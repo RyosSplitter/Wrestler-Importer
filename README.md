@@ -68,6 +68,9 @@ The Blender review rig is not the native PSP skeleton export.
 
 See [conversion status and test instructions](docs/conversion-status.md).
 
+The initial [PPSSPP test bundle](downloads/README.md) is available to download
+from this repository.
+
 ## Run
 
 The inspection readers alone require Python 3.10+ with no external packages.
