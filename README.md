@@ -54,6 +54,13 @@ report. Original files are opened for reading only. The DAE follows the supplied
 editor's coordinate and UV conventions; prepared JSON stores Blender UVs, and
 the native YOBJ export restores native top-origin V.
 
+The `native` folder also contains PNG/GIM files named to match model texture
+references (for example, `bn_arm.png`), beside `prepared.yobj` and `prepared.dae`.
+Open the model from that folder for external-texture previews. Noesis texture
+loading depends on the installed YOBJ plugin; direct PAC texture loading is
+not verified. Missing preview textures do not establish whether the in-game
+texture table is working.
+
 In this Linux cloud, the tested equivalent is `python3 tools/convert_hctp.py ...
 --editor-python /usr/bin/python3.13`. The main pipeline runs on Python 3.12 while
 the serialization bridge uses 3.13. Native Windows execution is not yet tested.

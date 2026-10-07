@@ -82,3 +82,15 @@ drag-and-drop app and additional profiles are still future work.
 
 The package contains the test PAC, native YOBJ/DAE, PNG/GIM textures, a Blender
 review file with packed textures, pose previews, and diagnostic reports.
+
+## External texture preview
+
+The initial bundle's PNG/GIM exports used numbered filenames in a separate
+folder, while the YOBJ texture names and DAE image references use names such as
+`bn_arm` and `bn_arm.png`. The converter now also places named PNG/GIM copies
+beside the native model. A separate preview download supplies these files;
+all DAE image paths are checked to resolve, and the preview YOBJ and all named
+GIMs match the corrected PAC's payloads. The PAC bytes are unchanged.
+Open the supplied `prepared.yobj` or `prepared.dae` from the extracted preview
+folder. Noesis YOBJ plugins differ in texture-loading support; the user's
+Noesis preview and PPSSPP remain the visual checks for texture assignment.

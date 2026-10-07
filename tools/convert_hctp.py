@@ -16,14 +16,14 @@ try:
     from .pac_inspect import FormatError, inspect_pac
     from .pac_repack import repack
     from .prepare_model import prepare
-    from .texture_convert import convert_pac
+    from .texture_convert import convert_pac, write_preview_textures
     from .yobj_read import load_model
 except ImportError:
     from hctp_read import load_hctp
     from pac_inspect import FormatError, inspect_pac
     from pac_repack import repack
     from prepare_model import prepare
-    from texture_convert import convert_pac
+    from texture_convert import convert_pac, write_preview_textures
     from yobj_read import load_model
 
 
@@ -88,9 +88,11 @@ def convert(source, target, reference, editor, output, editor_python):
                         '--prepared', str((output / 'prepared.json').resolve()), '--output', str((output / 'native').resolve())],
                        stdout=log, stderr=subprocess.STDOUT, check=True)
     verification = verify_serialized(model, base_yobj, output / 'native' / 'prepared.yobj')
+    preview_files = write_preview_textures(texture_manifest, output / 'textures', output / 'native')
     pac = output / 'RVD-HCTP-to-SVR2007-PSP-test.pac'
     packing = repack(target, output / 'native' / 'prepared.yobj', output / 'textures', pac)
     report = {'preparation': preparation, 'textures': texture_manifest, 'native_serialization': verification,
+              'preview_texture_files': preview_files,
               'pac': packing, 'status': 'Experimental test candidate; PPSSPP validation is pending'}
     (output / 'conversion-report.json').write_text(json.dumps(report, indent=2, allow_nan=False) + '\n', encoding='utf-8')
     return report

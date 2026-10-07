@@ -2,6 +2,13 @@
 
 [Download the alignment-corrected HCTP RVD to PSP SVR 2007 test bundle](https://github.com/RyosSplitter/Wrestler-Importer/raw/refs/heads/main/downloads/RVD-HCTP-to-PSP-test-bundle-aligned.zip).
 
+[Download the model with named preview textures](https://github.com/RyosSplitter/Wrestler-Importer/raw/refs/heads/main/downloads/RVD-Noesis-texture-preview.zip).
+Extract this preview ZIP to a folder and open `prepared.yobj` or `prepared.dae`
+there. PNG/GIM textures sit beside the model under its expected texture names.
+This fixes the original export's missing external image paths. Automatic YOBJ
+texture loading still depends on your Noesis plugin. The aligned test PAC is
+unchanged and already includes its 15 main GIM textures.
+
 This experimental bundle includes the converted PAC, model and texture exports,
 Blender review file, pose previews, reports, and installation/test instructions.
 It replaces Kurt's slot using the supplied PSP SVR 2007 base. Playability has

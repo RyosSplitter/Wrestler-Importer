@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import json
 from pathlib import Path
+import re
 import struct
 import sys
 
@@ -132,6 +133,24 @@ def convert_pac(source, output):
                 'validation': 'Every GIM decodes to exactly the converted source indices and RGBA palette'}
     (output / 'textures.json').write_text(json.dumps(manifest, indent=2) + '\n', encoding='utf-8')
     return manifest
+
+
+def write_preview_textures(manifest, textures_path, model_path):
+    """Supply same-directory image names used by the YOBJ and DAE references."""
+    files = []
+    for entry in manifest['textures']:
+        name = entry['name']
+        if not re.fullmatch(r'[A-Za-z0-9_-]+', name):
+            raise FormatError('Texture name is unsafe for a preview filename')
+        for extension in ('png', 'gim'):
+            source_name = entry[extension]
+            if not re.fullmatch(r'texture_[0-9]+\.' + extension, source_name):
+                raise FormatError('Unexpected preview texture source filename')
+            destination = model_path / (name + '.' + extension)
+            with destination.open('xb') as stream:
+                stream.write((textures_path / source_name).read_bytes())
+            files.append(destination.name)
+    return files
 
 
 def main():
