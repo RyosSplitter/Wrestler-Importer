@@ -9,10 +9,12 @@ try:
     from .pac_inspect import FormatError, inspect_pac
     from .yobj_read import read_yobj
     from .texture_convert import read_gim8
+    from .yobj_alignment import align_yobj_pof0
 except ImportError:
     from pac_inspect import FormatError, inspect_pac
     from yobj_read import read_yobj
     from texture_convert import read_gim8
+    from yobj_alignment import align_yobj_pof0
 
 
 def texture_table(names, payloads):
@@ -36,8 +38,13 @@ def replace_sections(base, replacements):
     if len(set(ids)) != len(ids) or not set(replacements).issubset(ids):
         raise FormatError('Ambiguous or missing replacement section IDs')
     table = bytearray(b'PAC ' + struct.pack('<I', len(ids)))
+    table_end = 8 + 8 * len(ids)
     payloads, offset = [], 0
     for section in report['sections']:
+        # Align actual file addresses, including when the table is not 16-aligned.
+        padding = (-(table_end + offset)) % 16
+        payloads.append(bytes(padding))
+        offset += padding
         payload = replacements.get(section['id'], base[section['offset']:section['offset'] + section['size']])
         if not payload or len(payload) >= 1 << 24 or offset >= 1 << 24:
             raise FormatError('PAC payload exceeds 24-bit table bounds')
@@ -54,6 +61,10 @@ def repack(base_path, yobj_path, textures_path, output):
     if output.exists():
         raise FileExistsError(f'Refusing to overwrite {output}')
     base, yobj = base_path.read_bytes(), yobj_path.read_bytes()
+    try:
+        yobj = align_yobj_pof0(yobj)
+    except ValueError as exc:
+        raise FormatError(str(exc)) from exc
     original = inspect_pac(base)
     models = [s for s in original['sections'] if s['id'] == 2 and s['kind'] == 'model_section']
     if len(models) != 1 or 9 not in [s['id'] for s in original['sections']]:
@@ -76,6 +87,8 @@ def repack(base_path, yobj_path, textures_path, output):
     replacement = texture_table(model['textures'], payloads)
     result = replace_sections(base, {2: yobj, 9: replacement})
     after = inspect_pac(result)
+    if any(s['offset'] % 16 for s in after['sections']):
+        raise FormatError('PAC section alignment failed')
     before_by_id = {s['id']: s for s in original['sections']}
     for s in after['sections']:
         if s['id'] not in (2, 9) and s['sha256'] != before_by_id[s['id']]['sha256']:
@@ -87,6 +100,8 @@ def repack(base_path, yobj_path, textures_path, output):
             'mesh_count': model['mesh_count'], 'bone_count': model['bone_count'],
             'triangles': model['triangle_count'], 'textures': len(payloads),
             'unchanged_sections': [s['id'] for s in after['sections'] if s['id'] not in (2, 9)],
+            'section_alignment_bytes': 16,
+            'relocation_chunk_aligned': len(yobj) % 16 == 0,
             'status': 'Experimental candidate; requires PPSSPP validation'}
 
 

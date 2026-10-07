@@ -18,6 +18,11 @@ import types
 import xml.etree.ElementTree as ET
 import zlib
 
+try:
+    from .yobj_alignment import align_yobj_pof0
+except ImportError:
+    from yobj_alignment import align_yobj_pof0
+
 
 EDITOR_SHA256 = '1e6fe5db14eae75ebfa853c0a1ec74b1895531db75b037fa63728cbf6ae6129f'
 READERS = ('read_header', 'read_mesh_header', 'read_mesh_header_bones', 'read_mesh_data_header',
@@ -160,6 +165,11 @@ def export(executable, base, prepared_path, output):
                 env[name](target, i)
         for name in ('write_bones', 'write_texture', 'write_model_name', 'generate_pof0'):
             env[name](target)
+        target.seek(0)
+        aligned = align_yobj_pof0(target.read())
+        target.seek(0)
+        target.write(aligned)
+        target.truncate()
     print('EDITOR_EXPORT_COMPLETED', output)
 
 

@@ -8,6 +8,7 @@ from tools.pac_inspect import FormatError, inspect_pac
 from tools.pac_repack import replace_sections
 from tools.stripify import stripify
 from tools.texture_convert import read_gim8, read_rtx3, write_gim8
+from tools.yobj_alignment import align_yobj_pof0
 
 
 def canonical(triangle):
@@ -78,6 +79,37 @@ class TextureAndRepackTests(unittest.TestCase):
         self.assertEqual(len(after) % 2048, 0)
         with self.assertRaises(FormatError):
             replace_sections(original, {99: b'missing'})
+
+    def test_odd_sized_model_and_unaligned_table_keep_payloads_on_aligned_addresses(self):
+        # A two-entry PAC has a 24-byte table; align absolute, not relative offsets.
+        payloads = [(2, b'YOBJ' + bytes(39)), (8, b'original opaque bytes')]
+        table = bytearray(b'PAC ' + struct.pack('<I', 2))
+        offset = 0
+        for sid, payload in payloads:
+            table += struct.pack('<H', sid) + offset.to_bytes(3, 'little') + len(payload).to_bytes(3, 'little')
+            offset += len(payload)
+        original = bytes(table) + b''.join(p for _, p in payloads)
+        replacement = b'YOBJ' + bytes(45)
+        after = replace_sections(original, {2: replacement})
+        sections = inspect_pac(after)['sections']
+        for section, expected in zip(sections, [replacement, payloads[1][1]]):
+            self.assertEqual(section['offset'] % 16, 0)
+            self.assertEqual(section['size'], len(expected))
+            self.assertEqual(after[section['offset']:section['offset'] + section['size']], expected)
+
+    def test_relocation_padding_is_included_in_chunk_size(self):
+        model = bytearray(b'YOBJ' + bytes(28))
+        struct.pack_into('<I', model, 4, 24)
+        original = bytes(model) + b'POF0' + struct.pack('<I', 3) + b'ABC'
+        aligned = align_yobj_pof0(original)
+        self.assertEqual(len(aligned), 48)
+        self.assertEqual(aligned[:36], original[:36])
+        self.assertEqual(struct.unpack_from('<I', aligned, 36)[0], 8)
+        self.assertEqual(aligned[40:], b'ABC' + bytes(5))
+        self.assertEqual(align_yobj_pof0(aligned), aligned)
+        for damaged in [original[:-1], original + b'\0', b'NOPE' + original[4:]]:
+            with self.assertRaises(ValueError):
+                align_yobj_pof0(damaged)
 
 
 if __name__ == '__main__':

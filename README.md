@@ -23,7 +23,9 @@ the same mesh representation for later alignment work.
 The first experimental conversion now aligns the supplied HCTP model, assigns
 body sections, transfers reference weights onto the unchanged PSP base skeleton,
 converts RTX3 textures to indexed8 GIM, serializes YOBJ/DAE, and repacks a copy of
-the PSP PAC. The complete pipeline was run twice and produced identical PAC bytes.
+the PSP PAC. Native model serialization is independently checked, and repeated
+PAC repacking produces identical bytes. Section starts and the final model
+relocation chunk are padded to 16-byte boundaries.
 
 **PPSSPP compatibility remains unverified.** This is a backend prototype for the
 supplied HCTP -> SVR 2007 PSP pair, not the finished Windows drag-and-drop app.

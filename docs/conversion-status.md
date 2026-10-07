@@ -24,16 +24,29 @@ It is not yet confirmed playable.
   Independent YOBJ re-reading checks positions, normals, colors, UV conversion,
   palettes, weights, material slots, triangle winding, and original bone bytes.
 - PAC section 2 replaced with the serialized model and section 9 with the new
-  named textures. Base section 8 preserved exactly; final padding is 2048-aligned.
-- One-command conversion reproduces the same PAC bytes on a second run.
-- Twenty-five unit tests pass. Original source/base PAC hashes remain unchanged.
+  named textures. Base section 8 preserved exactly; section starts and the model's
+  final relocation chunk are 16-byte aligned, with total size 2048-byte aligned.
+- Repacking the corrected native model reproduces the same PAC bytes.
+- Twenty-seven unit tests pass. Original source/base PAC hashes remain unchanged.
 
 Candidate: 434176 bytes, 58 meshes, 2825 sectioned vertices, 2836 triangles,
 79 original PSP bones, and 15 main textures. SHA-256:
 
 ```text
-bb402b49124a6f6878bcd789fdf78fa5b6fdd867201c7ceab173e355c58382f7
+7250868aab7a728ebd7ef198421039ffbd1c2f90a42274c84be2a2f89e9e1c78
 ```
+
+## Alignment correction
+
+PAC Editor v6.7.1 reported "This file has alignment issues" on the initial
+candidate. Its final POF0 relocation payload had an unpadded length of 1490
+bytes, leaving the following PAC sections at offsets 247298 and 254370, both
+two bytes off a four-byte boundary. The corrected writer adds 14 zero padding
+bytes and updates the POF0 length to 1504. Sections 8 and 9 now start at 247312
+and 254384. Geometry, weights, bone records, and texture payloads are unchanged.
+Regression tests cover relocation lengths and absolute PAC section alignment,
+including a table whose own size is not 16-byte aligned. The corrected file has
+not yet been opened in the Windows v6.7.1 GUI.
 
 ## What remains unverified
 
