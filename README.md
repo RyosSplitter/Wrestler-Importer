@@ -20,13 +20,58 @@ An experimental HCTP reader now decodes the supplied source's positions, normals
 UVs, and triangles. It preserves UV seams and source vertex indices, and exports
 the same mesh representation for later alignment work.
 
-It does **not** yet transfer weights, convert images, repack modified PACs, or
-produce playable exports. HCTP source skin weights and other games' container
-variants remain unverified.
+The first experimental conversion now aligns the supplied HCTP model, assigns
+body sections, transfers reference weights onto the unchanged PSP base skeleton,
+converts RTX3 textures to indexed8 GIM, serializes YOBJ/DAE, and repacks a copy of
+the PSP PAC. The complete pipeline was run twice and produced identical PAC bytes.
+
+**PPSSPP compatibility remains unverified.** This is a backend prototype for the
+supplied HCTP -> SVR 2007 PSP pair, not the finished Windows drag-and-drop app.
+Other games and packet variants remain unsupported. Source skeletons are not
+retargeted; the real PSP base's bone records are preserved byte for byte.
+
+## Convert the initial sample
+
+Requires CPython 3.13, NumPy/Pillow, the supplied PSP mesh editor executable,
+the PS2 source PAC, the PSP base PAC, and `Full Body.yobj`. The bridge only accepts
+the inspected executable's SHA-256. It calls selected serialization functions
+without running the Windows GUI or executable's top-level code. That third-party
+implementation is not included in this repository.
+
+From the repository directory on Windows:
+
+```powershell
+py -3.13 -m pip install -r requirements.txt
+py -3.13 tools/convert_hctp.py "C:\models\0900.pac" "C:\models\Kurt-Angle-Ring.PAC" "C:\models\Full Body.yobj" --editor "C:\tools\yobj_mesh_editor_PSP_GUI.exe" --output "local\rvd-test"
+py -3.13 -m unittest discover -s tests -v
+```
+
+The output directory must be new. The output contains the experimental PAC,
+decoded PNG/GIM textures, prepared JSON, native YOBJ/DAE, logs, and a conversion
+report. Original files are opened for reading only. The DAE follows the supplied
+editor's coordinate and UV conventions; prepared JSON stores Blender UVs, and
+the native YOBJ export restores native top-origin V.
+
+In this Linux cloud, the tested equivalent is `python3 tools/convert_hctp.py ...
+--editor-python /usr/bin/python3.13`. The main pipeline runs on Python 3.12 while
+the serialization bridge uses 3.13. Native Windows execution is not yet tested.
+
+Optional Blender 4.3 review (not Blender 2.79):
+
+```powershell
+blender --background --python-exit-code 1 --python tools/blender_validate.py -- local/rvd-test/prepared.json local/rvd-test/review local/rvd-test/textures
+```
+
+This saves a review rig with packed textures, three pose previews, and deformation
+diagnostics. Colored-section previews are available by omitting the texture path.
+The Blender review rig is not the native PSP skeleton export.
+
+See [conversion status and test instructions](docs/conversion-status.md).
 
 ## Run
 
-Requires Python 3.10+ with no external packages. From the repository directory:
+The inspection readers alone require Python 3.10+ with no external packages.
+From the repository directory:
 
 ```powershell
 py -3 tools/pac_inspect.py "C:\models\0900.pac"
@@ -56,8 +101,9 @@ texture names as paths. Original PACs are opened for reading only.
 
 Model sections retain all their bytes, including data following the YOBJ size
 field; they are saved as `.bin` until model-boundary semantics are verified.
-Texture entries retain their native GIM or TXC bytes. No image conversion is
-performed. `report.json` maps extracted files to the original offsets and names.
+Texture entries retain their native GIM or TXC bytes in the inspection command.
+The conversion pipeline performs image conversion separately. `report.json`
+maps extracted files to the original offsets and names.
 
 See [sample findings](docs/sample-findings.md) for the first format observations.
 Keep local game assets and third-party binaries under ignored `local/` or

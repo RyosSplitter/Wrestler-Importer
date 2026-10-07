@@ -1,0 +1,71 @@
+# First conversion candidate
+
+The supplied HCTP `0900.pac` contains `RVD1p_0100`. The first candidate replaces
+Kurt's geometry and main textures in a copy of the SVR 2007 PSP base PAC.
+It is not yet confirmed playable.
+
+## Completed and checked
+
+- HCTP geometry decoded with UV seams preserved.
+- Twelve shared skeleton landmarks fitted with uniform scale, rotation, and
+  translation. Scale is 1.01630064; landmark RMS is 0.114174 model units.
+- Source faces assigned to nearest PSP base body sections. Palette grouping
+  produces 58 chunks with at most eight bones and 254 triangles per chunk.
+- Weights interpolated from nearest reference triangles and mapped by bone name
+  to the target. Reference-only helpers collapse to matching target ancestors.
+  Maximum four influences per vertex; pruning is reported, not hidden.
+- All 2836 source triangles retained. Greedy oriented stripification reduces
+  draw strips from one per triangle to 912 without losing faces or winding.
+- All weights normalized, all bone references valid, and duplicate positions
+  stay together in T-pose, raised-arm, and bent-elbow/knee Blender tests.
+- Fifteen active RTX3 textures converted to PNG and indexed8 GIM. Every GIM
+  decodes to exactly its converted source pixel indices and RGBA palette.
+- Native YOBJ and DAE written using the supplied editor's inspected functions.
+  Independent YOBJ re-reading checks positions, normals, colors, UV conversion,
+  palettes, weights, material slots, triangle winding, and original bone bytes.
+- PAC section 2 replaced with the serialized model and section 9 with the new
+  named textures. Base section 8 preserved exactly; final padding is 2048-aligned.
+- One-command conversion reproduces the same PAC bytes on a second run.
+- Twenty-five unit tests pass. Original source/base PAC hashes remain unchanged.
+
+Candidate: 434176 bytes, 58 meshes, 2825 sectioned vertices, 2836 triangles,
+79 original PSP bones, and 15 main textures. SHA-256:
+
+```text
+bb402b49124a6f6878bcd789fdf78fa5b6fdd867201c7ceab173e355c58382f7
+```
+
+## What remains unverified
+
+The original Kurt PAC is 180224 bytes with 29 meshes and 1488 triangles. The
+candidate is larger; game allocation limits and performance need a real test.
+The per-mesh caps above reflect observed format constraints/tutorial guidance,
+not a measured global game budget. There has been no polygon decimation in this
+candidate because each resulting chunk is already below the tutorial's approximate
+per-object guidance. A lower total budget may be needed after game testing.
+
+Section assignment uses whole triangles. Joint boundaries and unusual clothing
+still need review. The bend checks exercise a Blender review rig rather than
+the PSP's animation engine. Facial expressions, entrances, cloth motion, texture
+orientation, transparency, and the game's reaction to the new section count
+are unverified. DAE is serialized but not independently imported into Blender
+(this build's Blender 4.3 has no Collada importer).
+
+No original skeleton was retargeted or replaced. The editor bridge is tied to
+the supplied executable's exact SHA-256 and CPython 3.13. Other tool releases,
+source games, PSP versions, and Windows GUI execution are untested. The finished
+drag-and-drop app and additional profiles are still future work.
+
+## PPSSPP test
+
+1. Keep a backup of the original Kurt PAC and game files.
+2. Use your normal SVR 2007 PSP replacement/repacking workflow to install the
+   test PAC in Kurt's slot. Use the original slot's expected filename. The PAC
+   has grown, so repack with a tool that updates containing archive offsets/sizes.
+3. Load Kurt in a match. Check appearance and textures before testing idle,
+   walking, punches/grapples, elbow/knee bending, and entrances.
+4. Report whether it loads, crashes, has texture/alpha problems, or deforms badly.
+   PPSSPP error text is useful if loading fails.
+
+The package contains the test PAC, native YOBJ/DAE, PNG/GIM textures, a Blender
+review file with packed textures, pose previews, and diagnostic reports.

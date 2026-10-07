@@ -40,8 +40,9 @@ def read_hctp(data: bytes) -> dict:
             vertex_count, bone_count, pos_ptr, normal_ptr = r.unpack("<4I", group_ptr + 8 + gi * 32)
             if not 1 <= bone_count <= 4:
                 raise FormatError("Unsupported HCTP group bone count")
-            bones = r.unpack("<" + "I" * bone_count, group_ptr + 24 + gi * 32)
-            if any(b >= model["bone_count"] for b in bones):
+            stored_bones = r.unpack("<" + "I" * bone_count, group_ptr + 24 + gi * 32)
+            bones = tuple(b - 1 for b in stored_bones)
+            if any(b < 0 or b >= model["bone_count"] for b in bones):
                 raise FormatError("HCTP group bone reference is out of range")
             r.check(pos_ptr + 8, vertex_count * 16)
             r.check(normal_ptr + 8, vertex_count * 16)
@@ -58,7 +59,7 @@ def read_hctp(data: bytes) -> dict:
                                      "weights": []})
                 positions.append(position[:3])
             groups.append({"source_vertex_start": start, "vertex_count": vertex_count,
-                           "source_bones": bones})
+                           "source_bones": bones, "stored_source_bones": stored_bones})
         if len(raw_vertices) != count:
             raise FormatError("HCTP group vertex counts differ from mesh count")
         r.check(material_ptr + 8, material_count * 208)

@@ -114,8 +114,11 @@ def read_yobj(data: bytes, *, psp_geometry: bool = False) -> dict:
         palette_count = r.u32(palette_ptr + 12)
         if palette_count != weight_count:
             raise FormatError("PSP weight slots do not match bone palette")
-        palette = r.unpack("<" + "I" * palette_count, palette_ptr + 24)
-        outside_palette = [b for b in palette if b >= bone_count]
+        stored_palette = r.unpack("<" + "I" * palette_count, palette_ptr + 24)
+        # YOBJ mesh references are 1-based; the bone table and parent indices
+        # are 0-based. Keeping these distinct is essential for deformation.
+        palette = tuple(b - 1 for b in stored_palette)
+        outside_palette = [b for b in stored_palette if not 1 <= b <= bone_count]
         if outside_palette:
             model["warnings"].append(
                 f"Mesh {index} palette references {outside_palette} outside the declared bone table; game semantics need verification")
@@ -159,6 +162,7 @@ def read_yobj(data: bytes, *, psp_geometry: bool = False) -> dict:
                         triangles.append(tri)
             materials.append({"texture_id": texture_id, "strips": strips, "triangles": triangles})
         meshes.append({"index": index, "flag": flag, "bone_palette": palette,
+                       "stored_bone_palette": stored_palette,
                        "vertices": vertices, "materials": materials})
     model.update(geometry_decoded=True, meshes=meshes,
                  vertex_count=len(all_positions),
@@ -169,7 +173,7 @@ def read_yobj(data: bytes, *, psp_geometry: bool = False) -> dict:
     model["weight_sum_outliers"] = sum(abs(sum(v["weights"]) - 1) > 0.001
                                        for m in meshes for v in m["vertices"])
     model["vertices_with_outside_bone_influences"] = sum(
-        any(b >= bone_count and w > 0 for b, w in zip(m["bone_palette"], v["weights"]))
+        any((b < 0 or b >= bone_count) and w > 0 for b, w in zip(m["bone_palette"], v["weights"]))
         for m in meshes for v in m["vertices"])
     return model
 

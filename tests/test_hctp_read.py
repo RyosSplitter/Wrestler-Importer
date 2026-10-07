@@ -13,7 +13,7 @@ def sample():
     struct.pack_into("<4I", d, 72, 1, 1, 128, 296)
     struct.pack_into("<I", d, 104, 10)
     struct.pack_into("<I", d, 112, 4)
-    struct.pack_into("<4I4i", d, 136, 4, 1, 168, 232, 0, -1, -1, -1)
+    struct.pack_into("<4I4i", d, 136, 4, 1, 168, 232, 1, -1, -1, -1)
     positions = ((0, 0, 0), (1, 0, 0), (0, 1, 0), (1, 1, 0))
     for i, p in enumerate(positions):
         struct.pack_into("<4f", d, 176 + i * 16, *p, 1)

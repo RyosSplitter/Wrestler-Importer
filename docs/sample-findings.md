@@ -67,16 +67,22 @@ the reader retains those strips and alternates winding when producing triangles.
 OBJ output preserves raw model axes and UVs. HCTP mesh fields differ; its geometry
 is deliberately rejected by the PSP decoder.
 
-All decoded PSP vertex weight sums are within 0.001 of 1. Kurt mesh 20 references
-palette index 79 even though the declared bone table has indices 0 through 78.
-Twelve vertices have positive weight for that slot. The reader retains these
-values and reports the inconsistency. Whether this uses a game-specific convention
-or is a model defect is unresolved; no repair or animation-readiness claim is made.
+All decoded PSP vertex weight sums are within 0.001 of 1. **Mesh palette references
+are one-based on disk; bone-table and parent indices are zero-based.** The earlier
+reader incorrectly treated palette references as array indices. A bend test
+exposed the error (a left toe appeared weighted to the right thigh). Correcting
+the reader fixed that mapping. Kurt's stored reference 79 is valid and maps to
+bone index 78, `r_tsumasaki`; it is not a defect in the user's file. Native palette
+bytes are retained separately from normalized array indices, and export adds
+one back. Unit tests enforce this distinction.
 
 The supplied Windows mesh editor was inspected as a PyInstaller archive with
 Python 3.13 bytecode; its readers helped identify the layout. The executable was
-not run, and none of its implementation was added to this repository. The native
-reader has no dependency on it. The supplied PAC editor contains a Python 2.7
+not run as a Windows process, and none of its implementation was added to this
+repository. The native reader has no dependency on it. The conversion bridge
+now executes a selected set of inspected reader/writer/export functions from
+that exact hash-pinned executable under CPython 3.13, with no GUI or top-level
+module execution. The supplied PAC editor contains a Python 2.7
 Windows distribution and `unrrbpe.exe`; GUI execution is not verified here.
 
 The uploaded cleanup script clears vertex groups from selected meshes. The UV
@@ -84,7 +90,7 @@ script applies `v = 1 - v` and uses Blender 2.79's active-object API. Neither
 performs body sectioning, automatic alignment, or weight transfer. They were
 read rather than run against the user's assets.
 
-Validation: fifteen unit tests pass, covering container extraction, malformed
+Validation: twenty-five unit tests pass, covering container extraction, malformed
 ranges, unsupported layouts, triangle winding, bone cycles, palette diagnostics,
 and overwrite prevention. Blender 4.3.2 imported the Base preview with exact
 counts. The Full Body OBJ import retained all 1318 triangles, but omitted two
@@ -92,8 +98,9 @@ objects and seven vertices used only by degenerate/no drawable faces. Exact
 mesh and vertex preservation needs a structured importer rather than OBJ.
 Structured JSON imports into Blender preserve all mesh, vertex, and triangle
 counts for Base, Full Body, Kurt, and the HCTP source. HCTP geometry was also
-rendered for visual inspection. No armature, animation, Windows, or PPSSPP test
-has run.
+rendered for visual inspection. Blender rig and pose checks now also run, as
+described in [conversion status](conversion-status.md). Native Windows and
+PPSSPP validation remain pending.
 
 ## Experimental HCTP source decoder
 
@@ -115,18 +122,21 @@ positions, normals, indices, and UVs pass the implemented structural checks.
 The rendered source resembles a complete wrestler in a T-pose. Raw YOBJ axes
 are retained in exported data; the preview rotates negative Y upward for display.
 
-Source skinning and RTX3 pixels are not decoded. Geometry/UV correctness still
-needs comparison with the original game or a known importer. Shared intermediate
-geometry is now available for source-to-target alignment and body sectioning.
+Source skinning is not decoded or copied. Geometry/UV correctness still needs
+in-game comparison. The pipeline uses PSP reference weights instead. RTX3 pixels
+are now decoded: the observed PSMT8 host pixel arrays are linear, and the CSM1
+CLUT order swaps indices 8/16 within 32-entry blocks. PS2 alpha values are mapped
+from the 0..128 scale to 0..255. All fifteen active model textures convert to
+PNG and swizzled PSP indexed8 GIM, retaining resolution and the 256-color palette.
+Each GIM round trip reproduces the converted pixels and palette exactly. Other
+PSM, palette, mipmap, and GIM formats are rejected rather than guessed.
 
 ## Next format work
 
-Use the PS2-compatible YOBJ importer or `yukes.bms`, if available, to cross-check
-the experimental HCTP decoder. Establish RTX3 pixel decoding, then continue
-alignment, PSP body sectioning, weight transfer, texture conversion, and repacking
-while preserving unrelated base sections. Investigate Kurt's out-of-table palette
-entry before rigged export. Missing old importer scripts do not prevent further
-work on the decoded geometry.
+Test the experimental repacked PAC in PPSSPP. Use the outcome to establish game
+mesh/memory limits, texture orientation, and actual animation quality before
+expanding profiles or building the Windows interface. A known PS2 importer or
+`yukes.bms` can still provide an independent source-format comparison.
 
 `Tools.zip` and `blender-2.79-windows32.zip` exceeded the cloud file-transfer
 limit of 32 MiB and were not downloaded or inspected. The separately uploaded

@@ -17,7 +17,7 @@ def sample():
     struct.pack_into("<2I", d, 96, 152, 0x57FF)
     struct.pack_into("<I", d, 112, 4)
     struct.pack_into("<I", d, 140, 2)
-    struct.pack_into("<2I", d, 152, 0, 1)
+    struct.pack_into("<2I", d, 152, 1, 2)
     struct.pack_into("<I", d, 160, 168)
     positions = ((0, 0, 0), (1, 0, 0), (0, 1, 0), (1, 1, 0))
     for j, pos in enumerate(positions):
@@ -47,6 +47,8 @@ class YobjTests(unittest.TestCase):
         self.assertEqual(m["meshes"][0]["vertices"][0]["weights"], (0.25, 0.75))
         self.assertEqual(m["meshes"][0]["materials"][0]["triangles"], [(0, 1, 2), (1, 3, 2)])
         self.assertEqual(m["bones"][1]["parent"], 0)
+        self.assertEqual(m["meshes"][0]["bone_palette"], (0, 1))
+        self.assertEqual(m["meshes"][0]["stored_bone_palette"], (1, 2))
         with tempfile.TemporaryDirectory() as tmp:
             p = Path(tmp) / "model.obj"
             write_obj(m, p)
@@ -79,7 +81,7 @@ class YobjTests(unittest.TestCase):
 
     def test_outside_palette_influences_retained_and_reported(self):
         d = sample()
-        struct.pack_into("<I", d, 156, 2)
+        struct.pack_into("<I", d, 156, 3)
         m = read_yobj(bytes(d), psp_geometry=True)
         self.assertEqual(m["vertices_with_outside_bone_influences"], 4)
         self.assertEqual(m["meshes"][0]["bone_palette"], (0, 2))
