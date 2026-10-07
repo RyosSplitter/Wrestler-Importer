@@ -5,7 +5,7 @@ import unittest
 import numpy as np
 
 from tools.pac_inspect import FormatError, inspect_pac
-from tools.pac_repack import replace_sections
+from tools.pac_repack import replace_sections, texture_table
 from tools.stripify import stripify
 from tools.texture_convert import budget_texture, read_gim, read_gim4, read_gim8, read_rtx3, write_gim4, write_gim8
 from tools.yobj_alignment import align_yobj_pof0
@@ -17,6 +17,21 @@ def canonical(triangle):
 
 
 class TextureAndRepackTests(unittest.TestCase):
+    def test_texture_archive_order_is_independent_of_model_indices(self):
+        names = ['KA_arm', 'blood_b', 'blood']
+        images = []
+        for i in range(3):
+            pixels = np.full((8, 32), i, dtype=np.uint8)
+            images.append(write_gim4(pixels, np.zeros((16, 4), dtype=np.uint8)))
+        table = texture_table(names, images)
+        pac = b'PAC ' + struct.pack('<I', 1) + struct.pack('<H', 9) + bytes(3) + len(table).to_bytes(3, 'little') + table
+        textures = inspect_pac(pac)['sections'][0]['textures']
+        self.assertEqual([t['name'] for t in textures], ['blood', 'blood_b', 'KA_arm'])
+        for t in textures:
+            self.assertEqual(table[t['offset']:t['offset'] + t['size']], images[names.index(t['name'])])
+        with self.assertRaises(FormatError):
+            texture_table(['skin', 'SKIN'], images[:2])
+
     def test_indexed4_nibble_order_swizzle_and_alpha_roundtrip(self):
         indices = (np.arange(64 * 16).reshape(16, 64) + np.arange(16)[:, None]).astype(np.uint8) % 16
         palette = np.arange(64, dtype=np.uint8).reshape(16, 4)

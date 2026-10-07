@@ -160,7 +160,8 @@ def read_yobj(data: bytes, *, psp_geometry: bool = False) -> dict:
                     tri = (strip[t], strip[t + 2], strip[t + 1]) if t % 2 else strip[t:t + 3]
                     if len(set(tri)) == 3:
                         triangles.append(tri)
-            materials.append({"texture_id": texture_id, "strips": strips, "triangles": triangles})
+            materials.append({"texture_id": texture_id, "control": r.u32(ma + 24),
+                              "strips": strips, "triangles": triangles})
         meshes.append({"index": index, "flag": flag, "bone_palette": palette,
                        "stored_bone_palette": stored_palette,
                        "vertices": vertices, "materials": materials})

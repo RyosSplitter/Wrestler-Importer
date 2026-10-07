@@ -1,13 +1,26 @@
 # Test downloads
 
+[Download the material-corrected 144 KiB PAC with matching Noesis YOBJ/textures](https://github.com/RyosSplitter/Wrestler-Importer/raw/refs/heads/main/downloads/RVD-HCTP-to-PSP-material-fix-test-bundle.zip).
+This is the current test candidate. It corrects seven ordinary RVD materials
+that accidentally inherited the base's blood-overlay settings and matches the
+original PACs' sorted texture-table convention. The YOBJ differs from
+the previous compact YOBJ in only 14 bytes; see the
+[audit and validation](../docs/material-state-fix.md). Game playability remains
+unverified. Extract the ZIP and use `RVD-HCTP-to-PSP-material-fix-test.pac`.
+The matching `preview/prepared.yobj` and named PNG/GIM textures are included.
+An untouched copy of the supplied Kurt PAC is in `control` for testing the same
+ARC-update/injection workflow before testing the converted model.
+
+The user tests in SVR 2011 PSP using the supplied SVR 2007 PSP Kurt base.
+Another 2011 base PAC is not required for the current investigation.
+
 [Download the 144 KiB compact PAC with Noesis model/textures](https://github.com/RyosSplitter/Wrestler-Importer/raw/refs/heads/main/downloads/RVD-HCTP-to-PSP-compact-test-bundle.zip).
-This is the next test candidate after the 424 KiB build crashed. Extract the
+This older build was reported not working and contains the material-state defect
+described above. It is retained for comparison. Extract the
 ZIP and open `preview/prepared.yobj` in Noesis; its named PNG/GIM textures are
 beside it. That YOBJ is byte-for-byte identical to the compact PAC's model.
 See [compact conversion and archive checks](../docs/compact-candidate.md).
 Compact playability is unverified; start from clean game archives for re-testing.
-The user tests in SVR 2011 PSP. This candidate still uses the supplied SVR 2007
-Kurt base; the original 2011 destination PAC is needed for a version-matched base.
 
 [Download the alignment-corrected HCTP RVD to PSP SVR 2007 test bundle](https://github.com/RyosSplitter/Wrestler-Importer/raw/refs/heads/main/downloads/RVD-HCTP-to-PSP-test-bundle-aligned.zip).
 

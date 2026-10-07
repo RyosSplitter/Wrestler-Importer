@@ -19,6 +19,7 @@ try:
     from .prepare_model import prepare
     from .texture_convert import convert_pac, write_preview_textures
     from .yobj_read import load_model
+    from .psp_materials import REGULAR_CONTROLS
 except ImportError:
     from hctp_read import load_hctp
     from pac_inspect import FormatError, inspect_pac
@@ -26,6 +27,7 @@ except ImportError:
     from prepare_model import prepare
     from texture_convert import convert_pac, write_preview_textures
     from yobj_read import load_model
+    from psp_materials import REGULAR_CONTROLS
 
 
 def _canonical(triangle):
@@ -60,8 +62,12 @@ def verify_serialized(prepared, base_bytes, yobj_path):
         for a, b in zip(expected['materials'], observed['materials']):
             if a['texture_id'] != b['texture_id'] or Counter(map(_canonical, a['triangles'])) != Counter(map(_canonical, b['triangles'])):
                 raise FormatError('Serialized material/triangle winding changed')
+            bits = prepared['texture_bits'][a['texture_id']]
+            if b['control'] != REGULAR_CONTROLS[bits]:
+                raise FormatError('Ordinary source texture has incompatible PSP material state')
     return {'bone_table_byte_identical': True, 'vertex_attributes_match': True,
-            'triangles_and_winding_match': True, 'native_yobj_warnings': actual['warnings']}
+            'triangles_and_winding_match': True, 'regular_material_controls_match_texture_depth': True,
+            'native_yobj_warnings': actual['warnings']}
 
 
 def convert(source, target, reference, editor, output, editor_python, *, compact=False, blender='blender'):
@@ -87,8 +93,9 @@ def convert(source, target, reference, editor, output, editor_python, *, compact
                            stdout=log, stderr=subprocess.STDOUT, env=env, check=True)
         source_model = json.loads(reduced_file.read_text())
     model, preparation = prepare(source_model, target_model, donor_model)
-    (output / 'prepared.json').write_text(json.dumps(model, indent=2, allow_nan=False) + '\n', encoding='utf-8')
     texture_manifest = convert_pac(source, output / 'textures', max_dimension=64 if compact else None, bits=4 if compact else 8)
+    model['texture_bits'] = [t['bits'] for t in sorted(texture_manifest['textures'], key=lambda t: t['index'])]
+    (output / 'prepared.json').write_text(json.dumps(model, indent=2, allow_nan=False) + '\n', encoding='utf-8')
     base = target.read_bytes()
     sections = [s for s in inspect_pac(base)['sections'] if s['id'] == 2 and s['kind'] == 'model_section']
     if len(sections) != 1:

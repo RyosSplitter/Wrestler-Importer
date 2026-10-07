@@ -20,8 +20,10 @@ import zlib
 
 try:
     from .yobj_alignment import align_yobj_pof0
+    from .psp_materials import regular_template
 except ImportError:
     from yobj_alignment import align_yobj_pof0
+    from psp_materials import regular_template
 
 
 EDITOR_SHA256 = '1e6fe5db14eae75ebfa853c0a1ec74b1895531db75b037fa63728cbf6ae6129f'
@@ -88,6 +90,9 @@ def read_base(env, path):
 
 def configure_meshes(env, prepared):
     headers, materials, face_headers = copy.deepcopy((env['mesh_header'], env['mesh_material'], env['mesh_faces_header']))
+    texture_bits = prepared['texture_bits']
+    if len(texture_bits) != len(prepared['textures']):
+        raise ValueError('Every prepared texture needs its native GIM color depth')
     fields = ('mesh_header', 'mesh_bones_count', 'mesh_bones', 'mesh_flag', 'mesh_flag_boolean',
               'mesh_flag_decode', 'mesh_data_lenght', 'mesh_data_count', 'mesh_data', 'mesh_bones_weight',
               'mesh_uv_u', 'mesh_uv_v', 'mesh_vertex_color', 'mesh_normal_x', 'mesh_normal_y', 'mesh_normal_z',
@@ -125,7 +130,8 @@ def configure_meshes(env, prepared):
         env['mesh_data'].append(records)
         mats = mesh['materials']
         env['mesh_material_count'].append(len(mats))
-        env['mesh_material'].append([materials[part][0] for _ in mats])
+        env['mesh_material'].append([
+            regular_template(materials, part, texture_bits[m['texture_id']]) for m in mats])
         env['mesh_material_texture'].append([m['texture_id'] for m in mats])
         env['mesh_material_faces_count'].append([len(m['strips']) for m in mats])
         env['mesh_faces_header'].append([[face_headers[part][0][0] for _ in m['strips']] for m in mats])

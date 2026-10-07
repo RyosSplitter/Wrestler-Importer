@@ -10,26 +10,33 @@ try:
     from .yobj_read import read_yobj
     from .texture_convert import read_gim
     from .yobj_alignment import align_yobj_pof0
+    from .psp_materials import validate_material_controls
 except ImportError:
     from pac_inspect import FormatError, inspect_pac
     from yobj_read import read_yobj
     from texture_convert import read_gim
     from yobj_alignment import align_yobj_pof0
+    from psp_materials import validate_material_controls
 
 
 def texture_table(names, payloads):
     if len(names) != len(payloads):
         raise FormatError('Texture name and payload counts differ')
+    if len({name.casefold() for name in names}) != len(names):
+        raise FormatError('Ambiguous texture names')
     table = bytearray(struct.pack('<4I', len(names), 0x100, 0, 16))
     offset = 16 + 32 * len(names)
-    for name, data in zip(names, payloads):
+    # Both original PAC samples use case-insensitive name order, independently
+    # of their YOBJ texture arrays. Preserve that archive-table convention.
+    ordered = sorted(zip(names, payloads), key=lambda pair: pair[0].casefold())
+    for name, data in ordered:
         encoded = name.encode('ascii')
         if len(encoded) > 15 or b'\0' in encoded:
             raise FormatError('Texture name cannot fit the PAC entry')
         read_gim(data)
         table += encoded.ljust(16, b'\0') + b'gim\0' + struct.pack('<3I', len(data), offset, 0)
         offset += len(data)
-    return bytes(table) + b''.join(payloads)
+    return bytes(table) + b''.join(data for _, data in ordered)
 
 
 def replace_sections(base, replacements):
@@ -85,6 +92,10 @@ def repack(base_path, yobj_path, textures_path, output, *, max_bytes=None):
             raise FormatError('Texture manifest path must be a filename')
         payloads.append((textures_path / relative).read_bytes())
     replacement = texture_table(model['textures'], payloads)
+    try:
+        validate_material_controls(model, [struct.unpack_from('<H', p, 76)[0] for p in payloads])
+    except ValueError as exc:
+        raise FormatError(str(exc)) from exc
     result = replace_sections(base, {2: yobj, 9: replacement})
     if max_bytes is not None and len(result) > max_bytes:
         raise FormatError(f'PAC is {len(result)} bytes, exceeding the {max_bytes}-byte budget; no PAC written')
@@ -104,6 +115,8 @@ def repack(base_path, yobj_path, textures_path, output, *, max_bytes=None):
             'unchanged_sections': [s['id'] for s in after['sections'] if s['id'] not in (2, 9)],
             'section_alignment_bytes': 16,
             'relocation_chunk_aligned': len(yobj) % 16 == 0,
+            'material_controls_checked_against_native_gim': True,
+            'texture_table_sorted_by_name': True,
             'status': 'Experimental candidate; requires PPSSPP validation'}
 
 

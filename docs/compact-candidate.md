@@ -1,5 +1,9 @@
 # Compact HCTP RVD test candidate
 
+This describes the previous compact build, which the user reports still does
+not work. Use the [material-corrected candidate](material-state-fix.md) for the
+next test. Size alone did not resolve the failure.
+
 The user reported that the 424 KiB PAC crashed in SVR 2011 PSP after injection,
 ARC update, and ISO save. The destination `EMD\00010001.pac` was originally
 148.5 KiB. The new candidate is 144 KiB (147456 bytes), a 66% reduction,
@@ -8,9 +12,9 @@ of the crash; a second game test is required.
 
 The available donor/base is still the supplied SVR 2007 PSP Kurt PAC. This
 candidate therefore tests a 2007-based model in the user's 2011 game. The
-original 2011 destination PAC is needed to preserve that game's actual bone
-table, mesh/material header conventions, and ancillary sections in a later
-conversion. Equal file size does not establish cross-version compatibility.
+user confirms that PSP SVR PACs are interchangeable. Another 2011 destination
+PAC is not required for investigating the converter's output. The supplied
+base remains selected; playability of the converted model is unverified.
 
 | Component | Original candidate | Compact candidate |
 | --- | ---: | ---: |
@@ -53,7 +57,7 @@ PAC SHA-256:
 ## Re-test from a clean archive
 
 1. Start from backed-up, unmodified game archives. This experimental candidate
-   uses the supplied SVR 2007 PSP Kurt base; 2011 compatibility is unverified.
+   uses the supplied SVR 2007 PSP Kurt base.
 2. Inject the compact PAC into the intended wrestler entry using the original
    slot filename. Rebuild the containing archive as required by the editor,
    update its ARC, and reopen the resulting CH.PAC before saving the ISO.
