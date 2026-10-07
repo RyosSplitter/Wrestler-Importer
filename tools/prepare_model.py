@@ -133,7 +133,9 @@ def donor_bone_map(donor, target):
     return mapping, collapsed
 
 
-def prepare(source, target, donor, *, flip_v=True):
+def prepare(source, target, donor, *, flip_v=True, max_influences=4, max_palette=8):
+    if not 1 <= max_influences <= max_palette <= 8:
+        raise FormatError('Invalid PSP influence/palette budget')
     source_names = {b['name']: b['index'] for b in source['bones']}
     target_names = {b['name']: b['index'] for b in target['bones']}
     names = [n for n in LANDMARKS if n in source_names and n in target_names]
@@ -172,7 +174,7 @@ def prepare(source, target, donor, *, flip_v=True):
                 if total <= 0:
                     raise FormatError('Weight donor produced an unweighted vertex')
                 dense = {b: w / total for b, w in dense.items()}
-                selected = dict(sorted(dense.items(), key=lambda x: -x[1])[:4])
+                selected = dict(sorted(dense.items(), key=lambda x: -x[1])[:max_influences])
                 kept = sum(selected.values())
                 initial_pruning.append(1 - kept)
                 cache[key] = {b: w / kept for b, w in selected.items()}
@@ -194,7 +196,7 @@ def prepare(source, target, donor, *, flip_v=True):
     palette_pruning = []
     for face in faces:
         keys = {vertices[v]['key'] for v in face['vertices']}
-        while len(set().union(*(cache[k].keys() for k in keys))) > 8:
+        while len(set().union(*(cache[k].keys() for k in keys))) > max_palette:
             candidates = [(w, k, b) for k in keys for b, w in cache[k].items() if len(cache[k]) > 1]
             if not candidates:
                 raise FormatError('Cannot fit triangle into PSP bone palette')
@@ -208,7 +210,7 @@ def prepare(source, target, donor, *, flip_v=True):
     for face in faces:
         support = set().union(*(cache[vertices[v]['key']].keys() for v in face['vertices']))
         bins = buckets.setdefault(face['part'], [])
-        candidates = [b for b in bins if len(b['palette'] | support) <= 8 and len(b['faces']) < 1000]
+        candidates = [b for b in bins if len(b['palette'] | support) <= max_palette and len(b['faces']) < 1000]
         if candidates:
             bucket = min(candidates, key=lambda b: len(b['palette'] | support))
         else:
@@ -255,13 +257,14 @@ def prepare(source, target, donor, *, flip_v=True):
               'weight_transfer': {'method': 'nearest surface with barycentric interpolation',
                                   'donor_distance_p95': float(np.percentile(donor_distances, 95)),
                                   'donor_distance_max': max(donor_distances),
-                                  'max_weight_mass_removed_for_top4': max(initial_pruning),
+                                  f'max_weight_mass_removed_for_top{max_influences}': max(initial_pruning),
                                   'face_palette_adjustments': len(palette_pruning),
                                   'max_face_palette_weight_removed': max(palette_pruning, default=0)},
               'source_triangles': source['triangle_count'], 'output_triangles': result['triangle_count'],
               'output_meshes': len(meshes), 'target_parts_used': sorted(buckets),
               'target_parts_without_source_faces': sorted(set(m['index'] for m in target['meshes']) - set(buckets)),
               'max_bones_per_mesh': max(len(m['bone_palette']) for m in meshes),
+              'max_influences_per_vertex': max_influences,
               'max_triangles_per_mesh': max(sum(len(mat['triangles']) for mat in m['materials']) for m in meshes),
               'limitations': ['Triangle-based section boundaries need joint review',
                               'UV flip follows tutorial and needs textured verification',

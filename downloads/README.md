@@ -1,5 +1,14 @@
 # Test downloads
 
+[Download the 144 KiB compact PAC with Noesis model/textures](https://github.com/RyosSplitter/Wrestler-Importer/raw/refs/heads/main/downloads/RVD-HCTP-to-PSP-compact-test-bundle.zip).
+This is the next test candidate after the 424 KiB build crashed. Extract the
+ZIP and open `preview/prepared.yobj` in Noesis; its named PNG/GIM textures are
+beside it. That YOBJ is byte-for-byte identical to the compact PAC's model.
+See [compact conversion and archive checks](../docs/compact-candidate.md).
+Compact playability is unverified; start from clean game archives for re-testing.
+The user tests in SVR 2011 PSP. This candidate still uses the supplied SVR 2007
+Kurt base; the original 2011 destination PAC is needed for a version-matched base.
+
 [Download the alignment-corrected HCTP RVD to PSP SVR 2007 test bundle](https://github.com/RyosSplitter/Wrestler-Importer/raw/refs/heads/main/downloads/RVD-HCTP-to-PSP-test-bundle-aligned.zip).
 
 [Download the model with named preview textures](https://github.com/RyosSplitter/Wrestler-Importer/raw/refs/heads/main/downloads/RVD-Noesis-texture-preview.zip).

@@ -48,6 +48,18 @@ py -3.13 tools/convert_hctp.py "C:\models\0900.pac" "C:\models\Kurt-Angle-Ring.P
 py -3.13 -m unittest discover -s tests -v
 ```
 
+The first 424 KiB candidate crashed in the user's game test. A compact profile
+now produces a 144 KiB candidate. It requires Blender 4.3 and applies shared-seam
+protected simplification plus 64-pixel/4-bit texture budgets:
+
+```powershell
+py -3.13 tools/convert_hctp.py "C:\models\0900.pac" "C:\models\Kurt-Angle-Ring.PAC" "C:\models\Full Body.yobj" --editor "C:\tools\yobj_mesh_editor_PSP_GUI.exe" --compact --blender "C:\tools\Blender 4.3\blender.exe" --output "local\rvd-compact"
+```
+
+The compact profile refuses to write a PAC above 148 KiB. Size is a test budget,
+not a confirmed engine limit or explanation of the crash. See the
+[compact candidate and archive checks](docs/compact-candidate.md).
+
 The output directory must be new. The output contains the experimental PAC,
 decoded PNG/GIM textures, prepared JSON, native YOBJ/DAE, logs, and a conversion
 report. Original files are opened for reading only. The DAE follows the supplied

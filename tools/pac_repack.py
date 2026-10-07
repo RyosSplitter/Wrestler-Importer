@@ -8,12 +8,12 @@ import sys
 try:
     from .pac_inspect import FormatError, inspect_pac
     from .yobj_read import read_yobj
-    from .texture_convert import read_gim8
+    from .texture_convert import read_gim
     from .yobj_alignment import align_yobj_pof0
 except ImportError:
     from pac_inspect import FormatError, inspect_pac
     from yobj_read import read_yobj
-    from texture_convert import read_gim8
+    from texture_convert import read_gim
     from yobj_alignment import align_yobj_pof0
 
 
@@ -26,7 +26,7 @@ def texture_table(names, payloads):
         encoded = name.encode('ascii')
         if len(encoded) > 15 or b'\0' in encoded:
             raise FormatError('Texture name cannot fit the PAC entry')
-        read_gim8(data)
+        read_gim(data)
         table += encoded.ljust(16, b'\0') + b'gim\0' + struct.pack('<3I', len(data), offset, 0)
         offset += len(data)
     return bytes(table) + b''.join(payloads)
@@ -57,7 +57,7 @@ def replace_sections(base, replacements):
     return result
 
 
-def repack(base_path, yobj_path, textures_path, output):
+def repack(base_path, yobj_path, textures_path, output, *, max_bytes=None):
     if output.exists():
         raise FileExistsError(f'Refusing to overwrite {output}')
     base, yobj = base_path.read_bytes(), yobj_path.read_bytes()
@@ -86,6 +86,8 @@ def repack(base_path, yobj_path, textures_path, output):
         payloads.append((textures_path / relative).read_bytes())
     replacement = texture_table(model['textures'], payloads)
     result = replace_sections(base, {2: yobj, 9: replacement})
+    if max_bytes is not None and len(result) > max_bytes:
+        raise FormatError(f'PAC is {len(result)} bytes, exceeding the {max_bytes}-byte budget; no PAC written')
     after = inspect_pac(result)
     if any(s['offset'] % 16 for s in after['sections']):
         raise FormatError('PAC section alignment failed')

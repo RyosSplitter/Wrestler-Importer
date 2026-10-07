@@ -7,7 +7,7 @@ import numpy as np
 from tools.pac_inspect import FormatError, inspect_pac
 from tools.pac_repack import replace_sections
 from tools.stripify import stripify
-from tools.texture_convert import read_gim8, read_rtx3, write_gim8
+from tools.texture_convert import budget_texture, read_gim, read_gim4, read_gim8, read_rtx3, write_gim4, write_gim8
 from tools.yobj_alignment import align_yobj_pof0
 
 
@@ -17,6 +17,34 @@ def canonical(triangle):
 
 
 class TextureAndRepackTests(unittest.TestCase):
+    def test_indexed4_nibble_order_swizzle_and_alpha_roundtrip(self):
+        indices = (np.arange(64 * 16).reshape(16, 64) + np.arange(16)[:, None]).astype(np.uint8) % 16
+        palette = np.arange(64, dtype=np.uint8).reshape(16, 4)
+        palette[0, 3], palette[15, 3] = 0, 255
+        encoded = write_gim4(indices, palette)
+        self.assertEqual(encoded[128], 0x10)
+        self.assertEqual(encoded[144], 0x21)  # Next row within the first 16-byte x 8-row tile.
+        self.assertEqual(encoded[256], 0x10)  # First row of the second tile.
+        pixels, colors = read_gim(encoded)
+        np.testing.assert_array_equal(pixels, indices)
+        np.testing.assert_array_equal(colors, palette)
+        with self.assertRaises(FormatError):
+            read_gim4(encoded[:-1])
+        with self.assertRaises(FormatError):
+            write_gim4(indices[:, :16], palette)
+
+    def test_texture_budget_reduces_dimensions_and_preserves_transparency(self):
+        indices = np.zeros((64, 128), dtype=np.uint8)
+        indices[:, 64:] = 1
+        palette = np.zeros((256, 4), dtype=np.uint8)
+        palette[1] = [220, 30, 10, 255]
+        pixels, colors = budget_texture(indices, palette, 64, 4)
+        self.assertEqual(pixels.shape, (32, 64))
+        self.assertEqual(colors.shape, (16, 4))
+        self.assertIn(0, colors[pixels][:, :, 3])
+        self.assertIn(255, colors[pixels][:, :, 3])
+        self.assertLessEqual(int(pixels.max()), 15)
+
     def test_indexed8_gim_roundtrip_nonuniform_palette_and_pixels(self):
         indices = np.arange(512, dtype=np.uint16).astype(np.uint8).reshape(16, 32)
         palette = np.arange(1024, dtype=np.uint16).astype(np.uint8).reshape(256, 4)

@@ -2,7 +2,9 @@
 
 The supplied HCTP `0900.pac` contains `RVD1p_0100`. The first candidate replaces
 Kurt's geometry and main textures in a copy of the SVR 2007 PSP base PAC.
-It is not yet confirmed playable.
+The user reports that the 424 KiB candidate crashed in the first game test.
+The [144 KiB compact candidate](compact-candidate.md) is the next test build;
+the larger candidate below is retained for comparison.
 
 ## Completed and checked
 

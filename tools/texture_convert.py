@@ -97,7 +97,68 @@ def read_gim8(data):
     return indices, palette
 
 
-def convert_pac(source, output):
+def write_gim4(indices, palette):
+    height, width = indices.shape
+    if width % 32 or height % 8 or indices.dtype != np.uint8 or palette.shape != (16, 4) or palette.dtype != np.uint8 or (indices > 15).any():
+        raise FormatError('GIM4 requires 16-entry RGBA palette, 4-bit indices and 32x8-aligned dimensions')
+    packed = indices[:, ::2] | (indices[:, 1::2] << 4)
+    pixels = np.empty(packed.size, dtype=np.uint8)
+    pixels[_gim_addresses(width // 2, height)] = packed
+    image = _block(4, 80 + pixels.size) + _image_header(4, 1, width, height, 4, pixels.size) + pixels.tobytes()
+    colors = _block(5, 144) + _image_header(3, 0, 16, 1, 32, 64, palette=True) + palette.tobytes()
+    size = 48 + len(image) + len(colors)
+    return b'MIG.00.1PSP\0\0\0\0\0' + _block(2, size - 16) + _block(3, size - 32) + image + colors
+
+
+def read_gim4(data):
+    if len(data) < 128 or data[:12] != b'MIG.00.1PSP\0' or struct.unpack_from('<I', data, 20)[0] + 16 != len(data):
+        raise FormatError('Invalid GIM4 header/length')
+    fmt, order, width, height, bits = struct.unpack_from('<5H', data, 68)
+    if (fmt, order, bits) != (4, 1, 4) or width % 32 or height % 8:
+        raise FormatError('Unsupported GIM4 image layout')
+    pixel_size = width * height // 2
+    palette_start = 128 + pixel_size
+    if struct.unpack_from('<I', data, 52)[0] != 80 + pixel_size or palette_start + 144 != len(data) or struct.unpack_from('<H', data, palette_start + 20)[0] != 3:
+        raise FormatError('Unsupported GIM4 palette/block layout')
+    raw = np.frombuffer(data[128:palette_start], dtype=np.uint8)
+    packed = raw[_gim_addresses(width // 2, height)]
+    indices = np.empty((height, width), dtype=np.uint8)
+    indices[:, ::2], indices[:, 1::2] = packed & 15, packed >> 4
+    colors = np.frombuffer(data[palette_start + 80:], dtype=np.uint8).reshape(16, 4).copy()
+    return indices, colors
+
+
+def read_gim(data):
+    if len(data) < 78:
+        raise FormatError('Truncated GIM')
+    bits = struct.unpack_from('<H', data, 76)[0]
+    if bits == 4:
+        return read_gim4(data)
+    return read_gim8(data)
+
+
+def budget_texture(indices, palette, max_dimension, bits):
+    if bits not in (4, 8) or max_dimension < 32 or max_dimension & (max_dimension - 1):
+        raise FormatError('Texture budget must use 4/8 bits and a power-of-two cap of at least 32')
+    image = Image.fromarray(palette[indices])
+    width, height = image.size
+    while max(width, height) > max_dimension:
+        width, height = max(32, width // 2), max(8, height // 2)
+    if bits == 4:
+        width = max(32, width)
+    image = image.resize((width, height), Image.Resampling.LANCZOS)
+    quantized = image.quantize(colors=1 << bits, method=Image.Quantize.FASTOCTREE, dither=Image.Dither.NONE)
+    colors = np.zeros((1 << bits, 4), dtype=np.uint8)
+    values = np.array(quantized.getpalette('RGBA'), dtype=np.uint8).reshape(-1, 4)
+    colors[:len(values)] = values
+    # Quantizer averages can turn an opaque plateau into alpha 254. Keep the
+    # transparent/opaque endpoints while retaining intermediate alpha values.
+    colors[colors[:, 3] >= 252, 3] = 255
+    colors[colors[:, 3] <= 3, 3] = 0
+    return np.array(quantized, dtype=np.uint8), colors
+
+
+def convert_pac(source, output, *, max_dimension=None, bits=8):
     data = source.read_bytes()
     report = inspect_pac(data)
     model = load_model(source)
@@ -116,21 +177,29 @@ def convert_pac(source, output):
         if name.lower() not in textures:
             raise FormatError(f'Missing source texture {name}')
         pixels, palette = read_rtx3(textures[name.lower()])
-        gim = write_gim8(pixels, palette)
-        back_pixels, back_palette = read_gim8(gim)
+        original_size = list(pixels.shape[::-1])
+        if max_dimension is not None:
+            pixels, palette = budget_texture(pixels, palette, max_dimension, bits)
+        elif bits != 8:
+            raise FormatError('A texture size budget is required for color-depth conversion')
+        gim = write_gim4(pixels, palette) if bits == 4 else write_gim8(pixels, palette)
+        back_pixels, back_palette = read_gim(gim)
         if not np.array_equal(pixels, back_pixels) or not np.array_equal(palette, back_palette):
             raise FormatError('GIM round trip altered pixels or palette')
-        converted.append((index, name, pixels, palette, gim))
+        converted.append((index, name, pixels, palette, gim, original_size))
     output.mkdir(parents=True, exist_ok=False)
     entries = []
-    for index, name, pixels, palette, gim in converted:
+    for index, name, pixels, palette, gim, original_size in converted:
         stem = f'texture_{index:02d}'
         Image.fromarray(palette[pixels]).save(output / (stem + '.png'))
         (output / (stem + '.gim')).write_bytes(gim)
         entries.append({'index': index, 'name': name, 'width': pixels.shape[1], 'height': pixels.shape[0],
-                        'gim': stem + '.gim', 'png': stem + '.png', 'gim_bytes': len(gim), 'bits': 8})
-    manifest = {'textures': entries, 'scope': 'Observed linear PSMT8 RTX3 only; GIM8 retains source resolution and palette',
-                'validation': 'Every GIM decodes to exactly the converted source indices and RGBA palette'}
+                        'gim': stem + '.gim', 'png': stem + '.png', 'gim_bytes': len(gim), 'bits': bits,
+                        'source_dimensions': original_size})
+    manifest = {'textures': entries, 'scope': f'Observed linear PSMT8 RTX3 only; PSP indexed{bits} GIM',
+                'validation': 'Every GIM decodes to exactly the converted image indices and RGBA palette',
+                'max_dimension': max_dimension, 'color_depth': bits,
+                'lossy_resize_or_quantization': max_dimension is not None}
     (output / 'textures.json').write_text(json.dumps(manifest, indent=2) + '\n', encoding='utf-8')
     return manifest
 

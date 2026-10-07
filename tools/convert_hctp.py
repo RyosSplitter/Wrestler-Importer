@@ -6,6 +6,7 @@ import argparse
 from collections import Counter
 import json
 import math
+import os
 from pathlib import Path
 import struct
 import subprocess
@@ -63,18 +64,31 @@ def verify_serialized(prepared, base_bytes, yobj_path):
             'triangles_and_winding_match': True, 'native_yobj_warnings': actual['warnings']}
 
 
-def convert(source, target, reference, editor, output, editor_python):
+def convert(source, target, reference, editor, output, editor_python, *, compact=False, blender='blender'):
     if output.exists():
         raise FileExistsError(f'Refusing to overwrite {output}')
     editor_python = str(editor_python)
     check = subprocess.run([editor_python, '-c', 'import sys; sys.exit(0 if sys.version_info[:2]==(3,13) else 1)'], check=False)
     if check.returncode:
         raise FormatError('Editor serialization requires CPython 3.13; select it with --editor-python')
-    model, preparation = prepare(load_hctp(source), load_model(target, psp_geometry=True),
-                                 load_model(reference, psp_geometry=True))
+    source_model = load_hctp(source)
+    target_model, donor_model = load_model(target, psp_geometry=True), load_model(reference, psp_geometry=True)
     output.mkdir(parents=True, exist_ok=False)
+    if compact:
+        source_file, reduced_file = output / 'source.json', output / 'reduced-source.json'
+        source_file.write_text(json.dumps(source_model, allow_nan=False), encoding='utf-8')
+        env = os.environ.copy()
+        for name, folder in [('BLENDER_USER_CONFIG', 'blender-config'), ('BLENDER_USER_EXTENSIONS', 'blender-extensions'), ('MESA_SHADER_CACHE_DIR', 'mesa-cache')]:
+            env.setdefault(name, str((output / folder).resolve()))
+        with (output / 'reduction.log').open('w', encoding='utf-8') as log:
+            subprocess.run([str(blender), '--background', '--python-exit-code', '1', '--python',
+                            str(Path(__file__).with_name('blender_reduce.py').resolve()), '--',
+                            str(source_file.resolve()), str(reduced_file.resolve()), '0.3'],
+                           stdout=log, stderr=subprocess.STDOUT, env=env, check=True)
+        source_model = json.loads(reduced_file.read_text())
+    model, preparation = prepare(source_model, target_model, donor_model)
     (output / 'prepared.json').write_text(json.dumps(model, indent=2, allow_nan=False) + '\n', encoding='utf-8')
-    texture_manifest = convert_pac(source, output / 'textures')
+    texture_manifest = convert_pac(source, output / 'textures', max_dimension=64 if compact else None, bits=4 if compact else 8)
     base = target.read_bytes()
     sections = [s for s in inspect_pac(base)['sections'] if s['id'] == 2 and s['kind'] == 'model_section']
     if len(sections) != 1:
@@ -89,10 +103,13 @@ def convert(source, target, reference, editor, output, editor_python):
                        stdout=log, stderr=subprocess.STDOUT, check=True)
     verification = verify_serialized(model, base_yobj, output / 'native' / 'prepared.yobj')
     preview_files = write_preview_textures(texture_manifest, output / 'textures', output / 'native')
-    pac = output / 'RVD-HCTP-to-SVR2007-PSP-test.pac'
-    packing = repack(target, output / 'native' / 'prepared.yobj', output / 'textures', pac)
+    pac = output / ('RVD-HCTP-to-SVR2007-PSP-compact-test.pac' if compact else 'RVD-HCTP-to-SVR2007-PSP-test.pac')
+    packing = repack(target, output / 'native' / 'prepared.yobj', output / 'textures', pac,
+                     max_bytes=148 * 1024 if compact else None)
     report = {'preparation': preparation, 'textures': texture_manifest, 'native_serialization': verification,
               'preview_texture_files': preview_files,
+              'reduction': source_model.get('reduction_report'), 'compact': compact,
+              'pac_filename': pac.name,
               'pac': packing, 'status': 'Experimental test candidate; PPSSPP validation is pending'}
     (output / 'conversion-report.json').write_text(json.dumps(report, indent=2, allow_nan=False) + '\n', encoding='utf-8')
     return report
@@ -106,9 +123,12 @@ def main():
     parser.add_argument('--editor', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--editor-python', default=sys.executable)
+    parser.add_argument('--compact', action='store_true', help='Blender reduction, 4-bit/64px textures, maximum 148 KiB PAC')
+    parser.add_argument('--blender', default='blender', help='Blender 4.3 executable for compact conversion')
     args = parser.parse_args()
     try:
-        report = convert(args.source, args.target, args.reference, args.editor, args.output, args.editor_python)
+        report = convert(args.source, args.target, args.reference, args.editor, args.output, args.editor_python,
+                         compact=args.compact, blender=args.blender)
         print(json.dumps({'output': str(args.output), **report['pac']}, indent=2))
     except (OSError, FormatError, subprocess.CalledProcessError) as exc:
         print(f'Conversion failed: {exc}', file=sys.stderr)

@@ -36,6 +36,18 @@ class PreparationTests(unittest.TestCase):
         with self.assertRaises(FormatError):
             similarity_fit([[0, 0, 0], [1, 0, 0], [2, 0, 0]], [[0, 0, 0], [1, 0, 0], [2, 0, 0]])
 
+    def test_compact_weight_budget_reports_removed_mass_and_keeps_skeleton(self):
+        source, target, donor = model(), model(), model()
+        reduced, report = prepare(source, target, donor, max_influences=1, max_palette=1)
+        self.assertEqual(reduced['triangle_count'], 2)
+        self.assertEqual(reduced['bones'], target['bones'])
+        self.assertEqual(report['weight_transfer']['max_weight_mass_removed_for_top1'], 0.25)
+        for mesh in reduced['meshes']:
+            self.assertEqual(mesh['bone_palette'], [2])
+            self.assertTrue(all(v['weights'] == [1] for v in mesh['vertices']))
+        with self.assertRaises(FormatError):
+            prepare(source, target, donor, max_influences=4, max_palette=2)
+
     def test_nearest_triangle_returns_barycentric_projection_and_edge(self):
         surface = Surface(model())
         index, bary, distance = surface.nearest([0.2, -0.3, 2])

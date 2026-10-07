@@ -90,7 +90,7 @@ script applies `v = 1 - v` and uses Blender 2.79's active-object API. Neither
 performs body sectioning, automatic alignment, or weight transfer. They were
 read rather than run against the user's assets.
 
-Validation: twenty-seven unit tests pass, covering container extraction, malformed
+Validation: thirty unit tests pass, covering container extraction, malformed
 ranges, unsupported layouts, triangle winding, bone cycles, palette diagnostics,
 and overwrite prevention. Blender 4.3.2 imported the Base preview with exact
 counts. The Full Body OBJ import retained all 1318 triangles, but omitted two
