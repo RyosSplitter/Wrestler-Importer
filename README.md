@@ -59,10 +59,15 @@ py -3.13 tools/convert_hctp.py "C:\models\0900.pac" "C:\models\Kurt-Angle-Ring.P
 The compact profile refuses to write a PAC above 148 KiB. Size is a test budget,
 not a confirmed engine limit or explanation of the crash. See the
 [compact candidate and archive checks](docs/compact-candidate.md).
-The previous compact build was also reported not working. The current
+The previous compact build was also reported not working. The
 [material-corrected candidate](docs/material-state-fix.md) fixes ordinary
 materials that inherited blood-overlay state. Export and repacking now check
 the supplied base's material conventions against native GIM color depths.
+The user subsequently reports successful loading, entrance and match, with
+see-through skin and missing surfaces. The latest
+[opacity-corrected candidate](docs/opacity-correction.md) sets ordinary body
+vertex alpha to 255, matching both PSP references. Texture transparency is
+preserved. This appearance fix still needs a game test.
 
 The output directory must be new. The output contains the experimental PAC,
 decoded PNG/GIM textures, prepared JSON, native YOBJ/DAE, logs, and a conversion

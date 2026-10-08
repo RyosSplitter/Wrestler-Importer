@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+from collections import Counter
 import copy
 import json
 import math
@@ -133,9 +134,12 @@ def donor_bone_map(donor, target):
     return mapping, collapsed
 
 
-def prepare(source, target, donor, *, flip_v=True, max_influences=4, max_palette=8):
+def prepare(source, target, donor, *, flip_v=True, max_influences=4, max_palette=8,
+            vertex_alpha_policy='opaque_psp_base'):
     if not 1 <= max_influences <= max_palette <= 8:
         raise FormatError('Invalid PSP influence/palette budget')
+    if vertex_alpha_policy not in ('opaque_psp_base', 'source'):
+        raise FormatError('Unknown vertex alpha policy')
     source_names = {b['name']: b['index'] for b in source['bones']}
     target_names = {b['name']: b['index'] for b in target['bones']}
     names = [n for n in LANDMARKS if n in source_names and n in target_names]
@@ -152,6 +156,13 @@ def prepare(source, target, donor, *, flip_v=True, max_influences=4, max_palette
     donor_distances, initial_pruning = [], []
     for mesh in aligned['meshes']:
         for i, vertex in enumerate(mesh['vertices']):
+            # The supplied PSP bodies use opaque vertex colors. Carrying the
+            # PS2 corner's fourth float into PSP alpha hides ordinary skin.
+            # Keep RGB and raw alpha for inspection; texture alpha still handles
+            # cutouts. The source policy is an explicit profile override.
+            vertex['source_vertex_alpha'] = vertex['color'][3]
+            if vertex_alpha_policy == 'opaque_psp_base':
+                vertex['color'] = [*vertex['color'][:3], 255]
             position = scale * rotation @ np.asarray(vertex['position']) + translation
             vertex['position'] = position.tolist()
             vertex['normal'] = (rotation @ np.asarray(vertex['normal'])).tolist()
@@ -249,7 +260,15 @@ def prepare(source, target, donor, *, flip_v=True, max_influences=4, max_palette
               'uv_v_flipped': flip_v}
     if result['triangle_count'] != source['triangle_count']:
         raise FormatError('Source triangles were lost during sectioning')
+    exported_vertices = [v for m in meshes for v in m['vertices']]
     report = {'profile': 'HCTP PS2 -> SVR 2007 PSP experimental',
+              'vertex_alpha': {
+                  'policy': vertex_alpha_policy,
+                  'before_histogram': dict(sorted(Counter(v['source_vertex_alpha'] for v in exported_vertices).items())),
+                  'after_histogram': dict(sorted(Counter(v['color'][3] for v in exported_vertices).items())),
+                  'changed_vertices': sum(v['source_vertex_alpha'] != v['color'][3] for v in exported_vertices),
+                  'rgb_preserved': True,
+                  'texture_alpha_unchanged': True},
               'alignment': {'scale': scale, 'rotation': rotation.tolist(), 'translation': translation.tolist(),
                             'landmark_errors': dict(zip(names, landmark_errors.tolist())),
                             'landmark_rms': float(np.sqrt(np.mean(landmark_errors ** 2)))},

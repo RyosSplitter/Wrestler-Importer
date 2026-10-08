@@ -1,5 +1,12 @@
 # PSP material-state and texture-table correction
 
+Update: the user now reports that the converted wrestler loads, enters, and
+appears in a match without crashes in SVR 2011 PSP, but has see-through skin
+and missing surfaces. The current [opacity-corrected candidate](opacity-correction.md)
+keeps this build's structure and changes only native vertex alpha. The ARC
+control test below is retained as prior investigation guidance, not a required
+next step after successful loading.
+
 The user reports that the compact 144 KiB RVD candidate still does not work.
 Auditing the converter found that seven ordinary body/face materials inherited
 the Kurt base's blood-overlay control word, `0x115`, instead of regular `0x5`

@@ -52,6 +52,8 @@ def verify_serialized(prepared, base_bytes, yobj_path):
         if expected['bone_palette'] != list(observed['bone_palette']) or len(expected['vertices']) != len(observed['vertices']):
             raise FormatError('Serialized palette/vertex count changed')
         for v, w in zip(expected['vertices'], observed['vertices']):
+            if prepared['preparation_report']['vertex_alpha']['policy'] == 'opaque_psp_base' and w['color'][3] != 255:
+                raise FormatError('PSP base opacity policy was lost during serialization')
             uv = [v['uv'][0], 1 - v['uv'][1] if prepared['uv_v_flipped'] else v['uv'][1]]
             matches = (close(v['position'], w['position']), close(v['normal'], w['normal']),
                        close(v['weights'], w['weights']), close(uv, w['uv']), list(v['color']) == list(w['color']))
@@ -67,6 +69,7 @@ def verify_serialized(prepared, base_bytes, yobj_path):
                 raise FormatError('Ordinary source texture has incompatible PSP material state')
     return {'bone_table_byte_identical': True, 'vertex_attributes_match': True,
             'triangles_and_winding_match': True, 'regular_material_controls_match_texture_depth': True,
+            'vertex_alpha_matches_preparation_policy': True,
             'native_yobj_warnings': actual['warnings']}
 
 

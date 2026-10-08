@@ -23,6 +23,31 @@ def model():
 
 
 class PreparationTests(unittest.TestCase):
+    def test_psp_profile_makes_body_vertices_opaque_without_changing_rgb_or_input(self):
+        source, target, donor = model(), model(), model()
+        colors = [[100, 120, 140, 0], [255, 240, 220, 50],
+                  [200, 180, 160, 152], [255, 255, 255, 255]]
+        for v, color in zip(source['meshes'][0]['vertices'], colors):
+            v['color'] = color
+        original = copy.deepcopy(source)
+        opaque, report = prepare(source, target, donor)
+        raw, raw_report = prepare(source, target, donor, vertex_alpha_policy='source')
+        self.assertEqual(source, original)
+        for a, b in zip(opaque['meshes'], raw['meshes']):
+            self.assertEqual(a['materials'], b['materials'])
+            for v, w in zip(a['vertices'], b['vertices']):
+                self.assertEqual(v['color'][:3], w['color'][:3])
+                self.assertEqual(v['color'][3], 255)
+                self.assertEqual(v['source_vertex_alpha'], w['color'][3])
+                for attribute in ('position', 'normal', 'uv', 'weights'):
+                    self.assertEqual(v[attribute], w[attribute])
+        self.assertEqual(report['vertex_alpha']['changed_vertices'], 3)
+        self.assertEqual(report['vertex_alpha']['after_histogram'], {255: 4})
+        self.assertEqual(raw_report['vertex_alpha']['before_histogram'], {0: 1, 50: 1, 152: 1, 255: 1})
+        self.assertEqual(raw_report['vertex_alpha']['changed_vertices'], 0)
+        with self.assertRaises(FormatError):
+            prepare(source, target, donor, vertex_alpha_policy='unknown')
+
     def test_similarity_recovers_scale_rotation_translation(self):
         source = np.array([[0, 0, 0], [1, 0, 0], [0, 1, 0], [0, 0, 1]], dtype=float)
         rotation = np.array([[0, -1, 0], [1, 0, 0], [0, 0, 1]])

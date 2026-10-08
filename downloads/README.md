@@ -1,12 +1,22 @@
 # Test downloads
 
+[Download the opacity-corrected 144 KiB PAC with matching Noesis YOBJ/textures](https://github.com/RyosSplitter/Wrestler-Importer/raw/refs/heads/main/downloads/RVD-HCTP-to-PSP-opacity-fix-test-bundle.zip).
+This is the current appearance test. The user reports that the preceding model
+loads and animates in SVR 2011 PSP without crashes, but has see-through skin and
+missing surfaces. This candidate changes only vertex opacity to the PSP base's
+fully opaque convention. PAC size, geometry, weights, materials, UVs and every
+texture byte stay unchanged. See [the opacity audit](../docs/opacity-correction.md).
+Use `RVD-HCTP-to-PSP-opacity-fix-test.pac`; the matching Noesis YOBJ and named
+PNG/GIM textures are in `preview`. In-game confirmation of this fix is pending.
+
 [Download the material-corrected 144 KiB PAC with matching Noesis YOBJ/textures](https://github.com/RyosSplitter/Wrestler-Importer/raw/refs/heads/main/downloads/RVD-HCTP-to-PSP-material-fix-test-bundle.zip).
-This is the current test candidate. It corrects seven ordinary RVD materials
+This is the preceding loading baseline. It corrects seven ordinary RVD materials
 that accidentally inherited the base's blood-overlay settings and matches the
 original PACs' sorted texture-table convention. The YOBJ differs from
 the previous compact YOBJ in only 14 bytes; see the
-[audit and validation](../docs/material-state-fix.md). Game playability remains
-unverified. Extract the ZIP and use `RVD-HCTP-to-PSP-material-fix-test.pac`.
+[audit and validation](../docs/material-state-fix.md). The user reports successful
+loading/entrance/match, with appearance defects. Extract the ZIP and use
+`RVD-HCTP-to-PSP-material-fix-test.pac`.
 The matching `preview/prepared.yobj` and named PNG/GIM textures are included.
 An untouched copy of the supplied Kurt PAC is in `control` for testing the same
 ARC-update/injection workflow before testing the converted model.

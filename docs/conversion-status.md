@@ -5,7 +5,10 @@ Kurt's geometry and main textures in a copy of the SVR 2007 PSP base PAC.
 The user reports that the 424 KiB candidate crashed in the first game test.
 The previous [144 KiB compact candidate](compact-candidate.md) was also reported
 not working. A [material-corrected 144 KiB candidate](material-state-fix.md)
-is the current test build; older builds below are retained for comparison.
+now loads, enters and appears in a match without crashes according to the user,
+but has see-through skin and missing surfaces. The
+[opacity-corrected 144 KiB candidate](opacity-correction.md) is the current
+appearance test; older builds below are retained for comparison.
 
 ## Completed and checked
 
