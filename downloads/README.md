@@ -1,3 +1,7 @@
+## 1800 hybrid PSP size-budget trial
+
+[Download the 144 KiB PAC](1800-PSP-hybrid-144KiB.pac) or [PAC and preview bundle](1800-PSP-hybrid-144KiB-test-bundle.zip). Retains 2,276 triangles, 80% of the head/arm regions, hybrid float weights and a 128×128 indexed8 face texture. Native BPE compression is used. PPSSPP validation is pending. [Report and screenshots](../docs/1800-hybrid-budget.md).
+
 ## 1800 hybrid weighting review
 
 [Download the review bundle](1800-hybrid-weight-review.zip): original geometry and textures with the Benoit study’s hybrid weighting method, using the earlier PSP Kurt base. Includes T-pose and posed Noesis screenshots, textured OBJs, assigned weights and a rigged Blender file. This is a review, not a replacement PAC. [Details and checks](../docs/1800-hybrid-weight-review.md).

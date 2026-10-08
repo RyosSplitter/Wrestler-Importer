@@ -1,0 +1,566 @@
+{
+  "status": "Experimental PSP PAC; PPSSPP validation pending",
+  "source_pac_original_bytes": 553728,
+  "output_bytes": 147456,
+  "budget_bytes": 147456,
+  "sha256": "ca9cb1992ef65ee3dce873cfeb473cc970388b512dd93a3b97b7d34575da2d86",
+  "original_triangles": 3018,
+  "final_triangles": 2276,
+  "original_uv_split_vertices": 2410,
+  "final_vertices": 2277,
+  "original_source_meshes": 13,
+  "final_native_psp_meshes": 57,
+  "base_bone_count": 79,
+  "weight_encoding": "float",
+  "weight_mass_pruned_max": 0.010121687343684016,
+  "model_expanded_bytes": 196256,
+  "model_stored_bytes": 119311,
+  "texture_table_expanded_bytes": 47712,
+  "texture_table_stored_bytes": 21026,
+  "unrelated_base_sections_unchanged": [
+    8
+  ],
+  "decompressed_pac_model_equals_preview_yobj": true,
+  "regional_decimation": {
+    "method": "PSP bone-weight regions; weighted Blender collapse; area-weighted smooth normals",
+    "input_triangles": 3018,
+    "output_triangles": 2276,
+    "meshes": [
+      {
+        "mesh": 0,
+        "input_triangles": 943,
+        "output_triangles": 755,
+        "protected_seam_positions": 17,
+        "requested_ratio": 0.8006362672322376,
+        "region": "Head",
+        "target_ratio": 0.8,
+        "actual_ratio": 0.8006362672322376
+      },
+      {
+        "mesh": 1,
+        "input_triangles": 447,
+        "output_triangles": 291,
+        "protected_seam_positions": 87,
+        "requested_ratio": 0.6510067114093959,
+        "region": "Torso",
+        "target_ratio": 0.65,
+        "actual_ratio": 0.6510067114093959
+      },
+      {
+        "mesh": 2,
+        "input_triangles": 1140,
+        "output_triangles": 912,
+        "protected_seam_positions": 46,
+        "requested_ratio": 0.8,
+        "region": "Arms",
+        "target_ratio": 0.8,
+        "actual_ratio": 0.8
+      },
+      {
+        "mesh": 3,
+        "input_triangles": 488,
+        "output_triangles": 318,
+        "protected_seam_positions": 24,
+        "requested_ratio": 0.6516393442622951,
+        "region": "Legs",
+        "target_ratio": 0.65,
+        "actual_ratio": 0.6516393442622951
+      }
+    ],
+    "protected_detail_textures": [],
+    "region_ratios": {
+      "Head": 0.8,
+      "Torso": 0.65,
+      "Arms": 0.8,
+      "Legs": 0.65
+    }
+  },
+  "texture_profile": [
+    {
+      "index": 0,
+      "name": "l-kao2",
+      "width": 128,
+      "height": 128,
+      "gim": "texture_00.gim",
+      "png": "texture_00.png",
+      "gim_bytes": 17616,
+      "bits": 8,
+      "source_dimensions": [
+        256,
+        256
+      ],
+      "source_format": {
+        "container": "RTX3",
+        "psm": 19,
+        "format": "PSMT8",
+        "cpsm": 0,
+        "csm": 0,
+        "csa": 0,
+        "width": 256,
+        "height": 256,
+        "palette_entries": 256
+      }
+    },
+    {
+      "index": 1,
+      "name": "kuchi01",
+      "width": 32,
+      "height": 16,
+      "gim": "texture_01.gim",
+      "png": "texture_01.png",
+      "gim_bytes": 528,
+      "bits": 4,
+      "source_dimensions": [
+        32,
+        16
+      ],
+      "source_format": {
+        "container": "RTX3",
+        "psm": 20,
+        "format": "PSMT4",
+        "cpsm": 0,
+        "csm": 0,
+        "csa": 0,
+        "width": 32,
+        "height": 16,
+        "palette_entries": 16
+      }
+    },
+    {
+      "index": 2,
+      "name": "l-pan2",
+      "width": 64,
+      "height": 64,
+      "gim": "texture_02.gim",
+      "png": "texture_02.png",
+      "gim_bytes": 2320,
+      "bits": 4,
+      "source_dimensions": [
+        64,
+        64
+      ],
+      "source_format": {
+        "container": "RTX3",
+        "psm": 20,
+        "format": "PSMT4",
+        "cpsm": 0,
+        "csm": 0,
+        "csa": 0,
+        "width": 64,
+        "height": 64,
+        "palette_entries": 16
+      }
+    },
+    {
+      "index": 3,
+      "name": "l_ude",
+      "width": 64,
+      "height": 64,
+      "gim": "texture_03.gim",
+      "png": "texture_03.png",
+      "gim_bytes": 2320,
+      "bits": 4,
+      "source_dimensions": [
+        128,
+        128
+      ],
+      "source_format": {
+        "container": "RTX3",
+        "psm": 19,
+        "format": "PSMT8",
+        "cpsm": 0,
+        "csm": 0,
+        "csa": 0,
+        "width": 128,
+        "height": 128,
+        "palette_entries": 256
+      }
+    },
+    {
+      "index": 4,
+      "name": "l-pan1",
+      "width": 64,
+      "height": 64,
+      "gim": "texture_04.gim",
+      "png": "texture_04.png",
+      "gim_bytes": 2320,
+      "bits": 4,
+      "source_dimensions": [
+        64,
+        64
+      ],
+      "source_format": {
+        "container": "RTX3",
+        "psm": 20,
+        "format": "PSMT4",
+        "cpsm": 0,
+        "csm": 0,
+        "csa": 0,
+        "width": 64,
+        "height": 64,
+        "palette_entries": 16
+      }
+    },
+    {
+      "index": 5,
+      "name": "momo",
+      "width": 64,
+      "height": 64,
+      "gim": "texture_05.gim",
+      "png": "texture_05.png",
+      "gim_bytes": 2320,
+      "bits": 4,
+      "source_dimensions": [
+        64,
+        64
+      ],
+      "source_format": {
+        "container": "RTX3",
+        "psm": 19,
+        "format": "PSMT8",
+        "cpsm": 0,
+        "csm": 0,
+        "csa": 0,
+        "width": 64,
+        "height": 64,
+        "palette_entries": 256
+      }
+    },
+    {
+      "index": 6,
+      "name": "l-se1",
+      "width": 64,
+      "height": 64,
+      "gim": "texture_06.gim",
+      "png": "texture_06.png",
+      "gim_bytes": 2320,
+      "bits": 4,
+      "source_dimensions": [
+        128,
+        128
+      ],
+      "source_format": {
+        "container": "RTX3",
+        "psm": 19,
+        "format": "PSMT8",
+        "cpsm": 0,
+        "csm": 0,
+        "csa": 0,
+        "width": 128,
+        "height": 128,
+        "palette_entries": 256
+      }
+    },
+    {
+      "index": 7,
+      "name": "l-mune2",
+      "width": 64,
+      "height": 64,
+      "gim": "texture_07.gim",
+      "png": "texture_07.png",
+      "gim_bytes": 2320,
+      "bits": 4,
+      "source_dimensions": [
+        128,
+        128
+      ],
+      "source_format": {
+        "container": "RTX3",
+        "psm": 19,
+        "format": "PSMT8",
+        "cpsm": 0,
+        "csm": 0,
+        "csa": 0,
+        "width": 128,
+        "height": 128,
+        "palette_entries": 256
+      }
+    },
+    {
+      "index": 8,
+      "name": "l-mune1",
+      "width": 32,
+      "height": 64,
+      "gim": "texture_08.gim",
+      "png": "texture_08.png",
+      "gim_bytes": 1296,
+      "bits": 4,
+      "source_dimensions": [
+        64,
+        128
+      ],
+      "source_format": {
+        "container": "RTX3",
+        "psm": 19,
+        "format": "PSMT8",
+        "cpsm": 0,
+        "csm": 0,
+        "csa": 0,
+        "width": 64,
+        "height": 128,
+        "palette_entries": 256
+      }
+    },
+    {
+      "index": 9,
+      "name": "te",
+      "width": 64,
+      "height": 32,
+      "gim": "texture_09.gim",
+      "png": "texture_09.png",
+      "gim_bytes": 1296,
+      "bits": 4,
+      "source_dimensions": [
+        64,
+        32
+      ],
+      "source_format": {
+        "container": "RTX3",
+        "psm": 19,
+        "format": "PSMT8",
+        "cpsm": 0,
+        "csm": 0,
+        "csa": 0,
+        "width": 64,
+        "height": 32,
+        "palette_entries": 256
+      }
+    },
+    {
+      "index": 10,
+      "name": "yubi",
+      "width": 32,
+      "height": 64,
+      "gim": "texture_10.gim",
+      "png": "texture_10.png",
+      "gim_bytes": 1296,
+      "bits": 4,
+      "source_dimensions": [
+        32,
+        64
+      ],
+      "source_format": {
+        "container": "RTX3",
+        "psm": 19,
+        "format": "PSMT8",
+        "cpsm": 0,
+        "csm": 0,
+        "csa": 0,
+        "width": 32,
+        "height": 64,
+        "palette_entries": 256
+      }
+    },
+    {
+      "index": 11,
+      "name": "l-kubi",
+      "width": 64,
+      "height": 32,
+      "gim": "texture_11.gim",
+      "png": "texture_11.png",
+      "gim_bytes": 1296,
+      "bits": 4,
+      "source_dimensions": [
+        64,
+        32
+      ],
+      "source_format": {
+        "container": "RTX3",
+        "psm": 19,
+        "format": "PSMT8",
+        "cpsm": 0,
+        "csm": 0,
+        "csa": 0,
+        "width": 64,
+        "height": 32,
+        "palette_entries": 256
+      }
+    },
+    {
+      "index": 12,
+      "name": "kutu3",
+      "width": 32,
+      "height": 32,
+      "gim": "texture_12.gim",
+      "png": "texture_12.png",
+      "gim_bytes": 784,
+      "bits": 4,
+      "source_dimensions": [
+        16,
+        32
+      ],
+      "source_format": {
+        "container": "RTX3",
+        "psm": 20,
+        "format": "PSMT4",
+        "cpsm": 0,
+        "csm": 0,
+        "csa": 0,
+        "width": 16,
+        "height": 32,
+        "palette_entries": 16
+      }
+    },
+    {
+      "index": 13,
+      "name": "l-kaobac",
+      "width": 32,
+      "height": 64,
+      "gim": "texture_13.gim",
+      "png": "texture_13.png",
+      "gim_bytes": 1296,
+      "bits": 4,
+      "source_dimensions": [
+        128,
+        256
+      ],
+      "source_format": {
+        "container": "RTX3",
+        "psm": 19,
+        "format": "PSMT8",
+        "cpsm": 0,
+        "csm": 0,
+        "csa": 0,
+        "width": 128,
+        "height": 256,
+        "palette_entries": 256
+      }
+    },
+    {
+      "index": 14,
+      "name": "pat",
+      "width": 64,
+      "height": 32,
+      "gim": "texture_14.gim",
+      "png": "texture_14.png",
+      "gim_bytes": 1296,
+      "bits": 4,
+      "source_dimensions": [
+        64,
+        32
+      ],
+      "source_format": {
+        "container": "RTX3",
+        "psm": 20,
+        "format": "PSMT4",
+        "cpsm": 0,
+        "csm": 0,
+        "csa": 0,
+        "width": 64,
+        "height": 32,
+        "palette_entries": 16
+      }
+    },
+    {
+      "index": 15,
+      "name": "l-eye",
+      "width": 64,
+      "height": 64,
+      "gim": "texture_15.gim",
+      "png": "texture_15.png",
+      "gim_bytes": 2320,
+      "bits": 4,
+      "source_dimensions": [
+        64,
+        64
+      ],
+      "source_format": {
+        "container": "RTX3",
+        "psm": 19,
+        "format": "PSMT8",
+        "cpsm": 0,
+        "csm": 0,
+        "csa": 0,
+        "width": 64,
+        "height": 64,
+        "palette_entries": 256
+      }
+    },
+    {
+      "index": 16,
+      "name": "ha",
+      "width": 32,
+      "height": 16,
+      "gim": "texture_16.gim",
+      "png": "texture_16.png",
+      "gim_bytes": 528,
+      "bits": 4,
+      "source_dimensions": [
+        32,
+        16
+      ],
+      "source_format": {
+        "container": "RTX3",
+        "psm": 20,
+        "format": "PSMT4",
+        "cpsm": 0,
+        "csm": 0,
+        "csa": 0,
+        "width": 32,
+        "height": 16,
+        "palette_entries": 16
+      }
+    },
+    {
+      "index": 17,
+      "name": "boots",
+      "width": 32,
+      "height": 64,
+      "gim": "texture_17.gim",
+      "png": "texture_17.png",
+      "gim_bytes": 1296,
+      "bits": 4,
+      "source_dimensions": [
+        64,
+        128
+      ],
+      "source_format": {
+        "container": "RTX3",
+        "psm": 20,
+        "format": "PSMT4",
+        "cpsm": 0,
+        "csm": 0,
+        "csa": 0,
+        "width": 64,
+        "height": 128,
+        "palette_entries": 16
+      }
+    },
+    {
+      "index": 18,
+      "name": "pat2",
+      "width": 64,
+      "height": 64,
+      "gim": "texture_18.gim",
+      "png": "texture_18.png",
+      "gim_bytes": 2320,
+      "bits": 4,
+      "source_dimensions": [
+        64,
+        64
+      ],
+      "source_format": {
+        "container": "RTX3",
+        "psm": 20,
+        "format": "PSMT4",
+        "cpsm": 0,
+        "csm": 0,
+        "csa": 0,
+        "width": 64,
+        "height": 64,
+        "palette_entries": 16
+      }
+    }
+  ],
+  "native_serialization": {
+    "bone_table_byte_identical": true,
+    "vertex_attributes_match": true,
+    "vertex_weight_encoding": "float",
+    "triangles_and_winding_match": true,
+    "regular_material_controls_match_texture_depth": true,
+    "vertex_alpha_matches_preparation_policy": true,
+    "native_yobj_warnings": []
+  },
+  "alpha_policy": "Opaque PSP vertex alpha; texture RGBA retained through indexed GIM conversion with resize/palette loss",
+  "normals": "Area-weighted smooth normals recalculated after decimation"
+}
