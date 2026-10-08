@@ -88,6 +88,10 @@ def map_source(source, target, source_weights, redistribute):
     redirects = {}
     for bone in source['bones']:
         name = bone['name']
+        # Unweighted dummy roots/endpoints have nothing to map. Some HCTP
+        # models retain a separate object root with no PSP counterpart.
+        if name not in tb and not np.any(source_weights[:, bone['index']] != 0):
+            continue
         if name not in tb and redistribute:
             index = bone['parent']
             while index != -1 and source['bones'][index]['name'] not in tb:

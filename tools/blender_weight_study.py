@@ -39,8 +39,8 @@ def primary_child(name):
 def create_rig(target, anatomical_tails=False):
     world = bone_matrices(target)
     byname = {b['name']:b['index'] for b in target['bones']}
-    armature = bpy.data.armatures.new('PSP_Benoit_77_bone_review')
-    rig = bpy.data.objects.new('PSP_Benoit_Review_Rig', armature)
+    armature = bpy.data.armatures.new('PSP_%d_bone_review' % target['bone_count'])
+    rig = bpy.data.objects.new('Target_PSP_Review_Rig', armature)
     bpy.context.collection.objects.link(rig)
     bpy.context.view_layer.objects.active = rig
     rig.select_set(True)

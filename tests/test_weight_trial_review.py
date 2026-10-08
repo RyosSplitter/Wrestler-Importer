@@ -42,5 +42,18 @@ class WeightTrialReviewTests(unittest.TestCase):
         np.testing.assert_allclose(missing, [0])
         self.assertEqual(redirects, {'helper': 'joint'})
 
+    def test_unused_object_root_is_ignored_but_weighted_root_is_rejected(self):
+        source = self.model()
+        source['bones'].append(bone(2, 'object_root', -1, [0, 0, 0]))
+        source['bone_count'] = 3
+        weights = np.array([[.25, .75, 0.]])
+        mapped, missing, redirects = map_source(source, self.model(), weights, True)
+        np.testing.assert_allclose(mapped, [[.25, .75]])
+        np.testing.assert_allclose(missing, [0])
+        self.assertEqual(redirects, {})
+        weights[0] = [.25, .65, .1]
+        with self.assertRaisesRegex(ValueError, 'No matching ancestor for object_root'):
+            map_source(source, self.model(), weights, True)
+
 
 if __name__ == '__main__': unittest.main()

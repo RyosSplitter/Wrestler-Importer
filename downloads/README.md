@@ -1,3 +1,7 @@
+## 1800 hybrid weighting review
+
+[Download the review bundle](1800-hybrid-weight-review.zip): original geometry and textures with the Benoit study’s hybrid weighting method, using the earlier PSP Kurt base. Includes T-pose and posed Noesis screenshots, textured OBJs, assigned weights and a rigged Blender file. This is a review, not a replacement PAC. [Details and checks](../docs/1800-hybrid-weight-review.md).
+
 # Test downloads
 
 [Download the five Benoit weighting trials](https://github.com/RyosSplitter/Wrestler-Importer/raw/refs/heads/main/downloads/Benoit-five-weight-methods-review.zip).

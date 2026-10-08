@@ -1,0 +1,152 @@
+{
+  "original_native_position_records": 2041,
+  "original_and_final_decoded_vertices": 2410,
+  "original_and_final_triangles": 3018,
+  "original_meshes_preserved": 13,
+  "target_bones": 79,
+  "head_blend_vertices": 683,
+  "body_weights_difference_max": 1.1102230246251565e-16,
+  "geometry_reduction": false,
+  "uv_preserved": true,
+  "original_pacs_unchanged": true,
+  "textures": [
+    {
+      "name": "l-kao2",
+      "rgba_pixel_exact": true,
+      "alpha_min": 255,
+      "alpha_max": 255
+    },
+    {
+      "name": "kuchi01",
+      "rgba_pixel_exact": true,
+      "alpha_min": 255,
+      "alpha_max": 255
+    },
+    {
+      "name": "l-pan2",
+      "rgba_pixel_exact": true,
+      "alpha_min": 239,
+      "alpha_max": 255
+    },
+    {
+      "name": "l_ude",
+      "rgba_pixel_exact": true,
+      "alpha_min": 255,
+      "alpha_max": 255
+    },
+    {
+      "name": "l-pan1",
+      "rgba_pixel_exact": true,
+      "alpha_min": 239,
+      "alpha_max": 255
+    },
+    {
+      "name": "momo",
+      "rgba_pixel_exact": true,
+      "alpha_min": 255,
+      "alpha_max": 255
+    },
+    {
+      "name": "l-se1",
+      "rgba_pixel_exact": true,
+      "alpha_min": 255,
+      "alpha_max": 255
+    },
+    {
+      "name": "l-mune2",
+      "rgba_pixel_exact": true,
+      "alpha_min": 255,
+      "alpha_max": 255
+    },
+    {
+      "name": "l-mune1",
+      "rgba_pixel_exact": true,
+      "alpha_min": 255,
+      "alpha_max": 255
+    },
+    {
+      "name": "te",
+      "rgba_pixel_exact": true,
+      "alpha_min": 255,
+      "alpha_max": 255
+    },
+    {
+      "name": "yubi",
+      "rgba_pixel_exact": true,
+      "alpha_min": 255,
+      "alpha_max": 255
+    },
+    {
+      "name": "l-kubi",
+      "rgba_pixel_exact": true,
+      "alpha_min": 255,
+      "alpha_max": 255
+    },
+    {
+      "name": "kutu3",
+      "rgba_pixel_exact": true,
+      "alpha_min": 255,
+      "alpha_max": 255
+    },
+    {
+      "name": "l-kaobac",
+      "rgba_pixel_exact": true,
+      "alpha_min": 255,
+      "alpha_max": 255
+    },
+    {
+      "name": "pat",
+      "rgba_pixel_exact": true,
+      "alpha_min": 255,
+      "alpha_max": 255
+    },
+    {
+      "name": "l-eye",
+      "rgba_pixel_exact": true,
+      "alpha_min": 255,
+      "alpha_max": 255
+    },
+    {
+      "name": "ha",
+      "rgba_pixel_exact": true,
+      "alpha_min": 255,
+      "alpha_max": 255
+    },
+    {
+      "name": "boots",
+      "rgba_pixel_exact": true,
+      "alpha_min": 255,
+      "alpha_max": 255
+    },
+    {
+      "name": "pat2",
+      "rgba_pixel_exact": true,
+      "alpha_min": 239,
+      "alpha_max": 255
+    }
+  ],
+  "native_psp_pac_written": false,
+  "blender": {
+    "poses": {
+      "elbow-flex": {
+        "max_position_difference_from_blender": 2.5789070933722708e-06,
+        "vertices_checked": 2410
+      },
+      "arms-up": {
+        "max_position_difference_from_blender": 4.130020091485796e-06,
+        "vertices_checked": 2410
+      },
+      "knees-bent": {
+        "max_position_difference_from_blender": 3.3833292817181045e-06,
+        "vertices_checked": 2410
+      },
+      "rest": {
+        "max_position_difference_from_blender": 2.40964008822979e-06,
+        "vertices_checked": 2410
+      }
+    },
+    "target_bones": 79,
+    "source_geometry_count_preserved": true,
+    "rig_is_review_only_not_a_psp_skeleton_export": true
+  }
+}
