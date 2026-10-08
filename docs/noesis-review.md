@@ -15,6 +15,11 @@ do not combine geometry and textures from different versions.
 7. Capture an actual Noesis screenshot. For comparisons, retain a consistent
    camera/view and note any changes to the camera after these toggles.
 
+For controlled comparisons, restart Noesis from default viewer settings for
+each model before applying these three toggles. Opening another model resets
+orientation, but other viewer settings can persist. Do not assume one click
+per load produces the same culling/shading state across a reused instance.
+
 Keep the OBJ's material texture paths relative to this directory. This tool
 writes `.gim` references into the MTL, so include the matching GIMs as well as
 PNGs. Check that the referenced images exist and Noesis displays them. Record which PAC,
@@ -44,6 +49,10 @@ PSP selection, YOBJ loading and **Export all as one OBJ** were completed through
 that original GUI. This is not execution of the Windows EXE.
 
 ## 1800 export comparison
+
+A subsequent [stage comparison with additional HCTP samples](arm-diagnosis.md)
+localizes the static arm damage to reduction, before sectioning or weight
+transfer. That comparison uses fresh viewer defaults for every screenshot.
 
 The reviewed PAC is the unchanged beta 0.1.1 `1800` candidate: 147456 bytes
 (144 KiB), SHA-256

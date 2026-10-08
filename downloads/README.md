@@ -1,5 +1,11 @@
 # Test downloads
 
+[Download the HCTP arm diagnostic review](https://github.com/RyosSplitter/Wrestler-Importer/raw/refs/heads/main/downloads/HCTP-arm-diagnosis.zip).
+Five controlled Noesis screenshots and stage geometry localize arm damage to
+the reduction step in `1800` and show similar damage in `2900`. Inspection
+reports cover all six new HCTP samples. This is a preview/report bundle, not
+an app update or replacement PAC. See [diagnosis and evidence](../docs/arm-diagnosis.md).
+
 [Download the 1800 Noesis review bundle](https://github.com/RyosSplitter/Wrestler-Importer/raw/refs/heads/main/downloads/1800-HCTP-to-PSP-Noesis-review.zip).
 This contains actual Noesis screenshots, the original YOBJ File Tool OBJ/MTL,
 a separately labeled native-winding diagnostic OBJ, matching PNG/GIM textures,
