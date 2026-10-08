@@ -8,7 +8,7 @@ import numpy as np
 
 from tools.pac_inspect import FormatError, inspect_pac
 from tools.pac_repack import replace_sections, texture_table
-from tools.stripify import stripify
+from tools.stripify import join_strips, stripify
 from tools.texture_convert import budget_texture, convert_pac, read_gim, read_gim4, read_gim8, read_rtx3, write_gim4, write_gim8
 from tools.yobj_alignment import align_yobj_pof0
 
@@ -139,6 +139,26 @@ class TextureAndRepackTests(unittest.TestCase):
                 result.append((strip[i], strip[i + 2], strip[i + 1]) if i % 2 else tuple(strip[i:i + 3]))
         self.assertEqual(Counter(map(canonical, result)), Counter(map(canonical, triangles)))
         self.assertLess(len(strips), len(triangles))
+
+    def test_joined_strips_preserve_even_odd_winding_and_no_extra_faces(self):
+        strips = [[0, 1, 2], [3, 4, 5, 6], [7, 8, 9, 10, 11], [12, 13, 14]]
+        def triangles(items):
+            result = []
+            for s in items:
+                for i in range(len(s)-2):
+                    tri = (s[i], s[i+2], s[i+1]) if i%2 else tuple(s[i:i+3])
+                    if len(set(tri))==3:
+                        result.append(canonical(tri))
+            return Counter(result)
+        original = [s[:] for s in strips]
+        joined = join_strips(strips)
+        self.assertEqual(len(joined), 1)
+        self.assertEqual(triangles(joined), triangles(strips))
+        self.assertEqual(strips, original)
+        limited = join_strips(strips, max_indices=12)
+        self.assertTrue(all(len(s)<=12 for s in limited))
+        self.assertEqual(triangles(limited), triangles(strips))
+        self.assertEqual(join_strips([]), [])
 
     def test_pac_replacement_preserves_unrelated_sections(self):
         payloads = [(2, b'YOBJ' + bytes(80)), (8, b'untouched base bytes'), (9, b'original textures')]

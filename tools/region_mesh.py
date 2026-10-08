@@ -4,9 +4,9 @@ import copy
 import math
 
 try:
-    from .stripify import stripify
+    from .stripify import join_strips, stripify
 except ImportError:
-    from stripify import stripify
+    from stripify import join_strips, stripify
 
 RATIOS = {'Head': .8, 'Torso': .5, 'Arms': .35, 'Legs': .35}
 DETAIL_TEXTURES = {'rvd_eye', 'bn_ha', 'bn_ha2', 'ts_naka'}
@@ -210,7 +210,7 @@ def pack_regions(model, max_influences=4, weight_encoding='psp_u16'):
             meshes.append({'index': len(meshes), 'region': region,
                            'target_part': {'Head': 0, 'Torso': 8, 'Arms': 9, 'Legs': 19}[region],
                            'part_chunk': chunk, 'bone_palette': palette, 'vertices': vertices,
-                           'materials': [{'texture_id': t, 'triangles': faces, 'strips': stripify(faces)}
+                           'materials': [{'texture_id': t, 'triangles': faces, 'strips': join_strips(stripify(faces))}
                                          for t, faces in sorted(materials.items())]})
     result.update(meshes=meshes, mesh_count=len(meshes), vertex_count=sum(len(x['vertices']) for x in meshes),
                   triangle_count=sum(len(m['triangles']) for x in meshes for m in x['materials']))

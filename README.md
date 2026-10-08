@@ -74,7 +74,9 @@ test, but sacrifices body detail. Use `--regions` for the latest
 [PSP bone-weight regional profile](docs/region-decimation.md): head 80%, torso
 50%, limbs 35%, smooth normals across seams and exact cutout alpha. It improves
 the torso palette and uses compact U16 weights to fit 1464 triangles into a
-148 KiB PAC. This vertex format and the new appearance need a PPSSPP test.
+140 KiB PAC. Joined triangle strips preserve the decoded geometry and textures;
+regional exports now have a 144 KiB cap. This vertex format and the new appearance
+need a PPSSPP test.
 
 The output directory must be new. The output contains the experimental PAC,
 decoded PNG/GIM textures, prepared JSON, native YOBJ/DAE, logs, and a conversion

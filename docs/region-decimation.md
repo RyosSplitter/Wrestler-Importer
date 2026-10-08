@@ -38,8 +38,14 @@ Ordinary body vertex alpha remains 255, the previously tested opacity correction
 
 ## Storage and validation
 
-The complete PAC is **151552 bytes (148 KiB)**, including 2048-byte archive padding.
-The size guard refuses larger exports. Palette packing limits duplicate vertex
+The smaller PAC is **143360 bytes (140 KiB)**, including 2048-byte archive padding,
+8 KiB below the preceding 148 KiB regional build. The regional size guard now
+refuses exports above 144 KiB, leaving at least 4 KiB below the previous cap.
+The geometry, weights, smooth normals, UVs, colors, material states and texture
+payloads decode identically to the 148 KiB build. Disconnected triangle strips
+are joined using repeated indices that create zero-area bridges, with winding
+parity preserved. This reduces strip records from 491 to 63. Joined strips
+respect the PSP GE's 65535-index draw-count limit. Palette packing limits duplicate vertex
 storage. PSP GE U16 weights replace float weight storage, with four influences
 per vertex and exactly normalized sums. Positions, normals and UVs remain floats.
 Fixed-point weight decoding follows PPSSPP's
@@ -53,8 +59,9 @@ Native serialization checks weights, coordinates, normals, colors, UVs, oriented
 triangles, material depth and the original PSP bone table. The PAC contains the
 exact `preview/prepared.yobj` bytes. Texture payloads match the named preview GIMs.
 Three Blender poses have finite positions and zero separation at duplicate
-seams. The 43 unit tests cover classification, seam normals, integer weight
-alignment, normalized rounding, mask alpha, and previous format/repacking checks.
+seams. The 44 unit tests cover classification, seam normals, integer weight
+alignment, normalized rounding, mask alpha, joined-strip winding/parity and
+draw-count limits, and previous format/repacking checks.
 
 This candidate needs an SVR 2011 PPSSPP test, particularly its U16 vertex format
 and appearance during animation. The checks exercise file structure and a Blender
@@ -62,8 +69,8 @@ review rig; they do not execute the game's model loader or animation engine.
 
 ## Download and reproduce
 
-[Download the regional PAC and matching preview bundle](https://github.com/RyosSplitter/Wrestler-Importer/raw/refs/heads/main/downloads/RVD-HCTP-to-PSP-region-test-bundle.zip).
-Inject `RVD-HCTP-to-PSP-region-test.pac` using the same working archive workflow.
+[Download the smaller regional PAC and matching preview bundle](https://github.com/RyosSplitter/Wrestler-Importer/raw/refs/heads/main/downloads/RVD-HCTP-to-PSP-region-small-test-bundle.zip).
+Inject `RVD-HCTP-to-PSP-region-small-test.pac` using the same working archive workflow.
 `preview` contains the exact native model and named PNG/GIM textures. If an older
 Noesis plugin only supports float weights, use `preview-float/prepared.yobj` or
 the DAE. The float preview has identical decoded attributes and textures, but
@@ -80,5 +87,5 @@ need development/testing. Outputs go to a new directory; originals are preserved
 PAC SHA-256:
 
 ```text
-f0fa0e2834eb963beded40f9e68743885a86cb73f628769107eec38f6dd6e9f4
+0ea14a9f0544db22dd0829d1700f2f52716b38c3bdb672a32830cc772c3a98be
 ```

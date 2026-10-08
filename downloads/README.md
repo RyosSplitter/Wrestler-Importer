@@ -1,7 +1,15 @@
 # Test downloads
 
+[Download the smaller 140 KiB regional PAC and matching Noesis preview](https://github.com/RyosSplitter/Wrestler-Importer/raw/refs/heads/main/downloads/RVD-HCTP-to-PSP-region-small-test-bundle.zip).
+This is the current test bundle, 8 KiB smaller than the 148 KiB build below.
+Geometry, normals, weights, UVs, materials and texture payloads remain identical
+after decoding. The savings come from joining triangle-strip records. Use
+`RVD-HCTP-to-PSP-region-small-test.pac`; matching YOBJ/textures and a float-weight
+Noesis fallback are included. The new regional export cap is 144 KiB.
+See [checks and details](../docs/region-decimation.md). PPSSPP testing is pending.
+
 [Download the 148 KiB regional PAC and matching Noesis preview](https://github.com/RyosSplitter/Wrestler-Importer/raw/refs/heads/main/downloads/RVD-HCTP-to-PSP-region-test-bundle.zip).
-This is the current appearance test: head 80%, torso 50%, arms/legs 35%, rebuilt
+This is the preceding regional build: head 80%, torso 50%, arms/legs 35%, rebuilt
 smooth normals, preserved cutout alpha and a better torso palette. It contains
 1464 triangles and uses PSP U16 weights to fit the budget. Use the root PAC;
 `preview` is its exact native YOBJ with textures. `preview-float` supplies the same
