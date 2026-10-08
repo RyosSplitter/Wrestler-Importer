@@ -12,7 +12,7 @@ if exist ".venv\beta-ready" goto launch
 echo Installing the beta's dependencies. This is only needed once.
 ".venv\Scripts\python.exe" -m pip install -r "requirements-beta.txt"
 if errorlevel 1 goto failed
-echo 0.1.0-beta> ".venv\beta-ready"
+echo 0.1.1-beta> ".venv\beta-ready"
 :launch
 ".venv\Scripts\python.exe" "wrestler_beta.py"
 if errorlevel 1 goto failed

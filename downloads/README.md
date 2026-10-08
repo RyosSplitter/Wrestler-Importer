@@ -1,6 +1,11 @@
 # Test downloads
 
-[Download Wrestler Importer Windows beta 0.1](https://github.com/RyosSplitter/Wrestler-Importer/raw/refs/heads/main/downloads/Wrestler-Importer-beta-0.1.zip).
+[Download Wrestler Importer Windows beta 0.1.1](https://github.com/RyosSplitter/Wrestler-Importer/raw/refs/heads/main/downloads/Wrestler-Importer-beta-0.1.1.zip).
+This update decodes the mixed PSMT4/PSMT8 textures in the user's HCTP `1800.pac`.
+It fits that source to the 144 KiB cap while retaining the unchanged RVD baseline.
+[Download the 1800 test PAC and matching Noesis YOBJ/textures](https://github.com/RyosSplitter/Wrestler-Importer/raw/refs/heads/main/downloads/1800-HCTP-to-PSP-beta-0.1.1-test-bundle.zip).
+The 1800 export still needs PPSSPP testing; [format coverage and size fitting](../docs/texture-decoder.md) describe its reduced texture detail.
+
 Extract and double-click `Start Wrestler Importer.cmd`. Python 3.13 is required
 for this source distribution; first launch installs the pinned dependencies.
 Select Blender 4.3.2 and your original PSP mesh editor in Tools & base setup.

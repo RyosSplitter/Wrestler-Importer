@@ -1,5 +1,8 @@
 # Beta baseline validation
 
+Beta 0.1.1 retains this baseline and adds PS2 RTX3 decoding and size fitting.
+See [the format coverage and real 1800 conversion](texture-decoder.md).
+
 The uploaded opacity-fix ZIP contains the same 147456-byte PAC as the repository's
 working baseline, SHA-256
 `c3a89e2171c6d757b1d4ef1b76cd0041d1ca881c8370a3bfbc21f2658d4c2710`.

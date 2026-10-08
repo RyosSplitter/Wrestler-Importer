@@ -69,9 +69,12 @@ def run_job(job, progress=lambda percent, message: None):
     from stable_pipeline.convert_hctp import verify_serialized
     from stable_pipeline.hctp_read import load_hctp
     from stable_pipeline.pac_inspect import inspect_pac
-    from stable_pipeline.pac_repack import repack
+    from stable_pipeline.pac_repack import repack, replace_sections, texture_table
     from stable_pipeline.prepare_model import prepare
-    from stable_pipeline.texture_convert import convert_pac, write_preview_textures
+    from stable_pipeline.texture_convert import write_preview_textures
+    from app.ps2_textures import convert_pac, read_source
+    from app.size_fit import next_ratio
+    from stable_pipeline.yobj_alignment import align_yobj_pof0
     from stable_pipeline.yobj_read import load_model
 
     source, base, reference = map(Path, (job.source, job.base, job.reference))
@@ -92,27 +95,24 @@ def run_job(job, progress=lambda percent, message: None):
     parent.mkdir(parents=True, exist_ok=True)
     working = Path(tempfile.mkdtemp(prefix='.partial-', dir=parent))
     try:
-        progress(28, 'Reducing the model with the working opacity-fix profile')
-        source_json, reduced_json = working / 'source.json', working / 'reduced-source.json'
+        progress(18, 'Checking PS2 texture formats')
+        decoded_textures = read_source(source)
+        (working / 'source-textures.json').write_text(json.dumps(
+            [{'index': index, 'name': name, **details}
+             for index, name, raw, rgba, details in decoded_textures], indent=2)+'\n', encoding='utf-8')
+        source_json = working / 'source.json'
         source_json.write_text(json.dumps(model, allow_nan=False), encoding='utf-8')
         env = os.environ.copy()
         for key, folder in (('BLENDER_USER_CONFIG', 'blender-config'),
                             ('BLENDER_USER_EXTENSIONS', 'blender-extensions'),
                             ('MESA_SHADER_CACHE_DIR', 'mesa-cache')):
             env[key] = str(working / folder)
-        with (working / 'reduction.log').open('w', encoding='utf-8') as log:
-            subprocess.run([str(blender), '--background', '--python-exit-code', '1', '--python',
-                            str(BACKEND / 'blender_reduce.py'), '--', str(source_json),
-                            str(reduced_json), '0.3'], stdout=log, stderr=subprocess.STDOUT,
-                           env=env, check=True)
-        reduced = json.loads(reduced_json.read_text(encoding='utf-8'))
-        progress(48, 'Aligning the model and transferring PSP weights')
-        prepared, preparation = prepare(reduced, target, donor)
-        progress(65, 'Preparing PSP textures')
-        textures = convert_pac(source, working / 'textures', max_dimension=64, bits=4)
-        prepared['texture_bits'] = [t['bits'] for t in sorted(textures['textures'], key=lambda t: t['index'])]
-        prepared_json = working / 'prepared.json'
-        prepared_json.write_text(json.dumps(prepared, indent=2, allow_nan=False)+'\n', encoding='utf-8')
+        progress(22, 'Preparing PSP textures')
+        texture_path, texture_cap = working / 'textures', 64
+        textures = convert_pac(source, texture_path, decoded=decoded_textures, max_dimension=texture_cap, bits=4)
+        texture_entries = sorted(textures['textures'], key=lambda t: t['index'])
+        native_textures = texture_table([t['name'] for t in texture_entries],
+                                       [(texture_path / t['gim']).read_bytes() for t in texture_entries])
         base_data = base.read_bytes()
         sections = [s for s in inspect_pac(base_data)['sections'] if s['id'] == 2 and s['kind'] == 'model_section']
         if len(sections) != 1:
@@ -121,18 +121,58 @@ def run_job(job, progress=lambda percent, message: None):
         base_yobj = base_data[section['offset']:section['offset']+section['size']]
         base_file = working / 'base-model.bin'
         base_file.write_bytes(base_yobj)
-        progress(78, 'Building the PSP model and Noesis preview')
-        preview = working / 'preview'
-        with (working / 'editor.log').open('w', encoding='utf-8') as log:
-            with contextlib.redirect_stdout(log), contextlib.redirect_stderr(log):
-                export(editor, base_file, prepared_json, preview)
-        progress(88, 'Checking the exported model and textures')
-        verification = verify_serialized(prepared, base_yobj, preview / 'prepared.yobj')
-        preview_files = write_preview_textures(textures, working / 'textures', preview)
+        ratio, attempts = profile['reduction_ratio'], []
+        for attempt in range(1, 5):
+            trial = working / f'attempt-{attempt:02d}'
+            trial.mkdir()
+            progress(28, f'Reducing with the opacity-fix method (ratio {ratio:g}, attempt {attempt})')
+            reduced_json = trial / 'reduced-source.json'
+            with (trial / 'reduction.log').open('w', encoding='utf-8') as log:
+                subprocess.run([str(blender), '--background', '--python-exit-code', '1', '--python',
+                                str(BACKEND / 'blender_reduce.py'), '--', str(source_json),
+                                str(reduced_json), str(ratio)], stdout=log, stderr=subprocess.STDOUT,
+                               env=env, check=True)
+            reduced = json.loads(reduced_json.read_text(encoding='utf-8'))
+            progress(48, 'Aligning the model and transferring PSP weights')
+            prepared, preparation = prepare(reduced, target, donor)
+            prepared['texture_bits'] = [t['bits'] for t in texture_entries]
+            prepared_json = trial / 'prepared.json'
+            prepared_json.write_text(json.dumps(prepared, indent=2, allow_nan=False)+'\n', encoding='utf-8')
+            progress(78, 'Building the PSP model and Noesis preview')
+            trial_preview = trial / 'preview'
+            with (trial / 'editor.log').open('w', encoding='utf-8') as log:
+                with contextlib.redirect_stdout(log), contextlib.redirect_stderr(log):
+                    export(editor, base_file, prepared_json, trial_preview)
+            progress(88, 'Checking the exported model and PAC size')
+            verification = verify_serialized(prepared, base_yobj, trial_preview / 'prepared.yobj')
+            yobj = align_yobj_pof0((trial_preview / 'prepared.yobj').read_bytes())
+            size = len(replace_sections(base_data, {2: yobj, 9: native_textures}))
+            attempts.append({'attempt': attempt, 'reduction_ratio': ratio, 'texture_max_dimension': texture_cap,
+                             'pac_bytes': size, 'triangles': reduced['triangle_count']})
+            if size > profile['beta_pac_limit_bytes'] and texture_cap == 64:
+                progress(89, 'Testing a 32-pixel texture budget before reducing geometry further')
+                texture_path, texture_cap = working / 'textures-32', 32
+                textures = convert_pac(source, texture_path, decoded=decoded_textures, max_dimension=texture_cap, bits=4)
+                texture_entries = sorted(textures['textures'], key=lambda t: t['index'])
+                native_textures = texture_table([t['name'] for t in texture_entries],
+                                               [(texture_path / t['gim']).read_bytes() for t in texture_entries])
+                size = len(replace_sections(base_data, {2: yobj, 9: native_textures}))
+                attempts.append({'attempt': attempt, 'reduction_ratio': ratio, 'texture_max_dimension': texture_cap,
+                                 'pac_bytes': size, 'triangles': reduced['triangle_count']})
+            (working / 'size-fit.json').write_text(json.dumps(attempts, indent=2)+'\n', encoding='utf-8')
+            if size <= profile['beta_pac_limit_bytes']:
+                preview = working / 'preview'
+                trial_preview.rename(preview)
+                break
+            progress(90, f'PAC would be {size/1024:g} KiB; fitting to the 144 KiB limit')
+            if attempt == 4:
+                raise ValueError('Source still exceeds the 144 KiB limit after four size-fitting attempts; export withheld.')
+            ratio = next_ratio(ratio, size, len(yobj), profile['beta_pac_limit_bytes'])
+        preview_files = write_preview_textures(textures, texture_path, preview)
         progress(96, 'Packing the PSP PAC')
         stem = re.sub(r'[^A-Za-z0-9_.-]', '_', source.stem)[:48].strip('.') or 'wrestler'
         pac = working / (stem+'-PSP-opacity-fix.pac')
-        packing = repack(base, preview / 'prepared.yobj', working / 'textures', pac,
+        packing = repack(base, preview / 'prepared.yobj', texture_path, pac,
                          max_bytes=profile['beta_pac_limit_bytes'])
         sample = profile['sample']
         baseline_match = None
@@ -151,6 +191,10 @@ def run_job(job, progress=lambda percent, message: None):
                   'base_sha256': base_hash, 'reference_sha256': reference_hash,
                   'sample_byte_identical_to_uploaded_working_pac': baseline_match,
                   'preparation': preparation, 'textures': textures, 'reduction': reduced['reduction_report'],
+                  'size_fit': {'attempts': attempts, 'final_ratio': ratio,
+                               'texture_max_dimension': texture_cap,
+                               'additional_reduction': ratio < profile['reduction_ratio'],
+                               'additional_texture_resize': texture_cap < 64},
                   'native_serialization': verification, 'preview_texture_files': preview_files,
                   'pac': packing, 'pac_filename': pac.name,
                   'status': 'File checks passed. Validate the exported wrestler in PPSSPP.'}
@@ -158,6 +202,7 @@ def run_job(job, progress=lambda percent, message: None):
         (working / 'README-export.txt').write_text(
             f'Wrestler Importer {VERSION}\nProfile: opacity-fix-v1\nPAC: {pac.name}\n'
             f'Size: {packing["output_bytes"]/1024:g} KiB\n\n'
+            f'Reduction ratio: {ratio:g}. Texture cap: {texture_cap}px. Size checks: {len(attempts)}.\n'
             'Inject the PAC using your working PAC/ARC-update workflow. Test in PPSSPP.\n'
             'preview/prepared.yobj is exactly the model inside this PAC. Named PNG/GIM\n'
             'textures and a DAE are beside it for Noesis viewing. Originals were read only.\n', encoding='utf-8')
@@ -166,6 +211,8 @@ def run_job(job, progress=lambda percent, message: None):
         progress(100, 'Conversion complete')
         return {'output': str(final), 'pac': str(final / pac.name),
                 'preview': str(final / 'preview'), 'bytes': packing['output_bytes'],
-                'baseline_match': baseline_match, 'sha256': packing['sha256']}
+                'baseline_match': baseline_match, 'sha256': packing['sha256'],
+                'reduction_ratio': ratio, 'texture_max_dimension': texture_cap,
+                'size_fitted': len(attempts) > 1}
     except Exception as exc:
         raise RuntimeError(f'{exc}\nDiagnostic files: {working}') from exc

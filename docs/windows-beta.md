@@ -1,4 +1,4 @@
-# Wrestler Importer 0.1 beta
+# Wrestler Importer 0.1.1 beta
 
 This Windows desktop beta uses the pipeline that produced the uploaded,
 working `RVD-HCTP-to-PSP-opacity-fix-test.pac`. The sample export is 147456 bytes
@@ -8,7 +8,7 @@ The app's conversion worker reproduces those exact bytes in the cloud test.
 
 ## Start on Windows
 
-1. Download and extract `Wrestler-Importer-beta-0.1.zip` into a writable folder.
+1. Download and extract `Wrestler-Importer-beta-0.1.1.zip` into a writable folder.
 2. Install **Python 3.13 for Windows**, including its Python launcher, if needed:
    [Python downloads](https://www.python.org/downloads/windows/).
 3. Double-click **Start Wrestler Importer.cmd**. The first launch creates a local
@@ -43,8 +43,13 @@ checks that match before publishing the result.
 If conversion fails, **Open logs** shows the worker's log and error details.
 Intermediate reduction/editor logs remain in the diagnostic `.partial-*` folder
 identified by the error. Failed/cancelled work is not published as a successful
-export. An oversized model fails the 144 KiB beta limit; it is not silently
-reduced with a different profile.
+export. The 144 KiB limit is checked against the fully padded archive. If the
+original 64px/ratio-0.3 settings exceed it, the app first tests 32px textures,
+then retries the same seam-protected collapse method at a lower ratio. The
+completion message and conversion report identify these changes. Lower texture
+resolution and extra reduction can reduce detail. The app stops after four
+geometry attempts or before going below ratio 0.1; an oversized PAC is never
+published. Sources that fit the original settings keep them, including RVD.
 
 ## Scope of this beta
 
@@ -64,6 +69,14 @@ The app verifies its source-file hashes before conversion. Its processing is:
 - 64-pixel/4-bit texture budgets, including their original alpha handling.
 - PSP body vertex alpha 255, original regular material templates and sorted
   texture archive, with aligned PAC/model sections.
+
+Beta 0.1.1 expands PS2 RTX3 decoding around those pinned primitives. It reads
+linear PSMT4 and PSMT8 textures, RGBA32/RGB5A1 palettes, and direct RGB(A)
+16/24/32-bit images. Palette addressing and PS2 alpha are converted before the
+original PSP quantization and GIM writing. Unsupported layouts report the
+texture name and register values before Blender starts. This is RTX3 support;
+TIM2, compressed texture payloads and raw GS VRAM dumps are not supported.
+See [format coverage and validation](https://github.com/RyosSplitter/Wrestler-Importer/blob/main/docs/texture-decoder.md).
 
 The rejected regional reduction, U16/U8 weights, joined strips and higher-detail
 texture profiles are excluded from the beta. The uploaded sample's PAC SHA is

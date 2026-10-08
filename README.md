@@ -8,10 +8,13 @@ runs on Windows; exports will be tested in PPSSPP.
 
 The [Windows beta](docs/windows-beta.md) now wraps the user's working opacity-fix
 pipeline with drag/drop, saved tool setup, responsive conversion, cancellation
-and matching Noesis exports. [Download beta 0.1](https://github.com/RyosSplitter/Wrestler-Importer/raw/refs/heads/main/downloads/Wrestler-Importer-beta-0.1.zip).
+and matching Noesis exports. [Download beta 0.1.1](https://github.com/RyosSplitter/Wrestler-Importer/raw/refs/heads/main/downloads/Wrestler-Importer-beta-0.1.1.zip).
 It uses a separately pinned backend and reproduces the uploaded 144 KiB working
 sample byte for byte. HCTP is the supported beta source game.
 See [baseline validation](docs/beta-validation.md).
+Beta 0.1.1 adds PS2 RTX3 4-bit textures, additional palette/direct-color formats,
+early texture diagnostics and automatic size fitting for larger HCTP sources.
+See [texture decoding](docs/texture-decoder.md).
 
 The first component is a read-only PAC container inspector and extractor.
 It is tested against the provided HCTP `0900.pac` and SVR 2007 PSP

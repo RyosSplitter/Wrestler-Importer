@@ -1,0 +1,76 @@
+{
+  "app_version": "0.1.1-beta",
+  "unit_tests_passed": 60,
+  "rvd": {
+    "bytes": 147456,
+    "sha256": "c3a89e2171c6d757b1d4ef1b76cd0041d1ca881c8370a3bfbc21f2658d4c2710",
+    "baseline_match": true,
+    "reduction_ratio": 0.3,
+    "texture_max_dimension": 64,
+    "size_fitted": false
+  },
+  "1800": {
+    "bytes": 147456,
+    "sha256": "340b1221ede95ed4bc5051661a35643c078274518cb56160285da275dc40c93f",
+    "reduction_ratio": 0.27,
+    "texture_max_dimension": 32,
+    "size_fitted": true,
+    "source_sha256": "fe1073d97e9301c62226d611d174324d74cb5223669f3bbeed8a6660bcb80495",
+    "textures": 19,
+    "source_format_counts": {
+      "PSMT4": 8,
+      "PSMT8": 11
+    },
+    "size_checks": [
+      {
+        "attempt": 1,
+        "reduction_ratio": 0.3,
+        "texture_max_dimension": 64,
+        "pac_bytes": 167936,
+        "triangles": 969
+      },
+      {
+        "attempt": 1,
+        "reduction_ratio": 0.3,
+        "texture_max_dimension": 32,
+        "pac_bytes": 149504,
+        "triangles": 969
+      },
+      {
+        "attempt": 2,
+        "reduction_ratio": 0.27,
+        "texture_max_dimension": 32,
+        "pac_bytes": 147456,
+        "triangles": 916
+      }
+    ],
+    "model_checks": {
+      "bone_table_byte_identical": true,
+      "vertex_attributes_match": true,
+      "triangles_and_winding_match": true,
+      "regular_material_controls_match_texture_depth": true,
+      "vertex_alpha_matches_preparation_policy": true,
+      "native_yobj_warnings": []
+    },
+    "packing_checks": {
+      "output_bytes": 147456,
+      "sha256": "340b1221ede95ed4bc5051661a35643c078274518cb56160285da275dc40c93f",
+      "mesh_count": 44,
+      "bone_count": 79,
+      "triangles": 916,
+      "textures": 19,
+      "unchanged_sections": [
+        8
+      ],
+      "section_alignment_bytes": 16,
+      "relocation_chunk_aligned": true,
+      "material_controls_checked_against_native_gim": true,
+      "texture_table_sorted_by_name": true,
+      "status": "Experimental candidate; requires PPSSPP validation"
+    }
+  },
+  "input_hashes_unchanged": true,
+  "native_windows_conversion_tested": false,
+  "1800_ppsspp_tested": false,
+  "scope": "RTX3 host-image format coverage is documented; not all PS2 texture containers are supported."
+}

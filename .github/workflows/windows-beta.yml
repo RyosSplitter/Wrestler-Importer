@@ -8,7 +8,7 @@ on:
       - 'stable_pipeline/**'
       - 'wrestler_beta.py'
       - 'requirements-beta.txt'
-      - 'downloads/Wrestler-Importer-beta-0.1.zip'
+      - 'downloads/Wrestler-Importer-beta-0.1.1.zip'
       - '.github/workflows/windows-beta.yml'
 permissions:
   contents: read
@@ -29,7 +29,7 @@ jobs:
           from pathlib import Path
           import zipfile
           Path('assets').mkdir()
-          with zipfile.ZipFile('downloads/Wrestler-Importer-beta-0.1.zip') as z:
+          with zipfile.ZipFile('downloads/Wrestler-Importer-beta-0.1.1.zip') as z:
               for name in ('Kurt-Angle-Ring.PAC', 'Full Body.yobj'):
                   Path('assets', name).write_bytes(z.read('WrestlerImporterBeta/assets/'+name))
       - name: Build standalone Windows app

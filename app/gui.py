@@ -75,7 +75,7 @@ class BetaApp:
         header.pack(fill='x')
         header.pack_propagate(False)
         tk.Label(header, text='WRESTLER IMPORTER', bg=NAVY, fg='white', font=('Segoe UI', 18, 'bold')).pack(side='left', padx=28)
-        tk.Label(header, text='BETA 0.1', bg='#263c58', fg='#a9cdff', padx=12, pady=6,
+        tk.Label(header, text='BETA 0.1.1', bg='#263c58', fg='#a9cdff', padx=12, pady=6,
                  font=('Segoe UI', 10, 'bold')).pack(side='right', padx=28)
         body = ttk.Frame(self.root, padding=16)
         body.pack(fill='both', expand=True)
@@ -325,7 +325,10 @@ class BetaApp:
             self.result = response
             self.progress['value'] = 100
             self.status.set('Export complete. Test the PAC in PPSSPP.')
-            self.summary.set(f'{Path(response["pac"]).name}  •  {response["bytes"]/1024:g} KB\nMatching YOBJ, textures and report included.')
+            detail = 'Matching YOBJ, textures and report included.'
+            if response.get('size_fitted'):
+                detail = f'Size fitted: {response["texture_max_dimension"]}px textures, ratio {response["reduction_ratio"]:g}. Check detail in PPSSPP.'
+            self.summary.set(f'{Path(response["pac"]).name}  •  {response["bytes"]/1024:g} KB\n{detail}')
             self.output_button.configure(state='normal')
             self.preview_button.configure(state='normal')
         else:

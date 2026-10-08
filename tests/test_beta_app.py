@@ -9,9 +9,22 @@ from unittest.mock import patch
 from app.pipeline import BACKEND, Job, verify_backend
 from app import settings
 from app.worker import main as worker
+from app.size_fit import next_ratio
 
 
 class BetaTests(unittest.TestCase):
+    def test_size_retry_reduces_only_the_uniform_ratio(self):
+        ratio = next_ratio(0.3, 167936, 120000, 147456)
+        self.assertGreaterEqual(ratio, 0.1)
+        self.assertLess(ratio, 0.3)
+        self.assertLess(120000 * ratio / 0.3 + 167936 - 120000, 147456)
+
+    def test_size_retry_refuses_unavoidable_overhead_or_extreme_reduction(self):
+        with self.assertRaisesRegex(ValueError, 'no model space'):
+            next_ratio(0.3, 300000, 10000, 147456)
+        with self.assertRaisesRegex(ValueError, 'quality floor'):
+            next_ratio(0.1, 167936, 120000, 147456)
+
     def test_pinned_backend_rejects_a_changed_reducer(self):
         with tempfile.TemporaryDirectory() as folder:
             backend = Path(folder) / 'backend'
