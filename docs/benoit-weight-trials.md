@@ -97,3 +97,21 @@ while the mapped arms remain intact. This is promising for facial compatibility,
 but neither edge ratios nor resemblance to the analytical original rig alone
 prove animation quality. Head turns, raised arms and bent knees are also saved
 for the final comparison.
+
+## 4. Whole-body transfer from the PSP base
+
+[Elbow-flex screenshot](../downloads/benoit-weight-trials/method-4-elbow-flex.png)
+and [report](../downloads/benoit-weight-trials/method-4-report.json).
+
+Every source vertex receives barycentrically interpolated weights from the
+nearest ordinary PSP body triangle. No source weight values are used for
+assignment; source bones contribute only to the common alignment and analytical
+reference. Blood overlays are excluded, identical seam positions share weights,
+and the result is capped at four active influences and normalized.
+
+The preview keeps the arm surfaces intact without decimation. Its elbow-flex
+RMS difference from the analytical original rig is 0.08855, versus 0.08136 for
+the hybrid and 0.07574 for redistribution. Its edge-stretch 95th percentile is
+1.040. These controlled metrics distinguish the weights, but a smaller distance
+to the source rig is not necessarily better PSP facial animation. The matched
+Benoit donor is a more relevant transfer reference than the earlier Kurt base.

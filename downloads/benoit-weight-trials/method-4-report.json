@@ -1,0 +1,188 @@
+{
+  "method": 4,
+  "name": "base-transfer",
+  "alignment": {
+    "scale": 1.0176969393607451,
+    "rotation": [
+      [
+        0.9999996876858673,
+        -0.0007897223921534918,
+        3.109197982720861e-05
+      ],
+      [
+        0.0007901740255646531,
+        0.9998150584413834,
+        -0.019215216336565203
+      ],
+      [
+        -1.5911543016939743e-05,
+        0.019215234903456432,
+        0.999815370203132
+      ]
+    ],
+    "translation": [
+      0.002180533908417879,
+      -0.08435128896950972,
+      -0.12194908862809238
+    ],
+    "landmarks": [
+      "koshi",
+      "atama",
+      "l_te",
+      "r_te",
+      "l_ashi",
+      "r_ashi",
+      "l_kote",
+      "r_kote",
+      "l_sune",
+      "r_sune",
+      "l_sakotsu",
+      "r_sakotsu"
+    ],
+    "source_weight_sum_max_error": 4.842877388000488e-08,
+    "geometry_digest": "882101baaa51f5681ddd25c4bd0e93aeee1b9523599c4a451de00a573839017c",
+    "alignment_shared_by_all_trials": true,
+    "triangles": 2836,
+    "vertices": 2016,
+    "decimation_applied": false
+  },
+  "details": {
+    "source_bone_mapping_used_for_weights": false,
+    "original_source_weight_values_used_for_assignment": false,
+    "transfer": {
+      "method": "Nearest ordinary PSP body triangle, barycentric weight interpolation",
+      "max_influences": 4,
+      "distance_p95": 0.3152753669866273,
+      "distance_max": 0.4768136843215444
+    }
+  },
+  "status": "Weight-study candidate; native export and playability untested",
+  "unmapped_vertices": 0,
+  "unmapped_mass_max": 0.0,
+  "active_influence_histogram": {
+    "2": 725,
+    "3": 1016,
+    "1": 202,
+    "4": 73
+  },
+  "pose_controls": {
+    "elbow-flex": {
+      "l_ninoude": [
+        "z",
+        -15
+      ],
+      "r_ninoude": [
+        "z",
+        15
+      ],
+      "l_kote": [
+        "z",
+        -65
+      ],
+      "r_kote": [
+        "z",
+        65
+      ],
+      "kubi": [
+        "y",
+        20
+      ],
+      "d_kuchi": [
+        "x",
+        18
+      ]
+    },
+    "arms-up": {
+      "l_ninoude": [
+        "z",
+        -65
+      ],
+      "r_ninoude": [
+        "z",
+        65
+      ],
+      "l_kote": [
+        "z",
+        -20
+      ],
+      "r_kote": [
+        "z",
+        20
+      ],
+      "kubi": [
+        "y",
+        -20
+      ],
+      "d_kuchi": [
+        "x",
+        18
+      ]
+    },
+    "knees-bent": {
+      "l_sune": [
+        "x",
+        35
+      ],
+      "r_sune": [
+        "x",
+        35
+      ],
+      "l_kote": [
+        "z",
+        -30
+      ],
+      "r_kote": [
+        "z",
+        30
+      ]
+    },
+    "rest": {}
+  },
+  "poses": {
+    "elbow-flex": {
+      "edge_length_ratio_p95": 1.0395061739711966,
+      "edge_length_ratio_max": 2.7745609866096737,
+      "duplicate_position_separation_max": 0.0,
+      "distance_to_analytical_original_rig_rms": 0.08854940209616369,
+      "distance_to_analytical_original_rig_p95": 0.1551726797614834,
+      "note": "LBS diagnostic metrics; original-game animation and PSP engine behavior are not established"
+    },
+    "arms-up": {
+      "edge_length_ratio_p95": 1.055488860766087,
+      "edge_length_ratio_max": 2.774560986609686,
+      "duplicate_position_separation_max": 0.0,
+      "distance_to_analytical_original_rig_rms": 0.17745106796289972,
+      "distance_to_analytical_original_rig_p95": 0.29410558716056334,
+      "note": "LBS diagnostic metrics; original-game animation and PSP engine behavior are not established"
+    },
+    "knees-bent": {
+      "edge_length_ratio_p95": 1.009024900318157,
+      "edge_length_ratio_max": 1.2729250742968974,
+      "duplicate_position_separation_max": 0.0,
+      "distance_to_analytical_original_rig_rms": 0.04903404938096343,
+      "distance_to_analytical_original_rig_p95": 0.10011852351543453,
+      "note": "LBS diagnostic metrics; original-game animation and PSP engine behavior are not established"
+    },
+    "rest": {
+      "edge_length_ratio_p95": 1.0000000000000053,
+      "edge_length_ratio_max": 1.000000000000209,
+      "duplicate_position_separation_max": 0.0,
+      "distance_to_analytical_original_rig_rms": 3.2351408358877314e-15,
+      "distance_to_analytical_original_rig_p95": 6.742231735271962e-15,
+      "note": "LBS diagnostic metrics; original-game animation and PSP engine behavior are not established"
+    }
+  },
+  "source_only_bones": [
+    "atama_d",
+    "d_ha",
+    "l_mayu",
+    "l_sakotsu_d",
+    "r_mayu",
+    "r_sakotsu_d",
+    "root_d",
+    "u_ha"
+  ],
+  "native_psp_pac_written": false,
+  "source_triangles_preserved": true,
+  "texture_and_uv_changes": false
+}

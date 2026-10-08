@@ -236,7 +236,10 @@ def run(root, method):
     if method in (1,2): weights = base
     elif method in (3,4):
         transferred, detail_transfer = transfer(target, positions)
-        if method == 4: weights = transferred
+        if method == 4:
+            weights = transferred
+            detail = {'source_bone_mapping_used_for_weights': False,
+                      'original_source_weight_values_used_for_assignment': False}
         else:
             head_names = descendant_names(source, 'atama')
             head_indices = [b['index'] for b in source['bones'] if b['name'] in head_names]
