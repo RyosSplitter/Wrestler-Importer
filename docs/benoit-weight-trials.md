@@ -79,3 +79,21 @@ from 0.09065 model units to 0.07574. The arms appear intact. Small facial edges
 still stretch during the jaw test; a complete mapping is not sufficient evidence
 of good facial deformation. Trial 3 will replace the head region's weighting
 with interpolation from the native PSP model.
+
+## 3. Hybrid source-body and PSP-head weighting
+
+[Elbow-flex screenshot](../downloads/benoit-weight-trials/method-3-elbow-flex.png)
+and [report](../downloads/benoit-weight-trials/method-3-report.json).
+
+Trial 2's mapped/redistributed weights remain on the body. The source's original
+`atama`-subtree influence mass defines a continuous head mask: **608 vertices**
+receive some head-region blending with weights interpolated from the nearest
+ordinary PSP body surface. Blood overlays are excluded from the donor. The
+interpolated/blended result is limited to four active influences and normalized.
+
+The elbow-flex pose's worst edge-length ratio falls from 6.25 in trial 2 to 2.77;
+its 95th percentile falls from 1.040 to 1.010. The jaw/face appearance changes
+while the mapped arms remain intact. This is promising for facial compatibility,
+but neither edge ratios nor resemblance to the analytical original rig alone
+prove animation quality. Head turns, raised arms and bent knees are also saved
+for the final comparison.
