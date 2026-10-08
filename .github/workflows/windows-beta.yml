@@ -1,0 +1,52 @@
+name: Build Windows beta
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'app/**'
+      - 'stable_pipeline/**'
+      - 'wrestler_beta.py'
+      - 'requirements-beta.txt'
+      - 'downloads/Wrestler-Importer-beta-0.1.zip'
+      - '.github/workflows/windows-beta.yml'
+permissions:
+  contents: read
+jobs:
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: python -m pip install -r requirements-beta.txt pyinstaller==6.16.0
+      - run: python -m unittest discover -s tests -v
+      - name: Extract bundled references
+        shell: python
+        run: |
+          from pathlib import Path
+          import zipfile
+          Path('assets').mkdir()
+          with zipfile.ZipFile('downloads/Wrestler-Importer-beta-0.1.zip') as z:
+              for name in ('Kurt-Angle-Ring.PAC', 'Full Body.yobj'):
+                  Path('assets', name).write_bytes(z.read('WrestlerImporterBeta/assets/'+name))
+      - name: Build standalone Windows app
+        run: python -m PyInstaller --noconfirm --clean --onedir --windowed --name WrestlerImporterBeta --collect-all tkinterdnd2 --collect-submodules stable_pipeline --add-data "stable_pipeline;stable_pipeline" --add-data "assets;assets" wrestler_beta.py
+      - name: Check the packaged interface and drag-drop resources
+        timeout-minutes: 2
+        shell: pwsh
+        run: |
+          $env:WRESTLER_IMPORTER_DATA = "$env:RUNNER_TEMP\beta-smoke-settings"
+          $testOutput = "$env:RUNNER_TEMP\beta-smoke.json"
+          $process = Start-Process "dist\WrestlerImporterBeta\WrestlerImporterBeta.exe" -ArgumentList @('--smoke-test', $testOutput) -PassThru -Wait
+          if ($process.ExitCode -ne 0) { throw 'Packaged GUI smoke test failed' }
+          Get-Content $testOutput
+      - name: Include instructions
+        shell: pwsh
+        run: Copy-Item docs/windows-beta.md dist/WrestlerImporterBeta/README-beta.md
+      - uses: actions/upload-artifact@v4
+        with:
+          name: WrestlerImporterBeta-Windows
+          path: dist/WrestlerImporterBeta/

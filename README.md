@@ -6,6 +6,13 @@ runs on Windows; exports will be tested in PPSSPP.
 
 ## Current capability
 
+The [Windows beta](docs/windows-beta.md) now wraps the user's working opacity-fix
+pipeline with drag/drop, saved tool setup, responsive conversion, cancellation
+and matching Noesis exports. [Download beta 0.1](https://github.com/RyosSplitter/Wrestler-Importer/raw/refs/heads/main/downloads/Wrestler-Importer-beta-0.1.zip).
+It uses a separately pinned backend and reproduces the uploaded 144 KiB working
+sample byte for byte. HCTP is the supported beta source game.
+See [baseline validation](docs/beta-validation.md).
+
 The first component is a read-only PAC container inspector and extractor.
 It is tested against the provided HCTP `0900.pac` and SVR 2007 PSP
 `Kurt-Angle-Ring.PAC`. It extracts exact model sections and named texture
@@ -28,8 +35,9 @@ PAC repacking produces identical bytes. Section starts and the final model
 relocation chunk are padded to 16-byte boundaries.
 
 The user confirms loading and animation of preceding candidates in SVR 2011 PSP.
-The latest regional candidate requires an in-game test. This is a backend prototype for the
-supplied HCTP -> SVR 2007 PSP pair, not the finished Windows drag-and-drop app.
+The user reports that the later regional candidates do not run, and chooses the
+uploaded opacity-fix build for the Windows beta. Experimental CLI profiles remain
+available separately. The beta supports the supplied HCTP -> SVR 2007 PSP pair.
 Other games and packet variants remain unsupported. Source skeletons are not
 retargeted; the real PSP base's bone records are preserved byte for byte.
 

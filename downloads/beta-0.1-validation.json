@@ -1,0 +1,19 @@
+{
+  "gui_started": true,
+  "drag_drop": true,
+  "setup_dialog_opened": true,
+  "gui_conversion_matches_uploaded_pac": true,
+  "pac_bytes": 147456,
+  "sha256": "c3a89e2171c6d757b1d4ef1b76cd0041d1ca881c8370a3bfbc21f2658d4c2710",
+  "ui_event_loop_iterations_during_conversion": 375,
+  "preview_button_points_to_matching_files": true,
+  "cancel_stopped_worker_and_blender_group": true,
+  "original_inputs_unchanged": true,
+  "native_windows_test": "Pending Windows build/user test",
+  "unit_tests_passed": 48,
+  "result_buttons_visible_at": [
+    "1040x740",
+    "940x720"
+  ],
+  "backend_revision": "866f9bf65ae06a025160c0f7257944c1fd2111b1"
+}

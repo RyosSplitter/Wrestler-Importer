@@ -1,7 +1,17 @@
 # Test downloads
 
+[Download Wrestler Importer Windows beta 0.1](https://github.com/RyosSplitter/Wrestler-Importer/raw/refs/heads/main/downloads/Wrestler-Importer-beta-0.1.zip).
+Extract and double-click `Start Wrestler Importer.cmd`. Python 3.13 is required
+for this source distribution; first launch installs the pinned dependencies.
+Select Blender 4.3.2 and your original PSP mesh editor in Tools & base setup.
+The included Kurt base and Full Body reference are preselected. The beta uses
+the working 144 KiB opacity-fix pipeline and reproduces that sample byte for byte.
+See [Windows setup and beta scope](../docs/windows-beta.md).
+
 [Download the smaller 140 KiB regional PAC and matching Noesis preview](https://github.com/RyosSplitter/Wrestler-Importer/raw/refs/heads/main/downloads/RVD-HCTP-to-PSP-region-small-test-bundle.zip).
-This is the current test bundle, 8 KiB smaller than the 148 KiB build below.
+The user reports this later regional variant does not run. It is retained for
+comparison; the beta returns to the working opacity-fix build.
+This is 8 KiB smaller than the 148 KiB build below.
 Geometry, normals, weights, UVs, materials and texture payloads remain identical
 after decoding. The savings come from joining triangle-strip records. Use
 `RVD-HCTP-to-PSP-region-small-test.pac`; matching YOBJ/textures and a float-weight

@@ -1,0 +1,38 @@
+{
+  "profile_id": "opacity-fix-v1",
+  "backend_revision": "866f9bf65ae06a025160c0f7257944c1fd2111b1",
+  "files": {
+    "blender_reduce.py": "7807787d58bde5a3be301b878ff8711f92be13b43bec02c3673922ae72674319",
+    "blender_validate.py": "cd8928092d21e2f65108f90fd52e5f07f9458741a54c0f1fbeae5a6aa65a7f5c",
+    "convert_hctp.py": "8aa41b98c5e15ca0004a23206e776f0e8d1bae6bab3efe02270a956bba92acc2",
+    "editor_bridge.py": "e2feda012700d22e7e348588e6acac8cc8688a62ae97600d62cd48b4339e63db",
+    "hctp_read.py": "8eb0bc4254e54a57e96a425b6c04e49ecd8379dd52044cf6bc3053ae2006b991",
+    "pac_inspect.py": "ff47544ec6c1b4f51544af21aaab293842198f50778dccd3613c5dbe5d79cd02",
+    "pac_repack.py": "43458aa1f11734f70fee87d9b717839e227577b2d56606d82dd2e0a3e117232b",
+    "prepare_model.py": "7949b51e307c53e232fffab11b700af77056a002847a8c8ec0dd5c5093d2b5ec",
+    "psp_materials.py": "f929c1643d3be67725a5bde5fc5c44c3e935f7be099a1fded6ebba5a5377b2bd",
+    "stripify.py": "c9ba4235537bbaae41b3cb6fa53da71cf1e9dfbf472e9f99b241be1ef673d567",
+    "texture_convert.py": "c595603024a47c1257fa0d6e2e987698f7028a0e7e4564f8d8fb1e4bc7fc2bc6",
+    "yobj_alignment.py": "a1ca8ae683c292e409e9195cc3b42baeecc4a94019a89ea0837b2c40d34ddee8",
+    "yobj_read.py": "a2369ec0e37323d55dcc9dd24b2d3d885f956c7a7c13fbae862d4b7dd8fc9866"
+  },
+  "reduction_ratio": 0.3,
+  "max_influences": 4,
+  "weight_encoding": "float",
+  "texture_max_dimension": 64,
+  "texture_bits": 4,
+  "vertex_alpha_policy": "opaque_psp_base",
+  "blender_version": "4.3.2",
+  "original_pac_limit_bytes": 151552,
+  "beta_pac_limit_bytes": 147456,
+  "sample": {
+    "source_sha256": "05d264911fde503a0f5d07b634611de2c666b30845c711d4943da8fbdfc21552",
+    "base_sha256": "bf935a51fe30bfd2df929f8eb9e50be5d793426ea05125ca9411ce21b19ead80",
+    "pac_sha256": "c3a89e2171c6d757b1d4ef1b76cd0041d1ca881c8370a3bfbc21f2658d4c2710",
+    "pac_bytes": 147456,
+    "meshes": 45,
+    "vertices": 1211,
+    "triangles": 877,
+    "reference_sha256": "4c7ed2988c6225c1ffdfc0eaf5ae403d8ed7b136286436aa5b3b7b394c111740"
+  }
+}
