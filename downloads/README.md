@@ -1,5 +1,11 @@
 # Test downloads
 
+[Download the Slaughter PS2/PSP reference review](https://github.com/RyosSplitter/Wrestler-Importer/raw/refs/heads/main/downloads/Slaughter-PS2-PSP-reference-review.zip).
+Matched HCTP and native PSP ring/entrance models, textures, four Noesis screenshots,
+and inspection reports show selective arm reduction and BPE compression in the
+original PSP port. See [the comparison](../docs/slaughter-reference.md).
+This is a reference bundle; the beta and all PACs are unchanged.
+
 [Download the HCTP arm diagnostic review](https://github.com/RyosSplitter/Wrestler-Importer/raw/refs/heads/main/downloads/HCTP-arm-diagnosis.zip).
 Five controlled Noesis screenshots and stage geometry localize arm damage to
 the reduction step in `1800` and show similar damage in `2900`. Inspection
