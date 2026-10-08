@@ -1,0 +1,182 @@
+{
+  "method": 1,
+  "name": "direct",
+  "alignment": {
+    "scale": 1.0176969393607451,
+    "rotation": [
+      [
+        0.9999996876858673,
+        -0.0007897223921534918,
+        3.109197982720861e-05
+      ],
+      [
+        0.0007901740255646531,
+        0.9998150584413834,
+        -0.019215216336565203
+      ],
+      [
+        -1.5911543016939743e-05,
+        0.019215234903456432,
+        0.999815370203132
+      ]
+    ],
+    "translation": [
+      0.002180533908417879,
+      -0.08435128896950972,
+      -0.12194908862809238
+    ],
+    "landmarks": [
+      "koshi",
+      "atama",
+      "l_te",
+      "r_te",
+      "l_ashi",
+      "r_ashi",
+      "l_kote",
+      "r_kote",
+      "l_sune",
+      "r_sune",
+      "l_sakotsu",
+      "r_sakotsu"
+    ],
+    "source_weight_sum_max_error": 4.842877388000488e-08,
+    "geometry_digest": "882101baaa51f5681ddd25c4bd0e93aeee1b9523599c4a451de00a573839017c",
+    "alignment_shared_by_all_trials": true,
+    "triangles": 2836,
+    "vertices": 2016,
+    "decimation_applied": false
+  },
+  "details": {
+    "mapping": {}
+  },
+  "status": "Incomplete direct mapping: diagnostic only",
+  "unmapped_vertices": 52,
+  "unmapped_mass_max": 1.0,
+  "active_influence_histogram": {
+    "2": 818,
+    "1": 1080,
+    "3": 100,
+    "4": 8,
+    "0": 10
+  },
+  "pose_controls": {
+    "elbow-flex": {
+      "l_ninoude": [
+        "z",
+        -15
+      ],
+      "r_ninoude": [
+        "z",
+        15
+      ],
+      "l_kote": [
+        "z",
+        -65
+      ],
+      "r_kote": [
+        "z",
+        65
+      ],
+      "kubi": [
+        "y",
+        20
+      ],
+      "d_kuchi": [
+        "x",
+        18
+      ]
+    },
+    "arms-up": {
+      "l_ninoude": [
+        "z",
+        -65
+      ],
+      "r_ninoude": [
+        "z",
+        65
+      ],
+      "l_kote": [
+        "z",
+        -20
+      ],
+      "r_kote": [
+        "z",
+        20
+      ],
+      "kubi": [
+        "y",
+        -20
+      ],
+      "d_kuchi": [
+        "x",
+        18
+      ]
+    },
+    "knees-bent": {
+      "l_sune": [
+        "x",
+        35
+      ],
+      "r_sune": [
+        "x",
+        35
+      ],
+      "l_kote": [
+        "z",
+        -30
+      ],
+      "r_kote": [
+        "z",
+        30
+      ]
+    },
+    "rest": {}
+  },
+  "poses": {
+    "elbow-flex": {
+      "edge_length_ratio_p95": 1.0909376063072118,
+      "edge_length_ratio_max": 7.907835185893093,
+      "duplicate_position_separation_max": 0.0,
+      "distance_to_analytical_original_rig_rms": 0.09065441913186302,
+      "distance_to_analytical_original_rig_p95": 0.15003560475603434,
+      "note": "LBS diagnostic metrics; original-game animation and PSP engine behavior are not established"
+    },
+    "arms-up": {
+      "edge_length_ratio_p95": 1.11772687696404,
+      "edge_length_ratio_max": 7.935477060970942,
+      "duplicate_position_separation_max": 0.0,
+      "distance_to_analytical_original_rig_rms": 0.16813412669440478,
+      "distance_to_analytical_original_rig_p95": 0.2929874055435199,
+      "note": "LBS diagnostic metrics; original-game animation and PSP engine behavior are not established"
+    },
+    "knees-bent": {
+      "edge_length_ratio_p95": 1.0000000000000058,
+      "edge_length_ratio_max": 1.5050670409065627,
+      "duplicate_position_separation_max": 0.0,
+      "distance_to_analytical_original_rig_rms": 0.031667201061448415,
+      "distance_to_analytical_original_rig_p95": 0.0715686002871107,
+      "note": "LBS diagnostic metrics; original-game animation and PSP engine behavior are not established"
+    },
+    "rest": {
+      "edge_length_ratio_p95": 1.0000000000000029,
+      "edge_length_ratio_max": 1.0000000000000495,
+      "duplicate_position_separation_max": 0.0,
+      "distance_to_analytical_original_rig_rms": 3.229697559053148e-15,
+      "distance_to_analytical_original_rig_p95": 6.677047783012433e-15,
+      "note": "LBS diagnostic metrics; original-game animation and PSP engine behavior are not established"
+    }
+  },
+  "source_only_bones": [
+    "atama_d",
+    "d_ha",
+    "l_mayu",
+    "l_sakotsu_d",
+    "r_mayu",
+    "r_sakotsu_d",
+    "root_d",
+    "u_ha"
+  ],
+  "native_psp_pac_written": false,
+  "source_triangles_preserved": true,
+  "texture_and_uv_changes": false
+}
