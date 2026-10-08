@@ -73,7 +73,9 @@ def verify_serialized(prepared, base_bytes, yobj_path):
             'native_yobj_warnings': actual['warnings']}
 
 
-def convert(source, target, reference, editor, output, editor_python, *, compact=False, blender='blender'):
+def convert(source, target, reference, editor, output, editor_python, *, compact=False, blender='blender', detail=False):
+    if detail and not compact:
+        raise FormatError('The facial detail profile requires --compact')
     if output.exists():
         raise FileExistsError(f'Refusing to overwrite {output}')
     editor_python = str(editor_python)
@@ -92,11 +94,13 @@ def convert(source, target, reference, editor, output, editor_python, *, compact
         with (output / 'reduction.log').open('w', encoding='utf-8') as log:
             subprocess.run([str(blender), '--background', '--python-exit-code', '1', '--python',
                             str(Path(__file__).with_name('blender_reduce.py').resolve()), '--',
-                            str(source_file.resolve()), str(reduced_file.resolve()), '0.3'],
+                            str(source_file.resolve()), str(reduced_file.resolve()),
+                            '0.20' if detail else '0.3', *(['--detail-profile'] if detail else [])],
                            stdout=log, stderr=subprocess.STDOUT, env=env, check=True)
         source_model = json.loads(reduced_file.read_text())
-    model, preparation = prepare(source_model, target_model, donor_model)
-    texture_manifest = convert_pac(source, output / 'textures', max_dimension=64 if compact else None, bits=4 if compact else 8)
+    model, preparation = prepare(source_model, target_model, donor_model, max_influences=2 if detail else 4)
+    texture_manifest = convert_pac(source, output / 'textures', max_dimension=64 if compact else None, bits=4 if compact else 8,
+                                   texture_budgets={'bn_kao2': (128, 8)} if detail else None)
     model['texture_bits'] = [t['bits'] for t in sorted(texture_manifest['textures'], key=lambda t: t['index'])]
     (output / 'prepared.json').write_text(json.dumps(model, indent=2, allow_nan=False) + '\n', encoding='utf-8')
     base = target.read_bytes()
@@ -118,7 +122,7 @@ def convert(source, target, reference, editor, output, editor_python, *, compact
                      max_bytes=148 * 1024 if compact else None)
     report = {'preparation': preparation, 'textures': texture_manifest, 'native_serialization': verification,
               'preview_texture_files': preview_files,
-              'reduction': source_model.get('reduction_report'), 'compact': compact,
+              'reduction': source_model.get('reduction_report'), 'compact': compact, 'detail': detail,
               'pac_filename': pac.name,
               'pac': packing, 'status': 'Experimental test candidate; PPSSPP validation is pending'}
     (output / 'conversion-report.json').write_text(json.dumps(report, indent=2, allow_nan=False) + '\n', encoding='utf-8')
@@ -135,10 +139,11 @@ def main():
     parser.add_argument('--editor-python', default=sys.executable)
     parser.add_argument('--compact', action='store_true', help='Blender reduction, 4-bit/64px textures, maximum 148 KiB PAC')
     parser.add_argument('--blender', default='blender', help='Blender 4.3 executable for compact conversion')
+    parser.add_argument('--detail', action='store_true', help='Preserve eyes/teeth/mouth and allocate more detail to the face')
     args = parser.parse_args()
     try:
         report = convert(args.source, args.target, args.reference, args.editor, args.output, args.editor_python,
-                         compact=args.compact, blender=args.blender)
+                         compact=args.compact, blender=args.blender, detail=args.detail)
         print(json.dumps({'output': str(args.output), **report['pac']}, indent=2))
     except (OSError, FormatError, subprocess.CalledProcessError) as exc:
         print(f'Conversion failed: {exc}', file=sys.stderr)

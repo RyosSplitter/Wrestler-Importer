@@ -158,7 +158,7 @@ def budget_texture(indices, palette, max_dimension, bits):
     return np.array(quantized, dtype=np.uint8), colors
 
 
-def convert_pac(source, output, *, max_dimension=None, bits=8):
+def convert_pac(source, output, *, max_dimension=None, bits=8, texture_budgets=None):
     data = source.read_bytes()
     report = inspect_pac(data)
     model = load_model(source)
@@ -178,28 +178,31 @@ def convert_pac(source, output, *, max_dimension=None, bits=8):
             raise FormatError(f'Missing source texture {name}')
         pixels, palette = read_rtx3(textures[name.lower()])
         original_size = list(pixels.shape[::-1])
-        if max_dimension is not None:
-            pixels, palette = budget_texture(pixels, palette, max_dimension, bits)
+        limit, texture_bits = (texture_budgets or {}).get(name.lower(), (max_dimension, bits))
+        if limit is not None:
+            pixels, palette = budget_texture(pixels, palette, limit, texture_bits)
         elif bits != 8:
             raise FormatError('A texture size budget is required for color-depth conversion')
-        gim = write_gim4(pixels, palette) if bits == 4 else write_gim8(pixels, palette)
+        gim = write_gim4(pixels, palette) if texture_bits == 4 else write_gim8(pixels, palette)
         back_pixels, back_palette = read_gim(gim)
         if not np.array_equal(pixels, back_pixels) or not np.array_equal(palette, back_palette):
             raise FormatError('GIM round trip altered pixels or palette')
-        converted.append((index, name, pixels, palette, gim, original_size))
+        converted.append((index, name, pixels, palette, gim, original_size, texture_bits))
     output.mkdir(parents=True, exist_ok=False)
     entries = []
-    for index, name, pixels, palette, gim, original_size in converted:
+    for index, name, pixels, palette, gim, original_size, texture_bits in converted:
         stem = f'texture_{index:02d}'
         Image.fromarray(palette[pixels]).save(output / (stem + '.png'))
         (output / (stem + '.gim')).write_bytes(gim)
         entries.append({'index': index, 'name': name, 'width': pixels.shape[1], 'height': pixels.shape[0],
-                        'gim': stem + '.gim', 'png': stem + '.png', 'gim_bytes': len(gim), 'bits': bits,
+                        'gim': stem + '.gim', 'png': stem + '.png', 'gim_bytes': len(gim), 'bits': texture_bits,
                         'source_dimensions': original_size})
-    manifest = {'textures': entries, 'scope': f'Observed linear PSMT8 RTX3 only; PSP indexed{bits} GIM',
+    depths = sorted({t['bits'] for t in entries})
+    manifest = {'textures': entries, 'scope': 'Observed linear PSMT8 RTX3 only; PSP indexed4/indexed8 GIM',
                 'validation': 'Every GIM decodes to exactly the converted image indices and RGBA palette',
-                'max_dimension': max_dimension, 'color_depth': bits,
+                'max_dimension': max_dimension, 'color_depth': depths[0] if len(depths) == 1 else 'mixed',
                 'lossy_resize_or_quantization': max_dimension is not None}
+    manifest['texture_budgets'] = texture_budgets or {}
     (output / 'textures.json').write_text(json.dumps(manifest, indent=2) + '\n', encoding='utf-8')
     return manifest
 

@@ -7,7 +7,7 @@ import sys
 import bpy
 
 
-def reduce(source, ratio):
+def reduce(source, ratio, detail_profile=False):
     if not 0 < ratio <= 1:
         raise ValueError('Reduction ratio must be between zero and one')
     bpy.ops.wm.read_factory_settings(use_empty=True)
@@ -16,6 +16,13 @@ def reduce(source, ratio):
         for v in entry['vertices']:
             owners.setdefault(tuple(v['position']), set()).add(entry['index'])
     protected = {p for p, meshes in owners.items() if len(meshes) > 1}
+    detail_textures = {'rvd_eye', 'bn_ha', 'bn_ha2', 'ts_naka'} if detail_profile else set()
+    if detail_profile:
+        for entry in source['meshes']:
+            for material in entry['materials']:
+                if source['textures'][material['texture_id']].lower() in detail_textures:
+                    protected.update(tuple(entry['vertices'][i]['position'])
+                                     for tri in material['triangles'] for i in tri)
     result = copy.deepcopy(source)
     stats = []
     for entry in result['meshes']:
@@ -64,7 +71,9 @@ def reduce(source, ratio):
         for i, p in enumerate(points):
             group.add([i], 0.0 if p in protected else 1.0, 'REPLACE')
         modifier = obj.modifiers.new('PSP budget', 'DECIMATE')
-        modifier.ratio = ratio
+        names = {source['textures'][m['texture_id']].lower() for m in entry['materials']}
+        mesh_ratio = 0.30 if detail_profile and names <= {'bn_kao2', 'bn_atam', 'bn_dou'} and entry['index'] < 3 else ratio
+        modifier.ratio = mesh_ratio
         modifier.use_collapse_triangulate = True
         modifier.vertex_group = group.name
         modifier.vertex_group_factor = 1000
@@ -104,15 +113,24 @@ def reduce(source, ratio):
         entry['vertices'] = output
         for mat, tris in zip(entry['materials'], triangles):
             mat['triangles'] = tris
+        for original_mat, mat in zip(source['meshes'][entry['index']]['materials'], entry['materials']):
+            if source['textures'][mat['texture_id']].lower() in detail_textures:
+                def geometry_keys(vertices, faces):
+                    from collections import Counter
+                    return Counter(tuple(sorted(tuple(vertices[i]['position']) for i in tri)) for tri in faces)
+                if geometry_keys(original_vertices, original_mat['triangles']) != geometry_keys(output, mat['triangles']):
+                    raise ValueError('Reduction changed protected facial detail triangles')
         after = sum(len(t) for t in triangles)
         stats.append({'mesh': entry['index'], 'input_triangles': before,
-                      'output_triangles': after, 'protected_seam_positions': len(required)})
+                      'output_triangles': after, 'protected_seam_positions': len(required),
+                      'requested_ratio': mesh_ratio})
         bpy.data.objects.remove(obj, do_unlink=True)
     result['triangle_count'] = sum(s['output_triangles'] for s in stats)
     result['vertex_count'] = sum(len(m['vertices']) for m in result['meshes'])
     result['reduction_report'] = {'method': 'Blender collapse with shared seam vertices protected',
                                 'requested_ratio': ratio, 'input_triangles': source['triangle_count'],
                                 'output_triangles': result['triangle_count'], 'meshes': stats}
+    result['reduction_report']['protected_detail_textures'] = sorted(detail_textures)
     return result
 
 
@@ -121,7 +139,7 @@ def main():
     source, output, ratio = Path(args[0]), Path(args[1]), float(args[2])
     if output.exists():
         raise FileExistsError(f'Refusing to overwrite {output}')
-    result = reduce(json.loads(source.read_text()), ratio)
+    result = reduce(json.loads(source.read_text()), ratio, detail_profile='--detail-profile' in args[3:])
     with output.open('x', encoding='utf-8') as stream:
         json.dump(result, stream, allow_nan=False)
     print('REDUCTION_COMPLETED', json.dumps(result['reduction_report']))

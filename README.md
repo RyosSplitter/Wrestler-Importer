@@ -67,7 +67,11 @@ The user subsequently reports successful loading, entrance and match, with
 see-through skin and missing surfaces. The latest
 [opacity-corrected candidate](docs/opacity-correction.md) sets ordinary body
 vertex alpha to 255, matching both PSP references. Texture transparency is
-preserved. This appearance fix still needs a game test.
+preserved. The user confirms this fixes transparency.
+The user confirms that transparency is fixed, but the face lacks detail.
+Use `--compact --detail` for the [facial-detail profile](docs/facial-detail.md),
+which protects eye/tooth/mouth geometry and improves the face palette within
+the 148 KiB budget. This variant still needs an in-game test.
 
 The output directory must be new. The output contains the experimental PAC,
 decoded PNG/GIM textures, prepared JSON, native YOBJ/DAE, logs, and a conversion

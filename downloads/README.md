@@ -1,7 +1,15 @@
 # Test downloads
 
+[Download the 146 KiB facial-detail PAC and matching Noesis preview](https://github.com/RyosSplitter/Wrestler-Importer/raw/refs/heads/main/downloads/RVD-HCTP-to-PSP-detail-test-bundle.zip).
+This is the current appearance test: it restores eye/tooth/mouth geometry lost
+in reduction, and improves the face to 128x64 with 256 colors. Body reduction
+and two-influence skinning offset the extra detail to stay below the original
+148.5 KiB slot size. See [details and checks](../docs/facial-detail.md).
+In-game confirmation of this variant is pending.
+
 [Download the opacity-corrected 144 KiB PAC with matching Noesis YOBJ/textures](https://github.com/RyosSplitter/Wrestler-Importer/raw/refs/heads/main/downloads/RVD-HCTP-to-PSP-opacity-fix-test-bundle.zip).
-This is the current appearance test. The user reports that the preceding model
+This is the opacity-fixed baseline; the user confirms transparency is resolved.
+The user reports that the preceding model
 loads and animates in SVR 2011 PSP without crashes, but has see-through skin and
 missing surfaces. This candidate changes only vertex opacity to the PSP base's
 fully opaque convention. PAC size, geometry, weights, materials, UVs and every
