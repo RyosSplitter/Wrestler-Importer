@@ -1,5 +1,14 @@
 # Benoit HCTP to PSP: five controlled weight trials
 
+All five trials are complete. **Hybrid weighting (trial 3) is the strongest
+starting candidate:** it retains the mapped source arm/body weights and reduces
+facial edge stretching with native PSP head weights. Redistribution alone also
+preserves the body well. Whole-body PSP transfer works reasonably on this matched
+pair. Pure direct mapping is incomplete, and the tested automatic heat bind
+visibly distorts the model. These are preview findings, not in-game approval.
+
+[Download all ten screenshots, posed models, weight data and rigged reviews](https://github.com/RyosSplitter/Wrestler-Importer/raw/refs/heads/main/downloads/Benoit-five-weight-methods-review.zip).
+
 The user supplied HCTP `0900.pac` and SVR 2007 PSP `Chris-Benoit.PAC` for five
 weighting trials. This study isolates weight assignment: all methods retain
 the full **2,836 source triangles and 2,016 UV-split vertices**, use one common
@@ -60,8 +69,8 @@ weight mass stays at its rest position in the diagnostic pose. No extra bone is
 added to the target skeleton. Other weights keep their mapped values.
 
 The screenshot shows largely intact arms, but unresolved facial/helper weights
-need explicit handling. Subsequent trials will test redistribution, hybrid
-weighting, PSP-base transfer and automatic binding on the same geometry.
+need explicit handling. The later trials below compare alternatives on the same
+geometry.
 
 ## 2. Bone mapping with ancestor redistribution
 
@@ -77,7 +86,7 @@ These ancestor choices are explicit in the report, not inferred game semantics.
 The elbow-flex pose's RMS displacement from the analytical original rig falls
 from 0.09065 model units to 0.07574. The arms appear intact. Small facial edges
 still stretch during the jaw test; a complete mapping is not sufficient evidence
-of good facial deformation. Trial 3 will replace the head region's weighting
+of good facial deformation. Trial 3 replaces the head region's weighting
 with interpolation from the native PSP model.
 
 ## 3. Hybrid source-body and PSP-head weighting
@@ -140,3 +149,49 @@ from the analytical original rig is 0.8274, substantially worse than trials 2–
 No missing triangles or changed rest geometry caused this deformation. A
 successful bind and normalized weights are not an appearance pass. This result
 does not establish that all heat or voxel binding configurations would fail.
+
+The saved heat proxy retains the **unpruned** Blender groups, enabling a separate
+audit without replacing trial 5. They use up to eleven active influences. Before
+pruning, elbow-flex RMS error is already 0.8615 and edge-stretch p95 is 1.316.
+After pruning, RMS is 0.8274 but edge-stretch p95 rises to 1.637. Pruning changes
+positions by 0.4956 units RMS and up to 1.9215 units. Thus the raw heat result
+already differs greatly from the source rig, and the influence limit changes
+it substantially again. A binding failure cannot be attributed only to pruning.
+
+## Comparison and checks
+
+| Method | Elbow-flex RMS difference from analytical source rig | Elbow-flex edge stretch p95 | Raised-arm edge stretch p95 | Outcome |
+| --- | ---: | ---: | ---: | --- |
+| 1. Direct mapping | 0.09065 | 1.091 | 1.118 | Incomplete: 52 unresolved vertices |
+| 2. Redistribution | 0.07574 | 1.040 | 1.062 | Complete mapped source weights; facial review needed |
+| 3. Hybrid | 0.08136 | 1.010 | 1.019 | Promising body/face combination |
+| 4. PSP-base transfer | 0.08855 | 1.040 | 1.055 | Reasonable matched-donor result |
+| 5. Automatic heat bind | 0.82737 | 1.637 | 1.470 | Visible neck/torso deformation |
+
+RMS is in native model units; the model is approximately 19 units tall. Edge
+stretch is a ratio to each edge's rest length. These are diagnostic measurements,
+not a quality score. Source and PSP facial rigs differ, so matching the analytical
+source deformation is not the sole objective. All duplicate-position seams stay
+together in the evaluated poses; all five rest poses reproduce common aligned
+geometry. No triangle, UV or texture changes distinguish these trials.
+
+The bundle includes a second actual Noesis screenshot for each method with
+raised arms, plus rest, bent-arm, raised-arm and bent-knee OBJs. `comparison-summary.json`
+also groups deformation metrics by source bone-weight regions. Trials 2 and 3
+have identical arm-region deformation in these checks. Whole-body transfer
+changes it modestly; the automatic bind changes it much more.
+
+For trials 2–5, `weighted-review.blend` contains the same 77-bone target review
+rig, original mesh/UV buffers, packed textures and keyframed checks: frame 1 rest,
+21 elbow-flex, 41 arms-up, 61 knees-bent. A real Blender armature modifier was
+evaluated at all four poses and compared with the analytical OBJ coordinates:
+maximum difference is below **0.000004 model units**. This validates the pose
+calculation; it does not validate PSP serialization or game animation. Trial 1
+has no complete rigged review file because its unresolved influences are only
+represented by explicitly held-at-rest mass in the diagnostic.
+
+Original input hashes remain unchanged. The packet decoder and skinning/mapping
+checks, together with relevant existing HCTP/prepare-model tests, pass. The
+pinned beta backend and app are unchanged. There is **no replacement PAC** in
+this study: native palette/mesh packing, compression, the stored-file budget
+and PPSSPP testing remain separate steps for a chosen weighting candidate.

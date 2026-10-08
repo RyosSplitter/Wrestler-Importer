@@ -130,6 +130,11 @@ cannot establish whether the original source weight values were preserved,
 remapped or repainted. PSP ring and entrance bone tables also differ byte for
 byte despite both containing 83 bones.
 
+Subsequently, the separate [Benoit weight study](benoit-weight-trials.md) added
+an analysis-only HCTP VIF weight reader and verified structural decoding on both
+Slaughter source YOBJs. The results above remain the original read-only
+comparison; source-to-PSP weight correspondence is not established here.
+
 Stored normals in all five YOBJs have lengths approximately 1.0. Every decoded
 vertex has alpha 255. These observations do not identify the original normal
 recalculation algorithm; smooth shading still depends on topology and seams.

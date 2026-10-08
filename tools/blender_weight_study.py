@@ -15,7 +15,7 @@ from mathutils import Matrix, Vector
 import numpy as np
 
 from tools.prepare_model import bone_matrices
-from tools.weight_trial_review import METHODS, POSES, load_study, skin_matrices
+from tools.weight_trial_review import METHODS, POSES, load_study, skin_matrices, deform, pose_metrics
 
 
 CONVERSION = np.array([[1.,0,0,0], [0,0,1,0], [0,-1,0,0], [0,0,0,1]])
@@ -123,7 +123,6 @@ def automatic(root):
         print('BINDING ATTEMPT',json.dumps(attempt),flush=True)
         if error or np.any(sums<=1e-8): continue
         weights/=sums[:,None]
-        before=weights.copy()
         order=np.argsort(weights,axis=1)
         np.put_along_axis(weights,order[:,:-4],0,axis=1)
         retained=weights.sum(axis=1)
@@ -147,6 +146,43 @@ def automatic(root):
     raise RuntimeError('Blender bone heat could not bind every proxy vertex; no replacement weights fabricated')
 
 
+def audit_automatic(root):
+    # The saved proxy retains Blender's full, unpruned vertex groups. Compare
+    # those with the four-influence trial to isolate the effect of pruning.
+    source,target,aligned,positions,originals,sw,alignment=load_study(root)
+    bpy.ops.wm.open_mainfile(filepath=str(root/'automatic-binding-proxy.blend'))
+    proxy=bpy.data.objects['Disposable_seam_welded_heat_proxy']
+    byname={b['name']:b['index'] for b in target['bones']}
+    unique_weights=np.zeros((len(proxy.data.vertices),target['bone_count']))
+    for vertex in proxy.data.vertices:
+        for group in vertex.groups:
+            name=proxy.vertex_groups[group.group].name
+            if name in byname:unique_weights[vertex.index,byname[name]]=group.weight
+    unique_weights/=unique_weights.sum(axis=1)[:,None]
+    lookup={};inverse=[]
+    for point in positions:
+        key=tuple(point)
+        if key not in lookup:lookup[key]=len(lookup)
+        inverse.append(lookup[key])
+    weights=unique_weights[inverse]
+    assert len(lookup)==len(unique_weights)
+    pruned=np.load(root/'automatic-weights.npz')['weights']
+    report={'purpose':'Separate raw Blender heat binding from four-influence pruning; primary trial 5 unchanged',
+            'unpruned_max_active_influences':int(np.max(np.count_nonzero(weights>1e-7,axis=1))),
+            'poses':{}}
+    for name,pose in POSES.items():
+        unpruned=deform(target,positions,weights,pose)
+        after=deform(target,positions,pruned,pose)
+        original=deform(source,originals,sw,pose)
+        reference=alignment['scale']*original@np.array(alignment['rotation']).T+np.array(alignment['translation'])
+        delta=np.linalg.norm(after-unpruned,axis=1)
+        report['poses'][name]={'unpruned_metrics':pose_metrics(aligned,unpruned,positions,reference),
+                               'pruning_displacement_rms':float(np.sqrt(np.mean(delta**2))),
+                               'pruning_displacement_max':float(delta.max())}
+    (root/'automatic-unpruned-audit.json').write_text(json.dumps(report,indent=2)+'\n')
+    print('UNPRUNED AUDIT',json.dumps(report),flush=True)
+
+
 def build_review(root,method):
     if method==1: raise ValueError('Incomplete direct mapping is a baked diagnostic, not a valid 77-bone Blender rig')
     source,target,aligned,positions,_,_,_=load_study(root)
@@ -161,6 +197,8 @@ def build_review(root,method):
         points=[tuple(CONVERSION[:3,:3]@p) for p in positions[offset:offset+count]]
         faces=[t for mat in entry['materials'] for t in mat['triangles']]
         mesh.from_pydata(points,[],faces);mesh.update()
+        if len(mesh.vertices)!=count or len(mesh.polygons)!=len(faces):
+            raise ValueError('Blender changed source geometry counts during review import')
         for p in mesh.polygons:p.use_smooth=True
         uv=mesh.uv_layers.new(name='Original_source_UV')
         for polygon in mesh.polygons:
@@ -189,6 +227,8 @@ def build_review(root,method):
             for polygon in mesh.polygons[face_offset:face_offset+len(mat_entry['triangles'])]:polygon.material_index=len(mesh.materials)-1
             face_offset+=len(mat_entry['triangles'])
         offset+=count
+    if sum(len(o.data.vertices) for o in objects)!=aligned['vertex_count'] or sum(len(o.data.polygons) for o in objects)!=aligned['triangle_count']:
+        raise ValueError('Review geometry totals do not match the original source')
     rest={b.name:np.array(b.matrix_local) for b in rig.data.bones}
     validation={}
     scene=bpy.context.scene;scene.frame_start=1;scene.frame_end=61
@@ -234,4 +274,5 @@ if __name__=='__main__':
     study=Path(args[0]).resolve()
     if args[1]=='auto':automatic(study)
     elif args[1]=='review':build_review(study,int(args[2]))
+    elif args[1]=='audit-auto':audit_automatic(study)
     else:raise ValueError('Expected auto or review')

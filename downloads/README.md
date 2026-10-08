@@ -1,5 +1,13 @@
 # Test downloads
 
+[Download the five Benoit weighting trials](https://github.com/RyosSplitter/Wrestler-Importer/raw/refs/heads/main/downloads/Benoit-five-weight-methods-review.zip).
+Ten actual Noesis screenshots, identical source geometry under five weight
+methods, posed OBJs/textures, weight data and four rigged Blender reviews.
+The original HCTP weights are now decoded for this study. See
+[methods, results and limitations](../docs/benoit-weight-trials.md).
+Hybrid weighting is the most promising candidate; automatic heat binding
+distorts the body. This is a weight-study bundle, not a replacement PAC or beta.
+
 [Download the Slaughter PS2/PSP reference review](https://github.com/RyosSplitter/Wrestler-Importer/raw/refs/heads/main/downloads/Slaughter-PS2-PSP-reference-review.zip).
 Matched HCTP and native PSP ring/entrance models, textures, four Noesis screenshots,
 and inspection reports show selective arm reduction and BPE compression in the
