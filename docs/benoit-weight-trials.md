@@ -115,3 +115,28 @@ the hybrid and 0.07574 for redistribution. Its edge-stretch 95th percentile is
 1.040. These controlled metrics distinguish the weights, but a smaller distance
 to the source rig is not necessarily better PSP facial animation. The matched
 Benoit donor is a more relevant transfer reference than the earlier Kurt base.
+
+## 5. Automatic heat rebinding
+
+[Elbow-flex screenshot](../downloads/benoit-weight-trials/method-5-elbow-flex.png)
+and [report](../downloads/benoit-weight-trials/method-5-report.json).
+
+Blender 4.3.2 `ARMATURE_AUTO` bone heat binds a disposable proxy with duplicate
+positions welded: 1,449 proxy vertices and 2,836 faces. All original 2,016 output
+vertices receive their proxy vertex's weights; final geometry and UVs are not
+modified. The bind succeeds with no unweighted vertices on its first attempt.
+
+The target rig retains 77 bones. This automatic configuration seeds 51 body and
+finger bones, using anatomical segment tails inferred from the target bone
+positions; facial and twist helpers are retained but excluded as heat seeds.
+No source or PSP donor weights are used. The generated values are normalized,
+limited to four influences, then normalized again. At the worst vertex, this
+limit removes 40.8% of the initial weight mass, so pruning is a material part of
+the tested configuration.
+
+**This automatic result visibly fails the posed shape check:** the neck stretches
+and the waist/torso flares. Elbow-flex edge-stretch p95 is 1.637 and RMS distance
+from the analytical original rig is 0.8274, substantially worse than trials 2–4.
+No missing triangles or changed rest geometry caused this deformation. A
+successful bind and normalized weights are not an appearance pass. This result
+does not establish that all heat or voxel binding configurations would fail.
