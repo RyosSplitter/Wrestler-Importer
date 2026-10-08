@@ -1,13 +1,15 @@
 from collections import Counter
 import struct
+import tempfile
 import unittest
+from pathlib import Path
 
 import numpy as np
 
 from tools.pac_inspect import FormatError, inspect_pac
 from tools.pac_repack import replace_sections, texture_table
 from tools.stripify import stripify
-from tools.texture_convert import budget_texture, read_gim, read_gim4, read_gim8, read_rtx3, write_gim4, write_gim8
+from tools.texture_convert import budget_texture, convert_pac, read_gim, read_gim4, read_gim8, read_rtx3, write_gim4, write_gim8
 from tools.yobj_alignment import align_yobj_pof0
 
 
@@ -17,6 +19,37 @@ def canonical(triangle):
 
 
 class TextureAndRepackTests(unittest.TestCase):
+    def test_mask_alpha_bypasses_lossy_texture_budget(self):
+        from tests.test_yobj_read import sample
+        model = sample()
+        model[680:696] = b'mask'.ljust(16, b'\0')
+        pixels = np.arange(2048, dtype=np.uint16).astype(np.uint8).reshape(32, 64)
+        palette = np.arange(1024, dtype=np.uint16).astype(np.uint8).reshape(256, 4)
+        palette[:, 3] %= 129
+        rtx = bytearray(64)
+        rtx[:4] = b'RTX3'
+        struct.pack_into('<I', rtx, 4, 64+2048+1024-8)
+        struct.pack_into('<Q', rtx, 8, (19<<20)|(6<<26)|(5<<30))
+        struct.pack_into('<2I', rtx, 36, 2048, 56)
+        rtx += pixels.tobytes()+palette.tobytes()
+        textures = (struct.pack('<4I', 1, 0x100, 0, 16) + b'mask'.ljust(16, b'\0')
+                    + b'txc\0' + struct.pack('<3I', len(rtx), 48, 0) + rtx)
+        table = b'PAC '+struct.pack('<I', 2)
+        offset = 0
+        for sid, data in ((2, model), (9, textures)):
+            table += struct.pack('<H', sid)+offset.to_bytes(3, 'little')+len(data).to_bytes(3, 'little')
+            offset += len(data)
+        with tempfile.TemporaryDirectory() as folder:
+            source, output = Path(folder)/'source.pac', Path(folder)/'textures'
+            source.write_bytes(table+model+textures)
+            manifest = convert_pac(source, output, max_dimension=32, bits=4, preserve_cutout_alpha=True)
+            entry = manifest['textures'][0]
+            self.assertEqual((entry['width'], entry['height'], entry['bits']), (64, 32, 8))
+            self.assertTrue(entry['source_alpha_pixel_exact'])
+            actual_pixels, actual_palette = read_gim((output/entry['gim']).read_bytes())
+            expected_pixels, expected_palette = read_rtx3(rtx)
+            np.testing.assert_array_equal(actual_palette[actual_pixels], expected_palette[expected_pixels])
+
     def test_texture_archive_order_is_independent_of_model_indices(self):
         names = ['KA_arm', 'blood_b', 'blood']
         images = []

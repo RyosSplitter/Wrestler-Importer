@@ -27,7 +27,8 @@ the PSP PAC. Native model serialization is independently checked, and repeated
 PAC repacking produces identical bytes. Section starts and the final model
 relocation chunk are padded to 16-byte boundaries.
 
-**PPSSPP compatibility remains unverified.** This is a backend prototype for the
+The user confirms loading and animation of preceding candidates in SVR 2011 PSP.
+The latest regional candidate requires an in-game test. This is a backend prototype for the
 supplied HCTP -> SVR 2007 PSP pair, not the finished Windows drag-and-drop app.
 Other games and packet variants remain unsupported. Source skeletons are not
 retargeted; the real PSP base's bone records are preserved byte for byte.
@@ -68,10 +69,12 @@ see-through skin and missing surfaces. The latest
 [opacity-corrected candidate](docs/opacity-correction.md) sets ordinary body
 vertex alpha to 255, matching both PSP references. Texture transparency is
 preserved. The user confirms this fixes transparency.
-The user confirms that transparency is fixed, but the face lacks detail.
-Use `--compact --detail` for the [facial-detail profile](docs/facial-detail.md),
-which protects eye/tooth/mouth geometry and improves the face palette within
-the 148 KiB budget. This variant still needs an in-game test.
+The [facial-detail profile](docs/facial-detail.md) improves the face in the user's
+test, but sacrifices body detail. Use `--regions` for the latest
+[PSP bone-weight regional profile](docs/region-decimation.md): head 80%, torso
+50%, limbs 35%, smooth normals across seams and exact cutout alpha. It improves
+the torso palette and uses compact U16 weights to fit 1464 triangles into a
+148 KiB PAC. This vertex format and the new appearance need a PPSSPP test.
 
 The output directory must be new. The output contains the experimental PAC,
 decoded PNG/GIM textures, prepared JSON, native YOBJ/DAE, logs, and a conversion
@@ -85,6 +88,9 @@ Open the model from that folder for external-texture previews. Noesis texture
 loading depends on the installed YOBJ plugin; direct PAC texture loading is
 not verified. Missing preview textures do not establish whether the in-game
 texture table is working.
+Regional conversions also include `native-float`, with the same decoded model
+attributes encoded as float weights for older viewers. Its YOBJ is a preview
+copy; `native/prepared.yobj` is the exact PAC payload.
 
 In this Linux cloud, the tested equivalent is `python3 tools/convert_hctp.py ...
 --editor-python /usr/bin/python3.13`. The main pipeline runs on Python 3.12 while

@@ -105,13 +105,26 @@ def configure_meshes(env, prepared):
         palette = mesh['bone_palette']
         vertices = mesh['vertices']
         count = len(palette)
-        env['mesh_header'].append(headers[part])
+        header = headers[part]
+        if prepared.get('regional'):
+            header = bytearray(header)
+            center = [(min(v['position'][axis] for v in vertices) + max(v['position'][axis] for v in vertices))/2 for axis in range(3)]
+            radius = max(math.dist(v['position'], center) for v in vertices) + .001
+            struct.pack_into('<4f', header, 48, *center, radius)
+            header = bytes(header)
+        env['mesh_header'].append(header)
         env['mesh_bones_count'].append(count)
         env['mesh_bones'].append(list(palette))  # DAE exporter expects array indices.
-        env['mesh_flag'].append(0x17ff | ((count - 1) << 14))
+        encoding = prepared.get('weight_encoding', 'float')
+        width, flag_base, denominator, weight_format = {
+            'float': (4, 0x17ff, None, 'f'), 'psp_u8': (1, 0x13ff, 128, 'B'),
+            'psp_u16': (2, 0x15ff, 32768, 'H')}[encoding]
+        compact_weights = denominator is not None
+        weight_bytes = 4*((width*count+3)//4)
+        env['mesh_flag'].append(flag_base | ((count - 1) << 14))
         env['mesh_flag_boolean'].append(True)
         env['mesh_flag_decode'].append(count - 1)
-        env['mesh_data_lenght'].append(36 + 4 * count)
+        env['mesh_data_lenght'].append(36 + weight_bytes)
         env['mesh_data_count'].append(len(vertices))
         env['mesh_bones_weight'].append([v['weights'] for v in vertices])
         env['mesh_uv_u'].append([v['uv'][0] for v in vertices])
@@ -124,7 +137,14 @@ def configure_meshes(env, prepared):
             env['mesh_normal_' + letter].append([v['normal'][axis] for v in vertices])
         records = []
         for vertex, v in zip(vertices, native_v):
-            records.append(struct.pack('<' + 'f' * count, *vertex['weights'])
+            if compact_weights:
+                integers = [round(w*denominator) for w in vertex['weights']]
+                if sum(integers) != denominator or any(abs(w-i/denominator) > 1e-8 for w, i in zip(vertex['weights'], integers)):
+                    raise ValueError('Prepared fixed point weights must sum to one exactly')
+                packed_weights = struct.pack('<'+weight_format*count, *integers) + bytes(weight_bytes-width*count)
+            else:
+                packed_weights = struct.pack('<' + 'f' * count, *vertex['weights'])
+            records.append(packed_weights
                            + struct.pack('<2f4B6f', vertex['uv'][0], v, *vertex['color'],
                                          *vertex['normal'], *vertex['position']))
         env['mesh_data'].append(records)
@@ -147,10 +167,32 @@ def configure_meshes(env, prepared):
     env['mesh_face_offset'] = [[[8] * len(mat['strips']) for mat in m['materials']] for m in prepared['meshes']]
 
 
-def export(executable, base, prepared_path, output):
+def write_packed_vertices(env, target, index):
+    """Write GE integer records directly; the supplied editor rewrites float weights."""
+    records = env['mesh_data'][index]
+    stride = env['mesh_data_lenght'][index]
+    if any(len(record) != stride for record in records):
+        raise ValueError('Packed vertex stride mismatch')
+    target.seek(0, os.SEEK_END)
+    env['padding'](target)
+    start = target.tell()
+    env['new_mesh_data_start_offset'].append(start)
+    target.write(b''.join(records))
+    # Both headers point to the same vertex block relative to byte eight.
+    locations = (env['new_mesh_bones_header_offset'][index]+8,
+                 env['new_mesh_data_header_offset'][index])
+    for location in locations:
+        env['all_offset'].append(location)
+        target.seek(location)
+        target.write(struct.pack('<I', start-8))
+
+
+def export(executable, base, prepared_path, output, *, float_preview=False):
     if output.exists():
         raise FileExistsError(f'Refusing to overwrite {output}')
     prepared = json.loads(prepared_path.read_text())
+    if float_preview:
+        prepared['weight_encoding'] = 'float'
     env = load_core(executable)
     read_base(env, base)
     if env['bone_name'] != [b['name'] for b in prepared['bones']]:
@@ -168,7 +210,10 @@ def export(executable, base, prepared_path, output):
         for i in range(env['mesh_count']):
             for name in ('write_mesh_header_bones', 'write_mesh_data_header', 'write_mesh_data',
                          'write_mesh_material', 'write_mesh_faces_header', 'write_mesh_faces'):
-                env[name](target, i)
+                if name == 'write_mesh_data' and prepared.get('weight_encoding', 'float') != 'float':
+                    write_packed_vertices(env, target, i)
+                else:
+                    env[name](target, i)
         for name in ('write_bones', 'write_texture', 'write_model_name', 'generate_pof0'):
             env[name](target)
         target.seek(0)
@@ -185,8 +230,9 @@ def main():
     parser.add_argument('--base-yobj', type=Path, required=True)
     parser.add_argument('--prepared', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--float-preview', action='store_true', help='Write the same attributes with float weights for older viewers')
     args = parser.parse_args()
-    export(args.editor, args.base_yobj, args.prepared, args.output)
+    export(args.editor, args.base_yobj, args.prepared, args.output, float_preview=args.float_preview)
 
 
 if __name__ == '__main__':

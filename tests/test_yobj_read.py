@@ -39,6 +39,21 @@ def sample():
 
 
 class YobjTests(unittest.TestCase):
+    def test_ge_integer_weight_alignment_matches_float_geometry(self):
+        for flag, packed in ((0x53FF, bytes([32, 96, 0, 0])),
+                             (0x55FF, struct.pack('<2H', 8192, 24576))):
+            d = sample()
+            expected = read_yobj(bytes(d), psp_geometry=True)
+            records = [bytes(d[176+j*44:176+(j+1)*44]) for j in range(4)]
+            struct.pack_into('<I', d, 100, flag)
+            for j, record in enumerate(records):
+                start = 176+j*40
+                d[start:start+40] = packed + record[8:]
+            actual = read_yobj(bytes(d), psp_geometry=True)
+            self.assertEqual(actual['meshes'][0]['vertices'], expected['meshes'][0]['vertices'])
+            self.assertEqual(actual['meshes'][0]['materials'], expected['meshes'][0]['materials'])
+            self.assertEqual(actual['weight_sum_outliers'], 0)
+
     def test_geometry_weights_and_strip_winding(self):
         m = read_yobj(bytes(sample()), psp_geometry=True)
         self.assertEqual(m["vertex_count"], 4)

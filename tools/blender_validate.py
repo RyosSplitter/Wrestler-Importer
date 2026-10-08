@@ -55,6 +55,10 @@ def build(model, textures=None):
         faces = [t for material in entry['materials'] for t in material['triangles']]
         mesh.from_pydata(positions, [], faces)
         mesh.update()
+        for polygon in mesh.polygons:
+            polygon.use_smooth = True
+        mesh.normals_split_custom_set_from_vertices([
+            tuple(conversion.to_3x3() @ Vector(v['normal'])) for v in entry['vertices']])
         obj = bpy.data.objects.new(name, mesh)
         bpy.context.collection.objects.link(obj)
         uv = mesh.uv_layers.new(name='UVMap')

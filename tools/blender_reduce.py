@@ -1,13 +1,16 @@
-"""Simplify source geometry before sectioning and weight transfer (Blender 4.3)."""
+"""Simplify raw source meshes or transferred PSP-weight regions (Blender 4.3)."""
 import copy
 import json
+import math
 from pathlib import Path
 import sys
 
 import bpy
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from region_mesh import DETAIL_TEXTURES, RATIOS, make_regions, smooth_normals
 
 
-def reduce(source, ratio, detail_profile=False):
+def reduce(source, ratio, detail_profile=False, regional=False):
     if not 0 < ratio <= 1:
         raise ValueError('Reduction ratio must be between zero and one')
     bpy.ops.wm.read_factory_settings(use_empty=True)
@@ -16,7 +19,7 @@ def reduce(source, ratio, detail_profile=False):
         for v in entry['vertices']:
             owners.setdefault(tuple(v['position']), set()).add(entry['index'])
     protected = {p for p, meshes in owners.items() if len(meshes) > 1}
-    detail_textures = {'rvd_eye', 'bn_ha', 'bn_ha2', 'ts_naka'} if detail_profile else set()
+    detail_textures = DETAIL_TEXTURES if detail_profile else set()
     if detail_profile:
         for entry in source['meshes']:
             for material in entry['materials']:
@@ -67,18 +70,52 @@ def reduce(source, ratio, detail_profile=False):
         for face, slot in zip(mesh.polygons, face_materials):
             face.material_index = slot
             face.use_smooth = True
+        bone_groups = {}
+        if regional:
+            for bone in source['bones']:
+                vg = obj.vertex_groups.new(name=bone['name'])
+                bone_groups[vg.index] = bone['index']
+                seen = set()
+                for vi, vertex in enumerate(original_vertices):
+                    point = source_indices[vi]
+                    weight = vertex['weights'][bone['index']]
+                    if point not in seen and weight > 0:
+                        vg.add([point], weight, 'REPLACE')
+                        seen.add(point)
         group = obj.vertex_groups.new(name='interior')
+        strengths = {source_indices[i]: v.get('region_strength', 1.) for i, v in enumerate(original_vertices)}
         for i, p in enumerate(points):
-            group.add([i], 0.0 if p in protected else 1.0, 'REPLACE')
+            group.add([i], 0.0 if p in protected else strengths[i], 'REPLACE')
         modifier = obj.modifiers.new('PSP budget', 'DECIMATE')
         names = {source['textures'][m['texture_id']].lower() for m in entry['materials']}
         mesh_ratio = 0.30 if detail_profile and names <= {'bn_kao2', 'bn_atam', 'bn_dou'} and entry['index'] < 3 else ratio
+        if regional:
+            mesh_ratio = math.ceil(len(original_faces) * RATIOS[entry['region']]) / len(original_faces)
         modifier.ratio = mesh_ratio
         modifier.use_collapse_triangulate = True
         modifier.vertex_group = group.name
         modifier.vertex_group_factor = 1000
+        if regional:
+            # Collapse removes adjacent faces together; Blender can undershoot
+            # the ratio by a face. Evaluate before applying and enforce the floor.
+            minimum = math.ceil(len(original_faces) * RATIOS[entry['region']])
+            while True:
+                bpy.context.view_layer.update()
+                evaluated = obj.evaluated_get(bpy.context.evaluated_depsgraph_get())
+                trial = evaluated.to_mesh()
+                trial.calc_loop_triangles()
+                count = len(trial.loop_triangles)
+                evaluated.to_mesh_clear()
+                if count >= minimum:
+                    break
+                if modifier.ratio >= 1.:
+                    raise ValueError('Source region cannot meet the face-count floor')
+                modifier.ratio = min(1., modifier.ratio + max(2, minimum-count) / len(original_faces))
         bpy.ops.object.modifier_apply(modifier=modifier.name)
         mesh = obj.data
+        for face in mesh.polygons:
+            face.use_smooth = True
+        mesh.update()
         mesh.calc_loop_triangles()
         actual_points = {tuple(v.co) for v in mesh.vertices}
         required = {tuple(mesh_point) for mesh_point in points if mesh_point in protected}
@@ -101,11 +138,24 @@ def reduce(source, ratio, detail_profile=False):
                 normal = normals[li]
                 texcoord = tuple(round(c, 6) for c in uv.data[li].uv)
                 color = tuple(max(0, min(255, round(c * 255))) for c in colors.data[li].color)
-                key = (loop.vertex_index, texcoord, color)
+                tid = entry['materials'][face.material_index]['texture_id']
+                smoothing = tid + 1 if source['textures'][tid].lower() in detail_textures else 0
+                key = (loop.vertex_index, texcoord, color, smoothing)
                 if key not in vertex_map:
                     vertex_map[key] = len(output)
+                    weights = []
+                    if regional:
+                        weights = [0.] * source['bone_count']
+                        for g in mesh.vertices[loop.vertex_index].groups:
+                            if g.group in bone_groups:
+                                weights[bone_groups[g.group]] = g.weight
+                        total = sum(weights)
+                        if total <= 0:
+                            raise ValueError('Decimation lost PSP skin weights')
+                        weights = [w/total for w in weights]
                     output.append({'position': position, 'normal': normal, 'uv': texcoord,
-                                   'color': color, 'weights': [], 'source_vertex_index': loop.vertex_index})
+                                   'color': color, 'weights': weights, 'smoothing_group': smoothing,
+                                   'source_vertex_index': loop.vertex_index})
                 tri.append(vertex_map[key])
             if len(set(tri)) == 3:
                 triangles[face.material_index].append(tri)
@@ -117,13 +167,18 @@ def reduce(source, ratio, detail_profile=False):
             if source['textures'][mat['texture_id']].lower() in detail_textures:
                 def geometry_keys(vertices, faces):
                     from collections import Counter
-                    return Counter(tuple(sorted(tuple(vertices[i]['position']) for i in tri)) for tri in faces)
+                    return Counter(tuple(sorted(tuple(Vector(vertices[i]['position'])) for i in tri)) for tri in faces)
                 if geometry_keys(original_vertices, original_mat['triangles']) != geometry_keys(output, mat['triangles']):
                     raise ValueError('Reduction changed protected facial detail triangles')
         after = sum(len(t) for t in triangles)
         stats.append({'mesh': entry['index'], 'input_triangles': before,
                       'output_triangles': after, 'protected_seam_positions': len(required),
                       'requested_ratio': mesh_ratio})
+        if regional:
+            if after < math.ceil(before * RATIOS[entry['region']]):
+                raise ValueError(f'{entry["region"]}: retained {after}/{before} faces, below requested minimum')
+            stats[-1].update(region=entry['region'], target_ratio=RATIOS[entry['region']],
+                             actual_ratio=after/before)
         bpy.data.objects.remove(obj, do_unlink=True)
     result['triangle_count'] = sum(s['output_triangles'] for s in stats)
     result['vertex_count'] = sum(len(m['vertices']) for m in result['meshes'])
@@ -131,6 +186,12 @@ def reduce(source, ratio, detail_profile=False):
                                 'requested_ratio': ratio, 'input_triangles': source['triangle_count'],
                                 'output_triangles': result['triangle_count'], 'meshes': stats}
     result['reduction_report']['protected_detail_textures'] = sorted(detail_textures)
+    if regional:
+        result['reduction_report'].pop('requested_ratio')
+        result['reduction_report']['region_ratios'] = RATIOS
+        smooth_normals(result)
+        result['regional'] = True
+        result['reduction_report']['method'] = 'PSP bone-weight regions; weighted Blender collapse; area-weighted smooth normals'
     return result
 
 
@@ -139,7 +200,11 @@ def main():
     source, output, ratio = Path(args[0]), Path(args[1]), float(args[2])
     if output.exists():
         raise FileExistsError(f'Refusing to overwrite {output}')
-    result = reduce(json.loads(source.read_text()), ratio, detail_profile='--detail-profile' in args[3:])
+    model = json.loads(source.read_text())
+    regional = '--regions' in args[3:]
+    if regional:
+        model = make_regions(model)
+    result = reduce(model, ratio, detail_profile='--detail-profile' in args[3:], regional=regional)
     with output.open('x', encoding='utf-8') as stream:
         json.dump(result, stream, allow_nan=False)
     print('REDUCTION_COMPLETED', json.dumps(result['reduction_report']))

@@ -158,7 +158,7 @@ def budget_texture(indices, palette, max_dimension, bits):
     return np.array(quantized, dtype=np.uint8), colors
 
 
-def convert_pac(source, output, *, max_dimension=None, bits=8, texture_budgets=None):
+def convert_pac(source, output, *, max_dimension=None, bits=8, texture_budgets=None, preserve_cutout_alpha=False):
     data = source.read_bytes()
     report = inspect_pac(data)
     model = load_model(source)
@@ -179,7 +179,10 @@ def convert_pac(source, output, *, max_dimension=None, bits=8, texture_budgets=N
         pixels, palette = read_rtx3(textures[name.lower()])
         original_size = list(pixels.shape[::-1])
         limit, texture_bits = (texture_budgets or {}).get(name.lower(), (max_dimension, bits))
-        if limit is not None:
+        preserve_alpha = preserve_cutout_alpha and (int(palette[pixels][:, :, 3].min()) < 128 or 'hair' in name.lower() or 'mask' in name.lower())
+        if preserve_alpha:
+            texture_bits = 8
+        elif limit is not None:
             pixels, palette = budget_texture(pixels, palette, limit, texture_bits)
         elif bits != 8:
             raise FormatError('A texture size budget is required for color-depth conversion')
@@ -187,16 +190,16 @@ def convert_pac(source, output, *, max_dimension=None, bits=8, texture_budgets=N
         back_pixels, back_palette = read_gim(gim)
         if not np.array_equal(pixels, back_pixels) or not np.array_equal(palette, back_palette):
             raise FormatError('GIM round trip altered pixels or palette')
-        converted.append((index, name, pixels, palette, gim, original_size, texture_bits))
+        converted.append((index, name, pixels, palette, gim, original_size, texture_bits, preserve_alpha))
     output.mkdir(parents=True, exist_ok=False)
     entries = []
-    for index, name, pixels, palette, gim, original_size, texture_bits in converted:
+    for index, name, pixels, palette, gim, original_size, texture_bits, preserve_alpha in converted:
         stem = f'texture_{index:02d}'
         Image.fromarray(palette[pixels]).save(output / (stem + '.png'))
         (output / (stem + '.gim')).write_bytes(gim)
         entries.append({'index': index, 'name': name, 'width': pixels.shape[1], 'height': pixels.shape[0],
                         'gim': stem + '.gim', 'png': stem + '.png', 'gim_bytes': len(gim), 'bits': texture_bits,
-                        'source_dimensions': original_size})
+                        'source_dimensions': original_size, 'source_alpha_pixel_exact': preserve_alpha})
     depths = sorted({t['bits'] for t in entries})
     manifest = {'textures': entries, 'scope': 'Observed linear PSMT8 RTX3 only; PSP indexed4/indexed8 GIM',
                 'validation': 'Every GIM decodes to exactly the converted image indices and RGBA palette',

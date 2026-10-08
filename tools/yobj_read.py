@@ -1,4 +1,4 @@
-"""Read YOBJ skeletons and the observed PSP float-vertex mesh layout.
+"""Read YOBJ skeletons and PSP float vertices with float or GE integer weights.
 
 No uploaded editor code is executed or required. Geometry support is explicit:
 the HCTP PS2 mesh layout is not handled by the PSP reader.
@@ -106,9 +106,10 @@ def read_yobj(data: bytes, *, psp_geometry: bool = False) -> dict:
         material_count, palette_ptr, material_ptr = r.unpack("<3I", a + 4)
         vertex_header_ptr, flag = r.unpack("<2I", a + 24)
         vertex_count = r.u32(a + 40)
-        # Only the float-weight/UV/normal/position variant observed in all
-        # three supplied PSP YOBJs is implemented. Reject PS2 and other flags.
-        if flag & ~0x1C000 != 0x17FF:
+        # The original samples use float weights. The region profile uses GE
+        # fixed-point integer weights, aligned to four bytes before float UVs.
+        base_flag = flag & ~0x1C000
+        if base_flag not in (0x17FF, 0x13FF, 0x15FF):
             raise FormatError(f"Unsupported PSP vertex flag 0x{flag:x} in mesh {index}; do not use this decoder for PS2 geometry")
         weight_count = ((flag >> 14) & 7) + 1
         palette_count = r.u32(palette_ptr + 12)
@@ -123,14 +124,17 @@ def read_yobj(data: bytes, *, psp_geometry: bool = False) -> dict:
             model["warnings"].append(
                 f"Mesh {index} palette references {outside_palette} outside the declared bone table; game semantics need verification")
         vertex_start = r.u32(vertex_header_ptr + 8) + 8
-        stride = 36 + 4 * weight_count
+        weight_width, weight_format, denominator = {
+            0x17FF: (4, 'f', 1), 0x13FF: (1, 'B', 128), 0x15FF: (2, 'H', 32768)}[base_flag]
+        weight_bytes = 4*((weight_width*weight_count+3)//4)
+        stride = 36 + weight_bytes
         r.check(vertex_start, vertex_count * stride)
         vertices = []
         for j in range(vertex_count):
             va = vertex_start + j * stride
-            weights = r.unpack("<" + "f" * weight_count, va)
-            uv = r.unpack("<2f", va + 4 * weight_count)
-            color = r.unpack("<4B", va + 4 * weight_count + 8)
+            weights = tuple(w/denominator for w in r.unpack('<'+weight_format*weight_count, va))
+            uv = r.unpack("<2f", va + weight_bytes)
+            color = r.unpack("<4B", va + weight_bytes + 8)
             normal = r.unpack("<3f", va + stride - 24)
             position = r.unpack("<3f", va + stride - 12)
             _finite((*weights, *uv, *normal, *position))
