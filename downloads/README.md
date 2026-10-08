@@ -1,5 +1,12 @@
 # Test downloads
 
+[Download the 1800 Noesis review bundle](https://github.com/RyosSplitter/Wrestler-Importer/raw/refs/heads/main/downloads/1800-HCTP-to-PSP-Noesis-review.zip).
+This contains actual Noesis screenshots, the original YOBJ File Tool OBJ/MTL,
+a separately labeled native-winding diagnostic OBJ, matching PNG/GIM textures,
+and the unchanged 144 KiB beta 0.1.1 PAC. The original OBJ exporter reverses
+317 native triangles; arm gaps remain visible in the previews.
+See [review evidence and limitations](../docs/noesis-review.md).
+
 [Download Wrestler Importer Windows beta 0.1.1](https://github.com/RyosSplitter/Wrestler-Importer/raw/refs/heads/main/downloads/Wrestler-Importer-beta-0.1.1.zip).
 This update decodes the mixed PSMT4/PSMT8 textures in the user's HCTP `1800.pac`.
 It fits that source to the 144 KiB cap while retaining the unchanged RVD baseline.
