@@ -1,3 +1,7 @@
+## 1800 hybrid: half-size textures
+
+[Download the 136 KiB PAC](1800-PSP-hybrid-half-textures.pac) or [PAC and preview bundle](1800-PSP-hybrid-half-textures-test-bundle.zip). Combined GIM size is reduced from 47,088 to 23,536 bytes through lower resolution. Model section, weights, materials and palettes are unchanged from the 144 KiB trial. [Details and screenshots](../docs/1800-hybrid-half-textures.md). PPSSPP validation is pending.
+
 ## 1800 hybrid PSP size-budget trial
 
 [Download the 144 KiB PAC](1800-PSP-hybrid-144KiB.pac) or [PAC and preview bundle](1800-PSP-hybrid-144KiB-test-bundle.zip). Retains 2,276 triangles, 80% of the head/arm regions, hybrid float weights and a 128×128 indexed8 face texture. Native BPE compression is used. PPSSPP validation is pending. [Report and screenshots](../docs/1800-hybrid-budget.md).

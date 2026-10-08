@@ -1,0 +1,313 @@
+{
+  "original_pac_bytes": 147456,
+  "pac_bytes": 139264,
+  "original_gim_bytes": 47088,
+  "gim_bytes": 23536,
+  "texture_size_fraction": 0.49983010533469246,
+  "original_texture_section_stored_bytes": 21026,
+  "texture_section_stored_bytes": 11275,
+  "texture_section_expanded_bytes": 24160,
+  "unchanged_sections": [
+    2,
+    8
+  ],
+  "model_section_byte_identical": true,
+  "model_expanded_sha256": "2d2feedcb031d1c2e252f51d0308cd1beb71d30538127a0586edaab631194f72",
+  "original_pac_sha256": "ca9cb1992ef65ee3dce873cfeb473cc970388b512dd93a3b97b7d34575da2d86",
+  "pac_sha256": "04ff929f8621a768f7c7d3f0a9c2c6e680a587857ee0532044c8dc64880014b0",
+  "resampling": "Nearest neighbor on existing palette indices",
+  "palette_and_alpha_values_unchanged": true,
+  "textures": [
+    {
+      "name": "boots",
+      "original_dimensions": [
+        32,
+        64
+      ],
+      "dimensions": [
+        32,
+        32
+      ],
+      "bits": 4,
+      "original_bytes": 1296,
+      "bytes": 784,
+      "rgba_palette_identical": true
+    },
+    {
+      "name": "ha",
+      "original_dimensions": [
+        32,
+        16
+      ],
+      "dimensions": [
+        32,
+        8
+      ],
+      "bits": 4,
+      "original_bytes": 528,
+      "bytes": 400,
+      "rgba_palette_identical": true
+    },
+    {
+      "name": "kuchi01",
+      "original_dimensions": [
+        32,
+        16
+      ],
+      "dimensions": [
+        32,
+        8
+      ],
+      "bits": 4,
+      "original_bytes": 528,
+      "bytes": 400,
+      "rgba_palette_identical": true
+    },
+    {
+      "name": "kutu3",
+      "original_dimensions": [
+        32,
+        32
+      ],
+      "dimensions": [
+        32,
+        16
+      ],
+      "bits": 4,
+      "original_bytes": 784,
+      "bytes": 528,
+      "rgba_palette_identical": true
+    },
+    {
+      "name": "l-eye",
+      "original_dimensions": [
+        64,
+        64
+      ],
+      "dimensions": [
+        64,
+        32
+      ],
+      "bits": 4,
+      "original_bytes": 2320,
+      "bytes": 1296,
+      "rgba_palette_identical": true
+    },
+    {
+      "name": "l-kao2",
+      "original_dimensions": [
+        128,
+        128
+      ],
+      "dimensions": [
+        128,
+        64
+      ],
+      "bits": 8,
+      "original_bytes": 17616,
+      "bytes": 9424,
+      "rgba_palette_identical": true
+    },
+    {
+      "name": "l-kaobac",
+      "original_dimensions": [
+        32,
+        64
+      ],
+      "dimensions": [
+        32,
+        32
+      ],
+      "bits": 4,
+      "original_bytes": 1296,
+      "bytes": 784,
+      "rgba_palette_identical": true
+    },
+    {
+      "name": "l-kubi",
+      "original_dimensions": [
+        64,
+        32
+      ],
+      "dimensions": [
+        32,
+        32
+      ],
+      "bits": 4,
+      "original_bytes": 1296,
+      "bytes": 784,
+      "rgba_palette_identical": true
+    },
+    {
+      "name": "l-mune1",
+      "original_dimensions": [
+        32,
+        64
+      ],
+      "dimensions": [
+        32,
+        32
+      ],
+      "bits": 4,
+      "original_bytes": 1296,
+      "bytes": 784,
+      "rgba_palette_identical": true
+    },
+    {
+      "name": "l-mune2",
+      "original_dimensions": [
+        64,
+        64
+      ],
+      "dimensions": [
+        32,
+        32
+      ],
+      "bits": 4,
+      "original_bytes": 2320,
+      "bytes": 784,
+      "rgba_palette_identical": true
+    },
+    {
+      "name": "l-pan1",
+      "original_dimensions": [
+        64,
+        64
+      ],
+      "dimensions": [
+        32,
+        32
+      ],
+      "bits": 4,
+      "original_bytes": 2320,
+      "bytes": 784,
+      "rgba_palette_identical": true
+    },
+    {
+      "name": "l-pan2",
+      "original_dimensions": [
+        64,
+        64
+      ],
+      "dimensions": [
+        32,
+        32
+      ],
+      "bits": 4,
+      "original_bytes": 2320,
+      "bytes": 784,
+      "rgba_palette_identical": true
+    },
+    {
+      "name": "l-se1",
+      "original_dimensions": [
+        64,
+        64
+      ],
+      "dimensions": [
+        32,
+        32
+      ],
+      "bits": 4,
+      "original_bytes": 2320,
+      "bytes": 784,
+      "rgba_palette_identical": true
+    },
+    {
+      "name": "l_ude",
+      "original_dimensions": [
+        64,
+        64
+      ],
+      "dimensions": [
+        64,
+        32
+      ],
+      "bits": 4,
+      "original_bytes": 2320,
+      "bytes": 1296,
+      "rgba_palette_identical": true
+    },
+    {
+      "name": "momo",
+      "original_dimensions": [
+        64,
+        64
+      ],
+      "dimensions": [
+        32,
+        32
+      ],
+      "bits": 4,
+      "original_bytes": 2320,
+      "bytes": 784,
+      "rgba_palette_identical": true
+    },
+    {
+      "name": "pat",
+      "original_dimensions": [
+        64,
+        32
+      ],
+      "dimensions": [
+        32,
+        32
+      ],
+      "bits": 4,
+      "original_bytes": 1296,
+      "bytes": 784,
+      "rgba_palette_identical": true
+    },
+    {
+      "name": "pat2",
+      "original_dimensions": [
+        64,
+        64
+      ],
+      "dimensions": [
+        32,
+        32
+      ],
+      "bits": 4,
+      "original_bytes": 2320,
+      "bytes": 784,
+      "rgba_palette_identical": true
+    },
+    {
+      "name": "te",
+      "original_dimensions": [
+        64,
+        32
+      ],
+      "dimensions": [
+        32,
+        32
+      ],
+      "bits": 4,
+      "original_bytes": 1296,
+      "bytes": 784,
+      "rgba_palette_identical": true
+    },
+    {
+      "name": "yubi",
+      "original_dimensions": [
+        32,
+        64
+      ],
+      "dimensions": [
+        32,
+        32
+      ],
+      "bits": 4,
+      "original_bytes": 1296,
+      "bytes": 784,
+      "rgba_palette_identical": true
+    }
+  ],
+  "status": "Experimental PSP candidate; PPSSPP validation pending",
+  "vertices": 2277,
+  "triangles": 2276,
+  "bones": 79,
+  "mesh_count": 57,
+  "model_reader_warnings": []
+}
