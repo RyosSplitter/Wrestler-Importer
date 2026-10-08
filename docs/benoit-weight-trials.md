@@ -62,3 +62,20 @@ added to the target skeleton. Other weights keep their mapped values.
 The screenshot shows largely intact arms, but unresolved facial/helper weights
 need explicit handling. Subsequent trials will test redistribution, hybrid
 weighting, PSP-base transfer and automatic binding on the same geometry.
+
+## 2. Bone mapping with ancestor redistribution
+
+[Elbow-flex screenshot](../downloads/benoit-weight-trials/method-2-elbow-flex.png)
+and [report](../downloads/benoit-weight-trials/method-2-report.json).
+
+Missing shoulder helpers map to the matching clavicle; missing tooth, eyebrow
+and head helper bones map to `atama`; `root_d` maps to `root`. Every vertex now
+has normalized PSP bone influences. No influence is held at rest, all 2,836
+triangles remain, and duplicate-position seams stay together in the test poses.
+These ancestor choices are explicit in the report, not inferred game semantics.
+
+The elbow-flex pose's RMS displacement from the analytical original rig falls
+from 0.09065 model units to 0.07574. The arms appear intact. Small facial edges
+still stretch during the jaw test; a complete mapping is not sufficient evidence
+of good facial deformation. Trial 3 will replace the head region's weighting
+with interpolation from the native PSP model.
