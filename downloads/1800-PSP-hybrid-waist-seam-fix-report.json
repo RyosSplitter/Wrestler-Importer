@@ -1,0 +1,790 @@
+{
+  "status": "Experimental localized visual repair; PPSSPP validation pending",
+  "source_sha256": "fe1073d97e9301c62226d611d174324d74cb5223669f3bbeed8a6660bcb80495",
+  "baseline_sha256": "04ff929f8621a768f7c7d3f0a9c2c6e680a587857ee0532044c8dc64880014b0",
+  "pac_sha256": "3d6540488e41b11532992ba9cd6072aab42c091a4b1bd4f51b430a44e3b3b89d",
+  "pac_filename": "1800-PSP-hybrid-waist-seam-fix.pac",
+  "alignment_of_readonly_reference": {
+    "scale": 0.9848508359266518,
+    "rotation": [
+      [
+        0.9999998851622679,
+        0.0004792013730987559,
+        -6.4416164210131625e-06
+      ],
+      [
+        -0.00047914987943760185,
+        0.9999790991924478,
+        0.006447603714032573
+      ],
+      [
+        9.531182338989066e-06,
+        -0.006447599887104649,
+        0.9999792139663961
+      ]
+    ],
+    "translation": [
+      -0.0049064050136848735,
+      0.041733606331453066,
+      0.046555414839408255
+    ],
+    "landmarks": [
+      "koshi",
+      "atama",
+      "l_te",
+      "r_te",
+      "l_ashi",
+      "r_ashi",
+      "l_kote",
+      "r_kote",
+      "l_sune",
+      "r_sune",
+      "l_sakotsu",
+      "r_sakotsu"
+    ]
+  },
+  "patch": {
+    "junctions": [
+      {
+        "before_position": [
+          1.7264759540557861,
+          -1.8043687343597412,
+          0.9147286415100098
+        ],
+        "after_position": [
+          1.7637462615966797,
+          -1.9194122552871704,
+          0.021693727001547813
+        ],
+        "material_textures": [
+          "l-pan2",
+          "l-pan1",
+          "l-se1",
+          "l-mune2"
+        ],
+        "displacement": 0.9011855780374587
+      },
+      {
+        "before_position": [
+          0.08176849037408829,
+          -2.0623838901519775,
+          -1.6361411809921265
+        ],
+        "after_position": [
+          -0.005761383101344109,
+          -1.6959104537963867,
+          -1.4477211236953735
+        ],
+        "material_textures": [
+          "l-pan1",
+          "l-mune2"
+        ],
+        "displacement": 0.42126758277443105
+      },
+      {
+        "before_position": [
+          -1.0850735902786255,
+          -1.8875726461410522,
+          1.1512280702590942
+        ],
+        "after_position": [
+          -1.0876390933990479,
+          -2.0687711238861084,
+          1.1658153533935547
+        ],
+        "material_textures": [
+          "l-pan2",
+          "l-se1"
+        ],
+        "displacement": 0.18180280243338226
+      },
+      {
+        "before_position": [
+          -1.7729796171188354,
+          -2.2210350036621094,
+          -0.5471447110176086
+        ],
+        "after_position": [
+          -1.7755591869354248,
+          -1.9177454710006714,
+          0.02165842056274414
+        ],
+        "material_textures": [
+          "l-pan2",
+          "l-pan1",
+          "l-se1",
+          "l-mune2"
+        ],
+        "displacement": 0.6446147665839251
+      }
+    ],
+    "changed_position_uv_records": [
+      {
+        "mesh": 52,
+        "vertex": 9,
+        "before_position": [
+          1.7264759540557861,
+          -1.8043687343597412,
+          0.9147286415100098
+        ],
+        "after_position": [
+          1.7637462615966797,
+          -1.9194122552871704,
+          0.021693727001547813
+        ],
+        "before_uv": [
+          0.20881199836730957,
+          0.1255279928445816
+        ],
+        "after_uv": [
+          0.005952482111752033,
+          0.020045936107635498
+        ],
+        "textures": [
+          2
+        ]
+      },
+      {
+        "mesh": 52,
+        "vertex": 19,
+        "before_position": [
+          0.08176849037408829,
+          -2.0623838901519775,
+          -1.6361411809921265
+        ],
+        "after_position": [
+          -0.005761383101344109,
+          -1.6959104537963867,
+          -1.4477211236953735
+        ],
+        "before_uv": [
+          0.5225719809532166,
+          0.09654200077056885
+        ],
+        "after_uv": [
+          0.5037735104560852,
+          0.02825796604156494
+        ],
+        "textures": [
+          4
+        ]
+      },
+      {
+        "mesh": 52,
+        "vertex": 20,
+        "before_position": [
+          1.7264759540557861,
+          -1.8043687343597412,
+          0.9147286415100098
+        ],
+        "after_position": [
+          1.7637462615966797,
+          -1.9194122552871704,
+          0.021693727001547813
+        ],
+        "before_uv": [
+          0.0671439990401268,
+          0.013766000047326088
+        ],
+        "after_uv": [
+          0.009637899696826935,
+          0.0057904720306396484
+        ],
+        "textures": [
+          4
+        ]
+      },
+      {
+        "mesh": 53,
+        "vertex": 6,
+        "before_position": [
+          -1.0850735902786255,
+          -1.8875726461410522,
+          1.1512280702590942
+        ],
+        "after_position": [
+          -1.0876390933990479,
+          -2.0687711238861084,
+          1.1658153533935547
+        ],
+        "before_uv": [
+          0.716742992401123,
+          0.8679220080375671
+        ],
+        "after_uv": [
+          0.7429389953613281,
+          0.9095879793167114
+        ],
+        "textures": [
+          6
+        ]
+      },
+      {
+        "mesh": 53,
+        "vertex": 17,
+        "before_position": [
+          -1.7729796171188354,
+          -2.2210350036621094,
+          -0.5471447110176086
+        ],
+        "after_position": [
+          -1.7755591869354248,
+          -1.9177454710006714,
+          0.02165842056274414
+        ],
+        "before_uv": [
+          0.925741970539093,
+          0.8985239863395691
+        ],
+        "after_uv": [
+          0.993399977684021,
+          0.9345200061798096
+        ],
+        "textures": [
+          6
+        ]
+      },
+      {
+        "mesh": 53,
+        "vertex": 22,
+        "before_position": [
+          1.7264759540557861,
+          -1.8043687343597412,
+          0.9147286415100098
+        ],
+        "after_position": [
+          1.7637462615966797,
+          -1.9194122552871704,
+          0.021693727001547813
+        ],
+        "before_uv": [
+          0.18601100146770477,
+          0.8908029794692993
+        ],
+        "after_uv": [
+          0.006616000086069107,
+          0.9345200061798096
+        ],
+        "textures": [
+          6
+        ]
+      },
+      {
+        "mesh": 53,
+        "vertex": 69,
+        "before_position": [
+          0.08176849037408829,
+          -2.0623838901519775,
+          -1.6361411809921265
+        ],
+        "after_position": [
+          -0.005761383101344109,
+          -1.6959104537963867,
+          -1.4477211236953735
+        ],
+        "before_uv": [
+          0.5000529885292053,
+          0.8388649821281433
+        ],
+        "after_uv": [
+          0.5000000596046448,
+          0.9947919845581055
+        ],
+        "textures": [
+          7
+        ]
+      },
+      {
+        "mesh": 53,
+        "vertex": 70,
+        "before_position": [
+          -1.7729796171188354,
+          -2.2210350036621094,
+          -0.5471447110176086
+        ],
+        "after_position": [
+          -1.7755591869354248,
+          -1.9177454710006714,
+          0.02165842056274414
+        ],
+        "before_uv": [
+          0.095769003033638,
+          0.9087839722633362
+        ],
+        "after_uv": [
+          0.014367000199854374,
+          0.9463480114936829
+        ],
+        "textures": [
+          7
+        ]
+      },
+      {
+        "mesh": 53,
+        "vertex": 76,
+        "before_position": [
+          1.7264759540557861,
+          -1.8043687343597412,
+          0.9147286415100098
+        ],
+        "after_position": [
+          1.7637462615966797,
+          -1.9194122552871704,
+          0.021693727001547813
+        ],
+        "before_uv": [
+          0.9210060238838196,
+          0.9214299917221069
+        ],
+        "after_uv": [
+          0.9875659942626953,
+          0.9463480114936829
+        ],
+        "textures": [
+          7
+        ]
+      },
+      {
+        "mesh": 55,
+        "vertex": 11,
+        "before_position": [
+          -1.0850735902786255,
+          -1.8875726461410522,
+          1.1512280702590942
+        ],
+        "after_position": [
+          -1.0876390933990479,
+          -2.0687711238861084,
+          1.1658153533935547
+        ],
+        "before_uv": [
+          0.6815440058708191,
+          0.11156199872493744
+        ],
+        "after_uv": [
+          0.7049142122268677,
+          0.0004994869232177734
+        ],
+        "textures": [
+          2
+        ]
+      },
+      {
+        "mesh": 55,
+        "vertex": 12,
+        "before_position": [
+          -1.7729796171188354,
+          -2.2210350036621094,
+          -0.5471447110176086
+        ],
+        "after_position": [
+          -1.7755591869354248,
+          -1.9177454710006714,
+          0.02165842056274414
+        ],
+        "before_uv": [
+          0.9299659729003906,
+          0.038499001413583755
+        ],
+        "after_uv": [
+          0.9914329051971436,
+          0.01093435287475586
+        ],
+        "textures": [
+          2
+        ]
+      },
+      {
+        "mesh": 55,
+        "vertex": 15,
+        "before_position": [
+          1.7264759540557861,
+          -1.8043687343597412,
+          0.9147286415100098
+        ],
+        "after_position": [
+          1.7637462615966797,
+          -1.9194122552871704,
+          0.021693727001547813
+        ],
+        "before_uv": [
+          0.20881199836730957,
+          0.1255279928445816
+        ],
+        "after_uv": [
+          0.005952482111752033,
+          0.020045936107635498
+        ],
+        "textures": [
+          2
+        ]
+      },
+      {
+        "mesh": 55,
+        "vertex": 16,
+        "before_position": [
+          0.08176849037408829,
+          -2.0623838901519775,
+          -1.6361411809921265
+        ],
+        "after_position": [
+          -0.005761383101344109,
+          -1.6959104537963867,
+          -1.4477211236953735
+        ],
+        "before_uv": [
+          0.5225719809532166,
+          0.09654200077056885
+        ],
+        "after_uv": [
+          0.5037735104560852,
+          0.02825796604156494
+        ],
+        "textures": [
+          4
+        ]
+      },
+      {
+        "mesh": 55,
+        "vertex": 18,
+        "before_position": [
+          -1.7729796171188354,
+          -2.2210350036621094,
+          -0.5471447110176086
+        ],
+        "after_position": [
+          -1.7755591869354248,
+          -1.9177454710006714,
+          0.02165842056274414
+        ],
+        "before_uv": [
+          0.9158269762992859,
+          0.06899599730968475
+        ],
+        "after_uv": [
+          0.9950488805770874,
+          0.0057904720306396484
+        ],
+        "textures": [
+          4
+        ]
+      }
+    ],
+    "changed_normal_records": [
+      {
+        "mesh": 52,
+        "vertex": 5
+      },
+      {
+        "mesh": 52,
+        "vertex": 7
+      },
+      {
+        "mesh": 52,
+        "vertex": 8
+      },
+      {
+        "mesh": 52,
+        "vertex": 9
+      },
+      {
+        "mesh": 52,
+        "vertex": 10
+      },
+      {
+        "mesh": 52,
+        "vertex": 11
+      },
+      {
+        "mesh": 52,
+        "vertex": 12
+      },
+      {
+        "mesh": 52,
+        "vertex": 13
+      },
+      {
+        "mesh": 52,
+        "vertex": 15
+      },
+      {
+        "mesh": 52,
+        "vertex": 18
+      },
+      {
+        "mesh": 52,
+        "vertex": 19
+      },
+      {
+        "mesh": 52,
+        "vertex": 20
+      },
+      {
+        "mesh": 52,
+        "vertex": 27
+      },
+      {
+        "mesh": 52,
+        "vertex": 39
+      },
+      {
+        "mesh": 52,
+        "vertex": 41
+      },
+      {
+        "mesh": 52,
+        "vertex": 42
+      },
+      {
+        "mesh": 53,
+        "vertex": 4
+      },
+      {
+        "mesh": 53,
+        "vertex": 5
+      },
+      {
+        "mesh": 53,
+        "vertex": 6
+      },
+      {
+        "mesh": 53,
+        "vertex": 7
+      },
+      {
+        "mesh": 53,
+        "vertex": 8
+      },
+      {
+        "mesh": 53,
+        "vertex": 17
+      },
+      {
+        "mesh": 53,
+        "vertex": 21
+      },
+      {
+        "mesh": 53,
+        "vertex": 22
+      },
+      {
+        "mesh": 53,
+        "vertex": 23
+      },
+      {
+        "mesh": 53,
+        "vertex": 24
+      },
+      {
+        "mesh": 53,
+        "vertex": 39
+      },
+      {
+        "mesh": 53,
+        "vertex": 42
+      },
+      {
+        "mesh": 53,
+        "vertex": 51
+      },
+      {
+        "mesh": 53,
+        "vertex": 55
+      },
+      {
+        "mesh": 53,
+        "vertex": 56
+      },
+      {
+        "mesh": 53,
+        "vertex": 57
+      },
+      {
+        "mesh": 53,
+        "vertex": 58
+      },
+      {
+        "mesh": 53,
+        "vertex": 69
+      },
+      {
+        "mesh": 53,
+        "vertex": 70
+      },
+      {
+        "mesh": 53,
+        "vertex": 72
+      },
+      {
+        "mesh": 53,
+        "vertex": 73
+      },
+      {
+        "mesh": 53,
+        "vertex": 76
+      },
+      {
+        "mesh": 53,
+        "vertex": 77
+      },
+      {
+        "mesh": 53,
+        "vertex": 78
+      },
+      {
+        "mesh": 55,
+        "vertex": 6
+      },
+      {
+        "mesh": 55,
+        "vertex": 8
+      },
+      {
+        "mesh": 55,
+        "vertex": 10
+      },
+      {
+        "mesh": 55,
+        "vertex": 11
+      },
+      {
+        "mesh": 55,
+        "vertex": 12
+      },
+      {
+        "mesh": 55,
+        "vertex": 13
+      },
+      {
+        "mesh": 55,
+        "vertex": 14
+      },
+      {
+        "mesh": 55,
+        "vertex": 15
+      },
+      {
+        "mesh": 55,
+        "vertex": 16
+      },
+      {
+        "mesh": 55,
+        "vertex": 17
+      },
+      {
+        "mesh": 55,
+        "vertex": 18
+      },
+      {
+        "mesh": 55,
+        "vertex": 19
+      },
+      {
+        "mesh": 55,
+        "vertex": 20
+      },
+      {
+        "mesh": 55,
+        "vertex": 21
+      },
+      {
+        "mesh": 55,
+        "vertex": 28
+      },
+      {
+        "mesh": 55,
+        "vertex": 29
+      },
+      {
+        "mesh": 55,
+        "vertex": 34
+      },
+      {
+        "mesh": 55,
+        "vertex": 36
+      },
+      {
+        "mesh": 55,
+        "vertex": 37
+      },
+      {
+        "mesh": 55,
+        "vertex": 42
+      },
+      {
+        "mesh": 55,
+        "vertex": 43
+      }
+    ],
+    "bounds_changed": [],
+    "expanded_yobj_changed_bytes": 831,
+    "affected_triangle_min_area": 0.08453680335433338,
+    "scope": "Four shared waistband material junctions and one-ring normals",
+    "indices_materials_strip_metadata_bone_palettes_weight_bits_color_alpha_headers_offsets_allocations_relocations_identical": true,
+    "touched_triangles": 40,
+    "relative_geometric_normal_flips": 0
+  },
+  "before": {
+    "pac_bytes": 139264,
+    "expanded_yobj_bytes": 196256,
+    "stored_model_bytes": 119311
+  },
+  "after": {
+    "pac_bytes": 139264,
+    "expanded_yobj_bytes": 196256,
+    "stored_model_bytes": 119259
+  },
+  "unchanged_counts": {
+    "meshes": 57,
+    "vertices": 2277,
+    "triangles": 2276,
+    "textures": 19,
+    "material_records": 96,
+    "indices": 3884,
+    "strips": 804,
+    "bones": 79
+  },
+  "unchanged_pac_sections": [
+    8,
+    9
+  ],
+  "preview_yobj_equals_final_decompressed_pac": true,
+  "weights": "Existing PSP float weight bytes unchanged; no source weights copied or new rig applied",
+  "analytical_pose_seam_checks": {
+    "elbow-flex": {
+      "maximum_repaired_junction_separation": 0.0
+    },
+    "arms-up": {
+      "maximum_repaired_junction_separation": 0.0
+    },
+    "knees-bent": {
+      "maximum_repaired_junction_separation": 0.0
+    },
+    "rest": {
+      "maximum_repaired_junction_separation": 0.0
+    }
+  },
+  "focused_tests_passed": 23,
+  "noesis_observations": {
+    "full_before": {
+      "meshes": 82,
+      "textures": 19,
+      "materials": 19
+    },
+    "full_after": {
+      "meshes": 83,
+      "textures": 19,
+      "materials": 19
+    },
+    "detail_triangle_selection_count": 152,
+    "detail_exports_are_partial_geometry_for_inspection": true
+  },
+  "recommended_base": "Accepted 57-mesh half-texture PAC, without the experimental merges",
+  "optional_merged_variant": {
+    "pac": "pat2",
+    "sha256": "8d400f9161448afca9ef78a9f70fca65e322c69368b80d1d812695213786545f",
+    "expanded_yobj_bytes": 202256,
+    "same_decoded_geometry_uv_normals_weights_and_ordered_primitives": true
+  },
+  "deterministic_reproduction_identical": true
+}
