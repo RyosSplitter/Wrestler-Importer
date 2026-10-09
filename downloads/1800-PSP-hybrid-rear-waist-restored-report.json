@@ -1,0 +1,602 @@
+{
+  "status": "Rear seam restored; PPSSPP validation pending",
+  "filename": "1800-PSP-hybrid-rear-waist-restored.pac",
+  "baseline_sha256": "8e59fec71768b1c19bb890ceb1f66fd9735a60f8c0087b3f8a1b1b6a882335b0",
+  "source_sha256": "fe1073d97e9301c62226d611d174324d74cb5223669f3bbeed8a6660bcb80495",
+  "pac_sha256": "f90f7532da39b283bdc9e1cae97aa91b1c3745aec728ea536bf4d538ddbdc844",
+  "patch": {
+    "added_vertex_records": [
+      {
+        "mesh": 52,
+        "vertex": 92,
+        "position": [
+          0.7055748701095581,
+          -1.7421064376831055,
+          -1.3122634887695312
+        ],
+        "texture": "l-pan1"
+      },
+      {
+        "mesh": 52,
+        "vertex": 93,
+        "position": [
+          1.1224980354309082,
+          -1.7836859226226807,
+          -1.102980613708496
+        ],
+        "texture": "l-pan1"
+      },
+      {
+        "mesh": 52,
+        "vertex": 94,
+        "position": [
+          1.6376080513000488,
+          -1.8766165971755981,
+          -0.5745152235031128
+        ],
+        "texture": "l-pan1"
+      },
+      {
+        "mesh": 53,
+        "vertex": 110,
+        "position": [
+          -0.7171915769577026,
+          -1.741444706916809,
+          -1.3122789859771729
+        ],
+        "texture": "l-mune2"
+      },
+      {
+        "mesh": 53,
+        "vertex": 111,
+        "position": [
+          -1.134157657623291,
+          -1.7826366424560547,
+          -1.1030036211013794
+        ],
+        "texture": "l-mune2"
+      },
+      {
+        "mesh": 53,
+        "vertex": 112,
+        "position": [
+          -1.649367332458496,
+          -1.8750872611999512,
+          -0.574547529220581
+        ],
+        "texture": "l-mune2"
+      },
+      {
+        "mesh": 53,
+        "vertex": 113,
+        "position": [
+          1.6376080513000488,
+          -1.8766165971755981,
+          -0.5745152235031128
+        ],
+        "texture": "l-mune2"
+      },
+      {
+        "mesh": 53,
+        "vertex": 114,
+        "position": [
+          1.1224980354309082,
+          -1.7836859226226807,
+          -1.102980613708496
+        ],
+        "texture": "l-mune2"
+      },
+      {
+        "mesh": 53,
+        "vertex": 115,
+        "position": [
+          0.7055748701095581,
+          -1.7421064376831055,
+          -1.3122634887695312
+        ],
+        "texture": "l-mune2"
+      },
+      {
+        "mesh": 55,
+        "vertex": 106,
+        "position": [
+          -1.649367332458496,
+          -1.8750872611999512,
+          -0.574547529220581
+        ],
+        "texture": "l-pan1"
+      },
+      {
+        "mesh": 55,
+        "vertex": 107,
+        "position": [
+          -1.134157657623291,
+          -1.7826366424560547,
+          -1.1030036211013794
+        ],
+        "texture": "l-pan1"
+      },
+      {
+        "mesh": 55,
+        "vertex": 108,
+        "position": [
+          -0.7171915769577026,
+          -1.741444706916809,
+          -1.3122789859771729
+        ],
+        "texture": "l-pan1"
+      }
+    ],
+    "changed_weight_normal_records": [
+      {
+        "mesh": 52,
+        "vertex": 9,
+        "position": [
+          1.7637462615966797,
+          -1.9194122552871704,
+          0.021693727001547813
+        ],
+        "before_bone_weights": {
+          "root": 0.831454873085022,
+          "koshi": 0.16212956607341766,
+          "l_momo": 0.006415571551769972
+        },
+        "after_bone_weights": {
+          "root": 0.5,
+          "koshi": 0.5
+        }
+      },
+      {
+        "mesh": 52,
+        "vertex": 19,
+        "position": [
+          -0.005761383101344109,
+          -1.6959104537963867,
+          -1.4477211236953735
+        ],
+        "before_bone_weights": {
+          "root": 0.42602473497390747,
+          "koshi": 0.560547947883606,
+          "mune": 0.012349944561719894,
+          "l_sakotsu": 0.001077402732335031
+        },
+        "after_bone_weights": {
+          "root": 0.8235290050506592,
+          "koshi": 0.17647099494934082
+        }
+      },
+      {
+        "mesh": 52,
+        "vertex": 20,
+        "position": [
+          1.7637462615966797,
+          -1.9194122552871704,
+          0.021693727001547813
+        ],
+        "before_bone_weights": {
+          "root": 0.831454873085022,
+          "koshi": 0.16212956607341766,
+          "l_momo": 0.006415571551769972
+        },
+        "after_bone_weights": {
+          "root": 0.5,
+          "koshi": 0.5
+        }
+      },
+      {
+        "mesh": 53,
+        "vertex": 17,
+        "position": [
+          -1.7755591869354248,
+          -1.9177454710006714,
+          0.02165842056274414
+        ],
+        "before_bone_weights": {
+          "root": 0.7277364134788513,
+          "koshi": 0.26739561557769775,
+          "r_momo": 0.004867945797741413
+        },
+        "after_bone_weights": {
+          "root": 0.5,
+          "koshi": 0.5
+        }
+      },
+      {
+        "mesh": 53,
+        "vertex": 22,
+        "position": [
+          1.7637462615966797,
+          -1.9194122552871704,
+          0.021693727001547813
+        ],
+        "before_bone_weights": {
+          "root": 0.831454873085022,
+          "koshi": 0.16212956607341766,
+          "l_momo": 0.006415571551769972
+        },
+        "after_bone_weights": {
+          "root": 0.5,
+          "koshi": 0.5
+        }
+      },
+      {
+        "mesh": 53,
+        "vertex": 69,
+        "position": [
+          -0.005761383101344109,
+          -1.6959104537963867,
+          -1.4477211236953735
+        ],
+        "before_bone_weights": {
+          "root": 0.42602473497390747,
+          "koshi": 0.560547947883606,
+          "mune": 0.012349944561719894,
+          "l_sakotsu": 0.001077402732335031
+        },
+        "after_bone_weights": {
+          "root": 0.8235290050506592,
+          "koshi": 0.17647099494934082
+        }
+      },
+      {
+        "mesh": 53,
+        "vertex": 70,
+        "position": [
+          -1.7755591869354248,
+          -1.9177454710006714,
+          0.02165842056274414
+        ],
+        "before_bone_weights": {
+          "root": 0.7277364134788513,
+          "koshi": 0.26739561557769775,
+          "r_momo": 0.004867945797741413
+        },
+        "after_bone_weights": {
+          "root": 0.5,
+          "koshi": 0.5
+        }
+      },
+      {
+        "mesh": 53,
+        "vertex": 76,
+        "position": [
+          1.7637462615966797,
+          -1.9194122552871704,
+          0.021693727001547813
+        ],
+        "before_bone_weights": {
+          "root": 0.831454873085022,
+          "koshi": 0.16212956607341766,
+          "l_momo": 0.006415571551769972
+        },
+        "after_bone_weights": {
+          "root": 0.5,
+          "koshi": 0.5
+        }
+      },
+      {
+        "mesh": 55,
+        "vertex": 12,
+        "position": [
+          -1.7755591869354248,
+          -1.9177454710006714,
+          0.02165842056274414
+        ],
+        "before_bone_weights": {
+          "root": 0.7277364134788513,
+          "koshi": 0.26739561557769775,
+          "r_momo": 0.004867945797741413
+        },
+        "after_bone_weights": {
+          "root": 0.5,
+          "koshi": 0.5
+        }
+      },
+      {
+        "mesh": 55,
+        "vertex": 15,
+        "position": [
+          1.7637462615966797,
+          -1.9194122552871704,
+          0.021693727001547813
+        ],
+        "before_bone_weights": {
+          "root": 0.831454873085022,
+          "koshi": 0.16212956607341766,
+          "l_momo": 0.006415571551769972
+        },
+        "after_bone_weights": {
+          "root": 0.5,
+          "koshi": 0.5
+        }
+      },
+      {
+        "mesh": 55,
+        "vertex": 16,
+        "position": [
+          -0.005761383101344109,
+          -1.6959104537963867,
+          -1.4477211236953735
+        ],
+        "before_bone_weights": {
+          "root": 0.42602473497390747,
+          "koshi": 0.560547947883606,
+          "mune": 0.012349944561719894,
+          "l_sakotsu": 0.001077402732335031
+        },
+        "after_bone_weights": {
+          "root": 0.8235290050506592,
+          "koshi": 0.17647099494934082
+        }
+      },
+      {
+        "mesh": 55,
+        "vertex": 18,
+        "position": [
+          -1.7755591869354248,
+          -1.9177454710006714,
+          0.02165842056274414
+        ],
+        "before_bone_weights": {
+          "root": 0.7277364134788513,
+          "koshi": 0.26739561557769775,
+          "r_momo": 0.004867945797741413
+        },
+        "after_bone_weights": {
+          "root": 0.5,
+          "koshi": 0.5
+        }
+      }
+    ],
+    "changed_strips": [
+      {
+        "mesh": 52,
+        "material": 1,
+        "original_strip": 2
+      },
+      {
+        "mesh": 53,
+        "material": 1,
+        "original_strip": 12
+      },
+      {
+        "mesh": 53,
+        "material": 1,
+        "original_strip": 14
+      },
+      {
+        "mesh": 55,
+        "material": 1,
+        "original_strip": 0
+      }
+    ],
+    "replaced_triangles": [
+      {
+        "mesh": 52,
+        "material": 1,
+        "before": [
+          19,
+          20,
+          15
+        ],
+        "after": [
+          [
+            19,
+            92,
+            15
+          ],
+          [
+            92,
+            93,
+            15
+          ],
+          [
+            93,
+            94,
+            15
+          ],
+          [
+            94,
+            20,
+            15
+          ]
+        ]
+      },
+      {
+        "mesh": 53,
+        "material": 1,
+        "before": [
+          70,
+          58,
+          69
+        ],
+        "after": [
+          [
+            69,
+            110,
+            58
+          ],
+          [
+            110,
+            111,
+            58
+          ],
+          [
+            111,
+            112,
+            58
+          ],
+          [
+            112,
+            70,
+            58
+          ]
+        ]
+      },
+      {
+        "mesh": 53,
+        "material": 1,
+        "before": [
+          73,
+          76,
+          69
+        ],
+        "after": [
+          [
+            76,
+            113,
+            73
+          ],
+          [
+            113,
+            114,
+            73
+          ],
+          [
+            114,
+            115,
+            73
+          ],
+          [
+            115,
+            69,
+            73
+          ]
+        ]
+      },
+      {
+        "mesh": 55,
+        "material": 1,
+        "before": [
+          16,
+          17,
+          18
+        ],
+        "after": [
+          [
+            18,
+            106,
+            17
+          ],
+          [
+            106,
+            107,
+            17
+          ],
+          [
+            107,
+            108,
+            17
+          ],
+          [
+            108,
+            16,
+            17
+          ]
+        ]
+      }
+    ],
+    "original_positions_uvs_colors_materials_skeleton_palettes_preserved": true,
+    "front_mirror_geometry_preserved": true,
+    "note": "Local rear seam weights intentionally restored to corresponding source values mapped onto the existing PSP bones."
+  },
+  "pose_checks": {
+    "elbow-flex": {
+      "rear_seam_gap": 0.0,
+      "minimum_rest_vs_skinned_face_normal_cosine": 0.9999999999999984
+    },
+    "arms-up": {
+      "rear_seam_gap": 0.0,
+      "minimum_rest_vs_skinned_face_normal_cosine": 0.9999999999999984
+    },
+    "knees-bent": {
+      "rear_seam_gap": 0.0,
+      "minimum_rest_vs_skinned_face_normal_cosine": 0.9999999999999984
+    },
+    "rest": {
+      "rear_seam_gap": 0.0,
+      "minimum_rest_vs_skinned_face_normal_cosine": 0.9999999999999984
+    },
+    "forward-bend": {
+      "rear_seam_gap": 0.0,
+      "minimum_rest_vs_skinned_face_normal_cosine": 0.8686764938111627
+    },
+    "backward-bend": {
+      "rear_seam_gap": 0.0,
+      "minimum_rest_vs_skinned_face_normal_cosine": 0.9802222442449515
+    },
+    "waist-twist": {
+      "rear_seam_gap": 0.0,
+      "minimum_rest_vs_skinned_face_normal_cosine": 0.9149203000483719
+    },
+    "side-bend": {
+      "rear_seam_gap": 0.0,
+      "minimum_rest_vs_skinned_face_normal_cosine": 0.9111969653807575
+    }
+  },
+  "source_curve_comparison": {
+    "elbow-flex": {
+      "before_maximum_distance_to_source_seam_samples": 0.4559428481204858,
+      "after_maximum_source_seam_sample_error": 0.0
+    },
+    "arms-up": {
+      "before_maximum_distance_to_source_seam_samples": 0.4559428481204858,
+      "after_maximum_source_seam_sample_error": 0.0
+    },
+    "knees-bent": {
+      "before_maximum_distance_to_source_seam_samples": 0.4559428481204858,
+      "after_maximum_source_seam_sample_error": 0.0
+    },
+    "rest": {
+      "before_maximum_distance_to_source_seam_samples": 0.4559428481204858,
+      "after_maximum_source_seam_sample_error": 0.0
+    },
+    "forward-bend": {
+      "before_maximum_distance_to_source_seam_samples": 0.5224354648044109,
+      "after_maximum_source_seam_sample_error": 0.0
+    },
+    "backward-bend": {
+      "before_maximum_distance_to_source_seam_samples": 0.4782956416502737,
+      "after_maximum_source_seam_sample_error": 0.0
+    },
+    "waist-twist": {
+      "before_maximum_distance_to_source_seam_samples": 0.5635233223488583,
+      "after_maximum_source_seam_sample_error": 0.0
+    },
+    "side-bend": {
+      "before_maximum_distance_to_source_seam_samples": 0.4658773100253115,
+      "after_maximum_source_seam_sample_error": 0.0
+    }
+  },
+  "before": {
+    "pac_bytes": 139264,
+    "model_bytes": 196848,
+    "stored_model_bytes": 119371,
+    "meshes": 57,
+    "vertices": 2279,
+    "triangles": 2278,
+    "indices": 3890,
+    "strips": 806,
+    "textures": 19,
+    "material_records": 96,
+    "bones": 79
+  },
+  "after": {
+    "pac_bytes": 139264,
+    "model_bytes": 198304,
+    "stored_model_bytes": 120000,
+    "meshes": 57,
+    "vertices": 2291,
+    "triangles": 2290,
+    "indices": 3944,
+    "strips": 827,
+    "textures": 19,
+    "material_records": 96,
+    "bones": 79
+  },
+  "preview_equals_final_model": true,
+  "preserved_pac_sections": [
+    8,
+    9
+  ]
+}
