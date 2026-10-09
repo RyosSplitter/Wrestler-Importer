@@ -1,0 +1,1545 @@
+{
+  "status": "Experimental; PSP runtime validation required",
+  "source_input_filename": "1800-PSP-hybrid-half-textures.pac",
+  "source_yobj_sha256": "2d2feedcb031d1c2e252f51d0308cd1beb71d30538127a0586edaab631194f72",
+  "output_yobj_sha256": "34770d3a368f53a8252d7c415b65cebcb64f4a6c36e052bde23d2e730d272826",
+  "before": {
+    "meshes": 57,
+    "vertices": 2277,
+    "triangles": 2276,
+    "textures": 19,
+    "material_records": 96,
+    "strips": 804,
+    "indices": 3884,
+    "expanded_bytes": 196256,
+    "pac_bytes": 139264,
+    "pac_sha256": "04ff929f8621a768f7c7d3f0a9c2c6e680a587857ee0532044c8dc64880014b0",
+    "model_stored_bytes": 119311,
+    "unique_texture_materials": 19,
+    "obj_nonempty_group_material_combinations": 96
+  },
+  "after": {
+    "meshes": 52,
+    "vertices": 2277,
+    "triangles": 2276,
+    "textures": 19,
+    "material_records": 96,
+    "strips": 804,
+    "indices": 3884,
+    "expanded_bytes": 202256,
+    "pac_bytes": 139264,
+    "pac_sha256": "4f97dd464c9cafe119c8a4afecdabdc58c18bd014e20d2d7007f663ce60fd9db",
+    "model_stored_bytes": 119098,
+    "unique_texture_materials": 19,
+    "obj_nonempty_group_material_combinations": 92
+  },
+  "merge_map": [
+    {
+      "output_mesh": 0,
+      "original_meshes_zero_based": [
+        0
+      ],
+      "target_part": 0,
+      "vertices": 87,
+      "triangles": 117,
+      "indices": 185,
+      "vertex_stride": 68,
+      "bone_palette_zero_based": [
+        4,
+        7,
+        8,
+        10,
+        13,
+        21,
+        22,
+        27
+      ],
+      "bounds": [
+        0.04493221640586853,
+        -8.82659912109375,
+        -0.6310818791389465,
+        1.1904019117355347
+      ]
+    },
+    {
+      "output_mesh": 1,
+      "original_meshes_zero_based": [
+        1
+      ],
+      "target_part": 0,
+      "vertices": 9,
+      "triangles": 5,
+      "indices": 11,
+      "vertex_stride": 68,
+      "bone_palette_zero_based": [
+        4,
+        8,
+        10,
+        13,
+        15,
+        22,
+        27,
+        28
+      ],
+      "bounds": [
+        -0.11890429258346558,
+        -8.757389068603516,
+        -1.2111189365386963,
+        0.6795193552970886
+      ]
+    },
+    {
+      "output_mesh": 2,
+      "original_meshes_zero_based": [
+        2
+      ],
+      "target_part": 0,
+      "vertices": 21,
+      "triangles": 15,
+      "indices": 29,
+      "vertex_stride": 68,
+      "bone_palette_zero_based": [
+        4,
+        7,
+        14,
+        15,
+        18,
+        19,
+        21,
+        22
+      ],
+      "bounds": [
+        0.280163049697876,
+        -8.577961921691895,
+        -1.0954949855804443,
+        0.9113861322402954
+      ]
+    },
+    {
+      "output_mesh": 3,
+      "original_meshes_zero_based": [
+        3
+      ],
+      "target_part": 0,
+      "vertices": 146,
+      "triangles": 172,
+      "indices": 268,
+      "vertex_stride": 64,
+      "bone_palette_zero_based": [
+        2,
+        3,
+        4,
+        14,
+        22,
+        24,
+        25
+      ],
+      "bounds": [
+        -0.008951693773269653,
+        -8.412576675415039,
+        -0.25800821185112,
+        1.6322153806686401
+      ]
+    },
+    {
+      "output_mesh": 4,
+      "original_meshes_zero_based": [
+        4
+      ],
+      "target_part": 0,
+      "vertices": 28,
+      "triangles": 33,
+      "indices": 53,
+      "vertex_stride": 68,
+      "bone_palette_zero_based": [
+        2,
+        3,
+        4,
+        13,
+        20,
+        22,
+        24,
+        26
+      ],
+      "bounds": [
+        -0.2817073464393616,
+        -7.681231498718262,
+        -1.0225937366485596,
+        0.6532568335533142
+      ]
+    },
+    {
+      "output_mesh": 5,
+      "original_meshes_zero_based": [
+        5
+      ],
+      "target_part": 0,
+      "vertices": 26,
+      "triangles": 24,
+      "indices": 44,
+      "vertex_stride": 64,
+      "bone_palette_zero_based": [
+        4,
+        20,
+        21,
+        22,
+        24,
+        25,
+        26
+      ],
+      "bounds": [
+        -0.00855913758277893,
+        -7.754602432250977,
+        -1.2572575807571411,
+        0.39666685461997986
+      ]
+    },
+    {
+      "output_mesh": 6,
+      "original_meshes_zero_based": [
+        6
+      ],
+      "target_part": 0,
+      "vertices": 5,
+      "triangles": 3,
+      "indices": 7,
+      "vertex_stride": 68,
+      "bone_palette_zero_based": [
+        4,
+        8,
+        13,
+        19,
+        20,
+        21,
+        22,
+        26
+      ],
+      "bounds": [
+        -0.45023080706596375,
+        -7.917144298553467,
+        -1.178748607635498,
+        0.28741779923439026
+      ]
+    },
+    {
+      "output_mesh": 7,
+      "original_meshes_zero_based": [
+        7
+      ],
+      "target_part": 0,
+      "vertices": 64,
+      "triangles": 86,
+      "indices": 128,
+      "vertex_stride": 60,
+      "bone_palette_zero_based": [
+        4,
+        7,
+        14,
+        21,
+        22,
+        28
+      ],
+      "bounds": [
+        -0.009169578552246094,
+        -8.945228576660156,
+        -0.17544642090797424,
+        1.3982969522476196
+      ]
+    },
+    {
+      "output_mesh": 8,
+      "original_meshes_zero_based": [
+        8
+      ],
+      "target_part": 1,
+      "vertices": 21,
+      "triangles": 19,
+      "indices": 35,
+      "vertex_stride": 68,
+      "bone_palette_zero_based": [
+        4,
+        8,
+        10,
+        13,
+        21,
+        22,
+        24,
+        27
+      ],
+      "bounds": [
+        -0.2315109372138977,
+        -8.258516311645508,
+        -1.372577428817749,
+        0.6268832683563232
+      ]
+    },
+    {
+      "output_mesh": 9,
+      "original_meshes_zero_based": [
+        9
+      ],
+      "target_part": 1,
+      "vertices": 17,
+      "triangles": 16,
+      "indices": 32,
+      "vertex_stride": 68,
+      "bone_palette_zero_based": [
+        4,
+        10,
+        13,
+        15,
+        19,
+        21,
+        26,
+        27
+      ],
+      "bounds": [
+        -0.14323768019676208,
+        -8.17137336730957,
+        -1.4136641025543213,
+        0.27745816111564636
+      ]
+    },
+    {
+      "output_mesh": 10,
+      "original_meshes_zero_based": [
+        10
+      ],
+      "target_part": 1,
+      "vertices": 22,
+      "triangles": 19,
+      "indices": 35,
+      "vertex_stride": 68,
+      "bone_palette_zero_based": [
+        4,
+        10,
+        12,
+        15,
+        18,
+        19,
+        21,
+        28
+      ],
+      "bounds": [
+        0.08986940234899521,
+        -8.216602325439453,
+        -1.4444611072540283,
+        0.29887741804122925
+      ]
+    },
+    {
+      "output_mesh": 11,
+      "original_meshes_zero_based": [
+        11
+      ],
+      "target_part": 1,
+      "vertices": 4,
+      "triangles": 2,
+      "indices": 4,
+      "vertex_stride": 56,
+      "bone_palette_zero_based": [
+        4,
+        10,
+        15,
+        27,
+        28
+      ],
+      "bounds": [
+        -0.030720118433237076,
+        -8.405056953430176,
+        -1.3689472675323486,
+        0.1202131137251854
+      ]
+    },
+    {
+      "output_mesh": 12,
+      "original_meshes_zero_based": [
+        12
+      ],
+      "target_part": 1,
+      "vertices": 3,
+      "triangles": 1,
+      "indices": 3,
+      "vertex_stride": 64,
+      "bone_palette_zero_based": [
+        4,
+        8,
+        10,
+        13,
+        15,
+        21,
+        22
+      ],
+      "bounds": [
+        -0.37505072355270386,
+        -8.21278190612793,
+        -1.2214529514312744,
+        0.23760740458965302
+      ]
+    },
+    {
+      "output_mesh": 13,
+      "original_meshes_zero_based": [
+        13
+      ],
+      "target_part": 2,
+      "vertices": 23,
+      "triangles": 15,
+      "indices": 35,
+      "vertex_stride": 68,
+      "bone_palette_zero_based": [
+        4,
+        7,
+        12,
+        14,
+        16,
+        22,
+        27,
+        28
+      ],
+      "bounds": [
+        0.24417200684547424,
+        -8.901321411132812,
+        -1.051941156387329,
+        0.5662057399749756
+      ]
+    },
+    {
+      "output_mesh": 14,
+      "original_meshes_zero_based": [
+        14
+      ],
+      "target_part": 3,
+      "vertices": 31,
+      "triangles": 31,
+      "indices": 53,
+      "vertex_stride": 68,
+      "bone_palette_zero_based": [
+        4,
+        7,
+        10,
+        15,
+        16,
+        21,
+        27,
+        28
+      ],
+      "bounds": [
+        0.024349361658096313,
+        -8.692049980163574,
+        -1.256701946258545,
+        0.5392357110977173
+      ]
+    },
+    {
+      "output_mesh": 15,
+      "original_meshes_zero_based": [
+        15
+      ],
+      "target_part": 3,
+      "vertices": 12,
+      "triangles": 8,
+      "indices": 14,
+      "vertex_stride": 68,
+      "bone_palette_zero_based": [
+        4,
+        8,
+        10,
+        12,
+        13,
+        15,
+        27,
+        28
+      ],
+      "bounds": [
+        -0.12371262162923813,
+        -8.392471313476562,
+        -1.22853422164917,
+        0.29532116651535034
+      ]
+    },
+    {
+      "output_mesh": 16,
+      "original_meshes_zero_based": [
+        16
+      ],
+      "target_part": 3,
+      "vertices": 14,
+      "triangles": 9,
+      "indices": 17,
+      "vertex_stride": 68,
+      "bone_palette_zero_based": [
+        4,
+        7,
+        12,
+        14,
+        15,
+        21,
+        22,
+        28
+      ],
+      "bounds": [
+        0.2988930344581604,
+        -8.35549545288086,
+        -1.1674115657806396,
+        0.2408038079738617
+      ]
+    },
+    {
+      "output_mesh": 17,
+      "original_meshes_zero_based": [
+        17
+      ],
+      "target_part": 3,
+      "vertices": 17,
+      "triangles": 11,
+      "indices": 23,
+      "vertex_stride": 68,
+      "bone_palette_zero_based": [
+        4,
+        7,
+        8,
+        13,
+        16,
+        22,
+        27,
+        28
+      ],
+      "bounds": [
+        0.05087004601955414,
+        -8.417074203491211,
+        -1.1078513860702515,
+        0.432697594165802
+      ]
+    },
+    {
+      "output_mesh": 18,
+      "original_meshes_zero_based": [
+        18
+      ],
+      "target_part": 4,
+      "vertices": 5,
+      "triangles": 2,
+      "indices": 6,
+      "vertex_stride": 68,
+      "bone_palette_zero_based": [
+        4,
+        8,
+        13,
+        19,
+        20,
+        21,
+        22,
+        26
+      ],
+      "bounds": [
+        -0.3563295900821686,
+        -7.947279453277588,
+        -1.2838879823684692,
+        0.29005271196365356
+      ]
+    },
+    {
+      "output_mesh": 19,
+      "original_meshes_zero_based": [
+        19
+      ],
+      "target_part": 4,
+      "vertices": 4,
+      "triangles": 2,
+      "indices": 4,
+      "vertex_stride": 56,
+      "bone_palette_zero_based": [
+        4,
+        10,
+        15,
+        19,
+        21
+      ],
+      "bounds": [
+        -0.16569021344184875,
+        -8.116622924804688,
+        -1.4355589151382446,
+        0.11398180574178696
+      ]
+    },
+    {
+      "output_mesh": 20,
+      "original_meshes_zero_based": [
+        20
+      ],
+      "target_part": 5,
+      "vertices": 9,
+      "triangles": 5,
+      "indices": 11,
+      "vertex_stride": 68,
+      "bone_palette_zero_based": [
+        4,
+        12,
+        15,
+        18,
+        20,
+        21,
+        22,
+        25
+      ],
+      "bounds": [
+        0.2549990713596344,
+        -7.923148155212402,
+        -1.3794000148773193,
+        0.3475716710090637
+      ]
+    },
+    {
+      "output_mesh": 21,
+      "original_meshes_zero_based": [
+        21
+      ],
+      "target_part": 5,
+      "vertices": 10,
+      "triangles": 7,
+      "indices": 11,
+      "vertex_stride": 68,
+      "bone_palette_zero_based": [
+        4,
+        7,
+        14,
+        18,
+        21,
+        22,
+        24,
+        25
+      ],
+      "bounds": [
+        0.4341381788253784,
+        -7.853944778442383,
+        -1.1788320541381836,
+        0.3472740054130554
+      ]
+    },
+    {
+      "output_mesh": 22,
+      "original_meshes_zero_based": [
+        22
+      ],
+      "target_part": 5,
+      "vertices": 4,
+      "triangles": 2,
+      "indices": 4,
+      "vertex_stride": 56,
+      "bone_palette_zero_based": [
+        4,
+        20,
+        22,
+        24,
+        25
+      ],
+      "bounds": [
+        0.2964555025100708,
+        -7.6935224533081055,
+        -1.3003532886505127,
+        0.13377773761749268
+      ]
+    },
+    {
+      "output_mesh": 23,
+      "original_meshes_zero_based": [
+        23
+      ],
+      "target_part": 6,
+      "vertices": 54,
+      "triangles": 56,
+      "indices": 100,
+      "vertex_stride": 68,
+      "bone_palette_zero_based": [
+        4,
+        7,
+        12,
+        14,
+        15,
+        16,
+        22,
+        28
+      ],
+      "bounds": [
+        0.39129552245140076,
+        -8.639714241027832,
+        -1.03969144821167,
+        0.8007883429527283
+      ]
+    },
+    {
+      "output_mesh": 24,
+      "original_meshes_zero_based": [
+        24
+      ],
+      "target_part": 6,
+      "vertices": 9,
+      "triangles": 4,
+      "indices": 10,
+      "vertex_stride": 68,
+      "bone_palette_zero_based": [
+        4,
+        7,
+        12,
+        14,
+        15,
+        21,
+        22,
+        28
+      ],
+      "bounds": [
+        0.32673755288124084,
+        -8.215946197509766,
+        -1.2873793840408325,
+        0.29403555393218994
+      ]
+    },
+    {
+      "output_mesh": 25,
+      "original_meshes_zero_based": [
+        25
+      ],
+      "target_part": 8,
+      "vertices": 137,
+      "triangles": 144,
+      "indices": 238,
+      "vertex_stride": 64,
+      "bone_palette_zero_based": [
+        2,
+        3,
+        4,
+        22,
+        24,
+        29,
+        50
+      ],
+      "bounds": [
+        0.053200364112854004,
+        -6.667108058929443,
+        0.16274738311767578,
+        2.256690740585327
+      ]
+    },
+    {
+      "output_mesh": 26,
+      "original_meshes_zero_based": [
+        26,
+        27
+      ],
+      "target_part": 8,
+      "vertices": 198,
+      "triangles": 173,
+      "indices": 323,
+      "vertex_stride": 64,
+      "bone_palette_zero_based": [
+        1,
+        2,
+        29,
+        50,
+        4,
+        30,
+        31
+      ],
+      "bounds": [
+        -0.007358551025390625,
+        -5.834322452545166,
+        -0.00896763801574707,
+        3.47464656829834
+      ]
+    },
+    {
+      "output_mesh": 27,
+      "original_meshes_zero_based": [
+        28
+      ],
+      "target_part": 8,
+      "vertices": 53,
+      "triangles": 48,
+      "indices": 82,
+      "vertex_stride": 56,
+      "bone_palette_zero_based": [
+        1,
+        2,
+        50,
+        51,
+        52
+      ],
+      "bounds": [
+        1.8605263233184814,
+        -5.688752174377441,
+        0.37029576301574707,
+        1.8915958404541016
+      ]
+    },
+    {
+      "output_mesh": 28,
+      "original_meshes_zero_based": [
+        29,
+        30
+      ],
+      "target_part": 9,
+      "vertices": 95,
+      "triangles": 118,
+      "indices": 164,
+      "vertex_stride": 64,
+      "bone_palette_zero_based": [
+        1,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55
+      ],
+      "bounds": [
+        3.478135824203491,
+        -5.852660179138184,
+        0.1695193648338318,
+        4.371415615081787
+      ]
+    },
+    {
+      "output_mesh": 29,
+      "original_meshes_zero_based": [
+        31
+      ],
+      "target_part": 9,
+      "vertices": 37,
+      "triangles": 31,
+      "indices": 63,
+      "vertex_stride": 68,
+      "bone_palette_zero_based": [
+        54,
+        55,
+        56,
+        57,
+        62,
+        63,
+        68,
+        69
+      ],
+      "bounds": [
+        8.085519790649414,
+        -5.82949161529541,
+        -0.1337077021598816,
+        0.7128918766975403
+      ]
+    },
+    {
+      "output_mesh": 30,
+      "original_meshes_zero_based": [
+        32
+      ],
+      "target_part": 9,
+      "vertices": 12,
+      "triangles": 6,
+      "indices": 14,
+      "vertex_stride": 52,
+      "bone_palette_zero_based": [
+        55,
+        68,
+        69,
+        70
+      ],
+      "bounds": [
+        8.243842124938965,
+        -5.5782470703125,
+        -0.6567230820655823,
+        0.35330653190612793
+      ]
+    },
+    {
+      "output_mesh": 31,
+      "original_meshes_zero_based": [
+        33
+      ],
+      "target_part": 9,
+      "vertices": 75,
+      "triangles": 70,
+      "indices": 124,
+      "vertex_stride": 56,
+      "bone_palette_zero_based": [
+        50,
+        51,
+        52,
+        53,
+        54
+      ],
+      "bounds": [
+        5.346075057983398,
+        -5.869694709777832,
+        0.13766223192214966,
+        1.3039655685424805
+      ]
+    },
+    {
+      "output_mesh": 32,
+      "original_meshes_zero_based": [
+        34
+      ],
+      "target_part": 10,
+      "vertices": 108,
+      "triangles": 142,
+      "indices": 222,
+      "vertex_stride": 60,
+      "bone_palette_zero_based": [
+        1,
+        29,
+        30,
+        31,
+        32,
+        33
+      ],
+      "bounds": [
+        -4.805850028991699,
+        -5.934580326080322,
+        0.1498199999332428,
+        2.599622964859009
+      ]
+    },
+    {
+      "output_mesh": 33,
+      "original_meshes_zero_based": [
+        35,
+        36
+      ],
+      "target_part": 10,
+      "vertices": 86,
+      "triangles": 65,
+      "indices": 107,
+      "vertex_stride": 68,
+      "bone_palette_zero_based": [
+        32,
+        33,
+        34,
+        47,
+        41,
+        42,
+        48,
+        49
+      ],
+      "bounds": [
+        -7.602661609649658,
+        -5.900556564331055,
+        -0.06086954474449158,
+        1.4447863101959229
+      ]
+    },
+    {
+      "output_mesh": 34,
+      "original_meshes_zero_based": [
+        37
+      ],
+      "target_part": 11,
+      "vertices": 29,
+      "triangles": 24,
+      "indices": 48,
+      "vertex_stride": 64,
+      "bone_palette_zero_based": [
+        54,
+        55,
+        56,
+        57,
+        62,
+        63,
+        68
+      ],
+      "bounds": [
+        8.089242935180664,
+        -5.859963417053223,
+        0.04290415346622467,
+        0.7517877817153931
+      ]
+    },
+    {
+      "output_mesh": 35,
+      "original_meshes_zero_based": [
+        38
+      ],
+      "target_part": 11,
+      "vertices": 34,
+      "triangles": 26,
+      "indices": 54,
+      "vertex_stride": 64,
+      "bone_palette_zero_based": [
+        55,
+        59,
+        60,
+        65,
+        66,
+        67,
+        68
+      ],
+      "bounds": [
+        8.784114837646484,
+        -5.978679656982422,
+        -0.2362656444311142,
+        0.9057408571243286
+      ]
+    },
+    {
+      "output_mesh": 36,
+      "original_meshes_zero_based": [
+        39
+      ],
+      "target_part": 11,
+      "vertices": 35,
+      "triangles": 27,
+      "indices": 51,
+      "vertex_stride": 64,
+      "bone_palette_zero_based": [
+        55,
+        56,
+        57,
+        58,
+        62,
+        63,
+        64
+      ],
+      "bounds": [
+        8.993380546569824,
+        -5.936676025390625,
+        0.3240452706813812,
+        0.5297845602035522
+      ]
+    },
+    {
+      "output_mesh": 37,
+      "original_meshes_zero_based": [
+        40,
+        41
+      ],
+      "target_part": 12,
+      "vertices": 104,
+      "triangles": 120,
+      "indices": 196,
+      "vertex_stride": 68,
+      "bone_palette_zero_based": [
+        68,
+        69,
+        70,
+        0,
+        71,
+        72,
+        73,
+        74
+      ],
+      "bounds": [
+        8.347119331359863,
+        -5.543493270874023,
+        -0.7210003137588501,
+        17.470666885375977
+      ]
+    },
+    {
+      "output_mesh": 38,
+      "original_meshes_zero_based": [
+        42
+      ],
+      "target_part": 13,
+      "vertices": 26,
+      "triangles": 21,
+      "indices": 37,
+      "vertex_stride": 68,
+      "bone_palette_zero_based": [
+        33,
+        34,
+        35,
+        47,
+        55,
+        59,
+        60,
+        61
+      ],
+      "bounds": [
+        0.47170305252075195,
+        -5.95435905456543,
+        -0.4302694797515869,
+        9.048046112060547
+      ]
+    },
+    {
+      "output_mesh": 39,
+      "original_meshes_zero_based": [
+        43
+      ],
+      "target_part": 14,
+      "vertices": 28,
+      "triangles": 20,
+      "indices": 42,
+      "vertex_stride": 68,
+      "bone_palette_zero_based": [
+        34,
+        44,
+        45,
+        46,
+        55,
+        65,
+        66,
+        67
+      ],
+      "bounds": [
+        0.19774675369262695,
+        -5.9439873695373535,
+        0.20303766429424286,
+        9.414509773254395
+      ]
+    },
+    {
+      "output_mesh": 40,
+      "original_meshes_zero_based": [
+        44
+      ],
+      "target_part": 14,
+      "vertices": 4,
+      "triangles": 2,
+      "indices": 4,
+      "vertex_stride": 56,
+      "bone_palette_zero_based": [
+        55,
+        59,
+        65,
+        66,
+        67
+      ],
+      "bounds": [
+        9.050073623657227,
+        -5.905379295349121,
+        -0.11661253124475479,
+        0.4536451995372772
+      ]
+    },
+    {
+      "output_mesh": 41,
+      "original_meshes_zero_based": [
+        45
+      ],
+      "target_part": 15,
+      "vertices": 28,
+      "triangles": 19,
+      "indices": 39,
+      "vertex_stride": 68,
+      "bone_palette_zero_based": [
+        34,
+        38,
+        39,
+        40,
+        55,
+        62,
+        63,
+        64
+      ],
+      "bounds": [
+        -0.21336078643798828,
+        -5.943918228149414,
+        0.20303362607955933,
+        9.414444923400879
+      ]
+    },
+    {
+      "output_mesh": 42,
+      "original_meshes_zero_based": [
+        46
+      ],
+      "target_part": 15,
+      "vertices": 4,
+      "triangles": 2,
+      "indices": 4,
+      "vertex_stride": 56,
+      "bone_palette_zero_based": [
+        34,
+        35,
+        38,
+        39,
+        40
+      ],
+      "bounds": [
+        -9.065576553344727,
+        -5.89669942855835,
+        -0.11678993701934814,
+        0.45364460349082947
+      ]
+    },
+    {
+      "output_mesh": 43,
+      "original_meshes_zero_based": [
+        47
+      ],
+      "target_part": 16,
+      "vertices": 26,
+      "triangles": 21,
+      "indices": 39,
+      "vertex_stride": 68,
+      "bone_palette_zero_based": [
+        34,
+        35,
+        36,
+        37,
+        54,
+        55,
+        59,
+        68
+      ],
+      "bounds": [
+        -0.48737049102783203,
+        -5.962122440338135,
+        -0.43027329444885254,
+        9.048023223876953
+      ]
+    },
+    {
+      "output_mesh": 44,
+      "original_meshes_zero_based": [
+        48
+      ],
+      "target_part": 17,
+      "vertices": 42,
+      "triangles": 42,
+      "indices": 76,
+      "vertex_stride": 68,
+      "bone_palette_zero_based": [
+        33,
+        34,
+        35,
+        36,
+        41,
+        44,
+        45,
+        47
+      ],
+      "bounds": [
+        -8.116294860839844,
+        -5.852527618408203,
+        -0.06056956946849823,
+        0.7035018801689148
+      ]
+    },
+    {
+      "output_mesh": 45,
+      "original_meshes_zero_based": [
+        49
+      ],
+      "target_part": 17,
+      "vertices": 24,
+      "triangles": 13,
+      "indices": 31,
+      "vertex_stride": 68,
+      "bone_palette_zero_based": [
+        34,
+        38,
+        39,
+        41,
+        42,
+        44,
+        45,
+        46
+      ],
+      "bounds": [
+        -8.837320327758789,
+        -5.968961715698242,
+        0.18962058424949646,
+        0.5566003918647766
+      ]
+    },
+    {
+      "output_mesh": 46,
+      "original_meshes_zero_based": [
+        50
+      ],
+      "target_part": 17,
+      "vertices": 33,
+      "triangles": 24,
+      "indices": 52,
+      "vertex_stride": 68,
+      "bone_palette_zero_based": [
+        34,
+        35,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43
+      ],
+      "bounds": [
+        -9.109692573547363,
+        -5.9536895751953125,
+        0.059890858829021454,
+        0.5634264945983887
+      ]
+    },
+    {
+      "output_mesh": 47,
+      "original_meshes_zero_based": [
+        51
+      ],
+      "target_part": 18,
+      "vertices": 22,
+      "triangles": 23,
+      "indices": 37,
+      "vertex_stride": 48,
+      "bone_palette_zero_based": [
+        47,
+        48,
+        49
+      ],
+      "bounds": [
+        -8.362241744995117,
+        -5.535480499267578,
+        -0.7211623191833496,
+        0.4331774115562439
+      ]
+    },
+    {
+      "output_mesh": 48,
+      "original_meshes_zero_based": [
+        52,
+        53
+      ],
+      "target_part": 19,
+      "vertices": 201,
+      "triangles": 224,
+      "indices": 368,
+      "vertex_stride": 68,
+      "bone_palette_zero_based": [
+        0,
+        1,
+        2,
+        50,
+        71,
+        72,
+        75,
+        29
+      ],
+      "bounds": [
+        0.9301177263259888,
+        1.0541640520095825,
+        -0.033609628677368164,
+        8.331727981567383
+      ]
+    },
+    {
+      "output_mesh": 49,
+      "original_meshes_zero_based": [
+        54
+      ],
+      "target_part": 19,
+      "vertices": 17,
+      "triangles": 9,
+      "indices": 21,
+      "vertex_stride": 60,
+      "bone_palette_zero_based": [
+        1,
+        2,
+        29,
+        30,
+        50,
+        51
+      ],
+      "bounds": [
+        -0.007401704788208008,
+        -5.015165328979492,
+        0.7788034677505493,
+        2.692599296569824
+      ]
+    },
+    {
+      "output_mesh": 50,
+      "original_meshes_zero_based": [
+        55
+      ],
+      "target_part": 20,
+      "vertices": 105,
+      "triangles": 113,
+      "indices": 191,
+      "vertex_stride": 64,
+      "bone_palette_zero_based": [
+        0,
+        1,
+        2,
+        50,
+        71,
+        75,
+        76
+      ],
+      "bounds": [
+        -0.22652041912078857,
+        2.1390390396118164,
+        -0.033609628677368164,
+        4.655621528625488
+      ]
+    },
+    {
+      "output_mesh": 51,
+      "original_meshes_zero_based": [
+        56
+      ],
+      "target_part": 20,
+      "vertices": 69,
+      "triangles": 85,
+      "indices": 135,
+      "vertex_stride": 52,
+      "bone_palette_zero_based": [
+        75,
+        76,
+        77,
+        78
+      ],
+      "bounds": [
+        -1.29996657371521,
+        6.429586887359619,
+        -0.5634006261825562,
+        3.5437750816345215
+      ]
+    }
+  ],
+  "native_references": [
+    {
+      "label": "jericho-section-2",
+      "pac_sha256": "dd5a606e28f1bedb466e6ebeaf25bccde2251066380c0ecaa75fe136a58bd67d",
+      "yobj_sha256": "091ddc06aecb46d800b6ec756bd3ea25c92ca0528b18b584185858f46977d075",
+      "meshes": 25,
+      "vertices": 1509,
+      "triangles": 1749,
+      "textures": 17,
+      "material_records": 45,
+      "strips": 453,
+      "indices": 2728,
+      "expanded_bytes": 134952
+    },
+    {
+      "label": "kurt-section-2",
+      "pac_sha256": "bf935a51fe30bfd2df929f8eb9e50be5d793426ea05125ca9411ce21b19ead80",
+      "yobj_sha256": "3d5d379fd26f7dbeb4b90aab47b0322bed184a29d44c8609282c9f0d0d16de27",
+      "meshes": 29,
+      "vertices": 1356,
+      "triangles": 1488,
+      "textures": 14,
+      "material_records": 43,
+      "strips": 387,
+      "indices": 2262,
+      "expanded_bytes": 120952
+    },
+    {
+      "label": "benoit-section-2",
+      "pac_sha256": "d1117cdc762a0ce86f0c80cea05bd5ee457dba35d143d2c05a854ecd53d6e102",
+      "yobj_sha256": "7173c9fb72ba7810980cc001ca7120fe8c5c209bba30d54fb782b0f36a063d44",
+      "meshes": 22,
+      "vertices": 1303,
+      "triangles": 1494,
+      "textures": 15,
+      "material_records": 41,
+      "strips": 363,
+      "indices": 2220,
+      "expanded_bytes": 115712
+    },
+    {
+      "label": "slaughter-ring-section-2",
+      "pac_sha256": "a281a69c5f707c8c3038c391820e2cef67f689a3e10425149746cd82933d5182",
+      "yobj_sha256": "3e7cc44dbbdcf169dc67b1088e1f0f8d85a9eb6317a48584be8a10695e7168c0",
+      "meshes": 22,
+      "vertices": 1455,
+      "triangles": 1730,
+      "textures": 20,
+      "material_records": 46,
+      "strips": 460,
+      "indices": 2716,
+      "expanded_bytes": 129504
+    },
+    {
+      "label": "slaughter-hat-section-2",
+      "pac_sha256": "83dab4bd00a1ff89aee72048aede735035ecd191008ca4a17a076d95edb5556f",
+      "yobj_sha256": "e8132c1bd8ea4c72bc112797765351aa9acbe04570d76d068b430cd4164b0854",
+      "meshes": 17,
+      "vertices": 1378,
+      "triangles": 1600,
+      "textures": 16,
+      "material_records": 40,
+      "strips": 435,
+      "indices": 2530,
+      "expanded_bytes": 121728
+    },
+    {
+      "label": "slaughter-hat-section-32",
+      "pac_sha256": "83dab4bd00a1ff89aee72048aede735035ecd191008ca4a17a076d95edb5556f",
+      "yobj_sha256": "eab82b1ad52ea7ce9786a481bf8967446f9c1bcb61283c9e9a82339df331f4c0",
+      "meshes": 1,
+      "vertices": 213,
+      "triangles": 272,
+      "textures": 5,
+      "material_records": 5,
+      "strips": 51,
+      "indices": 374,
+      "expanded_bytes": 17352
+    }
+  ],
+  "validation": {
+    "vertex_suffix_bits_identical": true,
+    "per_bone_nonzero_weight_bits_identical": true,
+    "ordered_global_indices_and_triangle_winding_identical": true,
+    "ordered_material_state_and_strip_metadata_identical": true,
+    "skeleton_texture_names_model_name_byte_identical": true,
+    "secondary_model_descriptor_count_matches_mesh_count": true,
+    "opaque_mesh_palette_model_metadata_identical": true,
+    "unmerged_bounds_identical_and_merged_bounds_enclose_original_spheres": true,
+    "before_and_after_allocation_palette_index_weight_relocation_audit_passed": true,
+    "source_relative_vertex_and_index_alignment_16_bytes_preserved": true,
+    "mesh_first_bones_textures_descriptor_layout_order_preserved": true
+  },
+  "analytical_pose_validation": {
+    "elbow-flex": {
+      "maximum_position_component_difference": 0.0
+    },
+    "arms-up": {
+      "maximum_position_component_difference": 0.0
+    },
+    "knees-bent": {
+      "maximum_position_component_difference": 0.0
+    },
+    "rest": {
+      "maximum_position_component_difference": 0.0
+    }
+  },
+  "unchanged_pac_sections_byte_identical": [
+    8,
+    9
+  ],
+  "preview_yobj_equals_decompressed_final_pac": true,
+  "field_changes": [
+    "Mesh header and descriptor counts",
+    "Layout pointers, sizes, alignment and POF0 relocation locations",
+    "Merged vertex-buffer lengths, GE weight-slot counts/strides and bone palettes",
+    "Existing weight bytes permuted by bone identity with zero-only extra slots",
+    "Local indices offset within merged vertex buffers; global ordered indices unchanged",
+    "Merged culling spheres expanded to enclose all original spheres; other bounds unchanged",
+    "Section 2 BPE bytes, PAC section table offsets/sizes, zero padding"
+  ],
+  "uncertainties": [
+    "Unknown opaque metadata copied; complete engine semantics are undocumented",
+    "Mesh-count changes may affect undocumented engine assumptions despite static and LBS equivalence",
+    "Noesis/OBJ cannot validate PSP render state, game animations or runtime memory safety",
+    "No cause of stretched turnbuckles or intermittent crashes established"
+  ],
+  "noesis_observed_before_after": {
+    "before": {
+      "meshes": 82,
+      "textures": 19,
+      "materials": 19
+    },
+    "after": {
+      "meshes": 82,
+      "textures": 19,
+      "materials": 19
+    },
+    "capture_viewport_rectangle_xyxy": [
+      568,
+      155,
+      1437,
+      635
+    ],
+    "viewport_identical": true
+  },
+  "focused_tests_passed": 30,
+  "planning_policy": "Minimum compatible contiguous record partition; minimize expanded vertex bytes among equal record-count partitions"
+}
