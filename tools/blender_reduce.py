@@ -10,7 +10,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from region_mesh import DETAIL_TEXTURES, RATIOS, make_regions, smooth_normals
 
 
-def reduce(source, ratio, detail_profile=False, regional=False):
+def reduce(source, ratio, detail_profile=False, regional=False, preserved_regions=()):
     if not 0 < ratio <= 1:
         raise ValueError('Reduction ratio must be between zero and one')
     bpy.ops.wm.read_factory_settings(use_empty=True)
@@ -29,6 +29,14 @@ def reduce(source, ratio, detail_profile=False, regional=False):
     result = copy.deepcopy(source)
     stats = []
     for entry in result['meshes']:
+        if entry.get('region') in preserved_regions:
+            count = sum(len(m['triangles']) for m in entry['materials'])
+            stats.append({'mesh': entry['index'], 'region': entry['region'],
+                          'input_triangles': count, 'output_triangles': count,
+                          'requested_ratio': 1., 'target_ratio': 1., 'actual_ratio': 1.,
+                          'protected_seam_positions': len({tuple(v['position']) for v in entry['vertices']} & protected),
+                          'geometry_preserved_without_modifier': True})
+            continue
         original_vertices = entry['vertices']
         # Weld geometric points while keeping the original per-corner UVs/colors.
         remap, points, source_indices = {}, [], []

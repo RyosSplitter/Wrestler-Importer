@@ -1,0 +1,1730 @@
+{
+  "status": "Experimental candidate; PPSSPP validation pending",
+  "source_sha256": "052da6cb97e1adcf865a89fd8d7d8544de8298025b36344f38de74ec600e9b1e",
+  "base_sha256": "bf935a51fe30bfd2df929f8eb9e50be5d793426ea05125ca9411ce21b19ead80",
+  "pac_sha256": "1715f8f2768dbe1c8293461dd10c72d383397d660b8c61689365683bbf2f5729",
+  "base_filename": "Kurt-Angle-Ring.PAC",
+  "source": {
+    "pac_bytes": 555520,
+    "vertices": 2602,
+    "triangles": 2981,
+    "meshes": 13,
+    "textures": 20,
+    "bones": 77
+  },
+  "output": {
+    "pac_bytes": 147456,
+    "model_expanded_bytes": 200688,
+    "model_stored_bytes": 123138,
+    "texture_stored_bytes": 17120,
+    "meshes": 54,
+    "vertices": 2387,
+    "triangles": 2413,
+    "indices": 4085,
+    "strips": 836,
+    "textures": 20,
+    "material_records": 94,
+    "bones": 79
+  },
+  "budget_bytes": 148000,
+  "within_budget": true,
+  "preparation": {
+    "vertex_alpha": {
+      "policy": "opaque_psp_base"
+    },
+    "alignment": {
+      "scale": 0.9768195507064528,
+      "rotation": [
+        [
+          0.9999999993556984,
+          -3.578094965288182e-05,
+          2.8855236873107597e-06
+        ],
+        [
+          3.57526771563583e-05,
+          0.9999570715173505,
+          0.009265734951379837
+        ],
+        [
+          -3.2169366119494833e-06,
+          -0.009265734842244699,
+          0.9999570721523406
+        ]
+      ],
+      "translation": [
+        0.00022057057147274934,
+        -0.0150437524850362,
+        0.08431432473109138
+      ],
+      "landmarks": [
+        "koshi",
+        "atama",
+        "l_te",
+        "r_te",
+        "l_ashi",
+        "r_ashi",
+        "l_kote",
+        "r_kote",
+        "l_sune",
+        "r_sune",
+        "l_sakotsu",
+        "r_sakotsu"
+      ]
+    },
+    "hybrid_weights": {
+      "method": 3,
+      "head_blended_vertices": 952,
+      "source_attachment_records": 177,
+      "bone_redirects": {
+        "u_ha": "atama",
+        "d_ha": "atama",
+        "kami00": "atama",
+        "kami00_00": "atama",
+        "kami00_01": "atama",
+        "kami00_02": "atama",
+        "kami00_03": "atama",
+        "kami00_04": "atama",
+        "r_mayu": "atama",
+        "l_mayu": "atama"
+      },
+      "transfer": {
+        "method": "Nearest ordinary PSP body triangle, barycentric weight interpolation",
+        "max_influences": 4,
+        "distance_p95": 0.3706848615579452,
+        "distance_max": 0.6719905161806558
+      },
+      "body_weight_difference_max": 1.1102230246251565e-16
+    },
+    "maximum_pruned_weight_mass": 0.04502581331821198,
+    "byte_identical_vertex_duplicates_removed": 135
+  },
+  "reduction": {
+    "method": "PSP bone-weight regions; weighted Blender collapse; area-weighted smooth normals",
+    "input_triangles": 2981,
+    "output_triangles": 2413,
+    "meshes": [
+      {
+        "mesh": 0,
+        "input_triangles": 754,
+        "output_triangles": 540,
+        "protected_seam_positions": 52,
+        "requested_ratio": 0.7148541114058355,
+        "region": "Head",
+        "target_ratio": 0.7148541114058355,
+        "actual_ratio": 0.7161803713527851
+      },
+      {
+        "mesh": 1,
+        "input_triangles": 20,
+        "output_triangles": 18,
+        "protected_seam_positions": 20,
+        "requested_ratio": 0.05,
+        "region": "Torso",
+        "target_ratio": 0.05,
+        "actual_ratio": 0.9
+      },
+      {
+        "mesh": 2,
+        "input_triangles": 906,
+        "output_triangles": 704,
+        "protected_seam_positions": 30,
+        "requested_ratio": 0.7759381898454746,
+        "region": "Arms",
+        "target_ratio": 0.7759381898454746,
+        "actual_ratio": 0.7770419426048565
+      },
+      {
+        "mesh": 3,
+        "input_triangles": 310,
+        "output_triangles": 160,
+        "protected_seam_positions": 18,
+        "requested_ratio": 0.5161290322580645,
+        "region": "Legs",
+        "target_ratio": 0.5161290322580645,
+        "actual_ratio": 0.5161290322580645
+      },
+      {
+        "mesh": 4,
+        "region": "Preserved",
+        "input_triangles": 85,
+        "output_triangles": 85,
+        "requested_ratio": 1.0,
+        "target_ratio": 1.0,
+        "actual_ratio": 1.0,
+        "protected_seam_positions": 43,
+        "geometry_preserved_without_modifier": true
+      },
+      {
+        "mesh": 5,
+        "region": "Preserved",
+        "input_triangles": 158,
+        "output_triangles": 158,
+        "requested_ratio": 1.0,
+        "target_ratio": 1.0,
+        "actual_ratio": 1.0,
+        "protected_seam_positions": 56,
+        "geometry_preserved_without_modifier": true
+      },
+      {
+        "mesh": 6,
+        "region": "Preserved",
+        "input_triangles": 127,
+        "output_triangles": 127,
+        "requested_ratio": 1.0,
+        "target_ratio": 1.0,
+        "actual_ratio": 1.0,
+        "protected_seam_positions": 49,
+        "geometry_preserved_without_modifier": true
+      },
+      {
+        "mesh": 7,
+        "region": "Preserved",
+        "input_triangles": 108,
+        "output_triangles": 108,
+        "requested_ratio": 1.0,
+        "target_ratio": 1.0,
+        "actual_ratio": 1.0,
+        "protected_seam_positions": 28,
+        "geometry_preserved_without_modifier": true
+      },
+      {
+        "mesh": 8,
+        "region": "Preserved",
+        "input_triangles": 13,
+        "output_triangles": 13,
+        "requested_ratio": 1.0,
+        "target_ratio": 1.0,
+        "actual_ratio": 1.0,
+        "protected_seam_positions": 11,
+        "geometry_preserved_without_modifier": true
+      },
+      {
+        "mesh": 9,
+        "region": "Preserved",
+        "input_triangles": 1,
+        "output_triangles": 1,
+        "requested_ratio": 1.0,
+        "target_ratio": 1.0,
+        "actual_ratio": 1.0,
+        "protected_seam_positions": 3,
+        "geometry_preserved_without_modifier": true
+      },
+      {
+        "mesh": 10,
+        "region": "Preserved",
+        "input_triangles": 36,
+        "output_triangles": 36,
+        "requested_ratio": 1.0,
+        "target_ratio": 1.0,
+        "actual_ratio": 1.0,
+        "protected_seam_positions": 31,
+        "geometry_preserved_without_modifier": true
+      },
+      {
+        "mesh": 11,
+        "region": "Preserved",
+        "input_triangles": 101,
+        "output_triangles": 101,
+        "requested_ratio": 1.0,
+        "target_ratio": 1.0,
+        "actual_ratio": 1.0,
+        "protected_seam_positions": 3,
+        "geometry_preserved_without_modifier": true
+      },
+      {
+        "mesh": 12,
+        "region": "Preserved",
+        "input_triangles": 117,
+        "output_triangles": 117,
+        "requested_ratio": 1.0,
+        "target_ratio": 1.0,
+        "actual_ratio": 1.0,
+        "protected_seam_positions": 26,
+        "geometry_preserved_without_modifier": true
+      },
+      {
+        "mesh": 13,
+        "region": "Preserved",
+        "input_triangles": 77,
+        "output_triangles": 77,
+        "requested_ratio": 1.0,
+        "target_ratio": 1.0,
+        "actual_ratio": 1.0,
+        "protected_seam_positions": 31,
+        "geometry_preserved_without_modifier": true
+      },
+      {
+        "mesh": 14,
+        "region": "Preserved",
+        "input_triangles": 168,
+        "output_triangles": 168,
+        "requested_ratio": 1.0,
+        "target_ratio": 1.0,
+        "actual_ratio": 1.0,
+        "protected_seam_positions": 40,
+        "geometry_preserved_without_modifier": true
+      }
+    ],
+    "protected_detail_textures": [],
+    "region_ratios": {
+      "Head": 0.7148541114058355,
+      "Torso": 0.05,
+      "Arms": 0.7759381898454746,
+      "Legs": 0.5161290322580645
+    },
+    "overall_region_ratios": {
+      "Head": 0.8,
+      "Torso": 0.65,
+      "Arms": 0.8,
+      "Legs": 0.65
+    },
+    "free_region_ratios": {
+      "Head": 0.7148541114058355,
+      "Torso": 0.05,
+      "Arms": 0.7759381898454746,
+      "Legs": 0.5161290322580645
+    },
+    "original_region_triangles": {
+      "Head": 1076,
+      "Torso": 456,
+      "Arms": 1019,
+      "Legs": 430
+    },
+    "protected_region_triangles": {
+      "Head": 322,
+      "Torso": 436,
+      "Arms": 113,
+      "Legs": 120
+    },
+    "final_region_triangles": {
+      "Head": 862,
+      "Torso": 454,
+      "Arms": 817,
+      "Legs": 280
+    },
+    "protected_source_materials": [
+      "y2j_body",
+      "y2j_eye",
+      "y2j_ha",
+      "y2j_hair",
+      "y2j_kuti",
+      "y2j_mata",
+      "y2j_tail",
+      "y2j_top"
+    ]
+  },
+  "protected_source_surfaces": {
+    "y2j_body": {
+      "triangles": 391,
+      "oriented_source_surface_sha256": "d5d761e217b9f4e9b4b791f29d5b5473381b4177d4a51f4e32cff122e7bc67db",
+      "oriented_position_uv_sha256": "78501350a6bbd82fa35f355daad63e15cbefb94b81beda083f771307afe4fc28",
+      "maximum_hybrid_weight_difference": 2.9624732666988507e-08,
+      "exact_float32_geometry_winding_and_uvs": true
+    },
+    "y2j_mata": {
+      "triangles": 278,
+      "oriented_source_surface_sha256": "98ef87663ba1244b277cafeed36bbc6cbe66df2b23db229f39cc4b0e9d20ed80",
+      "oriented_position_uv_sha256": "5eac45edb0df131f85fc52be9e722a6387e59e0a65667ea5d8886c3337c2277e",
+      "maximum_hybrid_weight_difference": 2.503395080122317e-08,
+      "exact_float32_geometry_winding_and_uvs": true
+    },
+    "y2j_eye": {
+      "triangles": 80,
+      "oriented_source_surface_sha256": "3cb9ba270fe9c94185514e026b1d639f8b3f2b7d43ad8f2847b7781f196ab01f",
+      "oriented_position_uv_sha256": "78dc3b5bade1a5ac9c932d900d57282f50b0da237389589ed2cbfa1ec4183c79",
+      "maximum_hybrid_weight_difference": 2.7316708672842083e-08,
+      "exact_float32_geometry_winding_and_uvs": true
+    },
+    "y2j_ha": {
+      "triangles": 30,
+      "oriented_source_surface_sha256": "530d63f767fef53fabe6e788f2133c8492160c052904307f54731eafe566f48e",
+      "oriented_position_uv_sha256": "2258c71e7aeff80bd02f09b311f373b28a5a6afe5b4faf08e0a8e7b8b82dbdaa",
+      "maximum_hybrid_weight_difference": 2.9537751022878922e-08,
+      "exact_float32_geometry_winding_and_uvs": true
+    },
+    "y2j_kuti": {
+      "triangles": 50,
+      "oriented_source_surface_sha256": "6c919c1d7142a8caf4bd4272d7f2b219b5d55682a584bb0d58ec1827ef3c35ac",
+      "oriented_position_uv_sha256": "93bb1ead2023728fa9393108682b03a6dd4dd13835ac3cb4fd32dba9d192b81c",
+      "maximum_hybrid_weight_difference": 2.9622831743125744e-08,
+      "exact_float32_geometry_winding_and_uvs": true
+    },
+    "y2j_hair": {
+      "triangles": 58,
+      "oriented_source_surface_sha256": "c98a886f96a919216c6142d54d7b608be312936c93a3e1f845d0b7c84792327c",
+      "oriented_position_uv_sha256": "c232d0b6094433bf007a497073be484bf6c00c5fce4a0f26b4011126d3978449",
+      "maximum_hybrid_weight_difference": 0.0,
+      "exact_float32_geometry_winding_and_uvs": true
+    },
+    "y2j_tail": {
+      "triangles": 79,
+      "oriented_source_surface_sha256": "4f1129b39d3579707c8c0b79dddbcfa6819b6bf1ca577bdd5a55b39a69c0cb7e",
+      "oriented_position_uv_sha256": "e204a385b4a00ddd46e970209aab645983ad72c0fdb4b968f716b501d64d7468",
+      "maximum_hybrid_weight_difference": 2.9802322387695312e-08,
+      "exact_float32_geometry_winding_and_uvs": true
+    },
+    "y2j_top": {
+      "triangles": 25,
+      "oriented_source_surface_sha256": "9d375e6462bbe4ad27895dbb3f65ff70dcbac3218f78b607ec0b78b98cb1010f",
+      "oriented_position_uv_sha256": "8602b28b2d851faed4e11ef732868027f5c4b7363fa5c8a8de00f9c69ccb3e9c",
+      "maximum_hybrid_weight_difference": 0.0,
+      "exact_float32_geometry_winding_and_uvs": true
+    }
+  },
+  "textures": [
+    {
+      "index": 0,
+      "name": "y2j_arm",
+      "bits": 4,
+      "bytes": 784,
+      "source_dimensions": [
+        128,
+        128
+      ],
+      "dimensions": [
+        32,
+        32
+      ],
+      "source_format": {
+        "container": "RTX3",
+        "psm": 19,
+        "format": "PSMT8",
+        "cpsm": 0,
+        "csm": 0,
+        "csa": 0,
+        "width": 128,
+        "height": 128,
+        "palette_entries": 256
+      },
+      "cutout_palette_and_pixels_exact": false,
+      "source_rgba_sha256": "f8b7d7f57518f368dbd2a99f8b06cda71cbe3d0da5683a89f98346d082475401",
+      "converted_rgba_sha256": "7d8a75515d6c67826ff10aaa64b5a12b79ff780ac2081729dfa034a197ff4327"
+    },
+    {
+      "index": 1,
+      "name": "y2j_body",
+      "bits": 4,
+      "bytes": 784,
+      "source_dimensions": [
+        128,
+        128
+      ],
+      "dimensions": [
+        32,
+        32
+      ],
+      "source_format": {
+        "container": "RTX3",
+        "psm": 19,
+        "format": "PSMT8",
+        "cpsm": 0,
+        "csm": 0,
+        "csa": 0,
+        "width": 128,
+        "height": 128,
+        "palette_entries": 256
+      },
+      "cutout_palette_and_pixels_exact": false,
+      "source_rgba_sha256": "20dd43fbaa3eb89b92b8a77f9e1c6d0047a4a30e6bb78cc44013b7d381b380c4",
+      "converted_rgba_sha256": "bcff8b608cff98c98d0e49d08f04cce9e4ada319dfa0d037fbddb8d0f344194b"
+    },
+    {
+      "index": 2,
+      "name": "y2j_hiji",
+      "bits": 4,
+      "bytes": 528,
+      "source_dimensions": [
+        32,
+        32
+      ],
+      "dimensions": [
+        32,
+        16
+      ],
+      "source_format": {
+        "container": "RTX3",
+        "psm": 19,
+        "format": "PSMT8",
+        "cpsm": 0,
+        "csm": 0,
+        "csa": 0,
+        "width": 32,
+        "height": 32,
+        "palette_entries": 256
+      },
+      "cutout_palette_and_pixels_exact": false,
+      "source_rgba_sha256": "0638c156ef13954e4759bb470ae62fe296cd4537405302560d2a74fc1c3eaa39",
+      "converted_rgba_sha256": "57be8f6082591d78892384437e86ce431f9104fc2475d4da98c700470f7a2e75"
+    },
+    {
+      "index": 3,
+      "name": "y2j_eye",
+      "bits": 4,
+      "bytes": 784,
+      "source_dimensions": [
+        64,
+        64
+      ],
+      "dimensions": [
+        32,
+        32
+      ],
+      "source_format": {
+        "container": "RTX3",
+        "psm": 19,
+        "format": "PSMT8",
+        "cpsm": 0,
+        "csm": 0,
+        "csa": 0,
+        "width": 64,
+        "height": 64,
+        "palette_entries": 256
+      },
+      "cutout_palette_and_pixels_exact": false,
+      "source_rgba_sha256": "39873d8d39c7e21a754b0defb64d315d4eb293265a4de81a037a5f17f3f9b9a4",
+      "converted_rgba_sha256": "340fd202a334b68b81f417b9bff2c4c449418ff86fbe877e3e1cda05549bbb5b"
+    },
+    {
+      "index": 4,
+      "name": "y2j_face",
+      "bits": 8,
+      "bytes": 9424,
+      "source_dimensions": [
+        256,
+        256
+      ],
+      "dimensions": [
+        128,
+        64
+      ],
+      "source_format": {
+        "container": "RTX3",
+        "psm": 19,
+        "format": "PSMT8",
+        "cpsm": 0,
+        "csm": 0,
+        "csa": 0,
+        "width": 256,
+        "height": 256,
+        "palette_entries": 256
+      },
+      "cutout_palette_and_pixels_exact": false,
+      "source_rgba_sha256": "a411a5af505f49d8fe569762f16f9f216c74c55f72b5dddab6c36aead0e5cdee",
+      "converted_rgba_sha256": "92d36197122b095bdf32c859ae1183a6fa7d8deebb10ade71587cc9ab9dab33c"
+    },
+    {
+      "index": 5,
+      "name": "y2j_ha",
+      "bits": 4,
+      "bytes": 400,
+      "source_dimensions": [
+        32,
+        16
+      ],
+      "dimensions": [
+        32,
+        8
+      ],
+      "source_format": {
+        "container": "RTX3",
+        "psm": 19,
+        "format": "PSMT8",
+        "cpsm": 0,
+        "csm": 0,
+        "csa": 0,
+        "width": 32,
+        "height": 16,
+        "palette_entries": 256
+      },
+      "cutout_palette_and_pixels_exact": false,
+      "source_rgba_sha256": "61ad5e8ff5dc87ec2f95da1b37682c52be45585830f36fdee8080d4f0aac3340",
+      "converted_rgba_sha256": "59cbfc042578b3ddb6620fb05645db10e218b32c663f59f83738444f50123dd0"
+    },
+    {
+      "index": 6,
+      "name": "y2j_hair",
+      "bits": 8,
+      "bytes": 5328,
+      "source_dimensions": [
+        64,
+        64
+      ],
+      "dimensions": [
+        64,
+        64
+      ],
+      "source_format": {
+        "container": "RTX3",
+        "psm": 19,
+        "format": "PSMT8",
+        "cpsm": 0,
+        "csm": 0,
+        "csa": 0,
+        "width": 64,
+        "height": 64,
+        "palette_entries": 256
+      },
+      "cutout_palette_and_pixels_exact": true,
+      "source_rgba_sha256": "a0c1dfac97dce5bc47d889f7f6df50aa94f71f641422375dc2a40db32db938e9",
+      "converted_rgba_sha256": "a0c1dfac97dce5bc47d889f7f6df50aa94f71f641422375dc2a40db32db938e9"
+    },
+    {
+      "index": 7,
+      "name": "y2j_hand",
+      "bits": 4,
+      "bytes": 784,
+      "source_dimensions": [
+        64,
+        32
+      ],
+      "dimensions": [
+        32,
+        32
+      ],
+      "source_format": {
+        "container": "RTX3",
+        "psm": 19,
+        "format": "PSMT8",
+        "cpsm": 0,
+        "csm": 0,
+        "csa": 0,
+        "width": 64,
+        "height": 32,
+        "palette_entries": 256
+      },
+      "cutout_palette_and_pixels_exact": false,
+      "source_rgba_sha256": "6cf02385907a6515632b716917f196a088a19b28799892b9f9212e76c9a3f7ad",
+      "converted_rgba_sha256": "162ddf46d9f87bc606f1286eed9553fc4400bc2aab2154a6a1654ad1d40a9134"
+    },
+    {
+      "index": 8,
+      "name": "y2j_head",
+      "bits": 4,
+      "bytes": 784,
+      "source_dimensions": [
+        64,
+        64
+      ],
+      "dimensions": [
+        32,
+        32
+      ],
+      "source_format": {
+        "container": "RTX3",
+        "psm": 19,
+        "format": "PSMT8",
+        "cpsm": 0,
+        "csm": 0,
+        "csa": 0,
+        "width": 64,
+        "height": 64,
+        "palette_entries": 256
+      },
+      "cutout_palette_and_pixels_exact": false,
+      "source_rgba_sha256": "091aeb70ff9a5c5bae372f6e9c778aa1d73821025f5b5d03629828c0fa90b62b",
+      "converted_rgba_sha256": "17ef5e5548cbe2527cb636bb69ac6122ec6cc486f4de1b5c5eb831f1888ec62e"
+    },
+    {
+      "index": 9,
+      "name": "y2j_hige",
+      "bits": 4,
+      "bytes": 784,
+      "source_dimensions": [
+        64,
+        64
+      ],
+      "dimensions": [
+        32,
+        32
+      ],
+      "source_format": {
+        "container": "RTX3",
+        "psm": 19,
+        "format": "PSMT8",
+        "cpsm": 0,
+        "csm": 0,
+        "csa": 0,
+        "width": 64,
+        "height": 64,
+        "palette_entries": 256
+      },
+      "cutout_palette_and_pixels_exact": false,
+      "source_rgba_sha256": "95913ff5635342bfd35518a69b7c6cca17b761a65ed116aa2830be09138ea02f",
+      "converted_rgba_sha256": "4a21afa07e569fab98b65e96a9654b610466c0731acac0d06e6c17a569c8b9bf"
+    },
+    {
+      "index": 10,
+      "name": "y2j_knee",
+      "bits": 4,
+      "bytes": 528,
+      "source_dimensions": [
+        32,
+        32
+      ],
+      "dimensions": [
+        32,
+        16
+      ],
+      "source_format": {
+        "container": "RTX3",
+        "psm": 19,
+        "format": "PSMT8",
+        "cpsm": 0,
+        "csm": 0,
+        "csa": 0,
+        "width": 32,
+        "height": 32,
+        "palette_entries": 256
+      },
+      "cutout_palette_and_pixels_exact": false,
+      "source_rgba_sha256": "7511bcdc8a13850aa4632da7cd29e52ce17080c4786ecf0ca8ee4453c3f2e9cd",
+      "converted_rgba_sha256": "c1e4f6b650833e901a9a66ecce900a64bb2e8f3c20ffb99be3dd01273334de60"
+    },
+    {
+      "index": 11,
+      "name": "y2j_kuti",
+      "bits": 4,
+      "bytes": 528,
+      "source_dimensions": [
+        32,
+        32
+      ],
+      "dimensions": [
+        32,
+        16
+      ],
+      "source_format": {
+        "container": "RTX3",
+        "psm": 19,
+        "format": "PSMT8",
+        "cpsm": 0,
+        "csm": 0,
+        "csa": 0,
+        "width": 32,
+        "height": 32,
+        "palette_entries": 256
+      },
+      "cutout_palette_and_pixels_exact": false,
+      "source_rgba_sha256": "3d832efa3d74b35df154006960f9d886b3771e0b96ec3c3b22e14a968effbe5c",
+      "converted_rgba_sha256": "0d590794aa99a851a9deb7033021711f12de024e8362999483f0e56af60e8d4a"
+    },
+    {
+      "index": 12,
+      "name": "y2j_kutu",
+      "bits": 4,
+      "bytes": 784,
+      "source_dimensions": [
+        64,
+        32
+      ],
+      "dimensions": [
+        32,
+        32
+      ],
+      "source_format": {
+        "container": "RTX3",
+        "psm": 19,
+        "format": "PSMT8",
+        "cpsm": 0,
+        "csm": 0,
+        "csa": 0,
+        "width": 64,
+        "height": 32,
+        "palette_entries": 256
+      },
+      "cutout_palette_and_pixels_exact": false,
+      "source_rgba_sha256": "8fbd0161ac052bdfe3bb3bffe653c3d47b4c59fb277ec0e88c04f80ff18d8bc3",
+      "converted_rgba_sha256": "e84db2c9a725aaad56bd9614a3faca808eb6dd9d25b4a22a9612f29574f281a4"
+    },
+    {
+      "index": 13,
+      "name": "y2j_sune",
+      "bits": 4,
+      "bytes": 784,
+      "source_dimensions": [
+        64,
+        64
+      ],
+      "dimensions": [
+        32,
+        32
+      ],
+      "source_format": {
+        "container": "RTX3",
+        "psm": 19,
+        "format": "PSMT8",
+        "cpsm": 0,
+        "csm": 0,
+        "csa": 0,
+        "width": 64,
+        "height": 64,
+        "palette_entries": 256
+      },
+      "cutout_palette_and_pixels_exact": false,
+      "source_rgba_sha256": "f92d0c53bcc5e2c66c09182844064eb29ae6fe371e14864f585ef27e707c7842",
+      "converted_rgba_sha256": "f4e45f992ecc5765f8db123fb4130f2b2f8c6e77f2dbbda27eae718435859af7"
+    },
+    {
+      "index": 14,
+      "name": "y2j_su_r",
+      "bits": 4,
+      "bytes": 784,
+      "source_dimensions": [
+        32,
+        64
+      ],
+      "dimensions": [
+        32,
+        32
+      ],
+      "source_format": {
+        "container": "RTX3",
+        "psm": 19,
+        "format": "PSMT8",
+        "cpsm": 0,
+        "csm": 0,
+        "csa": 0,
+        "width": 32,
+        "height": 64,
+        "palette_entries": 256
+      },
+      "cutout_palette_and_pixels_exact": false,
+      "source_rgba_sha256": "4b0e5071068e6f81db1842bcf23980069bf0c6fdd4e4179c1a516e5702605b52",
+      "converted_rgba_sha256": "902159a3dfe097665ddf4032e8d7e9eaae595fc2c92e9579d9c5e6c2214a06e3"
+    },
+    {
+      "index": 15,
+      "name": "y2j_tail",
+      "bits": 4,
+      "bytes": 784,
+      "source_dimensions": [
+        32,
+        64
+      ],
+      "dimensions": [
+        32,
+        32
+      ],
+      "source_format": {
+        "container": "RTX3",
+        "psm": 19,
+        "format": "PSMT8",
+        "cpsm": 0,
+        "csm": 0,
+        "csa": 0,
+        "width": 32,
+        "height": 64,
+        "palette_entries": 256
+      },
+      "cutout_palette_and_pixels_exact": false,
+      "source_rgba_sha256": "2fb578a085be2a8563d264d13ed56c7952eb1cafcc258c79b9f02b7cb02f11f5",
+      "converted_rgba_sha256": "1b089b3d00d75c5df073e55acbc6cba6ead6c605561faa76d0172d8a27037884"
+    },
+    {
+      "index": 16,
+      "name": "y2j_wrist",
+      "bits": 4,
+      "bytes": 784,
+      "source_dimensions": [
+        64,
+        32
+      ],
+      "dimensions": [
+        32,
+        32
+      ],
+      "source_format": {
+        "container": "RTX3",
+        "psm": 19,
+        "format": "PSMT8",
+        "cpsm": 0,
+        "csm": 0,
+        "csa": 0,
+        "width": 64,
+        "height": 32,
+        "palette_entries": 256
+      },
+      "cutout_palette_and_pixels_exact": false,
+      "source_rgba_sha256": "c5593f27c26ca461b12a94534983be9d430df2b0015dd770326e4f58371e4c2d",
+      "converted_rgba_sha256": "af04c3c941d38ede0298b8a16869bb23a3fdaeafa8edb6e5ca518e357b3bee4e"
+    },
+    {
+      "index": 17,
+      "name": "y2j_mata",
+      "bits": 4,
+      "bytes": 784,
+      "source_dimensions": [
+        256,
+        128
+      ],
+      "dimensions": [
+        32,
+        32
+      ],
+      "source_format": {
+        "container": "RTX3",
+        "psm": 19,
+        "format": "PSMT8",
+        "cpsm": 0,
+        "csm": 0,
+        "csa": 0,
+        "width": 256,
+        "height": 128,
+        "palette_entries": 256
+      },
+      "cutout_palette_and_pixels_exact": false,
+      "source_rgba_sha256": "3d909cc5187b144d70e73a614dad401a138ff8fb3ceb9d9b6578ac148f0a0c8a",
+      "converted_rgba_sha256": "167ad03241c920da6e6d1b4df0d4afc98c7fc0c125ea42c0ad6aecf20fd204e4"
+    },
+    {
+      "index": 18,
+      "name": "y2j_top",
+      "bits": 4,
+      "bytes": 784,
+      "source_dimensions": [
+        64,
+        64
+      ],
+      "dimensions": [
+        32,
+        32
+      ],
+      "source_format": {
+        "container": "RTX3",
+        "psm": 19,
+        "format": "PSMT8",
+        "cpsm": 0,
+        "csm": 0,
+        "csa": 0,
+        "width": 64,
+        "height": 64,
+        "palette_entries": 256
+      },
+      "cutout_palette_and_pixels_exact": false,
+      "source_rgba_sha256": "a36764d3dddbaa72b6940ec607d40a30be49bc1bbcdae3374650fd85aac3e637",
+      "converted_rgba_sha256": "6f59c120cdfe3722d411acb8aec0addeae84951c70d1923f7c68162aad77aecd"
+    },
+    {
+      "index": 19,
+      "name": "y2j_yubi",
+      "bits": 4,
+      "bytes": 784,
+      "source_dimensions": [
+        32,
+        64
+      ],
+      "dimensions": [
+        32,
+        32
+      ],
+      "source_format": {
+        "container": "RTX3",
+        "psm": 19,
+        "format": "PSMT8",
+        "cpsm": 0,
+        "csm": 0,
+        "csa": 0,
+        "width": 32,
+        "height": 64,
+        "palette_entries": 256
+      },
+      "cutout_palette_and_pixels_exact": false,
+      "source_rgba_sha256": "6555eb6a285ee44aab04b190effde66263d7d036e25beef297321518e8a3bb6f",
+      "converted_rgba_sha256": "e240763329583aa0436d5b36ebb137b93612f2ad07ca1dd2b236da073d3a1d19"
+    }
+  ],
+  "serialized_verification": {
+    "bone_table_byte_identical": true,
+    "vertex_attributes_match": true,
+    "vertex_weight_encoding": "float",
+    "triangles_and_winding_match": true,
+    "regular_material_controls_match_texture_depth": true,
+    "vertex_alpha_matches_preparation_policy": true,
+    "native_yobj_warnings": [],
+    "cutout_controls": [
+      {
+        "mesh": 0,
+        "material": 1,
+        "texture": "y2j_hair",
+        "before_control": 7,
+        "after_control": 279
+      },
+      {
+        "mesh": 17,
+        "material": 2,
+        "texture": "y2j_hair",
+        "before_control": 7,
+        "after_control": 279
+      }
+    ]
+  },
+  "unchanged_base_sections": [
+    8
+  ],
+  "preview_yobj_equals_final_pac": true,
+  "pose_definitions": {
+    "elbow-flex": {
+      "l_ninoude": [
+        "z",
+        -15
+      ],
+      "r_ninoude": [
+        "z",
+        15
+      ],
+      "l_kote": [
+        "z",
+        -65
+      ],
+      "r_kote": [
+        "z",
+        65
+      ],
+      "kubi": [
+        "y",
+        20
+      ],
+      "d_kuchi": [
+        "x",
+        18
+      ]
+    },
+    "arms-up": {
+      "l_ninoude": [
+        "z",
+        -65
+      ],
+      "r_ninoude": [
+        "z",
+        65
+      ],
+      "l_kote": [
+        "z",
+        -20
+      ],
+      "r_kote": [
+        "z",
+        20
+      ],
+      "kubi": [
+        "y",
+        -20
+      ],
+      "d_kuchi": [
+        "x",
+        18
+      ]
+    },
+    "knees-bent": {
+      "l_sune": [
+        "x",
+        35
+      ],
+      "r_sune": [
+        "x",
+        35
+      ],
+      "l_kote": [
+        "z",
+        -30
+      ],
+      "r_kote": [
+        "z",
+        30
+      ]
+    },
+    "rest": {},
+    "standing": {
+      "l_ninoude": [
+        "z",
+        70
+      ],
+      "r_ninoude": [
+        "z",
+        -70
+      ]
+    },
+    "forward-bend": {
+      "koshi": [
+        "x",
+        35
+      ],
+      "mune": [
+        "x",
+        20
+      ]
+    },
+    "crouch": {
+      "l_momo": [
+        "x",
+        -50
+      ],
+      "r_momo": [
+        "x",
+        -50
+      ],
+      "l_sune": [
+        "x",
+        95
+      ],
+      "r_sune": [
+        "x",
+        95
+      ],
+      "koshi": [
+        "x",
+        20
+      ],
+      "mune": [
+        "x",
+        10
+      ]
+    },
+    "walk-00": {
+      "l_momo": [
+        "x",
+        0.0
+      ],
+      "r_momo": [
+        "x",
+        -0.0
+      ],
+      "l_sune": [
+        "x",
+        0
+      ],
+      "r_sune": [
+        "x",
+        0
+      ]
+    },
+    "walk-01": {
+      "l_momo": [
+        "x",
+        9.567085809127244
+      ],
+      "r_momo": [
+        "x",
+        -9.567085809127244
+      ],
+      "l_sune": [
+        "x",
+        0
+      ],
+      "r_sune": [
+        "x",
+        15.307337294603592
+      ]
+    },
+    "walk-02": {
+      "l_momo": [
+        "x",
+        17.677669529663685
+      ],
+      "r_momo": [
+        "x",
+        -17.677669529663685
+      ],
+      "l_sune": [
+        "x",
+        0
+      ],
+      "r_sune": [
+        "x",
+        28.2842712474619
+      ]
+    },
+    "walk-03": {
+      "l_momo": [
+        "x",
+        23.09698831278217
+      ],
+      "r_momo": [
+        "x",
+        -23.09698831278217
+      ],
+      "l_sune": [
+        "x",
+        0
+      ],
+      "r_sune": [
+        "x",
+        36.95518130045147
+      ]
+    },
+    "walk-04": {
+      "l_momo": [
+        "x",
+        25.0
+      ],
+      "r_momo": [
+        "x",
+        -25.0
+      ],
+      "l_sune": [
+        "x",
+        0
+      ],
+      "r_sune": [
+        "x",
+        40.0
+      ]
+    },
+    "walk-05": {
+      "l_momo": [
+        "x",
+        23.09698831278217
+      ],
+      "r_momo": [
+        "x",
+        -23.09698831278217
+      ],
+      "l_sune": [
+        "x",
+        0
+      ],
+      "r_sune": [
+        "x",
+        36.95518130045147
+      ]
+    },
+    "walk-06": {
+      "l_momo": [
+        "x",
+        17.67766952966369
+      ],
+      "r_momo": [
+        "x",
+        -17.67766952966369
+      ],
+      "l_sune": [
+        "x",
+        0
+      ],
+      "r_sune": [
+        "x",
+        28.284271247461902
+      ]
+    },
+    "walk-07": {
+      "l_momo": [
+        "x",
+        9.567085809127247
+      ],
+      "r_momo": [
+        "x",
+        -9.567085809127247
+      ],
+      "l_sune": [
+        "x",
+        0
+      ],
+      "r_sune": [
+        "x",
+        15.307337294603595
+      ]
+    },
+    "walk-08": {
+      "l_momo": [
+        "x",
+        3.061616997868383e-15
+      ],
+      "r_momo": [
+        "x",
+        -3.061616997868383e-15
+      ],
+      "l_sune": [
+        "x",
+        0
+      ],
+      "r_sune": [
+        "x",
+        4.898587196589413e-15
+      ]
+    },
+    "walk-09": {
+      "l_momo": [
+        "x",
+        -9.567085809127242
+      ],
+      "r_momo": [
+        "x",
+        9.567085809127242
+      ],
+      "l_sune": [
+        "x",
+        15.307337294603586
+      ],
+      "r_sune": [
+        "x",
+        0
+      ]
+    },
+    "walk-10": {
+      "l_momo": [
+        "x",
+        -17.677669529663685
+      ],
+      "r_momo": [
+        "x",
+        17.677669529663685
+      ],
+      "l_sune": [
+        "x",
+        28.2842712474619
+      ],
+      "r_sune": [
+        "x",
+        0
+      ]
+    },
+    "walk-11": {
+      "l_momo": [
+        "x",
+        -23.096988312782162
+      ],
+      "r_momo": [
+        "x",
+        23.096988312782162
+      ],
+      "l_sune": [
+        "x",
+        36.95518130045146
+      ],
+      "r_sune": [
+        "x",
+        0
+      ]
+    },
+    "walk-12": {
+      "l_momo": [
+        "x",
+        -25.0
+      ],
+      "r_momo": [
+        "x",
+        25.0
+      ],
+      "l_sune": [
+        "x",
+        40.0
+      ],
+      "r_sune": [
+        "x",
+        0
+      ]
+    },
+    "walk-13": {
+      "l_momo": [
+        "x",
+        -23.096988312782166
+      ],
+      "r_momo": [
+        "x",
+        23.096988312782166
+      ],
+      "l_sune": [
+        "x",
+        36.955181300451464
+      ],
+      "r_sune": [
+        "x",
+        0
+      ]
+    },
+    "walk-14": {
+      "l_momo": [
+        "x",
+        -17.677669529663692
+      ],
+      "r_momo": [
+        "x",
+        17.677669529663692
+      ],
+      "l_sune": [
+        "x",
+        28.28427124746191
+      ],
+      "r_sune": [
+        "x",
+        0
+      ]
+    },
+    "walk-15": {
+      "l_momo": [
+        "x",
+        -9.56708580912726
+      ],
+      "r_momo": [
+        "x",
+        9.56708580912726
+      ],
+      "l_sune": [
+        "x",
+        15.307337294603617
+      ],
+      "r_sune": [
+        "x",
+        0
+      ]
+    }
+  },
+  "pose_validation": {
+    "elbow-flex": {
+      "maximum_coincident_position_gap": 0.0,
+      "minimum_protected_body_face_area_ratio": 0.8857781115092274,
+      "original_zero_area_body_faces": 0,
+      "finite_positions": true
+    },
+    "arms-up": {
+      "maximum_coincident_position_gap": 0.0,
+      "minimum_protected_body_face_area_ratio": 0.8856223847804662,
+      "original_zero_area_body_faces": 0,
+      "finite_positions": true
+    },
+    "knees-bent": {
+      "maximum_coincident_position_gap": 0.0,
+      "minimum_protected_body_face_area_ratio": 0.3377304570120521,
+      "original_zero_area_body_faces": 0,
+      "finite_positions": true
+    },
+    "rest": {
+      "maximum_coincident_position_gap": 0.0,
+      "minimum_protected_body_face_area_ratio": 0.9999992841301033,
+      "original_zero_area_body_faces": 0,
+      "finite_positions": true
+    },
+    "standing": {
+      "maximum_coincident_position_gap": 0.0,
+      "minimum_protected_body_face_area_ratio": 0.6005027771440931,
+      "original_zero_area_body_faces": 0,
+      "finite_positions": true
+    },
+    "forward-bend": {
+      "maximum_coincident_position_gap": 0.0,
+      "minimum_protected_body_face_area_ratio": 0.41102645038550434,
+      "original_zero_area_body_faces": 0,
+      "finite_positions": true
+    },
+    "crouch": {
+      "maximum_coincident_position_gap": 0.0,
+      "minimum_protected_body_face_area_ratio": 0.31906793236091685,
+      "original_zero_area_body_faces": 0,
+      "finite_positions": true
+    },
+    "walk-00": {
+      "maximum_coincident_position_gap": 0.0,
+      "minimum_protected_body_face_area_ratio": 0.9999992841301033,
+      "original_zero_area_body_faces": 0,
+      "finite_positions": true
+    },
+    "walk-01": {
+      "maximum_coincident_position_gap": 0.0,
+      "minimum_protected_body_face_area_ratio": 0.4115771788555483,
+      "original_zero_area_body_faces": 0,
+      "finite_positions": true
+    },
+    "walk-02": {
+      "maximum_coincident_position_gap": 0.0,
+      "minimum_protected_body_face_area_ratio": 0.050667762570848464,
+      "original_zero_area_body_faces": 0,
+      "finite_positions": true
+    },
+    "walk-03": {
+      "maximum_coincident_position_gap": 0.0,
+      "minimum_protected_body_face_area_ratio": 0.07838298966042301,
+      "original_zero_area_body_faces": 0,
+      "finite_positions": true
+    },
+    "walk-04": {
+      "maximum_coincident_position_gap": 0.0,
+      "minimum_protected_body_face_area_ratio": 0.09028204552404742,
+      "original_zero_area_body_faces": 0,
+      "finite_positions": true
+    },
+    "walk-05": {
+      "maximum_coincident_position_gap": 0.0,
+      "minimum_protected_body_face_area_ratio": 0.07838298966042301,
+      "original_zero_area_body_faces": 0,
+      "finite_positions": true
+    },
+    "walk-06": {
+      "maximum_coincident_position_gap": 0.0,
+      "minimum_protected_body_face_area_ratio": 0.05066776257084778,
+      "original_zero_area_body_faces": 0,
+      "finite_positions": true
+    },
+    "walk-07": {
+      "maximum_coincident_position_gap": 0.0,
+      "minimum_protected_body_face_area_ratio": 0.411577178855548,
+      "original_zero_area_body_faces": 0,
+      "finite_positions": true
+    },
+    "walk-08": {
+      "maximum_coincident_position_gap": 0.0,
+      "minimum_protected_body_face_area_ratio": 0.9999992841301033,
+      "original_zero_area_body_faces": 0,
+      "finite_positions": true
+    },
+    "walk-09": {
+      "maximum_coincident_position_gap": 0.0,
+      "minimum_protected_body_face_area_ratio": 0.41159598038524065,
+      "original_zero_area_body_faces": 0,
+      "finite_positions": true
+    },
+    "walk-10": {
+      "maximum_coincident_position_gap": 0.0,
+      "minimum_protected_body_face_area_ratio": 0.05070218622023095,
+      "original_zero_area_body_faces": 0,
+      "finite_positions": true
+    },
+    "walk-11": {
+      "maximum_coincident_position_gap": 0.0,
+      "minimum_protected_body_face_area_ratio": 0.0784387726445438,
+      "original_zero_area_body_faces": 0,
+      "finite_positions": true
+    },
+    "walk-12": {
+      "maximum_coincident_position_gap": 0.0,
+      "minimum_protected_body_face_area_ratio": 0.09030300788850835,
+      "original_zero_area_body_faces": 0,
+      "finite_positions": true
+    },
+    "walk-13": {
+      "maximum_coincident_position_gap": 0.0,
+      "minimum_protected_body_face_area_ratio": 0.07843877264454387,
+      "original_zero_area_body_faces": 0,
+      "finite_positions": true
+    },
+    "walk-14": {
+      "maximum_coincident_position_gap": 0.0,
+      "minimum_protected_body_face_area_ratio": 0.050702186220230684,
+      "original_zero_area_body_faces": 0,
+      "finite_positions": true
+    },
+    "walk-15": {
+      "maximum_coincident_position_gap": 0.0,
+      "minimum_protected_body_face_area_ratio": 0.41159598038524337,
+      "original_zero_area_body_faces": 0,
+      "finite_positions": true
+    }
+  },
+  "limitations": [
+    "Synthetic pose checks are not game animation playback",
+    "Kurt PSP lacks original ponytail bones; the source chain maps to its head ancestor and has no independent hair physics"
+  ],
+  "preview_yobj_sha256": "e640d293e0879c681aeeade175f55e5c2d9130294faa2b8c3cbe507a2daf05d5",
+  "second_build_pac_byte_identical": true,
+  "noesis_obj_counters": {
+    "groups": 87,
+    "loaded_textures": 19,
+    "named_materials": 20,
+    "bones": 0
+  },
+  "noesis_screenshots": [
+    {
+      "image": "preview/jericho-front-fresh-noesis.png",
+      "obj": "preview/jericho-front.obj",
+      "image_sha256": "b74c3f787d1b3c1f6cf6bb67233284e0c1113cf1bccdc5325c726e6895feacd6",
+      "obj_sha256": "239c597ad5dd5e9619b92ceb450337ececdd4383fdc4b9bfd5653a05f750c8b8",
+      "viewer": "Noesis 4.466 64-bit under Wine 11",
+      "toggles_once": [
+        "orientation",
+        "face culling",
+        "shading"
+      ],
+      "unedited": true
+    },
+    {
+      "image": "preview/jericho-rear-fresh-noesis.png",
+      "obj": "preview/jericho-rear.obj",
+      "image_sha256": "5525dc5a034c734e79ba5ff6baa8117b3b644bbec142f2bbabfd93eee380dd68",
+      "obj_sha256": "9eb061f0affdb3d063843b2a59fe7a400e8a6c7a8f725e23aad35e53cd4a44a8",
+      "viewer": "Noesis 4.466 64-bit under Wine 11",
+      "toggles_once": [
+        "orientation",
+        "face culling",
+        "shading"
+      ],
+      "unedited": true
+    },
+    {
+      "image": "preview/jericho-side-fresh-noesis.png",
+      "obj": "preview/jericho-side.obj",
+      "image_sha256": "00957d893c1ffd7c02bd00d39c0cc0194f63f15fcf602086df0c1554cdb0b7d7",
+      "obj_sha256": "b7ebcfced6146ef8f3c085cd788f5a1a30f39e7096fa6f615bb962c4c49629eb",
+      "viewer": "Noesis 4.466 64-bit under Wine 11",
+      "toggles_once": [
+        "orientation",
+        "face culling",
+        "shading"
+      ],
+      "unedited": true
+    },
+    {
+      "image": "preview/jericho-standing-fresh-noesis.png",
+      "obj": "preview/jericho-standing.obj",
+      "image_sha256": "ca5902cc61c4dc61857a91bcbfdd2e1efc509b7900d9b3cb8ac85559f28feffc",
+      "obj_sha256": "92e14737b7f20795b1176df620aa5a1ffd6ad2f06f03774300a93cda7934bc7c",
+      "viewer": "Noesis 4.466 64-bit under Wine 11",
+      "toggles_once": [
+        "orientation",
+        "face culling",
+        "shading"
+      ],
+      "unedited": true
+    },
+    {
+      "image": "preview/jericho-forward-bend-fresh-noesis.png",
+      "obj": "preview/jericho-forward-bend.obj",
+      "image_sha256": "e8f4429159fce8e0ea581c8d335d09011a4d8d2a24f5e64521ef1e2218b94340",
+      "obj_sha256": "704e1109535a96b8b9209542dd359c580a5620b7f8aa811cf5b6f04a03745f6c",
+      "viewer": "Noesis 4.466 64-bit under Wine 11",
+      "toggles_once": [
+        "orientation",
+        "face culling",
+        "shading"
+      ],
+      "unedited": true
+    },
+    {
+      "image": "preview/jericho-crouch-fresh-noesis.png",
+      "obj": "preview/jericho-crouch.obj",
+      "image_sha256": "5d20b5920b14e023dfc42a121e74fbcc43b8a57e686a869946ec2d4408036e07",
+      "obj_sha256": "b730ad8e43150a8da17a5e943b5dee24b99d904d4cc47ed41461a326251cb544",
+      "viewer": "Noesis 4.466 64-bit under Wine 11",
+      "toggles_once": [
+        "orientation",
+        "face culling",
+        "shading"
+      ],
+      "unedited": true
+    },
+    {
+      "image": "preview/source-front-fresh-noesis.png",
+      "obj": "preview/source-front.obj",
+      "image_sha256": "13d7bbcdbc1a11a0c1efca3d5f6e1e7672cea2444bf1f1c47a79561e94c2cf73",
+      "obj_sha256": "b93ce9c2b035197c0c08f7e1a0c8390fdf1b5c6509b9558a9a3a2f0a1ee99052",
+      "viewer": "Noesis 4.466 64-bit under Wine 11",
+      "toggles_once": [
+        "orientation",
+        "face culling",
+        "shading"
+      ],
+      "unedited": true
+    },
+    {
+      "image": "preview/source-rear-fresh-noesis.png",
+      "obj": "preview/source-rear.obj",
+      "image_sha256": "a0a09258235298407003d7b3cb9c7792774b0f465c815870264ae987b70c6a1c",
+      "obj_sha256": "133b729c7a66150a67569dc147e8b7f5cba7a20a9cff8ace7db99850c2ac7ab7",
+      "viewer": "Noesis 4.466 64-bit under Wine 11",
+      "toggles_once": [
+        "orientation",
+        "face culling",
+        "shading"
+      ],
+      "unedited": true
+    },
+    {
+      "image": "preview/source-side-fresh-noesis.png",
+      "obj": "preview/source-side.obj",
+      "image_sha256": "2c916e788ba0f086bf82dbc67beb4be06215226ca8463ed8f045c57411dcaedc",
+      "obj_sha256": "d003aaa4e323c600956755b57ccaafbe4a80dfa0c03f091fc8555da9b714d39c",
+      "viewer": "Noesis 4.466 64-bit under Wine 11",
+      "toggles_once": [
+        "orientation",
+        "face culling",
+        "shading"
+      ],
+      "unedited": true
+    },
+    {
+      "image": "source-original/hctp-jericho-fresh-noesis.png",
+      "obj": "source-original/hctp-jericho.obj",
+      "image_sha256": "c6f5b716a9315ebb6734cd90d7081cceea7a1ad43661c9244be40ab7b66e7dfe",
+      "obj_sha256": "9c93cd82aae85ee09613677821f2d3ca66b5fe3ff4233a078456419f488a75ec",
+      "viewer": "Noesis 4.466 64-bit under Wine 11",
+      "toggles_once": [
+        "orientation",
+        "face culling",
+        "shading"
+      ],
+      "unedited": true
+    }
+  ],
+  "native_jericho_alpha_reference": {
+    "pac_sha256": "dd5a606e28f1bedb466e6ebeaf25bccde2251066380c0ecaa75fe136a58bd67d",
+    "model_sha256": "091ddc06aecb46d800b6ec756bd3ea25c92ca0528b18b584185858f46977d075",
+    "hair_materials": [
+      {
+        "mesh": 20,
+        "material": 2,
+        "texture": "je_hair",
+        "control": 277
+      },
+      {
+        "mesh": 20,
+        "material": 3,
+        "texture": "je_hairc",
+        "control": 277
+      },
+      {
+        "mesh": 20,
+        "material": 4,
+        "texture": "je_hair_plus",
+        "control": 277
+      }
+    ]
+  },
+  "texture_preview_sha256": {
+    "y2j_yubi.png": "232f33c850efd37f850202d058b913208c9a88a23715dfcb29026e4ce8223164",
+    "y2j_eye.png": "7149a6bec597ac6c4495797e7ccc5952c9941c3f28d69282219fd73b8be8c98e",
+    "y2j_hair.gim": "a5aa325dd80afe48146cfbb9147f72c50fa806c3342e6c209f534ca439e516f1",
+    "y2j_knee.gim": "5e2c1981ff5a3a7ed0bf68ed11a5d578b333035d492339a8b28adb24eb6c69c1",
+    "y2j_hand.gim": "54190d3eb0b6af08e3c95c295ef67804a3c92b35a08c9b7aafc68c896f8585ce",
+    "y2j_tail.png": "c8484f994820a8ad86ec362b4737ee130486dc0a7915134e67c909ba57ba89e2",
+    "y2j_head.gim": "6b0a80d18f8468637cd5d3df2c81b8875724dbbea91ab13508ebaba14ca11c7d",
+    "y2j_top.png": "004c585b1a05cc36e2bf613d6bb7e48fbf48731e6f766bdfdfee715ec5051754",
+    "y2j_sune.gim": "01f1270ddfe5ee8d4ae6e09ff243c3ddc643e22e7bf151428cf344ef1bad387d",
+    "y2j_wrist.gim": "6f0726af3692e859288e506dc4c12fc6edf6686ff76834676f66843892aab3de",
+    "y2j_su_r.gim": "ea3ffbf1ad7f99f344b62a267a83d03459442c19cf62847e910521caef54cd94",
+    "y2j_arm.png": "c89bd0160e01026a2c639a31584baa8eb98489865ab640474e06918b002bcc2c",
+    "y2j_su_r.png": "dc1b14905e1675de363f61cb14cddee5bb2b46cf4f15e79dfed6a349f5d9bf1c",
+    "y2j_arm.gim": "64929eed7e1b54dbcbf78515666c92b1edd59a26fa3be8a2e15b621046bd223d",
+    "y2j_tail.gim": "95c6fd198ad6093ba4cd17ea1faf825f228b3f79cf5a32412e480623ba3d70ef",
+    "y2j_sune.png": "c4a0471e7cb304bd1274466ef6d044e855947151cfac819d394e4a22ec749e0f",
+    "y2j_body.gim": "add03838bcaf7fab04bc7ac15b51009e5db93d46ba42297244deeda05b4733f8",
+    "y2j_hair.png": "5d5334c7cd1d6fc81230ec0d0a8d2e6fbcb790db974bd0edd1c9aa44e44f3da5",
+    "y2j_kutu.gim": "251088fe428c3a4178541ef94126cab22c8b03eece770d06ca550fdf7cfff1cd",
+    "y2j_knee.png": "32ab696c73f07b4c731d4080f24641d9b2a6965256892a5f11dec9a23c987808",
+    "y2j_hiji.png": "75b1fca9e4e5cb63cec4da39fdb9bd8a3118ca2c8f16461925b6148a35df8a0f",
+    "y2j_kutu.png": "8b626a16fc6b4d02e65e24ad2811a300729d1e2412dae3a2a48c8fd35bc35c82",
+    "y2j_hiji.gim": "c398e289a36224d4a7f973445a662843da8e777b0c7951b538268c3e1a7f5eea",
+    "y2j_kuti.gim": "9b340c4424c749c63dfab6758d917117dabace38f3b773d270229e518aaf9748",
+    "y2j_face.gim": "6a8126eed1d6e621c5241931f05d0e1e24480a898f2c1ddfafae549d05bfc7e3",
+    "y2j_mata.png": "85704d8d59e8e67d666c0f518e91d7c84ab403d9d3bde58951a47276fd9e12ce",
+    "y2j_hige.gim": "cdfd4c891723cd3cf669f7d13f1ded03e77a08234596a6e46abb1318600b87a9",
+    "y2j_body.png": "429f717f537144759f9f2a051bbbb4abfbe9225f197303cf3e932d6efe3f0590",
+    "y2j_wrist.png": "933fd2821d6ea3a22f43274b30a7bceb15e0166dd584dc02af46ff5cca10837a",
+    "y2j_hige.png": "d40b9e63d7c29fee1ccfdf42023df5b11f30d665f834c9261a60532e673a4f81",
+    "y2j_head.png": "7dd8cbe47f2b1ec9b5ee237c753e9ec971f503d5a53ae0c7f612b4da97ced359",
+    "y2j_hand.png": "9c6ed7c4cb3b209c99d151c5cda4ed2c0dc544fb35077d3effdb738798d3ebd8",
+    "y2j_mata.gim": "2b43a0652a1aca83898569df01303b5ceea159b62df403382f7010a7781eea49",
+    "y2j_ha.png": "ad0d15015635d86d0d6727206554a5496c99ec7a79d4f2eb4190689cfddc9350",
+    "y2j_ha.gim": "f406fa3ec8a197f9cc12190306248a608f7bb69fa4d089b89156ccb4a326c012",
+    "y2j_eye.gim": "8116c72b0973ee8fd6935d4b1ccd9232e354b15632b75c7f309cacce6e1ae29a",
+    "y2j_top.gim": "cae8b74a4d4fd1583a7d514a9b5e349460c3e1226d5f3762ab1ed57cff74a2f4",
+    "y2j_kuti.png": "c96edbac962ddad7065a56a93443dff285c1d06da315eea184f105ff2b999e95",
+    "y2j_yubi.gim": "409836dd4bff549ca4b19e667c4ba5c06b91808c77d2a83bb525d3b186148188",
+    "y2j_face.png": "bb2c345f789ca7cd69b214388d0c78b973389760ee6eb17e876dfc105bce11c3"
+  },
+  "validation": {
+    "existing_regression_tests_passed": 56,
+    "delivery_tests": "tests.test_jericho_hybrid_trial",
+    "noesis_images_visually_inspected": 10,
+    "actual_ppsspp_gameplay_tested": false,
+    "delivery_tests_passed": 5
+  },
+  "final_pac_textures_equal_preview_by_name": true
+}

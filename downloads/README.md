@@ -1,3 +1,7 @@
+## HCTP Chris Jericho: PSP hybrid trial
+
+[Download the 144 KiB PAC](0600-PSP-hybrid-Jericho.pac) or [PAC, Noesis previews, textures and comparisons](0600-PSP-hybrid-Jericho-test-bundle.zip). Uses the accepted Kurt PSP hybrid-weight workflow, preserves the original torso/hip faces, and retains original hair cutout alpha. [Details and checks](../docs/0600-jericho-hybrid.md). SVR 2011 PPSSPP validation is pending.
+
 ## Lance Storm: original HCTP posterior anatomy restored
 
 [Download the 138 KiB corrected PAC](1800-PSP-hybrid-source-pelvis-restored.pac) or [PAC, Noesis previews, textures and comparisons](1800-PSP-hybrid-source-pelvis-restored-test-bundle.zip). Restores missing original rear-trunks and back-torso faces, closes their shared boundaries, and preserves the PSP rig and texture payloads. Front, rear and side Noesis views are checked. [Exact changes and validation](../docs/lance-source-pelvis-restoration.md). Actual SVR 2011 animation/gameplay verification remains pending.
