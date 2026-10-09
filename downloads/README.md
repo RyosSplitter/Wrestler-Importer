@@ -1,3 +1,7 @@
+## Chris Jericho PSP: unchanged preview
+
+[Download OBJ, textures, native YOBJ and Noesis screenshots](Chris-Jericho-PSP-Noesis-preview.zip). The original PAC is unchanged; textures retain their original resolution. Includes the complete model and an additional viewing copy with inactive blood effects hidden. [Details and mesh-count comparison](../docs/jericho-psp-preview.md).
+
 ## 1800 hybrid: half-size textures
 
 [Download the 136 KiB PAC](1800-PSP-hybrid-half-textures.pac) or [PAC and preview bundle](1800-PSP-hybrid-half-textures-test-bundle.zip). Combined GIM size is reduced from 47,088 to 23,536 bytes through lower resolution. Model section, weights, materials and palettes are unchanged from the 144 KiB trial. [Details and screenshots](../docs/1800-hybrid-half-textures.md). PPSSPP validation is pending.
