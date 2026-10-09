@@ -84,6 +84,16 @@ def rebuild(data, groups, parts):
             reasons = compatible([model['meshes'][i] for i in group],[parts[i] for i in group])
             if reasons:
                 raise ValueError('; '.join(reasons))
+    return write_model(model, groups)
+
+
+def write_model(model, groups):
+    """Serialize decoded records after a caller-validated controlled edit.
+
+    Rebuild validates merge provenance before calling this. Asset repair callers
+    must verify their own attribute/topology edits against the audited source.
+    Every output still passes the strict buffer/pointer/weight auditor.
+    """
     out = bytearray(model['header'])
     relocation_locations = []
 
@@ -145,12 +155,14 @@ def rebuild(data, groups, parts):
         for mi,(mesh,material) in enumerate(mats):
             if not material['strips']:
                 raise ValueError('Empty material index alias semantics unknown')
+            u32(ma+mi*144+132,len(material['strips']))
             sa = allocate(b''.join(material['strip_headers']))
             ptr(ma+mi*144+136,sa)
             strip_arrays.append(sa)
         for mi,(mesh,material) in enumerate(mats):
             sa=strip_arrays[mi]
             for si,strip in enumerate(material['strips']):
+                u32(sa+si*16+8,len(strip))
                 values = [v+bases[mesh['index']] for v in strip]
                 if any(v>=n or v>65535 for v in values):
                     raise ValueError('Remapped index out of range')

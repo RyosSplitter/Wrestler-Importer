@@ -1,0 +1,211 @@
+{
+  "status": "Left waist contour mirrored; PPSSPP test pending",
+  "patch": {
+    "added_vertex_records": [
+      {
+        "mesh": 53,
+        "vertex": 109,
+        "position": [
+          1.0757819414138794,
+          -2.069807767868042,
+          1.165835976600647
+        ],
+        "texture": "l-se1",
+        "mirrored_from_mesh": 53,
+        "mirrored_from_vertex": 6
+      },
+      {
+        "mesh": 55,
+        "vertex": 105,
+        "position": [
+          1.0757819414138794,
+          -2.069807767868042,
+          1.165835976600647
+        ],
+        "texture": "l-pan2",
+        "mirrored_from_mesh": 53,
+        "mirrored_from_vertex": 6
+      }
+    ],
+    "moved_vertex_records": [
+      {
+        "mesh": 53,
+        "vertex": 23,
+        "position": [
+          1.2991232872009277,
+          -3.4257936477661133,
+          1.4147762060165405
+        ],
+        "mirrored_from_mesh": 53,
+        "mirrored_from_vertex": 5
+      }
+    ],
+    "mirrored_normal_records": [
+      {
+        "mesh": 52,
+        "vertex": 9,
+        "mirrored_from_mesh": 53,
+        "mirrored_from_vertex": 17
+      },
+      {
+        "mesh": 52,
+        "vertex": 20,
+        "mirrored_from_mesh": 53,
+        "mirrored_from_vertex": 17
+      },
+      {
+        "mesh": 53,
+        "vertex": 21,
+        "mirrored_from_mesh": 53,
+        "mirrored_from_vertex": 7
+      },
+      {
+        "mesh": 53,
+        "vertex": 22,
+        "mirrored_from_mesh": 53,
+        "mirrored_from_vertex": 17
+      },
+      {
+        "mesh": 53,
+        "vertex": 24,
+        "mirrored_from_mesh": 53,
+        "mirrored_from_vertex": 4
+      },
+      {
+        "mesh": 53,
+        "vertex": 72,
+        "mirrored_from_mesh": 53,
+        "mirrored_from_vertex": 4
+      },
+      {
+        "mesh": 53,
+        "vertex": 76,
+        "mirrored_from_mesh": 53,
+        "mirrored_from_vertex": 17
+      },
+      {
+        "mesh": 55,
+        "vertex": 15,
+        "mirrored_from_mesh": 53,
+        "mirrored_from_vertex": 17
+      }
+    ],
+    "bounds_changed": [],
+    "reflection_plane": {
+      "point": [
+        -0.0049064050136848735,
+        0.041733606331453066,
+        0.046555414839408255
+      ],
+      "normal": [
+        0.9999998851622679,
+        -0.00047914987943760185,
+        9.531182338989066e-06
+      ]
+    },
+    "new_seam_pose_separation": {
+      "elbow-flex": 0.0,
+      "arms-up": 0.0,
+      "knees-bent": 0.0,
+      "rest": 0.0
+    },
+    "replaced_faces": {
+      "(53, 0)": [
+        [
+          8,
+          6,
+          22
+        ],
+        [
+          21,
+          8,
+          22
+        ],
+        [
+          21,
+          22,
+          23
+        ]
+      ],
+      "(55, 0)": [
+        [
+          11,
+          8,
+          15
+        ]
+      ]
+    },
+    "new_faces": {
+      "(53, 0)": [
+        [
+          21,
+          8,
+          109
+        ],
+        [
+          8,
+          6,
+          109
+        ],
+        [
+          109,
+          22,
+          23
+        ],
+        [
+          21,
+          109,
+          23
+        ]
+      ],
+      "(55, 0)": [
+        [
+          8,
+          15,
+          105
+        ],
+        [
+          11,
+          8,
+          105
+        ]
+      ]
+    },
+    "original_weight_bits_palettes_materials_textures_skeleton_preserved": true,
+    "unrelated_original_vertices_and_ordered_triangles_preserved": true
+  },
+  "filename": "1800-PSP-hybrid-mirrored-left-waist.pac",
+  "baseline_sha256": "e701ed84ea9388fab76c60259c07f72182dc71273a9120ed6db601068f88e41b",
+  "pac_sha256": "8e59fec71768b1c19bb890ceb1f66fd9735a60f8c0087b3f8a1b1b6a882335b0",
+  "before": {
+    "pac_bytes": 139264,
+    "model_bytes": 196256,
+    "stored_model_bytes": 119248,
+    "meshes": 57,
+    "vertices": 2277,
+    "triangles": 2276,
+    "indices": 3884,
+    "strips": 804,
+    "textures": 19,
+    "material_records": 96,
+    "bones": 79
+  },
+  "after": {
+    "pac_bytes": 139264,
+    "model_bytes": 196848,
+    "stored_model_bytes": 119371,
+    "meshes": 57,
+    "vertices": 2279,
+    "triangles": 2278,
+    "indices": 3890,
+    "strips": 806,
+    "textures": 19,
+    "material_records": 96,
+    "bones": 79
+  },
+  "preview_equals_final_pac_model": true,
+  "preserved_pac_sections": [
+    8,
+    9
+  ]
+}
