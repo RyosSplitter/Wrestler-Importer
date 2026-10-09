@@ -26,7 +26,13 @@ def run(source_path,output_path,profile_path):
     free_ratios={}
     for region,total in totals.items():
         count=total-held[region]
-        if count:free_ratios[region]=max(1/count,min(1.,(math.ceil(total*profile['ratios'][region])-held[region])/count))
+        if count:
+            if profile.get('redistribute_protected_budget',True):
+                free_ratios[region]=max(1/count,min(1.,(math.ceil(total*profile['ratios'][region])-held[region])/count))
+            else:
+                # Shape preservation may cost faces. Do not pay for protected
+                # anatomy by increasing reduction in an unrelated region.
+                free_ratios[region]=profile['ratios'][region]
     # Preserved meshes participate in the ownership map so free mesh borders
     # are locked, but are never passed through a modifier or geometry welding.
     for m in source['meshes']:
@@ -41,7 +47,11 @@ def run(source_path,output_path,profile_path):
                 for vi in tri:
                     key=(vi,smoothing)
                     if key not in cache:
-                        v=copy.deepcopy(m['vertices'][vi]);v['smoothing_group']=smoothing;cache[key]=len(vertices);vertices.append(v)
+                        v=copy.deepcopy(m['vertices'][vi])
+                        dense=[0.]*source['bone_count']
+                        for bone,weight in zip(m['bone_palette'],v['weights']):dense[bone]=weight
+                        v['weights']=dense
+                        v['smoothing_group']=smoothing;cache[key]=len(vertices);vertices.append(v)
                     face.append(cache[key])
                 faces.append(face)
             mats.append(dict(texture_id=tid,triangles=faces))
@@ -56,6 +66,7 @@ def run(source_path,output_path,profile_path):
     result['reduction_report'].update(overall_region_ratios=profile['ratios'],free_region_ratios=free_ratios,
         original_region_triangles=dict(totals),protected_region_triangles=preserved_by_region,
         final_region_triangles={r:actual[r]+held[r] for r in totals},protected_source_materials=sorted(protected))
+    result['reduction_report']['redistribute_protected_budget']=profile.get('redistribute_protected_budget',True)
     output_path.write_text(json.dumps(result,allow_nan=False));print(json.dumps(result['reduction_report'],indent=2))
 
 
