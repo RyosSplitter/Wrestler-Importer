@@ -42,7 +42,7 @@ PROFILE=dict(ratios={'Head':.8,'Torso':.65,'Arms':.8,'Legs':.65},protected_textu
 EXTRA_HALF_RESOLUTION={'y2j_arm','y2j_body','y2j_eye','y2j_head','y2j_hige','y2j_sune','y2j_top'}
 
 
-def prepare_hybrid(source,target):
+def prepare_hybrid(source,target,*,preserve_source_cranial=False):
     aligned,alignment=reference_model(source,target)
     ps=np.array([v['position'] for m in aligned['meshes'] for v in m['vertices']]);sw=np.zeros((len(ps),source['bone_count']));row=0
     for m in source['meshes']:
@@ -51,9 +51,16 @@ def prepare_hybrid(source,target):
             row+=1
     sw/=sw.sum(1)[:,None];mapped,missing,redirects=map_source(source,target,sw,True)
     if missing.max()>1e-7:raise ValueError('Source weights cannot map to the PSP skeleton')
-    transferred,transfer_report=transfer(target,ps)
     head_names=descendant_names(source,'atama');fraction=sw[:,[b['index'] for b in source['bones'] if b['name'] in head_names]].sum(1)
-    weights=mapped*(1-fraction[:,None])+transferred*fraction[:,None]
+    if preserve_source_cranial:
+        # A verified same-name/ancestor map already represents these facial
+        # controls. Nearest donor geometry must not replace that information
+        # with unrelated neck/body influences or different mouth controllers.
+        weights=mapped.copy()
+        transfer_report=dict(method='Verified source facial bone/ancestor mapping; nearest-body head replacement disabled',donor_transfer_applied=False)
+    else:
+        transferred,transfer_report=transfer(target,ps)
+        weights=mapped*(1-fraction[:,None])+transferred*fraction[:,None]
     # The source ponytail bones are absent from Kurt. Ancestor mapping attaches
     # them to the head; nearest-body transfer would attach the low tail to skin.
     held_positions={tuple(m['vertices'][i]['position']) for m in aligned['meshes'] for a in m['materials'] if aligned['textures'][a['texture_id']] in ('y2j_hair','y2j_tail','y2j_top') for i in {j for t in a['triangles'] for j in t}}
@@ -70,6 +77,8 @@ def prepare_hybrid(source,target):
     aligned['preparation_report']=dict(vertex_alpha={'policy':'opaque_psp_base'},alignment=alignment,
         hybrid_weights=dict(method=3,head_blended_vertices=int(np.count_nonzero(fraction>1e-7)),source_attachment_records=int(held.sum()),bone_redirects=redirects,transfer=transfer_report,
         body_weight_difference_max=float(np.max(np.abs(weights[fraction==0]-mapped[fraction==0])))))
+    if preserve_source_cranial:
+        aligned['preparation_report']['hybrid_weights']['source_cranial_preservation']=dict(enabled=True,records=int(np.count_nonzero(fraction>1e-7)),geometry_changed=False)
     return aligned
 
 
