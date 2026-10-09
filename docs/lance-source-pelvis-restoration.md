@@ -1,5 +1,14 @@
 # Lance: restore the original HCTP posterior anatomy
 
+**QA erratum:** The anatomical front/back labels in this historical analysis
+were reversed. Native negative Z is **front**, and the restored `l-pan1` /
+`l-mune2` surfaces are front trunks/torso. The numerical patch measurements
+below describe those selected surfaces, not proof that the actual buttocks
+were restored. The new [automated QA study](model-qa.md) measures the real rear
+and still flags a depth deficit in this accepted PAC. The historical PAC and
+patch data have not been changed. Treat subsequent posterior labels below as
+historical descriptions affected by that mistake.
+
 [Download the corrected PAC](../downloads/1800-PSP-hybrid-source-pelvis-restored.pac)
 or [the complete Noesis preview and comparison bundle](../downloads/1800-PSP-hybrid-source-pelvis-restored-test-bundle.zip).
 This is a controlled local repair of the newest rear-waist-restored candidate;
@@ -13,7 +22,7 @@ bone landmarks align this read-only reference into the existing PSP model space
 using uniform scale 0.9848508359, a proper rotation, and translation. There is no
 nonuniform reshaping or new alignment of the converted model. The full transform
 is in the [JSON report](../downloads/1800-PSP-hybrid-source-pelvis-restored-report.json).
-In this space, Y increases toward the feet and negative Z is the back.
+In this native space, Y increases toward the feet and negative Z is the front.
 
 The two affected original materials are `l-pan1` (rear trunks/buttocks) and
 `l-mune2` (back torso). Decimation removed interior points and replaced curved

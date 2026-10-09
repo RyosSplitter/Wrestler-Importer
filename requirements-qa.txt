@@ -1,0 +1,5 @@
+# Optional read-only model QA stage; separate from the Windows beta.
+-r requirements.txt
+scipy==1.17.1
+trimesh==4.11.4
+rtree==1.4.1

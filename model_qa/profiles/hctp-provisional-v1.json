@@ -1,0 +1,168 @@
+{
+  "version": 1,
+  "status": "Provisional review tolerances; not a game correctness certificate",
+  "distance_p95_height": 0.0015,
+  "distance_p99_height": 0.004,
+  "depth_absolute_p95_height": 0.003,
+  "inward_depth_p95_height": 0.002,
+  "edge_distance_p95_height": 0.002,
+  "animation_extra_p95_height": 0.002,
+  "minimum_surface_samples": 60,
+  "minimum_render_pixels": 100,
+  "calibration_cases": [
+    {
+      "label": "Accepted Jericho static body regions, excluding animated jaw",
+      "inputs": {
+        "source": "/workspace/attachments/31e89f9b-1ea9-4749-b14c-16426443609d/0600.pac",
+        "candidate": "/workspace/Wrestler-Importer/downloads/0600-PSP-hybrid-Jericho.pac",
+        "sha256": {
+          "/workspace/attachments/31e89f9b-1ea9-4749-b14c-16426443609d/0600.pac": "052da6cb97e1adcf865a89fd8d7d8544de8298025b36344f38de74ec600e9b1e",
+          "/workspace/Wrestler-Importer/downloads/0600-PSP-hybrid-Jericho.pac": "1715f8f2768dbe1c8293461dd10c72d383397d660b8c61689365683bbf2f5729"
+        }
+      },
+      "trusted_regions": [
+        "torso",
+        "waist",
+        "pelvis",
+        "buttocks",
+        "neck",
+        "shoulders",
+        "left-hands",
+        "right-hands",
+        "left-feet",
+        "right-feet"
+      ]
+    },
+    {
+      "label": "Accepted Lance static facial regions, excluding unresolved posterior",
+      "inputs": {
+        "source": "/workspace/attachments/c94671ca-096f-4409-8265-d205956085a4/1800.pac",
+        "candidate": "/workspace/Wrestler-Importer/downloads/1800-PSP-hybrid-source-pelvis-restored.pac",
+        "sha256": {
+          "/workspace/attachments/c94671ca-096f-4409-8265-d205956085a4/1800.pac": "fe1073d97e9301c62226d611d174324d74cb5223669f3bbeed8a6660bcb80495",
+          "/workspace/Wrestler-Importer/downloads/1800-PSP-hybrid-source-pelvis-restored.pac": "dbe2e1e0bd1a78ac84c5c4ff5fb06cd8247aabea3f6dcf2cace34c965ac8f1e3"
+        }
+      },
+      "trusted_regions": [
+        "face",
+        "jaw",
+        "chin",
+        "nose",
+        "eyes"
+      ]
+    }
+  ],
+  "regional": {
+    "torso": {
+      "distance_p95_height": 0.0015,
+      "distance_p99_height": 0.004,
+      "depth_absolute_p95_height": 0.003,
+      "inward_depth_p95_height": 0.002,
+      "edge_distance_p95_height": 0.002
+    },
+    "waist": {
+      "distance_p95_height": 0.0015,
+      "distance_p99_height": 0.004,
+      "depth_absolute_p95_height": 0.003,
+      "inward_depth_p95_height": 0.002,
+      "edge_distance_p95_height": 0.002
+    },
+    "pelvis": {
+      "distance_p95_height": 0.0015,
+      "distance_p99_height": 0.004,
+      "depth_absolute_p95_height": 0.003,
+      "inward_depth_p95_height": 0.002,
+      "edge_distance_p95_height": 0.002
+    },
+    "buttocks": {
+      "distance_p95_height": 0.0015,
+      "distance_p99_height": 0.004,
+      "depth_absolute_p95_height": 0.003,
+      "inward_depth_p95_height": 0.002,
+      "edge_distance_p95_height": 0.002
+    },
+    "neck": {
+      "distance_p95_height": 0.0015,
+      "distance_p99_height": 0.004,
+      "depth_absolute_p95_height": 0.003,
+      "inward_depth_p95_height": 0.002,
+      "edge_distance_p95_height": 0.002
+    },
+    "shoulders": {
+      "distance_p95_height": 0.0015,
+      "distance_p99_height": 0.004,
+      "depth_absolute_p95_height": 0.003,
+      "inward_depth_p95_height": 0.002,
+      "edge_distance_p95_height": 0.002
+    },
+    "left-hands": {
+      "distance_p95_height": 0.0015,
+      "distance_p99_height": 0.004,
+      "depth_absolute_p95_height": 0.003,
+      "inward_depth_p95_height": 0.00203084864318355,
+      "edge_distance_p95_height": 0.002
+    },
+    "right-hands": {
+      "distance_p95_height": 0.0015,
+      "distance_p99_height": 0.004,
+      "depth_absolute_p95_height": 0.003,
+      "inward_depth_p95_height": 0.0021723412662986953,
+      "edge_distance_p95_height": 0.002
+    },
+    "left-feet": {
+      "distance_p95_height": 0.004080205314886912,
+      "distance_p99_height": 0.00632468578760247,
+      "depth_absolute_p95_height": 0.029609487318801107,
+      "inward_depth_p95_height": 0.021210309412262547,
+      "edge_distance_p95_height": 0.004647489526774273
+    },
+    "right-feet": {
+      "distance_p95_height": 0.004290493712087617,
+      "distance_p99_height": 0.006390560550122639,
+      "depth_absolute_p95_height": 0.0327096232155275,
+      "inward_depth_p95_height": 0.019611168208828852,
+      "edge_distance_p95_height": 0.004647495069514682
+    },
+    "face": {
+      "distance_p95_height": 0.0015,
+      "distance_p99_height": 0.004,
+      "depth_absolute_p95_height": 0.003,
+      "inward_depth_p95_height": 0.002,
+      "edge_distance_p95_height": 0.002
+    },
+    "jaw": {
+      "distance_p95_height": 0.0015,
+      "distance_p99_height": 0.004,
+      "depth_absolute_p95_height": 0.003,
+      "inward_depth_p95_height": 0.002,
+      "edge_distance_p95_height": 0.002
+    },
+    "chin": {
+      "distance_p95_height": 0.0015,
+      "distance_p99_height": 0.004,
+      "depth_absolute_p95_height": 0.003,
+      "inward_depth_p95_height": 0.002,
+      "edge_distance_p95_height": 0.002
+    },
+    "nose": {
+      "distance_p95_height": 0.0015,
+      "distance_p99_height": 0.004,
+      "depth_absolute_p95_height": 0.003,
+      "inward_depth_p95_height": 0.002,
+      "edge_distance_p95_height": 0.002
+    },
+    "eyes": {
+      "distance_p95_height": 0.0015,
+      "distance_p99_height": 0.004,
+      "depth_absolute_p95_height": 0.003,
+      "inward_depth_p95_height": 0.002,
+      "edge_distance_p95_height": 0.002
+    }
+  },
+  "calibration_method": "Trusted converted regions: 1.5x observed error envelope, with explicit height-relative engineering floors",
+  "animation_calibration": "No verified animation clips available; animation limits remain provisional engineering floors",
+  "limitations": [
+    "Small selected-region calibration set; not a statistical guarantee across games or body types",
+    "Do not calibrate using a defect under test or claim an accepted model is defect-free everywhere"
+  ]
+}

@@ -6,6 +6,12 @@ runs on Windows; exports will be tested in PPSSPP.
 
 ## Current capability
 
+A separate [geometric QA stage](docs/model-qa.md) now compares original HCTP
+geometry with converted PSP PACs, generates matched views and heatmaps, checks
+analytical poses, and traces deviations through saved conversion stages.
+[Download the Lance/Jericho QA study](downloads/HCTP-Model-QA-0.1-study.zip).
+It is read-only and leaves the converter and accepted PACs unchanged.
+
 The [Windows beta](docs/windows-beta.md) now wraps the user's working opacity-fix
 pipeline with drag/drop, saved tool setup, responsive conversion, cancellation
 and matching Noesis exports. [Download beta 0.1.1](https://github.com/RyosSplitter/Wrestler-Importer/raw/refs/heads/main/downloads/Wrestler-Importer-beta-0.1.1.zip).

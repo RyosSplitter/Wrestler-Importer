@@ -1,10 +1,14 @@
+## Read-only HCTP model QA study
+
+[Download comparison reports, aligned geometry and matching heatmaps](HCTP-Model-QA-0.1-study.zip). Extract and open `index.html`. Detects Lance's posterior depth deficit and Jericho's pose-dependent jaw deviation, with saved-stage evidence. No new PAC or automatic correction is included. [Method, usage and limitations](../docs/model-qa.md).
+
 ## HCTP Chris Jericho: PSP hybrid trial
 
 [Download the 144 KiB PAC](0600-PSP-hybrid-Jericho.pac) or [PAC, Noesis previews, textures and comparisons](0600-PSP-hybrid-Jericho-test-bundle.zip). Uses the accepted Kurt PSP hybrid-weight workflow, preserves the original torso/hip faces, and retains original hair cutout alpha. [Details and checks](../docs/0600-jericho-hybrid.md). SVR 2011 PPSSPP validation is pending.
 
-## Lance Storm: original HCTP posterior anatomy restored
+## Lance Storm: previously accepted source-surface repair
 
-[Download the 138 KiB corrected PAC](1800-PSP-hybrid-source-pelvis-restored.pac) or [PAC, Noesis previews, textures and comparisons](1800-PSP-hybrid-source-pelvis-restored-test-bundle.zip). Restores missing original rear-trunks and back-torso faces, closes their shared boundaries, and preserves the PSP rig and texture payloads. Front, rear and side Noesis views are checked. [Exact changes and validation](../docs/lance-source-pelvis-restoration.md). Actual SVR 2011 animation/gameplay verification remains pending.
+[Download the 138 KiB accepted PAC](1800-PSP-hybrid-source-pelvis-restored.pac) or [PAC, Noesis previews, textures and comparisons](1800-PSP-hybrid-source-pelvis-restored-test-bundle.zip). Restores selected original faces and preserves the PSP rig and texture payloads. The earlier anatomical labels were reversed: the new QA study still detects a posterior deficit. [Historical patch data and QA erratum](../docs/lance-source-pelvis-restoration.md).
 
 ## Chris Jericho PSP: unchanged preview
 
