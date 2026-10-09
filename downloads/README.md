@@ -1,3 +1,7 @@
+## Lance Storm: original HCTP posterior anatomy restored
+
+[Download the 138 KiB corrected PAC](1800-PSP-hybrid-source-pelvis-restored.pac) or [PAC, Noesis previews, textures and comparisons](1800-PSP-hybrid-source-pelvis-restored-test-bundle.zip). Restores missing original rear-trunks and back-torso faces, closes their shared boundaries, and preserves the PSP rig and texture payloads. Front, rear and side Noesis views are checked. [Exact changes and validation](../docs/lance-source-pelvis-restoration.md). Actual SVR 2011 animation/gameplay verification remains pending.
+
 ## Chris Jericho PSP: unchanged preview
 
 [Download OBJ, textures, native YOBJ and Noesis screenshots](Chris-Jericho-PSP-Noesis-preview.zip). The original PAC is unchanged; textures retain their original resolution. Includes the complete model and an additional viewing copy with inactive blood effects hidden. [Details and mesh-count comparison](../docs/jericho-psp-preview.md).
