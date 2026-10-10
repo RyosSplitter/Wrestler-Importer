@@ -1,0 +1,197 @@
+{
+  "status": "Experimental; PPSSPP validation pending",
+  "branch": "experiment/jericho-elbow-pad",
+  "pac_file": "Jericho-SVR2011-PSP-elbow-pad-TEST.pac",
+  "pac_bytes": 145408,
+  "pac_sha256": "369ee95ed12c58c7c4d91f9ae26590bb2e4469a3abd31e8312d043bfe27533e8",
+  "yobj_sha256": "0a85f249b8336c07a4f22e01a6e7cafbba683565e8008d1469d5202d3305a77a",
+  "model_bpe_bytes": 119470,
+  "before": {
+    "meshes": 54,
+    "vertices": 2387,
+    "triangles": 2413,
+    "indices": 4085,
+    "bones": 79,
+    "textures": 20,
+    "material_records": 94,
+    "expanded_bytes": 194688
+  },
+  "after": {
+    "meshes": 54,
+    "vertices": 2389,
+    "triangles": 2417,
+    "indices": 4087,
+    "bones": 79,
+    "textures": 20,
+    "material_records": 94,
+    "expanded_bytes": 194784
+  },
+  "changes": {
+    "pad_vertices": [
+      52,
+      54
+    ],
+    "pad_triangles": [
+      69,
+      73
+    ],
+    "shared_skin_records": [
+      {
+        "mesh": 27,
+        "vertex": 5,
+        "before_position": [
+          -3.604644775390625,
+          -6.516931533813477,
+          0.0961623340845108
+        ],
+        "after_position": [
+          -4.027368068695068,
+          -6.4956817626953125,
+          0.08109116554260254
+        ],
+        "displacement": 0.4235252951075619,
+        "before_uv": [
+          0.4934979975223541,
+          0.3951970040798187
+        ],
+        "after_uv": [
+          0.47040608525276184,
+          0.46813952922821045
+        ],
+        "fields": [
+          "position",
+          "weights",
+          "uv",
+          "normal"
+        ],
+        "before_weights": {
+          "r_sakotsu": 0.02421247959136963,
+          "r_ninoude": 0.187204048037529,
+          "r_ninoude_x": 0.7885834574699402
+        },
+        "after_weights": {
+          "r_ninoude": 0.05000000130385162,
+          "r_ninoude_x": 0.9499999986961484
+        },
+        "evidence": "Unique material-specific UV at an original pad boundary; source skin alias at the same position"
+      },
+      {
+        "mesh": 28,
+        "vertex": 7,
+        "before_position": [
+          -5.500429630279541,
+          -6.494745254516602,
+          0.2115311175584793
+        ],
+        "after_position": [
+          -5.81649923324585,
+          -6.4623517990112305,
+          0.21326936781406403
+        ],
+        "displacement": 0.3177299976281897,
+        "before_uv": [
+          0.4835039973258972,
+          0.7214059829711914
+        ],
+        "after_uv": [
+          0.48350387811660767,
+          0.721406102180481
+        ],
+        "fields": [
+          "position",
+          "weights",
+          "uv",
+          "normal"
+        ],
+        "before_weights": {
+          "r_ninoude_x": 0.04112979769706726,
+          "r_kote": 0.7601586580276489,
+          "r_kote_x": 0.19871151447296143
+        },
+        "after_weights": {
+          "r_kote": 0.8999999962747096,
+          "r_kote_x": 0.10000000372529039
+        },
+        "evidence": "Unique material-specific UV at an original pad boundary; source skin alias at the same position"
+      },
+      {
+        "mesh": 28,
+        "vertex": 16,
+        "before_position": [
+          -5.814918518066406,
+          -5.295501708984375,
+          -0.44769325852394104
+        ],
+        "after_position": [
+          -5.816540718078613,
+          -5.290172576904297,
+          -0.4433564245700836
+        ],
+        "displacement": 0.007059696193877814,
+        "before_uv": [
+          0.0648140013217926,
+          0.7601460218429565
+        ],
+        "after_uv": [
+          0.06481365114450455,
+          0.760145902633667
+        ],
+        "fields": [
+          "position",
+          "weights",
+          "uv",
+          "normal"
+        ],
+        "before_weights": {
+          "r_ninoude_x": 0.08202157914638519,
+          "r_kote": 0.6191155910491943,
+          "r_kote_x": 0.29886287450790405
+        },
+        "after_weights": {
+          "r_ninoude_x": 0.0799999970197678,
+          "r_kote": 0.6199999955296517,
+          "r_kote_x": 0.3000000074505805
+        },
+        "evidence": "Unique material-specific UV at an original pad boundary; source skin alias at the same position"
+      }
+    ],
+    "pad_mesh": 28,
+    "adjacent_meshes": [
+      27,
+      28
+    ],
+    "all_other_native_records_unchanged": true
+  },
+  "root_cause": "Unprotected arm/pad material boundary was welded inside a single Arms region before collapse decimation. Three shared anchors moved and their weights/UVs interpolated; the upper anchor acquired shoulder influence. Material preservation prevents the collapse.",
+  "checks": {
+    "native_pointers_offsets_allocations_indices_palettes_weights_passed": true,
+    "unchanged_stored_payload_sections": [
+      8,
+      9
+    ],
+    "all_textures_and_alpha_unchanged": true,
+    "mesh_culling_spheres_valid": true,
+    "section_alignment_16": true,
+    "pac_alignment_2048": true,
+    "below_148000_bytes": true,
+    "actual_pac_yobj_matches_qa_and_preview": true,
+    "skeleton_palettes_materials_unchanged": true,
+    "facial_geometry_and_weights_bit_identical": true,
+    "tests_passed": 76,
+    "static_and_12_pose_flags": 0,
+    "pad_pose_tests": 6,
+    "eye_jaw_neck_probes": 16,
+    "maximum_facial_probe_delta": 0,
+    "maximum_pad_pose_surface_error": 2.524537060921515e-15,
+    "maximum_boundary_seam_gap": 0.0
+  },
+  "backup": {
+    "file": "backups/Jericho-eye-and-jaw-accepted.pac",
+    "bytes": 145408,
+    "sha256": "da7a9fa75b0941e58aba86881472f40129448b22880b5cc4fba478b265961bd9"
+  },
+  "converter_defaults_changed": false,
+  "packaging_code_changed": false,
+  "merged_to_main": false,
+  "limitation": "Synthetic poses and CPU comparison renders; no new game animation capture or in-game validation was performed here."
+}

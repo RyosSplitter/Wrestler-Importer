@@ -1,0 +1,8 @@
+{
+  "ratios": {"Head": 0.8, "Torso": 0.65, "Arms": 0.8, "Legs": 0.65},
+  "protected_textures": [
+    "y2j_body", "y2j_mata", "y2j_eye", "y2j_ha", "y2j_kuti",
+    "y2j_hair", "y2j_tail", "y2j_top", "y2j_hiji"
+  ],
+  "smooth_protected_textures": ["y2j_body", "y2j_mata"]
+}
