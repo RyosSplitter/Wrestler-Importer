@@ -36,7 +36,8 @@ jobs:
         shell: python
         run: |
           from pathlib import Path
-          import json,zipfile
+          import json,zipfile,sys
+          sys.path.insert(0,str(Path.cwd()))
           from tools.portable_fixture import create
           Path('assets').mkdir(exist_ok=True);Path('build/bpy-inputs').mkdir(exist_ok=True)
           with zipfile.ZipFile('downloads/Wrestler-Importer-beta-0.1.1.zip') as z:
@@ -65,8 +66,9 @@ jobs:
       - name: Compare frozen bpy output against official Blender 4.3.2 on Windows
         shell: python
         run: |
-          import os,json,subprocess,zipfile,hashlib
+          import os,json,subprocess,zipfile,hashlib,sys
           from pathlib import Path
+          sys.path.insert(0,str(Path.cwd()))
           from tools.build_portable import download
           from experiments.bpy.compare import compare
           archive=Path('build/blender-4.3.2-windows-x64.zip');checks=Path('build/blender-4.3.2.sha256')
