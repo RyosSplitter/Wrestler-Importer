@@ -69,7 +69,11 @@ def optimize_pac(baseline,decoded,output,*,target=148000,cancel=lambda:None,
         # good incumbent merely because its sampling axes differ from source.
         rgba=c[p];visible=rgba[rgba[:,:,3]>0]
         color_count=len(np.unique(visible,axis=0))+int(np.any(rgba[:,:,3]==0))
-        native_ok=p.shape[1::-1] in (OBSERVED_DIMENSIONS if bits==4 else OBSERVED_T8_DIMENSIONS)
+        observed_layout=p.shape[1::-1] in (OBSERVED_DIMENSIONS if bits==4 else OBSERVED_T8_DIMENSIONS)
+        # An established baseline layout may be absent from the 2011 corpus
+        # (e.g. exact 32x16 T8 cutout). Keeping its exact payload introduces no
+        # new format; do not confuse lack of observation with incompatibility.
+        native_ok=bits in (4,8)
         within_source=p.shape[1]<=sources[n].shape[1] and p.shape[0]<=sources[n].shape[0] and color_count<=features['useful_source_colors']+int(features['transparent_color_required'])
         alpha_ok=not features['has_alpha'] or (rgba.shape==sources[n].shape and np.array_equal(rgba[:,:,3],sources[n][:,:,3]))
         if native_ok and within_source and alpha_ok and all(r['raw']!=gims[n] for r in rows):
@@ -79,6 +83,7 @@ def optimize_pac(baseline,decoded,output,*,target=148000,cancel=lambda:None,
                 pixel_palette_bytes=len(gims[n])-208,metrics=measure(sources[n],rgba,scoring['mask']),
                 source_quality_ceiling=features['source_quality_ceiling'],fully_preserved=False,
                 sampling_aspect_preserved=p.shape[1]*sources[n].shape[0]==p.shape[0]*sources[n].shape[1],
+                native_corpus_layout_observed=observed_layout,
                 reason='Verified legal incumbent with normalized UVs; no new aspect-ratio distortion introduced')))
             rows.sort(key=lambda r:(r['entry']['serialized_bytes'],r['entry']['metrics']['perceptual_loss'],r['entry']['width'],r['entry']['bits']))
         if not rows:
@@ -144,11 +149,18 @@ def optimize_pac(baseline,decoded,output,*,target=148000,cancel=lambda:None,
         if m['luminance_ssim'] < b['luminance_ssim']-.05 or m['fine_feature_loss'] > b['fine_feature_loss']+.15:
             row['quality_review_flags'].append('Individual detail metric regresses despite aggregate allocation; human visual review required')
         if m['alpha_mae']>0:row['quality_review_flags'].append('Near-opaque alpha was resampled/quantized; measured alpha MAE %.4f'%m['alpha_mae'])
+        if e.get('native_corpus_layout_observed') is False:
+            row['quality_review_flags'].append('Unchanged established baseline layout absent from native 2011 corpus; no new layout generated, gameplay confirmation still required')
         p,c=read_gim(selected['raw']);Image.fromarray(c[p]).save(output/(n+'.png'));(output/(n+'.gim')).write_bytes(selected['raw'])
         Image.fromarray(sources[n]).save(output/(n+'-source.png'))
         oldp,oldc=read_gim(gims[n]);Image.fromarray(oldc[oldp]).save(output/(n+'-current.png'))
     sizes=inspect_pac(payload)['sections']
-    nontexture_stored=sum(s['size'] for s in sizes if s['id']!=9)+8+8*len(sizes)
+    retained_texture_ids={i for i,(s,raw) in unpacked.items() if i!=9 and len(raw)>=16 and
+        raw[4:16]==bytes.fromhex('000100000000000010000000') and
+        all(t['extension']=='gim' for t in parse_textures(raw))}
+    retained_texture_stored=sum(s['size'] for s in sizes if s['id'] in retained_texture_ids)
+    fixed_stored=sum(s['size'] for s in sizes if s['id']!=9)+8+8*len(sizes)
+    nontexture_stored=fixed_stored-retained_texture_stored
     report=dict(version=1,experimental=True,baseline_sha256=sha(baseline),sha256=sha(payload),
         baseline_bytes=len(baseline),**allocation,textures=reports,unchanged_sections=proof,
         lossless_retained_texture_storage=lossless_report,
@@ -156,7 +168,11 @@ def optimize_pac(baseline,decoded,output,*,target=148000,cancel=lambda:None,
         unused_aligned_bytes=target//2048*2048-len(payload),
         non_texture_stored_bytes_including_header=nontexture_stored,
         nominal_texture_budget=target//2048*2048-nontexture_stored,
-        alignment_padding_bytes=len(payload)-nontexture_stored-allocation['texture_stored_bytes'],
+        required_fixed_bytes_before_costume_textures=fixed_stored,
+        retained_texture_stored_bytes=retained_texture_stored,
+        costume_texture_budget=target//2048*2048-fixed_stored,
+        total_texture_stored_bytes=retained_texture_stored+allocation['texture_stored_bytes'],
+        alignment_padding_bytes=len(payload)-fixed_stored-allocation['texture_stored_bytes'],
         pixel_palette_budget=limit,pixel_budget_basis='Existing baseline padded pixels/CLUT plus retained texture tables; not actual runtime heap',
         scoring_formula='(.6 + 1.6*detail + .8*coverage + 1.2*half-resolution loss) * (.75 + .5*sqrt(min(surface fraction*20,4))); factor=1 without model coverage',
         loss_formula='.22*RGB_RMSE/255 + .15*(1-SSIM) + .30*min(oriented edge error,2)/2 + .23*fine-feature loss + .10*min(high-frequency error,2)/2',

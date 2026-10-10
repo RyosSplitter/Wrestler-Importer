@@ -127,6 +127,13 @@ regress beyond recorded tolerances. These are experimental quality policies, not
 loader limits. No fixed face/body output size or universal non-face color rule
 is introduced.
 
+An unchanged existing GIM layout may be absent from the 2011 census (Benoit's
+exact 32×16 T8 cutout is an example). It can remain as a ceiling-compliant
+incumbent because this introduces no new layout or pixels; the absence of a
+native observation is not proof that the already-established writer is invalid.
+Such retention is explicitly flagged for gameplay confirmation. Newly generated
+candidates still use only the observed layout whitelist.
+
 ## Actual PAC budget allocator
 
 **CONFIRMED:** The current target remains 148,000 bytes, permitting at most
