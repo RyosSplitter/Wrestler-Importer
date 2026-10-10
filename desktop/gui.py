@@ -124,7 +124,7 @@ class Application:
             events=self.job/'events.jsonl'
             if events.exists():
                 try:
-                    rows=events.read_text(encoding='utf-8').splitlines();r=json.loads(rows[-1]);self.progress['value']=r['percent'];self.status.set(r['message'])
+                    rows=events.read_text(encoding='utf-8').splitlines();r=json.loads(rows[-1]);self.progress['value']=max(self.progress['value'],r['percent']);self.status.set(r['message'])
                 except (ValueError,IndexError):pass
             if self.process.poll() is not None:
                 self.process=None;self.cancel.configure(state='disabled');self.convert.configure(state='normal');self.base_button.configure(state='normal')

@@ -16,8 +16,12 @@ def load_settings():
     except (OSError,ValueError):return {}
 
 def save_settings(settings):
-    root=data_dir();tmp=root/'settings.new'
-    tmp.write_text(json.dumps(settings,indent=2)+'\n',encoding='utf-8');os.replace(tmp,root/'settings.json')
+    root=data_dir();fd,tmp=tempfile.mkstemp(prefix='settings-',suffix='.tmp',dir=root)
+    try:
+        with os.fdopen(fd,'w',encoding='utf-8') as f:f.write(json.dumps(settings,indent=2)+'\n')
+        os.replace(tmp,root/'settings.json')
+    finally:
+        if Path(tmp).exists():Path(tmp).unlink()
 
 def save_as(result,destination):
     """Check the immutable reviewed candidate again, then atomically copy it."""

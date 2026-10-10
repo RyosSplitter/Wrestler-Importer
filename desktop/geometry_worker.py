@@ -79,6 +79,17 @@ def run(source_path,output_path,profile_path):
         mesh.update(index=len(regions['meshes']),region='Preserved')
         regions['meshes'].append(mesh)
     regions['triangle_count']=model['triangle_count']
+    # The established facial floor applies to the complete head, including
+    # preserved hair/eye/attachment faces, not an additional 80% of its remainder.
+    # Body/limb ratios stay conservative and never spend protected source volume.
+    whole=region_mesh.make_regions(model);held_regions=region_mesh.make_regions(held)
+    totals={m['region']:sum(len(a['triangles']) for a in m['materials']) for m in whole['meshes']}
+    held_counts={m['region']:sum(len(a['triangles']) for a in m['materials']) for m in held_regions['meshes']}
+    import math
+    free_head=next((sum(len(a['triangles']) for a in m['materials']) for m in regions['meshes'] if m.get('region')=='Head'),0)
+    if free_head:
+        floor=max(1,math.ceil(totals['Head']*profile['ratios']['Head'])-held_counts.get('Head',0))
+        value=min(1.,floor/free_head);region_mesh.RATIOS['Head']=value;blender_reduce.RATIOS['Head']=value
     # Corner remapping can drop a degenerate output triangle after Blender's
     # modifier count. Increase that region's requested retention and retry;
     # never waive the established floor or change unrelated region ratios.
@@ -90,9 +101,12 @@ def run(source_path,output_path,profile_path):
             match=re.fullmatch(r'(Head|Torso|Arms|Legs): retained (\d+)/(\d+) faces, below requested minimum',str(exc))
             if not match or attempt==4:raise
             import math
-            region=match[1];missing=math.ceil(int(match[3])*profile['ratios'][region])-int(match[2])
+            region=match[1];missing=math.ceil(int(match[3])*blender_reduce.RATIOS[region])-int(match[2])
             reserve[region]=reserve.get(region,0)+max(2,missing);retries.append(dict(region=region,extra_modifier_faces=reserve[region]))
     result['reduction_report']['retention_floor_retries']=retries
+    final_head=held_counts.get('Head',0)+sum(len(a['triangles']) for m in result['meshes'] if m.get('region')=='Head' for a in m['materials'])
+    if final_head<math.ceil(totals.get('Head',0)*profile['ratios']['Head']):raise ValueError('Complete-head retention floor failed.')
+    result['reduction_report']['complete_head_triangles']=dict(original=totals.get('Head',0),protected=held_counts.get('Head',0),final=final_head)
     # Blender's corner exporter rounds UVs to six decimals. At an unchanged
     # protected position this can create two otherwise identical corner records
     # on either side of a held/free boundary. Restore a uniquely matching original

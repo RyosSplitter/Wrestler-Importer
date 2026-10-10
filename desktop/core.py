@@ -208,12 +208,21 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
     def step(p,m):check();progress(p,m)
     def command(args,logname):
         check()
+        last_qa_line=None
         env=os.environ.copy();env['BLENDER_USER_CONFIG']=str(work/'blender-config');env['BLENDER_USER_EXTENSIONS']=str(work/'blender-extensions')
         with (work/logname).open('w',encoding='utf-8') as log:
             process=subprocess.Popen(args,stdout=log,stderr=subprocess.STDOUT,env=env,
                                      creationflags=0x08000000 if os.name=='nt' else 0)
             try:
-                while process.poll() is None:check();time.sleep(.2)
+                while process.poll() is None:
+                    check()
+                    if logname=='qa.log':
+                        lines=(work/logname).read_text(encoding='utf-8',errors='replace').splitlines()
+                        if lines and lines[-1]!=last_qa_line:
+                            last_qa_line=lines[-1]
+                            poses=sum(line.startswith('Comparing source-derived') for line in lines)
+                            if poses:progress(min(90,76+poses),'QA: checking '+last_qa_line.rsplit(' in ',1)[-1].replace('-',' '))
+                    time.sleep(.2)
             except BaseException:
                 process.terminate()
                 try:process.wait(timeout=5)

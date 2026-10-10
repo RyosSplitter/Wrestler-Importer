@@ -7,6 +7,7 @@ import shutil
 import subprocess
 import sys
 import urllib.request
+import urllib.error
 import zipfile
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -14,7 +15,12 @@ NAME='PS2PSP-Pac-Converter'
 
 def download(url,path):
     path=Path(path)
-    with urllib.request.urlopen(url,timeout=90) as response,path.open('wb') as out:shutil.copyfileobj(response,out)
+    request=urllib.request.Request(url,headers={'User-Agent':'PS2PSP-Pac-Converter-build/1.0 (+https://github.com/RyosSplitter/Wrestler-Importer)'})
+    try:
+        with urllib.request.urlopen(request,timeout=90) as response,path.open('wb') as out:shutil.copyfileobj(response,out)
+    except urllib.error.HTTPError as exc:
+        detail=exc.read(600).decode('utf-8',errors='replace')
+        raise RuntimeError('Official runtime download returned HTTP %d for %s: %s'%(exc.code,url,detail)) from exc
 
 def build():
     if sys.platform!='win32':raise SystemExit('Build on Windows x64, or use the Windows portable GitHub workflow.')
