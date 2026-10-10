@@ -41,8 +41,12 @@ def main():
             sys.stdout=open(Path(output).parent/'qa.log','a',encoding='utf-8',buffering=1)
             sys.stderr=sys.stdout
         try:
-            run(source,pac,output,stages=[dict(label='selective-weight-transfer',path=prepared,space='target'),
-                                         dict(label='guarded-decimation',path=reduced,space='target')],
+            stages=[dict(label='selective-weight-transfer',path=prepared,space='target'),
+                    dict(label='guarded-decimation',path=reduced,space='target')]
+            packed=Path(reduced).parent/'packed.json'
+            if packed.is_file() and json.loads(packed.read_text()).get('attribute_precision_report'):
+                stages.append(dict(label='bounded-attribute-precision',path=str(packed),space='target'))
+            run(source,pac,output,stages=stages,
                 samples=int(samples),resolution=int(resolution),progress=lambda m:print(m,flush=True))
             return 0
         except Exception:

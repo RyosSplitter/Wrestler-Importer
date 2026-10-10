@@ -1,0 +1,166 @@
+{
+  "pac": "/workspace/Wrestler-Importer/local/0401-budget/candidate/0401-PSP-precision-experimental.pac",
+  "bytes": 147456,
+  "sha256": "8a42bdead5369be91231aaef63127954652121ed970bf741318d891b24ebecd1",
+  "precision": {
+    "status": "bounded_experiment_pending_native_pose_and_visual_validation",
+    "position_divisions": 32768,
+    "position_step": 0.00048828125,
+    "maximum_position_error_height": 2.036816839313051e-05,
+    "maximum_uv_error": 3.0517578125e-05,
+    "maximum_normal_angle_degrees": 0.1704730620020467,
+    "maximum_normal_length_error": 0.002666751456565697,
+    "changed_vertex_records": {
+      "position": 3150,
+      "uv": 3037,
+      "normal": 3150
+    },
+    "held_ocular_vertex_records": 166,
+    "triangle_count_unchanged": true,
+    "vertex_count_unchanged": true,
+    "weights_and_bone_palettes_unchanged": true,
+    "textures_unchanged": true,
+    "limits": {
+      "position_error_height": 3e-05,
+      "uv_error": 3.0517578125e-05,
+      "normal_angle_degrees": 0.25,
+      "normal_length_error": 0.007
+    }
+  },
+  "bpe_max_distinct": 200,
+  "vertices": 3316,
+  "triangles": 3508,
+  "meshes": 47,
+  "textures": 19,
+  "source_sha256": "38723589baa316ba57d10b9361d248045fcdb6748edfb590cb6c8b6a9bfda471",
+  "base_sha256": "bf935a51fe30bfd2df929f8eb9e50be5d793426ea05125ca9411ce21b19ead80",
+  "source_bytes": 658432,
+  "source_meshes": 20,
+  "source_vertices": 3191,
+  "source_triangles": 4812,
+  "original_smallest_candidate_bytes": 184320,
+  "original_stored_model_bytes": 155149,
+  "original_stored_textures_bytes": 21910,
+  "original_bpe_symbols": 220,
+  "expanded_model_bytes_before": 257536,
+  "expanded_model_bytes_after": 257536,
+  "native_counts_before": {
+    "meshes": 47,
+    "vertices": 3316,
+    "triangles": 3508
+  },
+  "native_counts_after": {
+    "meshes": 47,
+    "vertices": 3316,
+    "triangles": 3508
+  },
+  "sections_after": [
+    {
+      "id": 2,
+      "offset": 32,
+      "size": 118352,
+      "sha256": "98719485d7078f4ae98e6541a683f564e6a390e10bc10ab066bf6ab3a5e4965e"
+    },
+    {
+      "id": 8,
+      "offset": 118384,
+      "size": 7072,
+      "sha256": "2bb4174789207f6fb9bf8132ffc1f683037b4036cca2372c7c1efc956969b4ee"
+    },
+    {
+      "id": 9,
+      "offset": 125456,
+      "size": 21928,
+      "sha256": "34574c69976ee760dadd75eccd452cbea0c87f8f138f302367423eef92df85a1"
+    }
+  ],
+  "new_qa_flags": [],
+  "review_flags_before": 19,
+  "review_flags_after": 18,
+  "overall_p95_height_before": 0.006499584249473756,
+  "overall_p95_height_after": 0.006505097584655813,
+  "regional_metrics": {
+    "face": {
+      "p95_height_before": 0.00030701468598073195,
+      "p95_height_after": 0.00030577372603335465
+    },
+    "jaw": {
+      "p95_height_before": 0.00028581252102049143,
+      "p95_height_after": 0.0002857472248746579
+    },
+    "chin": {
+      "p95_height_before": 0.00023345801984054514,
+      "p95_height_after": 0.00023488630114922731
+    },
+    "nose": {
+      "p95_height_before": 0.0003115434510446556,
+      "p95_height_after": 0.00030711157824306936
+    },
+    "eyes": {
+      "p95_height_before": 0.00025482097195465094,
+      "p95_height_after": 0.00024516648399722864
+    },
+    "neck": {
+      "p95_height_before": 0.00013127185934314468,
+      "p95_height_after": 0.0001326450127810771
+    },
+    "torso": {
+      "p95_height_before": 5.2097875120642846e-09,
+      "p95_height_after": 1.0287102819007069e-05
+    },
+    "waist": {
+      "p95_height_before": 2.5555415500480846e-09,
+      "p95_height_after": 9.550026675588318e-06
+    },
+    "pelvis": {
+      "p95_height_before": 3.0529514729451088e-09,
+      "p95_height_after": 1.0303512282688828e-05
+    },
+    "buttocks": {
+      "p95_height_before": 2.887709964397906e-09,
+      "p95_height_after": 9.952707580160761e-06
+    },
+    "shoulders": {
+      "p95_height_before": 0.010741514797977665,
+      "p95_height_after": 0.01075157363074509
+    },
+    "left-hands": {
+      "p95_height_before": 0.011477553830136473,
+      "p95_height_after": 0.011474805379793463
+    },
+    "left-feet": {
+      "p95_height_before": 0.0015391083667336484,
+      "p95_height_after": 0.0015296869141541989
+    },
+    "right-hands": {
+      "p95_height_before": 0.01097279127148336,
+      "p95_height_after": 0.01097400659351491
+    },
+    "right-feet": {
+      "p95_height_before": 0.0014346860726652205,
+      "p95_height_after": 0.0014358999765104637
+    }
+  },
+  "in_game_validation": "pending",
+  "claim_status": {
+    "confirmed": [
+      "Reproduced budget rejection",
+      "Native structure and weight integrity",
+      "Exact source-selected ocular replay",
+      "No additional faces removed",
+      "All converted texture bytes preserved",
+      "Bounded float attribute differences",
+      "No new QA review flags at measured settings"
+    ],
+    "inferred": [
+      "Visual equivalence of the precision-limited candidate in game"
+    ],
+    "unknown": [
+      "PPSSPP load stability and real animation appearance for this candidate",
+      "General acceptance of this precision policy for other source models"
+    ]
+  },
+  "bundle_sha256": "3b45242ed4fff17c970638b90ed0a4aa99f96dd19197eb720b7939156a15abe2",
+  "bundle_bytes": 29933678,
+  "bundle": "downloads/0401-PSP-precision-experiment.zip"
+}

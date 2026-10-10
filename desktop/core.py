@@ -19,6 +19,8 @@ import numpy as np
 from PIL import Image
 from desktop.adapters import adapter
 from desktop.native import serialize
+from desktop.budget import SizeFitReport
+from desktop.precision import bounded_precision,ocular_positions,validate_native_precision
 from tools.pac_inspect import inspect_pac,parse_textures
 from tools.pac_repack import replace_sections,texture_table
 from tools.psp_mesh_audit import audit_yobj
@@ -237,6 +239,9 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
     for name,model in (('source',original),('prepared',prepared),('legacy-eye-control',legacy),('source-jaw-control',jaw)):dump(work/(name+'.json'),model)
     step(25,'Protecting source anatomy and material boundaries before decimation')
     attempts=[];candidate=None
+    size_report=SizeFitReport(work/'size-fit.json',profile['max_pac_bytes'],hashes,
+                              dict(bytes=source.stat().st_size,meshes=original['mesh_count'],
+                                   triangles=original['triangle_count'],textures=len(original['textures'])))
     # Texture fitting precedes lower free-limb retention. Held source surfaces,
     # head floor and facial policy never change between budget attempts.
     for trial,limb_ratio in enumerate((None,.5,.35)):
@@ -253,22 +258,66 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
                 entries=json.loads((tf/'textures.json').read_text())['textures'];gims=[(tf/e['gim']).read_bytes() for e in entries]
             else:entries,gims=textures(decoded,prepared,tf,cap)
             yobj=serialize(packed,target,entries)
-            replacements={2:compress(yobj),9:compress(texture_table(packed['textures'],gims))}
+            table=texture_table(packed['textures'],gims)
+            replacements={2:compress(yobj),9:compress(table)}
             if decompress(replacements[2])!=yobj:raise ValueError('BPE round trip failed.')
             candidate=replace_sections(base_bytes,replacements);symbols=200
             # Lossless dictionary packing is tried before more geometry loss.
             # The established compressor/grammar and 4000-byte block cap stay
             # unchanged; every candidate is independently decoded and compared.
             if len(candidate)>profile['max_pac_bytes']:
-                check();table=texture_table(packed['textures'],gims)
+                check()
                 alternate={2:compress(yobj,max_distinct=220),9:compress(table,max_distinct=220)}
                 if decompress(alternate[2])!=yobj or decompress(alternate[9])!=table:raise ValueError('BPE dictionary optimization changed payloads.')
                 smaller_pac=replace_sections(base_bytes,alternate)
                 if len(smaller_pac)<len(candidate):candidate=smaller_pac;symbols=220
-            attempts.append(dict(texture_cap=cap,pac_bytes=len(candidate),free_region_ratios=reduced['reduction_report']['region_ratios'],complete_head_minimum_ratio=trial_profile['ratios']['Head'],bpe_max_distinct=symbols,bpe_block_cap=4000))
+            attempts.append(size_report.record(candidate,texture_cap=cap,
+                free_region_ratios=reduced['reduction_report']['region_ratios'],
+                complete_head_minimum_ratio=trial_profile['ratios']['Head'],
+                bpe_max_distinct=symbols,bpe_block_cap=4000,
+                vertices=packed['vertex_count'],triangles=packed['triangle_count'],
+                meshes=packed['mesh_count'],
+                protected_triangles=reduced['reduction_report']['protected_triangles']))
             if len(candidate)<=profile['max_pac_bytes']:break
         if len(candidate)<=profile['max_pac_bytes']:break
-    if len(candidate)>profile['max_pac_bytes']:raise ValueError('Preserved geometry/textures exceed the 148000-byte budget. Export withheld; protected anatomy was not reduced to force a fit.')
+    precision_validation=None
+    # Isolated preview fallback: retain the last guarded topology and all weight
+    # bits, then test explicitly bounded float attribute precision. This never
+    # runs for a candidate that already fits the established size budget.
+    if len(candidate)>profile['max_pac_bytes']:
+        step(60,'Testing bounded attribute precision; keeping weights, textures and ocular records')
+        original_packed=packed;original_yobj=yobj;held_positions=ocular_positions(jaw)
+        precision_rejections=[]
+        for divisions in (65536,32768):
+            check()
+            try:limited,precision_report=bounded_precision(original_packed,held_positions,divisions)
+            except ValueError as exc:
+                precision_rejections.append(dict(position_divisions=divisions,error=str(exc)))
+                dump(work/'precision-rejections.json',precision_rejections);continue
+            limited_yobj=serialize(limited,target,entries)
+            for symbols in (200,220):
+                check()
+                replacements={2:compress(limited_yobj,max_distinct=symbols),
+                              9:compress(table,max_distinct=symbols)}
+                limited_pac=replace_sections(base_bytes,replacements)
+                row=size_report.record(limited_pac,texture_cap=cap,
+                    free_region_ratios=reduced['reduction_report']['region_ratios'],
+                    complete_head_minimum_ratio=trial_profile['ratios']['Head'],
+                    bpe_max_distinct=symbols,bpe_block_cap=4000,
+                    vertices=limited['vertex_count'],triangles=limited['triangle_count'],
+                    meshes=limited['mesh_count'],
+                    protected_triangles=reduced['reduction_report']['protected_triangles'],
+                    attribute_precision=precision_report)
+                attempts.append(row)
+                if len(limited_pac)>profile['max_pac_bytes']:continue
+                precision_validation=validate_native_precision(audit_yobj(original_yobj),
+                                                               audit_yobj(limited_yobj),held_positions)
+                dump(work/'precision-validation.json',precision_validation)
+                dump(work/'precision.json',precision_report)
+                candidate=limited_pac;packed=limited;yobj=limited_yobj;break
+            if len(candidate)<=profile['max_pac_bytes']:break
+    size_report.finish(len(candidate)<=profile['max_pac_bytes'])
+    if len(candidate)>profile['max_pac_bytes']:raise size_report.error()
     dump(work/'reduced.json',reduced);dump(work/'packed.json',packed)
     step(65,'Validating final PAC pointers, buffers, weights, rendering records and size')
     native,gim_map=validate_pac(candidate,base_bytes,profile['max_pac_bytes'])
@@ -299,6 +348,8 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
                 source=str(source.resolve()),base=str(base.resolve()),inputs=hashes,profile=profile['id'],size_attempts=attempts,
                 meshes=native['report']['meshes'],triangles=packed['triangle_count'],vertices=packed['vertex_count'],
                 native_validation='passed',review_flags=len(qa['unresolved_review']),ocular_validation=ocular['status'],
+                attribute_precision=packed.get('attribute_precision_report'),
+                precision_validation=precision_validation,
                 status='Experimental conversion; review QA and test in PPSSPP. File checks do not certify game compatibility.')
     dump(work/'result.json',result);step(100,'Ready for review and Save As')
     return result

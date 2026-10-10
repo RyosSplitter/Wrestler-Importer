@@ -35,6 +35,29 @@ jobs retain the PAC, exact embedded `preview/output.yobj`, textured OBJ/PNG expo
 all intermediate geometry, texture manifests, `ocular-qa.json` and the independent
 QA HTML/JSON report. Personal PACs stay local and are never uploaded by the app.
 
+Size-fitting jobs now retain `work/size-fit.json` even when export is withheld.
+It records input hashes, every attempted texture/geometry profile, stored model
+and texture section sizes, retained base data, PAC padding, and the smallest
+attempt. A 148000-byte cap permits at most 147456 bytes after 2048-byte alignment.
+These are archive sizes, not expanded PSP memory limits. A failed size fit is
+distinct from a source decoding failure; switching bases or shrinking textures
+cannot be assumed to solve it when the model section alone exceeds the budget.
+
+The isolated `experiment/precision-budget-fit` preview adds a final **lossy
+attribute-precision** trial after all existing guarded fits fail. It retains
+topology, float weight bits, bone palettes, all converted texture bytes and
+all source-selected ocular records. Other positions may change by at most
+0.003% of model height, UVs by at most 1/32768, and shading normals by at most
+0.25 degrees. No further decimation or texture resizing occurs in this trial.
+The native float32 layout and packaging stay unchanged. New face collapses or
+flips, metadata changes and excessive analytical-pose displacement reject the
+trial. `precision.json` and `precision-validation.json` record what actually
+changed. QA traces this separate stage; its review findings remain visible.
+Already-fitting candidates never enter this experiment. The expanded model
+allocation stays the same: compressed size savings do not establish PSP memory
+safety. See [0401 investigation](portable-0401-budget.md) for measured results and
+limits. This experiment awaits PPSSPP validation and is not merged into main.
+
 Native errors and the **148000-byte** budget block export. Review findings remain
 visible and require an explicit experimental-export acknowledgement. Game tests
 must establish whether the generalized rules are acceptable. Historical accepted

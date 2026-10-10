@@ -2,8 +2,8 @@ name: Build portable PS2PSP preview
 on:
   workflow_dispatch:
   push:
-    branches: [feature/portable-ps2psp, fix/hctp-primary-model]
-    paths: ['desktop/**', 'ps2psp_converter.py', 'app/ps2_textures.py', 'tools/build_portable.py', 'tools/portable_fixture.py', 'tools/blender_reduce.py', 'tools/pac_inspect.py', 'tools/hctp_read.py', 'tools/hctp_weights.py', 'tools/yobj_read.py', 'requirements-desktop.txt', 'docs/portable-*.md', 'tests/test_portable_desktop.py', 'tests/test_main_model_selection.py', '.github/workflows/windows-portable.yml']
+    branches: [feature/portable-ps2psp, fix/hctp-primary-model, experiment/precision-budget-fit]
+    paths: ['desktop/**', 'ps2psp_converter.py', 'app/ps2_textures.py', 'tools/build_portable.py', 'tools/portable_fixture.py', 'tools/blender_reduce.py', 'tools/pac_inspect.py', 'tools/hctp_read.py', 'tools/hctp_weights.py', 'tools/yobj_read.py', 'requirements-desktop.txt', 'docs/portable-*.md', 'tests/test_portable_*.py', 'tests/test_main_model_selection.py', '.github/workflows/windows-portable.yml']
 permissions:
   contents: write
 jobs:
@@ -90,6 +90,6 @@ jobs:
         run: |
           $tag = "portable-preview-${{ github.run_number }}-${{ github.sha }}"
           @'
-          Portable Windows x64 preview. Fixes source import for PACs containing additional YOBJ models: selects the main wrestler model in section 2 for geometry, weights, textures and QA. Duplicate or ambiguous main models remain rejected. Includes the existing Python, Blender 4.3.2 and offline QA/rendering; requires your own supported PSP SVR base PAC once. No game PACs are bundled. HCTP only; other source formats disabled. New generalized outputs require PPSSPP validation. CI exercises frozen UI/runtime and modified HCTP Lance/Jericho containers, including reordered auxiliary YOBJ sections and byte-identical single/multi-model output, with developer tools removed from PATH; original-container and in-game tests are separate.
+          Portable Windows x64 experimental preview. Includes the main-section source-reader fix and an isolated size-fitting experiment: when existing guarded decimation and texture fitting cannot meet 148000 bytes, try bounded float attribute precision without further decimation, weight quantization or texture changes. Eye/eyelid records remain exact. Maximum point displacement is limited to 0.003% of height, UV error to 1/32768, and normal-angle change to 0.25 degrees; native and analytical-pose checks can reject a trial. This is lossy attribute precision and remains experimental. Logs retain size-fit.json even for rejected jobs. Existing fitting conversions bypass the new fallback. Uses the tested Python/Blender 4.3.2 runtime; requires your own supported PSP base PAC once. No game PACs are bundled. HCTP only. Review QA findings and test all new conversions in PPSSPP; archive size and analytical checks do not certify gameplay or expanded-memory safety. CI exercises frozen UI/runtime and Lance/Jericho/multi-YOBJ regressions with developer tools removed from PATH. Original 0401 was tested separately on Linux, not on the hosted Windows runner or in-game. No experimental changes are merged into main.
           '@ | Set-Content "$env:RUNNER_TEMP/release-notes.txt" -Encoding utf8NoBOM
           gh release create $tag dist/*.zip dist/*.sha256 --target '${{ github.sha }}' --prerelease --title 'PS2PSP Pac Converter by RyosPrime — Windows preview' --notes-file "$env:RUNNER_TEMP/release-notes.txt"

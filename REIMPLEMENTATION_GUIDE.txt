@@ -403,3 +403,17 @@ Windows workflow packages verified Blender, Python, QA dependencies, source and
 notices without game PACs. Its modified-container fixtures are distinct from the
 original-container cloud tests. UNKNOWN: pristine Windows 10/11 behavior and real
 SVR gameplay acceptance of new generalized outputs until independently tested.
+
+ISOLATED SIZE-FIT EXPERIMENT (experiment/precision-budget-fit; not accepted main)
+CONFIRMED: Original 0401 decoded successfully but the existing guarded fit was
+184320 bytes. docs/portable-0401-budget.md records the evidence and an isolated
+147456-byte trial. desktop/precision.py rounds bounded non-ocular float position,
+UV and normal attributes without further decimation, weight quantization, texture
+changes or vertex-format changes. Original eye-controller support selects exact
+held records; native topology correspondence is independently verified before
+using vertex indices for before/after pose comparisons. Source-to-converted QA
+still uses surface comparisons. desktop/budget.py retains failed-fit size evidence.
+Existing fitting conversions bypass this fallback. UNKNOWN: gameplay acceptance
+and general suitability of this new precision rule. Do not call it lossless or
+equate a smaller BPE stream with lower expanded PSP memory use. Preserve previously
+accepted PACs and require PPSSPP validation before promoting this experiment.
