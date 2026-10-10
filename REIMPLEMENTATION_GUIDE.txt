@@ -440,3 +440,22 @@ Existing fitting conversions bypass this fallback. UNKNOWN: gameplay acceptance
 and general suitability of this new precision rule. Do not call it lossless or
 equate a smaller BPE stream with lower expanded PSP memory use. Preserve previously
 accepted PACs and require PPSSPP validation before promoting this experiment.
+
+ISOLATED TEXTURE RESEARCH FOR v0.25 (experiment/texture-quality-v025)
+CONFIRMED: docs/texture-quality-v025.md and the downloadable research bundle
+record 110 user-labelled SVR 2011 PSP reference PACs, 2008 GIM records, complete
+texture-only Rock trials, exact model-byte proofs, image metrics, matching renders
+and reproduction commands. Native indexed4/indexed8 maps extend through 256x256;
+palette/depth/resolution conventions are not universal loader or memory limits.
+The old nominally 256-color Rock face used only 20 decoded colors. Improved
+quantization, aspect-preserving allocation and lossless encoding of the unchanged
+section-8 blood texture table recover detail while keeping trial 09 at 147456
+bytes and preserving all three stored YOBJ payloads exactly. Texture pixel/CLUT
+bytes do not increase over baseline. A small tattoo SSIM regression is documented.
+experiments/texture_quality is independent of desktop/core and stable_pipeline.
+UNKNOWN: actual peak heap/VRAM and PPSSPP/PSP behavior of these new candidates.
+The 52992-byte native Rock texture footprint is an observed comparison envelope,
+not a validated allocation limit. Do not implement a texture preset by trimming
+geometry or by assuming GIM validity establishes gameplay compatibility. The
+Compact/Balanced/Maximum UI and accessory checkbox remain planned v0.25 work,
+pending user instruction and in-game validation. No production change is implied.

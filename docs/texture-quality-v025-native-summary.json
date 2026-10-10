@@ -1,0 +1,656 @@
+{
+  "classification": "CONFIRMED: uploaded corpus observations; not universal loader limits",
+  "pac_count": 110,
+  "unique_pac_hashes": 109,
+  "texture_records": 2008,
+  "unique_gim_hashes": 1463,
+  "dimensions": {
+    "128x128": 103,
+    "128x16": 1,
+    "128x256": 1,
+    "128x32": 10,
+    "128x64": 54,
+    "16x16": 19,
+    "16x32": 10,
+    "16x64": 5,
+    "256x128": 13,
+    "256x256": 1,
+    "256x32": 1,
+    "32x128": 8,
+    "32x16": 105,
+    "32x32": 340,
+    "32x64": 159,
+    "32x8": 7,
+    "64x128": 204,
+    "64x16": 8,
+    "64x256": 1,
+    "64x32": 243,
+    "64x64": 713,
+    "8x8": 2
+  },
+  "image_formats": {
+    "4": 1776,
+    "5": 232
+  },
+  "bits": {
+    "4": 1776,
+    "8": 232
+  },
+  "palette_formats": {
+    "3": 2008
+  },
+  "palette_entries": {
+    "16": 1776,
+    "256": 232
+  },
+  "pixel_orders": {
+    "1": 2008
+  },
+  "palette_orders": {
+    "0": 2008
+  },
+  "image_levels": {
+    "1": 2008
+  },
+  "all_native_texture_records_decoded": true,
+  "outer_pac_alignment_2048_count": 110,
+  "all_outer_sections_alignment_4_count": 110,
+  "all_outer_sections_alignment_16_count": 0,
+  "texture_payload_alignment_16_count": 2008,
+  "pac_bytes": {
+    "minimum": 69632,
+    "maximum": 202752,
+    "mean": 136899.4909090909
+  },
+  "texture_counts": {
+    "minimum": 6,
+    "maximum": 27,
+    "mean": 18.254545454545454
+  },
+  "encoded_gim_bytes": {
+    "minimum": 35424,
+    "maximum": 91200,
+    "mean": 54334.836363636365
+  },
+  "modeled_gpu_pixel_palette_bytes": {
+    "minimum": 34176,
+    "maximum": 87872,
+    "mean": 50537.89090909091
+  },
+  "writer_subset_decoder_failures": [
+    {
+      "pac": "CM-Punk(Shirt2).PAC",
+      "name": "CM_earrings",
+      "width": 16,
+      "height": 16,
+      "message": "Unsupported GIM4 image layout"
+    },
+    {
+      "pac": "CM-Punk(Shirt2).PAC",
+      "name": "CM_wrist_02",
+      "width": 16,
+      "height": 32,
+      "message": "Unsupported GIM4 image layout"
+    },
+    {
+      "pac": "CM-Punk-Ring.PAC",
+      "name": "CM_wrist_02",
+      "width": 16,
+      "height": 64,
+      "message": "Unsupported GIM4 image layout"
+    },
+    {
+      "pac": "Cody-Rhodes(Shirt).PAC",
+      "name": "cor_yubi_2",
+      "width": 16,
+      "height": 32,
+      "message": "Unsupported GIM4 image layout"
+    },
+    {
+      "pac": "Cody-Rhodes-Ring.PAC",
+      "name": "cor_yubi_2",
+      "width": 16,
+      "height": 32,
+      "message": "Unsupported GIM4 image layout"
+    },
+    {
+      "pac": "Doctor.PAC",
+      "name": "Doc_strap",
+      "width": 16,
+      "height": 64,
+      "message": "Unsupported GIM4 image layout"
+    },
+    {
+      "pac": "Edge(Shirt).PAC",
+      "name": "edg_neck",
+      "width": 16,
+      "height": 16,
+      "message": "Unsupported GIM4 image layout"
+    },
+    {
+      "pac": "John-Cena(Shirt).PAC",
+      "name": "JC_head",
+      "width": 16,
+      "height": 64,
+      "message": "Unsupported GIM4 image layout"
+    },
+    {
+      "pac": "John-Cena(Shirt).PAC",
+      "name": "JC_knee",
+      "width": 16,
+      "height": 16,
+      "message": "Unsupported GIM4 image layout"
+    },
+    {
+      "pac": "John-Cena(Shirt).PAC",
+      "name": "JC_neck",
+      "width": 16,
+      "height": 16,
+      "message": "Unsupported GIM4 image layout"
+    },
+    {
+      "pac": "John-Cena(Shirt2).PAC",
+      "name": "JC_head",
+      "width": 16,
+      "height": 64,
+      "message": "Unsupported GIM4 image layout"
+    },
+    {
+      "pac": "John-Cena(Shirt2).PAC",
+      "name": "JC_knee",
+      "width": 16,
+      "height": 16,
+      "message": "Unsupported GIM4 image layout"
+    },
+    {
+      "pac": "John-Cena(Shirt2).PAC",
+      "name": "JC_neck",
+      "width": 16,
+      "height": 16,
+      "message": "Unsupported GIM4 image layout"
+    },
+    {
+      "pac": "CM-Punk(Shirt1).PAC",
+      "name": "CM_earrings",
+      "width": 16,
+      "height": 16,
+      "message": "Unsupported GIM4 image layout"
+    },
+    {
+      "pac": "CM-Punk(Shirt1).PAC",
+      "name": "CM_wrist_02",
+      "width": 16,
+      "height": 32,
+      "message": "Unsupported GIM4 image layout"
+    },
+    {
+      "pac": "John-Cena-Ring.PAC",
+      "name": "JC_head",
+      "width": 16,
+      "height": 64,
+      "message": "Unsupported GIM4 image layout"
+    },
+    {
+      "pac": "John-Cena-Ring.PAC",
+      "name": "JC_knee",
+      "width": 16,
+      "height": 32,
+      "message": "Unsupported GIM4 image layout"
+    },
+    {
+      "pac": "John-Cena-Ring.PAC",
+      "name": "JC_neck",
+      "width": 16,
+      "height": 16,
+      "message": "Unsupported GIM4 image layout"
+    },
+    {
+      "pac": "Justin-Roberts.PAC",
+      "name": "JR_shoe",
+      "width": 8,
+      "height": 8,
+      "message": "Unsupported GIM4 image layout"
+    },
+    {
+      "pac": "Micheal-Cole.PAC",
+      "name": "col_mouth",
+      "width": 16,
+      "height": 16,
+      "message": "Unsupported GIM4 image layout"
+    },
+    {
+      "pac": "Paul-Bearer.PAC",
+      "name": "251_button",
+      "width": 16,
+      "height": 16,
+      "message": "Unsupported GIM4 image layout"
+    },
+    {
+      "pac": "Paul-Bearer.PAC",
+      "name": "251_tie",
+      "width": 16,
+      "height": 32,
+      "message": "Unsupported GIM4 image layout"
+    },
+    {
+      "pac": "Randy-Orton(Shirt).PAC",
+      "name": "ro_pan",
+      "width": 16,
+      "height": 32,
+      "message": "Unsupported GIM4 image layout"
+    },
+    {
+      "pac": "Rey-Mysterio(Jeans).PAC",
+      "name": "rey_mask_top",
+      "width": 16,
+      "height": 16,
+      "message": "Unsupported GIM4 image layout"
+    },
+    {
+      "pac": "Ricky-Steamboat.PAC",
+      "name": "ric_tape",
+      "width": 16,
+      "height": 16,
+      "message": "Unsupported GIM4 image layout"
+    },
+    {
+      "pac": "R-Truth.PAC",
+      "name": "RT_pierce",
+      "width": 16,
+      "height": 16,
+      "message": "Unsupported GIM4 image layout"
+    },
+    {
+      "pac": "Santino-Marella.PAC",
+      "name": "san_knee",
+      "width": 16,
+      "height": 32,
+      "message": "Unsupported GIM4 image layout"
+    },
+    {
+      "pac": "Shaw-Micheals-Ring.PAC",
+      "name": "hbk_yubi",
+      "width": 16,
+      "height": 16,
+      "message": "Unsupported GIM4 image layout"
+    },
+    {
+      "pac": "Shelton-Benjamin.PAC",
+      "name": "Ben_shin2",
+      "width": 16,
+      "height": 32,
+      "message": "Unsupported GIM4 image layout"
+    },
+    {
+      "pac": "Stephanie-Mchahon(Suit).PAC",
+      "name": "SM_shirt",
+      "width": 16,
+      "height": 32,
+      "message": "Unsupported GIM4 image layout"
+    },
+    {
+      "pac": "Shad-Gasphard.PAC",
+      "name": "sha_earing",
+      "width": 8,
+      "height": 8,
+      "message": "Unsupported GIM4 image layout"
+    },
+    {
+      "pac": "Stone-Cold.PAC",
+      "name": "SC_eye",
+      "width": 16,
+      "height": 16,
+      "message": "Unsupported GIM4 image layout"
+    },
+    {
+      "pac": "Theodore-Long.PAC",
+      "name": "tl_ura",
+      "width": 16,
+      "height": 16,
+      "message": "Unsupported GIM4 image layout"
+    },
+    {
+      "pac": "William-Regal.PAC",
+      "name": "WR_knee",
+      "width": 16,
+      "height": 16,
+      "message": "Unsupported GIM4 image layout"
+    },
+    {
+      "pac": "William-Regal.PAC",
+      "name": "WR_wrist",
+      "width": 16,
+      "height": 16,
+      "message": "Unsupported GIM4 image layout"
+    },
+    {
+      "pac": "Zack-Ryder.PAC",
+      "name": "zack_wrist",
+      "width": 16,
+      "height": 16,
+      "message": "Unsupported GIM4 image layout"
+    }
+  ],
+  "model_audit_failures": [
+    {
+      "pac": "Alicia-Fox.PAC",
+      "section_path": "2",
+      "scope": "strict converted-YOBJ parser coverage; not a claim that native asset is malformed",
+      "message": "Secondary descriptor mesh count disagrees",
+      "header_mesh_count": 25,
+      "header_bone_count": 110,
+      "header_texture_count": 21,
+      "secondary_descriptor_count": 21
+    },
+    {
+      "pac": "Beth-Pheonix.PAC",
+      "section_path": "2",
+      "scope": "strict converted-YOBJ parser coverage; not a claim that native asset is malformed",
+      "message": "Secondary descriptor mesh count disagrees",
+      "header_mesh_count": 26,
+      "header_bone_count": 110,
+      "header_texture_count": 18,
+      "secondary_descriptor_count": 22
+    },
+    {
+      "pac": "Brie-Bella.PAC",
+      "section_path": "2",
+      "scope": "strict converted-YOBJ parser coverage; not a claim that native asset is malformed",
+      "message": "Secondary descriptor mesh count disagrees",
+      "header_mesh_count": 30,
+      "header_bone_count": 110,
+      "header_texture_count": 20,
+      "secondary_descriptor_count": 23
+    },
+    {
+      "pac": "CM-Punk(Shirt2).PAC",
+      "section_path": "2",
+      "scope": "strict converted-YOBJ parser coverage; not a claim that native asset is malformed",
+      "message": "Secondary descriptor mesh count disagrees",
+      "header_mesh_count": 25,
+      "header_bone_count": 83,
+      "header_texture_count": 30,
+      "secondary_descriptor_count": 24
+    },
+    {
+      "pac": "CM-Punk-Ring.PAC",
+      "section_path": "2",
+      "scope": "strict converted-YOBJ parser coverage; not a claim that native asset is malformed",
+      "message": "Secondary descriptor mesh count disagrees",
+      "header_mesh_count": 25,
+      "header_bone_count": 83,
+      "header_texture_count": 28,
+      "secondary_descriptor_count": 24
+    },
+    {
+      "pac": "Drew-Mcintyre.PAC",
+      "section_path": "2",
+      "scope": "strict converted-YOBJ parser coverage; not a claim that native asset is malformed",
+      "message": "Secondary descriptor mesh count disagrees",
+      "header_mesh_count": 27,
+      "header_bone_count": 87,
+      "header_texture_count": 20,
+      "secondary_descriptor_count": 1
+    },
+    {
+      "pac": "Eve-Torres.PAC",
+      "section_path": "2",
+      "scope": "strict converted-YOBJ parser coverage; not a claim that native asset is malformed",
+      "message": "Secondary descriptor mesh count disagrees",
+      "header_mesh_count": 24,
+      "header_bone_count": 110,
+      "header_texture_count": 24,
+      "secondary_descriptor_count": 21
+    },
+    {
+      "pac": "Gail-Kim.PAC",
+      "section_path": "2",
+      "scope": "strict converted-YOBJ parser coverage; not a claim that native asset is malformed",
+      "message": "Secondary descriptor mesh count disagrees",
+      "header_mesh_count": 30,
+      "header_bone_count": 106,
+      "header_texture_count": 22,
+      "secondary_descriptor_count": 26
+    },
+    {
+      "pac": "Jake-Roberts.PAC",
+      "section_path": "2",
+      "scope": "strict converted-YOBJ parser coverage; not a claim that native asset is malformed",
+      "message": "Secondary descriptor mesh count disagrees",
+      "header_mesh_count": 28,
+      "header_bone_count": 101,
+      "header_texture_count": 22,
+      "secondary_descriptor_count": 3
+    },
+    {
+      "pac": "Jimmy-Snuka.PAC",
+      "section_path": "2",
+      "scope": "strict converted-YOBJ parser coverage; not a claim that native asset is malformed",
+      "message": "Secondary descriptor mesh count disagrees",
+      "header_mesh_count": 31,
+      "header_bone_count": 101,
+      "header_texture_count": 22,
+      "secondary_descriptor_count": 28
+    },
+    {
+      "pac": "CM-Punk(Shirt1).PAC",
+      "section_path": "2",
+      "scope": "strict converted-YOBJ parser coverage; not a claim that native asset is malformed",
+      "message": "Secondary descriptor mesh count disagrees",
+      "header_mesh_count": 25,
+      "header_bone_count": 83,
+      "header_texture_count": 30,
+      "secondary_descriptor_count": 24
+    },
+    {
+      "pac": "John-Morrison(Entrance).PAC",
+      "section_path": "2",
+      "scope": "strict converted-YOBJ parser coverage; not a claim that native asset is malformed",
+      "message": "Secondary descriptor mesh count disagrees",
+      "header_mesh_count": 24,
+      "header_bone_count": 101,
+      "header_texture_count": 21,
+      "secondary_descriptor_count": 20
+    },
+    {
+      "pac": "John-Morrison-Ring.PAC",
+      "section_path": "2",
+      "scope": "strict converted-YOBJ parser coverage; not a claim that native asset is malformed",
+      "message": "Secondary descriptor mesh count disagrees",
+      "header_mesh_count": 33,
+      "header_bone_count": 101,
+      "header_texture_count": 72,
+      "secondary_descriptor_count": 27
+    },
+    {
+      "pac": "Kane(Masked).PAC",
+      "section_path": "2",
+      "scope": "strict converted-YOBJ parser coverage; not a claim that native asset is malformed",
+      "message": "Secondary descriptor mesh count disagrees",
+      "header_mesh_count": 21,
+      "header_bone_count": 101,
+      "header_texture_count": 20,
+      "secondary_descriptor_count": 18
+    },
+    {
+      "pac": "Kelly-Kelly.PAC",
+      "section_path": "2",
+      "scope": "strict converted-YOBJ parser coverage; not a claim that native asset is malformed",
+      "message": "Secondary descriptor mesh count disagrees",
+      "header_mesh_count": 26,
+      "header_bone_count": 103,
+      "header_texture_count": 50,
+      "secondary_descriptor_count": 24
+    },
+    {
+      "pac": "Kofi-Kingston.PAC",
+      "section_path": "2",
+      "scope": "strict converted-YOBJ parser coverage; not a claim that native asset is malformed",
+      "message": "Secondary descriptor mesh count disagrees",
+      "header_mesh_count": 29,
+      "header_bone_count": 101,
+      "header_texture_count": 21,
+      "secondary_descriptor_count": 26
+    },
+    {
+      "pac": "Maryse.PAC",
+      "section_path": "2",
+      "scope": "strict converted-YOBJ parser coverage; not a claim that native asset is malformed",
+      "message": "Secondary descriptor mesh count disagrees",
+      "header_mesh_count": 26,
+      "header_bone_count": 104,
+      "header_texture_count": 17,
+      "secondary_descriptor_count": 23
+    },
+    {
+      "pac": "Matt-Hardy.PAC",
+      "section_path": "2",
+      "scope": "strict converted-YOBJ parser coverage; not a claim that native asset is malformed",
+      "message": "Secondary descriptor mesh count disagrees",
+      "header_mesh_count": 30,
+      "header_bone_count": 95,
+      "header_texture_count": 19,
+      "secondary_descriptor_count": 27
+    },
+    {
+      "pac": "Melina.PAC",
+      "section_path": "2",
+      "scope": "strict converted-YOBJ parser coverage; not a claim that native asset is malformed",
+      "message": "Secondary descriptor mesh count disagrees",
+      "header_mesh_count": 26,
+      "header_bone_count": 109,
+      "header_texture_count": 22,
+      "secondary_descriptor_count": 22
+    },
+    {
+      "pac": "Michelle-McCool.PAC",
+      "section_path": "2",
+      "scope": "strict converted-YOBJ parser coverage; not a claim that native asset is malformed",
+      "message": "Secondary descriptor mesh count disagrees",
+      "header_mesh_count": 22,
+      "header_bone_count": 108,
+      "header_texture_count": 25,
+      "secondary_descriptor_count": 3
+    },
+    {
+      "pac": "Mickie-James.PAC",
+      "section_path": "2",
+      "scope": "strict converted-YOBJ parser coverage; not a claim that native asset is malformed",
+      "message": "Secondary descriptor mesh count disagrees",
+      "header_mesh_count": 22,
+      "header_bone_count": 109,
+      "header_texture_count": 18,
+      "secondary_descriptor_count": 19
+    },
+    {
+      "pac": "Mike-Knox.PAC",
+      "section_path": "2",
+      "scope": "strict converted-YOBJ parser coverage; not a claim that native asset is malformed",
+      "message": "Secondary descriptor mesh count disagrees",
+      "header_mesh_count": 31,
+      "header_bone_count": 101,
+      "header_texture_count": 27,
+      "secondary_descriptor_count": 30
+    },
+    {
+      "pac": "Natalya.PAC",
+      "section_path": "2",
+      "scope": "strict converted-YOBJ parser coverage; not a claim that native asset is malformed",
+      "message": "Secondary descriptor mesh count disagrees",
+      "header_mesh_count": 28,
+      "header_bone_count": 110,
+      "header_texture_count": 16,
+      "secondary_descriptor_count": 22
+    },
+    {
+      "pac": "Nikki-Bella.PAC",
+      "section_path": "2",
+      "scope": "strict converted-YOBJ parser coverage; not a claim that native asset is malformed",
+      "message": "Secondary descriptor mesh count disagrees",
+      "header_mesh_count": 26,
+      "header_bone_count": 110,
+      "header_texture_count": 18,
+      "secondary_descriptor_count": 22
+    },
+    {
+      "pac": "Rob-Van-Dam.PAC",
+      "section_path": "2",
+      "scope": "strict converted-YOBJ parser coverage; not a claim that native asset is malformed",
+      "message": "Secondary descriptor mesh count disagrees",
+      "header_mesh_count": 30,
+      "header_bone_count": 88,
+      "header_texture_count": 21,
+      "secondary_descriptor_count": 29
+    },
+    {
+      "pac": "Sheamus.PAC",
+      "section_path": "2",
+      "scope": "strict converted-YOBJ parser coverage; not a claim that native asset is malformed",
+      "message": "Secondary descriptor mesh count disagrees",
+      "header_mesh_count": 25,
+      "header_bone_count": 83,
+      "header_texture_count": 22,
+      "secondary_descriptor_count": 24
+    },
+    {
+      "pac": "Stephanie-Mchahon(Suit).PAC",
+      "section_path": "2",
+      "scope": "strict converted-YOBJ parser coverage; not a claim that native asset is malformed",
+      "message": "Secondary descriptor mesh count disagrees",
+      "header_mesh_count": 22,
+      "header_bone_count": 97,
+      "header_texture_count": 18,
+      "secondary_descriptor_count": 20
+    },
+    {
+      "pac": "Tiffany.PAC",
+      "section_path": "2",
+      "scope": "strict converted-YOBJ parser coverage; not a claim that native asset is malformed",
+      "message": "Secondary descriptor mesh count disagrees",
+      "header_mesh_count": 26,
+      "header_bone_count": 109,
+      "header_texture_count": 22,
+      "secondary_descriptor_count": 23
+    },
+    {
+      "pac": "Triple-H(Bandage).PAC",
+      "section_path": "2",
+      "scope": "strict converted-YOBJ parser coverage; not a claim that native asset is malformed",
+      "message": "Secondary descriptor mesh count disagrees",
+      "header_mesh_count": 25,
+      "header_bone_count": 100,
+      "header_texture_count": 22,
+      "secondary_descriptor_count": 24
+    },
+    {
+      "pac": "Yoshi-Tatsu.PAC",
+      "section_path": "2",
+      "scope": "strict converted-YOBJ parser coverage; not a claim that native asset is malformed",
+      "message": "Secondary descriptor mesh count disagrees",
+      "header_mesh_count": 31,
+      "header_bone_count": 101,
+      "header_texture_count": 29,
+      "secondary_descriptor_count": 27
+    },
+    {
+      "pac": "Zack-Ryder.PAC",
+      "section_path": "2",
+      "scope": "strict converted-YOBJ parser coverage; not a claim that native asset is malformed",
+      "message": "Secondary descriptor mesh count disagrees",
+      "header_mesh_count": 24,
+      "header_bone_count": 83,
+      "header_texture_count": 20,
+      "secondary_descriptor_count": 23
+    }
+  ],
+  "material_texture_pairs": {
+    "4/0x115": 309,
+    "4/0x117": 223,
+    "4/0x5": 1439,
+    "4/0x7": 108,
+    "8/0x115": 11,
+    "8/0x117": 1,
+    "8/0x5": 489,
+    "8/0x7": 51
+  }
+}
