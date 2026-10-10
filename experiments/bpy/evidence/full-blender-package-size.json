@@ -1,0 +1,47 @@
+[
+  {
+    "filename": "PS2PSP-Pac-Converter-Windows-x64.zip",
+    "zip_bytes": 556352052,
+    "expanded_bytes": 1276311842,
+    "files": 7336,
+    "zip_container_overhead_bytes": 2084780,
+    "groups": {
+      "manifest-readme-selfcheck": {
+        "compressed_bytes": 337620,
+        "expanded_bytes": 1023204,
+        "files": 3
+      },
+      "launcher": {
+        "compressed_bytes": 10717673,
+        "expanded_bytes": 10894620,
+        "files": 1
+      },
+      "notices": {
+        "compressed_bytes": 205654,
+        "expanded_bytes": 593897,
+        "files": 83
+      },
+      "full-blender-runtime": {
+        "compressed_bytes": 415414900,
+        "expanded_bytes": 1045476453,
+        "files": 5806
+      },
+      "blender-source": {
+        "compressed_bytes": 74491360,
+        "expanded_bytes": 74473996,
+        "files": 1
+      },
+      "converter-source-docs": {
+        "compressed_bytes": 298352,
+        "expanded_bytes": 840153,
+        "files": 104
+      },
+      "frozen-app-libraries": {
+        "compressed_bytes": 52801713,
+        "expanded_bytes": 143009519,
+        "files": 1338
+      }
+    },
+    "sha256": "80823d0f6b57b756d5bf370f5649421b3816bb76ce1d1079632ecf6b569f89c2"
+  }
+]

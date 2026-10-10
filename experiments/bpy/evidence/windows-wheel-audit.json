@@ -1,0 +1,142 @@
+{
+  "5.2.2": {
+    "filename": "bpy-5.2.2-cp313-cp313-win_amd64.whl",
+    "bytes": 338211575,
+    "sha256": "a2d29dca205e094f8f501544c73009ab15b643fb611a27ddc1155dce2fc6995d",
+    "expanded_bytes": 669289527,
+    "files": 2770,
+    "metadata": "Metadata-Version: 2.4\r\nName: bpy\r\nVersion: 5.2.2\r\nSummary: Blender as a Python module\r\nHome-page: https://www.blender.org\r\nAuthor: Blender Foundation\r\nLicense: GPL-3.0\r\nRequires-Python: ==3.13.*\r\nDescription-Content-Type: text/markdown\r\nRequires-Dist: cattrs\r\nRequires-Dist: cython\r\nRequires-Dist: numpy<3.0,>=2.2\r\nRequires-Dist: requests\r\nRequires-Dist: zstandard\r\nDynamic: author\r\nDynamic: description\r\nDynamic: description-content-type\r\nDynamic: home-page\r\nDynamic: license\r\nDynamic: requires-dist\r\nDynamic: requires-python\r\nDynamic: summary\r\n\r\n# Blender\r\n\r\n[Blender](https://www.blender.org) is the free and open source 3D creation suite. It supports the entirety of the 3D pipeline: modeling, rigging, animation, simulation, rendering, compositing and motion tracking, even video editing.\r\n\r\nThis package provides Blender as a Python module for use in studio pipelines, web services, scientific research, and more.\r\n\r\n### Archived Versions\r\n\r\nBlender versions outside the current LTS window are removed from PyPI but are available at [https://download.blender.org/pypi/bpy/](https://download.blender.org/pypi/bpy/).\r\n\r\nThese versions can still be installed manually. For example, to install version 3.6.0:\r\n\r\n```bash\r\npip install bpy==3.6.0 --extra-index-url https://download.blender.org/pypi/\r\n```\r\n\r\n## Documentation\r\n\r\n* [Blender Python API](https://docs.blender.org/api/current/)\r\n* [Blender as a Python Module](https://docs.blender.org/api/current/info_advanced_blender_as_bpy.html)\r\n\r\n## Requirements\r\n\r\n[System requirements](https://www.blender.org/download/requirements/) are the same as Blender.\r\n\r\nEach Blender release supports one Python version, and the package is only compatible with that version.\r\n\r\n## Source Code\r\n\r\n* [Releases](https://download.blender.org/source/)\r\n* Repository: [projects.blender.org/blender/blender.git](https://projects.blender.org/blender/blender)\r\n\r\n## Credits\r\n\r\nCreated by the [Blender developer community](https://www.blender.org/about/credits/).\r\n\r\nThanks to Tyler Alden Gubala for maintaining the original version of this package.\r\n",
+    "largest_files": [
+      {
+        "path": "bpy/__init__.pyd",
+        "bytes": 112687104,
+        "compressed_bytes": 42586838
+      },
+      {
+        "path": "bpy/usd_ms.dll",
+        "bytes": 49771008,
+        "compressed_bytes": 14946214
+      },
+      {
+        "path": "bpy/oslexec.dll",
+        "bytes": 49089024,
+        "compressed_bytes": 17936064
+      },
+      {
+        "path": "bpy/OpenImageDenoise_core.dll",
+        "bytes": 46940672,
+        "compressed_bytes": 43584366
+      },
+      {
+        "path": "bpy/cycles_kernel_oneapi_aot.dll",
+        "bytes": 39755776,
+        "compressed_bytes": 38246143
+      },
+      {
+        "path": "bpy/avcodec-62.dll",
+        "bytes": 36126208,
+        "compressed_bytes": 10400140
+      },
+      {
+        "path": "bpy/embree4.dll",
+        "bytes": 27038208,
+        "compressed_bytes": 9391961
+      },
+      {
+        "path": "bpy/oslcomp.dll",
+        "bytes": 25778176,
+        "compressed_bytes": 9948416
+      },
+      {
+        "path": "bpy/OpenImageDenoise_device_hip.dll",
+        "bytes": 14461952,
+        "compressed_bytes": 1929589
+      },
+      {
+        "path": "bpy/5.2/datafiles/fonts/Noto Sans CJK Regular.woff2",
+        "bytes": 11425316,
+        "compressed_bytes": 11427446
+      },
+      {
+        "path": "bpy/aom.dll",
+        "bytes": 9915392,
+        "compressed_bytes": 4343317
+      },
+      {
+        "path": "bpy/openimageio.dll",
+        "bytes": 8503808,
+        "compressed_bytes": 3522054
+      }
+    ]
+  },
+  "4.3.0": {
+    "filename": "bpy-4.3.0-cp311-cp311-win_amd64.whl",
+    "bytes": 333159335,
+    "sha256": "1a7b2c516aa7a95c31fcaae8842addd07fa86c1ce4768e88a34b480d17e2e93a",
+    "expanded_bytes": 733451018,
+    "files": 1952,
+    "metadata": "Metadata-Version: 2.1\r\nName: bpy\r\nVersion: 4.3.0\r\nSummary: Blender as a Python module\r\nHome-page: https://www.blender.org\r\nAuthor: Blender Foundation\r\nLicense: GPL-3.0\r\nRequires-Python: ==3.11.*\r\nDescription-Content-Type: text/markdown\r\nRequires-Dist: cython\r\nRequires-Dist: numpy\r\nRequires-Dist: requests\r\nRequires-Dist: zstandard\r\n\r\n# Blender\r\n\r\n[Blender](https://www.blender.org) is the free and open source 3D creation suite. It supports the entirety of the 3D pipeline\ufffd\ufffd\ufffdmodeling, rigging, animation, simulation, rendering, compositing and motion tracking, even video editing.\r\n\r\nThis package provides Blender as a Python module for use in studio pipelines, web services, scientific research, and more.\r\n\r\n## Documentation\r\n\r\n* [Blender Python API](https://docs.blender.org/api/current/)\r\n* [Blender as a Python Module](https://docs.blender.org/api/current/info_advanced_blender_as_bpy.html)\r\n\r\n## Requirements\r\n\r\n[System requirements](https://www.blender.org/download/requirements/) are the same as Blender.\r\n\r\nEach Blender release supports one Python version, and the package is only compatible with that version.\r\n\r\n## Source Code\r\n\r\n* [Releases](https://download.blender.org/source/)\r\n* Repository: [projects.blender.org/blender/blender.git](https://projects.blender.org/blender/blender)\r\n\r\n## Credits\r\n\r\nCreated by the [Blender developer community](https://www.blender.org/about/credits/).\r\n\r\nThanks to Tyler Alden Gubala for maintaining the original version of this package.\r\n",
+    "largest_files": [
+      {
+        "path": "bpy/cycles_kernel_oneapi_aot.dll",
+        "bytes": 161414656,
+        "compressed_bytes": 45177022
+      },
+      {
+        "path": "bpy/__init__.pyd",
+        "bytes": 86923776,
+        "compressed_bytes": 33295699
+      },
+      {
+        "path": "bpy/oslexec.dll",
+        "bytes": 57560064,
+        "compressed_bytes": 23115755
+      },
+      {
+        "path": "bpy/avcodec-60.dll",
+        "bytes": 49764352,
+        "compressed_bytes": 14416209
+      },
+      {
+        "path": "bpy/OpenImageDenoise_core.dll",
+        "bytes": 46937088,
+        "compressed_bytes": 43582161
+      },
+      {
+        "path": "bpy/usd_ms.dll",
+        "bytes": 31522816,
+        "compressed_bytes": 9767694
+      },
+      {
+        "path": "bpy/embree4.dll",
+        "bytes": 26682880,
+        "compressed_bytes": 9224746
+      },
+      {
+        "path": "bpy/openvdb.dll",
+        "bytes": 24628736,
+        "compressed_bytes": 3992264
+      },
+      {
+        "path": "bpy/oslcomp.dll",
+        "bytes": 22615040,
+        "compressed_bytes": 8873420
+      },
+      {
+        "path": "bpy/4.3/datafiles/fonts/Noto Sans CJK Regular.woff2",
+        "bytes": 11425316,
+        "compressed_bytes": 11427446
+      },
+      {
+        "path": "bpy/openimageio.dll",
+        "bytes": 9398272,
+        "compressed_bytes": 3439530
+      },
+      {
+        "path": "bpy/hiprt02003_5.7_amd.hipfb",
+        "bytes": 7904224,
+        "compressed_bytes": 2013444
+      }
+    ]
+  }
+}

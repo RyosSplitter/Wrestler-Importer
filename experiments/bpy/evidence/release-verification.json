@@ -1,0 +1,12 @@
+{
+  "zip_sha256": "9f9429748771ec96755dcee27179c54ee5a9c6da9cf071a6ed6549c125c33107",
+  "zip_bytes": 504665468,
+  "manifest_files_checked": 4792,
+  "extra_unmanifested_files": [],
+  "no_game_assets_outside_bpy_resources": true,
+  "blender_source_sha256": "56a3b1ec97479ff24dce65d2f09f8a1895005cece279b701fe4fcf74bce3f77e",
+  "included_gpl_texts": {
+    "blender-5.2.2/doc/license/GPL-license.txt": "f2703dec1b0118070caabd3302e21738c00211b0cc3260dbeb1168d6eda726b7",
+    "blender-5.2.2/doc/license/GPL3-license.txt": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903"
+  }
+}

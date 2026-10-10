@@ -1,0 +1,1033 @@
+[
+  {
+    "label": "lance-quality-final",
+    "reference_qa_input_hashes": {
+      "source": "/workspace/attachments/c94671ca-096f-4409-8265-d205956085a4/1800.pac",
+      "candidate": "/workspace/Wrestler-Importer/local/portable-tests/lance-quality-final/1800-PSP-experimental.pac",
+      "sha256": {
+        "/workspace/attachments/c94671ca-096f-4409-8265-d205956085a4/1800.pac": "fe1073d97e9301c62226d611d174324d74cb5223669f3bbeed8a6660bcb80495",
+        "/workspace/Wrestler-Importer/local/portable-tests/lance-quality-final/1800-PSP-experimental.pac": "1cb83929f9bdd948f2460c56d9306109fe25e0354febf09183babc72fdac50c4",
+        "/workspace/Wrestler-Importer/local/portable-tests/lance-quality-final/prepared.json": "212670af19f26ddd96fa0c95ab97c065dfc42efb5b162f5aee8c910817683cbf",
+        "/workspace/Wrestler-Importer/local/portable-tests/lance-quality-final/reduced.json": "c1074e906e7f08e7f77f9fed60ce96f292c3662a7594e6801447611af3a4413c"
+      }
+    },
+    "regions": {
+      "face": {
+        "distance_p95_height": 0.000344907831140957,
+        "views": {
+          "front": {
+            "silhouette_iou": 0.9999106823865667,
+            "depth_absolute_p95_height": 0.0007670884875331084
+          },
+          "left": {
+            "silhouette_iou": 0.9986015741255356,
+            "depth_absolute_p95_height": 0.0003846565317609555
+          },
+          "right": {
+            "silhouette_iou": 0.9986015741255356,
+            "depth_absolute_p95_height": 0.0003987702676889808
+          },
+          "front-left": {
+            "silhouette_iou": 0.9994579303101655,
+            "depth_absolute_p95_height": 0.0004445613427838185
+          },
+          "front-right": {
+            "silhouette_iou": 0.9994409716928394,
+            "depth_absolute_p95_height": 0.00047659034742434075
+          }
+        }
+      },
+      "jaw": {
+        "distance_p95_height": 0.00036985473705998984,
+        "views": {
+          "front": {
+            "silhouette_iou": 0.9998953339892404,
+            "depth_absolute_p95_height": 0.0007713496063826208
+          },
+          "left": {
+            "silhouette_iou": 0.9971813295945788,
+            "depth_absolute_p95_height": 0.000444546226502883
+          },
+          "right": {
+            "silhouette_iou": 0.9971813295945788,
+            "depth_absolute_p95_height": 0.0004786331903687551
+          },
+          "front-left": {
+            "silhouette_iou": 0.9989072175677786,
+            "depth_absolute_p95_height": 0.0004848879457815958
+          },
+          "front-right": {
+            "silhouette_iou": 0.9988137449160497,
+            "depth_absolute_p95_height": 0.0005160193725454496
+          }
+        }
+      },
+      "chin": {
+        "distance_p95_height": 0.0003234670639514344,
+        "views": {
+          "front": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 0.0005508565534074071
+          },
+          "left": {
+            "silhouette_iou": 0.9975806663686329,
+            "depth_absolute_p95_height": 0.00043960017173074573
+          },
+          "right": {
+            "silhouette_iou": 0.9975806663686329,
+            "depth_absolute_p95_height": 0.00047560847333124115
+          }
+        }
+      },
+      "nose": {
+        "distance_p95_height": 0.0005367820653183475,
+        "views": {
+          "front": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 0.0005655643710384978
+          },
+          "left": {
+            "silhouette_iou": 0.9925178110319509,
+            "depth_absolute_p95_height": 0.0004912836330561007
+          },
+          "right": {
+            "silhouette_iou": 0.9925178110319509,
+            "depth_absolute_p95_height": 0.000665309813330139
+          }
+        }
+      },
+      "eyes": {
+        "distance_p95_height": 0.0002823759551292244,
+        "views": {
+          "front": {
+            "silhouette_iou": 0.9999112137086034,
+            "depth_absolute_p95_height": 0.0009386297079091757
+          },
+          "left": {
+            "silhouette_iou": 0.9967820215235281,
+            "depth_absolute_p95_height": 0.00045069291140412317
+          },
+          "right": {
+            "silhouette_iou": 0.9967820215235281,
+            "depth_absolute_p95_height": 0.00046932025916364515
+          }
+        }
+      },
+      "neck": {
+        "distance_p95_height": 0.00010823921622227449,
+        "views": {
+          "front": {
+            "silhouette_iou": 0.9999658823395617,
+            "depth_absolute_p95_height": 0.00044327914426754337
+          },
+          "back": {
+            "silhouette_iou": 0.9999658823395617,
+            "depth_absolute_p95_height": 9.118855106456425e-09
+          },
+          "left": {
+            "silhouette_iou": 0.9993161868345033,
+            "depth_absolute_p95_height": 0.00046696134509580903
+          }
+        }
+      },
+      "torso": {
+        "distance_p95_height": 3.8215093833326186e-09,
+        "views": {
+          "front": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 8.787664531669577e-09
+          },
+          "back": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 6.512063670551385e-09
+          },
+          "left": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 3.28897600375296e-08
+          },
+          "right": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 3.873160443708363e-08
+          }
+        }
+      },
+      "waist": {
+        "distance_p95_height": 2.2171981862976105e-09,
+        "views": {
+          "front": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 3.430184900902855e-09
+          },
+          "back": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 3.4173988965297514e-09
+          },
+          "left": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 3.573362470143569e-09
+          },
+          "right": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 4.400065068869348e-09
+          }
+        }
+      },
+      "pelvis": {
+        "distance_p95_height": 2.2678043624880993e-09,
+        "views": {
+          "front": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 3.1445124255845374e-09
+          },
+          "back": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 3.4646837021784017e-09
+          },
+          "left": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 3.3199101748642187e-09
+          },
+          "right": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 3.878661653229943e-09
+          }
+        }
+      },
+      "buttocks": {
+        "distance_p95_height": 2.435055693831138e-09,
+        "views": {
+          "back": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 3.5115306823648443e-09
+          },
+          "left": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 3.1285432650364357e-09
+          },
+          "right": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 3.417421541559857e-09
+          },
+          "back-left": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 3.912574336300985e-09
+          },
+          "back-right": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 3.423615435172276e-09
+          }
+        }
+      },
+      "shoulders": {
+        "distance_p95_height": 0.00018906663208984373,
+        "views": {
+          "front": {
+            "silhouette_iou": 0.9997406639004149,
+            "depth_absolute_p95_height": 0.00032964481671942693
+          },
+          "back": {
+            "silhouette_iou": 0.9997406639004149,
+            "depth_absolute_p95_height": 0.00014230246849881843
+          },
+          "front-left": {
+            "silhouette_iou": 0.9994151457093879,
+            "depth_absolute_p95_height": 0.00039566475221996123
+          }
+        }
+      },
+      "left-hands": {
+        "distance_p95_height": 0.00019076214182478597,
+        "views": {
+          "front": {
+            "silhouette_iou": 0.9965123038170897,
+            "depth_absolute_p95_height": 0.0004918239935314255
+          },
+          "back": {
+            "silhouette_iou": 0.9965123038170897,
+            "depth_absolute_p95_height": 0.0004335361174815476
+          },
+          "left": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 0.0012789143528021175
+          }
+        }
+      },
+      "left-feet": {
+        "distance_p95_height": 0.0017371745834918694,
+        "views": {
+          "front": {
+            "silhouette_iou": 0.9873974996639333,
+            "depth_absolute_p95_height": 0.007186409219646373
+          },
+          "back": {
+            "silhouette_iou": 0.9873974996639333,
+            "depth_absolute_p95_height": 0.002472650458755697
+          },
+          "left": {
+            "silhouette_iou": 0.9796918948210461,
+            "depth_absolute_p95_height": 0.001876783824500003
+          }
+        }
+      },
+      "right-hands": {
+        "distance_p95_height": 0.00037774840289353154,
+        "views": {
+          "front": {
+            "silhouette_iou": 0.9981735159817352,
+            "depth_absolute_p95_height": 0.0008895996537148571
+          },
+          "back": {
+            "silhouette_iou": 0.9981735159817352,
+            "depth_absolute_p95_height": 1.1539953983751547e-07
+          },
+          "right": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 0.002352994198486331
+          }
+        }
+      },
+      "right-feet": {
+        "distance_p95_height": 0.0018006684614596167,
+        "views": {
+          "front": {
+            "silhouette_iou": 0.987350065517589,
+            "depth_absolute_p95_height": 0.007173683174868859
+          },
+          "back": {
+            "silhouette_iou": 0.987350065517589,
+            "depth_absolute_p95_height": 0.0024892792928809574
+          },
+          "right": {
+            "silhouette_iou": 0.9796134293308559,
+            "depth_absolute_p95_height": 0.0018809120666244611
+          }
+        }
+      }
+    },
+    "analytical_poses": [
+      "standing",
+      "walk-left",
+      "walk-right",
+      "bend",
+      "crouch",
+      "shoulders-up",
+      "neck-turn",
+      "head-tilt",
+      "jaw-06",
+      "jaw-12",
+      "jaw-18",
+      "jaw-25",
+      "elbow-flex-left",
+      "elbow-flex-right"
+    ],
+    "ocular_pose_count": 16,
+    "ocular_status": "pass",
+    "unresolved_flags": [
+      {
+        "region": "left-feet",
+        "pose": "rest",
+        "severity": "review"
+      },
+      {
+        "region": "right-feet",
+        "pose": "rest",
+        "severity": "review"
+      }
+    ],
+    "limitation": "Existing converter output is experimental. Byte identity with the reference is not proof of in-game compatibility or that all pre-existing review flags were resolved."
+  },
+  {
+    "label": "jericho-quality-final",
+    "reference_qa_input_hashes": {
+      "source": "/workspace/attachments/31e89f9b-1ea9-4749-b14c-16426443609d/0600.pac",
+      "candidate": "/workspace/Wrestler-Importer/local/portable-tests/jericho-quality-final/0600-PSP-experimental.pac",
+      "sha256": {
+        "/workspace/attachments/31e89f9b-1ea9-4749-b14c-16426443609d/0600.pac": "052da6cb97e1adcf865a89fd8d7d8544de8298025b36344f38de74ec600e9b1e",
+        "/workspace/Wrestler-Importer/local/portable-tests/jericho-quality-final/0600-PSP-experimental.pac": "9e410b2580495b57bd3d5e42d06d6415674e1a475a19e95632c932ac05b1b715",
+        "/workspace/Wrestler-Importer/local/portable-tests/jericho-quality-final/prepared.json": "3a883dc4e9c2bd8330bfaf96922cc0b25e180130b43c78e6665db332db07071a",
+        "/workspace/Wrestler-Importer/local/portable-tests/jericho-quality-final/reduced.json": "f64a9f990526ed5171d2af599c2bbd8683d6a27641093547d72ed7d54fb6777e"
+      }
+    },
+    "regions": {
+      "face": {
+        "distance_p95_height": 0.00031982931670928796,
+        "views": {
+          "front": {
+            "silhouette_iou": 0.9997766950872919,
+            "depth_absolute_p95_height": 0.0007907519135220791
+          },
+          "left": {
+            "silhouette_iou": 0.9990391722099039,
+            "depth_absolute_p95_height": 0.0003669823602538445
+          },
+          "right": {
+            "silhouette_iou": 0.9990391722099039,
+            "depth_absolute_p95_height": 0.00044342578634786156
+          },
+          "front-left": {
+            "silhouette_iou": 0.9995943578869734,
+            "depth_absolute_p95_height": 0.0004147921985399338
+          },
+          "front-right": {
+            "silhouette_iou": 0.9995817117084349,
+            "depth_absolute_p95_height": 0.00046721166674326925
+          }
+        }
+      },
+      "jaw": {
+        "distance_p95_height": 0.00039856998251270475,
+        "views": {
+          "front": {
+            "silhouette_iou": 0.9999893033255961,
+            "depth_absolute_p95_height": 0.0010281781158584858
+          },
+          "left": {
+            "silhouette_iou": 0.9973032908065488,
+            "depth_absolute_p95_height": 0.0005491311296218882
+          },
+          "right": {
+            "silhouette_iou": 0.9973032908065488,
+            "depth_absolute_p95_height": 0.000733322522128992
+          },
+          "front-left": {
+            "silhouette_iou": 0.9987955105392827,
+            "depth_absolute_p95_height": 0.0005761172838964388
+          },
+          "front-right": {
+            "silhouette_iou": 0.9988879889073461,
+            "depth_absolute_p95_height": 0.0006965740320860643
+          }
+        }
+      },
+      "chin": {
+        "distance_p95_height": 0.00025549412466375246,
+        "views": {
+          "front": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 0.0006505910915865529
+          },
+          "left": {
+            "silhouette_iou": 0.9967445019556409,
+            "depth_absolute_p95_height": 0.00056972070176459
+          },
+          "right": {
+            "silhouette_iou": 0.9967445019556409,
+            "depth_absolute_p95_height": 0.0007895494148381382
+          }
+        }
+      },
+      "nose": {
+        "distance_p95_height": 0.00048704357054518043,
+        "views": {
+          "front": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 0.0008819395189144601
+          },
+          "left": {
+            "silhouette_iou": 0.9958816473410635,
+            "depth_absolute_p95_height": 0.0006204337778857569
+          },
+          "right": {
+            "silhouette_iou": 0.9958816473410635,
+            "depth_absolute_p95_height": 0.0007789574260947477
+          }
+        }
+      },
+      "eyes": {
+        "distance_p95_height": 0.0003275474662931475,
+        "views": {
+          "front": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 0.0009451716447346531
+          },
+          "left": {
+            "silhouette_iou": 0.9980165417822604,
+            "depth_absolute_p95_height": 0.0005460763629442061
+          },
+          "right": {
+            "silhouette_iou": 0.9980165417822604,
+            "depth_absolute_p95_height": 0.000576499810667931
+          }
+        }
+      },
+      "neck": {
+        "distance_p95_height": 0.0001685063006413313,
+        "views": {
+          "front": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 0.0006572188031260818
+          },
+          "back": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 1.2191834709429453e-08
+          },
+          "left": {
+            "silhouette_iou": 0.9992680741516601,
+            "depth_absolute_p95_height": 0.0028780018251865474
+          }
+        }
+      },
+      "torso": {
+        "distance_p95_height": 5.013475666459684e-09,
+        "views": {
+          "front": {
+            "silhouette_iou": 0.9999266951740989,
+            "depth_absolute_p95_height": 9.766899410011913e-09
+          },
+          "back": {
+            "silhouette_iou": 0.9999266951740989,
+            "depth_absolute_p95_height": 1.4341493802538312e-08
+          },
+          "left": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 0.0006813095654993099
+          },
+          "right": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 4.3448877724821344e-08
+          }
+        }
+      },
+      "waist": {
+        "distance_p95_height": 2.3109892622995337e-09,
+        "views": {
+          "front": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 6.1859702083305256e-09
+          },
+          "back": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 4.753529812715799e-09
+          },
+          "left": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 3.68166601117739e-09
+          },
+          "right": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 4.500739484133964e-09
+          }
+        }
+      },
+      "pelvis": {
+        "distance_p95_height": 2.754851766862219e-09,
+        "views": {
+          "front": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 5.7920761814076336e-09
+          },
+          "back": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 4.721995961310607e-09
+          },
+          "left": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 4.086660147373221e-09
+          },
+          "right": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 5.366341715583004e-09
+          }
+        }
+      },
+      "buttocks": {
+        "distance_p95_height": 2.4521072065102382e-09,
+        "views": {
+          "back": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 4.751035091265833e-09
+          },
+          "left": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 2.9823990242353593e-09
+          },
+          "right": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 4.376443165717976e-09
+          },
+          "back-left": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 3.4108989707335244e-09
+          },
+          "back-right": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 3.504921461963748e-09
+          }
+        }
+      },
+      "shoulders": {
+        "distance_p95_height": 0.0008975333728941822,
+        "views": {
+          "front": {
+            "silhouette_iou": 0.9983339050325869,
+            "depth_absolute_p95_height": 0.0005698908953914249
+          },
+          "back": {
+            "silhouette_iou": 0.9983339050325869,
+            "depth_absolute_p95_height": 0.000694030016278555
+          },
+          "front-left": {
+            "silhouette_iou": 0.9986983275481225,
+            "depth_absolute_p95_height": 0.0006398467120045561
+          }
+        }
+      },
+      "left-hands": {
+        "distance_p95_height": 0.00015442104432326066,
+        "views": {
+          "front": {
+            "silhouette_iou": 0.9979065370070233,
+            "depth_absolute_p95_height": 0.0001658618790667494
+          },
+          "back": {
+            "silhouette_iou": 0.9979065370070233,
+            "depth_absolute_p95_height": 0.0005716381160732438
+          },
+          "left": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 0.004845684342749815
+          }
+        }
+      },
+      "left-feet": {
+        "distance_p95_height": 0.00041278991039514544,
+        "views": {
+          "front": {
+            "silhouette_iou": 0.9959948831967838,
+            "depth_absolute_p95_height": 0.00364303226641627
+          },
+          "back": {
+            "silhouette_iou": 0.9959948831967838,
+            "depth_absolute_p95_height": 0.0017662215605517108
+          },
+          "left": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 0.12797531624381928
+          }
+        }
+      },
+      "right-hands": {
+        "distance_p95_height": 1.5242588730906383e-05,
+        "views": {
+          "front": {
+            "silhouette_iou": 0.9978362296301305,
+            "depth_absolute_p95_height": 3.3854483662903355e-06
+          },
+          "back": {
+            "silhouette_iou": 0.9978362296301305,
+            "depth_absolute_p95_height": 0.0004836144278652926
+          },
+          "right": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 0.001456850964544126
+          }
+        }
+      },
+      "right-feet": {
+        "distance_p95_height": 1.5957371297407192e-08,
+        "views": {
+          "front": {
+            "silhouette_iou": 0.9989348103962505,
+            "depth_absolute_p95_height": 5.488094029366827e-05
+          },
+          "back": {
+            "silhouette_iou": 0.9989348103962505,
+            "depth_absolute_p95_height": 0.0007038616674192838
+          },
+          "right": {
+            "silhouette_iou": 0.9999724130320836,
+            "depth_absolute_p95_height": 8.413205957818825e-09
+          }
+        }
+      }
+    },
+    "analytical_poses": [
+      "standing",
+      "walk-left",
+      "walk-right",
+      "bend",
+      "crouch",
+      "shoulders-up",
+      "neck-turn",
+      "head-tilt",
+      "jaw-06",
+      "jaw-12",
+      "jaw-18",
+      "jaw-25",
+      "elbow-flex-left",
+      "elbow-flex-right"
+    ],
+    "ocular_pose_count": 16,
+    "ocular_status": "pass",
+    "unresolved_flags": [
+      {
+        "region": "left-hands",
+        "pose": "rest",
+        "severity": "review"
+      },
+      {
+        "region": "left-feet",
+        "pose": "rest",
+        "severity": "high-review"
+      }
+    ],
+    "limitation": "Existing converter output is experimental. Byte identity with the reference is not proof of in-game compatibility or that all pre-existing review flags were resolved."
+  },
+  {
+    "label": "unseen-quality-final",
+    "reference_qa_input_hashes": {
+      "source": "/workspace/attachments/e41101d5-cc7f-441e-9fbe-402da812218b/2800.pac",
+      "candidate": "/workspace/Wrestler-Importer/local/portable-tests/unseen-quality-final/2800-PSP-experimental.pac",
+      "sha256": {
+        "/workspace/attachments/e41101d5-cc7f-441e-9fbe-402da812218b/2800.pac": "dd8b067ccb450d63ea867e8ec8cc731afe035e915f3233b10daa07baeff731d7",
+        "/workspace/Wrestler-Importer/local/portable-tests/unseen-quality-final/2800-PSP-experimental.pac": "20586817f6f9b65d67d6514508a048b6fa88526f50a36954394438b6b0f58696",
+        "/workspace/Wrestler-Importer/local/portable-tests/unseen-quality-final/prepared.json": "7c427e743ac97079f32a64c579f7822aea09587f7310b0285bb82182c42e5977",
+        "/workspace/Wrestler-Importer/local/portable-tests/unseen-quality-final/reduced.json": "027bc54f7f885c71c76bd4ea09d32a16c22e6050cd6240f93adeebf3c393ee80"
+      }
+    },
+    "regions": {
+      "face": {
+        "distance_p95_height": 0.00032456549414357493,
+        "views": {
+          "front": {
+            "silhouette_iou": 0.9998434346948716,
+            "depth_absolute_p95_height": 0.0006465026885593206
+          },
+          "left": {
+            "silhouette_iou": 0.9994654527270532,
+            "depth_absolute_p95_height": 0.00037276206327704686
+          },
+          "right": {
+            "silhouette_iou": 0.9994654527270532,
+            "depth_absolute_p95_height": 0.00037772942559106715
+          },
+          "front-left": {
+            "silhouette_iou": 0.9994479112642832,
+            "depth_absolute_p95_height": 0.00042078277732258615
+          },
+          "front-right": {
+            "silhouette_iou": 0.9994085939744175,
+            "depth_absolute_p95_height": 0.0004310492282433335
+          }
+        }
+      },
+      "jaw": {
+        "distance_p95_height": 0.0003997655789639623,
+        "views": {
+          "front": {
+            "silhouette_iou": 0.9998699525326744,
+            "depth_absolute_p95_height": 0.0007283385849678296
+          },
+          "left": {
+            "silhouette_iou": 0.998585091052011,
+            "depth_absolute_p95_height": 0.0005631272136435159
+          },
+          "right": {
+            "silhouette_iou": 0.998585091052011,
+            "depth_absolute_p95_height": 0.0005206650075495974
+          },
+          "front-left": {
+            "silhouette_iou": 0.9982582218380275,
+            "depth_absolute_p95_height": 0.0005625880795344912
+          },
+          "front-right": {
+            "silhouette_iou": 0.998258783470051,
+            "depth_absolute_p95_height": 0.0005464385184127473
+          }
+        }
+      },
+      "chin": {
+        "distance_p95_height": 0.00039479243742497903,
+        "views": {
+          "front": {
+            "silhouette_iou": 0.9999902051050992,
+            "depth_absolute_p95_height": 0.0007426682549500023
+          },
+          "left": {
+            "silhouette_iou": 0.9978201310303753,
+            "depth_absolute_p95_height": 0.0007320578442191084
+          },
+          "right": {
+            "silhouette_iou": 0.9978201310303753,
+            "depth_absolute_p95_height": 0.0007340146506857879
+          }
+        }
+      },
+      "nose": {
+        "distance_p95_height": 0.0002840750742579702,
+        "views": {
+          "front": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 0.00039721820992985916
+          },
+          "left": {
+            "silhouette_iou": 0.9967288396816909,
+            "depth_absolute_p95_height": 0.0006574153144561471
+          },
+          "right": {
+            "silhouette_iou": 0.9967288396816909,
+            "depth_absolute_p95_height": 0.0006516004044720701
+          }
+        }
+      },
+      "eyes": {
+        "distance_p95_height": 0.00021318616229368484,
+        "views": {
+          "front": {
+            "silhouette_iou": 0.9999491937040839,
+            "depth_absolute_p95_height": 0.0005854114780402085
+          },
+          "left": {
+            "silhouette_iou": 0.9991577016984572,
+            "depth_absolute_p95_height": 0.0003173510656165263
+          },
+          "right": {
+            "silhouette_iou": 0.9991577016984572,
+            "depth_absolute_p95_height": 0.00022545488930400133
+          }
+        }
+      },
+      "neck": {
+        "distance_p95_height": 0.00022133988151336957,
+        "views": {
+          "front": {
+            "silhouette_iou": 0.9998466474779408,
+            "depth_absolute_p95_height": 0.0005818673874786771
+          },
+          "back": {
+            "silhouette_iou": 0.9998466474779408,
+            "depth_absolute_p95_height": 1.0361199306700932e-08
+          },
+          "left": {
+            "silhouette_iou": 0.9995407162043674,
+            "depth_absolute_p95_height": 0.004011647567245901
+          }
+        }
+      },
+      "torso": {
+        "distance_p95_height": 4.129368025951444e-09,
+        "views": {
+          "front": {
+            "silhouette_iou": 0.999124898538961,
+            "depth_absolute_p95_height": 1.1701620660476109e-08
+          },
+          "back": {
+            "silhouette_iou": 0.999124898538961,
+            "depth_absolute_p95_height": 1.104339560669825e-08
+          },
+          "left": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 0.0025105660986200744
+          },
+          "right": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 0.0025254112913204473
+          }
+        }
+      },
+      "waist": {
+        "distance_p95_height": 2.2787290403867792e-09,
+        "views": {
+          "front": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 5.3982047323686995e-09
+          },
+          "back": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 3.2268512209895106e-09
+          },
+          "left": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 4.884210391272045e-09
+          },
+          "right": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 4.9060216466379605e-09
+          }
+        }
+      },
+      "pelvis": {
+        "distance_p95_height": 3.2125730473807594e-09,
+        "views": {
+          "front": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 5.22795569417918e-09
+          },
+          "back": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 3.0019244538483313e-09
+          },
+          "left": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 4.980342748137068e-09
+          },
+          "right": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 5.476537143531252e-09
+          }
+        }
+      },
+      "buttocks": {
+        "distance_p95_height": 2.506583627526183e-09,
+        "views": {
+          "back": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 3.0019244584801908e-09
+          },
+          "left": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 4.527985377629306e-09
+          },
+          "right": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 5.046768842672471e-09
+          },
+          "back-left": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 3.731305175302808e-09
+          },
+          "back-right": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 3.3523174878877253e-09
+          }
+        }
+      },
+      "shoulders": {
+        "distance_p95_height": 0.0005862789304458484,
+        "views": {
+          "front": {
+            "silhouette_iou": 0.9971217004108343,
+            "depth_absolute_p95_height": 0.0006943555376690794
+          },
+          "back": {
+            "silhouette_iou": 0.9971217004108343,
+            "depth_absolute_p95_height": 0.0005774555102832917
+          },
+          "front-left": {
+            "silhouette_iou": 0.997340147024944,
+            "depth_absolute_p95_height": 0.0010275267192411256
+          }
+        }
+      },
+      "left-hands": {
+        "distance_p95_height": 0.0010129780192655274,
+        "views": {
+          "front": {
+            "silhouette_iou": 0.9740268411564399,
+            "depth_absolute_p95_height": 0.001801009457724857
+          },
+          "back": {
+            "silhouette_iou": 0.9740268411564399,
+            "depth_absolute_p95_height": 0.002187100934049857
+          },
+          "left": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 0.007060858919114211
+          }
+        }
+      },
+      "left-feet": {
+        "distance_p95_height": 0.002215984973037054,
+        "views": {
+          "front": {
+            "silhouette_iou": 0.9933240565881456,
+            "depth_absolute_p95_height": 0.006478818339674826
+          },
+          "back": {
+            "silhouette_iou": 0.9933240565881456,
+            "depth_absolute_p95_height": 0.003969338163418639
+          },
+          "left": {
+            "silhouette_iou": 0.9948692989393847,
+            "depth_absolute_p95_height": 0.0014010045406027299
+          }
+        }
+      },
+      "right-hands": {
+        "distance_p95_height": 0.0010604379057849796,
+        "views": {
+          "front": {
+            "silhouette_iou": 0.9742202631403193,
+            "depth_absolute_p95_height": 0.00180327696779479
+          },
+          "back": {
+            "silhouette_iou": 0.9742202631403193,
+            "depth_absolute_p95_height": 0.0021908693291978094
+          },
+          "right": {
+            "silhouette_iou": 1.0,
+            "depth_absolute_p95_height": 0.007099702963194835
+          }
+        }
+      },
+      "right-feet": {
+        "distance_p95_height": 0.002162302773997456,
+        "views": {
+          "front": {
+            "silhouette_iou": 0.9932591341217,
+            "depth_absolute_p95_height": 0.006464807741625577
+          },
+          "back": {
+            "silhouette_iou": 0.9932591341217,
+            "depth_absolute_p95_height": 0.003972054452798299
+          },
+          "right": {
+            "silhouette_iou": 0.9948894747515716,
+            "depth_absolute_p95_height": 0.0014006259065844594
+          }
+        }
+      }
+    },
+    "analytical_poses": [
+      "standing",
+      "walk-left",
+      "walk-right",
+      "bend",
+      "crouch",
+      "shoulders-up",
+      "neck-turn",
+      "head-tilt",
+      "jaw-06",
+      "jaw-12",
+      "jaw-18",
+      "jaw-25",
+      "elbow-flex-left",
+      "elbow-flex-right"
+    ],
+    "ocular_pose_count": 16,
+    "ocular_status": "pass",
+    "unresolved_flags": [
+      {
+        "region": "material:tjfoot",
+        "pose": "rest",
+        "severity": "review"
+      },
+      {
+        "region": "neck",
+        "pose": "rest",
+        "severity": "review"
+      },
+      {
+        "region": "left-hands",
+        "pose": "rest",
+        "severity": "review"
+      },
+      {
+        "region": "left-feet",
+        "pose": "rest",
+        "severity": "review"
+      },
+      {
+        "region": "right-hands",
+        "pose": "rest",
+        "severity": "review"
+      },
+      {
+        "region": "right-feet",
+        "pose": "rest",
+        "severity": "review"
+      }
+    ],
+    "limitation": "Existing converter output is experimental. Byte identity with the reference is not proof of in-game compatibility or that all pre-existing review flags were resolved."
+  }
+]

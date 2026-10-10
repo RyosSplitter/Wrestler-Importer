@@ -1,0 +1,148 @@
+[
+  {
+    "label": "Lance",
+    "inputs": {
+      "reference": "655c554cb0ae64afbd062983f7cf087d4c987da337489ec3f7355d5136a2379c",
+      "candidate": "49a3c7676ac09e87a3a0b17d9fe703a9fc65d979fc68015a3808160dec00432f",
+      "base": "bf935a51fe30bfd2df929f8eb9e50be5d793426ea05125ca9411ce21b19ead80",
+      "textures": "0f2d53520e722391a70618baa947d3b1bd7e6e47a9830c4271b70e28291c6540",
+      "yobj": "9651ef39838a53b24bfe87968cca7d1a06a461fb04b60d0b2e4c6a4556f799b0"
+    },
+    "counts": {
+      "meshes": 43,
+      "vertices": 2356,
+      "triangles": 2568,
+      "yobj_bytes": 190160
+    },
+    "exact_json_meshes": false,
+    "equal_attribute_array_shapes": true,
+    "changed_float32_records": {
+      "position": 0,
+      "normal": 0,
+      "uv": 0,
+      "weights": 0,
+      "color": 0
+    },
+    "maximum_python_attribute_difference": {
+      "position": 0.0,
+      "normal": 2.220446049250313e-16,
+      "uv": 0.0,
+      "weights": 0.0,
+      "color": 0.0
+    },
+    "native_structural_audit": "pass",
+    "exact_final_yobj": true,
+    "reference_yobj_sha256": "9651ef39838a53b24bfe87968cca7d1a06a461fb04b60d0b2e4c6a4556f799b0",
+    "candidate_yobj_sha256": "9651ef39838a53b24bfe87968cca7d1a06a461fb04b60d0b2e4c6a4556f799b0",
+    "conclusion": "Native byte identity preserves all static and analytical-pose QA inputs; no new geometric/skinning regression.",
+    "qa": {
+      "pac": "D:\\a\\_temp\\bpy-Lance\\work\\Lance-PSP-experimental.pac",
+      "preview": "D:\\a\\_temp\\bpy-Lance\\work\\preview",
+      "report": "D:\\a\\_temp\\bpy-Lance\\work\\qa\\report.html",
+      "bytes": 126976,
+      "sha256": "723b4a2873b2e354cf3468ef17ab86465e50e2cd6a65cd124c96f24e23d5c514",
+      "source": "D:\\a\\Wrestler-Importer\\Wrestler-Importer\\build\\bpy-inputs\\Lance.pac",
+      "base": "D:\\a\\Wrestler-Importer\\Wrestler-Importer\\assets\\Kurt-Angle-Ring.PAC",
+      "inputs": {
+        "D:\\a\\Wrestler-Importer\\Wrestler-Importer\\build\\bpy-inputs\\Lance.pac": "54e7bf082c24ca2e51ecf31f1cd08809c49d17c00406a2c34d4d6118fe2c2bff",
+        "D:\\a\\Wrestler-Importer\\Wrestler-Importer\\assets\\Kurt-Angle-Ring.PAC": "bf935a51fe30bfd2df929f8eb9e50be5d793426ea05125ca9411ce21b19ead80"
+      },
+      "profile": "hctp-selective-guards-preview-v1",
+      "size_attempts": [
+        {
+          "texture_cap": 64,
+          "pac_bytes": 126976,
+          "free_region_ratios": {
+            "Head": 0.6847290640394089,
+            "Torso": 0.65,
+            "Arms": 0.8,
+            "Legs": 0.65
+          },
+          "complete_head_minimum_ratio": 0.8,
+          "bpe_max_distinct": 200,
+          "bpe_block_cap": 4000
+        }
+      ],
+      "meshes": 43,
+      "triangles": 2568,
+      "vertices": 2356,
+      "native_validation": "passed",
+      "review_flags": 2,
+      "ocular_validation": "pass",
+      "status": "Experimental conversion; review QA and test in PPSSPP. File checks do not certify game compatibility."
+    }
+  },
+  {
+    "label": "Jericho",
+    "inputs": {
+      "reference": "5afab1cf736f188e2f32f786a3b88822f8b03471b56d6700849a4203315a5bf8",
+      "candidate": "72fab27d5c209ce3e45c71a5a231817f888a1ee975cac556d3676897c1ee995b",
+      "base": "bf935a51fe30bfd2df929f8eb9e50be5d793426ea05125ca9411ce21b19ead80",
+      "textures": "d0558d4c0b2ce53b1308d1485a890318f8d81d97d7667020eabdc8d9ec5bd393",
+      "yobj": "ca862d1a1a5c3b0af9e57c3e98f46368e3f3f5e0b536123d73a4644dfd1b318a"
+    },
+    "counts": {
+      "meshes": 47,
+      "vertices": 2647,
+      "triangles": 2667,
+      "yobj_bytes": 212960
+    },
+    "exact_json_meshes": false,
+    "equal_attribute_array_shapes": true,
+    "changed_float32_records": {
+      "position": 0,
+      "normal": 0,
+      "uv": 0,
+      "weights": 0,
+      "color": 0
+    },
+    "maximum_python_attribute_difference": {
+      "position": 0.0,
+      "normal": 2.220446049250313e-16,
+      "uv": 0.0,
+      "weights": 0.0,
+      "color": 0.0
+    },
+    "native_structural_audit": "pass",
+    "exact_final_yobj": true,
+    "reference_yobj_sha256": "ca862d1a1a5c3b0af9e57c3e98f46368e3f3f5e0b536123d73a4644dfd1b318a",
+    "candidate_yobj_sha256": "ca862d1a1a5c3b0af9e57c3e98f46368e3f3f5e0b536123d73a4644dfd1b318a",
+    "conclusion": "Native byte identity preserves all static and analytical-pose QA inputs; no new geometric/skinning regression.",
+    "qa": {
+      "pac": "D:\\a\\_temp\\bpy-Jericho\\work\\Jericho-PSP-experimental.pac",
+      "preview": "D:\\a\\_temp\\bpy-Jericho\\work\\preview",
+      "report": "D:\\a\\_temp\\bpy-Jericho\\work\\qa\\report.html",
+      "bytes": 137216,
+      "sha256": "cbf48d9107352cbd888e29249d1331c5ac91d57283432c3af2d863e615faf84d",
+      "source": "D:\\a\\Wrestler-Importer\\Wrestler-Importer\\build\\bpy-inputs\\Jericho.pac",
+      "base": "D:\\a\\Wrestler-Importer\\Wrestler-Importer\\assets\\Kurt-Angle-Ring.PAC",
+      "inputs": {
+        "D:\\a\\Wrestler-Importer\\Wrestler-Importer\\build\\bpy-inputs\\Jericho.pac": "f79b6d15dbe6c140012fc8f1349aa0e85e78b229920805f18cbb956a64a20c62",
+        "D:\\a\\Wrestler-Importer\\Wrestler-Importer\\assets\\Kurt-Angle-Ring.PAC": "bf935a51fe30bfd2df929f8eb9e50be5d793426ea05125ca9411ce21b19ead80"
+      },
+      "profile": "hctp-selective-guards-preview-v1",
+      "size_attempts": [
+        {
+          "texture_cap": 64,
+          "pac_bytes": 137216,
+          "free_region_ratios": {
+            "Head": 0.6706948640483383,
+            "Torso": 0.65,
+            "Arms": 0.8,
+            "Legs": 0.65
+          },
+          "complete_head_minimum_ratio": 0.8,
+          "bpe_max_distinct": 200,
+          "bpe_block_cap": 4000
+        }
+      ],
+      "meshes": 47,
+      "triangles": 2667,
+      "vertices": 2647,
+      "native_validation": "passed",
+      "review_flags": 2,
+      "ocular_validation": "pass",
+      "status": "Experimental conversion; review QA and test in PPSSPP. File checks do not certify game compatibility."
+    }
+  }
+]

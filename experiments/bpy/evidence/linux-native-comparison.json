@@ -1,0 +1,338 @@
+[
+  {
+    "label": "4.3.0/lance",
+    "inputs": {
+      "reference": "cbe20d263290cba5a9b7d887d3738c77f3c67b18404d99d9aa3f89b61b760c53",
+      "candidate": "2fe27c88bc45d41b3105f855af57c7ecbb01280fd2a1da9e4793e1d65a0fff31",
+      "base": "bf935a51fe30bfd2df929f8eb9e50be5d793426ea05125ca9411ce21b19ead80",
+      "textures": "461ff6b47a34712cf4c9544a1a71e683b6cc71060d07fb69e742102470bf9355",
+      "yobj": "4bff78ab0191702aa3443ed97c1074e2fe02f27c3b3c4140186245e184b0dc25"
+    },
+    "counts": {
+      "meshes": 44,
+      "vertices": 2365,
+      "triangles": 2568,
+      "yobj_bytes": 190912
+    },
+    "exact_json_meshes": false,
+    "equal_attribute_array_shapes": true,
+    "changed_float32_records": {
+      "position": 0,
+      "normal": 0,
+      "uv": 0,
+      "weights": 0,
+      "color": 0
+    },
+    "maximum_python_attribute_difference": {
+      "position": 0.0,
+      "normal": 2.220446049250313e-16,
+      "uv": 0.0,
+      "weights": 0.0,
+      "color": 0.0
+    },
+    "native_structural_audit": "pass",
+    "exact_final_yobj": true,
+    "reference_yobj_sha256": "4bff78ab0191702aa3443ed97c1074e2fe02f27c3b3c4140186245e184b0dc25",
+    "candidate_yobj_sha256": "4bff78ab0191702aa3443ed97c1074e2fe02f27c3b3c4140186245e184b0dc25",
+    "conclusion": "Native byte identity preserves all static and analytical-pose QA inputs; no new geometric/skinning regression.",
+    "pac_bytes": 137216,
+    "exact_final_pac": true,
+    "reference_pac_sha256": "1cb83929f9bdd948f2460c56d9306109fe25e0354febf09183babc72fdac50c4",
+    "candidate_pac_sha256": "1cb83929f9bdd948f2460c56d9306109fe25e0354febf09183babc72fdac50c4",
+    "pac_structural_audit": "pass"
+  },
+  {
+    "label": "4.3.0/jericho",
+    "inputs": {
+      "reference": "132b33740c57572f05811a7df990c2880795dc96bd6c3e440e627a98b8e6db47",
+      "candidate": "7876e127262553049b9df811c06f135506029ecf7cbde1b0b9ac21284fddec86",
+      "base": "bf935a51fe30bfd2df929f8eb9e50be5d793426ea05125ca9411ce21b19ead80",
+      "textures": "7379e284fccec5f42281b402c75757322d8763196c527ea0dd610baa4e8bcade",
+      "yobj": "e14d32f63ca2343fba4ee6fdfab69269acd6d9f29979abcefedf352038b0a490"
+    },
+    "counts": {
+      "meshes": 47,
+      "vertices": 2635,
+      "triangles": 2667,
+      "yobj_bytes": 211680
+    },
+    "exact_json_meshes": false,
+    "equal_attribute_array_shapes": true,
+    "changed_float32_records": {
+      "position": 0,
+      "normal": 0,
+      "uv": 0,
+      "weights": 0,
+      "color": 0
+    },
+    "maximum_python_attribute_difference": {
+      "position": 0.0,
+      "normal": 2.220446049250313e-16,
+      "uv": 0.0,
+      "weights": 0.0,
+      "color": 0.0
+    },
+    "native_structural_audit": "pass",
+    "exact_final_yobj": true,
+    "reference_yobj_sha256": "e14d32f63ca2343fba4ee6fdfab69269acd6d9f29979abcefedf352038b0a490",
+    "candidate_yobj_sha256": "e14d32f63ca2343fba4ee6fdfab69269acd6d9f29979abcefedf352038b0a490",
+    "conclusion": "Native byte identity preserves all static and analytical-pose QA inputs; no new geometric/skinning regression.",
+    "pac_bytes": 147456,
+    "exact_final_pac": true,
+    "reference_pac_sha256": "9e410b2580495b57bd3d5e42d06d6415674e1a475a19e95632c932ac05b1b715",
+    "candidate_pac_sha256": "9e410b2580495b57bd3d5e42d06d6415674e1a475a19e95632c932ac05b1b715",
+    "pac_structural_audit": "pass"
+  },
+  {
+    "label": "4.3.0/unseen",
+    "inputs": {
+      "reference": "cf02e473cb3168586729b2489854ebfd31dc01b3f9404a5c7245d1339d846a96",
+      "candidate": "56e5fa633aac5987987bdb1a20ab8c8b5e3a913c9e96999182ce88303d6f12e1",
+      "base": "bf935a51fe30bfd2df929f8eb9e50be5d793426ea05125ca9411ce21b19ead80",
+      "textures": "9a4dcd41615cbf3b861adaa764a70f9b64a36b08a80f01653a6cf85cee56a287",
+      "yobj": "3927ecbd35d7ec5a18e2b939d80ac575b11994230706974f518ed481a0d83953"
+    },
+    "counts": {
+      "meshes": 46,
+      "vertices": 2108,
+      "triangles": 2373,
+      "yobj_bytes": 174864
+    },
+    "exact_json_meshes": false,
+    "equal_attribute_array_shapes": true,
+    "changed_float32_records": {
+      "position": 0,
+      "normal": 0,
+      "uv": 0,
+      "weights": 0,
+      "color": 0
+    },
+    "maximum_python_attribute_difference": {
+      "position": 0.0,
+      "normal": 2.220446049250313e-16,
+      "uv": 0.0,
+      "weights": 0.0,
+      "color": 0.0
+    },
+    "native_structural_audit": "pass",
+    "exact_final_yobj": true,
+    "reference_yobj_sha256": "3927ecbd35d7ec5a18e2b939d80ac575b11994230706974f518ed481a0d83953",
+    "candidate_yobj_sha256": "3927ecbd35d7ec5a18e2b939d80ac575b11994230706974f518ed481a0d83953",
+    "conclusion": "Native byte identity preserves all static and analytical-pose QA inputs; no new geometric/skinning regression.",
+    "pac_bytes": 147456,
+    "exact_final_pac": true,
+    "reference_pac_sha256": "20586817f6f9b65d67d6514508a048b6fa88526f50a36954394438b6b0f58696",
+    "candidate_pac_sha256": "20586817f6f9b65d67d6514508a048b6fa88526f50a36954394438b6b0f58696",
+    "pac_structural_audit": "pass"
+  },
+  {
+    "label": "4.3.0/jericho-leg",
+    "inputs": {
+      "reference": "15544437953d496313e2e5ad67b1ffa5b93d219414aa52de63828ad865a734aa",
+      "candidate": "b2d4c15fd2ff3e579d0c578a18d66078d51015f4f5499c4c4369c7e0b644e496",
+      "base": "bf935a51fe30bfd2df929f8eb9e50be5d793426ea05125ca9411ce21b19ead80",
+      "textures": "7379e284fccec5f42281b402c75757322d8763196c527ea0dd610baa4e8bcade",
+      "yobj": "38745a7928f48e38af27036d7fd888f076695b98fec3310ac0fa353b0b9e2b19"
+    },
+    "counts": {
+      "meshes": 47,
+      "vertices": 2645,
+      "triangles": 2685,
+      "yobj_bytes": 212304
+    },
+    "exact_json_meshes": false,
+    "equal_attribute_array_shapes": true,
+    "changed_float32_records": {
+      "position": 0,
+      "normal": 0,
+      "uv": 0,
+      "weights": 0,
+      "color": 0
+    },
+    "maximum_python_attribute_difference": {
+      "position": 0.0,
+      "normal": 2.220446049250313e-16,
+      "uv": 0.0,
+      "weights": 0.0,
+      "color": 0.0
+    },
+    "native_structural_audit": "pass",
+    "exact_final_yobj": true,
+    "reference_yobj_sha256": "38745a7928f48e38af27036d7fd888f076695b98fec3310ac0fa353b0b9e2b19",
+    "candidate_yobj_sha256": "38745a7928f48e38af27036d7fd888f076695b98fec3310ac0fa353b0b9e2b19",
+    "conclusion": "Native byte identity preserves all static and analytical-pose QA inputs; no new geometric/skinning regression.",
+    "pac_bytes": 147456,
+    "exact_final_pac": true,
+    "reference_pac_sha256": "adfb29b2b4e428d14377d166ab9e4f1ed5e2eb47e209e07740654b356730deda",
+    "candidate_pac_sha256": "adfb29b2b4e428d14377d166ab9e4f1ed5e2eb47e209e07740654b356730deda",
+    "pac_structural_audit": "pass"
+  },
+  {
+    "label": "5.2.2-LTS/lance",
+    "inputs": {
+      "reference": "cbe20d263290cba5a9b7d887d3738c77f3c67b18404d99d9aa3f89b61b760c53",
+      "candidate": "cbe20d263290cba5a9b7d887d3738c77f3c67b18404d99d9aa3f89b61b760c53",
+      "base": "bf935a51fe30bfd2df929f8eb9e50be5d793426ea05125ca9411ce21b19ead80",
+      "textures": "461ff6b47a34712cf4c9544a1a71e683b6cc71060d07fb69e742102470bf9355",
+      "yobj": "4bff78ab0191702aa3443ed97c1074e2fe02f27c3b3c4140186245e184b0dc25"
+    },
+    "counts": {
+      "meshes": 44,
+      "vertices": 2365,
+      "triangles": 2568,
+      "yobj_bytes": 190912
+    },
+    "exact_json_meshes": true,
+    "equal_attribute_array_shapes": true,
+    "changed_float32_records": {
+      "position": 0,
+      "normal": 0,
+      "uv": 0,
+      "weights": 0,
+      "color": 0
+    },
+    "maximum_python_attribute_difference": {
+      "position": 0.0,
+      "normal": 0.0,
+      "uv": 0.0,
+      "weights": 0.0,
+      "color": 0.0
+    },
+    "native_structural_audit": "pass",
+    "exact_final_yobj": true,
+    "reference_yobj_sha256": "4bff78ab0191702aa3443ed97c1074e2fe02f27c3b3c4140186245e184b0dc25",
+    "candidate_yobj_sha256": "4bff78ab0191702aa3443ed97c1074e2fe02f27c3b3c4140186245e184b0dc25",
+    "conclusion": "Native byte identity preserves all static and analytical-pose QA inputs; no new geometric/skinning regression.",
+    "pac_bytes": 137216,
+    "exact_final_pac": true,
+    "reference_pac_sha256": "1cb83929f9bdd948f2460c56d9306109fe25e0354febf09183babc72fdac50c4",
+    "candidate_pac_sha256": "1cb83929f9bdd948f2460c56d9306109fe25e0354febf09183babc72fdac50c4",
+    "pac_structural_audit": "pass"
+  },
+  {
+    "label": "5.2.2-LTS/jericho",
+    "inputs": {
+      "reference": "132b33740c57572f05811a7df990c2880795dc96bd6c3e440e627a98b8e6db47",
+      "candidate": "132b33740c57572f05811a7df990c2880795dc96bd6c3e440e627a98b8e6db47",
+      "base": "bf935a51fe30bfd2df929f8eb9e50be5d793426ea05125ca9411ce21b19ead80",
+      "textures": "7379e284fccec5f42281b402c75757322d8763196c527ea0dd610baa4e8bcade",
+      "yobj": "e14d32f63ca2343fba4ee6fdfab69269acd6d9f29979abcefedf352038b0a490"
+    },
+    "counts": {
+      "meshes": 47,
+      "vertices": 2635,
+      "triangles": 2667,
+      "yobj_bytes": 211680
+    },
+    "exact_json_meshes": true,
+    "equal_attribute_array_shapes": true,
+    "changed_float32_records": {
+      "position": 0,
+      "normal": 0,
+      "uv": 0,
+      "weights": 0,
+      "color": 0
+    },
+    "maximum_python_attribute_difference": {
+      "position": 0.0,
+      "normal": 0.0,
+      "uv": 0.0,
+      "weights": 0.0,
+      "color": 0.0
+    },
+    "native_structural_audit": "pass",
+    "exact_final_yobj": true,
+    "reference_yobj_sha256": "e14d32f63ca2343fba4ee6fdfab69269acd6d9f29979abcefedf352038b0a490",
+    "candidate_yobj_sha256": "e14d32f63ca2343fba4ee6fdfab69269acd6d9f29979abcefedf352038b0a490",
+    "conclusion": "Native byte identity preserves all static and analytical-pose QA inputs; no new geometric/skinning regression.",
+    "pac_bytes": 147456,
+    "exact_final_pac": true,
+    "reference_pac_sha256": "9e410b2580495b57bd3d5e42d06d6415674e1a475a19e95632c932ac05b1b715",
+    "candidate_pac_sha256": "9e410b2580495b57bd3d5e42d06d6415674e1a475a19e95632c932ac05b1b715",
+    "pac_structural_audit": "pass"
+  },
+  {
+    "label": "5.2.2-LTS/unseen",
+    "inputs": {
+      "reference": "cf02e473cb3168586729b2489854ebfd31dc01b3f9404a5c7245d1339d846a96",
+      "candidate": "cf02e473cb3168586729b2489854ebfd31dc01b3f9404a5c7245d1339d846a96",
+      "base": "bf935a51fe30bfd2df929f8eb9e50be5d793426ea05125ca9411ce21b19ead80",
+      "textures": "9a4dcd41615cbf3b861adaa764a70f9b64a36b08a80f01653a6cf85cee56a287",
+      "yobj": "3927ecbd35d7ec5a18e2b939d80ac575b11994230706974f518ed481a0d83953"
+    },
+    "counts": {
+      "meshes": 46,
+      "vertices": 2108,
+      "triangles": 2373,
+      "yobj_bytes": 174864
+    },
+    "exact_json_meshes": true,
+    "equal_attribute_array_shapes": true,
+    "changed_float32_records": {
+      "position": 0,
+      "normal": 0,
+      "uv": 0,
+      "weights": 0,
+      "color": 0
+    },
+    "maximum_python_attribute_difference": {
+      "position": 0.0,
+      "normal": 0.0,
+      "uv": 0.0,
+      "weights": 0.0,
+      "color": 0.0
+    },
+    "native_structural_audit": "pass",
+    "exact_final_yobj": true,
+    "reference_yobj_sha256": "3927ecbd35d7ec5a18e2b939d80ac575b11994230706974f518ed481a0d83953",
+    "candidate_yobj_sha256": "3927ecbd35d7ec5a18e2b939d80ac575b11994230706974f518ed481a0d83953",
+    "conclusion": "Native byte identity preserves all static and analytical-pose QA inputs; no new geometric/skinning regression.",
+    "pac_bytes": 147456,
+    "exact_final_pac": true,
+    "reference_pac_sha256": "20586817f6f9b65d67d6514508a048b6fa88526f50a36954394438b6b0f58696",
+    "candidate_pac_sha256": "20586817f6f9b65d67d6514508a048b6fa88526f50a36954394438b6b0f58696",
+    "pac_structural_audit": "pass"
+  },
+  {
+    "label": "5.2.2-LTS/jericho-leg",
+    "inputs": {
+      "reference": "15544437953d496313e2e5ad67b1ffa5b93d219414aa52de63828ad865a734aa",
+      "candidate": "15544437953d496313e2e5ad67b1ffa5b93d219414aa52de63828ad865a734aa",
+      "base": "bf935a51fe30bfd2df929f8eb9e50be5d793426ea05125ca9411ce21b19ead80",
+      "textures": "7379e284fccec5f42281b402c75757322d8763196c527ea0dd610baa4e8bcade",
+      "yobj": "38745a7928f48e38af27036d7fd888f076695b98fec3310ac0fa353b0b9e2b19"
+    },
+    "counts": {
+      "meshes": 47,
+      "vertices": 2645,
+      "triangles": 2685,
+      "yobj_bytes": 212304
+    },
+    "exact_json_meshes": true,
+    "equal_attribute_array_shapes": true,
+    "changed_float32_records": {
+      "position": 0,
+      "normal": 0,
+      "uv": 0,
+      "weights": 0,
+      "color": 0
+    },
+    "maximum_python_attribute_difference": {
+      "position": 0.0,
+      "normal": 0.0,
+      "uv": 0.0,
+      "weights": 0.0,
+      "color": 0.0
+    },
+    "native_structural_audit": "pass",
+    "exact_final_yobj": true,
+    "reference_yobj_sha256": "38745a7928f48e38af27036d7fd888f076695b98fec3310ac0fa353b0b9e2b19",
+    "candidate_yobj_sha256": "38745a7928f48e38af27036d7fd888f076695b98fec3310ac0fa353b0b9e2b19",
+    "conclusion": "Native byte identity preserves all static and analytical-pose QA inputs; no new geometric/skinning regression.",
+    "pac_bytes": 147456,
+    "exact_final_pac": true,
+    "reference_pac_sha256": "adfb29b2b4e428d14377d166ab9e4f1ed5e2eb47e209e07740654b356730deda",
+    "candidate_pac_sha256": "adfb29b2b4e428d14377d166ab9e4f1ed5e2eb47e209e07740654b356730deda",
+    "pac_structural_audit": "pass"
+  }
+]

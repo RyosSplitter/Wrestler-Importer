@@ -1,0 +1,47 @@
+{
+  "zip_bytes": 504665468,
+  "expanded_bytes": 935280347,
+  "sha256": "9f9429748771ec96755dcee27179c54ee5a9c6da9cf071a6ed6549c125c33107",
+  "components": {
+    "MANIFEST.json": {
+      "compressed": 230529,
+      "expanded": 656136,
+      "files": 1
+    },
+    "PS2PSP-bpy-Experiment.exe": {
+      "compressed": 14460848,
+      "expanded": 14661905,
+      "files": 1
+    },
+    "README.txt": {
+      "compressed": 656,
+      "expanded": 1134,
+      "files": 1
+    },
+    "RunSelfCheck.cmd": {
+      "compressed": 185,
+      "expanded": 296,
+      "files": 1
+    },
+    "licenses": {
+      "compressed": 244841,
+      "expanded": 689829,
+      "files": 103
+    },
+    "sources": {
+      "compressed": 94080362,
+      "expanded": 94727192,
+      "files": 143
+    },
+    "_internal": {
+      "compressed": 56804568,
+      "expanded": 155567525,
+      "files": 1771
+    },
+    "bpy-runtime": {
+      "compressed": 337536029,
+      "expanded": 668976330,
+      "files": 2772
+    }
+  }
+}

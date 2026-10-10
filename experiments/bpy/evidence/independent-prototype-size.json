@@ -1,0 +1,47 @@
+[
+  {
+    "filename": "PS2PSP-bpy-Experiment-Windows-x64.zip",
+    "zip_bytes": 504665468,
+    "expanded_bytes": 935280347,
+    "files": 4793,
+    "zip_container_overhead_bytes": 1307450,
+    "groups": {
+      "manifest-readme-selfcheck": {
+        "compressed_bytes": 231370,
+        "expanded_bytes": 657566,
+        "files": 3
+      },
+      "launcher": {
+        "compressed_bytes": 14460848,
+        "expanded_bytes": 14661905,
+        "files": 1
+      },
+      "notices": {
+        "compressed_bytes": 244841,
+        "expanded_bytes": 689829,
+        "files": 103
+      },
+      "blender-source": {
+        "compressed_bytes": 93683996,
+        "expanded_bytes": 93671672,
+        "files": 1
+      },
+      "converter-source-docs": {
+        "compressed_bytes": 396366,
+        "expanded_bytes": 1055520,
+        "files": 142
+      },
+      "frozen-app-libraries": {
+        "compressed_bytes": 56804568,
+        "expanded_bytes": 155567525,
+        "files": 1771
+      },
+      "bpy-runtime": {
+        "compressed_bytes": 337536029,
+        "expanded_bytes": 668976330,
+        "files": 2772
+      }
+    },
+    "sha256": "9f9429748771ec96755dcee27179c54ee5a9c6da9cf071a6ed6549c125c33107"
+  }
+]
