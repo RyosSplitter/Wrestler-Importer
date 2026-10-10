@@ -34,10 +34,19 @@ def main():
     if len(sys.argv)>1 and sys.argv[1]=='--qa':
         from model_qa.pipeline import run
         source,pac,output,prepared,reduced,samples,resolution=sys.argv[2:]
-        run(source,pac,output,stages=[dict(label='selective-weight-transfer',path=prepared,space='target'),
-                                     dict(label='guarded-decimation',path=reduced,space='target')],
-            samples=int(samples),resolution=int(resolution),progress=lambda m:print(m,flush=True))
-        return 0
+        # Windowed frozen executables have no Python stdout even when a parent
+        # redirects OS handles. Restore a real log stream; never open a blocking
+        # crash dialog for an isolated background QA failure.
+        if sys.stdout is None:
+            sys.stdout=open(Path(output).parent/'qa.log','a',encoding='utf-8',buffering=1)
+            sys.stderr=sys.stdout
+        try:
+            run(source,pac,output,stages=[dict(label='selective-weight-transfer',path=prepared,space='target'),
+                                         dict(label='guarded-decimation',path=reduced,space='target')],
+                samples=int(samples),resolution=int(resolution),progress=lambda m:print(m,flush=True))
+            return 0
+        except Exception:
+            (Path(output).parent/'qa-error.log').write_text(traceback.format_exc(),encoding='utf-8');return 1
     from desktop.gui import Application
     app=Application()
     if len(sys.argv)>1 and sys.argv[1]=='--smoke-test':

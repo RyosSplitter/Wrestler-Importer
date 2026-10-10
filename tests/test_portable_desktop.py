@@ -38,6 +38,11 @@ class PortableTests(unittest.TestCase):
         rgba=np.array([[[10,20,30,0],[10,20,30,127],[10,20,30,255]]],dtype=np.uint8)
         p,c=palette_rgba(rgba);np.testing.assert_array_equal(c[p],rgba)
 
+    def test_lossless_bpe_budget_optimization(self):
+        from tools.yukes_bpe import compress,decompress
+        raw=vectors()['psp-quad.yobj']*15
+        for symbols in (200,220):self.assertEqual(decompress(compress(raw,max_distinct=symbols)),raw)
+
     def test_preview_uses_final_texture_and_view(self):
         files=vectors();m=audit_yobj(files['psp-quad.yobj'])
         image=np.asarray(render(m,{'skin':files['skin-t4.gim']},'front',96))

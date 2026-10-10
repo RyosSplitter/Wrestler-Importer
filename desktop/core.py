@@ -255,7 +255,17 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
             yobj=serialize(packed,target,entries)
             replacements={2:compress(yobj),9:compress(texture_table(packed['textures'],gims))}
             if decompress(replacements[2])!=yobj:raise ValueError('BPE round trip failed.')
-            candidate=replace_sections(base_bytes,replacements);attempts.append(dict(texture_cap=cap,pac_bytes=len(candidate),free_region_ratios=trial_profile['ratios']))
+            candidate=replace_sections(base_bytes,replacements);symbols=200
+            # Lossless dictionary packing is tried before more geometry loss.
+            # The established compressor/grammar and 4000-byte block cap stay
+            # unchanged; every candidate is independently decoded and compared.
+            if len(candidate)>profile['max_pac_bytes']:
+                check();table=texture_table(packed['textures'],gims)
+                alternate={2:compress(yobj,max_distinct=220),9:compress(table,max_distinct=220)}
+                if decompress(alternate[2])!=yobj or decompress(alternate[9])!=table:raise ValueError('BPE dictionary optimization changed payloads.')
+                smaller_pac=replace_sections(base_bytes,alternate)
+                if len(smaller_pac)<len(candidate):candidate=smaller_pac;symbols=220
+            attempts.append(dict(texture_cap=cap,pac_bytes=len(candidate),free_region_ratios=trial_profile['ratios'],bpe_max_distinct=symbols,bpe_block_cap=4000))
             if len(candidate)<=profile['max_pac_bytes']:break
         if len(candidate)<=profile['max_pac_bytes']:break
     if len(candidate)>profile['max_pac_bytes']:raise ValueError('Preserved geometry/textures exceed the 148000-byte budget. Export withheld; protected anatomy was not reduced to force a fit.')
