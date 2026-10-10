@@ -63,10 +63,21 @@ def main():
         if not app.root.tk.call('info','commands','::tkdnd::drop_target'):raise ValueError('Drag/drop runtime command missing.')
         if app.adaptive_textures.get() is not False:raise ValueError('Experimental adaptive checkbox must default OFF.')
         if app.adaptive_checkbox.cget('text')!='Adaptive Texture Optimization (Experimental)':raise ValueError('Adaptive checkbox label is incorrect.')
+        if app.convert.winfo_rooty()+app.convert.winfo_height()>app.preview.winfo_rooty():raise ValueError('Convert must be above the preview.')
+        if app.convert.winfo_rootx()<app.preview.winfo_rootx():raise ValueError('Convert must be in the preview column.')
+        if 'disabled' not in app.cancel.state() or 'disabled' not in app.save.state():raise ValueError('Cancel and Save must start disabled.')
+        if sys.platform=='win32' and app.ui_theme!='vista':raise ValueError('Native Windows control theme missing.')
         from desktop.preview import VIEWS
         dump(sys.argv[2],dict(gui=True,drag_drop_command_verified=True,source_menu_states=states,
                               bundled_blender=version.splitlines()[0],preview_views=list(VIEWS),base_required=True,
-                              adaptive_textures_default=False,adaptive_checkbox_verified=True))
+                              adaptive_textures_default=False,adaptive_checkbox_verified=True,
+                              ui_theme=app.ui_theme,convert_above_preview=True,
+                              initial_button_states_verified=True))
+        if sys.platform=='win32':
+            from PIL import ImageGrab
+            app.root.lift();app.root.update()
+            x,y=app.root.winfo_rootx(),app.root.winfo_rooty()
+            ImageGrab.grab(bbox=(x,y,x+app.root.winfo_width(),y+app.root.winfo_height())).save(Path(sys.argv[2]).with_suffix('.png'))
         app.root.destroy();return 0
     app.root.mainloop();return 0
 

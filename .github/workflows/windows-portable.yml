@@ -47,6 +47,7 @@ jobs:
           $p = Start-Process dist/PS2PSP-Pac-Converter/PS2PSP-Pac-Converter.exe -ArgumentList @('--smoke-test',$output) -PassThru -Wait
           if ($p.ExitCode -ne 0) { throw 'Frozen GUI/runtime smoke test failed' }
           Get-Content $output
+          Copy-Item ([System.IO.Path]::ChangeExtension($output,'png')) dist/PS2PSP-converter-preview.png
       - name: Frozen conversion, QA and textured previews including multi-YOBJ source
         timeout-minutes: 25
         shell: pwsh
@@ -130,6 +131,7 @@ jobs:
           path: |
             dist/*.zip
             dist/*.sha256
+            dist/*.png
       - name: Publish isolated preview build
         shell: pwsh
         env:
@@ -137,6 +139,6 @@ jobs:
         run: |
           $tag = "portable-preview-${{ github.run_number }}-${{ github.sha }}"
           @'
-          Portable Windows x64 experimental preview. v0.25 adds Adaptive Texture Optimization (Experimental), OFF by default. The unchanged current converter creates the baseline; the opt-in modular analyzer then evaluates source-bounded proportional dimensions and useful color counts, alpha/UV occupancy, detail coverage, actual reduction losses and measured PAC marginal benefit per byte. Only compatible existing material depths are eligible. YOBJ model, geometry, rigging, weights, UVs, normals and material payloads stay exact; retained effect tables may use lossless BPE storage. Native checks and QA still run. Diagnostics and A/B texture comparisons accompany each successful adaptive job. The 148000-byte cap and baseline padded-pixel/CLUT envelope are enforced, but actual runtime memory/gameplay remains unverified. Requires your own supported PSP base. Includes bundled Blender, sources and notices, no game assets. Preserves independent supported elbow-pad models and the legacy size-fitting process. No changes merged into main. See repository docs/portable-adaptive-textures.md for scoring, measured wrestler comparisons and limitations.
+          Portable Windows x64 experimental preview. v0.25 now has a compact Windows 7-style light interface, native Windows controls and Convert/Cancel directly above the preview. The included PNG is an actual packaged Windows UI capture. This is a visual style, not Windows 7 operating-system support; use Windows 10/11 x64. Conversion behavior is unchanged. Adaptive Texture Optimization (Experimental) remains OFF by default. The unchanged current converter creates the baseline; the opt-in modular analyzer then evaluates source-bounded proportional dimensions and useful color counts, alpha/UV occupancy, detail coverage, actual reduction losses and measured PAC marginal benefit per byte. Only compatible existing material depths are eligible. YOBJ model, geometry, rigging, weights, UVs, normals and material payloads stay exact; retained effect tables may use lossless BPE storage. Native checks and QA still run. Diagnostics and A/B texture comparisons accompany each successful adaptive job. The 148000-byte cap and baseline padded-pixel/CLUT envelope are enforced, but actual runtime memory/gameplay remains unverified. Requires your own supported PSP base. Includes bundled Blender, sources and notices, no game assets. Preserves independent supported elbow-pad models and the legacy size-fitting process. No changes merged into main. See repository docs/portable-adaptive-textures.md for scoring, measured wrestler comparisons and limitations.
           '@ | Set-Content "$env:RUNNER_TEMP/release-notes.txt" -Encoding utf8NoBOM
-          gh release create $tag dist/*.zip dist/*.sha256 --target '${{ github.sha }}' --prerelease --title 'PS2PSP Pac Converter by RyosPrime — Windows preview' --notes-file "$env:RUNNER_TEMP/release-notes.txt"
+          gh release create $tag dist/*.zip dist/*.sha256 dist/*.png --target '${{ github.sha }}' --prerelease --title 'PS2PSP v0.25 — Windows 7-style preview' --notes-file "$env:RUNNER_TEMP/release-notes.txt"

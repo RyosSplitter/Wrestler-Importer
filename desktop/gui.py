@@ -14,69 +14,109 @@ from desktop import NAME,VERSION
 from desktop.adapters import FORMATS
 from desktop.storage import data_dir,load_settings,save_settings,save_as
 
-BG='#111113';PANEL='#1b1b1f';FG='#f2f2f3';MUTED='#a5a5af';RED='#d72d40'
+BG='#f0f0f0';PANEL='#e3e5e8';FG='#202020';MUTED='#606060'
 
 class Application:
     def __init__(self):
         from tkinterdnd2 import TkinterDnD,DND_FILES
         self.root=TkinterDnD.Tk();self.drag_drop=True
-        self.root.title(NAME);self.root.configure(bg=BG);self.root.geometry('1140x820');self.root.minsize(970,730)
+        self.root.title(NAME);self.root.configure(bg=BG);self.root.geometry('1040x720');self.root.minsize(940,640)
         self.settings=load_settings();self.source=None;self.process=None;self.result=None;self.saved=None;self.closing=False
         self.inspector=None;self.inspect_root=None;self.view='front-left';self.zoom='full';self.photo=None
         self.base=tk.StringVar(value=self.settings.get('base',''));self.status=tk.StringVar(value='Choose your PSP base once, then drop an HCTP PAC.')
         # Session-only and deliberately OFF, even when an earlier job enabled it.
         self.adaptive_textures=tk.BooleanVar(value=False)
         self.info=tk.StringVar(value='No source selected');self.output=tk.StringVar(value='Your converted PSP output will appear here.')
-        style=ttk.Style(self.root);style.theme_use('clam');style.configure('TProgressbar',troughcolor=PANEL,background=RED,bordercolor=PANEL)
-        title=tk.Frame(self.root,bg=BG);title.pack(fill='x',padx=28,pady=(23,20))
-        tk.Label(title,text='PS2PSP',font=('Segoe UI',25,'bold'),fg=FG,bg=BG).pack(side='left')
-        tk.Label(title,text='PAC CONVERTER  /  by RyosPrime',font=('Segoe UI',11),fg=MUTED,bg=BG).pack(side='left',padx=18)
-        tk.Label(title,text='HCTP PREVIEW',font=('Segoe UI',10,'bold'),fg=RED,bg=BG).pack(side='right')
-        body=tk.Frame(self.root,bg=BG);body.pack(fill='both',expand=True,padx=28)
-        left=tk.Frame(body,bg=BG,width=370);left.pack(side='left',fill='y',padx=(0,24));left.pack_propagate(False)
-        right=tk.Frame(body,bg=BG);right.pack(side='left',fill='both',expand=True)
-        self.label(left,'SOURCE CONTAINER')
-        menu=tk.Menubutton(left,text=FORMATS[2].label+'  ▾',bg=PANEL,fg=FG,font=('Segoe UI',10),padx=12,pady=12,anchor='w',relief='flat')
-        choices=tk.Menu(menu,tearoff=False,bg=PANEL,fg=FG,disabledforeground='#65656d')
+        # Vista is Tk's native Windows 7-era control theme. Keep native button,
+        # checkbox, focus and disabled rendering; use a light fallback elsewhere.
+        style=ttk.Style(self.root)
+        style.theme_use('vista' if 'vista' in style.theme_names() else 'clam')
+        self.ui_theme=style.theme_use()
+        self.root.option_add('*Font',('Segoe UI',9))
+        style.configure('.',font=('Segoe UI',9))
+        style.configure('TFrame',background=BG)
+        style.configure('TLabel',background=BG,foreground=FG)
+        style.configure('TLabelframe',background=BG)
+        style.configure('TLabelframe.Label',background=BG,foreground=FG)
+        style.configure('Muted.TLabel',foreground=MUTED)
+        style.configure('TButton',padding=(8,3))
+        if self.ui_theme!='vista':
+            style.configure('TButton',background='#f5f5f5',bordercolor='#a0a0a0',lightcolor='#ffffff',darkcolor='#cccccc')
+            style.map('TButton',background=[('pressed','#dce9f5'),('active','#edf5fc')])
+            style.configure('TCheckbutton',background=BG,foreground=FG)
+            style.configure('TMenubutton',background='#f5f5f5',foreground=FG,padding=(6,3))
+            style.configure('TProgressbar',troughcolor='#ffffff',background='#52a651')
+
+        header=ttk.Frame(self.root,padding=(12,10,12,6));header.pack(fill='x')
+        ttk.Label(header,text='PS2PSP PAC Converter',font=('Segoe UI',12)).pack(side='left')
+        ttk.Label(header,text='by RyosPrime',style='Muted.TLabel').pack(side='left',padx=10)
+        ttk.Label(header,text='v'+VERSION,style='Muted.TLabel').pack(side='right')
+        ttk.Separator(self.root).pack(fill='x',padx=12)
+
+        # Reserve the status bar before the expanding body so it remains visible
+        # at the minimum window size and at enlarged Windows text scales.
+        footer=ttk.Frame(self.root,padding=(12,6,12,10));footer.pack(side='bottom',fill='x')
+        self.progress=ttk.Progressbar(footer,maximum=100);self.progress.pack(fill='x',pady=(0,6))
+        status_row=ttk.Frame(footer);status_row.pack(fill='x')
+        self.button(status_row,'Logs',self.open_logs).pack(side='right',padx=(8,0))
+        self.status_label=ttk.Label(status_row,textvariable=self.status,style='Muted.TLabel',wraplength=850)
+        self.status_label.pack(side='left',fill='x',expand=True)
+        status_row.bind('<Configure>',lambda e:self.status_label.configure(wraplength=max(200,e.width-90)))
+
+        body=ttk.Frame(self.root,padding=(12,10,12,0));body.pack(fill='both',expand=True)
+        left=ttk.Frame(body,width=340);left.pack(side='left',fill='y',padx=(0,12));left.pack_propagate(False)
+        right=ttk.Frame(body);right.pack(side='left',fill='both',expand=True)
+        source_group=ttk.LabelFrame(left,text='Source PAC',padding=10);source_group.pack(fill='x')
+        menu=ttk.Menubutton(source_group,text=FORMATS[2].label)
+        choices=tk.Menu(menu,tearoff=False)
         for item in FORMATS:choices.add_command(label=item.label+(' — Coming soon' if not item.supported else ''),state='normal' if item.supported else 'disabled')
-        menu.configure(menu=choices);menu.pack(fill='x',pady=(8,20))
+        menu.configure(menu=choices);menu.pack(fill='x',pady=(0,10))
         self.source_menu=choices
-        self.drop=tk.Label(left,text='Drop an HCTP .pac here\n\nor click to browse',bg=PANEL,fg=FG,font=('Segoe UI',13),height=5,cursor='hand2',highlightbackground='#3a3a42',highlightthickness=1)
+        self.drop=tk.Label(source_group,text='Drop an HCTP .pac here\nor click to browse',bg='#ffffff',fg=MUTED,
+            height=5,cursor='hand2',relief='sunken',borderwidth=1,wraplength=290)
         self.drop.pack(fill='x');self.drop.bind('<Button-1>',lambda e:self.browse_source());self.drop.drop_target_register(DND_FILES)
         self.drop.dnd_bind('<<Drop>>',self.dropped)
-        tk.Label(left,textvariable=self.info,bg=BG,fg=MUTED,font=('Segoe UI',10),wraplength=365,justify='left').pack(fill='x',pady=(12,22))
-        self.label(left,'YOUR PSP BASE  /  remembered locally')
-        tk.Label(left,textvariable=self.base,bg=BG,fg=MUTED,font=('Segoe UI',9),wraplength=365,justify='left').pack(fill='x',pady=8)
-        self.base_button=self.button(left,'Choose PSP base PAC',self.choose_base);self.base_button.pack(fill='x')
-        self.adaptive_checkbox=tk.Checkbutton(left,text='Adaptive Texture Optimization (Experimental)',
-            variable=self.adaptive_textures,bg=BG,fg=FG,selectcolor=PANEL,activebackground=BG,
-            activeforeground=FG,font=('Segoe UI',9),anchor='w',wraplength=345)
-        self.adaptive_checkbox.pack(fill='x',pady=(12,0))
-        tk.Label(left,text='Target: SVR 2011 PSP\nCompatible custom HCTP containers accepted.\nOther PS2 formats are coming soon.',bg=BG,fg=MUTED,font=('Segoe UI',10),justify='left').pack(fill='x',pady=20)
-        conversion_actions=tk.Frame(left,bg=BG);conversion_actions.pack(fill='x',pady=6)
-        self.convert=self.button(conversion_actions,'Convert',self.start,primary=True);self.convert.pack(side='left',fill='x',expand=True,padx=(0,8))
-        self.cancel=self.button(conversion_actions,'Cancel',self.cancel_job);self.cancel.pack(side='left',fill='x',expand=True);self.cancel.configure(state='disabled')
-        self.label(right,'FINAL PSP OUTPUT  /  textured offline preview')
-        self.preview=tk.Label(right,text='Convert a model to preview the PSP output',bg=PANEL,fg=MUTED,font=('Segoe UI',12),cursor='hand2')
-        self.preview.pack(fill='both',expand=True,pady=(8,12));self.preview.bind('<Configure>',lambda e:self.show_preview());self.preview.bind('<Button-1>',lambda e:self.enlarge())
-        controls=tk.Frame(right,bg=BG);controls.pack(fill='x')
+        ttk.Label(source_group,textvariable=self.info,style='Muted.TLabel',wraplength=310,justify='left').pack(fill='x',pady=(8,0))
+        base_group=ttk.LabelFrame(left,text='PSP base PAC',padding=10);base_group.pack(fill='x',pady=(10,0))
+        ttk.Label(base_group,textvariable=self.base,wraplength=310,justify='left').pack(fill='x',pady=(0,8))
+        self.base_button=self.button(base_group,'Choose PSP base PAC...',self.choose_base);self.base_button.pack(fill='x')
+        ttk.Label(base_group,text='Remembered on this computer.',style='Muted.TLabel').pack(anchor='w',pady=(6,0))
+        options=ttk.LabelFrame(left,text='Options',padding=10);options.pack(fill='x',pady=(10,0))
+        # The wrapped classic checkbox retains the exact option label and keeps
+        # it readable at larger system font scales without clipping the sidebar.
+        self.adaptive_checkbox=tk.Checkbutton(options,text='Adaptive Texture Optimization (Experimental)',
+            variable=self.adaptive_textures,bg=BG,fg=FG,selectcolor='#ffffff',activebackground=BG,
+            activeforeground=FG,anchor='w',justify='left',wraplength=280)
+        self.adaptive_checkbox.pack(fill='x')
+        ttk.Label(left,text='Target: SVR 2011 PSP\nHCTP and compatible custom PACs supported.',
+            style='Muted.TLabel',wraplength=330,justify='left').pack(fill='x',pady=12)
+
+        preview_group=ttk.LabelFrame(right,text='PSP preview',padding=8);preview_group.pack(fill='both',expand=True)
+        conversion_actions=ttk.Frame(preview_group);conversion_actions.pack(fill='x',pady=(0,8))
+        self.convert=self.button(conversion_actions,'Convert',self.start,primary=True);self.convert.pack(side='left',padx=(0,6))
+        self.cancel=self.button(conversion_actions,'Cancel',self.cancel_job);self.cancel.pack(side='left');self.cancel.configure(state='disabled')
+        ttk.Label(conversion_actions,text='Textured preview',style='Muted.TLabel').pack(side='right')
+        # Pack the fixed view controls first so the preview receives only the
+        # remaining space, keeping buttons accessible when the window shrinks.
+        controls=ttk.Frame(preview_group);controls.pack(side='bottom',fill='x',pady=(8,0))
         for label,view in (('¾','front-left'),('Front','front'),('Rear','back'),('Left','left'),('Right','right')):
-            self.button(controls,label,lambda v=view:self.set_view(v)).pack(side='left',padx=(0,5))
+            self.button(controls,label,lambda v=view:self.set_view(v)).pack(side='left',padx=(0,4))
         self.button(controls,'Zoom',self.toggle_zoom).pack(side='right')
-        tk.Label(right,textvariable=self.output,bg=BG,fg=MUTED,font=('Segoe UI',10),wraplength=670,justify='left').pack(fill='x',pady=12)
-        actions=tk.Frame(right,bg=BG);actions.pack(fill='x')
-        self.save=self.button(actions,'Save PAC As…',self.export,primary=True);self.save.pack(side='left');self.save.configure(state='disabled')
-        self.button(actions,'QA report',self.open_report).pack(side='left',padx=10)
-        self.button(actions,'Open Folder',self.open_folder).pack(side='left')
-        footer=tk.Frame(self.root,bg=BG);footer.pack(fill='x',padx=28,pady=(18,24))
-        self.progress=ttk.Progressbar(footer,maximum=100);self.progress.pack(fill='x')
-        tk.Label(footer,textvariable=self.status,bg=BG,fg=MUTED,font=('Segoe UI',10),anchor='w',wraplength=1060).pack(fill='x',pady=(10,0))
-        self.button(footer,'Logs',self.open_logs).pack(side='right',pady=6)
+        self.preview=tk.Label(preview_group,text='Convert a model to preview the PSP output',bg=PANEL,fg=MUTED,
+            cursor='hand2',relief='sunken',borderwidth=1)
+        self.preview.pack(fill='both',expand=True);self.preview.bind('<Configure>',lambda e:self.show_preview());self.preview.bind('<Button-1>',lambda e:self.enlarge())
+        actions=ttk.Frame(right);actions.pack(side='bottom',fill='x',pady=(4,6))
+        self.save=self.button(actions,'Save PAC As...',self.export);self.save.pack(side='left');self.save.configure(state='disabled')
+        self.button(actions,'QA report',self.open_report).pack(side='left',padx=6)
+        self.button(actions,'Open folder',self.open_folder).pack(side='left')
+        self.output_label=ttk.Label(right,textvariable=self.output,style='Muted.TLabel',wraplength=630,justify='left')
+        self.output_label.pack(side='bottom',fill='x',pady=(8,4))
+        right.bind('<Configure>',lambda e:self.output_label.configure(wraplength=max(200,e.width)))
         self.root.protocol('WM_DELETE_WINDOW',self.close);self.root.after(200,self.poll)
 
-    def label(self,parent,text):tk.Label(parent,text=text,bg=BG,fg=MUTED,font=('Segoe UI',9,'bold'),anchor='w').pack(fill='x')
     def button(self,parent,text,command,primary=False):
-        return tk.Button(parent,text=text,command=command,bg=RED if primary else PANEL,fg=FG,activebackground='#9b2532' if primary else '#34343a',activeforeground=FG,relief='flat',borderwidth=0,padx=14,pady=10,font=('Segoe UI',10,'bold' if primary else 'normal'),cursor='hand2',disabledforeground='#68686e')
+        return ttk.Button(parent,text=text,command=command,width=max(5,len(text)+2),
+            default='active' if primary else 'normal')
     def entry(self):return [sys.executable] if getattr(sys,'frozen',False) else [sys.executable,str(Path(__file__).resolve().parents[1]/'ps2psp_converter.py')]
     def spawn(self,args):return subprocess.Popen(self.entry()+args,creationflags=0x08000000 if os.name=='nt' else 0)
     def busy(self):return self.process is not None
