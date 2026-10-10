@@ -1,6 +1,20 @@
 HCTP -> PSP REIMPLEMENTATION GUIDE
 ================================
 
+CONFIRMED — 2026-10-10 optional texture experiment:
+Read docs/portable-adaptive-textures.md and portable-adaptive-texture-results.md
+for the separate v0.25 content-aware analyzer/allocator and five-model A/B trials.
+The current generator remains unchanged and the new checkbox defaults OFF. Freeze
+all YOBJ/model/material bytes; infer eligible indexed depth from their existing
+rendering contract. Generate source-bounded useful-color/dimension candidates,
+use verified UV/alpha occupancy and combined detail/perceptual losses, then choose
+marginal upgrades by measured padded PAC cost. Validate final serialized size and
+the independent baseline pixel/CLUT envelope. Lossless retained GIM-table storage
+is permitted only with decoded equality. Native layout observations are not hard
+loader limits. All new combined candidates require gameplay testing; no accepted
+PAC or main branch was replaced. Documented metric failures and incumbent rules
+are necessary to reproduce this policy without relying on conversation history.
+
 CONFIRMED — 2026-10-10 independent accessory experiment:
 Read docs/portable-multi-model.md for the uploaded Rock comparison. Main-model
 selection does not imply accessory conversion: enumerate every top-level YOBJ,

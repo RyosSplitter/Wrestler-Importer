@@ -64,6 +64,29 @@ class AdaptiveTextureTests(unittest.TestCase):
         row=encode(image(32,32),(32,32),4,16)
         with self.assertRaises(ValueError):read_gim(row['raw'][:-1])
 
+    def test_indexed8_unobserved_layout_is_not_generated(self):
+        with self.assertRaisesRegex(ValueError,'not observed'):encode(image(256,256),(256,256),8,256)
+
+    def test_gim_end_pointer_is_checked(self):
+        import struct
+        row=encode(image(32,32),(32,32),4,16);raw=bytearray(row['raw'])
+        struct.pack_into('<I',raw,96,123)
+        with self.assertRaisesRegex(ValueError,'pointer'):read_gim(raw)
+
+    def test_unobserved_exact_incumbent_is_retained_not_regenerated(self):
+        from experiments.texture_quality.frozen import FrozenPac
+        from tools.texture_convert import read_gim as legacy_read,write_gim8
+        f=vectors();p,c=legacy_read(f['skin-t4.gim']);p=np.resize(p,(16,32)).astype(np.uint8)
+        palette=np.zeros((256,4),np.uint8);palette[:16]=c
+        palette[int(p[0,0]),3]=0 # cutout alpha makes source-sized retention mandatory
+        baseline,_=FrozenPac(f['psp-quad.pac']).build({'skin':write_gim8(p,palette)})
+        source=palette[p]
+        with tempfile.TemporaryDirectory() as t:
+            data,r=optimize_pac(baseline,[(0,'skin',b'',source,{})],t)
+            selected=r['textures'][0]['selected_configuration']
+            self.assertEqual((selected['width'],selected['height']),(32,16))
+            self.assertFalse(selected['native_corpus_layout_observed'])
+
     def test_alpha_exact_visible_rgb_and_transparent_padding(self):
         a=np.zeros((32,32,4),np.uint8);a[8:24,8:24]=[70,10,90,127];a[12:20,12:20]=[90,30,10,255]
         a[:8,:,:3]=image(32,8)[:,:,:3] # invisible colors do not require palette capacity

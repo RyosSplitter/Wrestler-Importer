@@ -90,7 +90,7 @@ the analyzer and explicitly remains a heuristic, not a trained perceptual model.
 dimension reductions are proportional and within the native whitelist.
 Rectangular images remain rectangular. A baseline image is additionally retained
 as an explicitly labeled incumbent if it already obeys source dimensions/colors,
-the native layout and alpha safeguards. Such an incumbent can have anisotropic
+the established rendering layout and alpha safeguards. Such an incumbent can have anisotropic
 sampling; normalized UVs and its pixels are left intact. An optimizer should not
 discard a good legal existing representation just because its pixel aspect differs
 from source. Upscaled legacy maps and alpha-flattened maps are not eligible.
@@ -171,6 +171,10 @@ factor saving 3,062 bytes without changing blood pixels or model data. Actual
 gameplay of a newly combined candidate still needs testing.
 
 ## Reports, failures and reproduction
+
+See [final five-model results and downloads](portable-adaptive-texture-results.md)
+for per-texture comparisons, serialized allocations, Windows validation and the
+failure history. Those final hashes identify the downloadable test candidates.
 
 Each successful job links `adaptive-textures/report.html` from the ordinary QA
 report. `report.json` includes source dimensions/actual colors/source formats,
