@@ -19,13 +19,19 @@
           "texture_cap": 64,
           "pac_bytes": 137216,
           "free_region_ratios": {
-            "Head": 0.8,
+            "Head": 0.6847290640394089,
             "Torso": 0.65,
             "Arms": 0.8,
             "Legs": 0.65
           },
           "bpe_max_distinct": 200,
-          "bpe_block_cap": 4000
+          "bpe_block_cap": 4000,
+          "complete_head_minimum_ratio": 0.8,
+          "complete_head_triangles": {
+            "original": 963,
+            "protected": 354,
+            "final": 773
+          }
         }
       ],
       "label": "Lance",
@@ -68,25 +74,37 @@
           "texture_cap": 64,
           "pac_bytes": 153600,
           "free_region_ratios": {
-            "Head": 0.8,
+            "Head": 0.6390728476821192,
             "Torso": 0.65,
             "Arms": 0.8,
             "Legs": 0.65
           },
           "bpe_max_distinct": 200,
-          "bpe_block_cap": 4000
+          "bpe_block_cap": 4000,
+          "complete_head_minimum_ratio": 0.8,
+          "complete_head_triangles": {
+            "original": 1093,
+            "protected": 489,
+            "final": 875
+          }
         },
         {
           "texture_cap": 32,
           "pac_bytes": 147456,
           "free_region_ratios": {
-            "Head": 0.8,
+            "Head": 0.6390728476821192,
             "Torso": 0.65,
             "Arms": 0.8,
             "Legs": 0.65
           },
           "bpe_max_distinct": 220,
-          "bpe_block_cap": 4000
+          "bpe_block_cap": 4000,
+          "complete_head_minimum_ratio": 0.8,
+          "complete_head_triangles": {
+            "original": 1093,
+            "protected": 489,
+            "final": 875
+          }
         }
       ],
       "label": "Jericho",
@@ -129,37 +147,55 @@
           "texture_cap": 64,
           "pac_bytes": 153600,
           "free_region_ratios": {
-            "Head": 0.8,
+            "Head": 0.69558599695586,
             "Torso": 0.65,
             "Arms": 0.8,
             "Legs": 0.65
           },
           "bpe_max_distinct": 220,
-          "bpe_block_cap": 4000
+          "bpe_block_cap": 4000,
+          "complete_head_minimum_ratio": 0.8,
+          "complete_head_triangles": {
+            "original": 1003,
+            "protected": 346,
+            "final": 803
+          }
         },
         {
           "texture_cap": 32,
           "pac_bytes": 151552,
           "free_region_ratios": {
-            "Head": 0.8,
+            "Head": 0.69558599695586,
             "Torso": 0.65,
             "Arms": 0.8,
             "Legs": 0.65
           },
           "bpe_max_distinct": 200,
-          "bpe_block_cap": 4000
+          "bpe_block_cap": 4000,
+          "complete_head_minimum_ratio": 0.8,
+          "complete_head_triangles": {
+            "original": 1003,
+            "protected": 346,
+            "final": 803
+          }
         },
         {
           "texture_cap": 64,
           "pac_bytes": 147456,
           "free_region_ratios": {
-            "Head": 0.8,
+            "Head": 0.69558599695586,
             "Torso": 0.65,
             "Arms": 0.5,
             "Legs": 0.5
           },
           "bpe_max_distinct": 200,
-          "bpe_block_cap": 4000
+          "bpe_block_cap": 4000,
+          "complete_head_minimum_ratio": 0.8,
+          "complete_head_triangles": {
+            "original": 1003,
+            "protected": 346,
+            "final": 803
+          }
         }
       ],
       "label": "Additional HCTP 2800",
@@ -210,5 +246,37 @@
       },
       "game_validation": "not run on these newly generated artifacts"
     }
-  ]
+  ],
+  "cloud_setup": {
+    "dependencies": "installed and refreshed",
+    "gui_restart_smoke": "passed on newly started Xvfb display",
+    "configuration": "install_script and start_skill saved as draft; publication not established"
+  },
+  "windows_package": {
+    "source_commit": "ad2f9d3e507b657d5d7a5d8d1995df4c892f4ae1",
+    "workflow": "https://github.com/RyosSplitter/Wrestler-Importer/actions/runs/38023193460",
+    "result": "passed",
+    "tests": 171,
+    "packaged_gui": "passed",
+    "bundled_blender": "4.3.2",
+    "packaged_full_conversions": [
+      "modified HCTP Lance",
+      "modified HCTP Jericho"
+    ],
+    "developer_PATH": "only Windows and System32 retained",
+    "pristine_windows_10_11_vm": "not run; hosted runner contains developer tools outside PATH",
+    "network_disconnected_windows_trial": "not run; conversion code has no network calls",
+    "release": "https://github.com/RyosSplitter/Wrestler-Importer/releases/tag/portable-preview-7-ad2f9d3e507b657d5d7a5d8d1995df4c892f4ae1",
+    "artifact_audit": {
+      "bytes": 556352052,
+      "sha256": "80823d0f6b57b756d5bf370f5649421b3816bb76ce1d1079632ecf6b569f89c2",
+      "manifest_files_verified": 7070,
+      "additional_generated_python_caches": 265,
+      "license_files": 83,
+      "game_assets": 0,
+      "crt_bundled": true,
+      "essential_files_present": true
+    },
+    "manifest_scope": "Build-time source/runtime files; additional Python caches were generated by the packaged tests. ZIP SHA-256 covers the complete release."
+  }
 }
