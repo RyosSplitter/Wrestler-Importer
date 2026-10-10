@@ -68,6 +68,7 @@ jobs:
           import os,json,subprocess,zipfile,hashlib
           from pathlib import Path
           from tools.build_portable import download
+          from experiments.bpy.compare import compare
           archive=Path('build/blender-4.3.2-windows-x64.zip');checks=Path('build/blender-4.3.2.sha256')
           download('https://download.blender.org/release/Blender4.3/'+checks.name,checks)
           download('https://download.blender.org/release/Blender4.3/'+archive.name,archive)
@@ -81,10 +82,9 @@ jobs:
               profile=next(p for p in work.glob('profile-*.json') if json.loads(p.read_text())['ratios']['Arms']==selected['free_region_ratios']['Arms'])
               out=work/'reference-blender.json'
               subprocess.run(['build/bpy-baseline/blender-4.3.2-windows-x64/blender.exe','--background','--factory-startup','--python-exit-code','1','--python','desktop/geometry_worker.py','--',str(work/'prepared.json'),str(out),str(profile)],check=True)
-              a=json.loads(out.read_text());b=json.loads((work/'reduced.json').read_text())
-              equal=a['meshes']==b['meshes']
-              rows.append(dict(model=name,exact_mesh_attributes_and_topology=equal,triangles=b['triangle_count'],vertices=b['vertex_count'],qa=json.loads((work/'result.json').read_text())))
-              if not equal: raise ValueError('::error::Windows geometry regression differs: '+name)
+              comparison=compare(dict(label=name,reference=str(out),candidate=str(work/'reduced.json'),base='assets/Kurt-Angle-Ring.PAC',textures=str(work/('textures-'+str(selected['texture_cap']))/'textures.json'),yobj=str(work/'preview/output.yobj')))
+              comparison['qa']=json.loads((work/'result.json').read_text());rows.append(comparison)
+              if not comparison['exact_final_yobj']: raise ValueError('::error::Windows native output regression differs: '+name)
           Path('build/bpy-windows-results.json').write_text(json.dumps(rows,indent=2))
           print(json.dumps(rows,indent=2))
       - name: Size, checksums and archive
