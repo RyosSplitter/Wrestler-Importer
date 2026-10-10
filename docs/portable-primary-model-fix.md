@@ -104,6 +104,15 @@ single-model fixture and requires identical output, in addition to the existing
 frozen UI/runtime, Lance/Jericho conversions, native checks and complete QA.
 Actual build outcomes are recorded in the GitHub Actions run for the release.
 
+**CONFIRMED:** [Windows run 38043212061](https://github.com/RyosSplitter/Wrestler-Importer/actions/runs/38043212061)
+completed successfully: all 177 tests, frozen GUI/runtime startup, three complete
+frozen conversions with QA, and byte-identical single/multi-model output passed.
+The published ZIP was independently downloaded and its checksum verified;
+updated source and runtime reader copies match the committed fix. See the
+[release verification record](portable-primary-model-release.json) for the
+download URL, SHA-256 and actual packaged sizes. Main and experiment branches
+were not merged.
+
 ```text
 python -m unittest tests.test_main_model_selection -v
 python -m tools.ci_tests

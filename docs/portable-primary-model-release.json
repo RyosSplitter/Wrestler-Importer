@@ -1,0 +1,17 @@
+{
+  "release_tag": "portable-preview-8-bab9752f148b3d20bd63a462c7bc5dfffeb7401f",
+  "release_url": "https://github.com/RyosSplitter/Wrestler-Importer/releases/tag/portable-preview-8-bab9752f148b3d20bd63a462c7bc5dfffeb7401f",
+  "download_url": "https://github.com/RyosSplitter/Wrestler-Importer/releases/download/portable-preview-8-bab9752f148b3d20bd63a462c7bc5dfffeb7401f/PS2PSP-Pac-Converter-Windows-x64.zip",
+  "sha256": "0b95574fc751762c524c6e37829bea947f3cbfda78c36cf13a0574555f661056",
+  "zip_bytes": 556358189,
+  "expanded_bytes": 1276321773,
+  "checked_updated_source_and_runtime_files": true,
+  "no_game_model_assets": true,
+  "windows_actions_run": "https://github.com/RyosSplitter/Wrestler-Importer/actions/runs/38043212061",
+  "windows_tests": [
+    "177 repository tests",
+    "Frozen GUI/drag-drop and Blender startup",
+    "Full Lance/Jericho/LanceMulti conversion and QA",
+    "Byte-identical main-only and auxiliary-model PSP output"
+  ]
+}
