@@ -1,0 +1,11 @@
+{
+  "id": "hctp-selective-guards-preview-v1",
+  "status": "Experimental generalization of validated source-shape and selective facial policies; gameplay validation required",
+  "ratios": {"Head": 0.8, "Torso": 0.65, "Arms": 0.8, "Legs": 0.65},
+  "protect_torso_and_pelvis": true,
+  "protect_material_boundaries": true,
+  "protect_ocular_surfaces": true,
+  "max_pac_bytes": 148000,
+  "qa_samples": 24000,
+  "qa_resolution": 320
+}

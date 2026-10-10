@@ -1,0 +1,3 @@
+-r requirements-qa.txt
+tkinterdnd2==0.4.3
+pyinstaller==6.16.0

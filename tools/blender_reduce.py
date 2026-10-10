@@ -10,7 +10,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from region_mesh import DETAIL_TEXTURES, RATIOS, make_regions, smooth_normals
 
 
-def reduce(source, ratio, detail_profile=False, regional=False, preserved_regions=()):
+def reduce(source, ratio, detail_profile=False, regional=False, preserved_regions=(), retention_reserve=None):
     if not 0 < ratio <= 1:
         raise ValueError('Reduction ratio must be between zero and one')
     bpy.ops.wm.read_factory_settings(use_empty=True)
@@ -106,7 +106,7 @@ def reduce(source, ratio, detail_profile=False, regional=False, preserved_region
         if regional:
             # Collapse removes adjacent faces together; Blender can undershoot
             # the ratio by a face. Evaluate before applying and enforce the floor.
-            minimum = math.ceil(len(original_faces) * RATIOS[entry['region']])
+            minimum = math.ceil(len(original_faces) * RATIOS[entry['region']]) + (retention_reserve or {}).get(entry['region'],0)
             while True:
                 bpy.context.view_layer.update()
                 evaluated = obj.evaluated_get(bpy.context.evaluated_depsgraph_get())
