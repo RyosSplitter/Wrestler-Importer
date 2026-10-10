@@ -4,7 +4,7 @@ import struct
 
 
 def model():
-    names = [('koshi', -1), ('atama', 0), ('l_ninoude', 0), ('l_momo', 0),
+    names = [('koshi', -1), ('atama', 0), ('l_sakotsu', 0), ('l_momo', 0),
              ('l_eye', 1), ('r_eye', 1), ('l_mabuta', 1), ('r_mabuta', 1), ('d_kuchi', 1)]
     bones = [dict(index=i, name=n, parent=p, local_position=[0, 0, 0], rotation=[0, 0, 0])
              for i, (n, p) in enumerate(names)]

@@ -28,7 +28,8 @@ jobs:
           Get-Content "$env:RUNNER_TEMP\bpy-self-check.json"
           if ($LASTEXITCODE -ne 0) {
             Get-Content "$env:RUNNER_TEMP\bpy-self-check.log"
-            Write-Output '::error::Frozen standalone bpy self-check failed; see JSON in this step.'
+            $detail = (Get-Content "$env:RUNNER_TEMP\bpy-self-check.json" -Raw).Replace('%','%25').Replace("`r",'%0D').Replace("`n",'%0A')
+            Write-Output "::error title=Frozen bpy self-check::$detail"
             exit 1
           }
       - name: Prepare development-only regression containers
