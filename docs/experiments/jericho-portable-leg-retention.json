@@ -1,0 +1,192 @@
+{
+  "experiment": "Jericho portable leg retention",
+  "status": "Native and analytical QA passed; PPSSPP testing not run",
+  "source_commit": "e7c3f403236eae492e7cdda7b2ca096640d94800",
+  "reference_source_sha256": "052da6cb97e1adcf865a89fd8d7d8544de8298025b36344f38de74ec600e9b1e",
+  "before": {
+    "bytes": 147456,
+    "vertices": 2635,
+    "triangles": 2667,
+    "meshes": 47,
+    "sha256": "9e410b2580495b57bd3d5e42d06d6415674e1a475a19e95632c932ac05b1b715"
+  },
+  "after": {
+    "pac": "local/jericho-leg-review/Jericho-SVR2011-PSP-leg-retention-TEST.pac",
+    "sha256": "adfb29b2b4e428d14377d166ab9e4f1ed5e2eb47e209e07740654b356730deda",
+    "bytes": 147456,
+    "sizes": [
+      {
+        "symbols": 200,
+        "bytes": 149504
+      },
+      {
+        "symbols": 220,
+        "bytes": 147456
+      }
+    ],
+    "vertices": 2645,
+    "triangles": 2685,
+    "meshes": 47
+  },
+  "change_audit": {
+    "changed_geometry_materials": [
+      "y2j_knee",
+      "y2j_sune"
+    ],
+    "other_geometry_uv_color_weights_identical": true,
+    "changed_normal_materials": [
+      "y2j_knee",
+      "y2j_sune"
+    ],
+    "skeleton_bytes_identical": true,
+    "non_model_sections_identical": true,
+    "textures_identical": true,
+    "ocular_validation": "pass"
+  },
+  "regional_metrics": {
+    "face": {
+      "before_distance_p95_height": 0.00031982931670928796,
+      "after_distance_p95_height": 0.00031133510744122913
+    },
+    "jaw": {
+      "before_distance_p95_height": 0.00039856998251270475,
+      "after_distance_p95_height": 0.0003871170134211533
+    },
+    "chin": {
+      "before_distance_p95_height": 0.00025549412466375246,
+      "after_distance_p95_height": 0.00025932158209516934
+    },
+    "nose": {
+      "before_distance_p95_height": 0.00048704357054518043,
+      "after_distance_p95_height": 0.0004067832714906199
+    },
+    "eyes": {
+      "before_distance_p95_height": 0.0003275474662931475,
+      "after_distance_p95_height": 0.0002988904957119559
+    },
+    "neck": {
+      "before_distance_p95_height": 0.0001685063006413313,
+      "after_distance_p95_height": 0.0001793539447985517
+    },
+    "torso": {
+      "before_distance_p95_height": 5.013475666459684e-09,
+      "after_distance_p95_height": 5.0024390677304056e-09
+    },
+    "waist": {
+      "before_distance_p95_height": 2.3109892622995337e-09,
+      "after_distance_p95_height": 2.3398367935862503e-09
+    },
+    "pelvis": {
+      "before_distance_p95_height": 2.754851766862219e-09,
+      "after_distance_p95_height": 2.7630769404854243e-09
+    },
+    "buttocks": {
+      "before_distance_p95_height": 2.4521072065102382e-09,
+      "after_distance_p95_height": 2.466579355432848e-09
+    },
+    "shoulders": {
+      "before_distance_p95_height": 0.0008975333728941822,
+      "after_distance_p95_height": 0.0008860720495780437
+    },
+    "left-hands": {
+      "before_distance_p95_height": 0.00015442104432326066,
+      "after_distance_p95_height": 0.00011128290146934218
+    },
+    "left-feet": {
+      "before_distance_p95_height": 0.00041278991039514544,
+      "after_distance_p95_height": 1.5214718524477448e-08
+    },
+    "right-hands": {
+      "before_distance_p95_height": 1.5242588730906383e-05,
+      "after_distance_p95_height": 7.423054482641201e-06
+    },
+    "right-feet": {
+      "before_distance_p95_height": 1.5957371297407192e-08,
+      "after_distance_p95_height": 1.3302519661241138e-08
+    }
+  },
+  "before_flags": [
+    {
+      "region": "left-hands",
+      "pose": "rest",
+      "kind": "surface-recession-or-concavity",
+      "severity": "review",
+      "evidence": [
+        {
+          "metric": "inward_depth_p95_height",
+          "view": "left",
+          "value": 0.0026979118952709315,
+          "tolerance": 0.002
+        },
+        {
+          "metric": "depth_absolute_p95_height",
+          "view": "left",
+          "value": 0.004845684342749815,
+          "tolerance": 0.003
+        }
+      ],
+      "interpretation": "Suspicious relative to this profile; intentional rig/LOD changes and open surfaces require human review"
+    },
+    {
+      "region": "left-feet",
+      "pose": "rest",
+      "kind": "surface-recession-or-concavity",
+      "severity": "high-review",
+      "evidence": [
+        {
+          "metric": "depth_absolute_p95_height",
+          "view": "front",
+          "value": 0.00364303226641627,
+          "tolerance": 0.003
+        },
+        {
+          "metric": "inward_depth_p95_height",
+          "view": "left",
+          "value": 0.12797531624381928,
+          "tolerance": 0.002
+        },
+        {
+          "metric": "depth_absolute_p95_height",
+          "view": "left",
+          "value": 0.12797531624381928,
+          "tolerance": 0.003
+        }
+      ],
+      "interpretation": "Suspicious relative to this profile; intentional rig/LOD changes and open surfaces require human review"
+    }
+  ],
+  "after_flags": [
+    {
+      "region": "left-hands",
+      "pose": "rest",
+      "kind": "surface-recession-or-concavity",
+      "severity": "review",
+      "evidence": [
+        {
+          "metric": "inward_depth_p95_height",
+          "view": "left",
+          "value": 0.0026979118952709315,
+          "tolerance": 0.002
+        },
+        {
+          "metric": "depth_absolute_p95_height",
+          "view": "left",
+          "value": 0.004845684342749815,
+          "tolerance": 0.003
+        }
+      ],
+      "interpretation": "Suspicious relative to this profile; intentional rig/LOD changes and open surfaces require human review"
+    }
+  ],
+  "analytical_body_poses": 14,
+  "ocular_probes": 16,
+  "source_and_candidates_unchanged_by_qa": true,
+  "previously_passing_regions_added_flags": [],
+  "same_thresholds": true,
+  "same_bpe_dictionary_limit": 220,
+  "known_unchanged_degenerate_triangles": {
+    "before": 2,
+    "after": 2
+  },
+  "labels": "QA canonical x positive is anatomical left; screenshot right is not necessarily anatomical right."
+}
