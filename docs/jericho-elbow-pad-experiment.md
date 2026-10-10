@@ -3,7 +3,10 @@
 The accepted Jericho pad acquired a pointed upper edge during decimation.
 This isolated candidate restores its original aligned HCTP surface and three
 shared skin anchors, while retaining the accepted eye/jaw correction.
-Branch: `experiment/jericho-elbow-pad`; PPSSPP testing is pending.
+Branch: `experiment/jericho-elbow-pad`. The user subsequently confirmed this
+candidate worked in SVR 2011 PSP. The published PAC and its historical test
+reports are preserved unchanged; it is now the accepted elbow-pad regression
+reference for [QA 0.2](qa-material-boundaries.md).
 
 [Download PAC](../downloads/Jericho-SVR2011-PSP-elbow-pad-TEST.pac) ·
 [Preview, backups, QA and import instructions](../downloads/Jericho-SVR2011-PSP-elbow-pad-TEST-bundle.zip) ·

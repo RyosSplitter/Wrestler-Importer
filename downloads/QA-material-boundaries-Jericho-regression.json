@@ -1,0 +1,666 @@
+{
+  "qa_version": "0.2.0",
+  "branch": "experiment/qa-material-boundaries",
+  "user_validation": "User confirmed the corrected Jericho elbow-pad PAC works in SVR 2011 PSP",
+  "tests_passed": 85,
+  "default_boundary_checks_enabled": true,
+  "poses": [
+    "standing",
+    "walk-left",
+    "walk-right",
+    "bend",
+    "crouch",
+    "shoulders-up",
+    "neck-turn",
+    "head-tilt",
+    "jaw-06",
+    "jaw-12",
+    "jaw-18",
+    "jaw-25",
+    "elbow-flex-left",
+    "elbow-flex-right"
+  ],
+  "converter_code_changed": false,
+  "packaging_code_changed": false,
+  "accepted_pacs_modified": false,
+  "merged_to_main": false,
+  "material_boundary_thresholds": {
+    "maximum_height": 0.003,
+    "p95_height": 0.0015,
+    "animation_extra_maximum_height": 0.002,
+    "seam_extra_height": 0.0002,
+    "per_texture": {},
+    "status": "Provisional review floors; matched texture names do not prove equivalent materials"
+  },
+  "before": {
+    "inputs": {
+      "source": "/workspace/attachments/31e89f9b-1ea9-4749-b14c-16426443609d/0600.pac",
+      "candidate": "/workspace/Wrestler-Importer/downloads/Jericho-SVR2011-PSP-eye-compatibility-TEST.pac",
+      "sha256": {
+        "/workspace/attachments/31e89f9b-1ea9-4749-b14c-16426443609d/0600.pac": "052da6cb97e1adcf865a89fd8d7d8544de8298025b36344f38de74ec600e9b1e",
+        "/workspace/Wrestler-Importer/downloads/Jericho-SVR2011-PSP-eye-compatibility-TEST.pac": "da7a9fa75b0941e58aba86881472f40129448b22880b5cc4fba478b265961bd9"
+      }
+    },
+    "pad_rest": {
+      "source_edges": 21,
+      "candidate_edges": 21,
+      "distance": {
+        "samples": 126,
+        "mean": 0.03163894546308807,
+        "rms": 0.09439506521657248,
+        "p50": 1.7126113214419231e-07,
+        "p95": 0.2754557072882494,
+        "p99": 0.39683782844322274,
+        "maximum": 0.42329527878112605,
+        "p95_height": 0.014226005021561386,
+        "p99_height": 0.020494826539466764
+      },
+      "source_shared_seam_groups": 21,
+      "candidate_shared_seam_groups": 21,
+      "source_seam_gap": 0.0,
+      "candidate_seam_gap": 0.0,
+      "status": "measured",
+      "source_to_candidate": {
+        "samples": 63,
+        "mean": 0.027936668671444113,
+        "rms": 0.08197026473009154,
+        "p50": 1.672719194262468e-07,
+        "p95": 0.2640964828387555,
+        "p99": 0.30345114921593913,
+        "maximum": 0.30345114921593913,
+        "p95_height": 0.013639353956493993,
+        "p99_height": 0.015671839276966314
+      },
+      "candidate_to_source": {
+        "samples": 63,
+        "mean": 0.035341222254732026,
+        "rms": 0.10536475869360046,
+        "p50": 1.7548731133701398e-07,
+        "p95": 0.30688370458986414,
+        "p99": 0.42329527878112605,
+        "maximum": 0.42329527878112605,
+        "p95_height": 0.01584911478331531,
+        "p99_height": 0.02186123068868578
+      },
+      "maximum_height": 0.02186123068868578,
+      "worst_candidate_point": [
+        -3.604644775390625,
+        6.516931533813477,
+        -0.0961623340845108
+      ],
+      "worst_reference_point": [
+        -4.027368012972638,
+        6.495681726506844,
+        -0.08109116602650654
+      ],
+      "reference_camera_points": [
+        [
+          -5.816540770233082,
+          5.290172575084847,
+          0.44335643240468725
+        ],
+        [
+          -5.816539512614172,
+          5.200304777983916,
+          -0.07761438430118513
+        ],
+        [
+          -5.816532191355731,
+          5.270393226545151,
+          -0.5609691840929552
+        ],
+        [
+          -5.816518142511579,
+          5.62883230361513,
+          -0.799675684873004
+        ],
+        [
+          -5.81651128553388,
+          6.075100908166708,
+          -0.7224511804866955
+        ],
+        [
+          -5.816499078289828,
+          6.462351619492516,
+          -0.21326936750793363
+        ],
+        [
+          -5.80082664518824,
+          6.488380767146607,
+          0.3023079253760613
+        ],
+        [
+          -5.785212862258868,
+          5.687500414201984,
+          0.7375481273066112
+        ],
+        [
+          -5.785193669643166,
+          6.228807110478034,
+          0.6426640712961353
+        ],
+        [
+          -4.107769235174215,
+          5.638494562025633,
+          0.798967569930219
+        ],
+        [
+          -4.079139873074982,
+          6.03312316405694,
+          0.7096029458442868
+        ],
+        [
+          -4.0790921796006785,
+          5.301534783128034,
+          0.6300652261377062
+        ],
+        [
+          -4.055715526340975,
+          6.217954726584834,
+          0.4233720467439972
+        ],
+        [
+          -4.03851010124631,
+          5.31099810681612,
+          0.09581255754418949
+        ],
+        [
+          -4.027469830039951,
+          5.601430968957138,
+          -0.9567917690329961
+        ],
+        [
+          -4.027410644556452,
+          6.0081787053616145,
+          -0.9343830365496671
+        ],
+        [
+          -4.027373324727121,
+          6.297799036565542,
+          -0.7739445160120031
+        ],
+        [
+          -4.02737162657031,
+          6.474032886789653,
+          -0.5015100919697896
+        ],
+        [
+          -4.027368012972638,
+          6.495681726506844,
+          -0.08109116602650654
+        ],
+        [
+          -4.027346211140151,
+          5.206302825650918,
+          -0.4831781260216468
+        ],
+        [
+          -4.027339988567521,
+          5.19547277532568,
+          -0.07640925376458393
+        ]
+      ]
+    },
+    "pad_flags": [
+      {
+        "region": "material:y2j_hiji",
+        "texture": "y2j_hiji",
+        "pose": "rest",
+        "kind": "material-boundary-drift",
+        "severity": "review",
+        "evidence": [
+          {
+            "metric": "maximum_height",
+            "value": 0.02186123068868578,
+            "tolerance": 0.003
+          },
+          {
+            "metric": "p95_height",
+            "value": 0.014226005021561386,
+            "tolerance": 0.0015
+          }
+        ],
+        "coverage_status": "measured",
+        "interpretation": "Small material/accessory edge or seam differs from source; human review required, no automatic model edit"
+      },
+      {
+        "region": "material:y2j_hiji",
+        "texture": "y2j_hiji",
+        "pose": "standing",
+        "kind": "material-boundary-pose-or-seam-drift",
+        "severity": "review",
+        "evidence": [
+          {
+            "metric": "animation_extra_maximum_height",
+            "value": 0.002186170743503652,
+            "tolerance": 0.002
+          }
+        ],
+        "coverage_status": "measured",
+        "interpretation": "Small material/accessory edge or seam differs from source; human review required, no automatic model edit"
+      },
+      {
+        "region": "material:y2j_hiji",
+        "texture": "y2j_hiji",
+        "pose": "elbow-flex-left",
+        "kind": "material-boundary-pose-or-seam-drift",
+        "severity": "review",
+        "evidence": [
+          {
+            "metric": "animation_extra_maximum_height",
+            "value": 0.002186170743503652,
+            "tolerance": 0.002
+          }
+        ],
+        "coverage_status": "measured",
+        "interpretation": "Small material/accessory edge or seam differs from source; human review required, no automatic model edit"
+      },
+      {
+        "region": "material:y2j_hiji",
+        "texture": "y2j_hiji",
+        "pose": "elbow-flex-right",
+        "kind": "material-boundary-pose-or-seam-drift",
+        "severity": "review",
+        "evidence": [
+          {
+            "metric": "animation_extra_maximum_height",
+            "value": 0.002186170743503652,
+            "tolerance": 0.002
+          }
+        ],
+        "coverage_status": "measured",
+        "interpretation": "Small material/accessory edge or seam differs from source; human review required, no automatic model edit"
+      }
+    ]
+  },
+  "after": {
+    "inputs": {
+      "source": "/workspace/attachments/31e89f9b-1ea9-4749-b14c-16426443609d/0600.pac",
+      "candidate": "/workspace/Wrestler-Importer/downloads/Jericho-SVR2011-PSP-elbow-pad-TEST.pac",
+      "sha256": {
+        "/workspace/attachments/31e89f9b-1ea9-4749-b14c-16426443609d/0600.pac": "052da6cb97e1adcf865a89fd8d7d8544de8298025b36344f38de74ec600e9b1e",
+        "/workspace/Wrestler-Importer/downloads/Jericho-SVR2011-PSP-elbow-pad-TEST.pac": "369ee95ed12c58c7c4d91f9ae26590bb2e4469a3abd31e8312d043bfe27533e8"
+      }
+    },
+    "pad_rest": {
+      "source_edges": 21,
+      "candidate_edges": 21,
+      "distance": {
+        "samples": 126,
+        "mean": 1.4831325199334703e-07,
+        "rms": 1.6351056633441496e-07,
+        "p50": 1.535023929141843e-07,
+        "p95": 2.5538306845617067e-07,
+        "p99": 3.052427806976087e-07,
+        "maximum": 3.0582144241775645e-07,
+        "p95_height": 1.3189346665006355e-08,
+        "p99_height": 1.5764368702861808e-08
+      },
+      "source_shared_seam_groups": 21,
+      "candidate_shared_seam_groups": 21,
+      "source_seam_gap": 0.0,
+      "candidate_seam_gap": 0.0,
+      "status": "measured",
+      "source_to_candidate": {
+        "samples": 63,
+        "mean": 1.4779687564723636e-07,
+        "rms": 1.633640521483996e-07,
+        "p50": 1.535023929141843e-07,
+        "p95": 2.6233975961770045e-07,
+        "p99": 3.0582144241775645e-07,
+        "maximum": 3.0582144241775645e-07,
+        "p95_height": 1.3548627379759568e-08,
+        "p99_height": 1.5794253887008648e-08
+      },
+      "candidate_to_source": {
+        "samples": 63,
+        "mean": 1.4882962833945768e-07,
+        "rms": 1.6365694935338738e-07,
+        "p50": 1.6084668672802512e-07,
+        "p95": 2.535559641832814e-07,
+        "p99": 3.035067955371654e-07,
+        "maximum": 3.035067955371654e-07,
+        "p95_height": 1.3094985234571952e-08,
+        "p99_height": 1.5674713150421287e-08
+      },
+      "maximum_height": 1.5794253887008648e-08,
+      "worst_candidate_point": [
+        -5.816539287567139,
+        5.200304985046387,
+        -0.07761438190937042
+      ],
+      "worst_reference_point": [
+        -5.816539512614172,
+        5.200304777983916,
+        -0.07761438430118513
+      ],
+      "reference_camera_points": [
+        [
+          -5.816540770233082,
+          5.290172575084847,
+          0.44335643240468725
+        ],
+        [
+          -5.816539512614172,
+          5.200304777983916,
+          -0.07761438430118513
+        ],
+        [
+          -5.816532191355731,
+          5.270393226545151,
+          -0.5609691840929552
+        ],
+        [
+          -5.816518142511579,
+          5.62883230361513,
+          -0.799675684873004
+        ],
+        [
+          -5.81651128553388,
+          6.075100908166708,
+          -0.7224511804866955
+        ],
+        [
+          -5.816499078289828,
+          6.462351619492516,
+          -0.21326936750793363
+        ],
+        [
+          -5.80082664518824,
+          6.488380767146607,
+          0.3023079253760613
+        ],
+        [
+          -5.785212862258868,
+          5.687500414201984,
+          0.7375481273066112
+        ],
+        [
+          -5.785193669643166,
+          6.228807110478034,
+          0.6426640712961353
+        ],
+        [
+          -4.107769235174215,
+          5.638494562025633,
+          0.798967569930219
+        ],
+        [
+          -4.079139873074982,
+          6.03312316405694,
+          0.7096029458442868
+        ],
+        [
+          -4.0790921796006785,
+          5.301534783128034,
+          0.6300652261377062
+        ],
+        [
+          -4.055715526340975,
+          6.217954726584834,
+          0.4233720467439972
+        ],
+        [
+          -4.03851010124631,
+          5.31099810681612,
+          0.09581255754418949
+        ],
+        [
+          -4.027469830039951,
+          5.601430968957138,
+          -0.9567917690329961
+        ],
+        [
+          -4.027410644556452,
+          6.0081787053616145,
+          -0.9343830365496671
+        ],
+        [
+          -4.027373324727121,
+          6.297799036565542,
+          -0.7739445160120031
+        ],
+        [
+          -4.02737162657031,
+          6.474032886789653,
+          -0.5015100919697896
+        ],
+        [
+          -4.027368012972638,
+          6.495681726506844,
+          -0.08109116602650654
+        ],
+        [
+          -4.027346211140151,
+          5.206302825650918,
+          -0.4831781260216468
+        ],
+        [
+          -4.027339988567521,
+          5.19547277532568,
+          -0.07640925376458393
+        ]
+      ]
+    },
+    "pad_flags": [],
+    "other_review_flags": [
+      {
+        "region": "material:y2j_hand",
+        "texture": "y2j_hand",
+        "pose": "rest",
+        "kind": "material-boundary-drift",
+        "severity": "review",
+        "evidence": [
+          {
+            "metric": "maximum_height",
+            "value": 0.046634537485187456,
+            "tolerance": 0.003
+          },
+          {
+            "metric": "p95_height",
+            "value": 0.04051372375182307,
+            "tolerance": 0.0015
+          }
+        ],
+        "coverage_status": "measured",
+        "interpretation": "Small material/accessory edge or seam differs from source; human review required, no automatic model edit"
+      },
+      {
+        "region": "material:y2j_knee",
+        "texture": "y2j_knee",
+        "pose": "rest",
+        "kind": "material-boundary-drift",
+        "severity": "review",
+        "evidence": [
+          {
+            "metric": "maximum_height",
+            "value": 0.03036291331203547,
+            "tolerance": 0.003
+          },
+          {
+            "metric": "p95_height",
+            "value": 0.020575858440444763,
+            "tolerance": 0.0015
+          }
+        ],
+        "coverage_status": "measured",
+        "interpretation": "Small material/accessory edge or seam differs from source; human review required, no automatic model edit"
+      },
+      {
+        "region": "material:y2j_kutu",
+        "texture": "y2j_kutu",
+        "pose": "rest",
+        "kind": "material-boundary-drift",
+        "severity": "review",
+        "evidence": [
+          {
+            "metric": "maximum_height",
+            "value": 0.03562448445842101,
+            "tolerance": 0.003
+          },
+          {
+            "metric": "p95_height",
+            "value": 0.03408089080835614,
+            "tolerance": 0.0015
+          }
+        ],
+        "coverage_status": "measured",
+        "interpretation": "Small material/accessory edge or seam differs from source; human review required, no automatic model edit"
+      },
+      {
+        "region": "material:y2j_su_r",
+        "texture": "y2j_su_r",
+        "pose": "rest",
+        "kind": "material-boundary-drift",
+        "severity": "review",
+        "evidence": [
+          {
+            "metric": "maximum_height",
+            "value": 0.030282309478598654,
+            "tolerance": 0.003
+          },
+          {
+            "metric": "p95_height",
+            "value": 0.015449526919925403,
+            "tolerance": 0.0015
+          }
+        ],
+        "coverage_status": "measured",
+        "interpretation": "Small material/accessory edge or seam differs from source; human review required, no automatic model edit"
+      },
+      {
+        "region": "material:y2j_sune",
+        "texture": "y2j_sune",
+        "pose": "rest",
+        "kind": "material-boundary-drift",
+        "severity": "review",
+        "evidence": [
+          {
+            "metric": "maximum_height",
+            "value": 0.03562448445842101,
+            "tolerance": 0.003
+          },
+          {
+            "metric": "p95_height",
+            "value": 0.03289049999376729,
+            "tolerance": 0.0015
+          }
+        ],
+        "coverage_status": "measured",
+        "interpretation": "Small material/accessory edge or seam differs from source; human review required, no automatic model edit"
+      },
+      {
+        "region": "material:y2j_yubi",
+        "texture": "y2j_yubi",
+        "pose": "rest",
+        "kind": "material-boundary-drift",
+        "severity": "review",
+        "evidence": [
+          {
+            "metric": "maximum_height",
+            "value": 0.046634537485187456,
+            "tolerance": 0.003
+          },
+          {
+            "metric": "p95_height",
+            "value": 0.040643926524432876,
+            "tolerance": 0.0015
+          }
+        ],
+        "coverage_status": "measured",
+        "interpretation": "Small material/accessory edge or seam differs from source; human review required, no automatic model edit"
+      }
+    ]
+  },
+  "posed_pad": {
+    "standing": {
+      "maximum_height": 1.5794253876545667e-08,
+      "shared_seam_groups": 21,
+      "maximum_skin_seam_gap": 0.0,
+      "flagged": false
+    },
+    "walk-left": {
+      "maximum_height": 1.5794253887008648e-08,
+      "shared_seam_groups": 21,
+      "maximum_skin_seam_gap": 0.0,
+      "flagged": false
+    },
+    "walk-right": {
+      "maximum_height": 1.5794253887008648e-08,
+      "shared_seam_groups": 21,
+      "maximum_skin_seam_gap": 0.0,
+      "flagged": false
+    },
+    "bend": {
+      "maximum_height": 1.5794253886892035e-08,
+      "shared_seam_groups": 21,
+      "maximum_skin_seam_gap": 0.0,
+      "flagged": false
+    },
+    "crouch": {
+      "maximum_height": 1.5794253885063258e-08,
+      "shared_seam_groups": 21,
+      "maximum_skin_seam_gap": 0.0,
+      "flagged": false
+    },
+    "shoulders-up": {
+      "maximum_height": 1.579425393237015e-08,
+      "shared_seam_groups": 21,
+      "maximum_skin_seam_gap": 0.0,
+      "flagged": false
+    },
+    "neck-turn": {
+      "maximum_height": 1.5794253887008648e-08,
+      "shared_seam_groups": 21,
+      "maximum_skin_seam_gap": 0.0,
+      "flagged": false
+    },
+    "head-tilt": {
+      "maximum_height": 1.5794253887008648e-08,
+      "shared_seam_groups": 21,
+      "maximum_skin_seam_gap": 0.0,
+      "flagged": false
+    },
+    "jaw-06": {
+      "maximum_height": 1.5794253887008648e-08,
+      "shared_seam_groups": 21,
+      "maximum_skin_seam_gap": 0.0,
+      "flagged": false
+    },
+    "jaw-12": {
+      "maximum_height": 1.5794253887008648e-08,
+      "shared_seam_groups": 21,
+      "maximum_skin_seam_gap": 0.0,
+      "flagged": false
+    },
+    "jaw-18": {
+      "maximum_height": 1.5794253887008648e-08,
+      "shared_seam_groups": 21,
+      "maximum_skin_seam_gap": 0.0,
+      "flagged": false
+    },
+    "jaw-25": {
+      "maximum_height": 1.5794253887008648e-08,
+      "shared_seam_groups": 21,
+      "maximum_skin_seam_gap": 0.0,
+      "flagged": false
+    },
+    "elbow-flex-left": {
+      "maximum_height": 1.5794253876545667e-08,
+      "shared_seam_groups": 21,
+      "maximum_skin_seam_gap": 0.0,
+      "flagged": false
+    },
+    "elbow-flex-right": {
+      "maximum_height": 1.57942538764859e-08,
+      "shared_seam_groups": 21,
+      "maximum_skin_seam_gap": 0.0,
+      "flagged": false
+    }
+  },
+  "limitations": [
+    "Other boundary findings remain human-review items; thresholds were not relaxed to suppress accepted-model LOD differences.",
+    "Analytical poses do not capture all real game animations.",
+    "These comparisons used 24000 surface samples in each direction and all 14 poses; renders were disabled for this regression run. Existing original/before/after pad comparisons remain unchanged."
+  ]
+}

@@ -6,6 +6,9 @@ matching comparison renders, heatmaps, and input/output SHA-256 manifests.
 It does not write PACs, modify the converter, apply corrections, or replace an
 accepted model. Existing outputs cannot be overwritten.
 
+QA 0.2 also checks material/accessory boundaries by default. The Jericho pad
+regression is documented in [the material-boundary update](qa-material-boundaries.md).
+
 [Download the Lance/Jericho study](../downloads/HCTP-Model-QA-0.1-study.zip).
 Extract it and open `index.html`; each case links to its complete report.
 
@@ -80,8 +83,9 @@ geometry/weight changes from differences between the two games' rig pivots.
 Additional controls compare the original HCTP rig against the mapped PSP rig
 to show the amount attributable to skeleton adaptation.
 
-Twelve poses exercise standing, alternating walk steps, bending, crouching,
-shoulders, neck, head and four jaw-opening angles. The report flags increased
+Fourteen poses exercise standing, alternating walk steps, bending, crouching,
+shoulders, neck, head, four jaw-opening angles and left/right elbow flexion.
+The report flags increased
 regional error beyond the static baseline and includes selected matching pose
 renders. It also reports area-weighted cranial/neck/body influence mass by
 bone ancestry. This is analytical linear-blend skinning, **not actual game

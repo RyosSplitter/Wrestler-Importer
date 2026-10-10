@@ -1,6 +1,7 @@
 """Bidirectional distances, signed depth, curvature and review flags."""
 import numpy as np
 from .geometry import Surface, curvature, distribution, topology
+from . import material_boundaries
 
 
 DEFAULT_PROFILE = {
@@ -10,6 +11,7 @@ DEFAULT_PROFILE = {
     'edge_distance_p95_height':.002,'animation_extra_p95_height':.002,
     'minimum_surface_samples':60,'minimum_render_pixels':100,
     'calibration_cases':[], 'regional':{},
+    'material_boundaries':dict(material_boundaries.DEFAULT_LIMITS),
 }
 
 
@@ -65,6 +67,7 @@ def measure(reference,candidate,rois,height,reference_bind=None,candidate_bind=N
             report['curvature_caveat']='Integrated mean curvature over radius 1.2% of height; topology changes affect this diagnostic'
         per_region[name]=report
     results=dict(overall=overall,regions=per_region,reference_topology=topology(reference,height),candidate_topology=topology(candidate,height),
+                 material_boundaries=material_boundaries.measure(reference,candidate,height,rb,cb),
                  maximum_vertex_surface_error=distribution(vertex_error,height),distance_method='Deterministic area-weighted bidirectional triangle-surface distance; no vertex-index matching',
                  sample_seed=[2718,3141],samples_each_direction=count)
     heat=dict(vertex_error=vertex_error,vertex_source_triangle=vertex_face,vertex_source_closest=vertex_closest)
@@ -97,6 +100,10 @@ def tolerances(profile,region):
 
 def detect(results,profile,pose='rest',rest=None):
     flags=[]
+    if 'material_boundaries' in results:
+        flags.extend(material_boundaries.detect(results['material_boundaries'],profile,pose,
+            rest.get('material_boundaries') if rest else None,
+            results.get('reference_height',results['material_boundaries'].get('reference_height',1.))))
     for region,r in results['regions'].items():
         limits=tolerances(profile,region);dist=r['distance'];evidence=[]
         if not dist or dist['samples']<limits['minimum_surface_samples']:

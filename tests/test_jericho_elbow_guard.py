@@ -9,6 +9,7 @@ from tools.jericho_elbow_guard_trial import repair, signature, TEXTURE
 from tools.jericho_elbow_review import evaluate
 from tools.psp_mesh_audit import audit_yobj
 from tools.psp_mesh_merge_trial import sections
+from model_qa.pipeline import POSES
 
 
 class JerichoElbowGuardTests(unittest.TestCase):
@@ -46,7 +47,7 @@ class JerichoElbowGuardTests(unittest.TestCase):
         self.assertEqual(len(self.qa['eye_jaw_neck_probes']),16)
         for p in self.qa['eye_jaw_neck_probes'].values():
             self.assertEqual(p['maximum_delta_vs_accepted'],0)
-        self.assertEqual(len(self.qa['full_suite_facial_identity']),12)
+        self.assertEqual(len(self.qa['full_suite_facial_identity']),len(POSES))
         for p in self.qa['full_suite_facial_identity'].values():
             self.assertEqual(p['facial_neck_maximum_delta'],0)
 

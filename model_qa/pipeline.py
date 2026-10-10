@@ -25,6 +25,8 @@ POSES = {
     'neck-turn':{'kubi':('y',25)}, 'head-tilt':{'atama':('z',12)},
     'jaw-06':{'d_kuchi':('x',6)},'jaw-12':{'d_kuchi':('x',12)},
     'jaw-18':{'d_kuchi':('x',18)},'jaw-25':{'d_kuchi':('x',25)},
+    'elbow-flex-left':{'l_ninoude':('z',70),'r_ninoude':('z',-70),'l_kote':('y',-90)},
+    'elbow-flex-right':{'l_ninoude':('z',70),'r_ninoude':('z',-70),'r_kote':('y',90)},
 }
 
 
@@ -46,6 +48,13 @@ def normalized_profile(profile):
         if not isinstance(p[key],(int,float)) or not np.isfinite(p[key]) or p[key]<=0:raise ValueError('Invalid tolerance: '+key)
         for regional in p.get('regional',{}).values():
             if key in regional and (not np.isfinite(regional[key]) or regional[key]<=0):raise ValueError('Invalid regional tolerance: '+key)
+    from .material_boundaries import DEFAULT_LIMITS
+    boundary=dict(DEFAULT_LIMITS,**p.get('material_boundaries',{}))
+    for key in ('maximum_height','p95_height','animation_extra_maximum_height','seam_extra_height'):
+        for limits in (boundary,*boundary.get('per_texture',{}).values()):
+            if key in limits and (not isinstance(limits[key],(int,float)) or not np.isfinite(limits[key]) or limits[key]<=0):
+                raise ValueError('Invalid material boundary tolerance: '+key)
+    p['material_boundaries']=boundary
     return p
 
 
@@ -101,6 +110,8 @@ def run(source_path,candidate_path,output,*,profile=None,stages=(),samples=16000
         gallery+=entries
         for name,metrics in views.items():rest['regions'][name]['views']=metrics
     flags=detect(rest,thresholds);motion={};pose_controls=poses or POSES
+    if renders:
+        gallery+=render_material_flags(reference,candidate,rest,flags,output/'renders',height,resolution)
     if animations:
         source_names=set(reference.bone_names);target_names=set(candidate.bone_names)
         for name,controls in pose_controls.items():
@@ -113,6 +124,8 @@ def run(source_path,candidate_path,output,*,profile=None,stages=(),samples=16000
             np.savez_compressed(output/'geometry'/(name+'-reference.npz'),vertices=rp.vertices)
             np.savez_compressed(output/'geometry'/(name+'-candidate.npz'),vertices=cp.vertices)
             pose_flags=detect(comparison,thresholds,name,rest)
+            if renders:
+                gallery+=render_material_flags(rp,cp,comparison,pose_flags,output/'renders',height,resolution,name)
             if renders and name in ('standing','bend','crouch','neck-turn','jaw-18','jaw-25'):
                 selections=['jaw','chin','neck'] if name.startswith('jaw') or name=='neck-turn' else ['shoulders','pelvis','buttocks']
                 entries,views=render_views(rp,cp,reference,rois,height,pose_heat['vertex_error'],output/'renders',pose=name,resolution=resolution,selected=selections,save_depth=save_depth)
@@ -198,6 +211,24 @@ def run(source_path,candidate_path,output,*,profile=None,stages=(),samples=16000
     return report
 
 
+def render_material_flags(reference,candidate,metrics,flags,folder,height,resolution,pose='rest'):
+    """Matching close-ups for flagged materials, using only reference framing."""
+    from hashlib import sha256
+    result=[]
+    for flag in flags:
+        texture=flag.get('texture')
+        if texture is None:continue
+        points=metrics['material_boundaries']['materials'][texture].get('reference_camera_points')
+        if points is None or len(points)<3:continue
+        safe=sha256(texture.encode()).hexdigest()[:12]
+        for view in ('front','back','left','right'):
+            cam=camera(np.asarray(points),view,resolution);cam.span*=1.3
+            stem=pose+'-material-'+safe+'-'+view
+            values,configuration=save_pair(folder,stem,reference,candidate,cam,height)
+            result.append(dict(region='material:'+texture,pose=pose,view=view,file='renders/'+stem+'.png',camera=configuration,metrics=values))
+    return result
+
+
 def write_html(report,path):
     e=html.escape
     rows=[]
@@ -226,6 +257,12 @@ details{padding:12px;border:1px solid #50555c;margin:10px 0}summary{cursor:point
     d=report['rest']['overall'];body+='<p>Bidirectional mean surface distance '+str(round(d['mean'],6))+' model units; p95 '+str(round(d['p95_height']*100,4))+'% of original height. Uniform scale only.</p>'
     body+='<p><a href="report.json">Full machine-readable report</a> · <a href="manifest.json">SHA-256 manifest</a> · <a href="geometry/reference.obj">Aligned reference OBJ</a> · <a href="geometry/candidate.obj">Candidate OBJ</a></p>'
     body+='<table><tr><th>Region</th><th>Samples</th><th>Mean distance</th><th>P95 / height</th><th>Review</th></tr>'+''.join(rows)+'</table>'
+    material_rows=[]
+    for name,r in report['rest'].get('material_boundaries',{}).get('materials',{}).items():
+        status=', '.join(sorted({f['severity'] for f in report['flags'] if f.get('texture')==name})) or r['status']
+        values=[name,str(r['source_edges']),str(r['candidate_edges']),('%.4f%%'%(r['maximum_height']*100)) if r['distance'] else 'n/a',status]
+        material_rows.append('<tr>'+''.join('<td>'+e(v)+'</td>' for v in values)+'</tr>')
+    body+='<h2>Material and accessory boundaries</h2><p>Every boundary endpoint and midpoint is checked against the corresponding material boundary. Peak drift catches small corners that area percentiles can miss. Shared skin seams are also checked under poses; intentional material/LOD differences remain review findings.</p><table><tr><th>Texture/material</th><th>Source edges</th><th>Candidate edges</th><th>Maximum / height</th><th>Review</th></tr>'+''.join(material_rows)+'</table>'
     body+='<h2>Detected deviations</h2><ul>'+findings+'</ul><h2>Saved-stage evidence</h2><pre>'+e(json.dumps(report['defect_first_appearance'],indent=2))+'</pre>'
     body+='<h2>Matching renders and heatmaps</h2><p>Source-only camera framing, identical orthographic projection and lights. Blue is low surface error; red is at least 0.6% of height. Open details to use the comparison wipe.</p>'+''.join(views)
     body+='<h2>Tolerances and limitations</h2><pre>'+e(json.dumps(report['thresholds'],indent=2))+'</pre><ul>'+''.join('<li>'+e(v)+'</li>' for v in report['limitations']+report['animation_limitations'])+'</ul></body></html>'

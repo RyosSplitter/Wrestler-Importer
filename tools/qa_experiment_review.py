@@ -58,6 +58,7 @@ def unchanged_region_proofs(before,after,baseline,yobj):
     old_flags={(f['region'],f['pose']) for f in before['flags'] if f['severity']!='insufficient-evidence'}
     for flag in after['flags']:
         region,pose=flag['region'],flag['pose']
+        if region not in after['rest']['regions']:continue
         if (region,pose) in old_flags or region=='whole-model' or flag['severity']=='insufficient-evidence':continue
         roi=after['rest']['regions'][region]['roi'];lo,hi=np.array(roi['lower']),np.array(roi['upper'])
         def signatures(g):
