@@ -151,8 +151,17 @@ def build_accessories(items, target, alignment, texture_entries):
         donor['model_name_raw'] = name
         donor['model_descriptor_raw'] = name+donor['model_descriptor_raw'][16:]
         prepared['bones'] = copy.deepcopy(donor['bones'])
-        entries = [dict(by_name[n.casefold()],index=i) for i,n in enumerate(prepared['textures'])]
-        prepared['textures'] = [e['name'] for e in entries]
+        # Sections 26/27 in the native Rock share the main texture namespace.
+        # Keep the same name array and material indices in all three models;
+        # do not assume the engine builds a separate texture pool for each pad.
+        local_names = list(prepared['textures'])
+        prepared['textures'] = [e['name'] for e in texture_entries]
+        prepared['texture_count'] = len(texture_entries)
+        indices = {n.casefold():i for i,n in enumerate(prepared['textures'])}
+        for mesh in prepared['meshes']:
+            for material in mesh['materials']:
+                material['texture_id'] = indices[local_names[material['texture_id']].casefold()]
+        entries = texture_entries
         yobj = serialize(prepared, donor, entries)
         native = audit_yobj(yobj)
         checked = validate_accessory(prepared, native)
@@ -162,6 +171,7 @@ def build_accessories(items, target, alignment, texture_entries):
                             source_vertices=item['model']['vertex_count'], source_triangles=item['model']['triangle_count'],
                             **native['report'], analytical_validation=checked,
                             stored_global_metadata='Aligned source values for active bones; zero for inactive bones',
+                            shared_texture_namespace=True,
                             local_bind_records_match_main=True, decimation_applied=False,
                             limitation='Actual elbow-pad removal/throw semantics require SVR 2011 testing.'))
     return models, prepared_models, reports

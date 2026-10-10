@@ -108,8 +108,10 @@ compatible with native per-model global semantics; analytical LBS does not
 consume these metadata floats, so it cannot establish their runtime meaning.
 
 **CONFIRMED:** The texture decoder resolves the union of model dependencies.
-The main YOBJ keeps its original 18-name array; each new pad has its own `pat`
-array and material index 0. The shared PAC table contains 19 converted GIMs.
+The main YOBJ and both pads declare the same 19-name array, matching the
+shared-array pattern in the native Rock. `pat` is appended at index 18; pad
+materials use that index. Existing body indices remain unchanged. The shared
+PAC table contains 19 converted GIMs.
 `pat` uses the existing texture policy: source 64×32 PSMT4 → 32×32 indexed4
 GIM, 784 bytes. Source cutout RGBA follows the existing exact-alpha policy;
 this particular pad texture is opaque. No additional resizing of body textures
@@ -162,13 +164,15 @@ and compared exactly against the corresponding final PAC payloads. Textured
 PNG views are offline CPU renders, not Noesis screenshots or PSP GPU captures.
 
 **CONFIRMED:** The new uploaded-source trial is 143360 bytes, SHA-256
-`aadc99d153735cdb9ee4fbbecac4c1250cdd12666d0046cc0de03902499e044c`.
+`ae56c7e0f18f230a865790a5f7bb18796003c354c65fa1f1be744e1c4581a16e`.
 It has three YOBJs, 45 meshes, 2473 vertex records, 2853 triangles and 19
 unique textures. Each pad retains 71 vertices and 64 triangles. Section 8 is
-unchanged from the selected Kurt donor. The main YOBJ is **byte-identical** to
-the user's uploaded `The Rock.pac` YOBJ: SHA-256
-`d1e14041a38fcb9c17457a24c2da5d85389835a05702f7ec8ddbb12f31781945`.
-Thus this experiment does not change its body geometry, rigging or materials.
+unchanged from the selected Kurt donor. Every main vertex-buffer byte, mesh
+header, bone-table byte, material and strip record matches the uploaded
+`The Rock.pac`. The main YOBJ's texture-name metadata gains the `pat` entry;
+its descriptor address, declared sizes and relocation placement are rebuilt
+accordingly. Its geometry, UVs, weights, normals and body material indices do
+not change.
 
 **CONFIRMED:** Tests in `tests/test_portable_accessories.py` generate independent
 synthetic models and cover role/texture closure, wrong-side/unknown/duplicate
@@ -193,3 +197,22 @@ hidden by alignment or tolerances. **UNKNOWN:** In-game pad events, actual game
 skinning behavior and runtime memory safety until SVR 2011 testing. Test normal
 entrance, gameplay, victory, elbow flexes and the People's Elbow pad removal/
 throw with a backed-up ISO and the user's working rebuild/ARC-update workflow.
+
+## Shared texture namespace refinement
+
+**CONFIRMED:** The first trial used a separate one-name pad texture array and
+material index 0. Before gameplay acceptance, comparison of the native Rock's
+three YOBJs showed that the pad model and body share identical name arrays and
+indices. The final candidate mirrors that arrangement. The first candidate's
+SHA-256 was aadc99d153735cdb9ee4fbbecac4c1250cdd12666d0046cc0de03902499e044c;
+it remains in Git history as an unaccepted experiment, not a validated baseline.
+**INFERRED:** Matching the reference avoids reliance on undocumented per-pad
+texture-pool behavior. **UNKNOWN:** Whether the previous local-array variant
+would have bound its texture correctly in-game; it was not tested.
+
+**CONFIRMED:** The provided SVR 2008 Sgt-Slaughter(Hat).PAC has a main section-2
+YOBJ with 16 texture-name entries, a section-9 texture table with 11 unique
+names, a hat section-32 YOBJ with 5 entries and a separate section-39 texture
+table with its 4 unique names. That is a different namespace/section contract
+from the Rock pads, which share section 9. Do not generalize elbow-pad mapping
+or shared-array validation to hats without a separate profile.

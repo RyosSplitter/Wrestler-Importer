@@ -175,6 +175,7 @@ def validate_pac(data,base=None,max_bytes=148000,*,accessory_models=None):
                 if mat['control'] not in (expected,(expected|0x110) if expected else None):raise ValueError('Native GIM/material bit depth mismatch.')
         if section!=2:
             if section not in (26,27):raise ValueError('Unrecognized final auxiliary YOBJ role.')
+            if model['texture_names']!=native['texture_names']:raise ValueError('Shared-section accessory texture array differs from the main model.')
             if len(model['bone_raw'])!=len(native['bone_raw']) or any(
                     model['bone_raw'][i:i+64]!=native['bone_raw'][i:i+64] or
                     model['bone_raw'][i+76:i+80]!=native['bone_raw'][i+76:i+80]
@@ -263,6 +264,7 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
          [dict(section=a['source_section'],psp_section=a['target_section'],role=a['name'],support=a['support'],vertices=a['model']['vertex_count'],triangles=a['model']['triangle_count']) for a in accessories],texture_dependencies=texture_names))
     step(15,'Uniform alignment and selective facial weighting')
     prepared,legacy,jaw=prepare(original,target)
+    prepared['textures']=texture_names;prepared['texture_count']=len(texture_names)
     prepared['cutout_texture_ids']=[i for i,n,r,rgba,d in decoded if np.any(rgba[:,:,3]<128)]
     for name,model in (('source',original),('prepared',prepared),('legacy-eye-control',legacy),('source-jaw-control',jaw)):dump(work/(name+'.json'),model)
     step(25,'Protecting source anatomy and material boundaries before decimation')

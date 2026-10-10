@@ -77,7 +77,7 @@ jobs:
               r=json.loads(Path(os.environ['RUNNER_TEMP'],'portable-'+label,'success.json').read_text())
               return audit_yobj(next(raw for s,raw in sections(Path(r['pac']).read_bytes()) if s['id']==2))
           a,b=final('Lance'),final('LanceMulti')
-          assert a['texture_raw']==b['texture_raw']
+          assert b['texture_names']==a['texture_names']+['fixture_pad']
           assert a['bone_raw']==b['bone_raw']
           assert len(a['meshes'])==len(b['meshes'])
           for x,y in zip(a['meshes'],b['meshes']):

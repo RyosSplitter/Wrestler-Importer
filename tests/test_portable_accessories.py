@@ -61,13 +61,14 @@ class AccessoriesTests(unittest.TestCase):
 
     def build(self):
         items,names=self.read_set([(2,self.main),(6,self.pad)])
-        return build_accessories(items,self.target,self.alignment,[dict(name='pad',bits=4,cutout=False)])
+        return build_accessories(items,self.target,self.alignment,[dict(name=n,index=i,bits=4,cutout=False) for i,n in enumerate(('skin','pad'))])
 
     def test_all_accessory_attributes_topology_and_poses_survive_native_writing(self):
         models,expected,reports=self.build();native=audit_yobj(models[26])
         self.assertEqual(reports[0]['source_triangles'],2);self.assertEqual(reports[0]['triangles'],2)
         self.assertFalse(reports[0]['decimation_applied'])
-        self.assertEqual(native['texture_names'],['pad'])
+        self.assertEqual(native['texture_names'],['skin','pad'])
+        self.assertEqual(native['meshes'][0]['materials'][0]['texture_id'],1)
         self.assertTrue(all(row['maximum_position_delta']==0 for row in reports[0]['analytical_validation']['poses'].values()))
         bad=copy.deepcopy(native);bad['meshes'][0]['vertices'][0]['weights']=[0.,1.]
         with self.assertRaisesRegex(ValueError,'weights'):validate_accessory(expected[26],bad)
@@ -78,7 +79,10 @@ class AccessoriesTests(unittest.TestCase):
         models,expected,reports=self.build()
         base=pac([(2,named(self.files['psp-quad.yobj'])),(9,texture_table(['skin'],[self.files['skin-t4.gim']])),(50,b'untouched')])
         table=texture_table(['skin','pad'],[self.files['skin-t4.gim']]*2)
-        candidate=package_models(base,named(self.files['psp-quad.yobj']),table,models)
+        from desktop.native import serialize
+        main=copy.deepcopy(self.target);main['textures']=['skin','pad'];main['meshes'][0]['target_part']=0
+        main_yobj=serialize(main,self.target,[dict(bits=4,cutout=False)]*2)
+        candidate=package_models(base,main_yobj,table,models)
         native,gims=validate_pac(candidate,base,accessory_models=expected)
         self.assertEqual(set(gims),{'skin','pad'})
         self.assertEqual([s['id'] for s in inspect_pac(candidate)['sections']],[2,9,50,26])
@@ -87,9 +91,9 @@ class AccessoriesTests(unittest.TestCase):
         material=struct.unpack_from('<I',malformed,mesh+12)[0]+8
         index=struct.unpack_from('<I',malformed,material+140)[0]+8
         struct.pack_into('<H',malformed,index,65535)
-        bad=package_models(base,named(self.files['psp-quad.yobj']),table,{26:bytes(malformed)})
+        bad=package_models(base,main_yobj,table,{26:bytes(malformed)})
         with self.assertRaisesRegex(ValueError,'Index outside'):validate_pac(bad,base,accessory_models=expected)
-        missing=package_models(base,named(self.files['psp-quad.yobj']),texture_table(['skin'],[self.files['skin-t4.gim']]),models)
+        missing=package_models(base,main_yobj,texture_table(['skin'],[self.files['skin-t4.gim']]),models)
         with self.assertRaisesRegex(ValueError,'texture table'):validate_pac(missing)
 
     def test_preview_remaps_independent_texture_indices_without_mutation(self):
@@ -98,7 +102,7 @@ class AccessoriesTests(unittest.TestCase):
         combined=combined_preview(main,[pad])
         self.assertEqual(len(combined['meshes']),2)
         self.assertEqual(combined['meshes'][1]['materials'][0]['texture_id'],1)
-        self.assertEqual(pad['meshes'][0]['materials'][0]['texture_id'],0)
+        self.assertEqual(pad['meshes'][0]['materials'][0]['texture_id'],1)
         self.assertEqual(len(main['meshes']),1)
 
     def test_replacement_contract_and_explicit_addition_collision(self):
