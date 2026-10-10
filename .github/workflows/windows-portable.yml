@@ -68,8 +68,9 @@ jobs:
       - name: Main geometry remains identical with independent accessory models
         shell: python
         run: |
-          import json,os
+          import json,os,sys
           from pathlib import Path
+          sys.path.insert(0,str(Path.cwd()))
           from tools.psp_mesh_audit import audit_yobj
           from tools.psp_mesh_merge_trial import sections
           def final(label):
