@@ -34,7 +34,9 @@ class JerichoWeightGuardTests(unittest.TestCase):
         source=json.loads(self.z.read('trial/input-source-weighted.json'));target=json.loads(self.z.read('trial/input-psp-donor.json'))
         old=prepare_hybrid(source,target);fixed=prepare_hybrid(source,target,preserve_source_cranial=True)
         archived_old=json.loads(self.z.read('trial/legacy-weight-transfer.json'));archived_new=json.loads(self.z.read('trial/corrected-weight-transfer.json'))
-        np.testing.assert_array_equal(geometry(old).weights,geometry(archived_old).weights)
+        # Windows/Linux BLAS differ by ~1e-14 in this float64 interpolation.
+        # The tolerance is far below one serialized float32 weight ULP.
+        np.testing.assert_allclose(geometry(old).weights,geometry(archived_old).weights,atol=2e-13,rtol=0)
         np.testing.assert_array_equal(geometry(fixed).weights,geometry(archived_new).weights)
         np.testing.assert_array_equal(geometry(old).vertices,geometry(fixed).vertices)
         with np.load(io.BytesIO(self.z.read('trial/weight-comparison.npz'))) as w:

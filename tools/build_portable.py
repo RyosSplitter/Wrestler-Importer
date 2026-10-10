@@ -72,4 +72,10 @@ def build():
     (destination/'MANIFEST.json').write_text(json.dumps(dict(blender_official_zip_sha256=wanted,blender_source_sha256=hashlib.file_digest(source.open('rb'),'sha256').hexdigest(),files=files),indent=2),encoding='utf-8')
     print(destination)
 
-if __name__=='__main__':build()
+if __name__=='__main__':
+    try:build()
+    except Exception:
+        import traceback
+        error=traceback.format_exc().replace('%','%25').replace('\r','%0D').replace('\n','%0A')
+        print('::error title=Portable build::'+error,flush=True)
+        raise

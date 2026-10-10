@@ -86,6 +86,8 @@ def prepare(source,target):
     def prune(w):
         w=w.copy();np.put_along_axis(w,np.argsort(w,axis=1)[:,:-4],0,axis=1);w/=w.sum(1)[:,None];return w
     jaw_weights=prune(mapped);legacy=prune(legacy);weights=jaw_weights.copy();weights[selected]=legacy[selected]
+    absent=[b['index'] for b in source['bones'] if b['name'] not in {b['name'] for b in target['bones']}]
+    attachments=sw[:,absent].sum(1)>1e-7
     def stage(ws):
         out=copy.deepcopy(aligned);row=0
         for m in out['meshes']:
@@ -97,6 +99,7 @@ def prepare(source,target):
                 v['normal']=(n/length).tolist();v['color']=[*v['color'][:3],255]
                 v['weights']=ws[row].tolist();row+=1
         out.update(bones=copy.deepcopy(target['bones']),bone_count=target['bone_count'],uv_v_flipped=False,weight_encoding='float',
+                   preserved_attachment_positions=np.asarray(ps[attachments],dtype=np.float32).astype(float).tolist(),
                    preparation_report=dict(alignment=fit,hybrid_weights=dict(ancestor_redirects=redirects,donor_transfer=transfer_report,
                    ocular_selected_records=int(selected.sum()),jaw_source_mapping_preserved=True,
                    policy='Source-derived body/jaw; legacy PSP donor transfer only on source eye/eyelid support')))

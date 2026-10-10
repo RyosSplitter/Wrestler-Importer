@@ -25,6 +25,18 @@ def select_guards(model):
                 ps=[tuple(mesh['vertices'][i]['position']) for i in tri]
                 for a,b in zip(ps,ps[1:]+ps[:1]):edges[tuple(sorted((a,b)))].add(mat['texture_id'])
     boundary={p for edge,mats in edges.items() if len(mats)>1 for p in edge}
+    attachments={tuple(p) for p in model.get('preserved_attachment_positions',[])}
+    torso_faces=Counter();all_faces=Counter()
+    for mesh in model['meshes']:
+        for mat in mesh['materials']:
+            for tri in mat['triangles']:
+                mass=sum(sum(w for b,w in zip(mesh['bone_palette'],mesh['vertices'][i]['weights']) if bone_regions[b]=='Torso') for i in tri)/3
+                all_faces[mat['texture_id']]+=1
+                if mass>.5:torso_faces[mat['texture_id']]+=1
+    # Native anatomical surfaces often extend across bone-region borders (neck
+    # and shoulder on a torso map, pelvis on a leg map). Retain the whole material
+    # surface when torso support identifies a substantial part of it.
+    torso_materials={tid for tid,n in all_faces.items() if torso_faces[tid]/n>=.3}
     decisions=[]
     for mesh in model['meshes']:
         for mat in mesh['materials']:
@@ -34,7 +46,8 @@ def select_guards(model):
                 eyes=any(any(w>1e-7 and b in eye_bones for b,w in zip(mesh['bone_palette'],v['weights'])) for v in vertices)
                 seam=any(tuple(v['position']) in boundary for v in vertices)
                 cutout=mat['texture_id'] in model.get('cutout_texture_ids',[])
-                decisions.append((mesh['index'],mat['texture_id'],ti,torso>.5 or eyes or seam or cutout))
+                attachment=any(tuple(v['position']) in attachments for v in vertices)
+                decisions.append((mesh['index'],mat['texture_id'],ti,torso>.5 or mat['texture_id'] in torso_materials or eyes or seam or cutout or attachment))
     return decisions
 
 

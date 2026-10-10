@@ -60,7 +60,12 @@ class JerichoTrialTests(unittest.TestCase):
 
     def test_synthetic_standing_walk_bend_and_crouch(self):
         results=pose_checks(self.model,self.report['pose_definitions'])
-        self.assertEqual(results,self.report['pose_validation'])
+        self.assertEqual(results.keys(),self.report['pose_validation'].keys())
+        for name,row in results.items():
+            expected=self.report['pose_validation'][name]
+            for key,value in row.items():
+                if isinstance(value,float):self.assertAlmostEqual(value,expected[key],places=12)
+                else:self.assertEqual(value,expected[key])
         self.assertEqual(len(results),23)
         for row in results.values():
             self.assertEqual(row['maximum_coincident_position_gap'],0)
