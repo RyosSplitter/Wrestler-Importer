@@ -155,7 +155,7 @@ def textures(decoded,prepared,folder,cap):
     dump(folder/'textures.json',dict(textures=entries))
     return entries,gims
 
-def validate_pac(data,base=None,max_bytes=148000,*,accessory_models=None,gim_reader=read_gim):
+def validate_pac(data,base=None,max_bytes=148000,*,accessory_models=None,gim_reader=read_gim,lossless_texture_sections=()):
     report=inspect_pac(data)
     if len(data)>max_bytes or len(data)%2048 or any(s['offset']%16 for s in report['sections']):raise ValueError('PSP PAC size/alignment check failed.')
     if len({s['id'] for s in report['sections']})!=len(report['sections']):raise ValueError('Duplicate final PAC section IDs.')
@@ -193,7 +193,13 @@ def validate_pac(data,base=None,max_bytes=148000,*,accessory_models=None,gim_rea
         if after_ids!=before_ids+additions:raise ValueError('Base section order or explicit accessory additions changed.')
         after_by_id={s['id']:s for s in report['sections']}
         for a in before['sections']:
-            if a['id'] not in {2,9,*(accessory_models or {})} and a['sha256']!=after_by_id[a['id']]['sha256']:raise ValueError('Unrelated base section changed.')
+            if a['id'] not in {2,9,*(accessory_models or {})} and a['sha256']!=after_by_id[a['id']]['sha256']:
+                if a['id'] not in lossless_texture_sections:raise ValueError('Unrelated base section changed.')
+                old_raw=next(r for s,r in sections(base) if s['id']==a['id'])
+                if old_raw!=unpacked[a['id']]:raise ValueError('Lossless retained texture section changed decoded data.')
+                for t in parse_textures(old_raw):
+                    if t['extension']!='gim':raise ValueError('Lossless storage exception requires a named GIM table.')
+                    gim_reader(old_raw[t['offset']:t['offset']+t['size']])
         original=next(r for s,r in sections(base) if s['id']==2)
         if audit_yobj(original)['bone_raw']!=native['bone_raw']:raise ValueError('Base skeleton changed.')
     return native,gims
@@ -359,7 +365,8 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
             target=profile['max_pac_bytes'],cancel=check,progress=lambda message:progress(63,message))
         texture_reader=adaptive_reader
     step(65,'Validating final PAC pointers, buffers, weights, rendering records and size')
-    native,gim_map=validate_pac(candidate,base_bytes,profile['max_pac_bytes'],accessory_models=accessory_prepared,gim_reader=texture_reader)
+    native,gim_map=validate_pac(candidate,base_bytes,profile['max_pac_bytes'],accessory_models=accessory_prepared,gim_reader=texture_reader,
+        lossless_texture_sections=[r['section'] for r in adaptive_report['lossless_retained_texture_storage']] if adaptive_report else ())
     dump(work/'accessory-qa.json',dict(status='pass',models=accessory_reports,
          limitation='Exact source-derived geometry and direct weights, native structure and analytical poses; removal/throw behavior requires in-game validation.'))
     unpacked=next(r for s,r in sections(candidate) if s['id']==2)

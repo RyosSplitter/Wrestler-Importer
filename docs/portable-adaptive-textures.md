@@ -108,7 +108,9 @@ with colors partitioned by alpha level. A format with too few slots for exact
 cutout alpha levels is rejected. Near-opaque images may reduce resolution using
 nearest alpha sampling. If many alpha levels compete for a fixed CLUT, they are
 quantized to representative **source alpha levels**, all >=128, while reserving
-RGB entries per level. This is a disclosed lossy policy, not exact source-alpha
+RGB entries per level. A joint near-opaque RGBA alternative is also measured,
+snapping its palette alpha to source levels; rare alpha strata otherwise consume
+slots needed for visible lip colors. This is a disclosed lossy policy, not exact source-alpha
 preservation; alpha MAE and review flags are reported. Cutout boundaries never
 pass through that lossy policy. Hair/mask filename guesses are unnecessary.
 

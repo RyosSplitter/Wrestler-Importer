@@ -27,6 +27,8 @@ def read_gim(data):
     start=64+struct.unpack_from('<I',data,92)[0]
     end=48+struct.unpack_from('<I',data,52)[0]
     if start!=128 or end!=start+pitch*ph or end+80>len(data):raise ValueError('GIM pixel bounds mismatch')
+    if 64+struct.unpack_from('<I',data,96)[0]!=end:raise ValueError('GIM image data-end pointer mismatch')
+    if struct.unpack_from('<4H',data,104)!=(1,1,3,1):raise ValueError('Unsupported GIM levels/frames')
     if struct.unpack_from('<5H',data,end+20)!=(3,0,1<<bits,1,32):raise ValueError('Unsupported RGBA CLUT')
     if end+80+(1<<bits)*4!=len(data) or end+struct.unpack_from('<I',data,end+4)[0]!=len(data):raise ValueError('GIM palette bounds mismatch')
     y,x=np.indices((ph,pitch));address=((y//8)*(pitch//16)+x//16)*128+(y%8)*16+x%16
@@ -105,15 +107,28 @@ def encode(source,size,bits,color_limit,mask=None):
                 candidates=[j for j,level in enumerate(levels) if level>0]
                 if not candidates:break
                 j=max(candidates,key=lambda j:counts[j]/(allocation[j]+1));allocation[j]+=1
-            c=np.zeros((1<<bits,4),np.uint8);p=np.zeros(target.shape[:2],np.uint8);offset=0
-            for level,capacity in zip(levels,allocation):
-                pixels=canonical[:,:,3]==level;values=canonical[pixels,:3]
-                q=Image.fromarray(values[None,:,:]).quantize(colors=int(capacity),method=Image.Quantize.MEDIANCUT,dither=Image.Dither.NONE)
-                rgbc=np.asarray(q.getpalette(),np.uint8).reshape(-1,3)
-                used=int(np.asarray(q).max())+1
-                c[offset:offset+used,:3]=rgbc[:used];c[offset:offset+used,3]=level
-                p[pixels]=np.asarray(q).reshape(-1)+offset;offset+=used
-            choices=[('RGB quantized per exact alpha level',p,c)]
+            choices=[]
+            for method in (Image.Quantize.MEDIANCUT,Image.Quantize.MAXCOVERAGE,Image.Quantize.FASTOCTREE):
+                c=np.zeros((1<<bits,4),np.uint8);p=np.zeros(target.shape[:2],np.uint8);offset=0
+                for level,capacity in zip(levels,allocation):
+                    pixels=canonical[:,:,3]==level;values=canonical[pixels,:3]
+                    q=Image.fromarray(values[None,:,:]).quantize(colors=int(capacity),method=method,dither=Image.Dither.NONE)
+                    rgbc=np.asarray(q.getpalette(),np.uint8).reshape(-1,3)
+                    used=int(np.asarray(q).max())+1
+                    c[offset:offset+used,:3]=rgbc[:used];c[offset:offset+used,3]=level
+                    p[pixels]=np.asarray(q).reshape(-1)+offset;offset+=used
+                choices.append(('RGB quantized per alpha level, method '+str(method),p,c))
+            if not np.any(source[:,:,3]<128):
+                # Joint near-opaque RGBA clustering can preserve facial color
+                # much better than reserving a slot for every rare alpha group.
+                # Snap cluster alpha to actual source levels and keep every
+                # pixel >=128. True cutouts never use this alternative.
+                q=Image.fromarray(target).quantize(colors=count,method=Image.Quantize.FASTOCTREE,dither=Image.Dither.NONE)
+                p=np.asarray(q,np.uint8);values=np.asarray(q.getpalette('RGBA'),np.uint8).reshape(-1,4)
+                c=np.zeros((1<<bits,4),np.uint8);c[:len(values)]=values
+                original_levels=np.unique(source[:,:,3]).astype(int)
+                c[:,3]=original_levels[np.abs(c[:,3].astype(int)[:,None]-original_levels).argmin(1)]
+                choices.append(('Joint near-opaque RGBA, source-level alpha',p,c))
     else:
         choices=[]
         colors,inverse=np.unique(target.reshape(-1,4),axis=0,return_inverse=True)
@@ -172,5 +187,8 @@ def generate(source,analysis,required_bits,baseline_rgba=None,head_sensitive=Fal
     rows.sort(key=lambda r:(r['entry']['serialized_bytes'],r['entry']['metrics']['perceptual_loss'],r['entry']['width'],r['entry']['bits']))
     # Only useful diminishing-return options; actual whole-PAC byte effects are
     # measured later, so equal GIM cost with different compression stays.
-    if not rows:raise ValueError('No legal source-bounded candidate passes minimum safeguards')
+    if not rows:
+        error=ValueError('No legal source-bounded candidate passes minimum safeguards')
+        error.rejected_configurations=rejected
+        raise error
     return rows,rejected

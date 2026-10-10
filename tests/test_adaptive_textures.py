@@ -189,5 +189,16 @@ class AdaptiveTextureTests(unittest.TestCase):
         import inspect
         self.assertNotIn('texture_optimizer',inspect.getsource(textures))
 
+    def test_retained_table_exception_is_explicit_and_lossless(self):
+        from tools.pac_repack import rewrite_sections,texture_table
+        from tools.yukes_bpe import compress
+        f=vectors();table=texture_table(['blood'],[f['skin-t4.gim']])
+        base=rewrite_sections(f['psp-quad.pac'],{},additions={8:table})
+        converted=rewrite_sections(base,{8:compress(table)})
+        with self.assertRaisesRegex(ValueError,'Unrelated'):validate_pac(converted,base)
+        validate_pac(converted,base,lossless_texture_sections=[8])
+        changed=rewrite_sections(base,{8:compress(table+b'extra')})
+        with self.assertRaisesRegex(ValueError,'decoded'):validate_pac(changed,base,lossless_texture_sections=[8])
+
 
 if __name__=='__main__':unittest.main()

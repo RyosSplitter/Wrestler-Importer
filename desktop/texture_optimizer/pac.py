@@ -63,7 +63,8 @@ def optimize_pac(baseline,decoded,output,*,target=148000,cancel=lambda:None,
         try:rows,rejected=generate(sources[n],scoring,bits,c[p],usage[n]['head_fraction']>.5)
         except ValueError as exc:
             (output/'failure-report.json').write_text(json.dumps(dict(texture=n,error=str(exc),
-                source_details=features,required_rendering_bits=bits,source_format=details[n]),indent=2)+'\n')
+                source_details=features,required_rendering_bits=bits,source_format=details[n],
+                rejected_configurations=getattr(exc,'rejected_configurations',[])),indent=2)+'\n')
             raise ValueError(n+': '+str(exc)+'; diagnostics: '+str(output/'failure-report.json')) from exc
         choices.append(rows)
         reports.append(dict(name=n,source_palette_format=details[n],**features,
