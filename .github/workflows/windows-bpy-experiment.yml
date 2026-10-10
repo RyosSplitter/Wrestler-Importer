@@ -1,0 +1,129 @@
+name: Standalone bpy Windows experiment
+on:
+  workflow_dispatch:
+  push:
+    branches: [experiment/bpy-runtime-investigation]
+    paths: ['experiments/bpy/**', '.github/workflows/windows-bpy-experiment.yml']
+permissions:
+  contents: write
+jobs:
+  investigate:
+    runs-on: windows-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: python -m pip install -r requirements-desktop.txt bpy==5.2.2
+      - name: Build full standalone prototype with resources, native libraries and sources
+        run: python -m experiments.bpy.build_windows
+      - name: Frozen self-check without installed Python or Blender on PATH
+        shell: pwsh
+        run: |
+          $env:PATH = "$env:SystemRoot\System32;$env:SystemRoot"
+          $env:PYTHONHOME = ''
+          $env:PYTHONPATH = ''
+          & dist/PS2PSP-bpy-Experiment/PS2PSP-bpy-Experiment.exe --bpy-self-check "$env:RUNNER_TEMP\bpy-self-check.json" > "$env:RUNNER_TEMP\bpy-self-check.log" 2>&1
+          Get-Content "$env:RUNNER_TEMP\bpy-self-check.json"
+          if ($LASTEXITCODE -ne 0) {
+            Get-Content "$env:RUNNER_TEMP\bpy-self-check.log"
+            Write-Output '::error::Frozen standalone bpy self-check failed; see JSON in this step.'
+            exit 1
+          }
+      - name: Prepare development-only regression containers
+        shell: python
+        run: |
+          from pathlib import Path
+          import json,zipfile
+          from tools.portable_fixture import create
+          Path('assets').mkdir(exist_ok=True);Path('build/bpy-inputs').mkdir(exist_ok=True)
+          with zipfile.ZipFile('downloads/Wrestler-Importer-beta-0.1.1.zip') as z:
+              for n in ('Kurt-Angle-Ring.PAC','Full Body.yobj'): Path('assets',n).write_bytes(z.read('WrestlerImporterBeta/assets/'+n))
+          for label,archive,entry in [('Lance','1800-hybrid-weight-review.zip','1800-hybrid-weight-review/source-weighted.json'),('Jericho','Jericho-QA-facial-weights-experiment.zip','trial/input-source-weighted.json')]:
+              with zipfile.ZipFile('downloads/'+archive) as z: source=json.loads(z.read(entry))
+              create(source,Path('build/bpy-inputs',label+'.pac'))
+      - name: Packaged full conversions with static, analytical-pose and ocular QA
+        timeout-minutes: 25
+        shell: pwsh
+        run: |
+          $env:PATH = "$env:SystemRoot\System32;$env:SystemRoot"
+          foreach ($name in @('Lance','Jericho')) {
+            $job = "$env:RUNNER_TEMP\bpy-$name"
+            New-Item -ItemType Directory -Path $job | Out-Null
+            @{source=(Resolve-Path "build/bpy-inputs/$name.pac").Path; base=(Resolve-Path 'assets/Kurt-Angle-Ring.PAC').Path; source_format='hctp'} | ConvertTo-Json | Set-Content "$job/request.json" -Encoding utf8NoBOM
+            & dist/PS2PSP-bpy-Experiment/PS2PSP-bpy-Experiment.exe --worker "$job/request.json"
+            if ($LASTEXITCODE -ne 0) {
+              Get-Content "$job/error.log"
+              Get-Content "$job/work/geometry-0.log"
+              Write-Output "::error::Frozen $name conversion failed."
+              exit 1
+            }
+            Get-Content "$job/success.json"
+          }
+      - name: Compare frozen bpy output against official Blender 4.3.2 on Windows
+        shell: python
+        run: |
+          import os,json,subprocess,zipfile,hashlib
+          from pathlib import Path
+          from tools.build_portable import download
+          archive=Path('build/blender-4.3.2-windows-x64.zip');checks=Path('build/blender-4.3.2.sha256')
+          download('https://download.blender.org/release/Blender4.3/'+checks.name,checks)
+          download('https://download.blender.org/release/Blender4.3/'+archive.name,archive)
+          wanted=next(l.split()[0] for l in checks.read_text().splitlines() if l.split()[-1].lstrip('*')==archive.name)
+          assert hashlib.file_digest(archive.open('rb'),'sha256').hexdigest()==wanted
+          with zipfile.ZipFile(archive) as z:z.extractall('build/bpy-baseline')
+          rows=[]
+          for name in ('Lance','Jericho'):
+              work=Path(os.environ['RUNNER_TEMP'])/('bpy-'+name)/'work'
+              selected=json.loads((work/'result.json').read_text())['size_attempts'][-1]
+              profile=next(p for p in work.glob('profile-*.json') if json.loads(p.read_text())['ratios']['Arms']==selected['free_region_ratios']['Arms'])
+              out=work/'reference-blender.json'
+              subprocess.run(['build/bpy-baseline/blender-4.3.2-windows-x64/blender.exe','--background','--factory-startup','--python-exit-code','1','--python','desktop/geometry_worker.py','--',str(work/'prepared.json'),str(out),str(profile)],check=True)
+              a=json.loads(out.read_text());b=json.loads((work/'reduced.json').read_text())
+              equal=a['meshes']==b['meshes']
+              rows.append(dict(model=name,exact_mesh_attributes_and_topology=equal,triangles=b['triangle_count'],vertices=b['vertex_count'],qa=json.loads((work/'result.json').read_text())))
+              if not equal: raise ValueError('::error::Windows geometry regression differs: '+name)
+          Path('build/bpy-windows-results.json').write_text(json.dumps(rows,indent=2))
+          print(json.dumps(rows,indent=2))
+      - name: Size, checksums and archive
+        shell: python
+        run: |
+          import shutil,hashlib,json,zipfile
+          from pathlib import Path
+          root=Path('dist/PS2PSP-bpy-Experiment')
+          path=Path(shutil.make_archive('dist/PS2PSP-bpy-Experiment-Windows-x64','zip','dist',root.name))
+          sha=hashlib.file_digest(path.open('rb'),'sha256').hexdigest()
+          Path(str(path)+'.sha256').write_text(sha+'  '+path.name+'\n')
+          with zipfile.ZipFile(path) as z:
+              items=z.infolist();parts={}
+              for i in items:
+                  if i.is_dir():continue
+                  bits=Path(i.filename).parts
+                  key='bpy-runtime' if '_internal' in bits and 'bpy' in bits else bits[1] if len(bits)>1 else 'other'
+                  row=parts.setdefault(key,dict(compressed=0,expanded=0,files=0))
+                  row['compressed']+=i.compress_size;row['expanded']+=i.file_size;row['files']+=1
+          summary=dict(zip_bytes=path.stat().st_size,expanded_bytes=sum(i.file_size for i in items),sha256=sha,components=parts)
+          Path('dist/bpy-package-size.json').write_text(json.dumps(summary,indent=2))
+          print(json.dumps(summary,indent=2))
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: bpy-experiment-diagnostics
+          path: |
+            dist/*.zip
+            dist/*.sha256
+            dist/bpy-package-size.json
+            build/bpy-windows-results.json
+            ${{ runner.temp }}/bpy-self-check.json
+            ${{ runner.temp }}/bpy-self-check.log
+      - name: Publish isolated self-check prototype
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $tag = "bpy-experiment-${{ github.run_number }}-${{ github.sha }}"
+          @'
+          Isolated feasibility prototype, not a production replacement. CPython 3.13 + standalone bpy 5.2.2; complete native wheel/resources, matching Blender source and notices. No game assets. Extract ZIP and double-click RunSelfCheck.cmd; send SELF-CHECK.json and SELF-CHECK.log. Hosted Windows tests remove Python/Blender from PATH but are not a pristine Windows VM. GPL integration/project licensing requires review before production distribution. Production converter and baselines are unchanged.
+          '@ | Set-Content "$env:RUNNER_TEMP/bpy-release-notes.txt" -Encoding utf8NoBOM
+          gh release create $tag dist/*.zip dist/*.sha256 dist/bpy-package-size.json build/bpy-windows-results.json --target '${{ github.sha }}' --prerelease --title 'Standalone bpy — Windows investigation and self-check' --notes-file "$env:RUNNER_TEMP/bpy-release-notes.txt"
