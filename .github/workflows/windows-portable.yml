@@ -2,8 +2,8 @@ name: Build portable PS2PSP preview
 on:
   workflow_dispatch:
   push:
-    branches: [feature/portable-ps2psp]
-    paths: ['desktop/**', 'ps2psp_converter.py', 'tools/build_portable.py', 'tools/portable_fixture.py', 'tools/blender_reduce.py', 'requirements-desktop.txt', 'docs/portable-*.md', 'tests/test_portable_desktop.py', '.github/workflows/windows-portable.yml']
+    branches: [feature/portable-ps2psp, fix/hctp-primary-model]
+    paths: ['desktop/**', 'ps2psp_converter.py', 'app/ps2_textures.py', 'tools/build_portable.py', 'tools/portable_fixture.py', 'tools/blender_reduce.py', 'tools/pac_inspect.py', 'tools/hctp_read.py', 'tools/hctp_weights.py', 'tools/yobj_read.py', 'requirements-desktop.txt', 'docs/portable-*.md', 'tests/test_portable_desktop.py', 'tests/test_main_model_selection.py', '.github/workflows/windows-portable.yml']
 permissions:
   contents: write
 jobs:
@@ -23,6 +23,8 @@ jobs:
           import json,zipfile,sys
           sys.path.insert(0,str(Path.cwd()))
           from tools.portable_fixture import create
+          from tools.generate_conformance_fixtures import pac, vectors
+          from tools.pac_inspect import inspect_pac
           Path('assets').mkdir(exist_ok=True)
           Path('build/test-inputs').mkdir(parents=True,exist_ok=True)
           with zipfile.ZipFile('downloads/Wrestler-Importer-beta-0.1.1.zip') as z:
@@ -32,6 +34,12 @@ jobs:
           for label,archive,entry in cases:
               with zipfile.ZipFile('downloads/'+archive) as z: source=json.loads(z.read(entry))
               create(source,Path('build/test-inputs',label+'-modified-HCTP.pac'))
+          # Auxiliary YOBJ entries precede the main section deliberately; their
+          # skin texture is absent from the main costume's texture table.
+          original=Path('build/test-inputs/Lance-modified-HCTP.pac').read_bytes()
+          entries=[(s['id'],original[s['offset']:s['offset']+s['size']]) for s in inspect_pac(original)['sections']]
+          auxiliary=vectors()['hctp-quad.yobj']
+          Path('build/test-inputs/LanceMulti-modified-HCTP.pac').write_bytes(pac([(7,auxiliary),(6,auxiliary)]+entries))
       - run: python -m tools.ci_tests
       - name: Build app, audited runtime, source bundle and notices
         run: python -m tools.build_portable
@@ -44,12 +52,12 @@ jobs:
           $p = Start-Process dist/PS2PSP-Pac-Converter/PS2PSP-Pac-Converter.exe -ArgumentList @('--smoke-test',$output) -PassThru -Wait
           if ($p.ExitCode -ne 0) { throw 'Frozen GUI/runtime smoke test failed' }
           Get-Content $output
-      - name: Frozen conversion, QA and textured previews on two modified HCTP fixtures
+      - name: Frozen conversion, QA and textured previews including multi-YOBJ source
         timeout-minutes: 25
         shell: pwsh
         run: |
           $env:PATH = "$env:SystemRoot\System32;$env:SystemRoot"
-          foreach ($name in @('Lance','Jericho')) {
+          foreach ($name in @('Lance','Jericho','LanceMulti')) {
             $job = "$env:RUNNER_TEMP\portable-$name"
             New-Item -ItemType Directory -Path $job | Out-Null
             @{source=(Resolve-Path "build/test-inputs/$name-modified-HCTP.pac").Path; base=(Resolve-Path 'assets/Kurt-Angle-Ring.PAC').Path; source_format='hctp'} | ConvertTo-Json | Set-Content "$job/request.json" -Encoding utf8NoBOM
@@ -57,6 +65,10 @@ jobs:
             if ($p.ExitCode -ne 0) { Get-Content "$job/error.log"; Get-Content "$job/work/geometry-0.log"; throw "Frozen $name conversion failed" }
             Get-Content "$job/success.json"
           }
+          $single = Get-Content "$env:RUNNER_TEMP\portable-Lance\success.json" -Raw | ConvertFrom-Json
+          $multi = Get-Content "$env:RUNNER_TEMP\portable-LanceMulti\success.json" -Raw | ConvertFrom-Json
+          if ($single.sha256 -ne $multi.sha256) { throw 'Auxiliary source models changed the final PSP PAC' }
+          Write-Output 'Single-model and multi-model inputs produce byte-identical PSP PACs.'
       - name: Package portable ZIP
         shell: python
         run: |
@@ -78,6 +90,6 @@ jobs:
         run: |
           $tag = "portable-preview-${{ github.run_number }}-${{ github.sha }}"
           @'
-          Portable Windows x64 preview. Includes Python, Blender 4.3.2 and offline QA/rendering; requires your own PSP SVR base PAC once. No game PACs are bundled. HCTP only; other source formats disabled. New generalized outputs require PPSSPP validation. CI exercises frozen UI/runtime and modified HCTP Lance/Jericho containers on Windows with developer tools removed from PATH; original-container and in-game tests are separate.
+          Portable Windows x64 preview. Fixes source import for PACs containing additional YOBJ models: selects the main wrestler model in section 2 for geometry, weights, textures and QA. Duplicate or ambiguous main models remain rejected. Includes the existing Python, Blender 4.3.2 and offline QA/rendering; requires your own supported PSP SVR base PAC once. No game PACs are bundled. HCTP only; other source formats disabled. New generalized outputs require PPSSPP validation. CI exercises frozen UI/runtime and modified HCTP Lance/Jericho containers, including reordered auxiliary YOBJ sections and byte-identical single/multi-model output, with developer tools removed from PATH; original-container and in-game tests are separate.
           '@ | Set-Content "$env:RUNNER_TEMP/release-notes.txt" -Encoding utf8NoBOM
           gh release create $tag dist/*.zip dist/*.sha256 --target '${{ github.sha }}' --prerelease --title 'PS2PSP Pac Converter by RyosPrime — Windows preview' --notes-file "$env:RUNNER_TEMP/release-notes.txt"

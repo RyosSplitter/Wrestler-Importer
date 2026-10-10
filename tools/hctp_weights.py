@@ -13,7 +13,7 @@ import math
 from pathlib import Path
 
 from .hctp_read import read_hctp
-from .pac_inspect import FormatError, inspect_pac
+from .pac_inspect import FormatError, inspect_pac, select_model_section
 from .yobj_read import Reader
 
 
@@ -120,9 +120,6 @@ def load_hctp_with_weights(path: Path):
     data = path.read_bytes()
     if data.startswith(b'PAC '):
         pac = inspect_pac(data)
-        sections = [s for s in pac['sections'] if s['kind'] == 'model_section']
-        if len(sections) != 1:
-            raise FormatError('Expected one uncompressed HCTP model section')
-        section = sections[0]
+        section = select_model_section(pac)
         data = data[section['offset']:section['offset'] + section['size']]
     return read_hctp_with_weights(data)

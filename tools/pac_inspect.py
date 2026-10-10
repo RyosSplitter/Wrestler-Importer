@@ -104,6 +104,26 @@ def inspect_pac(data: bytes) -> dict:
             "warnings": warnings, "scope": "Container inspection; conversion is not implemented"}
 
 
+def select_model_section(report: dict) -> dict:
+    """Select the main wrestler YOBJ, without treating auxiliary models as it.
+
+    Section 2 is the main model in the observed wrestler PAC layout. Auxiliary
+    YOBJs (including sections 6/7) must not make this selection ambiguous. Keep
+    the previous single-model fallback only when no section 2 is present; do
+    not guess by file order, model name or size. Container ranges must already
+    have been validated by inspect_pac.
+    """
+    main = [s for s in report['sections'] if s['id'] == 2]
+    if main:
+        if len(main) != 1 or main[0]['kind'] != 'model_section':
+            raise FormatError('PAC section 2 must contain exactly one uncompressed YOBJ model')
+        return main[0]
+    models = [s for s in report['sections'] if s['kind'] == 'model_section']
+    if len(models) != 1:
+        raise FormatError('Missing or ambiguous main YOBJ model: multiple models require PAC section 2')
+    return models[0]
+
+
 def extract_pac(data: bytes, destination: Path) -> dict:
     """Extract exact section/image slices to a new directory; never overwrite."""
     report = inspect_pac(data)

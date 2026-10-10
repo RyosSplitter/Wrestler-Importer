@@ -11,7 +11,8 @@ from PIL import Image
 
 from stable_pipeline import texture_convert as psp
 from stable_pipeline.pac_inspect import FormatError, inspect_pac
-from stable_pipeline.yobj_read import load_model
+from tools.pac_inspect import FormatError as SourceFormatError
+from tools.yobj_read import load_model
 
 PSM_NAMES = {0: 'PSMCT32', 1: 'PSMCT24', 2: 'PSMCT16', 10: 'PSMCT16S',
              19: 'PSMT8', 20: 'PSMT4'}
@@ -115,7 +116,12 @@ def read_rtx3(data):
 def read_source(source):
     """Decode only model-referenced textures; prefer the main costume section."""
     data = source.read_bytes()
-    model = load_model(source)
+    # The historic opacity-fix snapshot remains hash-pinned. Use the maintained
+    # reader for main-section selection, preserving this module's error type.
+    try:
+        model = load_model(source)
+    except SourceFormatError as exc:
+        raise FormatError(str(exc)) from exc
     textures = {}
     for section in inspect_pac(data)['sections']:
         for entry in section.get('textures', []):

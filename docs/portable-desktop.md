@@ -58,3 +58,8 @@ to exercise Tk drag/drop resources and the bundled Blender binary. The separate
 `windows-portable.yml` workflow builds and tests this branch, then publishes a
 prerelease. It never merges into main. See `portable-distribution.md` for notices
 and `docs/hctp-psp/` plus `REIMPLEMENTATION_GUIDE.txt` for format details.
+# Source import maintenance
+
+The current reader supports main wrestler YOBJ section 2 alongside auxiliary
+models in other sections. See [source-selection regression notes](portable-primary-model-fix.md)
+for validation and remaining accessory-support limits.

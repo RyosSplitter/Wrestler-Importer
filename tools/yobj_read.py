@@ -14,9 +14,9 @@ import struct
 import sys
 
 try:
-    from .pac_inspect import FormatError, inspect_pac
+    from .pac_inspect import FormatError, inspect_pac, select_model_section
 except ImportError:
-    from pac_inspect import FormatError, inspect_pac
+    from pac_inspect import FormatError, inspect_pac, select_model_section
 
 
 class Reader:
@@ -187,10 +187,7 @@ def load_model(path: Path, *, psp_geometry: bool = False) -> dict:
     data = path.read_bytes()
     if data.startswith(b"PAC "):
         report = inspect_pac(data)
-        models = [s for s in report["sections"] if s["kind"] == "model_section"]
-        if len(models) != 1:
-            raise FormatError("Expected exactly one YOBJ model section in PAC")
-        section = models[0]
+        section = select_model_section(report)
         data = data[section["offset"]:section["offset"] + section["size"]]
     return read_yobj(data, psp_geometry=psp_geometry)
 

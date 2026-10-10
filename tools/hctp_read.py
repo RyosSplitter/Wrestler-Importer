@@ -12,10 +12,10 @@ from pathlib import Path
 import sys
 
 try:
-    from .pac_inspect import FormatError, inspect_pac
+    from .pac_inspect import FormatError, inspect_pac, select_model_section
     from .yobj_read import Reader, _finite, read_yobj, write_obj
 except ImportError:
-    from pac_inspect import FormatError, inspect_pac
+    from pac_inspect import FormatError, inspect_pac, select_model_section
     from yobj_read import Reader, _finite, read_yobj, write_obj
 
 
@@ -134,10 +134,7 @@ def load_hctp(path: Path) -> dict:
     data = path.read_bytes()
     if data.startswith(b"PAC "):
         report = inspect_pac(data)
-        sections = [s for s in report["sections"] if s["kind"] == "model_section"]
-        if len(sections) != 1:
-            raise FormatError("Expected one HCTP model section")
-        s = sections[0]
+        s = select_model_section(report)
         data = data[s["offset"]:s["offset"] + s["size"]]
     return read_hctp(data)
 
