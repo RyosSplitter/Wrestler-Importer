@@ -1,5 +1,11 @@
 ## Read-only HCTP model QA study
 
+Developer handoff: [HCTP → PSP format/pipeline reference](../docs/hctp-psp/README.md)
+and [from-scratch reimplementation guide](../REIMPLEMENTATION_GUIDE.txt).
+The recommended latest Lance/Jericho references, hashes and separate branch
+locations are listed in [reproduction](../docs/hctp-psp/pipeline-and-reproduction.md).
+Historical beta and failed test artifacts remain preserved below.
+
 [Download comparison reports, aligned geometry and matching heatmaps](HCTP-Model-QA-0.1-study.zip). Extract and open `index.html`. Detects Lance's posterior depth deficit and Jericho's pose-dependent jaw deviation, with saved-stage evidence. No new PAC or automatic correction is included. [Method, usage and limitations](../docs/model-qa.md).
 
 ## HCTP Chris Jericho: PSP hybrid trial

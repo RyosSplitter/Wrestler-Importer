@@ -1,0 +1,28 @@
+{
+  "status": "CONFIRMED identified binary artifacts; user-reported SVR 2011 PSP acceptance",
+  "policy": "Preserve these hashes; future rules use successful steps plus separate QA, not failed baselines",
+  "baselines": [
+    {
+      "label": "Lance posterior guard",
+      "status": "CONFIRMED final artifact and reported posterior gameplay success; unrelated historical QA findings retained",
+      "commit": "27e2f1364dda8f76a940d80e188da07a0d619d86",
+      "path": "downloads/Lance-SVR2011-PSP-posterior-guard-TEST.pac",
+      "bytes": 145408,
+      "sha256": "807d60134bb91071f01a28381dd0368214ecfb5c57b3713ae3829203f1568700",
+      "yobj_bytes": 208384,
+      "yobj_sha256": "b591b1b0386462d1beaac0188a617c1dfb90b04925c9c5d16bee53a179a3f849",
+      "counts": {"meshes": 57, "vertices": 2385, "triangles": 2420, "indices": 4318, "bones": 79, "textures": 19, "material_records": 96}
+    },
+    {
+      "label": "Jericho jaw eye elbow guard",
+      "status": "CONFIRMED final artifact and reported gameplay acceptance; QA 0.2 clears pad-specific flags but retains six other boundary review findings",
+      "commit": "9c4212ee01ba322b1296119852d91e3da736bb15",
+      "path": "downloads/Jericho-SVR2011-PSP-elbow-pad-TEST.pac",
+      "bytes": 145408,
+      "sha256": "369ee95ed12c58c7c4d91f9ae26590bb2e4469a3abd31e8312d043bfe27533e8",
+      "yobj_bytes": 194784,
+      "yobj_sha256": "0a85f249b8336c07a4f22e01a6e7cafbba683565e8008d1469d5202d3305a77a",
+      "counts": {"meshes": 54, "vertices": 2389, "triangles": 2417, "indices": 4087, "bones": 79, "textures": 20, "material_records": 94}
+    }
+  ]
+}

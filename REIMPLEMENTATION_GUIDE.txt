@@ -1,0 +1,393 @@
+HCTP -> PSP REIMPLEMENTATION GUIDE
+================================
+
+Purpose
+-------
+Build a compatible HCTP wrestler converter using only this repository's written
+specification and independently implemented readers/writers. Do not depend on a
+previous chat, a local cloud directory, or undistributed editor source code.
+
+Evidence labels apply to each paragraph and its following pseudocode/list:
+CONFIRMED = cited supported binary/test/implementation observation.
+INFERRED = supported explanation or proposed broader conversion policy.
+UNKNOWN = unresolved semantics or coverage. Copy native opaque data or reject
+unsupported variants; never silently invent their meaning.
+
+Read docs/hctp-psp/README.md and evidence-ledger.md first. E01..E25 below refer to
+that ledger. Detailed offset tables are in binary-formats.md and
+textures-and-rendering.md. This guide also states the essential algorithms.
+
+1. Establish scope and successful targets
+-----------------------------------------
+CONFIRMED [E01/E16/E20]: Latest user-validated reference outcomes:
+  Lance: Lance-SVR 2011-PSP-posterior-guard-TEST.pac, 145408 bytes
+    SHA256 807d60134bb91071f01a28381dd0368214ecfb5c57b3713ae3829203f1568700
+    expanded YOBJ SHA256
+    b591b1b0386462d1beaac0188a617c1dfb90b04925c9c5d16bee53a179a3f849
+  Jericho: Jericho-SVR 2011-PSP-elbow-pad-TEST.pac, 145408 bytes
+    SHA256 369ee95ed12c58c7c4d91f9ae26590bb2e4469a3abd31e8312d043bfe27533e8
+    expanded YOBJ SHA256
+    0a85f249b8336c07a4f22e01a6e7cafbba683565e8008d1469d5202d3305a77a
+
+CONFIRMED [E01]: Lance's tools/evidence are on separate immutable commit
+27e2f1364dda8f76a940d80e188da07a0d619d86. Jericho's final pad experiment is at
+9c4212ee01ba322b1296119852d91e3da736bb15. Current QA 0.2 is at
+a565300993df0f6fae84a4179f7d7fa53e89b9cc. Use a detached worktree for the Lance
+branch; neither experiment needs a merge into main for reproduction.
+
+CONFIRMED [E01]: The beta uses older stable_pipeline/profile.json opacity-fix-v1,
+not all these accepted improvements. Reimplement the successful components below,
+not the historical uniform 30%-retention beta as the final quality policy.
+
+UNKNOWN [E22]: All HCTP characters, other PS2 games, all PSP games and every native
+packet/controller variant are not certified. Tests reported by the user used
+SVR 2011 PSP ULUS10543; these conversions retained the PSP 2007 Kurt skeleton.
+
+2. Write bounded binary readers before any mesh editing
+------------------------------------------------------
+CONFIRMED [E02/E04]: Use little-endian unsigned fields/floats except POF0 delta
+encodings. Validate every length, multiplication, pointer and addition before
+reading/allocating. Preserve originals, raw opaque records and hashes. Different
+formats have different origins:
+  PAC: section address = (8 + 8*section_count) + u24(row+2).
+  YOBJ: pointer target = u32(pointer_field) + 8.
+  Texture table: row payload address is relative to section byte zero.
+
+CONFIRMED [E02]: PAC header = 'PAC ' + u32 count, then count rows of8 bytes:
+u16 ID, u24 relative offset, u24 stored size. Require valid, nonempty, disjoint
+ranges after the row table. Do not assume all section IDs have the same game
+meaning. In the target samples main model=2, texture table=9; section8 must be
+preserved from the PSP base, not replaced with the source HCTP section8.
+
+CONFIRMED [E03]: If stored section starts 'BPE ', read version0x100, compressed
+length and expanded length at offsets4,8,12; data starts to 16. For each block:
+  left[i]=i, right[i]=0 for 256 entries; index=0.
+  c<=127: read c+1 dictionary entries.
+  c>127: skip c-127 entries, then read ONE entry unless index==256.
+  Entry reads left; if left!=index also read right.
+  Then read u16 LE TOKEN count and those tokens; recursively expand.
+  Reset dictionary each block; reject cycles/truncation/zero token blocks.
+  Enforce exact wrapper lengths and bounded expanded total.
+A literal-only BPE encoder can establish correctness, but useful pair compression
+is needed to reach the demonstrated file budgets. Compression does not reduce
+expanded model memory. Current compressor block size4000/distinct-symbol200 are
+policy choices, not format requirements.
+
+3. Decode common skeletons and HCTP geometry/weights
+---------------------------------------------------
+CONFIRMED [E04]: YOBJ header72 bytes:
+  +0 magic, +4 pre-POF0 end minus8, +12 same end on supported native PSP,
+  +24 mesh count, +28 bone count, +32 texture count,
+  +36 mesh pointer, +40 bones, +44 texture names, +48 model descriptor.
+Keep unlisted header fields opaque. Bone stride80:
+  +0 name16; +16 local float4; +32 rotation float3; +48 signed parent;
+  +64 stored global float3. Other bytes opaque. Parents are zero-based/-1 roots.
+Texture names stride16. PSP descriptor32 has name16 and secondary mesh count+24.
+Check finite transforms, unique names and acyclic hierarchy.
+
+CONFIRMED [E05]: HCTP mesh stride64:
+  +0 group count, +4 material count, +8 groups pointer, +12 materials pointer,
+  +28 weights stream pointer, +32 supported packet count=2*positions+2,
+  +36 weight stream qword length, +40 native position count.
+Group stride32: +0 vertex count, +4 used bone count1..4, +8 positions pointer,
++12 normals pointer, +16 four u32 slots. Used bone IDs are ONE-based.
+Positions/normals are separate float4 arrays with16-byte strides. PositionW=1.
+Concatenate groups in order to obtain mesh-local native source position indices.
+
+CONFIRMED [E05]: HCTP material stride208: +40 zero-based texture ID,
++196 strip count, +200 strips pointer. Primitive stride16:
++0 primitive3, +4 attributes3, +8 corner count, +12 corners pointer.
+Corner stride32: float3 UVQ(+0, Q=1), u32 source index(+12), float4 RGBA(+16).
+Make distinct output vertices for different UV/color corners of the same source
+point, recording source_vertex_index for skinning. Reconstruct alternating strip
+winding: even(0,1,2), odd(1,3,2), etc. Degenerate suppression uses repeated SOURCE
+position indices, not the possibly split UV output indices.
+
+CONFIRMED [E05]: Weight stream contains 16-byte headers [0,0,0,command] then
+count float4 rows. Supported command high byte0x6c (V4-32), bits 16..23 count
+(0 means256), low10 bits VU destination, other low control bits reject.
+First source vertex = destination - 0x280 (FIXED, not computed from mesh count).
+One-bone groups implicitly weight1. Multi-bone groups must have nonoverlapping,
+complete explicit packet coverage. Float slots use that group's palette order;
+unused slots zero, values finite0..1, sum tolerance1e-5. Copy weights to every
+UV/color duplicate using its verified source index. Current decoder supports
+<=160 source positions/mesh; unsupported variants must fail clearly.
+
+UNKNOWN [E05]: Complete VU microprogram and other packet layouts are not known.
+Do not reinterpret an unknown command as an equivalent float array.
+
+4. Use a loss-aware intermediate representation
+-----------------------------------------------
+CONFIRMED [E09]: Store bones, textures, meshes, per-mesh palette, corner-split
+vertices {position,normal,uv,color,weights,source_vertex_index}, per-material
+texture ID and oriented triangles. weights[j] belongs to palette[j]. Preserve
+raw source/native state separately. During numerical stages, expand weights to
+a dense TARGET-bone vector; during writing, reduce to the ordered mesh palette.
+Save hashes, convention metadata, uniform alignment and stage provenance.
+
+CONFIRMED [E15]: Save at least decoded/aligned, transferred, reduced, packed and
+serialized/redecoded stages. QA traces first supplied divergence, so missing
+stages prevent reliable diagnosis. Do not retain invalid source-index labels
+after topology changes as if correspondence were still established.
+
+5. Normalize rest pose with one rigid rotation and uniform scale
+---------------------------------------------------------------
+CONFIRMED [E09]: Build bind matrices using hierarchy and the supported formula
+parent * T(localXYZ) * Rz * Ry * Rx. Fit a uniform positive similarity using
+shared rest bone landmarks, SVD/Kabsch proper rotation (determinant+1), then
+translation of means. At least six landmarks are required for current QA.
+The twelve names are listed in rigging-and-optimization.md. Record landmark
+residuals. Transform geometry by s*R*p+t and normals by normalized R*n.
+Never fit separate axis scales to remove an anatomical discrepancy.
+
+INFERRED [E09]: The stored rotation angles are interpreted as radians for the
+supported samples. Native animation-controller semantics are not fully proved.
+
+CONFIRMED [E09/E15]: Supported native model has negative Y toward head and
+negative Z toward the FRONT. QA uses(x,-y,-z); preview OBJ uses(x,z,-y). Negative native Z
+was previously mislabeled rear: that caused a wrong anatomical diagnosis.
+Track UV convention: native stages uv_v_flipped=false; Blender-facing legacy
+stages flip V once and writer reverses it once. Never flip again indiscriminately.
+
+6. Map weights selectively onto the preserved PSP skeleton
+---------------------------------------------------------
+CONFIRMED [E10]: Map source bone names, not original indices. Missing bones
+redirect to nearest shared named ancestor, summing mass. Reject any remaining
+missing mass. PSP output bones remain the donor's original bytes. No source
+animation retargeting occurs. Source-only hair chains attach to the head ancestor;
+this does not preserve all source hair simulation.
+
+CONFIRMED [E10/E17]: Body source/ancestor weights worked better in the paired
+trials than blanket nearest-donor or automatic heat binding. Nearest donor
+queries use ordinary triangles, closest point and barycentric interpolation,
+not just nearest vertices. The original hybrid used source head mass f:
+  W=(1-f)*mapped_source + f*PSP_donor.
+That replaces ALL source cranial data when f=1, introducing neck/body influence
+around a different donor's jaw. Do not use it unconditionally for faces.
+
+CONFIRMED [E17/E18]: Successful jaw correction preserves mapped source cranial
+support on existing geometry. Unconditional cranial preservation then failed
+at the eyes: same-name eye/lid bind frames/pivots differed, and source-weight
+preservation produced the reported ocular defect. Selective
+correction restores proven previous PSP ocular weights where source supports
+l_eye/r_eye/l_mabuta/r_mabuta, preserving every other jaw-fixed record. This
+requires verified frozen correspondence between PSP versions, not presumed
+source/native index equality. Remap copied float32 weight bytes by bone identity.
+
+INFERRED [E18]: For a new wrestler, construct separate source-derived jaw/chin
+and donor-compatible ocular candidates, inspect controller frames/parents,
+compare poses and establish a proven PSP ocular control. Do not claim an old
+Jericho native-record selection works on a different character. Normalization
+and palette validity do not prove compatible animation semantics.
+
+CONFIRMED [E11]: Prune strongest active influences according to policy (current
+max 4), report discarded mass and normalize. Coincident seam aliases must retain
+consistent skinning unless intentional. Encoded draw palette capacity is 8,
+not a hard 2 active influence law inferred from one native reference.
+
+7. Preserve original shape before simplification
+------------------------------------------------
+CONFIRMED [E11/E16/E20]: Current regional reducer uses PSP weights for Head,
+Torso, Arms, Legs ownership. Later hybrid retention Head 0.8, Torso 0.65, Arms 0.8,
+Legs 0.65 is a tested profile, not a universal platform requirement. A ratio 0.3
+means RETAIN 30%, not remove 30%. Protect region seams, corner UVs/colors and
+appropriate smoothing ownership. Create all Blender attribute layers before
+holding RNA references; otherwise old layer references may become invalid.
+
+CONFIRMED [E16]: Broad region face floors failed Lance's rear volume. Surface
+preservation froze actual original posterior l-pan2/l-se1 triangles before
+collapse WITHOUT taking extra faces from unrelated regions. Replaying source
+geometry retained existing seam weights and unrelated superior neck boundary;
+new interior records used pre-decimation source-derived weights. An initial
+upper seam neck regression was rejected. No arbitrary outward offset was used.
+
+CONFIRMED [E20]: Same-entry material boundaries also need protection. Jericho's
+pad/skin anchors moved despite whole-arm QA passing. Preserving original pad
+faces plus source skin aliases and weights fixed its pointed edge while keeping
+jaw and eyes unchanged. Current successful branch selectors are asset-specific.
+
+INFERRED [E16/E20/E21]: A reusable replacement should select protected anatomical
+surfaces and material boundaries using reference/depth/curvature and seam evidence,
+then test simplification against source. Keep acceptable protected surfaces or
+reject collapse causing excess drift. Do not imitate a failed shape with volume
+inflation. If texture reduction/compression cannot meet a budget with required
+anatomy preserved, report the conflict. This repository does not yet contain a
+universal volume-constrained simplifier.
+
+CONFIRMED [E11]: Recalculate normals after reduction using area-weighted oriented
+faces, respecting intended hard edges/smoothing groups and seam duplicates.
+Rebuild corner-split native records after geometry changes. Check UVs against
+source. Protected faces require oriented position/UV/weight signatures, not
+just equal triangle counts.
+
+8. Decode textures and write the supported GIM subset
+----------------------------------------------------
+CONFIRMED [E08]: RTX3 header 64: +0 magic; +4 size-8; +8 u64 TEX0;
++36 pixel byte count; +40 pixel offset (relative to byte 8). Palette follows pixels.
+PSM bits 20..25, TW 26..29, TH 30..33, CPSM 51..54, CSM55, CSA 56..60.
+width=2^TW,height=2^TH. Supported expanded decoder handles T8(19),T4(20),
+CT32(0),CT24(1),CT16(2),CT16S(10), with specified palette formats.
+Do not confuse these supported contracts with all PS2 texture formats.
+
+CONFIRMED [E08]: T4 reads low nibble first. For a 256-entry CSM1 palette, reorder
+(i&~24)|((i&8)<<1)|((i&16)>>1). Compact 16 palette is not fully permuted.
+T4 full palette uses CSA*16 bank. T8 nonzero CSA rejects. 32-bit alpha expands
+min(a*255//128,255); RGB5A1 uses 5-bit expansion and bit 15 alpha. Observed RTX3
+host images are linear, so no extra GS VRAM unswizzle. See texture book for
+synthetic CSM2/direct-color coverage and unknown real-file variants.
+
+CONFIRMED [E08]: GIM writer prefix 16, root 16, picture 32, image 48; block header 16,
+information 64, pixels start 128. Image format 4/5 for T4/T8, order 1; palette RGBA8888
+format 3/order 0. Swizzle BYTE coordinates with:
+  A=((y//8)*(byte_width//16)+x//16)*128+(y%8)*16+x%16.
+For T4 first pack even_pixel | (odd_pixel << 4),byte_width=width/2, W multiple of 32, H multiple of 8.
+For T8 byte_width=W,W multiple of 16, H multiple of 8. Palette 16/256 RGBA entries follows
+image. Total T4=272+W*H/2;T8=1232+W*H. Full block information fields are tabulated
+in docs/hctp-psp/textures-and-rendering.md; implement these exactly for fixtures.
+
+CONFIRMED [E08/E13/E18]: Opaque budgeted images can be reduced/quantized, with
+loss reports. Cutout hair/masks retain exact supported source indices/palette
+when possible; latest accepted corrective PACs preserve texture sections bytewise.
+Ordinary BODY vertex alpha 255 is a separate rule; do not make texture alpha
+opaque. Halving both image axes quarters pixels, not halves them. Fixed GIM
+overhead prevents exact size halving. Decode output GIM and compare expected
+pixels/palette, including alpha, after each texture operation.
+
+9. Pack PSP draw buffers and preserve native state
+--------------------------------------------------
+CONFIRMED [E06/E11]: Native PSP mesh (64 bytes): +4 material count,+8 palette pointer,
++12 materials,+24 pointer-to-vertex-pointer-cell,+28 GE format,+40 vertex count,
++48 center XYZ/radius float4. Palette (16+4*K bytes): +0 vertex count,+4 K,+8 vertex pointer,
++12 opaque,+16 K one-based bone IDs. Its vertex pointer and cell value must alias.
+K=((flag>>14)&7)+1,1..8. Clear 0x1c000 to get base 0x17ff(float),0x13ff(u8/128),
+0x15ff(u16/32768). W=align4(K*slot width),stride=W+36:
+  weights, padding, float2 UV, RGBA8, float3 normal, float3 position.
+Rigid 0x11ff has a 36-byte stride; attachment semantics remain UNKNOWN. Latest
+successful artifacts use float32. Fixed point must sum to 128/32768, not 255/65535.
+
+CONFIRMED [E06/E19]: Assign target ordinary body part provenance, then split
+triangles by palette union<=8 and representable vertex/index ranges. Duplications
+for UV/material/palette boundaries are legitimate. Meshes are not required to
+match a count of 31 observed in one OBJ. Merge only adjacent demonstrably compatible
+part/layout/opaque metadata chunks. Preserve material/primitive order, remap
+palette weight slots and all local indices, conservatively enclose bounds.
+Measure expanded cost: union palettes can enlarge strides even if draw count falls.
+
+CONFIRMED [E06/E08/E12]: Material (144 bytes): +22 u16 texture ID,+24 observed control,
++132 strip count,+136 strip headers,+140 first-index alias. Copy first 132 bytes
+from compatible PSP template, changing only verified texture/control fields.
+Ordinary native T4/T8 profile controls 0x5/0x7; overlay 0x115/0x117; source cutout
+T8 trial 0x117. Full bit semantics are UNKNOWN. Do not use first blood material
+as every ordinary template. Strip (16 bytes): opaque8 bytes,count+8,index pointer+12;
+u16 LE local indices with alternating winding. Degenerate bridges count as
+indices but not triangles. Preserve oriented triangle multiset.
+
+10. Serialize YOBJ with independent pointer/relocation validation
+-----------------------------------------------------------------
+CONFIRMED [E06/E07]: Start copied 72-byte PSP header. Allocate meshes and buffers
+aligned relative to YOBJ byte 8 ((address-8)%16==0); pointer targets four-byte aligned. Copy
+bone/name/descriptor opaque bytes, update counts/pointers. Retain both vertex
+pointer aliases and material first-index alias. Preserve unknown metadata or reject
+unsupported relocated fields. Write both pre-POF0-end fields to E-8.
+
+CONFIRMED [E07]: Record every POINTER FIELD ADDRESS. POF0 at E has magic and
+u32 LE payload size. Sort locations, cursor 8; delta=(next_location-cursor)/4.
+Positive delta<=63 encodes one byte 0x40|delta;<=16383 two bytes BIG ENDIAN
+0x8000|delta; otherwise four bytes BIG ENDIAN 0xc0000000|delta. Zeroes are final
+padding only. Pad final YOBJ file to 16 and include padding in POF0 size,not E.
+Strict relocation set must exactly equal parsed pointer fields. Do not encode
+buffer addresses or omit aliases.
+
+CONFIRMED [E06/E23]: Verify allocations bounded/disjoint(exact aliases allowed),
+secondary mesh count, indices<own vertex count, bone IDs valid, weights finite/ranged/
+normalized, pointer aliases, relocation bounds/set and supported flags. The native
+repository writer can be used as a comparator, but independent fixture known
+answers avoid merely sharing its bug. Zero synthetic render state proves parser
+contracts, not gameplay; real outputs require native opaque donor templates.
+
+11. Run separate QA before and after packaging
+----------------------------------------------
+CONFIRMED [E15/E21]: Compare surfaces, not unverified indices. Fixed source ROIs,
+bidirectional closest-triangle distances, local depth/inward loss, silhouette,
+curvature diagnostic, topology/degeneracy and seams complement each other.
+Open segmented models do not give reliable closed anatomical volume. Use
+identical cameras/lights/poses, front/back/both sides/four three-quarter views,
+region close-ups and heatmaps. CPU clay images are not Noesis/game screenshots.
+
+CONFIRMED [E15/E18/E21]: Run 14 current whole-suite poses plus 16 ocular-specific
+probes separately. Use source-weight same PSP rig control and original-rig secondary
+control. Retain proven jaw motion while testing ocular compatibility. Check
+material boundary endpoints/midpoints against segments in both directions,
+maximum AND p95, posed shared seams. Whole-arm p95 missed the elbow corner.
+Calibration must exclude defect under study; thresholds remain provisional.
+
+INFERRED [E15/E21]: Accept only demonstrated local improvement with unchanged
+or in-tolerance unrelated regions, proper static/posed/native/size behavior and
+matched renders. If sampling changes produce a new flag, keep it and independently
+prove unchanged local posed signatures/fixed references; do not lower thresholds.
+Preserve best validated model and all failed candidates/reports.
+
+CONFIRMED [E21]: Accepted Jericho clears pad-specific flags but retains six other
+material boundary review findings. User reports of perfect appearance are not
+permission to call every automated metric perfect. QA read-only correction is
+separate; --fail-on-review returns 2 after reports. Without it CLI exit 0 may still
+contain findings. QA 0.1 archived reports have 12 poses, not current 14+boundary checks.
+
+12. Rebuild a copy of PSP PAC using unchanged container process
+--------------------------------------------------------------
+CONFIRMED [E02/E03/E16/E20]: Compress reviewed model, prove roundtrip, replace
+only approved sections with tools.pac_repack.replace_sections (or independently
+implemented equivalent). Recompute table offsets/sizes; align absolute PAC section
+starts to 16 and final file to 2048. Keep other stored payloads exact. New source conversion
+also replaces appropriate texture table, keeping donor ancillary sections. Avoid
+old raw-model repack helper for BPE/cutout trials. Confirm 24-bit offset/size bounds.
+
+CONFIRMED [E16/E20]: Current strict test budget 148000 bytes. 145408-byte accepted
+PACs meet it. Historical 144 KiB=147456 and 148 KiB=151552 are different limits.
+UNKNOWN [E22]: Universal runtime RAM or engine file/mesh ceilings are not known.
+Stored compression success does not certify expanded GE buffers or outer archive.
+
+CONFIRMED [E16/E20/E25]: Decode final PAC again, strictly audit the exact model, compare
+its SHA to QA model and preview YOBJ. Export OBJ/MTL/PNGs from THAT final PAC and
+retain the hash manifest. Keep texture sections/alpha exact across corrective trials.
+Never overwrite previous accepted PAC; name isolated test version with SHA256.
+
+13. Verify fixtures and actual game behavior
+--------------------------------------------
+CONFIRMED [E23]: Portable fixtures at tests/fixtures/hctp_psp contain an original
+synthetic quad, palette, VIF,BPE,POF0 and PAC. No game art/editor required.
+  python -m pip install -r requirements.txt
+  python -m tools.generate_conformance_fixtures --check
+  python -m unittest tests.test_documented_conformance -v
+11known-answer tests include corruptions/UVduplicates/stripparity/alpha.
+Additional QA/native/regressioncommands and assetrequirements are in
+fixtures-and-tests.md. Do not claim unrun asset-dependenttests passed.
+
+CONFIRMED [E25]: For Noesis preview keep OBJ, MTL, named PNGs adjacent; use fresh
+orientation/cull/shading toggles once each. For gameplay back up ISO/CH.PAC/ARC/
+slot, inject intended ring entry, rebuild allocation as needed, updateARC against
+resulting CH.PAC, saveISO, verify no next-entry overlap, restart PPSSPP and fresh match.
+Repeat standing/walking/bending/crouching, expressions/entrance/victory; inspect
+arena too. Record exact PAC hash, game version,motion,repetitions andfailures.
+
+UNKNOWN [E22/E25]: A valid inner PAC cannot prove outer ISO/ARC correctness, and
+analyticalposes cannot prove every native facial animation. Intermittent crashes and
+turnbuckle corruption lacked conclusive fault traces. Preserve this uncertainty.
+
+14. Forward integration and completion criteria
+-----------------------------------------------
+INFERRED [E16–E21]: Integrate successful source-shape preservation, selective
+facialcompatibility, materialboundary protection and QA as reusable policies,
+with explicit game/body/rig profiles and separate comparison stage. Evidence from
+additional paired models should replace asset-specific selectors. Integration
+must preserve accepted hashes/backups and not silently change beta/main behavior.
+
+CONFIRMED [E01]: This documentation does not merge experimental branches or
+rewrite converter/packaging. Exact accepted experiment replay is described in
+pipeline-and-reproduction.md; complete failure history/root cause evidence is in
+development-history-and-failures.md. Archive rejected first Lance patch andjaw-only
+eye failure, but use successful final policy/results as new development references.
+
+UNKNOWN [E22]: Universal HCTP support remains unproved. Completion requires wider
+packet/texture/controller coverage, reproducible real animation validation and
+new native pairs, not only these two excellent-looking tested models.

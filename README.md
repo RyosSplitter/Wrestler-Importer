@@ -4,6 +4,21 @@ Goal: turn a PS2 wrestler PAC from SYM, JBI, HCTP, or PS2 SVR into a PSP SVR
 wrestler PAC using a target PSP base skeleton and body layout. The intended app
 runs on Windows; exports will be tested in PPSSPP.
 
+## Developer reference and recommended baselines
+
+Read the [standalone HCTP → PSP developer reference](docs/hctp-psp/README.md)
+and [REIMPLEMENTATION_GUIDE.txt](REIMPLEMENTATION_GUIDE.txt). They document binary
+layouts, the successful source-preservation and selective facial workflow,
+failed approaches, QA, reproduction commands, evidence levels and synthetic
+conformance fixtures.
+
+The latest user-validated references are Lance's posterior-guard experiment and
+Jericho's jaw/eye/elbow-pad experiment. Use their successful steps plus current
+QA for future development. These independent branches have not been merged into
+main; the pinned Windows beta below still uses the earlier opacity-fix pipeline.
+The following sections describe historical capabilities and experiments, not a
+claim that the beta contains every accepted improvement.
+
 ## Current capability
 
 A separate [geometric QA stage](docs/model-qa.md) now compares original HCTP
