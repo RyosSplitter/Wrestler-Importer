@@ -158,3 +158,18 @@ standing, walking, crouching, grapples, facial motion and victory sequences in
 PPSSPP. Keep the prior accepted replacement for immediate rollback. Compare the
 preview YOBJ with the decompressed section 2 of the injected PAC before blaming
 rendering discrepancies on archive size.
+
+## Windows preview publication
+
+**CONFIRMED:** Windows CI run `38045941346`, job `114195374882`, passed all 184
+tests, the frozen GUI/Blender runtime smoke check, and full frozen Lance, Jericho
+and reordered multi-YOBJ conversion/QA jobs. Single- and multi-model controls
+produce identical PACs. The original 0401 experiment above was run on Linux;
+**UNKNOWN:** original 0401 conversion behavior on Windows and PPSSPP remains
+pending user testing. Hosted Windows checks are not a pristine-machine test.
+
+The [isolated Windows release](https://github.com/RyosSplitter/Wrestler-Importer/releases/tag/portable-preview-9-ea75979c2ee84be9a803338a5e39b3dc2734ce71)
+was downloaded and checked against its published SHA-256; its bundled source
+matches the tested modules. `docs/portable-0401-release.json` records the build,
+sizes and checksum. It contains no game PAC/model assets. Neither the standalone
+PAC nor the larger reference/QA bundle is included in the application ZIP.

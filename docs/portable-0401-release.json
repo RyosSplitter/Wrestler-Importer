@@ -1,0 +1,22 @@
+{
+  "source_commit": "ea75979c2ee84be9a803338a5e39b3dc2734ce71",
+  "branch": "experiment/precision-budget-fit",
+  "sha256": "523f74a0f9e2afbbd330f65c2702ff991c78ebb4b569e9bf58ba40adf226c844",
+  "zip_bytes": 556390885,
+  "expanded_bytes": 1276392178,
+  "code_matches": [
+    "desktop/core.py",
+    "desktop/budget.py",
+    "desktop/precision.py",
+    "ps2psp_converter.py"
+  ],
+  "game_assets_bundled": false,
+  "ci_run": 38045941346,
+  "ci_job": 114195374882,
+  "ci_result": "success",
+  "release_url": "https://github.com/RyosSplitter/Wrestler-Importer/releases/tag/portable-preview-9-ea75979c2ee84be9a803338a5e39b3dc2734ce71",
+  "runtime": "Blender 4.3.2, existing Python runtime",
+  "original_0401_test_platform": "Linux",
+  "original_0401_windows_test": "pending",
+  "original_0401_gameplay_test": "pending"
+}
