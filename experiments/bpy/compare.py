@@ -12,9 +12,12 @@ import sys
 
 import numpy as np
 from desktop.core import base_model
+from desktop.core import validate_pac
 from desktop.native import serialize
 from tools.jericho_hybrid_trial import pack
 from tools.psp_mesh_audit import audit_yobj
+from tools.pac_repack import replace_sections, texture_table
+from tools.yukes_bpe import compress
 
 
 def digest(p):
@@ -25,7 +28,7 @@ def compare(case):
     inputs = {key: Path(case[key]) for key in ('reference', 'candidate', 'base', 'textures', 'yobj')}
     hashes = {key: digest(p) for key, p in inputs.items()}
     a, b = [json.loads(inputs[k].read_text()) for k in ('reference', 'candidate')]
-    _, base = base_model(inputs['base'])
+    base_bytes, base = base_model(inputs['base'])
     entries = json.loads(inputs['textures'].read_text())['textures']
     raw = serialize(pack(b, base), base, entries)
     native = audit_yobj(raw)
@@ -47,6 +50,17 @@ def compare(case):
         native_structural_audit='pass', exact_final_yobj=raw==reference_bytes,
         reference_yobj_sha256=hashes['yobj'], candidate_yobj_sha256=hashlib.sha256(raw).hexdigest(),
         conclusion='Native byte identity preserves all static and analytical-pose QA inputs; no new geometric/skinning regression.' if raw==reference_bytes else 'Output differs; requires fresh QA before acceptance.')
+    if 'pac' in case:
+        path = Path(case['pac']); previous = digest(path)
+        gims = [(inputs['textures'].parent/e['gim']).read_bytes() for e in entries]
+        symbols = case['bpe_max_distinct']
+        pac = replace_sections(base_bytes, {2: compress(raw, max_distinct=symbols),
+            9: compress(texture_table(b['textures'], gims), max_distinct=symbols)})
+        validate_pac(pac, base_bytes)
+        result.update(pac_bytes=len(pac), exact_final_pac=pac==path.read_bytes(),
+            reference_pac_sha256=previous, candidate_pac_sha256=hashlib.sha256(pac).hexdigest(),
+            pac_structural_audit='pass')
+        if digest(path)!=previous: raise RuntimeError('Reference PAC changed')
     for key, p in inputs.items():
         if digest(p)!=hashes[key]: raise RuntimeError('Experiment changed input: '+str(p))
     return result

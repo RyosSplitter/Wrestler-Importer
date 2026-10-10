@@ -14,22 +14,9 @@ import traceback
 
 def load_bpy():
     import bpy
-    if getattr(sys, 'frozen', False) and not hasattr(bpy, 'app'):
-        # Resolve the physical wheel entry explicitly if the frozen importer
-        # selected an incomplete proxy/namespace instead of the native package.
-        import importlib.util
-        import importlib.machinery
-        binary = Path(sys._MEIPASS)/'bpy/__init__.pyd'
-        if not binary.is_file(): raise RuntimeError('Missing bpy native entry: '+str(binary))
-        print('Frozen bpy initial module:', repr(getattr(bpy, '__file__', None)), repr(bpy.__spec__), flush=True)
-        sys.modules.pop('bpy', None)
-        loader = importlib.machinery.ExtensionFileLoader('bpy', str(binary))
-        spec = importlib.util.spec_from_file_location('bpy', binary, loader=loader,
-            submodule_search_locations=[str(binary.parent)])
-        bpy = importlib.util.module_from_spec(spec)
-        sys.modules['bpy'] = bpy
-        loader.exec_module(bpy)
-    if not hasattr(bpy, 'app'): raise RuntimeError('bpy native initialization did not expose bpy.app')
+    if not hasattr(bpy, 'app'):
+        raise RuntimeError('Imported wrong/incomplete bpy module: '+repr(getattr(bpy, '__file__', None))+
+            '; check freezer entry import root for experiment package shadowing.')
     return bpy
 
 
