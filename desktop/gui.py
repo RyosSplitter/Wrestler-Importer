@@ -143,6 +143,8 @@ class Application:
                     else:
                         self.result=json.loads((self.job/'success.json').read_text(encoding='utf-8'));r=self.result
                         self.output.set(f"{Path(r['pac']).name}  •  {r['bytes']:,} bytes\nNative checks passed • {r.get('model_count',1)} models • {r.get('total_meshes',r['meshes'])} meshes • {r.get('total_triangles',r['triangles']):,} triangles\nQA: {r['review_flags']} findings to review • PPSSPP validation required")
+                        if r.get('adaptive_textures'):
+                            self.output.set(self.output.get()+f"\nAdaptive textures: {r['adaptive_textures']['review_flags']} texture tradeoffs — open QA report")
                         self.save.configure(state='normal');self.status.set('Review the PSP preview and QA report before saving.');self.show_preview()
                 except Exception as e:self.status.set('Worker ended unexpectedly; inspect Logs.');messagebox.showerror(NAME,str(e))
         if self.closing and not self.busy() and self.inspector is None:self.root.destroy();return

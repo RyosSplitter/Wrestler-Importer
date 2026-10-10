@@ -86,10 +86,16 @@ the analyzer and explicitly remains a heuristic, not a trained perceptual model.
 
 ## Candidates and source ceilings
 
-**CONFIRMED:** Width/height never exceed source width/height. Only proportional
-dimension reductions within the native whitelist are generated. Rectangular
-images remain rectangular. No aspect stretching, sharpening, super-resolution,
-or geometry/UV compensation is performed.
+**CONFIRMED:** Width/height never exceed source width/height. Newly generated
+dimension reductions are proportional and within the native whitelist.
+Rectangular images remain rectangular. A baseline image is additionally retained
+as an explicitly labeled incumbent if it already obeys source dimensions/colors,
+the native layout and alpha safeguards. Such an incumbent can have anisotropic
+sampling; normalized UVs and its pixels are left intact. An optimizer should not
+discard a good legal existing representation just because its pixel aspect differs
+from source. Upscaled legacy maps and alpha-flattened maps are not eligible.
+No new aspect stretching, sharpening, super-resolution or geometry/UV compensation
+is performed. Every incumbent's sampling-aspect status is reported.
 
 The useful color ceiling is actual visible source RGBA usage, plus one canonical
 fully transparent entry where required—not the declared PS2 palette capacity.
@@ -199,3 +205,11 @@ serialized budgets, compression inversion, independent pixel budget, legacy
 reference bytes and unchanged non-texture payloads. Windows CI also verifies the
 checkbox default and the frozen adaptive worker. Host tests do not replace that
 packaged Windows check or PPSSPP validation.
+
+**CONFIRMED platform finding:** The captured legacy reference texture hashes differ
+between the pinned Linux and Windows Pillow runtime builds. Tests freeze both
+observed platform hashes, and the previous/new legacy function was independently
+compared on the same Linux runtime. Determinism means repeatable on the same
+pinned runtime; cross-platform byte identity of native image processing is not
+claimed. The initial Windows test incorrectly assumed the Linux hash and failed;
+the generator itself was unchanged.

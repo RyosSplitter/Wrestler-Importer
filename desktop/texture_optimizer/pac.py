@@ -14,7 +14,7 @@ from tools.psp_mesh_audit import audit_yobj
 from tools.psp_mesh_merge_trial import sections
 from tools.yukes_bpe import compress,decompress
 from .analysis import analyze,measure,model_usage,occupied
-from .candidates import read_gim,generate
+from .candidates import read_gim,generate,OBSERVED_DIMENSIONS,OBSERVED_T8_DIMENSIONS
 from .allocator import allocate
 
 
@@ -62,10 +62,31 @@ def optimize_pac(baseline,decoded,output,*,target=148000,cancel=lambda:None,
         scoring=dict(features,mask=occupied(sources[n],usage[n]['uv_mask']))
         try:rows,rejected=generate(sources[n],scoring,bits,c[p],usage[n]['head_fraction']>.5)
         except ValueError as exc:
-            (output/'failure-report.json').write_text(json.dumps(dict(texture=n,error=str(exc),
+            rows=[];rejected=getattr(exc,'rejected_configurations',[])
+        # Keep the established representation as an explicit incumbent only
+        # when it obeys the new hard source ceilings, observed format contract
+        # and alpha safeguards. A content optimizer must not discard a legal
+        # good incumbent merely because its sampling axes differ from source.
+        rgba=c[p];visible=rgba[rgba[:,:,3]>0]
+        color_count=len(np.unique(visible,axis=0))+int(np.any(rgba[:,:,3]==0))
+        native_ok=p.shape[1::-1] in (OBSERVED_DIMENSIONS if bits==4 else OBSERVED_T8_DIMENSIONS)
+        within_source=p.shape[1]<=sources[n].shape[1] and p.shape[0]<=sources[n].shape[0] and color_count<=features['useful_source_colors']+int(features['transparent_color_required'])
+        alpha_ok=not features['has_alpha'] or (rgba.shape==sources[n].shape and np.array_equal(rgba[:,:,3],sources[n][:,:,3]))
+        if native_ok and within_source and alpha_ok and all(r['raw']!=gims[n] for r in rows):
+            rows.append(dict(raw=gims[n],entry=dict(width=p.shape[1],height=p.shape[0],bits=bits,
+                palette_entries=len(c),requested_useful_colors=color_count,used_palette_colors=color_count,
+                quantizer='Existing legal source-bounded incumbent',serialized_bytes=len(gims[n]),
+                pixel_palette_bytes=len(gims[n])-208,metrics=measure(sources[n],rgba,scoring['mask']),
+                source_quality_ceiling=features['source_quality_ceiling'],fully_preserved=False,
+                sampling_aspect_preserved=p.shape[1]*sources[n].shape[0]==p.shape[0]*sources[n].shape[1],
+                reason='Verified legal incumbent with normalized UVs; no new aspect-ratio distortion introduced')))
+            rows.sort(key=lambda r:(r['entry']['serialized_bytes'],r['entry']['metrics']['perceptual_loss'],r['entry']['width'],r['entry']['bits']))
+        if not rows:
+            (output/'failure-report.json').write_text(json.dumps(dict(texture=n,
+                error='No source-bounded native candidate or legal incumbent passes safeguards',
                 source_details=features,required_rendering_bits=bits,source_format=details[n],
-                rejected_configurations=getattr(exc,'rejected_configurations',[])),indent=2)+'\n')
-            raise ValueError(n+': '+str(exc)+'; diagnostics: '+str(output/'failure-report.json')) from exc
+                rejected_configurations=rejected),indent=2)+'\n')
+            raise ValueError(n+': no source-bounded native candidate passes safeguards; diagnostics: '+str(output/'failure-report.json'))
         choices.append(rows)
         reports.append(dict(name=n,source_palette_format=details[n],**features,
             head_fraction=usage[n]['head_fraction'],uv_coverage_used=usage[n]['uv_mask'] is not None,

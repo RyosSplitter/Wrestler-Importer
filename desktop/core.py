@@ -404,7 +404,8 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
     text=html.read_text(encoding='utf-8')
     note='<p>Native model set: %d models. <a href="../accessory-qa.json">Independent accessory structure, attributes and pose validation</a>. <a href="../preview/output.obj">Combined OBJ preview</a>. Actual in-game pad removal/throw behavior remains unverified.</p>'%(1+len(accessory_yobjs))
     if adaptive_report is not None:
-        note+='<p>Adaptive textures enabled. <a href="../adaptive-textures/report.html">Source/current/adaptive textures and allocation report</a>. Every non-texture section payload is byte-identical to the current-method baseline.</p>'
+        texture_flags=sum(bool(t['quality_review_flags']) for t in adaptive_report['textures'])
+        note+='<p>Adaptive textures enabled: %d textures have tradeoffs requiring review. <a href="../adaptive-textures/report.html">Source/current/adaptive textures and allocation report</a>. Every non-texture section payload is byte-identical to the current-method baseline.</p>'%texture_flags
     text=text.replace('</body>',note+'</body>')
     html.write_text(text,encoding='utf-8')
     step(92,'Rendering textured views of the actual final PSP output')
@@ -426,6 +427,8 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
     if adaptive_report is not None:
         result['adaptive_textures']=dict(report=str(work/'adaptive-textures/report.html'),
             baseline_pac=str(work/'current-texture-method.pac'),baseline_bytes=adaptive_report['baseline_bytes'],
-            pixel_palette_bytes=adaptive_report['pixel_palette_bytes'],unchanged_non_texture_payloads=True)
+            pixel_palette_bytes=adaptive_report['pixel_palette_bytes'],unchanged_non_texture_payloads=True,
+            review_flags=texture_flags)
+        result['review_flags']+=texture_flags
     dump(work/'result.json',result);step(100,'Ready for review and Save As')
     return result
