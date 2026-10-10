@@ -18,8 +18,9 @@ class HctpAdapter:
         return model,textures
     def inspect(self,path):
         model,textures=self.read(path)
-        from desktop.accessories import source_models
+        from desktop.accessories import source_models,decode_dependencies
         accessories,names=source_models(Path(path),model)
+        decode_dependencies(Path(path),textures,names)
         return {'format':'HCTP PS2','model':model['model_name'],'bytes':Path(path).stat().st_size,
                 'meshes':model['mesh_count'],'vertices':model['source_vertex_count'],
                 'triangles':model['triangle_count'],'bones':model['bone_count'],'textures':len(names),
