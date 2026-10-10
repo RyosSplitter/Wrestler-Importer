@@ -84,6 +84,9 @@ by the compressed-size saving.
 
 Experimental PAC: `0401-PSP-precision-experimental.pac`, SHA-256
 `8a42bdead5369be91231aaef63127954652121ed970bf741318d891b24ebecd1`.
+The standalone file and checksum are under `downloads/`; the separate
+`0401-PSP-precision-experiment.zip` contains the PAC, OBJ/PNG/YOBJ preview,
+both QA runs, structural checks and a detailed import README.
 
 ## Validation and limitations
 
@@ -97,6 +100,14 @@ arm/thigh/shin/wrist material edges, rest jaw and recession/depth findings in
 neck/torso/shoulders/hands/feet, plus shoulder/elbow pose findings. Before had
 19 review flags; after has 18. A coordinate-derived component flag disappeared;
 this is not claimed as an anatomical repair.
+
+**CONFIRMED:** Additional textured before/after panels in
+`downloads/0401-precision-comparisons/` use identical cameras, lighting and
+converted GIMs. Foreground mean absolute RGB differences were 0.0367–0.0451
+on a 0–255 scale across the five views; fewer than 0.068% of foreground pixels
+differed by over eight levels. These are measurements, not an acceptance limit.
+This CPU shader normalizes interpolated normals and cannot prove equivalence
+with real PSP lighting. The images are not Noesis screenshots.
 
 **CONFIRMED:** Separate verified native-topology correspondence tests compared
 every vertex in rest plus all 14 analytical poses and all 16 ocular probes.

@@ -1,0 +1,36 @@
+{
+  "status": "measurement_only",
+  "views": {
+    "front-left": {
+      "mean_absolute_rgb_difference_foreground": 0.037266322611160065,
+      "p99_channel_difference": 1.0,
+      "max_channel_difference": 117.0,
+      "pixels_over_8_fraction_foreground": 0.0005378251267321975
+    },
+    "front": {
+      "mean_absolute_rgb_difference_foreground": 0.042793548799590804,
+      "p99_channel_difference": 1.0,
+      "max_channel_difference": 127.0,
+      "pixels_over_8_fraction_foreground": 0.000539464850867939
+    },
+    "back": {
+      "mean_absolute_rgb_difference_foreground": 0.03865597263350557,
+      "p99_channel_difference": 1.0,
+      "max_channel_difference": 152.0,
+      "pixels_over_8_fraction_foreground": 0.00045557540372372947
+    },
+    "left": {
+      "mean_absolute_rgb_difference_foreground": 0.03665098709999287,
+      "p99_channel_difference": 1.0,
+      "max_channel_difference": 88.0,
+      "pixels_over_8_fraction_foreground": 0.0004988953032570736
+    },
+    "right": {
+      "mean_absolute_rgb_difference_foreground": 0.04505370601151267,
+      "p99_channel_difference": 1.0,
+      "max_channel_difference": 127.0,
+      "pixels_over_8_fraction_foreground": 0.0006765177140822503
+    }
+  },
+  "limitation": "Offline CPU shader normalizes interpolated normals; not a PSP/Noesis/PPSSPP rendering-equivalence guarantee"
+}
