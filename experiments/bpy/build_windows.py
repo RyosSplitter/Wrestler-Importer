@@ -26,7 +26,7 @@ def build():
         download('https://raw.githubusercontent.com/blender/blender/v5.2.2/'+filename, cache/filename)
     site = Path(sysconfig.get_path('platlib'))/'bpy'
     args = [sys.executable, '-m', 'PyInstaller', '--noconfirm', '--clean', '--onedir', '--console', '--name', NAME,
-            '--hidden-import', 'bpy', '--collect-all', 'tkinterdnd2', '--collect-all', 'rtree',
+            '--hidden-import', 'bpy', '--collect-submodules', 'tomllib', '--collect-all', 'tkinterdnd2', '--collect-all', 'rtree',
             '--collect-submodules', 'tools', '--collect-submodules', 'model_qa',
             '--collect-submodules', 'desktop', '--collect-submodules', 'stable_pipeline',
             '--collect-submodules', 'experiments.bpy', '--collect-all', 'cattrs',

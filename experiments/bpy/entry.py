@@ -12,6 +12,21 @@ import tempfile
 import traceback
 
 
+def load_bpy():
+    import bpy
+    if getattr(sys, 'frozen', False) and not hasattr(bpy, 'app'):
+        # Blender's native module intentionally delays initialization until its
+        # dummy __file__ is replaced. Windows' frozen extension importer can
+        # leave that proxy untouched. Follow the upstream initialization contract
+        # using the actual copied native path; never replace the reducer itself.
+        binary = Path(sys._MEIPASS)/'bpy/__init__.pyd'
+        if not binary.is_file(): raise RuntimeError('Missing bpy native entry: '+str(binary))
+        print('Initializing frozen bpy proxy; original file type:', type(getattr(bpy, '__file__', None)).__name__, flush=True)
+        bpy.__file__ = str(binary)
+    if not hasattr(bpy, 'app'): raise RuntimeError('bpy native initialization did not expose bpy.app')
+    return bpy
+
+
 def self_check(output):
     result = dict(status='failed', platform=sys.platform, python=sys.version,
                   executable=sys.executable, clean_windows_verified=False)
@@ -70,13 +85,13 @@ def main():
         # Per-job configuration remains writable; no persistent Blender install.
         os.environ.setdefault('BLENDER_USER_CONFIG', str(Path(tempfile.gettempdir())/'ps2psp-bpy-config'))
         os.environ.setdefault('BLENDER_USER_EXTENSIONS', str(Path(tempfile.gettempdir())/'ps2psp-bpy-extensions'))
-        import bpy
+        bpy = load_bpy()
         from desktop.geometry_worker import run
         print('Standalone bpy', bpy.app.version_string, bpy.app.build_hash.decode(), flush=True)
         run(*sys.argv[sys.argv.index('--')+1:])
         return 0
     if '--version' in sys.argv:
-        import bpy
+        bpy = load_bpy()
         print('Standalone bpy '+bpy.app.version_string, flush=True)
         return 0
     from desktop import core
