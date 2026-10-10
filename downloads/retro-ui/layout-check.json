@@ -1,0 +1,87 @@
+{
+  "platform": "Linux light fallback (Windows native capture is a separate release asset)",
+  "minimum_geometry": "940x640+20+20",
+  "convert_above_preview": true,
+  "view_controls_all_visible": [
+    {
+      "control": "\u00be",
+      "x": 0,
+      "width": 62
+    },
+    {
+      "control": "Front",
+      "x": 66,
+      "width": 78
+    },
+    {
+      "control": "Rear",
+      "x": 148,
+      "width": 70
+    },
+    {
+      "control": "Left",
+      "x": 222,
+      "width": 70
+    },
+    {
+      "control": "Right",
+      "x": 296,
+      "width": 78
+    },
+    {
+      "control": "Zoom",
+      "x": 474,
+      "width": 70
+    }
+  ],
+  "adaptive_default_off": true,
+  "unchanged_event_handler_methods": [
+    "entry",
+    "spawn",
+    "busy",
+    "browse_source",
+    "dropped",
+    "select_source",
+    "choose_base",
+    "start",
+    "cancel_job",
+    "poll",
+    "set_view",
+    "toggle_zoom",
+    "image_path",
+    "show_preview",
+    "enlarge",
+    "export",
+    "open_report",
+    "open_path",
+    "open_folder",
+    "open_logs",
+    "close"
+  ],
+  "conversion_runtime_byte_identical_to_previous_revision": true,
+  "host_suite": "235 tests passed",
+  "host_smoke": {
+    "gui": true,
+    "drag_drop_command_verified": true,
+    "source_menu_states": [
+      "disabled",
+      "disabled",
+      "normal",
+      "disabled"
+    ],
+    "bundled_blender": "Blender 4.3.2",
+    "preview_views": [
+      "front-left",
+      "front",
+      "back",
+      "left",
+      "right"
+    ],
+    "base_required": true,
+    "adaptive_textures_default": false,
+    "adaptive_checkbox_verified": true,
+    "ui_theme": "clam",
+    "convert_above_preview": true,
+    "initial_button_states_verified": true
+  }
+}
