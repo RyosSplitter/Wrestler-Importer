@@ -57,6 +57,8 @@ class PortableTests(unittest.TestCase):
             for p in (source,base,candidate):
                 with self.assertRaises(ValueError):save_as(result,p)
             output=root/'export.pac';save_as(result,output);self.assertEqual(output.read_bytes(),candidate.read_bytes())
+            output.write_bytes(b'previous accepted PAC');old_hash=digest(output);save_as(result,output)
+            self.assertEqual((root/'.ps2psp-backups'/(old_hash+'.pac')).read_bytes(),b'previous accepted PAC')
             candidate.write_bytes(candidate.read_bytes()+b'x')
             with self.assertRaises(ValueError):save_as(result,output)
 

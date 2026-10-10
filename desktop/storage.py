@@ -31,10 +31,20 @@ def save_as(result,destination):
     if destination.exists() and any(os.path.samefile(destination,result[k]) for k in ('source','base','pac')):raise ValueError('Save As points to a protected input through a hard link.')
     if digest(candidate)!=result['sha256']:raise ValueError('Review candidate changed; export withheld.')
     validate_pac(candidate.read_bytes())
+    previous=None
+    if destination.exists():
+        previous=digest(destination);backups=destination.parent/'.ps2psp-backups';backups.mkdir(exist_ok=True)
+        backup=backups/(previous+'.pac')
+        if not backup.exists():
+            try:
+                with backup.open('xb') as f:f.write(destination.read_bytes());f.flush();os.fsync(f.fileno())
+            except FileExistsError:pass
+        if digest(backup)!=previous:raise ValueError('Previous PAC backup verification failed; export withheld.')
     fd,temp=tempfile.mkstemp(prefix='.ps2psp-',suffix='.tmp',dir=destination.parent)
     try:
         with os.fdopen(fd,'wb') as f:f.write(candidate.read_bytes());f.flush();os.fsync(f.fileno())
         if digest(temp)!=result['sha256']:raise ValueError('Copy verification failed.')
+        if previous is not None and digest(destination)!=previous:raise ValueError('Destination changed during Save As; export withheld.')
         os.replace(temp,destination)
     finally:
         if Path(temp).exists():Path(temp).unlink()

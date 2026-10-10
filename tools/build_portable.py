@@ -56,6 +56,8 @@ def build():
     for filename in ('ps2psp_converter.py','requirements-desktop.txt','requirements-qa.txt','requirements.txt','REIMPLEMENTATION_GUIDE.txt'):
         shutil.copy2(ROOT/filename,sources/'converter'/filename)
     shutil.copytree(ROOT/'docs/hctp-psp',sources/'converter/docs/hctp-psp')
+    for path in (ROOT/'docs').glob('portable-*'):
+        if path.is_file():shutil.copy2(path,sources/'converter/docs'/path.name)
     notices=destination/'licenses';notices.mkdir();manifest=[]
     for dist in metadata.distributions():
         license_files=[]

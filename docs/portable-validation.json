@@ -1,0 +1,214 @@
+{
+  "status": "Original-container cloud tests; Windows package tests recorded separately; new outputs require PPSSPP validation",
+  "suite": {
+    "passed": 171,
+    "failed": 0,
+    "skipped": 0
+  },
+  "historical_baselines_unchanged": true,
+  "cases": [
+    {
+      "bytes": 137216,
+      "sha256": "1cb83929f9bdd948f2460c56d9306109fe25e0354febf09183babc72fdac50c4",
+      "meshes": 44,
+      "vertices": 2365,
+      "triangles": 2568,
+      "review_flags": 2,
+      "size_attempts": [
+        {
+          "texture_cap": 64,
+          "pac_bytes": 137216,
+          "free_region_ratios": {
+            "Head": 0.8,
+            "Torso": 0.65,
+            "Arms": 0.8,
+            "Legs": 0.65
+          },
+          "bpe_max_distinct": 200,
+          "bpe_block_cap": 4000
+        }
+      ],
+      "label": "Lance",
+      "source_sha256": "fe1073d97e9301c62226d611d174324d74cb5223669f3bbeed8a6660bcb80495",
+      "native_validation": "passed",
+      "body_poses": 14,
+      "ocular_probes": 16,
+      "ocular_validation": "pass",
+      "unresolved": [
+        {
+          "region": "left-feet",
+          "pose": "rest",
+          "severity": "review"
+        },
+        {
+          "region": "right-feet",
+          "pose": "rest",
+          "severity": "review"
+        }
+      ],
+      "region_p95_height": {
+        "buttocks": 2.435055693831138e-09,
+        "pelvis": 2.2678043624880993e-09,
+        "torso": 3.8215093833326186e-09,
+        "shoulders": 0.00018906663208984373,
+        "jaw": 0.00036985473705998984,
+        "eyes": 0.0002823759551292244
+      },
+      "game_validation": "not run on these newly generated artifacts"
+    },
+    {
+      "bytes": 147456,
+      "sha256": "9e410b2580495b57bd3d5e42d06d6415674e1a475a19e95632c932ac05b1b715",
+      "meshes": 47,
+      "vertices": 2635,
+      "triangles": 2667,
+      "review_flags": 2,
+      "size_attempts": [
+        {
+          "texture_cap": 64,
+          "pac_bytes": 153600,
+          "free_region_ratios": {
+            "Head": 0.8,
+            "Torso": 0.65,
+            "Arms": 0.8,
+            "Legs": 0.65
+          },
+          "bpe_max_distinct": 200,
+          "bpe_block_cap": 4000
+        },
+        {
+          "texture_cap": 32,
+          "pac_bytes": 147456,
+          "free_region_ratios": {
+            "Head": 0.8,
+            "Torso": 0.65,
+            "Arms": 0.8,
+            "Legs": 0.65
+          },
+          "bpe_max_distinct": 220,
+          "bpe_block_cap": 4000
+        }
+      ],
+      "label": "Jericho",
+      "source_sha256": "052da6cb97e1adcf865a89fd8d7d8544de8298025b36344f38de74ec600e9b1e",
+      "native_validation": "passed",
+      "body_poses": 14,
+      "ocular_probes": 16,
+      "ocular_validation": "pass",
+      "unresolved": [
+        {
+          "region": "left-hands",
+          "pose": "rest",
+          "severity": "review"
+        },
+        {
+          "region": "left-feet",
+          "pose": "rest",
+          "severity": "high-review"
+        }
+      ],
+      "region_p95_height": {
+        "buttocks": 2.4521072065102382e-09,
+        "pelvis": 2.754851766862219e-09,
+        "torso": 5.013475666459684e-09,
+        "shoulders": 0.0008975333728941822,
+        "jaw": 0.00039856998251270475,
+        "eyes": 0.0003275474662931475
+      },
+      "game_validation": "not run on these newly generated artifacts"
+    },
+    {
+      "bytes": 147456,
+      "sha256": "20586817f6f9b65d67d6514508a048b6fa88526f50a36954394438b6b0f58696",
+      "meshes": 46,
+      "vertices": 2108,
+      "triangles": 2373,
+      "review_flags": 6,
+      "size_attempts": [
+        {
+          "texture_cap": 64,
+          "pac_bytes": 153600,
+          "free_region_ratios": {
+            "Head": 0.8,
+            "Torso": 0.65,
+            "Arms": 0.8,
+            "Legs": 0.65
+          },
+          "bpe_max_distinct": 220,
+          "bpe_block_cap": 4000
+        },
+        {
+          "texture_cap": 32,
+          "pac_bytes": 151552,
+          "free_region_ratios": {
+            "Head": 0.8,
+            "Torso": 0.65,
+            "Arms": 0.8,
+            "Legs": 0.65
+          },
+          "bpe_max_distinct": 200,
+          "bpe_block_cap": 4000
+        },
+        {
+          "texture_cap": 64,
+          "pac_bytes": 147456,
+          "free_region_ratios": {
+            "Head": 0.8,
+            "Torso": 0.65,
+            "Arms": 0.5,
+            "Legs": 0.5
+          },
+          "bpe_max_distinct": 200,
+          "bpe_block_cap": 4000
+        }
+      ],
+      "label": "Additional HCTP 2800",
+      "source_sha256": "dd8b067ccb450d63ea867e8ec8cc731afe035e915f3233b10daa07baeff731d7",
+      "native_validation": "passed",
+      "body_poses": 14,
+      "ocular_probes": 16,
+      "ocular_validation": "pass",
+      "unresolved": [
+        {
+          "region": "material:tjfoot",
+          "pose": "rest",
+          "severity": "review"
+        },
+        {
+          "region": "neck",
+          "pose": "rest",
+          "severity": "review"
+        },
+        {
+          "region": "left-hands",
+          "pose": "rest",
+          "severity": "review"
+        },
+        {
+          "region": "left-feet",
+          "pose": "rest",
+          "severity": "review"
+        },
+        {
+          "region": "right-hands",
+          "pose": "rest",
+          "severity": "review"
+        },
+        {
+          "region": "right-feet",
+          "pose": "rest",
+          "severity": "review"
+        }
+      ],
+      "region_p95_height": {
+        "buttocks": 2.506583627526183e-09,
+        "pelvis": 3.2125730473807594e-09,
+        "torso": 4.129368025951444e-09,
+        "shoulders": 0.0005862789304458484,
+        "jaw": 0.0003997655789639623,
+        "eyes": 0.00021318616229368484
+      },
+      "game_validation": "not run on these newly generated artifacts"
+    }
+  ]
+}

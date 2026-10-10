@@ -265,7 +265,7 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
                 if decompress(alternate[2])!=yobj or decompress(alternate[9])!=table:raise ValueError('BPE dictionary optimization changed payloads.')
                 smaller_pac=replace_sections(base_bytes,alternate)
                 if len(smaller_pac)<len(candidate):candidate=smaller_pac;symbols=220
-            attempts.append(dict(texture_cap=cap,pac_bytes=len(candidate),free_region_ratios=trial_profile['ratios'],bpe_max_distinct=symbols,bpe_block_cap=4000))
+            attempts.append(dict(texture_cap=cap,pac_bytes=len(candidate),free_region_ratios=reduced['reduction_report']['region_ratios'],complete_head_minimum_ratio=trial_profile['ratios']['Head'],bpe_max_distinct=symbols,bpe_block_cap=4000))
             if len(candidate)<=profile['max_pac_bytes']:break
         if len(candidate)<=profile['max_pac_bytes']:break
     if len(candidate)>profile['max_pac_bytes']:raise ValueError('Preserved geometry/textures exceed the 148000-byte budget. Export withheld; protected anatomy was not reduced to force a fit.')

@@ -391,3 +391,15 @@ eye failure, but use successful final policy/results as new development referenc
 UNKNOWN [E22]: Universal HCTP support remains unproved. Completion requires wider
 packet/texture/controller coverage, reproducible real animation validation and
 new native pairs, not only these two excellent-looking tested models.
+
+PORTABLE APPLICATION ADDENDUM (separate feature/portable-ps2psp branch)
+CONFIRMED: desktop/ and ps2psp_converter.py implement a separate offline front end
+with a user-selected PSP base, a native PSP writer and final-model textured CPU
+previews. The old beta and accepted PACs remain controls. Read
+docs/portable-architecture.md for the new orchestration, protected source geometry,
+selective facial rules, lossless size fitting, limitations and evidence classes;
+docs/portable-validation.json records original-container test identities. The
+Windows workflow packages verified Blender, Python, QA dependencies, source and
+notices without game PACs. Its modified-container fixtures are distinct from the
+original-container cloud tests. UNKNOWN: pristine Windows 10/11 behavior and real
+SVR gameplay acceptance of new generalized outputs until independently tested.

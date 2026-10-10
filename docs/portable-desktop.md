@@ -20,7 +20,9 @@ installation is required. Conversion and previews work offline.
 5. Save PAC As. The candidate is re-audited and hashed immediately before copying.
    Saving into the source, base or internal candidate is rejected, including
    hard-link aliases. Existing destinations use the Windows Save As overwrite
-   confirmation. A new conversion never replaces an accepted baseline.
+   confirmation. The previous file is verified and retained under
+   `.ps2psp-backups/<SHA-256>.pac` before replacement; a changed destination aborts
+   saving. A new conversion never overwrites the inputs or its review candidate.
 
 Inject into SVR 2011 PSP with your tested PAC Editor/ARC-update workflow, save a
 copy of the ISO and test entrances, matches, facial motion and victory animations
