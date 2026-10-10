@@ -67,6 +67,32 @@ decoding and the existing uniform-alignment/selective-weight preparation stage
 with the supplied Kurt PSP development base. Its 18 referenced textures are
 decoded independently of the auxiliary models.
 
+**CONFIRMED:** The original `0000.pac` also completes the unchanged Blender 4.3.2
+conversion and full QA stage locally: the resulting PAC is 133,120 bytes, with
+43 native draw meshes, 2,331 vertices and 2,725 triangles. It passes native
+pointer/range/alignment/relocation/bone-palette/normalized-weight checks, the
+148,000-byte constraint and all 16 existing ocular compatibility probes.
+QA runs all 14 body/jaw poses at 24,000 samples and 320-pixel render resolution.
+Source and donor hashes remain unchanged.
+
+**CONFIRMED:** The full geometric QA report retains five unresolved visual-review
+flags: neck, pelvis, buttocks and both hand regions in the rest pose. Pelvis and
+buttocks are marked high-review. Thus this evidence establishes the import fix
+and successful native output, not visual perfection or game compatibility. No
+anatomy, weight-transfer or tolerance changes were made to suppress these flags.
+
+**CONFIRMED:** Across 13 uploaded numbered reference inputs, main-model parsing
+matches direct section decoding (or preserves the same malformed-weight
+rejection); the texture-model descriptors of all 12 single-model inputs also
+match the previous pinned reader exactly. Eleven desktop source inspections
+pass. Existing rejections remain for `3002.pac` (missing `h_01` texture) and
+`2902.pac` (unnormalized source weights). These independent source-support issues
+are recorded rather than broadened into this repair.
+
+The [machine-readable validation evidence](portable-primary-model-validation.json)
+contains source/output hashes, reference counts, native checks, analytical poses,
+review flags and preservation checks for the accepted Lance/Jericho baselines.
+
 **UNKNOWN:** Actual accessory/effect behavior, support for every HCTP PAC variant,
 and in-game correctness of newly generated outputs. A successful source import
 does not certify a conversion or replace native/size/QA/PPSSPP validation.

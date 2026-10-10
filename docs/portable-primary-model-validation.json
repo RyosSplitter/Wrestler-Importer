@@ -1,0 +1,363 @@
+{
+  "evidence": "CONFIRMED local source inspection, full original 0000 conversion and QA; no PPSSPP test",
+  "repository_tests_passed": 177,
+  "reference_inputs": [
+    {
+      "file": "2900.pac",
+      "sha256": "76ec15a9fdf71b194f9fc4964cf6daf7f58e47731b181bc15d09c0286d62d90f",
+      "yobj_sections": [
+        2
+      ],
+      "previous_texture_model_unchanged": true,
+      "direct_main_model_matches": true,
+      "model": "rikishi",
+      "meshes": 13,
+      "triangles": 2999,
+      "desktop_inspection": {
+        "format": "HCTP PS2",
+        "model": "rikishi",
+        "bytes": 526592,
+        "meshes": 13,
+        "vertices": 1995,
+        "triangles": 2999,
+        "bones": 79,
+        "textures": 18
+      },
+      "desktop_source_status": "pass"
+    },
+    {
+      "file": "5800.pac",
+      "sha256": "71b1103c7bd8709e4914c11b04ef1177b498e13a6f63d2a79b415c5d7c50e7bc",
+      "yobj_sections": [
+        2
+      ],
+      "previous_texture_model_unchanged": true,
+      "direct_main_model_matches": true,
+      "model": "sgt",
+      "meshes": 13,
+      "triangles": 2996,
+      "desktop_inspection": {
+        "format": "HCTP PS2",
+        "model": "sgt",
+        "bytes": 460288,
+        "meshes": 13,
+        "vertices": 2020,
+        "triangles": 2996,
+        "bones": 68,
+        "textures": 19
+      },
+      "desktop_source_status": "pass"
+    },
+    {
+      "file": "0600.pac",
+      "sha256": "052da6cb97e1adcf865a89fd8d7d8544de8298025b36344f38de74ec600e9b1e",
+      "yobj_sections": [
+        2
+      ],
+      "previous_texture_model_unchanged": true,
+      "direct_main_model_matches": true,
+      "model": "Y2J",
+      "meshes": 13,
+      "triangles": 2981,
+      "desktop_inspection": {
+        "format": "HCTP PS2",
+        "model": "Y2J",
+        "bytes": 555520,
+        "meshes": 13,
+        "vertices": 2016,
+        "triangles": 2981,
+        "bones": 77,
+        "textures": 20
+      },
+      "desktop_source_status": "pass"
+    },
+    {
+      "file": "3002.pac",
+      "sha256": "7c691130b1e4fac188d1d1fc8552f6837c3b64047d3ce6ed55b201da312759c4",
+      "yobj_sections": [
+        2
+      ],
+      "previous_texture_model_unchanged": true,
+      "direct_main_model_matches": true,
+      "model": "ric2p",
+      "meshes": 3,
+      "triangles": 677,
+      "desktop_source_status": "unrelated_existing_rejection",
+      "error": "Missing source texture h_01 in 3002.pac"
+    },
+    {
+      "file": "0000.pac",
+      "sha256": "d1d5ca744b5a793743851c142bf273554c81076ae3b8231834364559e048a973",
+      "yobj_sections": [
+        2,
+        6,
+        7
+      ],
+      "direct_main_model_matches": true,
+      "model": "hogan",
+      "meshes": 13,
+      "triangles": 3077,
+      "desktop_inspection": {
+        "format": "HCTP PS2",
+        "model": "hogan",
+        "bytes": 542976,
+        "meshes": 13,
+        "vertices": 2013,
+        "triangles": 3077,
+        "bones": 71,
+        "textures": 18
+      },
+      "desktop_source_status": "pass"
+    },
+    {
+      "file": "0900.pac",
+      "sha256": "05d264911fde503a0f5d07b634611de2c666b30845c711d4943da8fbdfc21552",
+      "yobj_sections": [
+        2
+      ],
+      "previous_texture_model_unchanged": true,
+      "direct_main_model_matches": true,
+      "model": "RVD1p_0100",
+      "meshes": 11,
+      "triangles": 2836,
+      "desktop_inspection": {
+        "format": "HCTP PS2",
+        "model": "RVD1p_0100",
+        "bytes": 457984,
+        "meshes": 11,
+        "vertices": 1722,
+        "triangles": 2836,
+        "bones": 71,
+        "textures": 15
+      },
+      "desktop_source_status": "pass"
+    },
+    {
+      "file": "3010.pac",
+      "sha256": "5d9aab8d880ccab65ddde3e7dcdbc9dccbcf0f10fe62480dc410a06417de7dd4",
+      "yobj_sections": [
+        2
+      ],
+      "previous_texture_model_unchanged": true,
+      "direct_main_model_matches": true,
+      "model": "ric2p",
+      "meshes": 13,
+      "triangles": 2995,
+      "desktop_inspection": {
+        "format": "HCTP PS2",
+        "model": "ric2p",
+        "bytes": 487680,
+        "meshes": 13,
+        "vertices": 1956,
+        "triangles": 2995,
+        "bones": 71,
+        "textures": 20
+      },
+      "desktop_source_status": "pass"
+    },
+    {
+      "file": "3000.pac",
+      "sha256": "cbabdc06f40e769b1695436204b27c4c27f2e109b8892451e08cd405d8b404f2",
+      "yobj_sections": [
+        2
+      ],
+      "previous_texture_model_unchanged": true,
+      "direct_main_model_matches": true,
+      "model": "ric2p",
+      "meshes": 13,
+      "triangles": 2995,
+      "desktop_inspection": {
+        "format": "HCTP PS2",
+        "model": "ric2p",
+        "bytes": 487680,
+        "meshes": 13,
+        "vertices": 1956,
+        "triangles": 2995,
+        "bones": 71,
+        "textures": 20
+      },
+      "desktop_source_status": "pass"
+    },
+    {
+      "file": "0900.pac",
+      "sha256": "05d264911fde503a0f5d07b634611de2c666b30845c711d4943da8fbdfc21552",
+      "yobj_sections": [
+        2
+      ],
+      "previous_texture_model_unchanged": true,
+      "direct_main_model_matches": true,
+      "model": "RVD1p_0100",
+      "meshes": 11,
+      "triangles": 2836,
+      "desktop_inspection": {
+        "format": "HCTP PS2",
+        "model": "RVD1p_0100",
+        "bytes": 457984,
+        "meshes": 11,
+        "vertices": 1722,
+        "triangles": 2836,
+        "bones": 71,
+        "textures": 15
+      },
+      "desktop_source_status": "pass"
+    },
+    {
+      "file": "1800.pac",
+      "sha256": "fe1073d97e9301c62226d611d174324d74cb5223669f3bbeed8a6660bcb80495",
+      "yobj_sections": [
+        2
+      ],
+      "previous_texture_model_unchanged": true,
+      "direct_main_model_matches": true,
+      "model": "lance",
+      "meshes": 13,
+      "triangles": 3018,
+      "desktop_inspection": {
+        "format": "HCTP PS2",
+        "model": "lance",
+        "bytes": 553728,
+        "meshes": 13,
+        "vertices": 2041,
+        "triangles": 3018,
+        "bones": 100,
+        "textures": 19
+      },
+      "desktop_source_status": "pass"
+    },
+    {
+      "file": "5804.pac",
+      "sha256": "0bfce91526f3e20e2e57a4df965edd01e2a134407ca09ef3546a10896e8b01d7",
+      "yobj_sections": [
+        2
+      ],
+      "previous_texture_model_unchanged": true,
+      "direct_main_model_matches": true,
+      "model": "sgt",
+      "meshes": 14,
+      "triangles": 3298,
+      "desktop_inspection": {
+        "format": "HCTP PS2",
+        "model": "sgt",
+        "bytes": 462592,
+        "meshes": 14,
+        "vertices": 2170,
+        "triangles": 3298,
+        "bones": 66,
+        "textures": 19
+      },
+      "desktop_source_status": "pass"
+    },
+    {
+      "file": "2800.pac",
+      "sha256": "dd8b067ccb450d63ea867e8ec8cc731afe035e915f3233b10daa07baeff731d7",
+      "yobj_sections": [
+        2
+      ],
+      "previous_texture_model_unchanged": true,
+      "direct_main_model_matches": true,
+      "model": "body0",
+      "meshes": 12,
+      "triangles": 2997,
+      "desktop_inspection": {
+        "format": "HCTP PS2",
+        "model": "body0",
+        "bytes": 498176,
+        "meshes": 12,
+        "vertices": 1886,
+        "triangles": 2997,
+        "bones": 83,
+        "textures": 14
+      },
+      "desktop_source_status": "pass"
+    },
+    {
+      "file": "2902.pac",
+      "sha256": "91adee4cd51b27b1f5b88b1af132f44ec05ec34b687c177705a20877a8f271de",
+      "yobj_sections": [
+        2
+      ],
+      "previous_texture_model_unchanged": true,
+      "direct_main_model_matches": true,
+      "desktop_source_status": "unrelated_existing_rejection",
+      "error": "HCTP skin weights are not normalized"
+    }
+  ],
+  "uploaded_0000": {
+    "source_sha256": "d1d5ca744b5a793743851c142bf273554c81076ae3b8231834364559e048a973",
+    "base_sha256": "bf935a51fe30bfd2df929f8eb9e50be5d793426ea05125ca9411ce21b19ead80",
+    "output": {
+      "sha256": "d3b05de9a2077004dde053cdee50ffad0efa292138004f49d75d1377eee7839c",
+      "bytes": 133120,
+      "meshes": 43,
+      "vertices": 2331,
+      "triangles": 2725,
+      "native_validation": "passed",
+      "review_flags": 5,
+      "ocular_validation": "pass"
+    },
+    "qa_samples": 24000,
+    "qa_resolution": 320,
+    "analytical_body_jaw_poses": [
+      "standing",
+      "walk-left",
+      "walk-right",
+      "bend",
+      "crouch",
+      "shoulders-up",
+      "neck-turn",
+      "head-tilt",
+      "jaw-06",
+      "jaw-12",
+      "jaw-18",
+      "jaw-25",
+      "elbow-flex-left",
+      "elbow-flex-right"
+    ],
+    "ocular_pose_count": 16,
+    "native_checks": [
+      "internal pointers/allocations/alignment",
+      "relocations",
+      "vertex/index ranges",
+      "bone palettes",
+      "finite normalized weights"
+    ],
+    "inputs_unchanged": true,
+    "unresolved_review": [
+      {
+        "region": "neck",
+        "pose": "rest",
+        "kind": "surface-shape",
+        "severity": "review"
+      },
+      {
+        "region": "pelvis",
+        "pose": "rest",
+        "kind": "surface-recession-or-concavity",
+        "severity": "high-review"
+      },
+      {
+        "region": "buttocks",
+        "pose": "rest",
+        "kind": "surface-recession-or-concavity",
+        "severity": "high-review"
+      },
+      {
+        "region": "left-hands",
+        "pose": "rest",
+        "kind": "surface-recession-or-concavity",
+        "severity": "review"
+      },
+      {
+        "region": "right-hands",
+        "pose": "rest",
+        "kind": "surface-recession-or-concavity",
+        "severity": "review"
+      }
+    ]
+  },
+  "preserved_baselines": {
+    "lance": "807d60134bb91071f01a28381dd0368214ecfb5c57b3713ae3829203f1568700",
+    "jericho": "369ee95ed12c58c7c4d91f9ae26590bb2e4469a3abd31e8312d043bfe27533e8",
+    "stable_pipeline_hashes_unchanged": true
+  }
+}
