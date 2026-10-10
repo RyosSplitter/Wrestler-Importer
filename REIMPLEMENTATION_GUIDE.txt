@@ -1,6 +1,24 @@
 HCTP -> PSP REIMPLEMENTATION GUIDE
 ================================
 
+CONFIRMED — 2026-10-10 independent accessory experiment:
+Read docs/portable-multi-model.md for the uploaded Rock comparison. Main-model
+selection does not imply accessory conversion: enumerate every top-level YOBJ,
+establish its semantic role, convert independent rigs by bone name, and resolve
+the union of texture dependencies. HCTP 6/7 correspond to PSP 26/27 in this
+verified left/right elbow-pad pair; broader applicability is INFERRED and gated
+by matching influencing controllers and ancestor rest transforms. Never guess
+new section IDs for unknown models or silently omit them. Each pad receives the
+main body's one uniform alignment, sparse float weights and a separate native
+YOBJ, with no decimation or donor weight transfer. Check all independent native
+buffers, local bind records, palettes, texture references and analytical poses.
+Only explicit output sections may be added/replaced; preserve unrelated donor
+payloads and account for the entire model set in the size budget. Native sparse
+stored-global metadata and JUDE event semantics remain INFERRED/UNKNOWN as
+documented. The trial is not yet validated for actual pad removal/throw in-game.
+desktop/accessories.py, tests/test_portable_accessories.py and generated Windows
+accessory fixtures provide implementation and independent contract checks.
+
 Purpose
 -------
 Build a compatible HCTP wrestler converter using only this repository's written

@@ -85,5 +85,9 @@ and `docs/hctp-psp/` plus `REIMPLEMENTATION_GUIDE.txt` for format details.
 ## Source import maintenance
 
 The current reader supports main wrestler YOBJ section 2 alongside auxiliary
-models in other sections. See [source-selection regression notes](portable-primary-model-fix.md)
-for validation and remaining accessory-support limits.
+models in other sections. The isolated multi-model experiment converts verified
+left/right HCTP elbow-pad sections 6/7 into independent PSP sections 26/27,
+retains their shared texture and previews all models together. Unknown extra
+model roles are rejected instead of silently discarded. See
+[multi-model contracts and evidence](portable-multi-model.md) and the historical
+[source-selection regression notes](portable-primary-model-fix.md).

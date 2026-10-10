@@ -113,8 +113,16 @@ array and material index 0. The shared PAC table contains 19 converted GIMs.
 `pat` uses the existing texture policy: source 64×32 PSMT4 → 32×32 indexed4
 GIM, 784 bytes. Source cutout RGBA follows the existing exact-alpha policy;
 this particular pad texture is opaque. No additional resizing of body textures
-was needed. All 18 preexisting body GIM payloads are byte-identical to the
-uploaded app output.
+was needed. All 18 body GIMs are byte-identical to a separate current-runtime
+main-only texture conversion, confirming that accessory dependencies did not
+alter body texture processing. Against the uploaded older app output, ten GIMs
+are byte-identical, five have only palette/index changes with identical decoded
+RGBA, and three have decoded pixel differences: `rc_hiza` 2/1024 pixels (maximum
+channel delta 170), `rc_pan2` 1/1024 (46), `rock_eye_y` 20/512 (3). **UNKNOWN:**
+The exact cause of those older-output quantization differences; host/library
+or build differences are plausible but not proven. This is reported for review,
+not described as a pixel-identical texture baseline. No texture-conversion
+algorithm was changed by this feature.
 
 **CONFIRMED:** `pac_repack.rewrite_sections` permits explicit noncolliding
 additions. Existing IDs stay in order with exact unrelated payloads; additions
