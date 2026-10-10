@@ -20,7 +20,13 @@ class Application:
     def __init__(self):
         from tkinterdnd2 import TkinterDnD,DND_FILES
         self.root=TkinterDnD.Tk();self.drag_drop=True
-        self.root.title(NAME);self.root.configure(bg=BG);self.root.geometry('1040x720');self.root.minsize(940,640)
+        self.root.title(NAME);self.root.configure(bg=BG)
+        # Leave room for the title bar/taskbar on a 1024x768 desktop. Explicit
+        # placement also avoids the window manager's cascading off-screen origin.
+        screen_w,screen_h=self.root.winfo_screenwidth(),self.root.winfo_screenheight()
+        width=max(940,min(1040,screen_w-64));height=max(640,min(720,screen_h-120))
+        x=max(0,(screen_w-width)//2);y=max(0,(screen_h-height)//2-20)
+        self.root.geometry(f'{width}x{height}+{x}+{y}');self.root.minsize(940,640)
         self.settings=load_settings();self.source=None;self.process=None;self.result=None;self.saved=None;self.closing=False
         self.inspector=None;self.inspect_root=None;self.view='front-left';self.zoom='full';self.photo=None
         self.base=tk.StringVar(value=self.settings.get('base',''));self.status=tk.StringVar(value='Choose your PSP base once, then drop an HCTP PAC.')
