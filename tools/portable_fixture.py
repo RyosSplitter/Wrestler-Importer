@@ -67,6 +67,41 @@ def create(model,output):
         table+=name.encode('ascii').ljust(16,b'\0')+b'txc\0'+struct.pack('<3I',len(raw),offset,0);offset+=len(raw)
     Path(output).write_bytes(pac([(2,encode(model)),(9,bytes(table)+b''.join(payloads)),(50,b'CI MODIFIED CONTAINER')]))
 
+def create_with_accessories(model,output):
+    """CI-only original quads exercising real left/right role contracts.
+
+    Uses existing development IR solely for its rig; pad geometry/UVs and pixels
+    are generated. Independent indices deliberately differ from the main rig.
+    """
+    import copy
+    from tools.pac_inspect import inspect_pac
+    create(model,output);original=Path(output).read_bytes()
+    entries=[(s['id'],original[s['offset']:s['offset']+s['size']]) for s in inspect_pac(original)['sections']]
+    names=model['textures']+['fixture_pad'];payloads=[checker() for n in names]
+    table=bytearray(struct.pack('<4I',len(names),0x100,0,16));offset=16+32*len(names)
+    for name,raw in zip(names,payloads):
+        table+=name.encode('ascii').ljust(16,b'\0')+b'txc\0'+struct.pack('<3I',len(raw),offset,0);offset+=len(raw)
+    entries=[(i,bytes(table)+b''.join(payloads) if i==9 else raw) for i,raw in entries]
+    pads=[]
+    for section,side,sign in ((6,'l',1),(7,'r',-1)):
+        names={b['name']:b for b in model['bones']}
+        active=[names[side+'_ninoude']['index'],names[side+'_kote']['index']]
+        used=set(active)
+        for i in active:
+            while i!=-1:used.add(i);i=model['bones'][i]['parent']
+        old=sorted(used);mapping={i:j for j,i in enumerate(old)}
+        bones=[]
+        for i in old:
+            b=copy.deepcopy(model['bones'][i]);b['index']=mapping[i]
+            b['parent']=mapping[b['parent']] if b['parent']!=-1 else -1;bones.append(b)
+        vertices=[dict(position=[sign*(4.5+x*.5),-6+y*.5,.8],normal=[0,0,1],
+                       uv=[x,y],color=[255]*4,weights=list(w))
+                  for (x,y),w in zip(((0,0),(1,0),(0,1),(1,1)),((1.,0.),(.75,.25),(.25,.75),(0.,1.)))]
+        pad=dict(bones=bones,textures=['fixture_pad'],meshes=[dict(index=0,bone_palette=[mapping[i] for i in active],vertices=vertices,
+                 materials=[dict(texture_id=0,triangles=[[0,1,2],[1,3,2]])])])
+        pads.append((section,encode(pad)))
+    Path(output).write_bytes(pac(list(reversed(pads))+entries))
+
 if __name__=='__main__':
     import sys
     create(json.loads(Path(sys.argv[1]).read_text()),sys.argv[2])

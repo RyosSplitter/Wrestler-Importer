@@ -23,12 +23,13 @@ class SizeFitReport:
                              encoding='utf-8')
         temporary.replace(self.path)
 
-    def record(self, candidate, **details):
+    def record(self, candidate, *, accessory_sections=(), **details):
         report = inspect_pac(candidate)
         sizes = {s['id']: s['size'] for s in report['sections']}
         components = dict(model_stored_bytes=sizes[2],
                           textures_stored_bytes=sizes[9],
-                          retained_base_stored_bytes=sum(n for i,n in sizes.items() if i not in (2,9)),
+                          accessory_models_stored_bytes=sum(sizes[i] for i in accessory_sections),
+                          retained_base_stored_bytes=sum(n for i,n in sizes.items() if i not in {2,9,*accessory_sections}),
                           headers_and_padding_bytes=len(candidate)-sum(sizes.values()))
         row = dict(details, pac_bytes=len(candidate), **components)
         self.data['attempts'].append(row)
@@ -51,6 +52,7 @@ class SizeFitReport:
             f"{self.data['maximum_pac_bytes']:,}-byte budget. "
             f"Stored model: {row['model_stored_bytes']:,} bytes; "
             f"textures: {row['textures_stored_bytes']:,}; "
+            f"accessory models: {row['accessory_models_stored_bytes']:,}; "
             f"retained base data: {row['retained_base_stored_bytes']:,}; "
             f"headers/padding: {row['headers_and_padding_bytes']:,}. "
             'Export withheld; protected anatomy was not reduced to force a fit. '

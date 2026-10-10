@@ -40,22 +40,36 @@ def texture_table(names, payloads):
 
 
 def replace_sections(base, replacements):
+    return rewrite_sections(base, replacements)
+
+
+def rewrite_sections(base, replacements, *, additions=None):
+    """Explicit additions retain existing section order and exact other payloads.
+
+    Role selection is the caller's responsibility; this writer never guesses
+    PS2/PSP section semantics. Replacement-only callers retain their contract.
+    """
     report = inspect_pac(base)
+    additions = additions or {}
     ids = [s['id'] for s in report['sections']]
-    if len(set(ids)) != len(ids) or not set(replacements).issubset(ids):
+    if (len(set(ids)) != len(ids) or not set(replacements).issubset(ids)
+            or set(additions) & set(ids)):
         raise FormatError('Ambiguous or missing replacement section IDs')
+    entries = [(s['id'], replacements.get(s['id'], base[s['offset']:s['offset']+s['size']]))
+               for s in report['sections']]
+    entries.extend(sorted(additions.items()))
+    ids = [i for i,p in entries]
     table = bytearray(b'PAC ' + struct.pack('<I', len(ids)))
     table_end = 8 + 8 * len(ids)
     payloads, offset = [], 0
-    for section in report['sections']:
+    for section_id, payload in entries:
         # Align actual file addresses, including when the table is not 16-aligned.
         padding = (-(table_end + offset)) % 16
         payloads.append(bytes(padding))
         offset += padding
-        payload = replacements.get(section['id'], base[section['offset']:section['offset'] + section['size']])
-        if not payload or len(payload) >= 1 << 24 or offset >= 1 << 24:
+        if not 0 <= section_id <= 65535 or not payload or len(payload) >= 1 << 24 or offset >= 1 << 24:
             raise FormatError('PAC payload exceeds 24-bit table bounds')
-        table += struct.pack('<H', section['id']) + offset.to_bytes(3, 'little') + len(payload).to_bytes(3, 'little')
+        table += struct.pack('<H', section_id) + offset.to_bytes(3, 'little') + len(payload).to_bytes(3, 'little')
         payloads.append(payload)
         offset += len(payload)
     result = bytes(table) + b''.join(payloads)

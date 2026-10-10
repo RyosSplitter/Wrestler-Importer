@@ -115,7 +115,7 @@ class Application:
             try:
                 r=json.loads((self.inspect_root/'result.json').read_text())
                 if not r['ok']:raise ValueError(r['error'])
-                self.source=self.pending_source;v=r['info'];self.info.set(f"{v['format']} • {v['model']}\n{v['bytes']:,} bytes • {v['triangles']:,} triangles\n{v['meshes']} source meshes • {v['textures']} textures")
+                self.source=self.pending_source;v=r['info'];self.info.set(f"{v['format']} • {v['model']}\n{v['bytes']:,} bytes • {v['triangles']:,} main-model triangles\n{v.get('model_count',1)} models • {v['textures']} textures")
                 self.status.set('Source validated. Ready to convert.')
             except Exception as e:self.info.set('Input rejected');self.status.set(str(e));messagebox.showerror('Input check',str(e))
             import shutil
@@ -134,7 +134,7 @@ class Application:
                         if not failure['cancelled']:messagebox.showerror('Conversion stopped',failure['error']+'\n\nUse Logs for diagnostics.')
                     else:
                         self.result=json.loads((self.job/'success.json').read_text(encoding='utf-8'));r=self.result
-                        self.output.set(f"{Path(r['pac']).name}  •  {r['bytes']:,} bytes\nNative checks passed • {r['meshes']} meshes • {r['triangles']:,} triangles\nQA: {r['review_flags']} findings to review • PPSSPP validation required")
+                        self.output.set(f"{Path(r['pac']).name}  •  {r['bytes']:,} bytes\nNative checks passed • {r.get('model_count',1)} models • {r.get('total_meshes',r['meshes'])} meshes • {r.get('total_triangles',r['triangles']):,} triangles\nQA: {r['review_flags']} findings to review • PPSSPP validation required")
                         self.save.configure(state='normal');self.status.set('Review the PSP preview and QA report before saving.');self.show_preview()
                 except Exception as e:self.status.set('Worker ended unexpectedly; inspect Logs.');messagebox.showerror(NAME,str(e))
         if self.closing and not self.busy() and self.inspector is None:self.root.destroy();return

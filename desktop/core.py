@@ -21,6 +21,7 @@ from desktop.adapters import adapter
 from desktop.native import serialize
 from desktop.budget import SizeFitReport
 from desktop.precision import bounded_precision,ocular_positions,validate_native_precision
+from desktop.accessories import source_models,decode_dependencies,build_accessories,package_models,combined_preview,validate_accessory
 from tools.pac_inspect import inspect_pac,parse_textures
 from tools.pac_repack import replace_sections,texture_table
 from tools.psp_mesh_audit import audit_yobj
@@ -152,24 +153,44 @@ def textures(decoded,prepared,folder,cap):
     dump(folder/'textures.json',dict(textures=entries))
     return entries,gims
 
-def validate_pac(data,base=None,max_bytes=148000):
+def validate_pac(data,base=None,max_bytes=148000,*,accessory_models=None):
     report=inspect_pac(data)
     if len(data)>max_bytes or len(data)%2048 or any(s['offset']%16 for s in report['sections']):raise ValueError('PSP PAC size/alignment check failed.')
+    if len({s['id'] for s in report['sections']})!=len(report['sections']):raise ValueError('Duplicate final PAC section IDs.')
     unpacked={s['id']:r for s,r in sections(data)}
-    native=audit_yobj(unpacked[2]);texture_records=parse_textures(unpacked[9])
+    models={i:audit_yobj(raw) for i,raw in unpacked.items() if raw.startswith(b'YOBJ')}
+    native=models[2];texture_records=parse_textures(unpacked[9])
     gims={r['name']:unpacked[9][r['offset']:r['offset']+r['size']] for r in texture_records}
-    if set(gims)!=set(native['texture_names']):raise ValueError('Native texture table does not match YOBJ.')
-    for mesh in native['meshes']:
-        for mat in mesh['materials']:
-            raw=gims[native['texture_names'][mat['texture_id']]];read_gim(raw)
-            import struct
-            bits=struct.unpack_from('<H',raw,76)[0];expected=5 if bits==4 else 7 if bits==8 else None
-            if mat['control'] not in (expected,(expected|0x110) if expected else None):raise ValueError('Native GIM/material bit depth mismatch.')
+    if len(gims)!=len(texture_records) or set(gims)!={n for m in models.values() for n in m['texture_names']}:raise ValueError('Native texture table does not match the YOBJ model set.')
+    for raw in gims.values():read_gim(raw)
+    for section,model in models.items():
+        for mesh in model['meshes']:
+            if (model['report']['mesh_reports'][mesh['index']]['vertex_buffer_start']-8)%16:raise ValueError('Native vertex alignment failed.')
+            for row in model['report']['mesh_reports'][mesh['index']]['submeshes']:
+                if any((r['start']-8)%16 for r in row['index_ranges']):raise ValueError('Native index alignment failed.')
+            for mat in mesh['materials']:
+                raw=gims[model['texture_names'][mat['texture_id']]]
+                import struct
+                bits=struct.unpack_from('<H',raw,76)[0];expected=5 if bits==4 else 7 if bits==8 else None
+                if mat['control'] not in (expected,(expected|0x110) if expected else None):raise ValueError('Native GIM/material bit depth mismatch.')
+        if section!=2:
+            if section not in (26,27):raise ValueError('Unrecognized final auxiliary YOBJ role.')
+            if len(model['bone_raw'])!=len(native['bone_raw']) or any(
+                    model['bone_raw'][i:i+64]!=native['bone_raw'][i:i+64] or
+                    model['bone_raw'][i+76:i+80]!=native['bone_raw'][i+76:i+80]
+                    for i in range(0,len(native['bone_raw']),80)):
+                raise ValueError('Accessory local bind records differ from the main PSP rig.')
+    if accessory_models is not None:
+        if set(models)!={2,*accessory_models}:raise ValueError('Expected accessory model set differs from final PAC.')
+        for section,expected in accessory_models.items():validate_accessory(expected,models[section])
     if base is not None:
         before=inspect_pac(base)
-        if [s['id'] for s in before['sections']]!=[s['id'] for s in report['sections']]:raise ValueError('Base section order changed.')
-        for a,b in zip(before['sections'],report['sections']):
-            if a['id'] not in (2,9) and a['sha256']!=b['sha256']:raise ValueError('Unrelated base section changed.')
+        before_ids=[s['id'] for s in before['sections']];after_ids=[s['id'] for s in report['sections']]
+        additions=sorted(set(accessory_models or {})-set(before_ids))
+        if after_ids!=before_ids+additions:raise ValueError('Base section order or explicit accessory additions changed.')
+        after_by_id={s['id']:s for s in report['sections']}
+        for a in before['sections']:
+            if a['id'] not in {2,9,*(accessory_models or {})} and a['sha256']!=after_by_id[a['id']]['sha256']:raise ValueError('Unrelated base section changed.')
         original=next(r for s,r in sections(base) if s['id']==2)
         if audit_yobj(original)['bone_raw']!=native['bone_raw']:raise ValueError('Base skeleton changed.')
     return native,gims
@@ -233,6 +254,13 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
             if process.returncode:raise ValueError('Processing failed. Read '+logname+' in this job’s logs.')
     step(5,'Reading HCTP source and your PSP base')
     original,decoded=adapter(request.source_format).read(source);base_bytes,target=base_model(base)
+    accessories,texture_names=source_models(source,original)
+    decoded=decode_dependencies(source,decoded,texture_names)
+    source_roles={a['target_section'] for a in accessories}
+    base_roles={s['id'] for s,r in sections(base_bytes) if s['id']!=2 and r.startswith(b'YOBJ')}
+    if not base_roles<=source_roles:raise ValueError('The PSP base contains unmatched accessory models; choose a base without them or a source with matching supported accessories.')
+    dump(work/'model-set-input.json',dict(source_models=[dict(section=2,role='main',vertices=original['vertex_count'],triangles=original['triangle_count'])]+
+         [dict(section=a['source_section'],psp_section=a['target_section'],role=a['name'],support=a['support'],vertices=a['model']['vertex_count'],triangles=a['model']['triangle_count']) for a in accessories],texture_dependencies=texture_names))
     step(15,'Uniform alignment and selective facial weighting')
     prepared,legacy,jaw=prepare(original,target)
     prepared['cutout_texture_ids']=[i for i,n,r,rgba,d in decoded if np.any(rgba[:,:,3]<128)]
@@ -257,21 +285,18 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
             if tf.exists():
                 entries=json.loads((tf/'textures.json').read_text())['textures'];gims=[(tf/e['gim']).read_bytes() for e in entries]
             else:entries,gims=textures(decoded,prepared,tf,cap)
+            accessory_yobjs,accessory_prepared,accessory_reports=build_accessories(accessories,target,prepared['preparation_report']['alignment'],entries)
             yobj=serialize(packed,target,entries)
-            table=texture_table(packed['textures'],gims)
-            replacements={2:compress(yobj),9:compress(table)}
-            if decompress(replacements[2])!=yobj:raise ValueError('BPE round trip failed.')
-            candidate=replace_sections(base_bytes,replacements);symbols=200
+            table=texture_table(texture_names,gims)
+            candidate=package_models(base_bytes,yobj,table,accessory_yobjs);symbols=200
             # Lossless dictionary packing is tried before more geometry loss.
             # The established compressor/grammar and 4000-byte block cap stay
             # unchanged; every candidate is independently decoded and compared.
             if len(candidate)>profile['max_pac_bytes']:
                 check()
-                alternate={2:compress(yobj,max_distinct=220),9:compress(table,max_distinct=220)}
-                if decompress(alternate[2])!=yobj or decompress(alternate[9])!=table:raise ValueError('BPE dictionary optimization changed payloads.')
-                smaller_pac=replace_sections(base_bytes,alternate)
+                smaller_pac=package_models(base_bytes,yobj,table,accessory_yobjs,max_distinct=220)
                 if len(smaller_pac)<len(candidate):candidate=smaller_pac;symbols=220
-            attempts.append(size_report.record(candidate,texture_cap=cap,
+            attempts.append(size_report.record(candidate,accessory_sections=accessory_yobjs,texture_cap=cap,
                 free_region_ratios=reduced['reduction_report']['region_ratios'],
                 complete_head_minimum_ratio=trial_profile['ratios']['Head'],
                 bpe_max_distinct=symbols,bpe_block_cap=4000,
@@ -297,10 +322,8 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
             limited_yobj=serialize(limited,target,entries)
             for symbols in (200,220):
                 check()
-                replacements={2:compress(limited_yobj,max_distinct=symbols),
-                              9:compress(table,max_distinct=symbols)}
-                limited_pac=replace_sections(base_bytes,replacements)
-                row=size_report.record(limited_pac,texture_cap=cap,
+                limited_pac=package_models(base_bytes,limited_yobj,table,accessory_yobjs,max_distinct=symbols)
+                row=size_report.record(limited_pac,accessory_sections=accessory_yobjs,texture_cap=cap,
                     free_region_ratios=reduced['reduction_report']['region_ratios'],
                     complete_head_minimum_ratio=trial_profile['ratios']['Head'],
                     bpe_max_distinct=symbols,bpe_block_cap=4000,
@@ -320,14 +343,23 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
     if len(candidate)>profile['max_pac_bytes']:raise size_report.error()
     dump(work/'reduced.json',reduced);dump(work/'packed.json',packed)
     step(65,'Validating final PAC pointers, buffers, weights, rendering records and size')
-    native,gim_map=validate_pac(candidate,base_bytes,profile['max_pac_bytes'])
+    native,gim_map=validate_pac(candidate,base_bytes,profile['max_pac_bytes'],accessory_models=accessory_prepared)
+    dump(work/'accessory-qa.json',dict(status='pass',models=accessory_reports,
+         limitation='Exact source-derived geometry and direct weights, native structure and analytical poses; removal/throw behavior requires in-game validation.'))
     unpacked=next(r for s,r in sections(candidate) if s['id']==2)
     if unpacked!=yobj:raise ValueError('Preview model differs from final PAC.')
     stem=re.sub(r'[^A-Za-z0-9_.-]','_',source.stem)[:48].strip('.') or 'wrestler'
     pac=work/(stem+'-PSP-experimental.pac');pac.write_bytes(candidate)
-    preview=work/'preview';preview.mkdir();(preview/'output.yobj').write_bytes(yobj);write_preview(native,preview/'output.obj')
+    preview=work/'preview';preview.mkdir();(preview/'output.yobj').write_bytes(yobj)
+    accessory_native=[audit_yobj(raw) for raw in accessory_yobjs.values()]
+    visual=combined_preview(native,accessory_native);write_preview(visual,preview/'output.obj')
+    for section,raw in accessory_yobjs.items():
+        (preview/('section-%d.yobj'%section)).write_bytes(raw)
+        independent=combined_preview(native,[])  # Shared preview texture indexing, independent accessory geometry.
+        independent['meshes']=[]
+        write_preview(combined_preview(independent,[audit_yobj(raw)]),preview/('section-%d.obj'%section))
     mtl=[]
-    for i,name in enumerate(native['texture_names']):
+    for i,name in enumerate(visual['texture_names']):
         filename='texture_%02d.png'%i;pixels,palette=read_gim(gim_map[name]);Image.fromarray(palette[pixels]).save(preview/filename)
         mtl.extend(['newmtl texture_%d'%i,'Kd 1 1 1','map_Kd '+filename])
     (preview/'preview.mtl').write_text('\n'.join(mtl)+'\n',encoding='ascii')
@@ -339,14 +371,29 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
     entry=[sys.executable] if getattr(sys,'frozen',False) else [sys.executable,str(ROOT/'ps2psp_converter.py')]
     command(entry+args,'qa.log')
     qa=json.loads((work/'qa/report.json').read_text())
+    # Body QA stays a separate reusable stage. Link the independent model-set
+    # evidence so the displayed report does not imply it audited only section 2.
+    qa['model_set_validation']=dict(status='pass',model_count=1+len(accessory_yobjs),
+        accessory_sections=sorted(accessory_yobjs),report='../accessory-qa.json',
+        scope='Every native YOBJ audited; independent accessories compared against prepared source attributes and analytical poses.')
+    dump(work/'qa/report.json',qa)
+    html=work/'qa/report.html'
+    text=html.read_text(encoding='utf-8')
+    note='<p>Native model set: %d models. <a href="../accessory-qa.json">Independent accessory structure, attributes and pose validation</a>. <a href="../preview/output.obj">Combined OBJ preview</a>. Actual in-game pad removal/throw behavior remains unverified.</p>'%(1+len(accessory_yobjs))
+    text=text.replace('</body>',note+'</body>')
+    html.write_text(text,encoding='utf-8')
     step(92,'Rendering textured views of the actual final PSP output')
     from desktop.preview import save_views
-    save_views(native,gim_map,preview)
+    save_views(visual,gim_map,preview)
     for p,h in hashes.items():
         if digest(p)!=h:raise ValueError('An input changed during conversion; output withheld.')
     result=dict(pac=str(pac),preview=str(preview),report=str(work/'qa/report.html'),bytes=len(candidate),sha256=digest(pac),
                 source=str(source.resolve()),base=str(base.resolve()),inputs=hashes,profile=profile['id'],size_attempts=attempts,
                 meshes=native['report']['meshes'],triangles=packed['triangle_count'],vertices=packed['vertex_count'],
+                model_count=1+len(accessory_yobjs),accessory_sections=sorted(accessory_yobjs),
+                total_meshes=native['report']['meshes']+sum(a['meshes'] for a in accessory_reports),
+                total_triangles=packed['triangle_count']+sum(a['triangles'] for a in accessory_reports),
+                total_vertices=packed['vertex_count']+sum(a['vertices'] for a in accessory_reports),
                 native_validation='passed',review_flags=len(qa['unresolved_review']),ocular_validation=ocular['status'],
                 attribute_precision=packed.get('attribute_precision_report'),
                 precision_validation=precision_validation,

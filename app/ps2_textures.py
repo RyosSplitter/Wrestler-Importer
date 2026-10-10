@@ -113,13 +113,13 @@ def read_rtx3(data):
         raise FormatError(f'{exc} ({context})') from exc
 
 
-def read_source(source):
+def read_source(source, *, texture_names=None):
     """Decode only model-referenced textures; prefer the main costume section."""
     data = source.read_bytes()
     # The historic opacity-fix snapshot remains hash-pinned. Use the maintained
     # reader for main-section selection, preserving this module's error type.
     try:
-        model = load_model(source)
+        model = load_model(source) if texture_names is None else {'textures': list(texture_names)}
     except SourceFormatError as exc:
         raise FormatError(str(exc)) from exc
     textures = {}
