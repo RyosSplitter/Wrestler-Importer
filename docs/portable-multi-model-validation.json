@@ -425,17 +425,17 @@
     "candidate": {
       "filename": "0000-PSP-experimental.pac",
       "bytes": 143360,
-      "sha256": "aadc99d153735cdb9ee4fbbecac4c1250cdd12666d0046cc0de03902499e044c",
+      "sha256": "ae56c7e0f18f230a865790a5f7bb18796003c354c65fa1f1be744e1c4581a16e",
       "sections": [
         {
           "index": 0,
           "id": 2,
           "offset": 48,
-          "size": 113043,
-          "sha256": "acb1e461fe151742ba3aae36cb52def08bf5ceee9fa62522621ab6ee953b99c0",
+          "size": 113049,
+          "sha256": "da177d1829bd97022925717c9b78cc4e66d19f0bf8ae41b37603d9545b5be713",
           "signature": "BPE ",
           "kind": "unknown",
-          "decoded_bytes": 187872,
+          "decoded_bytes": 187888,
           "decoded_signature": "YOBJ"
         },
         {
@@ -493,22 +493,22 @@
           "index": 3,
           "id": 26,
           "offset": 131456,
-          "size": 5612,
-          "sha256": "d8c5a253074528085c8de829a7d90be761fee0752e0a5fd858087a4d5cf9c146",
+          "size": 5733,
+          "sha256": "091153a7d2146a9b7b20deef8d50f76bfedd184c4cc835a364770421f87aaf0a",
           "signature": "BPE ",
           "kind": "unknown",
-          "decoded_bytes": 11200,
+          "decoded_bytes": 11488,
           "decoded_signature": "YOBJ"
         },
         {
           "index": 4,
           "id": 27,
-          "offset": 137072,
-          "size": 5570,
-          "sha256": "3f999b66f57051d1f5a39e545fb64b6e2448768b94e2bdb044aaa5c9b4cb206c",
+          "offset": 137200,
+          "size": 5695,
+          "sha256": "e643518a2d05edc82a7a2911fba77f194df7c99605672359d7f2d28329e440d2",
           "signature": "BPE ",
           "kind": "unknown",
-          "decoded_bytes": 11200,
+          "decoded_bytes": 11488,
           "decoded_signature": "YOBJ"
         }
       ]
@@ -32063,7 +32063,7 @@
         "model_name": "Kurt Angle",
         "meshes": 43,
         "bones": 79,
-        "textures": 18,
+        "textures": 19,
         "vertices": 2331,
         "triangles": 2725,
         "material_records": 90,
@@ -32087,7 +32087,8 @@
           "rock_face_y",
           "rock_eye_y",
           "rc_kuti",
-          "rc_ha"
+          "rc_ha",
+          "pat"
         ],
         "mesh_reports": [
           {
@@ -43889,13 +43890,13 @@
           },
           {
             "start": 186232,
-            "end": 186520,
-            "bytes": 288,
+            "end": 186536,
+            "bytes": 304,
             "kind": "texture names"
           },
           {
-            "start": 186520,
-            "end": 186552,
+            "start": 186536,
+            "end": 186568,
             "bytes": 32,
             "kind": "model name and descriptor"
           },
@@ -51817,9 +51818,9 @@
           179572,
           179588
         ],
-        "declared_yobj_end": 186552,
+        "declared_yobj_end": 186568,
         "pof0_bytes": 1320,
-        "expanded_bytes": 187872,
+        "expanded_bytes": 187888,
         "model_descriptor_hex": "4b75727420416e676c6500000000000001000000000000002b00000000000000",
         "offsets_ranges_indices_palettes_weights_valid": true
       },
@@ -51828,13 +51829,31 @@
         "model_name": "L_elb",
         "meshes": 1,
         "bones": 79,
-        "textures": 1,
+        "textures": 19,
         "vertices": 71,
         "triangles": 64,
         "material_records": 1,
         "strips": 22,
         "indices": 108,
         "texture_names": [
+          "rc_dou",
+          "rc_kat_l",
+          "rc_ude",
+          "rc_kat_r",
+          "rc_handa",
+          "rc_handb",
+          "rc_momo",
+          "rc_pan1",
+          "rc_pan2",
+          "rc_kutu1",
+          "rc_kutu2",
+          "rc_kutu4",
+          "rc_hiza",
+          "rc_kutu3",
+          "rock_face_y",
+          "rock_eye_y",
+          "rc_kuti",
+          "rc_ha",
           "pat"
         ],
         "mesh_reports": [
@@ -51847,14 +51866,14 @@
             "submeshes": [
               {
                 "material": 0,
-                "texture_id": 0,
+                "texture_id": 18,
                 "texture": "pat",
                 "vertex_buffer_vertices": 71,
                 "referenced_vertices": 71,
                 "index_format": "uint16",
                 "material_control": "0x5",
-                "opaque_render_state_hex": "808080ff808080ffffffffff0000000000007f4300000000050000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000",
-                "opaque_render_state_sha256": "983bb66b9f82a013db5f9aeec9a38aa1da113d09b7fbf48f653f807b8936ed65",
+                "opaque_render_state_hex": "808080ff808080ffffffffff0000000000007f4300001200050000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000",
+                "opaque_render_state_sha256": "888a453678e3731a66df1be78d3b29218446d18ec85906c3977dce847583c63a",
                 "triangles": 64,
                 "indices": 108,
                 "strips": 22,
@@ -52131,13 +52150,13 @@
           },
           {
             "start": 11096,
-            "end": 11112,
-            "bytes": 16,
+            "end": 11400,
+            "bytes": 304,
             "kind": "texture names"
           },
           {
-            "start": 11112,
-            "end": 11144,
+            "start": 11400,
+            "end": 11432,
             "bytes": 32,
             "kind": "model name and descriptor"
           },
@@ -52340,9 +52359,9 @@
           4356,
           4372
         ],
-        "declared_yobj_end": 11144,
+        "declared_yobj_end": 11432,
         "pof0_bytes": 56,
-        "expanded_bytes": 11200,
+        "expanded_bytes": 11488,
         "model_descriptor_hex": "4c5f656c62000000000000000000000001000000000000000100000000000000",
         "offsets_ranges_indices_palettes_weights_valid": true
       },
@@ -52351,13 +52370,31 @@
         "model_name": "R_elb",
         "meshes": 1,
         "bones": 79,
-        "textures": 1,
+        "textures": 19,
         "vertices": 71,
         "triangles": 64,
         "material_records": 1,
         "strips": 22,
         "indices": 108,
         "texture_names": [
+          "rc_dou",
+          "rc_kat_l",
+          "rc_ude",
+          "rc_kat_r",
+          "rc_handa",
+          "rc_handb",
+          "rc_momo",
+          "rc_pan1",
+          "rc_pan2",
+          "rc_kutu1",
+          "rc_kutu2",
+          "rc_kutu4",
+          "rc_hiza",
+          "rc_kutu3",
+          "rock_face_y",
+          "rock_eye_y",
+          "rc_kuti",
+          "rc_ha",
           "pat"
         ],
         "mesh_reports": [
@@ -52370,14 +52407,14 @@
             "submeshes": [
               {
                 "material": 0,
-                "texture_id": 0,
+                "texture_id": 18,
                 "texture": "pat",
                 "vertex_buffer_vertices": 71,
                 "referenced_vertices": 71,
                 "index_format": "uint16",
                 "material_control": "0x5",
-                "opaque_render_state_hex": "808080ff808080ffffffffff0000000000007f4300000000050000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000",
-                "opaque_render_state_sha256": "983bb66b9f82a013db5f9aeec9a38aa1da113d09b7fbf48f653f807b8936ed65",
+                "opaque_render_state_hex": "808080ff808080ffffffffff0000000000007f4300001200050000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000",
+                "opaque_render_state_sha256": "888a453678e3731a66df1be78d3b29218446d18ec85906c3977dce847583c63a",
                 "triangles": 64,
                 "indices": 108,
                 "strips": 22,
@@ -52654,13 +52691,13 @@
           },
           {
             "start": 11096,
-            "end": 11112,
-            "bytes": 16,
+            "end": 11400,
+            "bytes": 304,
             "kind": "texture names"
           },
           {
-            "start": 11112,
-            "end": 11144,
+            "start": 11400,
+            "end": 11432,
             "bytes": 32,
             "kind": "model name and descriptor"
           },
@@ -52863,17 +52900,59 @@
           4356,
           4372
         ],
-        "declared_yobj_end": 11144,
+        "declared_yobj_end": 11432,
         "pof0_bytes": 56,
-        "expanded_bytes": 11200,
+        "expanded_bytes": 11488,
         "model_descriptor_hex": "525f656c62000000000000000000000001000000000000000100000000000000",
         "offsets_ranges_indices_palettes_weights_valid": true
       }
     ]
   },
   "comparison": {
-    "main_yobj_byte_identical": true,
-    "main_yobj_sha256": "d1e14041a38fcb9c17457a24c2da5d85389835a05702f7ec8ddbb12f31781945",
+    "main_yobj_byte_identical": false,
+    "main_vertex_buffers_bone_table_mesh_headers_materials_strips_byte_identical": true,
+    "main_texture_names_before": [
+      "rc_dou",
+      "rc_kat_l",
+      "rc_ude",
+      "rc_kat_r",
+      "rc_handa",
+      "rc_handb",
+      "rc_momo",
+      "rc_pan1",
+      "rc_pan2",
+      "rc_kutu1",
+      "rc_kutu2",
+      "rc_kutu4",
+      "rc_hiza",
+      "rc_kutu3",
+      "rock_face_y",
+      "rock_eye_y",
+      "rc_kuti",
+      "rc_ha"
+    ],
+    "main_texture_names_after": [
+      "rc_dou",
+      "rc_kat_l",
+      "rc_ude",
+      "rc_kat_r",
+      "rc_handa",
+      "rc_handb",
+      "rc_momo",
+      "rc_pan1",
+      "rc_pan2",
+      "rc_kutu1",
+      "rc_kutu2",
+      "rc_kutu4",
+      "rc_hiza",
+      "rc_kutu3",
+      "rock_face_y",
+      "rock_eye_y",
+      "rc_kuti",
+      "rc_ha",
+      "pat"
+    ],
+    "main_yobj_sha256": "0136497494db33cdbe764d0d742d157f872254ac17e00e59de677674b637a030",
     "original_models": 1,
     "final_models": 3,
     "original_meshes": 43,
@@ -53067,13 +53146,31 @@
           "model_name": "L_elb",
           "meshes": 1,
           "bones": 79,
-          "textures": 1,
+          "textures": 19,
           "vertices": 71,
           "triangles": 64,
           "material_records": 1,
           "strips": 22,
           "indices": 108,
           "texture_names": [
+            "rc_dou",
+            "rc_kat_l",
+            "rc_ude",
+            "rc_kat_r",
+            "rc_handa",
+            "rc_handb",
+            "rc_momo",
+            "rc_pan1",
+            "rc_pan2",
+            "rc_kutu1",
+            "rc_kutu2",
+            "rc_kutu4",
+            "rc_hiza",
+            "rc_kutu3",
+            "rock_face_y",
+            "rock_eye_y",
+            "rc_kuti",
+            "rc_ha",
             "pat"
           ],
           "mesh_reports": [
@@ -53086,14 +53183,14 @@
               "submeshes": [
                 {
                   "material": 0,
-                  "texture_id": 0,
+                  "texture_id": 18,
                   "texture": "pat",
                   "vertex_buffer_vertices": 71,
                   "referenced_vertices": 71,
                   "index_format": "uint16",
                   "material_control": "0x5",
-                  "opaque_render_state_hex": "808080ff808080ffffffffff0000000000007f4300000000050000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000",
-                  "opaque_render_state_sha256": "983bb66b9f82a013db5f9aeec9a38aa1da113d09b7fbf48f653f807b8936ed65",
+                  "opaque_render_state_hex": "808080ff808080ffffffffff0000000000007f4300001200050000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000",
+                  "opaque_render_state_sha256": "888a453678e3731a66df1be78d3b29218446d18ec85906c3977dce847583c63a",
                   "triangles": 64,
                   "indices": 108,
                   "strips": 22,
@@ -53370,13 +53467,13 @@
             },
             {
               "start": 11096,
-              "end": 11112,
-              "bytes": 16,
+              "end": 11400,
+              "bytes": 304,
               "kind": "texture names"
             },
             {
-              "start": 11112,
-              "end": 11144,
+              "start": 11400,
+              "end": 11432,
               "bytes": 32,
               "kind": "model name and descriptor"
             },
@@ -53579,9 +53676,9 @@
             4356,
             4372
           ],
-          "declared_yobj_end": 11144,
+          "declared_yobj_end": 11432,
           "pof0_bytes": 56,
-          "expanded_bytes": 11200,
+          "expanded_bytes": 11488,
           "model_descriptor_hex": "4c5f656c62000000000000000000000001000000000000000100000000000000",
           "offsets_ranges_indices_palettes_weights_valid": true,
           "analytical_validation": {
@@ -53664,6 +53761,7 @@
             }
           },
           "stored_global_metadata": "Aligned source values for active bones; zero for inactive bones",
+          "shared_texture_namespace": true,
           "local_bind_records_match_main": true,
           "decimation_applied": false,
           "limitation": "Actual elbow-pad removal/throw semantics require SVR 2011 testing."
@@ -53678,13 +53776,31 @@
           "model_name": "R_elb",
           "meshes": 1,
           "bones": 79,
-          "textures": 1,
+          "textures": 19,
           "vertices": 71,
           "triangles": 64,
           "material_records": 1,
           "strips": 22,
           "indices": 108,
           "texture_names": [
+            "rc_dou",
+            "rc_kat_l",
+            "rc_ude",
+            "rc_kat_r",
+            "rc_handa",
+            "rc_handb",
+            "rc_momo",
+            "rc_pan1",
+            "rc_pan2",
+            "rc_kutu1",
+            "rc_kutu2",
+            "rc_kutu4",
+            "rc_hiza",
+            "rc_kutu3",
+            "rock_face_y",
+            "rock_eye_y",
+            "rc_kuti",
+            "rc_ha",
             "pat"
           ],
           "mesh_reports": [
@@ -53697,14 +53813,14 @@
               "submeshes": [
                 {
                   "material": 0,
-                  "texture_id": 0,
+                  "texture_id": 18,
                   "texture": "pat",
                   "vertex_buffer_vertices": 71,
                   "referenced_vertices": 71,
                   "index_format": "uint16",
                   "material_control": "0x5",
-                  "opaque_render_state_hex": "808080ff808080ffffffffff0000000000007f4300000000050000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000",
-                  "opaque_render_state_sha256": "983bb66b9f82a013db5f9aeec9a38aa1da113d09b7fbf48f653f807b8936ed65",
+                  "opaque_render_state_hex": "808080ff808080ffffffffff0000000000007f4300001200050000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000",
+                  "opaque_render_state_sha256": "888a453678e3731a66df1be78d3b29218446d18ec85906c3977dce847583c63a",
                   "triangles": 64,
                   "indices": 108,
                   "strips": 22,
@@ -53981,13 +54097,13 @@
             },
             {
               "start": 11096,
-              "end": 11112,
-              "bytes": 16,
+              "end": 11400,
+              "bytes": 304,
               "kind": "texture names"
             },
             {
-              "start": 11112,
-              "end": 11144,
+              "start": 11400,
+              "end": 11432,
               "bytes": 32,
               "kind": "model name and descriptor"
             },
@@ -54190,9 +54306,9 @@
             4356,
             4372
           ],
-          "declared_yobj_end": 11144,
+          "declared_yobj_end": 11432,
           "pof0_bytes": 56,
-          "expanded_bytes": 11200,
+          "expanded_bytes": 11488,
           "model_descriptor_hex": "525f656c62000000000000000000000001000000000000000100000000000000",
           "offsets_ranges_indices_palettes_weights_valid": true,
           "analytical_validation": {
@@ -54275,6 +54391,7 @@
             }
           },
           "stored_global_metadata": "Aligned source values for active bones; zero for inactive bones",
+          "shared_texture_namespace": true,
           "local_bind_records_match_main": true,
           "decimation_applied": false,
           "limitation": "Actual elbow-pad removal/throw semantics require SVR 2011 testing."

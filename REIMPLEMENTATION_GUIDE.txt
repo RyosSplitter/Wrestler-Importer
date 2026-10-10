@@ -12,6 +12,11 @@ new section IDs for unknown models or silently omit them. Each pad receives the
 main body's one uniform alignment, sparse float weights and a separate native
 YOBJ, with no decimation or donor weight transfer. Check all independent native
 buffers, local bind records, palettes, texture references and analytical poses.
+Match the Rock's shared texture contract: main and both pad YOBJs declare the
+same name array, with the new pad texture appended so existing body indices
+remain unchanged. Each pad material references its index in that shared array.
+Do not extrapolate this to the Sgt. Slaughter hat: its model/texture sections
+32/39 use a separate namespace and require a different profile.
 Only explicit output sections may be added/replaced; preserve unrelated donor
 payloads and account for the entire model set in the size budget. Native sparse
 stored-global metadata and JUDE event semantics remain INFERRED/UNKNOWN as
