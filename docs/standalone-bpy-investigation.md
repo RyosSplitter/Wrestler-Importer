@@ -8,6 +8,9 @@ Labels apply to each technical assertion: **CONFIRMED** means measured or
 demonstrated in this experiment; **INFERRED** means supported but not proved for
 every input/platform; **UNKNOWN** means not yet established.
 
+The published bundle's [complete file inventory](standalone-bpy-file-inventory.md)
+lists every file's purpose, compressed/extracted size, hash and removal assessment.
+
 ## Scope and result
 
 **CONFIRMED:** This experiment changes no production reducer, converter, QA,
