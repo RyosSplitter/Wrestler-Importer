@@ -1,0 +1,67 @@
+{
+  "status": "Experimental; PPSSPP validation required",
+  "branch": "experiment/jericho-eye-compatibility",
+  "pac_file": "Jericho-SVR2011-PSP-eye-compatibility-TEST.pac",
+  "pac_bytes": 145408,
+  "pac_sha256": "da7a9fa75b0941e58aba86881472f40129448b22880b5cc4fba478b265961bd9",
+  "yobj_sha256": "f4fba01b184ed012fa98038e24f07694b10a09ecd4a69ec984cd20f2d931ea47",
+  "model_bpe_bytes": 119350,
+  "native_counts": {
+    "meshes": 54,
+    "bones": 79,
+    "vertices": 2387,
+    "triangles": 2413,
+    "indices": 4085,
+    "textures": 20,
+    "material_records": 94,
+    "expanded_bytes": 194688
+  },
+  "changed_weight_records": 84,
+  "changed_eye_records": 66,
+  "changed_eyelid_or_seam_records": 18,
+  "selected_records": 99,
+  "changed_palette_meshes": 4,
+  "checks": {
+    "actual_final_pac_native_audit_passed": true,
+    "pointers_offsets_ranges_relocations_indices_palettes_weights_valid": true,
+    "skeleton_geometry_uv_normals_colors_indices_materials_unchanged": true,
+    "unchanged_stored_payload_sections": [
+      8,
+      9
+    ],
+    "all_gim_textures_decoded": true,
+    "alpha_unchanged": true,
+    "sections_16_aligned": true,
+    "pac_2048_aligned": true,
+    "below_148000_bytes": true,
+    "exact_qa_reviewed_yobj_inside_pac": true,
+    "preview_yobj_matches_actual_pac": true,
+    "ocular_selected_weights_match_previous_psp": true,
+    "non_ocular_weights_match_jaw_fixed": true
+  },
+  "qa": {
+    "full_static_and_12_pose_flags": 0,
+    "ocular_probes": 16,
+    "known_bad_probes_flagged": 14,
+    "candidate_eye_flags": 0,
+    "jaw_p95_metrics_unchanged": true,
+    "jaw_motion_unchanged_in_eye_probes": true,
+    "tests_passed": 70
+  },
+  "backups": [
+    {
+      "filename": "backups/Jericho-previous-jaw-broken-ACCEPTED.pac",
+      "bytes": 147456,
+      "sha256": "1715f8f2768dbe1c8293461dd10c72d383397d660b8c61689365683bbf2f5729"
+    },
+    {
+      "filename": "backups/Jericho-jaw-fixed-eyes-reported-bad-TEST.pac",
+      "bytes": 143360,
+      "sha256": "f4f60125520f48285b4d03cd59abc21b980af4eca24124bc5a29423108aa3f1e"
+    }
+  ],
+  "packaging_code_changed": false,
+  "converter_defaults_changed": false,
+  "merged_to_main": false,
+  "limitation": "Synthetic controller probes reproduce excess ocular sensitivity, not the exact animation in the uploaded video. No new in-game test was performed here."
+}
