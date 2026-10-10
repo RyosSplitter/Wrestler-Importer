@@ -4,6 +4,20 @@ Evidence date: 2026-10-10. Isolated branch: `experiment/multi-yobj-accessories`.
 This supersedes the main-only **output** limitation documented in
 `portable-primary-model-fix.md`; its main-model reader remains valid.
 
+## Downloaded Windows release verification
+
+**CONFIRMED:** Release `portable-preview-13-62abe01676035e3559385bf3a80fdfbc2e8f8435`
+was built from commit `62abe01676035e3559385bf3a80fdfbc2e8f8435`. Hosted Windows
+CI passed 191 tests, frozen main/accessory conversions, and the independent
+body geometry/bone/material regression comparison. The downloaded ZIP is
+556,556,884 bytes, SHA-256
+`b95834aecbce25c4ac170d2d6dab56bd734b4e7d0b50e51f323c72d506a2753c`.
+All 7,084 manifest file hashes and archive paths were verified. Critical bundled
+converter source files match the build commit; no PAC/YOBJ/GIM assets are bundled.
+Machine-readable evidence is in `portable-multi-model-release.json`.
+**UNKNOWN:** Gameplay behavior, including pad removal/throw events. The hosted
+build is not a clean user Windows installation or PPSSPP gameplay test.
+
 ## What failed and what the supplied files show
 
 **CONFIRMED — binary inspection:** `0000.pac` SHA-256

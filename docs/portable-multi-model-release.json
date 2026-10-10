@@ -1,0 +1,41 @@
+{
+  "classification": "CONFIRMED: hosted Windows build and downloaded archive verification; gameplay remains unverified",
+  "branch": "experiment/multi-yobj-accessories",
+  "build_commit": "62abe01676035e3559385bf3a80fdfbc2e8f8435",
+  "release_tag": "portable-preview-13-62abe01676035e3559385bf3a80fdfbc2e8f8435",
+  "ci_run": "https://github.com/RyosSplitter/Wrestler-Importer/actions/runs/38073332704",
+  "windows_archive": {
+    "filename": "PS2PSP-Pac-Converter-Windows-x64.zip",
+    "bytes": 556556884,
+    "sha256": "b95834aecbce25c4ac170d2d6dab56bd734b4e7d0b50e51f323c72d506a2753c",
+    "entries": 8371,
+    "manifest_files_verified": 7084,
+    "game_pac_yobj_gim_assets_bundled": false,
+    "critical_bundled_source_files_match_build_commit": true
+  },
+  "checks": {
+    "tests_passed": 191,
+    "frozen_main_and_accessory_conversions": "PASS",
+    "frozen_geometry_bone_material_regression_comparison": "PASS",
+    "archive_manifest_sha256_validation": "PASS",
+    "archive_path_validation": "PASS"
+  },
+  "rock_candidate": {
+    "filename": "Rock-HCTP-to-PSP-with-elbow-pads-experimental.pac",
+    "bytes": 143360,
+    "sha256": "ae56c7e0f18f230a865790a5f7bb18796003c354c65fa1f1be744e1c4581a16e",
+    "yobj_sections": [2, 26, 27],
+    "ppsspp_validation": "PENDING, including pad-removal and throw events"
+  },
+  "preview_bundle": {
+    "filename": "Rock-HCTP-to-PSP-multi-model-test-bundle.zip",
+    "bytes": 14100479,
+    "sha256": "881e50882936a1e0a060ebd731b42ded5aba6e54c859d52f2b9e118c119b4ea8"
+  },
+  "limitations": [
+    "Only verified HCTP left/right elbow-pad roles are supported; other extra YOBJ roles are rejected explicitly.",
+    "The app archive uses the existing bundled Blender runtime; this change does not implement standalone bpy.",
+    "No clean user Windows machine or PPSSPP gameplay validation is claimed.",
+    "Nothing has been merged into main."
+  ]
+}
