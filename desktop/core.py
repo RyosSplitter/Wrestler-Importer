@@ -46,8 +46,10 @@ class Request:
     source:str
     base:str
     source_format:str='hctp'
+    adaptive_textures:bool=False
 
     def validate(self):
+        if not isinstance(self.adaptive_textures,bool):raise ValueError('Adaptive texture option must be a boolean.')
         adapter(self.source_format)
         for raw in (self.source,self.base):
             p=Path(raw)
@@ -153,7 +155,7 @@ def textures(decoded,prepared,folder,cap):
     dump(folder/'textures.json',dict(textures=entries))
     return entries,gims
 
-def validate_pac(data,base=None,max_bytes=148000,*,accessory_models=None):
+def validate_pac(data,base=None,max_bytes=148000,*,accessory_models=None,gim_reader=read_gim):
     report=inspect_pac(data)
     if len(data)>max_bytes or len(data)%2048 or any(s['offset']%16 for s in report['sections']):raise ValueError('PSP PAC size/alignment check failed.')
     if len({s['id'] for s in report['sections']})!=len(report['sections']):raise ValueError('Duplicate final PAC section IDs.')
@@ -162,7 +164,7 @@ def validate_pac(data,base=None,max_bytes=148000,*,accessory_models=None):
     native=models[2];texture_records=parse_textures(unpacked[9])
     gims={r['name']:unpacked[9][r['offset']:r['offset']+r['size']] for r in texture_records}
     if len(gims)!=len(texture_records) or set(gims)!={n for m in models.values() for n in m['texture_names']}:raise ValueError('Native texture table does not match the YOBJ model set.')
-    for raw in gims.values():read_gim(raw)
+    for raw in gims.values():gim_reader(raw)
     for section,model in models.items():
         for mesh in model['meshes']:
             if (model['report']['mesh_reports'][mesh['index']]['vertex_buffer_start']-8)%16:raise ValueError('Native vertex alignment failed.')
@@ -344,14 +346,26 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
     size_report.finish(len(candidate)<=profile['max_pac_bytes'])
     if len(candidate)>profile['max_pac_bytes']:raise size_report.error()
     dump(work/'reduced.json',reduced);dump(work/'packed.json',packed)
+    texture_reader=read_gim
+    adaptive_report=None
+    if request.adaptive_textures:
+        # The established conversion (including geometry selection) runs exactly
+        # as before. The opt-in stage is allowed to replace only texture table 9.
+        from desktop.texture_optimizer import optimize_pac
+        from desktop.texture_optimizer.candidates import read_gim as adaptive_reader
+        step(63,'Analyzing source texture detail and measured PAC upgrade costs')
+        (work/'current-texture-method.pac').write_bytes(candidate)
+        candidate,adaptive_report=optimize_pac(candidate,decoded,work/'adaptive-textures',
+            target=profile['max_pac_bytes'],cancel=check,progress=lambda message:progress(63,message))
+        texture_reader=adaptive_reader
     step(65,'Validating final PAC pointers, buffers, weights, rendering records and size')
-    native,gim_map=validate_pac(candidate,base_bytes,profile['max_pac_bytes'],accessory_models=accessory_prepared)
+    native,gim_map=validate_pac(candidate,base_bytes,profile['max_pac_bytes'],accessory_models=accessory_prepared,gim_reader=texture_reader)
     dump(work/'accessory-qa.json',dict(status='pass',models=accessory_reports,
          limitation='Exact source-derived geometry and direct weights, native structure and analytical poses; removal/throw behavior requires in-game validation.'))
     unpacked=next(r for s,r in sections(candidate) if s['id']==2)
     if unpacked!=yobj:raise ValueError('Preview model differs from final PAC.')
     stem=re.sub(r'[^A-Za-z0-9_.-]','_',source.stem)[:48].strip('.') or 'wrestler'
-    pac=work/(stem+'-PSP-experimental.pac');pac.write_bytes(candidate)
+    pac=work/(stem+('-PSP-adaptive-experimental.pac' if request.adaptive_textures else '-PSP-experimental.pac'));pac.write_bytes(candidate)
     preview=work/'preview';preview.mkdir();(preview/'output.yobj').write_bytes(yobj)
     accessory_native=[audit_yobj(raw) for raw in accessory_yobjs.values()]
     visual=combined_preview(native,accessory_native);write_preview(visual,preview/'output.obj')
@@ -362,7 +376,7 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
         write_preview(combined_preview(independent,[audit_yobj(raw)]),preview/('section-%d.obj'%section))
     mtl=[]
     for i,name in enumerate(visual['texture_names']):
-        filename='texture_%02d.png'%i;pixels,palette=read_gim(gim_map[name]);Image.fromarray(palette[pixels]).save(preview/filename)
+        filename='texture_%02d.png'%i;pixels,palette=texture_reader(gim_map[name]);Image.fromarray(palette[pixels]).save(preview/filename)
         mtl.extend(['newmtl texture_%d'%i,'Kd 1 1 1','map_Kd '+filename])
     (preview/'preview.mtl').write_text('\n'.join(mtl)+'\n',encoding='ascii')
     step(70,'Checking eye/eyelid compatibility and facial regression poses')
@@ -382,11 +396,13 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
     html=work/'qa/report.html'
     text=html.read_text(encoding='utf-8')
     note='<p>Native model set: %d models. <a href="../accessory-qa.json">Independent accessory structure, attributes and pose validation</a>. <a href="../preview/output.obj">Combined OBJ preview</a>. Actual in-game pad removal/throw behavior remains unverified.</p>'%(1+len(accessory_yobjs))
+    if adaptive_report is not None:
+        note+='<p>Adaptive textures enabled. <a href="../adaptive-textures/report.html">Source/current/adaptive textures and allocation report</a>. Every non-texture section payload is byte-identical to the current-method baseline.</p>'
     text=text.replace('</body>',note+'</body>')
     html.write_text(text,encoding='utf-8')
     step(92,'Rendering textured views of the actual final PSP output')
     from desktop.preview import save_views
-    save_views(visual,gim_map,preview)
+    save_views(visual,gim_map,preview,gim_reader=texture_reader)
     for p,h in hashes.items():
         if digest(p)!=h:raise ValueError('An input changed during conversion; output withheld.')
     result=dict(pac=str(pac),preview=str(preview),report=str(work/'qa/report.html'),bytes=len(candidate),sha256=digest(pac),
@@ -400,5 +416,9 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
                 attribute_precision=packed.get('attribute_precision_report'),
                 precision_validation=precision_validation,
                 status='Experimental conversion; review QA and test in PPSSPP. File checks do not certify game compatibility.')
+    if adaptive_report is not None:
+        result['adaptive_textures']=dict(report=str(work/'adaptive-textures/report.html'),
+            baseline_pac=str(work/'current-texture-method.pac'),baseline_bytes=adaptive_report['baseline_bytes'],
+            pixel_palette_bytes=adaptive_report['pixel_palette_bytes'],unchanged_non_texture_payloads=True)
     dump(work/'result.json',result);step(100,'Ready for review and Save As')
     return result

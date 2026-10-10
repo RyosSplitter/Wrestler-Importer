@@ -61,9 +61,12 @@ def main():
         states=[app.source_menu.entrycget(i,'state') for i in range(4)]
         if states!=['disabled','disabled','normal','disabled']:raise ValueError('Source selector states are incorrect.')
         if not app.root.tk.call('info','commands','::tkdnd::drop_target'):raise ValueError('Drag/drop runtime command missing.')
+        if app.adaptive_textures.get() is not False:raise ValueError('Experimental adaptive checkbox must default OFF.')
+        if app.adaptive_checkbox.cget('text')!='Adaptive Texture Optimization (Experimental)':raise ValueError('Adaptive checkbox label is incorrect.')
         from desktop.preview import VIEWS
         dump(sys.argv[2],dict(gui=True,drag_drop_command_verified=True,source_menu_states=states,
-                              bundled_blender=version.splitlines()[0],preview_views=list(VIEWS),base_required=True))
+                              bundled_blender=version.splitlines()[0],preview_views=list(VIEWS),base_required=True,
+                              adaptive_textures_default=False,adaptive_checkbox_verified=True))
         app.root.destroy();return 0
     app.root.mainloop();return 0
 

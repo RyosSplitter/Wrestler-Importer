@@ -19,7 +19,7 @@ except ImportError:
     from psp_materials import validate_material_controls
 
 
-def texture_table(names, payloads):
+def texture_table(names, payloads, *, gim_reader=read_gim):
     if len(names) != len(payloads):
         raise FormatError('Texture name and payload counts differ')
     if len({name.casefold() for name in names}) != len(names):
@@ -33,7 +33,7 @@ def texture_table(names, payloads):
         encoded = name.encode('ascii')
         if len(encoded) > 15 or b'\0' in encoded:
             raise FormatError('Texture name cannot fit the PAC entry')
-        read_gim(data)
+        gim_reader(data)
         table += encoded.ljust(16, b'\0') + b'gim\0' + struct.pack('<3I', len(data), offset, 0)
         offset += len(data)
     return bytes(table) + b''.join(data for _, data in ordered)

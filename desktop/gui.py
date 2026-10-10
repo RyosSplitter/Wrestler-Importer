@@ -24,6 +24,8 @@ class Application:
         self.settings=load_settings();self.source=None;self.process=None;self.result=None;self.saved=None;self.closing=False
         self.inspector=None;self.inspect_root=None;self.view='front-left';self.zoom='full';self.photo=None
         self.base=tk.StringVar(value=self.settings.get('base',''));self.status=tk.StringVar(value='Choose your PSP base once, then drop an HCTP PAC.')
+        # Session-only and deliberately OFF, even when an earlier job enabled it.
+        self.adaptive_textures=tk.BooleanVar(value=False)
         self.info=tk.StringVar(value='No source selected');self.output=tk.StringVar(value='Your converted PSP output will appear here.')
         style=ttk.Style(self.root);style.theme_use('clam');style.configure('TProgressbar',troughcolor=PANEL,background=RED,bordercolor=PANEL)
         title=tk.Frame(self.root,bg=BG);title.pack(fill='x',padx=28,pady=(23,20))
@@ -46,6 +48,10 @@ class Application:
         self.label(left,'YOUR PSP BASE  /  remembered locally')
         tk.Label(left,textvariable=self.base,bg=BG,fg=MUTED,font=('Segoe UI',9),wraplength=365,justify='left').pack(fill='x',pady=8)
         self.base_button=self.button(left,'Choose PSP base PAC',self.choose_base);self.base_button.pack(fill='x')
+        self.adaptive_checkbox=tk.Checkbutton(left,text='Adaptive Texture Optimization (Experimental)',
+            variable=self.adaptive_textures,bg=BG,fg=FG,selectcolor=PANEL,activebackground=BG,
+            activeforeground=FG,font=('Segoe UI',9),anchor='w',wraplength=345)
+        self.adaptive_checkbox.pack(fill='x',pady=(12,0))
         tk.Label(left,text='Target: SVR 2011 PSP\nCompatible custom HCTP containers accepted.\nOther PS2 formats are coming soon.',bg=BG,fg=MUTED,font=('Segoe UI',10),justify='left').pack(fill='x',pady=20)
         conversion_actions=tk.Frame(left,bg=BG);conversion_actions.pack(fill='x',pady=6)
         self.convert=self.button(conversion_actions,'Convert',self.start,primary=True);self.convert.pack(side='left',fill='x',expand=True,padx=(0,8))
@@ -104,8 +110,9 @@ class Application:
         try:Request(self.source,self.base.get()).validate()
         except Exception as e:messagebox.showerror(NAME,str(e));return
         self.job=data_dir()/'jobs'/uuid.uuid4().hex;self.job.mkdir(parents=True)
-        (self.job/'request.json').write_text(json.dumps(dict(source=self.source,base=self.base.get(),source_format='hctp')),encoding='utf-8')
+        (self.job/'request.json').write_text(json.dumps(dict(source=self.source,base=self.base.get(),source_format='hctp',adaptive_textures=self.adaptive_textures.get())),encoding='utf-8')
         self.result=None;self.save.configure(state='disabled');self.convert.configure(state='disabled');self.base_button.configure(state='disabled');self.cancel.configure(state='normal')
+        self.adaptive_checkbox.configure(state='disabled')
         self.output.set('Building an experimental PSP candidate…');self.preview.configure(image='',text='Converting…');self.progress['value']=0
         self.process=self.spawn(['--worker',str(self.job/'request.json')]);self.status.set('Starting isolated conversion job…')
     def cancel_job(self):
@@ -128,6 +135,7 @@ class Application:
                 except (ValueError,IndexError):pass
             if self.process.poll() is not None:
                 self.process=None;self.cancel.configure(state='disabled');self.convert.configure(state='normal');self.base_button.configure(state='normal')
+                self.adaptive_checkbox.configure(state='normal')
                 try:
                     if not (self.job/'success.json').exists():
                         failure=json.loads((self.job/'failure.json').read_text(encoding='utf-8'));self.status.set(failure['error'])

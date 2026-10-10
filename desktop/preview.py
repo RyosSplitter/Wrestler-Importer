@@ -8,10 +8,10 @@ from tools.texture_convert import read_gim
 
 VIEWS=('front-left','front','back','left','right')
 
-def render(model,textures,view='front-left',resolution=768,zoom=1.):
+def render(model,textures,view='front-left',resolution=768,zoom=1.,*,gim_reader=read_gim):
     points=np.array([v['position'] for m in model['meshes'] for v in m['vertices']])@AXES
     cam=camera(points,view,resolution);cam.span/=zoom
-    rgba={name:colors[indices] for name,raw in textures.items() for indices,colors in [read_gim(raw)]}
+    rgba={name:colors[indices] for name,raw in textures.items() for indices,colors in [gim_reader(raw)]}
     pixels=np.full((resolution,resolution,3),72,dtype=np.uint8)
     depth=np.full((resolution,resolution),-np.inf)
     light=cam.direction+.45*cam.right+.7*cam.up;light/=np.linalg.norm(light)
@@ -50,7 +50,7 @@ def render(model,textures,view='front-left',resolution=768,zoom=1.):
     return image
 
 
-def save_views(model,textures,folder,resolution=768):
+def save_views(model,textures,folder,resolution=768,*,gim_reader=read_gim):
     folder=Path(folder);folder.mkdir(parents=True,exist_ok=True)
     for zoom,label in ((1.,'full'),(1.7,'zoom')):
-        for view in VIEWS:render(model,textures,view,resolution,zoom).save(folder/(view+'-'+label+'.png'))
+        for view in VIEWS:render(model,textures,view,resolution,zoom,gim_reader=gim_reader).save(folder/(view+'-'+label+'.png'))

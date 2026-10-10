@@ -2,8 +2,8 @@ name: Build portable PS2PSP preview
 on:
   workflow_dispatch:
   push:
-    branches: [feature/portable-ps2psp, fix/hctp-primary-model, experiment/precision-budget-fit, experiment/multi-yobj-accessories]
-    paths: ['desktop/**', 'ps2psp_converter.py', 'app/ps2_textures.py', 'tools/build_portable.py', 'tools/portable_fixture.py', 'tools/blender_reduce.py', 'tools/pac_inspect.py', 'tools/hctp_read.py', 'tools/hctp_weights.py', 'tools/yobj_read.py', 'requirements-desktop.txt', 'docs/portable-*.md', 'tests/test_portable_*.py', 'tests/test_main_model_selection.py', '.github/workflows/windows-portable.yml']
+    branches: [feature/portable-ps2psp, fix/hctp-primary-model, experiment/precision-budget-fit, experiment/multi-yobj-accessories, experiment/content-aware-textures]
+    paths: ['desktop/**', 'ps2psp_converter.py', 'app/ps2_textures.py', 'tools/build_portable.py', 'tools/portable_fixture.py', 'tools/blender_reduce.py', 'tools/pac_inspect.py', 'tools/pac_repack.py', 'tools/hctp_read.py', 'tools/hctp_weights.py', 'tools/yobj_read.py', 'requirements-desktop.txt', 'docs/portable-*.md', 'tests/test_portable_*.py', 'tests/test_adaptive_textures.py', 'tests/test_main_model_selection.py', '.github/workflows/windows-portable.yml']
 permissions:
   contents: write
 jobs:
@@ -65,6 +65,39 @@ jobs:
           if ($multi.model_count -ne 3 -or $multi.accessory_sections.Count -ne 2) { throw 'Accessory source models were dropped' }
           if ($single.sha256 -eq $multi.sha256) { throw 'Multi-model output unexpectedly equals main-only output' }
           Write-Output 'Multi-model input retains two independently audited PSP accessories.'
+      - name: Frozen adaptive texture A/B and immutable model verification
+        timeout-minutes: 15
+        shell: pwsh
+        run: |
+          $env:PATH = "$env:SystemRoot\System32;$env:SystemRoot"
+          $job = "$env:RUNNER_TEMP\portable-adaptive"
+          New-Item -ItemType Directory -Path $job | Out-Null
+          @{source=(Resolve-Path 'build/test-inputs/Lance-modified-HCTP.pac').Path; base=(Resolve-Path 'assets/Kurt-Angle-Ring.PAC').Path; source_format='hctp'; adaptive_textures=$true} | ConvertTo-Json | Set-Content "$job/request.json" -Encoding utf8NoBOM
+          $p = Start-Process dist/PS2PSP-Pac-Converter/PS2PSP-Pac-Converter.exe -ArgumentList @('--worker',"$job/request.json") -PassThru -Wait
+          if ($p.ExitCode -ne 0) { Get-Content "$job/error.log"; throw 'Frozen adaptive job failed' }
+          Get-Content "$job/success.json"
+        if: github.ref == 'refs/heads/experiment/content-aware-textures'
+      - name: Check frozen adaptive output and unchanged model payloads
+        shell: python
+        if: github.ref == 'refs/heads/experiment/content-aware-textures'
+        run: |
+          import json,os,sys
+          from pathlib import Path
+          sys.path.insert(0,str(Path.cwd()))
+          from tools.psp_mesh_merge_trial import sections
+          from desktop.core import validate_pac
+          from desktop.texture_optimizer.candidates import read_gim
+          root=Path(os.environ['RUNNER_TEMP'],'portable-adaptive')
+          r=json.loads((root/'success.json').read_text())
+          current=Path(r['adaptive_textures']['baseline_pac']).read_bytes()
+          result=Path(r['pac']).read_bytes()
+          validate_pac(result,gim_reader=read_gim)
+          a={s['id']:raw for s,raw in sections(current)}
+          b={s['id']:raw for s,raw in sections(result)}
+          assert a.keys()==b.keys()
+          for section,raw in a.items():
+              if section!=9: assert raw==b[section]
+          assert len(result)<=148000
       - name: Main geometry remains identical with independent accessory models
         shell: python
         run: |
@@ -104,6 +137,6 @@ jobs:
         run: |
           $tag = "portable-preview-${{ github.run_number }}-${{ github.sha }}"
           @'
-          Portable Windows x64 experimental preview. Retains independently converted HCTP elbow-pad YOBJs from sections 6/7 as PSP sections 26/27, gated by verified left/right controller support and rest hierarchies. Includes the shared accessory texture and combined textured previews; no pad decimation, donor weight transfer or merging into the body. Every final YOBJ receives native pointer/index/palette/weight/alignment checks and analytical pose replay. Unknown extra model roles and unsupported rig contracts are rejected instead of silently dropped. The uploaded Rock source was tested separately on Linux; actual SVR 2011 pad removal/throw behavior still needs PPSSPP testing. CI exercises single-model and generated independent accessory rigs in the frozen Windows app and checks unchanged main geometry. Retains the prior bounded precision fallback for oversized sources and the 148000-byte output budget. Uses bundled Blender 4.3.2, requires your own supported PSP base PAC, and bundles no game assets. Current supported PSP bases still require ordinary indexed4 and indexed8 rendering templates; the supplied native 2011 Rock was a structure reference, not the conversion donor. No experimental changes are merged into main.
+          Portable Windows x64 experimental preview. v0.25 adds Adaptive Texture Optimization (Experimental), OFF by default. The unchanged current converter creates the baseline; the opt-in modular analyzer then evaluates source-bounded proportional dimensions and useful color counts, alpha/UV occupancy, detail coverage, actual reduction losses and measured PAC marginal benefit per byte. Only compatible existing material depths are eligible. YOBJ model, geometry, rigging, weights, UVs, normals and material payloads stay exact; retained effect tables may use lossless BPE storage. Native checks and QA still run. Diagnostics and A/B texture comparisons accompany each successful adaptive job. The 148000-byte cap and baseline padded-pixel/CLUT envelope are enforced, but actual runtime memory/gameplay remains unverified. Requires your own supported PSP base. Includes bundled Blender, sources and notices, no game assets. Preserves independent supported elbow-pad models and the legacy size-fitting process. No changes merged into main. See repository docs/portable-adaptive-textures.md for scoring, measured wrestler comparisons and limitations.
           '@ | Set-Content "$env:RUNNER_TEMP/release-notes.txt" -Encoding utf8NoBOM
           gh release create $tag dist/*.zip dist/*.sha256 --target '${{ github.sha }}' --prerelease --title 'PS2PSP Pac Converter by RyosPrime — Windows preview' --notes-file "$env:RUNNER_TEMP/release-notes.txt"

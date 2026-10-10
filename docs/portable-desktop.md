@@ -14,6 +14,12 @@ installation is required. Conversion and previews work offline.
    than original character hashes. JBI, SYM and PS2 SVR remain disabled.
 3. Convert. Processing, native validation, reference QA and preview rendering
    run in an isolated job. Cancel removes incomplete geometry and retains logs.
+   **Adaptive Texture Optimization (Experimental)** defaults OFF. Check it to
+   run source-bounded content analysis and measured texture budget allocation
+   after the unchanged current converter. Its A/B baseline and per-texture
+   decision report are retained in the job and linked from QA. See
+   [adaptive texture documentation](portable-adaptive-textures.md). No model or
+   material payloads change in that stage; gameplay validation remains required.
 4. Review the **final PSP output**. Use front/rear/sides/three-quarter, Zoom and
    click the preview to enlarge it. Open the QA report for source comparisons,
    analytical poses, heatmaps and material-boundary findings.
