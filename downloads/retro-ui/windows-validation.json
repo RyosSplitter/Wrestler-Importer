@@ -1,0 +1,9 @@
+{
+  "runtime_revision": "d461d8c7253c5ae92727c4a82b9d1e59824935b2",
+  "ui_only_validation_run": "https://github.com/RyosSplitter/Wrestler-Importer/actions/runs/38094840133",
+  "full_conversion_validation_run": "https://github.com/RyosSplitter/Wrestler-Importer/actions/runs/38093772121",
+  "release": "https://github.com/RyosSplitter/Wrestler-Importer/releases/tag/portable-preview-19-d461d8c7253c5ae92727c4a82b9d1e59824935b2",
+  "tests": 235,
+  "packaged_native_ui_checks": "passed",
+  "game_processing_unchanged": true
+}
