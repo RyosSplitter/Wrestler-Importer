@@ -44,8 +44,13 @@ def main():
         from desktop.core import dump,blender_path
         import subprocess
         version=subprocess.run([str(blender_path()),'--version'],capture_output=True,text=True,timeout=45,check=True).stdout
-        app.root.update();dump(sys.argv[2],dict(gui=True,drag_drop=app.drag_drop,disabled_formats=3,
-                                             bundled_blender=version.splitlines()[0],preview_views=5,base_required=True))
+        app.root.update()
+        states=[app.source_menu.entrycget(i,'state') for i in range(4)]
+        if states!=['disabled','disabled','normal','disabled']:raise ValueError('Source selector states are incorrect.')
+        if not app.root.tk.call('info','commands','::tkdnd::drop_target'):raise ValueError('Drag/drop runtime command missing.')
+        from desktop.preview import VIEWS
+        dump(sys.argv[2],dict(gui=True,drag_drop_command_verified=True,source_menu_states=states,
+                              bundled_blender=version.splitlines()[0],preview_views=list(VIEWS),base_required=True))
         app.root.destroy();return 0
     app.root.mainloop();return 0
 

@@ -76,7 +76,7 @@ def write_preview(model, path):
             for triangle in material['triangles']:
                 lines.append('f '+' '.join('%d/%d/%d'%((offset+i+1,)*3) for i in triangle))
         offset+=len(mesh['vertices'])
-    path.write_text('\n'.join(lines)+'\n',encoding='ascii')
+    path.write_text('\n'.join(lines)+'\n',encoding='ascii',newline='\n')
 
 
 def pose_validation(a,b):

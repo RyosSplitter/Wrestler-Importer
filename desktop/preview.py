@@ -45,8 +45,8 @@ def render(model,textures,view='front-left',resolution=768,zoom=1.):
                 color=np.clip(sample[:,:,:3]*vc[:,:,:3]*shade[:,:,None],0,255).astype(np.uint8)
                 target=pixels[lo[1]:hi[1]+1,lo[0]:hi[0]+1];target[take]=color[take];window[take]=zz[take]
     image=Image.fromarray(pixels);draw=ImageDraw.Draw(image)
-    draw.text((14,14),'PSP OUTPUT • '+view.replace('-',' ').upper(),fill='white')
-    draw.text((14,resolution-25),'Offline preview • game shading may differ',fill='white')
+    draw.text((14,14),'PSP OUTPUT | '+view.replace('-',' ').upper(),fill='white')
+    draw.text((14,resolution-25),'Offline preview | game shading may differ',fill='white')
     return image
 
 

@@ -38,6 +38,7 @@ class Application:
         choices=tk.Menu(menu,tearoff=False,bg=PANEL,fg=FG,disabledforeground='#65656d')
         for item in FORMATS:choices.add_command(label=item.label+(' — Coming soon' if not item.supported else ''),state='normal' if item.supported else 'disabled')
         menu.configure(menu=choices);menu.pack(fill='x',pady=(8,20))
+        self.source_menu=choices
         self.drop=tk.Label(left,text='Drop an HCTP .pac here\n\nor click to browse',bg=PANEL,fg=FG,font=('Segoe UI',13),height=7,cursor='hand2',highlightbackground='#3a3a42',highlightthickness=1)
         self.drop.pack(fill='x');self.drop.bind('<Button-1>',lambda e:self.browse_source());self.drop.drop_target_register(DND_FILES)
         self.drop.dnd_bind('<<Drop>>',self.dropped)

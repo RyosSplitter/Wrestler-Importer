@@ -69,4 +69,31 @@ class PortableTests(unittest.TestCase):
         model=dict(bones=[dict(index=0,name='koshi',parent=-1)],meshes=[dict(index=0,bone_palette=[0],vertices=[dict(position=p,weights=[1.]) for p in ((0,0,0),(1,0,0),(0,1,0))],materials=[dict(texture_id=0,triangles=[[0,1,2]])])])
         self.assertEqual(select_guards(model),[(0,0,0,True)])
 
+    def test_selective_eye_policy_preserves_source_jaw_records(self):
+        import zipfile
+        from desktop.core import prepare,base_model
+        from model_qa.geometry import geometry
+        root=Path(__file__).resolve().parents[1]
+        with zipfile.ZipFile(root/'downloads/Jericho-QA-facial-weights-experiment.zip') as z:source=json.loads(z.read('trial/input-source-weighted.json'))
+        _,target=base_model(root/'assets/Kurt-Angle-Ring.PAC');candidate,legacy,jaw=prepare(source,target)
+        a,b,c=map(geometry,(candidate,legacy,jaw))
+        eye=[i for i,n in enumerate(c.bone_names) if n in ('l_eye','r_eye','l_mabuta','r_mabuta')]
+        selected=c.weights[:,eye].sum(1)>1e-7
+        self.assertGreater(selected.sum(),0)
+        np.testing.assert_array_equal(a.weights[selected],b.weights[selected])
+        np.testing.assert_array_equal(a.weights[~selected],c.weights[~selected])
+        jaw_ids=[i for i,n in enumerate(c.bone_names) if n=='d_kuchi' or n.startswith('d_kuchi_')]
+        mask=c.weights[:,jaw_ids].sum(1)>1e-7
+        self.assertGreater(mask.sum(),0);np.testing.assert_array_equal(a.weights[mask],c.weights[mask])
+
+    def test_modified_source_container_keeps_surface_and_weights(self):
+        from tools.hctp_weights import read_hctp_with_weights
+        from tools.portable_fixture import create
+        source=read_hctp_with_weights(vectors()['hctp-quad.yobj'])
+        with tempfile.TemporaryDirectory() as folder:
+            path=Path(folder)/'custom.pac';create(source,path);actual,textures=adapter('hctp').read(path)
+            self.assertEqual(actual['triangle_count'],2)
+            for a,b in zip(source['meshes'][0]['vertices'],actual['meshes'][0]['vertices']):
+                np.testing.assert_array_equal(a['position'],b['position']);np.testing.assert_array_equal(a['weights'],b['weights'])
+
 if __name__=='__main__':unittest.main()
