@@ -1,0 +1,298 @@
+{
+  "status": "Experimental: awaiting SVR 2011 PSP in-game validation",
+  "branch": "experiment/lance-posterior-decimation",
+  "accepted_input": "downloads/1800-PSP-hybrid-source-pelvis-restored.pac",
+  "corrected_input": "local/qa-refinement/lance/trial-02/candidate.yobj",
+  "before": {
+    "pac_bytes": 141312,
+    "pac_sha256": "dbe2e1e0bd1a78ac84c5c4ff5fb06cd8247aabea3f6dcf2cace34c965ac8f1e3",
+    "meshes": 57,
+    "vertices": 2339,
+    "triangles": 2360,
+    "indices": 4262,
+    "bones": 79,
+    "textures": 19,
+    "material_records": 96,
+    "expanded_bytes": 205392
+  },
+  "after": {
+    "pac_bytes": 145408,
+    "pac_sha256": "807d60134bb91071f01a28381dd0368214ecfb5c57b3713ae3829203f1568700",
+    "meshes": 57,
+    "vertices": 2385,
+    "triangles": 2420,
+    "indices": 4318,
+    "bones": 79,
+    "textures": 19,
+    "material_records": 96,
+    "expanded_bytes": 208384
+  },
+  "corrected_yobj_sha256": "b591b1b0386462d1beaac0188a617c1dfb90b04925c9c5d16bee53a179a3f849",
+  "model_bpe_bytes": 125059,
+  "budget_bytes": 148000,
+  "checks": {
+    "native_offsets_ranges_alignment_relocations_indices_palettes_weights": true,
+    "container_ranges_no_overlap": true,
+    "section_alignment_16": true,
+    "final_alignment_2048": true,
+    "below_148000_bytes": true,
+    "bpe_roundtrip": true,
+    "exact_reviewed_yobj_inside_actual_pac": true,
+    "preview_yobj_equals_final_pac_model": true,
+    "skeleton_bytes_unchanged": true,
+    "materials_render_state_unchanged": true,
+    "texture_names_metadata_unchanged": true,
+    "all_native_gim_textures_decoded": true,
+    "original_alpha_preserved": true,
+    "unchanged_stored_payload_sections": [
+      8,
+      9
+    ],
+    "accepted_backup_hash_matches": true,
+    "accepted_original_hash_unchanged": true
+  },
+  "changed_palette_meshes_zero_based": [],
+  "textures": [
+    {
+      "name": "l-kao2",
+      "sha256": "288e2119023f03632a706c030ab2aa1323f603c716a86e4d969ce3bcce151eaa",
+      "bytes": 9424,
+      "width": 128,
+      "height": 64,
+      "palette_entries": 256,
+      "alpha_min": 255,
+      "alpha_max": 255,
+      "unchanged": true
+    },
+    {
+      "name": "kuchi01",
+      "sha256": "f87b1a4b6111ba03c5e18842dd19495ec7d1c0d6f31948a082734b3d3f47d122",
+      "bytes": 400,
+      "width": 32,
+      "height": 8,
+      "palette_entries": 16,
+      "alpha_min": 255,
+      "alpha_max": 255,
+      "unchanged": true
+    },
+    {
+      "name": "l-pan2",
+      "sha256": "1e4c5922df48058c6e583b607e7dbb3f1c055ed8afc7300a836ec851cd96df20",
+      "bytes": 784,
+      "width": 32,
+      "height": 32,
+      "palette_entries": 16,
+      "alpha_min": 239,
+      "alpha_max": 255,
+      "unchanged": true
+    },
+    {
+      "name": "l_ude",
+      "sha256": "260597c514278a88608dc8b1ff774644d6ea011dba35a35d9538b5d73f2a8ebb",
+      "bytes": 1296,
+      "width": 64,
+      "height": 32,
+      "palette_entries": 16,
+      "alpha_min": 255,
+      "alpha_max": 255,
+      "unchanged": true
+    },
+    {
+      "name": "l-pan1",
+      "sha256": "23b07621369f0e335047aa7b2853efc502c303a9809ce1a9aabeb24e8adff562",
+      "bytes": 784,
+      "width": 32,
+      "height": 32,
+      "palette_entries": 16,
+      "alpha_min": 245,
+      "alpha_max": 255,
+      "unchanged": true
+    },
+    {
+      "name": "momo",
+      "sha256": "33de2012d499303bdb68f47c85ddc2b70ee8ec6ad75d17c15645749609b6f97d",
+      "bytes": 784,
+      "width": 32,
+      "height": 32,
+      "palette_entries": 16,
+      "alpha_min": 255,
+      "alpha_max": 255,
+      "unchanged": true
+    },
+    {
+      "name": "l-se1",
+      "sha256": "1f80286d1cf6ebc7ea3ba9805ea7c3e70ea7ddad3c3898ae583d1d3494b2b1aa",
+      "bytes": 784,
+      "width": 32,
+      "height": 32,
+      "palette_entries": 16,
+      "alpha_min": 255,
+      "alpha_max": 255,
+      "unchanged": true
+    },
+    {
+      "name": "l-mune2",
+      "sha256": "1f09ce19d603c25072d63ab3cdbc03787a867eefe5ee07c43df68a6493895b64",
+      "bytes": 784,
+      "width": 32,
+      "height": 32,
+      "palette_entries": 16,
+      "alpha_min": 255,
+      "alpha_max": 255,
+      "unchanged": true
+    },
+    {
+      "name": "l-mune1",
+      "sha256": "497d78b7dee1071e71a3783cba8cb0348997afa1e5e00babd91a3a81345d3330",
+      "bytes": 784,
+      "width": 32,
+      "height": 32,
+      "palette_entries": 16,
+      "alpha_min": 255,
+      "alpha_max": 255,
+      "unchanged": true
+    },
+    {
+      "name": "te",
+      "sha256": "abe0013e7953bbcaedb3761076915da39fea6a7c30d2ee1913eabe4a709804b2",
+      "bytes": 784,
+      "width": 32,
+      "height": 32,
+      "palette_entries": 16,
+      "alpha_min": 255,
+      "alpha_max": 255,
+      "unchanged": true
+    },
+    {
+      "name": "yubi",
+      "sha256": "a0c94b3a975b57f18140508cde3a067f962ebd8794b3d6fccf1fa33f0aed57e6",
+      "bytes": 784,
+      "width": 32,
+      "height": 32,
+      "palette_entries": 16,
+      "alpha_min": 255,
+      "alpha_max": 255,
+      "unchanged": true
+    },
+    {
+      "name": "l-kubi",
+      "sha256": "2ae1f61693cfac0c3afe1f1567fee015f00cf8854f96b32cd6acc12d29ca6aa0",
+      "bytes": 784,
+      "width": 32,
+      "height": 32,
+      "palette_entries": 16,
+      "alpha_min": 255,
+      "alpha_max": 255,
+      "unchanged": true
+    },
+    {
+      "name": "kutu3",
+      "sha256": "a54cf7a0c44e23c2c0f346720459f0e1a4a47eecacdce6cddeb17e13bab689b6",
+      "bytes": 528,
+      "width": 32,
+      "height": 16,
+      "palette_entries": 16,
+      "alpha_min": 255,
+      "alpha_max": 255,
+      "unchanged": true
+    },
+    {
+      "name": "l-kaobac",
+      "sha256": "f219668e1a1516ef233e3202b349809e30dc044d514c44081eceeb25aefcad41",
+      "bytes": 784,
+      "width": 32,
+      "height": 32,
+      "palette_entries": 16,
+      "alpha_min": 255,
+      "alpha_max": 255,
+      "unchanged": true
+    },
+    {
+      "name": "pat",
+      "sha256": "093099abdb345685dfc5d6fd31bfe585128a37e18ca8acef934f9a32acf164ee",
+      "bytes": 784,
+      "width": 32,
+      "height": 32,
+      "palette_entries": 16,
+      "alpha_min": 255,
+      "alpha_max": 255,
+      "unchanged": true
+    },
+    {
+      "name": "l-eye",
+      "sha256": "38e9c3efb7ea3e862f56afdf97a6ffd62d5fc495c8a97b39edf395ebc086bc30",
+      "bytes": 1296,
+      "width": 64,
+      "height": 32,
+      "palette_entries": 16,
+      "alpha_min": 255,
+      "alpha_max": 255,
+      "unchanged": true
+    },
+    {
+      "name": "ha",
+      "sha256": "835f04506ef882b0a570f558e25795b83f2457531402f324063c1a83e60dd26f",
+      "bytes": 400,
+      "width": 32,
+      "height": 8,
+      "palette_entries": 16,
+      "alpha_min": 255,
+      "alpha_max": 255,
+      "unchanged": true
+    },
+    {
+      "name": "boots",
+      "sha256": "a5b4094b59a5fa47e3de814b9e4ed8807ee7e16a513fd18eb07381b2687729be",
+      "bytes": 784,
+      "width": 32,
+      "height": 32,
+      "palette_entries": 16,
+      "alpha_min": 255,
+      "alpha_max": 255,
+      "unchanged": true
+    },
+    {
+      "name": "pat2",
+      "sha256": "56a8f5f5271c5ed5423a79cca9a7e03153967ad91458a68e98f7297c96f0a69a",
+      "bytes": 784,
+      "width": 32,
+      "height": 32,
+      "palette_entries": 16,
+      "alpha_min": 255,
+      "alpha_max": 255,
+      "unchanged": true
+    }
+  ],
+  "packaging": "Existing tools.yukes_bpe.compress + tools.pac_repack.replace_sections; only section 2 replaced.",
+  "qa": {
+    "prior_gate": "eligible-for-human-review",
+    "regressions": [],
+    "new_flags": [],
+    "unchanged_region_sampling_reviews": [
+      {
+        "region": "face",
+        "pose": "neck-turn",
+        "local_triangles": 593,
+        "identical_posed_position_and_bone_weight_signatures": true,
+        "identical_fixed_reference_sample_errors": true,
+        "source_to_candidate_p95": 0.03890588781558713,
+        "local_signature_sha256": "63e43a93570a57f6b50247c926d09e90e374c8acee7c5bf905e426452782cd8e",
+        "candidate_samples_before": 663,
+        "candidate_samples_after": 691,
+        "interpretation": "Raw QA threshold crossing retained: distant area changes alter candidate sample draws; exact local geometry/weights/poses and fixed source queries are unchanged. No tolerance was relaxed."
+      }
+    ],
+    "exact_input_hash_matches_full_qa_report": true,
+    "reason_no_geometry_rerun": "Decompressed final PAC model is byte-identical to the corrected YOBJ already evaluated by the complete static/analytical-pose QA suite.",
+    "caveat": "Analytical QA poses are not actual game animations; PPSSPP testing remains required."
+  },
+  "file_changes": [
+    "Section 2 compressed model bytes",
+    "PAC section table offsets/sizes as required",
+    "Inter-section zero padding and final sector padding"
+  ],
+  "baseline_replaced": false,
+  "converter_changed": false,
+  "packaging_code_changed": false,
+  "branch_merged_to_main": false
+}
