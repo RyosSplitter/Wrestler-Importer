@@ -40,7 +40,9 @@ def build():
             args += ['--add-binary', str(p)+';bpy']
         elif p.is_dir() and p.name != '__pycache__':
             args += ['--add-data', str(p)+';bpy/'+p.name]
-    args += [str(ROOT/'experiments/bpy/entry.py')]
+    # The entry is outside experiments/bpy: PyInstaller derives its import root
+    # from the entry's package, which otherwise shadows the upstream bpy wheel.
+    args += [str(ROOT/'bpy_experiment.py')]
     subprocess.run(args, cwd=ROOT, check=True)
     destination = ROOT/'dist'/NAME
     for p in destination.rglob('__pycache__'): shutil.rmtree(p)
@@ -48,7 +50,7 @@ def build():
     shutil.copy2(source, sources/source.name)
     for folder in ('desktop', 'tools', 'model_qa', 'app', 'stable_pipeline', 'experiments'):
         shutil.copytree(ROOT/folder, sources/'converter'/folder, ignore=shutil.ignore_patterns('__pycache__', '*.pyc'))
-    for filename in ('ps2psp_converter.py', 'requirements-desktop.txt', 'requirements-qa.txt', 'requirements.txt', 'REIMPLEMENTATION_GUIDE.txt'):
+    for filename in ('ps2psp_converter.py', 'bpy_experiment.py', 'requirements-desktop.txt', 'requirements-qa.txt', 'requirements.txt', 'REIMPLEMENTATION_GUIDE.txt'):
         shutil.copy2(ROOT/filename, sources/'converter'/filename)
     shutil.copytree(ROOT/'docs', sources/'converter/docs')
     licenses = destination/'licenses'; licenses.mkdir()
