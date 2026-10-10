@@ -20,7 +20,8 @@ jobs:
         shell: python
         run: |
           from pathlib import Path
-          import json,zipfile
+          import json,zipfile,sys
+          sys.path.insert(0,str(Path.cwd()))
           from tools.portable_fixture import create
           Path('assets').mkdir(exist_ok=True)
           Path('build/test-inputs').mkdir(parents=True,exist_ok=True)
