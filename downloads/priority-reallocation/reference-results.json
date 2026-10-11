@@ -1,0 +1,94 @@
+[
+  {
+    "name": "Rock",
+    "before_bytes": 145408,
+    "after_bytes": 145408,
+    "geometry_and_rigging_exact": true,
+    "native_validation": "passed",
+    "pixel_palette_bytes": 26176,
+    "pixel_budget": 26176,
+    "selected": [
+      {
+        "name": "rc_dou",
+        "improvement": 0.0
+      },
+      {
+        "name": "rc_kat_l",
+        "improvement": 0.0
+      },
+      {
+        "name": "rock_face_y",
+        "improvement": 0.0
+      }
+    ]
+  },
+  {
+    "name": "Lance",
+    "before_bytes": 133120,
+    "after_bytes": 135168,
+    "geometry_and_rigging_exact": true,
+    "native_validation": "passed",
+    "pixel_palette_bytes": 28480,
+    "pixel_budget": 28480,
+    "selected": [
+      {
+        "name": "l-kao2",
+        "improvement": 0.0
+      },
+      {
+        "name": "kuchi01",
+        "improvement": 0.0
+      },
+      {
+        "name": "l-pan2",
+        "improvement": 0.10676010176745818
+      }
+    ]
+  },
+  {
+    "name": "Benoit",
+    "before_bytes": 116736,
+    "after_bytes": 118784,
+    "geometry_and_rigging_exact": true,
+    "native_validation": "passed",
+    "pixel_palette_bytes": 24704,
+    "pixel_budget": 24960,
+    "selected": [
+      {
+        "name": "bn_kao2",
+        "improvement": 0.0
+      },
+      {
+        "name": "bn_atam",
+        "improvement": 0.1910659940909146
+      },
+      {
+        "name": "ts_naka",
+        "improvement": 0.0
+      }
+    ]
+  },
+  {
+    "name": "0401",
+    "before_bytes": 145408,
+    "after_bytes": 145408,
+    "geometry_and_rigging_exact": true,
+    "native_validation": "passed",
+    "pixel_palette_bytes": 32896,
+    "pixel_budget": 32896,
+    "selected": [
+      {
+        "name": "rvd_yubi",
+        "improvement": 0.0
+      },
+      {
+        "name": "rvd_hand",
+        "improvement": 0.0735818714693457
+      },
+      {
+        "name": "rvd_sune",
+        "improvement": 0.0
+      }
+    ]
+  }
+]

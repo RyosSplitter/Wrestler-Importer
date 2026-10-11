@@ -89,3 +89,10 @@ results, harmful exchanges, independent RAM limits, non-additive serialized
 costs and cancellation. Real trials verify native structure and exact unrelated
 payloads. Allocator coefficients and safeguards remain perceptual hypotheses;
 review the selected texture and every donor, not just the aggregate score.
+
+**CONFIRMED additional real-reference checks:** Rock, Lance, Benoit and 0401
+priority/donor trials passed native validation, exact non-texture identity,
+selected-quality floors and the same padded-memory/PAC budgets. Some selections
+receive no upgrade under those guards; the UI now reports this explicitly.
+See `downloads/priority-reallocation/reference-results.json`. These trials run
+over retained historical priority baselines, not fresh geometry conversions.
