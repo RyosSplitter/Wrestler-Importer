@@ -1,5 +1,9 @@
 # Rock scalp corruption: open investigation
 
+Follow-up: the exact failing upload has now been supplied and compared. See
+[the isolated scalp-layout control](rock-scalp-layout-control.md). The initial
+input-identity uncertainty below is preserved as investigation history.
+
 The user reported crown-like scalp spikes and gaps around the forehead/temples
 in SVR 2011 PSP with **both** texture options. This is a gameplay failure. The
 experimental changes here improve the separate QA stage; they do not claim to

@@ -1,0 +1,15 @@
+{
+  "upload_sha256": "2228eabd964bf0584a8c89909b997baeba3c84929ab46fdd28d074b1879b1406",
+  "control_sha256": "b23c97770203e517eb26f64c61aad88cf9661e157957bf49979e705264107fbf",
+  "reproduction_baseline_report_candidate_sha256": "a36d20b854f7e51843345179c8eabf8c9bcebd8d55926fd67d97387bcd8d9eab",
+  "uploaded_and_reproduction_yobjs_byte_identical": true,
+  "main_yobj_before": "0136497494db33cdbe764d0d742d157f872254ac17e00e59de677674b637a030",
+  "main_yobj_after": "40e24479c4a27b8b4189e3b6ded7df8697078b533b142ad444ee2e79acf7364f",
+  "rest_metrics_exact": true,
+  "body_pose_metrics_exact": true,
+  "head_probe_metrics_exact": true,
+  "old_review_flags": 43,
+  "new_review_flags": 42,
+  "removed_warning": "unvalidated-small-skinned-palette in mesh 0",
+  "no_claim_of_gameplay_success": true
+}

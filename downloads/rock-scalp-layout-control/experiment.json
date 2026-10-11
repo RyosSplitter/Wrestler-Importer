@@ -1,0 +1,135 @@
+{
+  "status": "structurally-valid isolated control; PPSSPP outcome unknown",
+  "input_sha256": "2228eabd964bf0584a8c89909b997baeba3c84929ab46fdd28d074b1879b1406",
+  "candidate_sha256": "b23c97770203e517eb26f64c61aad88cf9661e157957bf49979e705264107fbf",
+  "original_bytes": 147456,
+  "candidate_bytes": 147456,
+  "packaging_attempts": [
+    {
+      "symbols": 200,
+      "pac_bytes": 147456,
+      "model_stored_bytes": 113135
+    }
+  ],
+  "original_decoded_yobj_bytes": 187888,
+  "candidate_decoded_yobj_bytes": 188928,
+  "change": "Only selected mesh palettes/weight-slot count/stride; extra weights zero. Required YOBJ/PAC offsets, size fields, relocation and compression rebuilt.",
+  "meshes": [
+    {
+      "mesh": 0,
+      "old_palette": [
+        4
+      ],
+      "new_palette": [
+        4,
+        3,
+        2
+      ],
+      "old_stride": 40,
+      "new_stride": 48,
+      "old_flag": "0x17ff",
+      "new_flag": "0x97ff"
+    }
+  ],
+  "preservation": {
+    "vertex_suffix_bits_identical": true,
+    "per_bone_nonzero_weight_bits_identical": true,
+    "ordered_global_indices_and_triangle_winding_identical": true,
+    "ordered_material_state_and_strip_metadata_identical": true,
+    "skeleton_texture_names_model_name_byte_identical": true,
+    "secondary_model_descriptor_count_matches_mesh_count": true,
+    "opaque_mesh_palette_model_metadata_identical": true,
+    "unmerged_bounds_identical_and_merged_bounds_enclose_original_spheres": true,
+    "before_and_after_allocation_palette_index_weight_relocation_audit_passed": true
+  },
+  "poses": {
+    "status": "pass",
+    "effective_positions_faces_dense_weights_exact": true,
+    "body_pose_maximum_component_deltas": {
+      "standing": 0.0,
+      "walk-left": 0.0,
+      "walk-right": 0.0,
+      "bend": 0.0,
+      "crouch": 0.0,
+      "shoulders-up": 0.0,
+      "neck-turn": 0.0,
+      "head-tilt": 0.0,
+      "jaw-06": 0.0,
+      "jaw-12": 0.0,
+      "jaw-18": 0.0,
+      "jaw-25": 0.0,
+      "elbow-flex-left": 0.0,
+      "elbow-flex-right": 0.0
+    },
+    "head_probe_maximum_component_deltas": {
+      "rest": 0.0,
+      "eyes-world-x--25": 0.0,
+      "eyes-world-x-25": 0.0,
+      "eyes-world-y--25": 0.0,
+      "eyes-world-y-25": 0.0,
+      "eyes-world-z--25": 0.0,
+      "eyes-world-z-25": 0.0,
+      "l-eye-local-turn": 0.0,
+      "l-lid-local-close": 0.0,
+      "r-eye-local-turn": 0.0,
+      "r-lid-local-close": 0.0,
+      "ocular-local-translate-x": 0.0,
+      "ocular-local-translate-y": 0.0,
+      "ocular-local-translate-z": 0.0,
+      "eye-lid-neck-jaw": 0.0,
+      "psp-brow-local": 0.0,
+      "l_mayu_00-local-x": 0.0,
+      "l_mayu_00-local-y": 0.0,
+      "l_mayu_00-local-z": 0.0,
+      "l_mayu_01-local-x": 0.0,
+      "l_mayu_01-local-y": 0.0,
+      "l_mayu_01-local-z": 0.0,
+      "l_mayu_02-local-x": 0.0,
+      "l_mayu_02-local-y": 0.0,
+      "l_mayu_02-local-z": 0.0,
+      "r_mayu_00-local-x": 0.0,
+      "r_mayu_00-local-y": 0.0,
+      "r_mayu_00-local-z": 0.0,
+      "r_mayu_01-local-x": 0.0,
+      "r_mayu_01-local-y": 0.0,
+      "r_mayu_01-local-z": 0.0,
+      "r_mayu_02-local-x": 0.0,
+      "r_mayu_02-local-y": 0.0,
+      "r_mayu_02-local-z": 0.0,
+      "head-turn": 0.0,
+      "neck-turn": 0.0,
+      "jaw-open": 0.0
+    },
+    "limitation": "Exact analytical LBS replay; cannot prove SVR runtime interpretation."
+  },
+  "original_counts": {
+    "meshes": 43,
+    "vertices": 2331,
+    "triangles": 2725
+  },
+  "candidate_counts": {
+    "meshes": 43,
+    "vertices": 2331,
+    "triangles": 2725
+  },
+  "all_non_model_sections_stored_and_decoded_exact": true,
+  "unselected_mesh_vertex_bytes_palettes_strides_flags_exact": true,
+  "section_sha256_before": {
+    "2": "0136497494db33cdbe764d0d742d157f872254ac17e00e59de677674b637a030",
+    "8": "2bb4174789207f6fb9bf8132ffc1f683037b4036cca2372c7c1efc956969b4ee",
+    "9": "f76e639df8f904ac611180b98f8ce42eac0a597252937f0ecaf8f606fe9bd09f",
+    "26": "53e2470230bb9308536786e0f2074730035cbcb496558fec66816da49351ac52",
+    "27": "8f749b7ee9f625efeb62ba5b4757b0bfc0574ac545501fe9807c268ecf9d5a01"
+  },
+  "section_sha256_after": {
+    "2": "40e24479c4a27b8b4189e3b6ded7df8697078b533b142ad444ee2e79acf7364f",
+    "8": "2bb4174789207f6fb9bf8132ffc1f683037b4036cca2372c7c1efc956969b4ee",
+    "9": "f76e639df8f904ac611180b98f8ce42eac0a597252937f0ecaf8f606fe9bd09f",
+    "26": "53e2470230bb9308536786e0f2074730035cbcb496558fec66816da49351ac52",
+    "27": "8f749b7ee9f625efeb62ba5b4757b0bfc0574ac545501fe9807c268ecf9d5a01"
+  },
+  "psp_structure_alignment_offsets_palettes_indices_weights_pass": true,
+  "hypothesis": "Single-slot float skinning may be interpreted differently by the SVR loader. Native sample convention supports testing, not proof of a hard three-slot minimum.",
+  "no_production_converter_changes": true,
+  "input_preserved": true
+}
