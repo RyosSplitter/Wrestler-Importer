@@ -57,6 +57,10 @@ class Request:
     def use_adaptive(self):
         return self.texture_mode=='ATO' if self.texture_mode else self.adaptive_textures
 
+    @property
+    def maximum_downgrade(self):
+        return self.texture_mode=='Maximum Downgrade'
+
     def validate(self):
         from desktop.texture_review import validate_selection
         selected=validate_selection(self.priority_textures)
@@ -369,15 +373,17 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
                     protected_triangles=reduced['reduction_report']['protected_triangles'],
                     attribute_precision=precision_report)
                 attempts.append(row)
-                if len(limited_pac)>profile['max_pac_bytes']:continue
+                if len(limited_pac)>profile['max_pac_bytes'] and not (request.maximum_downgrade and len(limited_pac)<len(candidate)):continue
                 precision_validation=validate_native_precision(audit_yobj(original_yobj),
                                                                audit_yobj(limited_yobj),held_positions)
                 dump(work/'precision-validation.json',precision_validation)
                 dump(work/'precision.json',precision_report)
-                candidate=limited_pac;packed=limited;yobj=limited_yobj;break
+                candidate=limited_pac;packed=limited;yobj=limited_yobj
+                if len(candidate)<=profile['max_pac_bytes']:break
             if len(candidate)<=profile['max_pac_bytes']:break
-    size_report.finish(len(candidate)<=profile['max_pac_bytes'])
-    if len(candidate)>profile['max_pac_bytes']:raise size_report.error()
+    if not request.maximum_downgrade:
+        size_report.finish(len(candidate)<=profile['max_pac_bytes'])
+        if len(candidate)>profile['max_pac_bytes']:raise size_report.error()
     dump(work/'reduced.json',reduced);dump(work/'packed.json',packed)
     texture_reader=read_gim
     adaptive_report=None
@@ -397,7 +403,7 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
         step(64,'Checking single-slot skinning layouts; preserving effective weights')
         (work/'before-skin-compatibility.pac').write_bytes(candidate)
         candidate,compatibility_report=apply_single_slot_compatibility(candidate,
-            max_bytes=profile['max_pac_bytes'],cancel=check)
+            max_bytes=max(profile['max_pac_bytes'],len(candidate)+8*len(yobj)) if request.maximum_downgrade else profile['max_pac_bytes'],cancel=check)
         dump(work/'skin-compatibility.json',compatibility_report)
         yobj=next(raw for s,raw in sections(candidate) if s['id']==2)
         accessory_yobjs={s['id']:raw for s,raw in sections(candidate) if s['id'] in accessory_yobjs}
@@ -435,6 +441,22 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
         candidate,downgrade_report=downgrade_pac(candidate,decoded,work/'texture-downgrade',
             steps=request.downgrade_steps,target=profile['max_pac_bytes'],cancel=check)
         texture_reader=downgrade_reader
+    maximum_report=None
+    if request.maximum_downgrade:
+        from desktop.maximum_downgrade import fit_pac
+        from desktop.texture_optimizer.candidates import read_gim as maximum_reader
+        step(64,'Fitting textures only; keeping the validated Default geometry candidate unchanged')
+        (work/'before-maximum-downgrade.pac').write_bytes(candidate)
+        try:
+            candidate,maximum_report=fit_pac(candidate,work/'maximum-downgrade',target=profile['max_pac_bytes'],
+                cancel=check,progress=lambda message:progress(64,message))
+        except ValueError:
+            size_report.finish(False)
+            raise
+        texture_reader=maximum_reader
+        attempts.append(size_report.record(candidate,accessory_sections=accessory_yobjs,texture_mode='Maximum Downgrade',
+            vertices=packed['vertex_count'],triangles=packed['triangle_count'],meshes=packed['mesh_count']))
+        size_report.finish(True)
     step(65,'Validating final PAC pointers, buffers, weights, rendering records and size')
     native,gim_map=validate_pac(candidate,base_bytes,profile['max_pac_bytes'],accessory_models=accessory_prepared,gim_reader=texture_reader,
         lossless_texture_sections={r['section'] for report in (adaptive_report,priority_report) if report for r in report['lossless_retained_texture_storage']})
@@ -443,7 +465,7 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
     unpacked=next(r for s,r in sections(candidate) if s['id']==2)
     if unpacked!=yobj:raise ValueError('Preview model differs from final PAC.')
     stem=re.sub(r'[^A-Za-z0-9_.-]','_',source.stem)[:48].strip('.') or 'wrestler'
-    suffix='-PSP-adaptive-experimental.pac' if request.use_adaptive else ('-PSP-downgrade-%d-experimental.pac'%request.downgrade_steps if request.downgrade_steps else '-PSP-experimental.pac')
+    suffix='-PSP-maximum-downgrade-experimental.pac' if request.maximum_downgrade else '-PSP-adaptive-experimental.pac' if request.use_adaptive else ('-PSP-downgrade-%d-experimental.pac'%request.downgrade_steps if request.downgrade_steps else '-PSP-experimental.pac')
     pac=work/(stem+suffix);pac.write_bytes(candidate)
     preview=work/'preview';preview.mkdir();(preview/'output.yobj').write_bytes(yobj)
     accessory_native=[audit_yobj(raw) for raw in accessory_yobjs.values()]
@@ -489,6 +511,8 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
         note+='<p>Manual texture priorities: <a href="../texture-priorities/report.html">Source/current/final previews, selected settings, reductions and budget decisions</a>. Up to three selections; size limits and source ceilings remain enforced.</p>'
     if downgrade_report is not None:
         note+='<p>Texture downgrade: <a href="../texture-downgrade/report.html">Requested source reductions, actual dimensions, palette/alpha checks and serialized budget</a>. No additional texture reduction or geometry changes were used to force this setting to fit.</p>'
+    if maximum_report is not None:
+        note+='<p>Maximum Downgrade: <a href="../maximum-downgrade/report.html">Texture quality losses, candidates and measured size decisions</a>. Default geometry fitting is unchanged; every non-texture payload is identical to the compatibility-adjusted baseline. Any existing bounded attribute-precision fallback is reported separately.</p>'
     text=text.replace('</body>',note+'</body>')
     html.write_text(text,encoding='utf-8')
     step(92,'Rendering textured views of the actual final PSP output')
@@ -528,6 +552,11 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
             pixel_palette_bytes=downgrade_report['pixel_palette_bytes'],
             pixel_palette_budget=downgrade_report['pixel_palette_budget'])
     result['texture_mode']=request.texture_mode or ('Downgrade' if request.downgrade_steps else 'ATO' if request.use_adaptive else 'Priority Selection' if request.priority_textures else 'Default')
+    if maximum_report is not None:
+        result['maximum_downgrade']=dict(report=str(work/'maximum-downgrade/report.html'),
+            baseline_pac=str(work/'before-maximum-downgrade.pac'),baseline_bytes=maximum_report['baseline_bytes'],
+            changed_textures=maximum_report['changed_textures'],unchanged_non_texture_payloads=True,
+            pixel_palette_bytes=maximum_report['final_texture_pixel_palette_bytes'])
     if compatibility_report is not None:
         result['skin_palette_compatibility']=dict(report=str(work/'skin-compatibility.json'),
             baseline_pac=str(work/'before-skin-compatibility.pac'),

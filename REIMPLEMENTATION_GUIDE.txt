@@ -561,3 +561,14 @@ See desktop/texture_modes.py, tests/test_texture_modes.py,
 docs/portable-texture-review.md and the frozen Windows workflow. The existing
 baseline envelope is conservative policy (INFERRED compatibility protection),
 not a measured game heap limit (UNKNOWN). Review actual PPSSPP output.
+
+v0.25.4 Maximum Downgrade (experimental):
+Read docs/portable-maximum-downgrade.md and desktop/maximum_downgrade.py.
+This is section-9-only fitting after the established Default geometry/precision
+and skin-compatibility stages. Oversize validated intermediates are allowed
+internally, never exported. Material bit depths and fixed CLUT slots stay exact;
+native-observed dimensions can fall below64 and useful colors can fall to1.
+RGB is per-alpha Lanczos/median-cut; alpha is nearest-sampled exactly. The actual
+whole PAC, not image area, determines fit. Non-texture stored/decoded hashes,
+allocation and native structure must pass. The greedy heuristic is not globally
+optimal and does not certify game compatibility. Reports document all losses.

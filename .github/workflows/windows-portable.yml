@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches: [feature/portable-ps2psp, fix/hctp-primary-model, experiment/precision-budget-fit, experiment/multi-yobj-accessories, experiment/content-aware-textures, experiment/scalp-compatibility-update, experiment/texture-fidelity-selection]
-    paths: ['desktop/**', 'model_qa/**', 'tests/test_head_qa.py', 'tests/test_skin_palette_padding.py', 'tests/test_portable_skinning.py', 'ps2psp_converter.py', 'app/ps2_textures.py', 'tools/build_portable.py', 'tools/portable_fixture.py', 'tools/blender_reduce.py', 'tools/pac_inspect.py', 'tools/pac_repack.py', 'tools/hctp_read.py', 'tools/hctp_weights.py', 'tools/yobj_read.py', 'requirements-desktop.txt', 'docs/portable-*.md', 'tests/test_portable_*.py', 'tests/test_adaptive_textures.py', 'tests/test_texture_review.py', 'tests/test_texture_modes.py', 'tests/test_main_model_selection.py', '.github/workflows/windows-portable.yml']
+    paths: ['desktop/**', 'model_qa/**', 'tests/test_head_qa.py', 'tests/test_skin_palette_padding.py', 'tests/test_portable_skinning.py', 'ps2psp_converter.py', 'app/ps2_textures.py', 'tools/build_portable.py', 'tools/portable_fixture.py', 'tools/blender_reduce.py', 'tools/pac_inspect.py', 'tools/pac_repack.py', 'tools/hctp_read.py', 'tools/hctp_weights.py', 'tools/yobj_read.py', 'requirements-desktop.txt', 'docs/portable-*.md', 'tests/test_portable_*.py', 'tests/test_adaptive_textures.py', 'tests/test_texture_review.py', 'tests/test_texture_modes.py', 'tests/test_maximum_downgrade.py', 'tests/test_main_model_selection.py', '.github/workflows/windows-portable.yml']
 permissions:
   contents: write
 jobs:
@@ -217,6 +217,35 @@ jobs:
               if section!=9:assert raw==after[section][1] and s['sha256']==after[section][0]['sha256']
           assert all(t['palette_bytes_identical'] for t in report['textures'])
           print('Frozen Downgrade bytes:',result['bytes'],'pixels:',report['pixel_palette_bytes'])
+      - name: Frozen Maximum Downgrade rescue and unchanged model verification
+        if: steps.scope.outputs.full == 'true'
+        timeout-minutes: 8
+        shell: python
+        run: |
+          import json,os,subprocess,sys
+          from pathlib import Path
+          sys.path.insert(0,str(Path.cwd()))
+          from tests.test_maximum_downgrade import MaximumDowngradeTests
+          from tools.psp_mesh_merge_trial import sections
+          from desktop.core import validate_pac
+          from desktop.texture_optimizer.candidates import read_gim
+          exe='dist/PS2PSP-Pac-Converter/PS2PSP-Pac-Converter.exe'
+          root=Path(os.environ['RUNNER_TEMP'],'portable-maximum');root.mkdir()
+          source=root/'oversized-control.pac';data=MaximumDowngradeTests().baseline();source.write_bytes(data)
+          target=len(data)-2048
+          subprocess.run([exe,'--maximum-downgrade',str(source),str(root/'rescue'),str(target)],check=True,timeout=180)
+          result=(root/'rescue/candidate.pac').read_bytes();validate_pac(result,max_bytes=target,gim_reader=read_gim)
+          a={s['id']:(s['sha256'],r) for s,r in sections(data)}
+          b={s['id']:(s['sha256'],r) for s,r in sections(result)}
+          assert all(a[i]==b[i] for i in a if i!=9)
+          request=dict(source=str(Path('build/test-inputs/Lance-modified-HCTP.pac').resolve()),
+              base=str(Path('assets/Kurt-Angle-Ring.PAC').resolve()),texture_mode='Maximum Downgrade')
+          (root/'request.json').write_text(json.dumps(request))
+          subprocess.run([exe,'--worker',str(root/'request.json')],check=True,timeout=420)
+          r=json.loads((root/'success.json').read_text())
+          assert r['texture_mode']=='Maximum Downgrade' and r['bytes']<=148000
+          assert r['maximum_downgrade']['unchanged_non_texture_payloads']
+          print('Frozen Maximum rescue:',len(data),'->',len(result),'worker:',r['bytes'])
       - name: Main geometry remains identical with independent accessory models
         if: steps.scope.outputs.full == 'true'
         shell: python
@@ -258,6 +287,6 @@ jobs:
         run: |
           $tag = "portable-preview-${{ github.run_number }}-${{ github.sha }}"
           @'
-          PS2PSP v0.25.3 Windows x64 preview. Adds a Textures section with Default (best for most models), ATO, Priority Selection (source previews, up to three priorities), and Downgrade (one, two or three halving steps with a 64-pixel floor). Default remains the startup mode. Default/ATO algorithms and accepted baselines are unchanged; the UI modes are mutually exclusive. Priorities report remaining reductions. Downgrade enforces actual serialized PAC size and conservative baseline padded pixels/CLUT allocation; it withholds settings that cannot fit rather than silently lowering the floor or changing geometry. Reports preserve decisions and failure diagnostics. Includes scalp compatibility, complete head QA, Windows 7-style interface, bundled Blender, sources and notices; no game assets. Requires your own supported PSP base and Windows 10/11 x64. No main merge; PPSSPP validation required.
+          PS2PSP v0.25.4 Windows x64 preview. Adds opt-in Maximum Downgrade: frozen Default geometry candidate, automatic sub-64 native-observed texture reductions and useful-color reductions, exact non-texture preservation, measured PAC budget and sampled-alpha checks. Existing modes remain unchanged. Adds a Textures section with Default (best for most models), ATO, Priority Selection (source previews, up to three priorities), and Downgrade (one, two or three halving steps with a 64-pixel floor). Default remains the startup mode. Default/ATO algorithms and accepted baselines are unchanged; the UI modes are mutually exclusive. Priorities report remaining reductions. Downgrade enforces actual serialized PAC size and conservative baseline padded pixels/CLUT allocation; it withholds settings that cannot fit rather than silently lowering the floor or changing geometry. Reports preserve decisions and failure diagnostics. Includes scalp compatibility, complete head QA, Windows 7-style interface, bundled Blender, sources and notices; no game assets. Requires your own supported PSP base and Windows 10/11 x64. No main merge; PPSSPP validation required.
           '@ | Set-Content "$env:RUNNER_TEMP/release-notes.txt" -Encoding utf8NoBOM
-          gh release create $tag dist/*.zip dist/*.sha256 dist/*.png --target '${{ github.sha }}' --prerelease --title 'PS2PSP v0.25.3 — texture mode selector' --notes-file "$env:RUNNER_TEMP/release-notes.txt"
+          gh release create $tag dist/*.zip dist/*.sha256 dist/*.png --target '${{ github.sha }}' --prerelease --title 'PS2PSP v0.25.4 — Maximum Downgrade' --notes-file "$env:RUNNER_TEMP/release-notes.txt"

@@ -24,6 +24,15 @@ def worker(job_path):
         dump(root/'failure.json',dict(error=str(exc),cancelled=cancelled,logs=str(root)));return 2 if cancelled else 1
 
 def main():
+    if len(sys.argv)>1 and sys.argv[1]=='--maximum-downgrade':
+        from desktop.maximum_downgrade import fit_pac
+        source,output=map(Path,sys.argv[2:4]);target=int(sys.argv[4]) if len(sys.argv)>4 else 148000
+        if output.exists():raise FileExistsError('Refusing to overwrite '+str(output))
+        original=source.read_bytes()
+        candidate,report=fit_pac(original,output,target=target)
+        if source.read_bytes()!=original:raise ValueError('Input changed during texture fitting')
+        (output/'candidate.pac').write_bytes(candidate)
+        return 0
     if len(sys.argv)>1 and sys.argv[1]=='--skin-compatibility':
         from desktop.skinning import apply_single_slot_compatibility
         from desktop.core import validate_pac,dump
@@ -82,6 +91,9 @@ def main():
         app.texture_mode.set('Downgrade');app.update_texture_mode();app.root.update()
         if not app.downgrade_row.winfo_ismapped():raise ValueError('Downgrade selector is missing.')
         if tuple(app.downgrade_dropdown.cget('values'))!=('1 size','2 sizes','3 sizes'):raise ValueError('Downgrade steps are incorrect.')
+        app.texture_mode.set('Maximum Downgrade');app.update_texture_mode();app.root.update()
+        if app.downgrade_row.winfo_manager():raise ValueError('Maximum mode must allocate automatically, without a fixed step selector.')
+        app.texture_mode.set('Downgrade');app.update_texture_mode();app.root.update()
         if app.texture_help_label.winfo_rooty()+app.texture_help_label.winfo_height()>app.progress.winfo_rooty():raise ValueError('Texture controls clipped at minimum window size.')
         old_geometry=app.root.geometry();old_base=app.base.get();old_info=app.info.get()
         app.root.geometry('940x640');app.base.set('C:/Users/Example/Documents/PSP Models/Original/SVR2007 Non-Converted Models/Kurt-Angle-Ring.PAC')

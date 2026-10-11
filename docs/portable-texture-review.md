@@ -1,6 +1,6 @@
 # Texture modes and optional source review (v0.25.3)
 
-The **Textures** section has four mutually exclusive modes: **Default** (best for most models; selected on startup), **ATO** (the existing experimental adaptive system), **Priority Selection** (use when Default and ATO do not give good visual results), and **Downgrade** (one, two or three halving steps). Default and ATO retain their existing algorithms. The previous separate adaptive/review checkboxes are replaced by this selector; skin compatibility remains independent.
+The **Textures** section has four established mutually exclusive modes: **Default** (best for most models; selected on startup), **ATO** (the existing experimental adaptive system), **Priority Selection** (use when Default and ATO do not give good visual results), and **Downgrade** (one, two or three halving steps). Default and ATO retain their existing algorithms. The previous separate adaptive/review checkboxes are replaced by this selector; skin compatibility remains independent.
 
 Choose **Priority Selection**, then a source and your own PSP base, and press **Convert**. The dialog shows decoded PS2 textures before conversion, including accessory dependencies. Click a thumbnail to enlarge it. Check zero to three maps and select **Continue conversion**; **Cancel** starts no job. A fourth checkbox is disabled until a selection is cleared. Changing the source clears selections. Priority Selection starts with the established Default conversion, then applies manual priorities. The worker still accepts historical advanced requests that combine adaptive analysis and priorities for reproducible older A/B jobs; the UI no longer combines those modes.
 
@@ -150,3 +150,11 @@ and chooser screenshots were downloaded and visually inspected. See
 screenshots. Release remains a prerelease on the isolated experiment branch;
 main and accepted reference PACs were not modified. Game runtime limits beyond
 the existing demonstrated envelope remain **UNKNOWN**.
+
+## Maximum Downgrade addition (v0.25.4)
+
+A fifth, explicitly selected rescue mode relaxes texture detail floors while
+freezing the validated Default model candidate. Default remains selected at
+startup; prior modes are unchanged. See [Maximum Downgrade](portable-maximum-downgrade.md)
+for source ceilings, alpha semantics, existing precision-stage caveats, measured
+size allocation, immutable model evidence and known limitations.

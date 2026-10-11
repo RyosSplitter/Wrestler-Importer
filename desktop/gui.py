@@ -256,6 +256,8 @@ class Application:
                             t=r['texture_priorities'];self.output.set(self.output.get()+f"\nTexture priorities: {len(t['names'])} selected; {t['reductions']} still reduced — open QA report")
                         if r.get('texture_downgrade'):
                             self.output.set(self.output.get()+f"\nDowngrade: {r['texture_downgrade']['steps']} steps from Default, 64-pixel floor — open QA report")
+                        if r.get('maximum_downgrade'):
+                            self.output.set(self.output.get()+f"\nMaximum Downgrade: {r['maximum_downgrade']['changed_textures']} textures reduced; model unchanged — open QA report")
                         self.save.configure(state='normal');self.status.set('Review the PSP preview and QA report before saving.');self.show_preview()
                 except Exception as e:self.status.set('Worker ended unexpectedly; inspect Logs.');messagebox.showerror(NAME,str(e))
         if self.closing and not self.busy() and self.inspector is None:self.clean_inspection();self.root.destroy();return
