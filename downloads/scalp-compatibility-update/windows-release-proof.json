@@ -1,0 +1,201 @@
+{
+  "release_url": "https://github.com/RyosSplitter/Wrestler-Importer/releases/tag/portable-preview-20-c7c6874783ddc43690f9c854c033bcbb49726761",
+  "tag": "portable-preview-20-c7c6874783ddc43690f9c854c033bcbb49726761",
+  "runtime_commit": "c7c6874783ddc43690f9c854c033bcbb49726761",
+  "zip_bytes": 556715052,
+  "zip_sha256": "1fd085df00fd548583cfb6a556cafa5d1276421e61855a93ca5e968f936fdd5d",
+  "github_asset_digest_matches": true,
+  "windows_checks": {
+    "total_count": 1,
+    "jobs": [
+      {
+        "id": 114354158642,
+        "run_id": 38100126132,
+        "workflow_name": "Build portable PS2PSP preview",
+        "head_branch": "experiment/scalp-compatibility-update",
+        "run_url": "https://api.github.com/repos/RyosSplitter/Wrestler-Importer/actions/runs/38100126132",
+        "run_attempt": 1,
+        "node_id": "CR_kwDOU_dQBM8AAAAaoAn8Mg",
+        "head_sha": "c7c6874783ddc43690f9c854c033bcbb49726761",
+        "url": "https://api.github.com/repos/RyosSplitter/Wrestler-Importer/actions/jobs/114354158642",
+        "html_url": "https://github.com/RyosSplitter/Wrestler-Importer/actions/runs/38100126132/job/114354158642",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-10-11T00:56:29Z",
+        "started_at": "2026-10-11T00:56:31Z",
+        "completed_at": "2026-10-11T01:13:17Z",
+        "name": "portable",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-11T00:56:32Z",
+            "completed_at": "2026-10-11T00:56:33Z"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-11T00:56:33Z",
+            "completed_at": "2026-10-11T00:56:45Z"
+          },
+          {
+            "name": "Determine whether conversion code changed",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-11T00:56:45Z",
+            "completed_at": "2026-10-11T00:56:47Z"
+          },
+          {
+            "name": "Run actions/setup-python@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-11T00:56:47Z",
+            "completed_at": "2026-10-11T00:56:47Z"
+          },
+          {
+            "name": "Run python -m pip install -r requirements-desktop.txt",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-10-11T00:56:47Z",
+            "completed_at": "2026-10-11T00:57:23Z"
+          },
+          {
+            "name": "Prepare development-only PSP donor and modified HCTP trials",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-10-11T00:57:23Z",
+            "completed_at": "2026-10-11T00:57:23Z"
+          },
+          {
+            "name": "Run python -m tools.ci_tests",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-10-11T00:57:23Z",
+            "completed_at": "2026-10-11T00:57:56Z"
+          },
+          {
+            "name": "Build app, audited runtime, source bundle and notices",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-10-11T00:57:56Z",
+            "completed_at": "2026-10-11T00:58:46Z"
+          },
+          {
+            "name": "Packaged UI and bundled runtime with developer tools removed from PATH",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9,
+            "started_at": "2026-10-11T00:58:46Z",
+            "completed_at": "2026-10-11T00:58:50Z"
+          },
+          {
+            "name": "Frozen single-slot layout control and exact preservation",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10,
+            "started_at": "2026-10-11T00:58:50Z",
+            "completed_at": "2026-10-11T00:58:51Z"
+          },
+          {
+            "name": "Frozen conversion, QA and textured previews including multi-YOBJ source",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11,
+            "started_at": "2026-10-11T00:58:51Z",
+            "completed_at": "2026-10-11T01:08:11Z"
+          },
+          {
+            "name": "Frozen adaptive texture A/B and immutable model verification",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 12,
+            "started_at": "2026-10-11T01:08:11Z",
+            "completed_at": "2026-10-11T01:11:38Z"
+          },
+          {
+            "name": "Check frozen adaptive output and unchanged model payloads",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 13,
+            "started_at": "2026-10-11T01:11:38Z",
+            "completed_at": "2026-10-11T01:11:39Z"
+          },
+          {
+            "name": "Main geometry remains identical with independent accessory models",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 14,
+            "started_at": "2026-10-11T01:11:39Z",
+            "completed_at": "2026-10-11T01:11:39Z"
+          },
+          {
+            "name": "Package portable ZIP",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 15,
+            "started_at": "2026-10-11T01:11:39Z",
+            "completed_at": "2026-10-11T01:12:31Z"
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 16,
+            "started_at": "2026-10-11T01:12:31Z",
+            "completed_at": "2026-10-11T01:12:48Z"
+          },
+          {
+            "name": "Publish isolated preview build",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 17,
+            "started_at": "2026-10-11T01:12:48Z",
+            "completed_at": "2026-10-11T01:13:13Z"
+          },
+          {
+            "name": "Post Run actions/setup-python@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 33,
+            "started_at": "2026-10-11T01:13:13Z",
+            "completed_at": "2026-10-11T01:13:13Z"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 34,
+            "started_at": "2026-10-11T01:13:13Z",
+            "completed_at": "2026-10-11T01:13:15Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 35,
+            "started_at": "2026-10-11T01:13:15Z",
+            "completed_at": "2026-10-11T01:13:15Z"
+          }
+        ],
+        "check_run_url": "https://api.github.com/repos/RyosSplitter/Wrestler-Importer/check-runs/114354158642",
+        "labels": [
+          "windows-latest"
+        ],
+        "runner_id": 1000000036,
+        "runner_name": "GitHub Actions 1000000036",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions"
+      }
+    ]
+  }
+}

@@ -10,3 +10,9 @@ Windows packaged checks and the downloadable app are provided by the isolated
 [build workflow](https://github.com/RyosSplitter/Wrestler-Importer/actions/runs/38100126132).
 See [implementation notes](../../docs/portable-scalp-compatibility.md).
 No new gameplay validation is asserted for other wrestlers.
+
+Windows publication completed successfully: [download v0.25.1](https://github.com/RyosSplitter/Wrestler-Importer/releases/tag/portable-preview-20-c7c6874783ddc43690f9c854c033bcbb49726761).
+All packaged checks passed. `windows-release-proof.json` records the exact runtime
+commit, completed check states, ZIP size and SHA-256; the checksum matches
+GitHub's uploaded-asset digest. `windows-ui.png` is the actual packaged Windows
+UI capture, showing compatibility ON and adaptive textures OFF.
