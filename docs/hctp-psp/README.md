@@ -74,3 +74,10 @@ geometric algorithms and explicit profiles; no trained in-app AI guarantees
 correct anatomy. Proposed body archetypes, interactive snap/alignment controls
 and general automatic refinement are product goals rather than fully implemented
 features. The comparison stage remains reusable and separate from conversion.
+
+**CONFIRMED (implementation/testing and user visual report):** The isolated
+[v0.25.1 update](../portable-scalp-compatibility.md) integrates the Rock single-slot
+skinning control and full-head QA. Its evidence distinguishes exact native
+preservation and the reported successful appearance from **INFERRED** loader
+behavior and **UNKNOWN** general runtime memory/animation limits. Two-slot and
+rigid layouts are unchanged; accepted PACs and main remain preserved.

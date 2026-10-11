@@ -473,3 +473,31 @@ not a validated allocation limit. Do not implement a texture preset by trimming
 geometry or by assuming GIM validity establishes gameplay compatibility. The
 Compact/Balanced/Maximum UI and accessory checkbox remain planned v0.25 work,
 pending user instruction and in-game validation. No production change is implied.
+
+v0.25.1 SINGLE-SLOT COMPATIBILITY AND COMPLETE HEAD QA
+CONFIRMED: desktop/skinning.py adapts only native float32 skinned meshes whose
+palette contains exactly one entry. Add two distinct existing bones (ancestors
+first) and exact zero float weights; retain every original weight and vertex
+attribute bit. Stride becomes 48 rather than 40 bytes, with GE flag 0x97ff rather
+than 0x17ff. Rebuild allocation pointers, size fields and POF0 through the existing
+writer. Independently verify oriented primitives, material state, opaque metadata,
+bounds, skeleton, effective per-bone weights and analytical motion. Repack only
+changed YOBJ sections using existing BPE/PAC code; preserve every unrelated stored
+and decoded section. Never discard geometry or textures to fit this layout edit.
+The portable stage runs after existing size fitting and optional adaptive textures,
+and its final PAC is re-audited. Log added decoded buffer bytes independently of
+compressed/archive size. Compatibility defaults ON, with an OFF control for A/B.
+CONFIRMED (user report): the isolated Rock control looked good in SVR 2011 PSP.
+The integrated adapter reproduces that exact control SHA-256 from the uploaded
+failing PAC. INFERRED: the loader's one-slot skinned path contributed to the
+runtime scalp spikes. UNKNOWN: precise loader semantics and generalized runtime
+memory/animation safety. Do not require three slots for all PSP meshes: two-slot
+and rigid layouts remain untouched by this policy.
+CONFIRMED: model_qa/head.py selects cranial support before posing, including the
+rear scalp and vertices that later escape the reference bounds. Compare nearest
+surfaces and matched views with both culling conventions, and probe head, neck,
+jaw, eyes, eyelids and eyebrows. Native small-palette review supplements geometry
+checks because the failing Rock had an intact stored scalp and smooth offline
+renders. QA remains independent and does not emulate the game loader/GPU/clips.
+See docs/portable-scalp-compatibility.md, docs/rock-scalp-layout-control.md and
+downloads/scalp-compatibility-update/ for measured evidence and reproduction.
