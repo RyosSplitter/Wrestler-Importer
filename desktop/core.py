@@ -47,9 +47,11 @@ class Request:
     base:str
     source_format:str='hctp'
     adaptive_textures:bool=False
+    skin_palette_compatibility:bool=True
 
     def validate(self):
         if not isinstance(self.adaptive_textures,bool):raise ValueError('Adaptive texture option must be a boolean.')
+        if not isinstance(self.skin_palette_compatibility,bool):raise ValueError('Skin palette compatibility option must be a boolean.')
         adapter(self.source_format)
         for raw in (self.source,self.base):
             p=Path(raw)
@@ -364,6 +366,31 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
         candidate,adaptive_report=optimize_pac(candidate,decoded,work/'adaptive-textures',
             target=profile['max_pac_bytes'],cancel=check,progress=lambda message:progress(63,message))
         texture_reader=adaptive_reader
+    compatibility_report=None
+    if request.skin_palette_compatibility:
+        from desktop.skinning import apply_single_slot_compatibility
+        step(64,'Checking single-slot skinning layouts; preserving effective weights')
+        (work/'before-skin-compatibility.pac').write_bytes(candidate)
+        candidate,compatibility_report=apply_single_slot_compatibility(candidate,
+            max_bytes=profile['max_pac_bytes'],cancel=check)
+        dump(work/'skin-compatibility.json',compatibility_report)
+        yobj=next(raw for s,raw in sections(candidate) if s['id']==2)
+        accessory_yobjs={s['id']:raw for s,raw in sections(candidate) if s['id'] in accessory_yobjs}
+        # Keep the source-derived accessory validator exact in the expanded
+        # representation. Only append the zero slots already proven by the
+        # native before/after verifier; never substitute final geometry for the
+        # independent expected source attributes.
+        for model_report in compatibility_report['changed_models']:
+            section=model_report['section']
+            if section not in accessory_prepared:continue
+            expected=copy.deepcopy(accessory_prepared[section])
+            for change in model_report['changed_meshes']:
+                mesh=expected['meshes'][change['mesh']]
+                if mesh['bone_palette']!=change['old_palette']:raise ValueError('Accessory compatibility provenance differs.')
+                mesh['bone_palette']=change['new_palette']
+                count=len(change['new_palette'])-len(change['old_palette'])
+                for vertex in mesh['vertices']:vertex['weights']=vertex['weights']+[0.]*count
+            accessory_prepared[section]=expected
     step(65,'Validating final PAC pointers, buffers, weights, rendering records and size')
     native,gim_map=validate_pac(candidate,base_bytes,profile['max_pac_bytes'],accessory_models=accessory_prepared,gim_reader=texture_reader,
         lossless_texture_sections=[r['section'] for r in adaptive_report['lossless_retained_texture_storage']] if adaptive_report else ())
@@ -399,13 +426,20 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
     qa['model_set_validation']=dict(status='pass',model_count=1+len(accessory_yobjs),
         accessory_sections=sorted(accessory_yobjs),report='../accessory-qa.json',
         scope='Every native YOBJ audited; independent accessories compared against prepared source attributes and analytical poses.')
+    if compatibility_report is not None:
+        qa['skin_palette_compatibility']=dict(report='../skin-compatibility.json',
+            changed_meshes=compatibility_report['changed_meshes'],
+            added_vertex_buffer_bytes=compatibility_report['added_vertex_buffer_bytes'],
+            effective_geometry_weights_exact=True,analytical_pose_replay='exact')
     dump(work/'qa/report.json',qa)
     html=work/'qa/report.html'
     text=html.read_text(encoding='utf-8')
     note='<p>Native model set: %d models. <a href="../accessory-qa.json">Independent accessory structure, attributes and pose validation</a>. <a href="../preview/output.obj">Combined OBJ preview</a>. Actual in-game pad removal/throw behavior remains unverified.</p>'%(1+len(accessory_yobjs))
     if adaptive_report is not None:
         texture_flags=sum(bool(t['quality_review_flags']) for t in adaptive_report['textures'])
-        note+='<p>Adaptive textures enabled: %d textures have tradeoffs requiring review. <a href="../adaptive-textures/report.html">Source/current/adaptive textures and allocation report</a>. Every non-texture section payload is byte-identical to the current-method baseline.</p>'%texture_flags
+        note+='<p>Adaptive textures enabled: %d textures have tradeoffs requiring review. <a href="../adaptive-textures/report.html">Source/current/adaptive textures and allocation report</a>. The texture stage preserves every non-texture payload; any subsequent skin-layout adaptation is reported separately.</p>'%texture_flags
+    if compatibility_report is not None:
+        note+='<p>Single-slot skinning compatibility: %d meshes adapted, %d additional decoded vertex-buffer bytes. <a href="../skin-compatibility.json">Exact geometry, effective weights and analytical pose preservation checks</a>. Other small palettes remain review findings; no universal minimum is claimed.</p>'%(compatibility_report['changed_meshes'],compatibility_report['added_vertex_buffer_bytes'])
     text=text.replace('</body>',note+'</body>')
     html.write_text(text,encoding='utf-8')
     step(92,'Rendering textured views of the actual final PSP output')
@@ -428,7 +462,14 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
         result['adaptive_textures']=dict(report=str(work/'adaptive-textures/report.html'),
             baseline_pac=str(work/'current-texture-method.pac'),baseline_bytes=adaptive_report['baseline_bytes'],
             pixel_palette_bytes=adaptive_report['pixel_palette_bytes'],unchanged_non_texture_payloads=True,
+            preservation_scope='Texture stage; subsequent skin-layout changes validated separately.',
             review_flags=texture_flags)
         result['review_flags']+=texture_flags
+    if compatibility_report is not None:
+        result['skin_palette_compatibility']=dict(report=str(work/'skin-compatibility.json'),
+            baseline_pac=str(work/'before-skin-compatibility.pac'),
+            changed_meshes=compatibility_report['changed_meshes'],
+            added_vertex_buffer_bytes=compatibility_report['added_vertex_buffer_bytes'],
+            effective_geometry_weights_exact=True)
     dump(work/'result.json',result);step(100,'Ready for review and Save As')
     return result

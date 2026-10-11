@@ -129,3 +129,9 @@ preserve both controls and capture the failing frame's PSP GE vertex type,
 stride, vertex/index buffers and live head matrix for comparison. A gameplay
 outcome alone would support the layout hypothesis but would not fully decode
 the loader's internals. No automatic main-branch promotion is authorized here.
+
+The user requested that the next update accommodate this issue. See
+[next update notes](next-update.md) for the tracked QA and compatibility work;
+The user subsequently reported the Rock model looked good and requested the
+update. [v0.25.1 integration](portable-scalp-compatibility.md) records the new
+visual evidence; comprehensive runtime validation remains unrecorded.

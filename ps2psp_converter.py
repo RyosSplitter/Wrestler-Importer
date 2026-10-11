@@ -24,6 +24,20 @@ def worker(job_path):
         dump(root/'failure.json',dict(error=str(exc),cancelled=cancelled,logs=str(root)));return 2 if cancelled else 1
 
 def main():
+    if len(sys.argv)>1 and sys.argv[1]=='--skin-compatibility':
+        from desktop.skinning import apply_single_slot_compatibility
+        from desktop.core import validate_pac,dump
+        from desktop.texture_optimizer.candidates import read_gim
+        source,output=map(Path,sys.argv[2:])
+        if output.exists():raise FileExistsError('Refusing to overwrite '+str(output))
+        original=source.read_bytes()
+        candidate,report=apply_single_slot_compatibility(original)
+        validate_pac(candidate,gim_reader=read_gim)
+        if source.read_bytes()!=original:raise ValueError('Input changed during inspection')
+        output.mkdir(parents=True)
+        (output/'candidate.pac').write_bytes(candidate)
+        dump(output/'skin-compatibility.json',report)
+        return 0
     if len(sys.argv)>1 and sys.argv[1]=='--worker':return worker(sys.argv[2])
     if len(sys.argv)>1 and sys.argv[1]=='--inspect':
         from desktop.adapters import adapter
@@ -63,6 +77,8 @@ def main():
         if not app.root.tk.call('info','commands','::tkdnd::drop_target'):raise ValueError('Drag/drop runtime command missing.')
         if app.adaptive_textures.get() is not False:raise ValueError('Experimental adaptive checkbox must default OFF.')
         if app.adaptive_checkbox.cget('text')!='Adaptive Texture Optimization (Experimental)':raise ValueError('Adaptive checkbox label is incorrect.')
+        if app.skin_palette_compatibility.get() is not True:raise ValueError('Single-slot compatibility must default ON.')
+        if app.skin_checkbox.cget('text')!='Single-slot skinning compatibility':raise ValueError('Skin compatibility checkbox label is incorrect.')
         if app.convert.winfo_rooty()+app.convert.winfo_height()>app.preview.winfo_rooty():raise ValueError('Convert must be above the preview.')
         if app.convert.winfo_rootx()<app.preview.winfo_rootx():raise ValueError('Convert must be in the preview column.')
         if 'disabled' not in app.cancel.state() or 'disabled' not in app.save.state():raise ValueError('Cancel and Save must start disabled.')
@@ -71,6 +87,7 @@ def main():
         dump(sys.argv[2],dict(gui=True,drag_drop_command_verified=True,source_menu_states=states,
                               bundled_blender=version.splitlines()[0],preview_views=list(VIEWS),base_required=True,
                               adaptive_textures_default=False,adaptive_checkbox_verified=True,
+                              skin_palette_compatibility_default=True,skin_checkbox_verified=True,
                               ui_theme=app.ui_theme,convert_above_preview=True,
                               initial_button_states_verified=True))
         if sys.platform=='win32':

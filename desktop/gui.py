@@ -32,6 +32,7 @@ class Application:
         self.base=tk.StringVar(value=self.settings.get('base',''));self.status=tk.StringVar(value='Choose your PSP base once, then drop an HCTP PAC.')
         # Session-only and deliberately OFF, even when an earlier job enabled it.
         self.adaptive_textures=tk.BooleanVar(value=False)
+        self.skin_palette_compatibility=tk.BooleanVar(value=True)
         self.info=tk.StringVar(value='No source selected');self.output=tk.StringVar(value='Your converted PSP output will appear here.')
         # Vista is Tk's native Windows 7-era control theme. Keep native button,
         # checkbox, focus and disabled rendering; use a light fallback elsewhere.
@@ -94,6 +95,10 @@ class Application:
             variable=self.adaptive_textures,bg=BG,fg=FG,selectcolor='#ffffff',activebackground=BG,
             activeforeground=FG,anchor='w',justify='left',wraplength=280)
         self.adaptive_checkbox.pack(fill='x')
+        self.skin_checkbox=tk.Checkbutton(options,text='Single-slot skinning compatibility',
+            variable=self.skin_palette_compatibility,bg=BG,fg=FG,selectcolor='#ffffff',activebackground=BG,
+            activeforeground=FG,anchor='w',justify='left',wraplength=280)
+        self.skin_checkbox.pack(fill='x')
         ttk.Label(left,text='Target: SVR 2011 PSP\nHCTP and compatible custom PACs supported.',
             style='Muted.TLabel',wraplength=330,justify='left').pack(fill='x',pady=12)
 
@@ -156,9 +161,10 @@ class Application:
         try:Request(self.source,self.base.get()).validate()
         except Exception as e:messagebox.showerror(NAME,str(e));return
         self.job=data_dir()/'jobs'/uuid.uuid4().hex;self.job.mkdir(parents=True)
-        (self.job/'request.json').write_text(json.dumps(dict(source=self.source,base=self.base.get(),source_format='hctp',adaptive_textures=self.adaptive_textures.get())),encoding='utf-8')
+        (self.job/'request.json').write_text(json.dumps(dict(source=self.source,base=self.base.get(),source_format='hctp',adaptive_textures=self.adaptive_textures.get(),skin_palette_compatibility=self.skin_palette_compatibility.get())),encoding='utf-8')
         self.result=None;self.save.configure(state='disabled');self.convert.configure(state='disabled');self.base_button.configure(state='disabled');self.cancel.configure(state='normal')
         self.adaptive_checkbox.configure(state='disabled')
+        self.skin_checkbox.configure(state='disabled')
         self.output.set('Building an experimental PSP candidate…');self.preview.configure(image='',text='Converting…');self.progress['value']=0
         self.process=self.spawn(['--worker',str(self.job/'request.json')]);self.status.set('Starting isolated conversion job…')
     def cancel_job(self):
@@ -182,6 +188,7 @@ class Application:
             if self.process.poll() is not None:
                 self.process=None;self.cancel.configure(state='disabled');self.convert.configure(state='normal');self.base_button.configure(state='normal')
                 self.adaptive_checkbox.configure(state='normal')
+                self.skin_checkbox.configure(state='normal')
                 try:
                     if not (self.job/'success.json').exists():
                         failure=json.loads((self.job/'failure.json').read_text(encoding='utf-8'));self.status.set(failure['error'])

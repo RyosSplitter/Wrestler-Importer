@@ -2,8 +2,8 @@ name: Build portable PS2PSP preview
 on:
   workflow_dispatch:
   push:
-    branches: [feature/portable-ps2psp, fix/hctp-primary-model, experiment/precision-budget-fit, experiment/multi-yobj-accessories, experiment/content-aware-textures]
-    paths: ['desktop/**', 'ps2psp_converter.py', 'app/ps2_textures.py', 'tools/build_portable.py', 'tools/portable_fixture.py', 'tools/blender_reduce.py', 'tools/pac_inspect.py', 'tools/pac_repack.py', 'tools/hctp_read.py', 'tools/hctp_weights.py', 'tools/yobj_read.py', 'requirements-desktop.txt', 'docs/portable-*.md', 'tests/test_portable_*.py', 'tests/test_adaptive_textures.py', 'tests/test_main_model_selection.py', '.github/workflows/windows-portable.yml']
+    branches: [feature/portable-ps2psp, fix/hctp-primary-model, experiment/precision-budget-fit, experiment/multi-yobj-accessories, experiment/content-aware-textures, experiment/scalp-compatibility-update]
+    paths: ['desktop/**', 'model_qa/**', 'tests/test_head_qa.py', 'tests/test_skin_palette_padding.py', 'tests/test_portable_skinning.py', 'ps2psp_converter.py', 'app/ps2_textures.py', 'tools/build_portable.py', 'tools/portable_fixture.py', 'tools/blender_reduce.py', 'tools/pac_inspect.py', 'tools/pac_repack.py', 'tools/hctp_read.py', 'tools/hctp_weights.py', 'tools/yobj_read.py', 'requirements-desktop.txt', 'docs/portable-*.md', 'tests/test_portable_*.py', 'tests/test_adaptive_textures.py', 'tests/test_main_model_selection.py', '.github/workflows/windows-portable.yml']
 permissions:
   contents: write
 jobs:
@@ -69,6 +69,28 @@ jobs:
           if ($p.ExitCode -ne 0) { throw 'Frozen GUI/runtime smoke test failed' }
           Get-Content $output
           Copy-Item ([System.IO.Path]::ChangeExtension($output,'png')) dist/PS2PSP-converter-preview.png
+      - name: Frozen single-slot layout control and exact preservation
+        shell: python
+        run: |
+          import json,subprocess,sys
+          from pathlib import Path
+          sys.path.insert(0,str(Path.cwd()))
+          from tests.test_portable_skinning import one_slot_model
+          from tools.generate_conformance_fixtures import vectors,pac
+          from tools.psp_mesh_merge_trial import sections
+          from tools.psp_mesh_audit import audit_yobj
+          texture=next(raw for s,raw in sections(vectors()['psp-quad.pac']) if s['id']==9)
+          source=Path('build/test-inputs/single-slot.pac')
+          source.write_bytes(pac([(2,one_slot_model()),(9,texture),(50,b'opaque retained control')]))
+          output=Path('build/frozen-skin-control')
+          subprocess.run(['dist/PS2PSP-Pac-Converter/PS2PSP-Pac-Converter.exe','--skin-compatibility',str(source),str(output)],check=True,timeout=120)
+          report=json.loads((output/'skin-compatibility.json').read_text())
+          assert report['changed_meshes']==1 and report['added_vertex_buffer_bytes']==32
+          a={s['id']:raw for s,raw in sections(source.read_bytes())}
+          b={s['id']:raw for s,raw in sections((output/'candidate.pac').read_bytes())}
+          assert a[9]==b[9] and a[50]==b[50]
+          assert audit_yobj(b[2])['meshes'][0]['weight_slots']==3
+          print('Frozen one-slot adaptation and exact effective geometry/weight replay passed.')
       - name: Frozen conversion, QA and textured previews including multi-YOBJ source
         if: steps.scope.outputs.full == 'true'
         timeout-minutes: 25
@@ -99,10 +121,10 @@ jobs:
           $p = Start-Process dist/PS2PSP-Pac-Converter/PS2PSP-Pac-Converter.exe -ArgumentList @('--worker',"$job/request.json") -PassThru -Wait
           if ($p.ExitCode -ne 0) { Get-Content "$job/error.log"; throw 'Frozen adaptive job failed' }
           Get-Content "$job/success.json"
-        if: github.ref == 'refs/heads/experiment/content-aware-textures' && steps.scope.outputs.full == 'true'
+        if: steps.scope.outputs.full == 'true'
       - name: Check frozen adaptive output and unchanged model payloads
         shell: python
-        if: github.ref == 'refs/heads/experiment/content-aware-textures' && steps.scope.outputs.full == 'true'
+        if: steps.scope.outputs.full == 'true'
         run: |
           import json,os,sys
           from pathlib import Path
@@ -116,7 +138,8 @@ jobs:
           result=Path(r['pac']).read_bytes()
           validate_pac(result,gim_reader=read_gim)
           a={s['id']:raw for s,raw in sections(current)}
-          b={s['id']:raw for s,raw in sections(result)}
+          texture_stage=Path(r['skin_palette_compatibility']['baseline_pac']).read_bytes()
+          b={s['id']:raw for s,raw in sections(texture_stage)}
           assert a.keys()==b.keys()
           for section,raw in a.items():
               if section!=9: assert raw==b[section]
@@ -162,6 +185,6 @@ jobs:
         run: |
           $tag = "portable-preview-${{ github.run_number }}-${{ github.sha }}"
           @'
-          Portable Windows x64 experimental preview. v0.25 now has a compact Windows 7-style light interface, native Windows controls and Convert/Cancel directly above the preview. The included PNG is an actual packaged Windows UI capture. This is a visual style, not Windows 7 operating-system support; use Windows 10/11 x64. Conversion behavior is unchanged. Adaptive Texture Optimization (Experimental) remains OFF by default. The unchanged current converter creates the baseline; the opt-in modular analyzer then evaluates source-bounded proportional dimensions and useful color counts, alpha/UV occupancy, detail coverage, actual reduction losses and measured PAC marginal benefit per byte. Only compatible existing material depths are eligible. YOBJ model, geometry, rigging, weights, UVs, normals and material payloads stay exact; retained effect tables may use lossless BPE storage. Native checks and QA still run. Diagnostics and A/B texture comparisons accompany each successful adaptive job. The 148000-byte cap and baseline padded-pixel/CLUT envelope are enforced, but actual runtime memory/gameplay remains unverified. Requires your own supported PSP base. Includes bundled Blender, sources and notices, no game assets. Preserves independent supported elbow-pad models and the legacy size-fitting process. No changes merged into main. See repository docs/portable-adaptive-textures.md for scoring, measured wrestler comparisons and limitations.
+          PS2PSP v0.25.1 Windows x64 preview. Adds automatic single-slot float skinning compatibility, based on the Rock control visually accepted in SVR 2011 PSP. The default-ON option adds two zero-weight slots, preserving positions, normals, UVs, colors, materials, effective bone weights, skeleton and analytical motion exactly. Disable only for A/B comparison with the previous app. Two-slot and rigid buffers remain unchanged. PACs that cannot fit the additional layout overhead are withheld rather than reducing geometry or textures. Complete head QA now covers the rear scalp, culled multi-view renders, vertex outliers, winding and head/neck/jaw/eye/eyebrow probes. Reports include the precise layout changes and added decoded vertex-buffer memory. These offline checks do not emulate the SVR loader or certify all animation/runtime behavior. Adaptive Texture Optimization stays OFF by default and both texture algorithms remain unchanged. The Windows 7-style interface and Convert placement remain. Requires your own supported PSP base; use Windows 10/11 x64. Includes bundled Blender, sources and notices, no game assets. Accepted PACs preserved; no main merge. See docs/portable-scalp-compatibility.md for evidence and limitations.
           '@ | Set-Content "$env:RUNNER_TEMP/release-notes.txt" -Encoding utf8NoBOM
-          gh release create $tag dist/*.zip dist/*.sha256 dist/*.png --target '${{ github.sha }}' --prerelease --title 'PS2PSP v0.25 — Windows 7-style preview' --notes-file "$env:RUNNER_TEMP/release-notes.txt"
+          gh release create $tag dist/*.zip dist/*.sha256 dist/*.png --target '${{ github.sha }}' --prerelease --title 'PS2PSP v0.25.1 — scalp compatibility and full-head QA' --notes-file "$env:RUNNER_TEMP/release-notes.txt"

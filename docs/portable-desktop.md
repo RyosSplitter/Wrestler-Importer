@@ -12,7 +12,11 @@ installation is required. Conversion and previews work offline.
 2. Select HCTP in the source container selector; drop or browse one PS2 `.pac`.
    Supported modified HCTP containers are accepted using binary contracts, rather
    than original character hashes. JBI, SYM and PS2 SVR remain disabled.
-3. Convert. Processing, native validation, reference QA and preview rendering
+3. **Single-slot skinning compatibility** defaults ON in v0.25.1. It applies the
+   visually accepted Rock buffer-layout adaptation with exact geometry/effective
+   weights and no texture changes. Disable only for an explicit A/B test.
+   [Compatibility and full-head QA details](portable-scalp-compatibility.md).
+   Convert. Processing, native validation, reference QA and preview rendering
    run in an isolated job. Cancel removes incomplete geometry and retains logs.
    **Adaptive Texture Optimization (Experimental)** defaults OFF. Check it to
    run source-bounded content analysis and measured texture budget allocation

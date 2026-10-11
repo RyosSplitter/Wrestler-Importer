@@ -6,6 +6,10 @@ runs on Windows; exports will be tested in PPSSPP.
 
 ## Developer reference and recommended baselines
 
+The isolated [v0.25.1 scalp compatibility update](docs/portable-scalp-compatibility.md)
+adds the visually accepted single-slot adaptation and full-head QA, preserving
+both texture paths. Main and accepted PAC baselines remain unchanged.
+
 Read the [standalone HCTP → PSP developer reference](docs/hctp-psp/README.md)
 and [REIMPLEMENTATION_GUIDE.txt](REIMPLEMENTATION_GUIDE.txt). They document binary
 layouts, the successful source-preservation and selective facial workflow,

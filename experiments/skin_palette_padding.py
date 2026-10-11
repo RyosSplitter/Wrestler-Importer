@@ -10,14 +10,10 @@ import hashlib
 import json
 from pathlib import Path
 
-import numpy as np
 
+from desktop.skinning import pad_mesh,exact_pose_checks
 from desktop.core import validate_pac
 from desktop.texture_optimizer.candidates import read_gim
-from model_qa.geometry import geometry,posed
-from model_qa.ocular import skin
-from model_qa.head import controller_probes
-from model_qa.pipeline import POSES
 from tools.pac_inspect import inspect_pac
 from tools.pac_repack import replace_sections
 from tools.psp_mesh_audit import audit_yobj
@@ -25,53 +21,6 @@ from tools.psp_mesh_merge import write_model,verify
 from tools.psp_mesh_merge_trial import sections
 from tools.yukes_bpe import compress,decompress
 
-
-def pad_mesh(mesh,bones,slots):
-    if mesh.get('rigid') or mesh['base_flag']!=0x17ff:
-        raise ValueError('Control supports only float32 skinned vertices')
-    palette=mesh['bone_palette'];old=len(palette)
-    if not old<slots<=8:raise ValueError('Padding needs more slots, at most eight')
-    if len(bones)<slots:raise ValueError('Not enough distinct existing bones')
-    extras=[]
-    for b in palette:
-        parent=bones[b]['parent'];seen=set()
-        while parent!=-1:
-            if parent in seen:raise ValueError('Cyclic skeleton')
-            seen.add(parent)
-            if parent not in palette and parent not in extras:extras.append(parent)
-            parent=bones[parent]['parent']
-    extras += [i for i in range(len(bones)) if i not in palette and i not in extras]
-    extras=extras[:slots-old];result=copy.deepcopy(mesh)
-    result['bone_palette']=palette+extras;result['weight_slots']=slots
-    result['stride']=36+4*slots
-    raw=[]
-    for i,v in enumerate(result['vertices']):
-        v['weights']=list(v['weights'])+[0.]*len(extras)
-        before=mesh['raw_vertices'][i*mesh['stride']:(i+1)*mesh['stride']]
-        raw.append(before[:4*old]+bytes(4*len(extras))+before[4*old:])
-    result['raw_vertices']=b''.join(raw)
-    return result
-
-
-def exact_pose_checks(before,after):
-    a,b=geometry(before),geometry(after)
-    if not np.array_equal(a.vertices,b.vertices) or not np.array_equal(a.faces,b.faces) or not np.array_equal(a.weights,b.weights):
-        raise ValueError('Effective geometry/topology/weights changed')
-    result={}
-    for name,controls in POSES.items():
-        x,y=posed(a,controls),posed(b,controls)
-        delta=float(np.abs(x.vertices-y.vertices).max())
-        if delta:raise ValueError('Body analytical motion changed')
-        result[name]=delta
-    cranial={}
-    for name,probe in controller_probes(before).items():
-        x,_=skin(a,probe);y,_=skin(b,probe)
-        delta=float(np.abs(x.vertices-y.vertices).max())
-        if delta:raise ValueError('Head analytical motion changed')
-        cranial[name]=delta
-    return dict(status='pass',effective_positions_faces_dense_weights_exact=True,
-        body_pose_maximum_component_deltas=result,head_probe_maximum_component_deltas=cranial,
-        limitation='Exact analytical LBS replay; cannot prove SVR runtime interpretation.')
 
 
 def build(input_path,output,meshes,slots=3):

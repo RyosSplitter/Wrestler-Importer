@@ -58,6 +58,8 @@ def build():
     shutil.copytree(ROOT/'docs/hctp-psp',sources/'converter/docs/hctp-psp')
     for path in (ROOT/'docs').glob('portable-*'):
         if path.is_file():shutil.copy2(path,sources/'converter/docs'/path.name)
+    for filename in ('rock-head-qa-investigation.md','rock-scalp-layout-control.md','next-update.md'):
+        shutil.copy2(ROOT/'docs'/filename,sources/'converter/docs'/filename)
     notices=destination/'licenses';notices.mkdir();manifest=[]
     for dist in metadata.distributions():
         license_files=[]
