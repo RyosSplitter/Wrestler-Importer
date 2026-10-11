@@ -1,0 +1,48 @@
+{
+  "source_pac_sha256": "01a9d9b4ef35b70e52903d7ab46626fee183d8c30a7fc87c538e25d6ac8b82ac",
+  "candidate_sha256": "ac659abb25d00d9fb832ec97de8e7ab007fc36d3b63823d9cca6a8dec6509ac0",
+  "before_bytes": 143360,
+  "after_bytes": 147456,
+  "non_texture_sections": [
+    {
+      "section": 2,
+      "stored_sha256": "6025d069c561ab05e53309468086e2cb9937b05f28204bdb7d470db76d7756b4",
+      "stored_and_decoded_identical": true
+    },
+    {
+      "section": 8,
+      "stored_sha256": "46f106adca929fdbcfa595914849ee8217879ec808fe43d376f99a4dec1d2835",
+      "stored_and_decoded_identical": true
+    }
+  ],
+  "native_validation": "passed",
+  "geometry_rigging_materials_uvs": "exact extracted YOBJ bytes; unchanged",
+  "gameplay_validation": "pending",
+  "deterministic_repeat_sha256": "ac659abb25d00d9fb832ec97de8e7ab007fc36d3b63823d9cca6a8dec6509ac0",
+  "full_suite": "290 tests passed before adding one further PAC integration test; all 8 new priority tests passed including that integration test",
+  "app_worker_validation": {
+    "pac_bytes": 147456,
+    "texture_priorities": [
+      {
+        "name": "y2j_mata",
+        "source_dimensions": [
+          256,
+          128
+        ],
+        "selected_dimensions": [
+          128,
+          64
+        ],
+        "fixed_rendering_bits": 4,
+        "source_useful_colors": 256,
+        "selected_used_colors": 16,
+        "full_source_preserved": false,
+        "best_supported_quality_reached": false,
+        "explanation": "Priority is weighted 8x. Ordinary maps can fund improvements through reported texture-only exchanges; facial/cutout safeguards remain. Source ceilings, unchanged material depth, measured PAC size and existing pixel/CLUT envelope still apply. See rejected_upgrades for budget reasons."
+      }
+    ],
+    "source_derived_static_and_pose_qa": "completed; see app-qa-summary.json",
+    "review_flags": 43
+  },
+  "ui_smoke": "passed locally under Tk; Windows frozen validation pending"
+}

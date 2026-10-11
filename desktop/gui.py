@@ -254,6 +254,13 @@ class Application:
                             self.output.set(self.output.get()+f"\nAdaptive textures: {r['adaptive_textures']['review_flags']} texture tradeoffs — open QA report")
                         if r.get('texture_priorities'):
                             t=r['texture_priorities'];self.output.set(self.output.get()+f"\nTexture priorities: {len(t['names'])} selected; {t['reductions']} still reduced — open QA report")
+                            for selected in t['selected_settings']:
+                                w,h=selected['selected_dimensions']
+                                self.output.set(self.output.get()+f"\n{selected['name']}: {w}×{h}, {selected['selected_used_colors']} used colors")
+                            if t.get('donor_textures'):
+                                self.output.set(self.output.get()+f"\n{len(t['donor_textures'])} other textures changed to fund priorities — review tradeoffs")
+                            if t.get('unimproved_textures'):
+                                self.output.set(self.output.get()+"\nNo improvement available for: "+', '.join(t['unimproved_textures'])+" — see budget constraints in QA report")
                         if r.get('texture_downgrade'):
                             self.output.set(self.output.get()+f"\nDowngrade: {r['texture_downgrade']['steps']} steps from Default, 64-pixel floor — open QA report")
                         if r.get('maximum_downgrade'):

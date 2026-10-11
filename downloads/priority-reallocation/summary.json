@@ -1,0 +1,81 @@
+{
+  "source_sha256": "052da6cb97e1adcf865a89fd8d7d8544de8298025b36344f38de74ec600e9b1e",
+  "before_sha256": "01a9d9b4ef35b70e52903d7ab46626fee183d8c30a7fc87c538e25d6ac8b82ac",
+  "after_sha256": "ac659abb25d00d9fb832ec97de8e7ab007fc36d3b63823d9cca6a8dec6509ac0",
+  "before_bytes": 143360,
+  "after_bytes": 147456,
+  "geometry_and_rigging_exact": true,
+  "native_validation": "passed",
+  "pixel_palette_bytes": 25664,
+  "pixel_budget": 25792,
+  "selected": [
+    {
+      "name": "y2j_mata",
+      "before": {
+        "width": 32,
+        "height": 8,
+        "bits": 4,
+        "palette_entries": 16,
+        "used_palette_colors": 13,
+        "metrics": {
+          "rgb_rmse_255": 25.154826159886586,
+          "luminance_ssim": 0.4976528667875967,
+          "oriented_edge_error": 0.9989907346493793,
+          "fine_feature_loss": 0.8417491478202931,
+          "high_frequency_error": 0.9583452600628872,
+          "perceptual_loss": 0.4884224501425499,
+          "quality_score": 0.5115775498574501,
+          "alpha_mae": 0.0,
+          "alpha_exact": false,
+          "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception"
+        }
+      },
+      "after": {
+        "width": 128,
+        "height": 64,
+        "bits": 4,
+        "palette_entries": 16,
+        "requested_useful_colors": 16,
+        "used_palette_colors": 16,
+        "quantizer": "0",
+        "serialized_bytes": 4368,
+        "pixel_palette_bytes": 4160,
+        "metrics": {
+          "rgb_rmse_255": 13.735800699845838,
+          "luminance_ssim": 0.8653695014854089,
+          "oriented_edge_error": 0.4853547779242235,
+          "fine_feature_loss": 0.11641572601766971,
+          "high_frequency_error": 0.7308966455929998,
+          "perceptual_loss": 0.16816873545097183,
+          "quality_score": 0.8318312645490282,
+          "alpha_mae": 0.0,
+          "alpha_exact": false,
+          "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception"
+        },
+        "source_quality_ceiling": {
+          "width": 256,
+          "height": 128,
+          "useful_colors": 256
+        },
+        "fully_preserved": false
+      },
+      "improvement": 0.3202537146915781,
+      "reductions": {
+        "source_dimensions": [
+          256,
+          128
+        ],
+        "selected_dimensions": [
+          128,
+          64
+        ],
+        "fixed_rendering_bits": 4,
+        "source_useful_colors": 256,
+        "selected_used_colors": 16,
+        "full_source_preserved": false,
+        "best_supported_quality_reached": false,
+        "explanation": "Priority is weighted 8x. Ordinary maps can fund improvements through reported texture-only exchanges; facial/cutout safeguards remain. Source ceilings, unchanged material depth, measured PAC size and existing pixel/CLUT envelope still apply. See rejected_upgrades for budget reasons."
+      }
+    }
+  ]
+}

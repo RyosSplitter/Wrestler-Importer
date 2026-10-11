@@ -51,7 +51,7 @@ class TextureChooser:
         self.top=tk.Toplevel(parent);self.top.title('Review source textures — choose up to 3')
         self.top.geometry('640x560');self.top.minsize(480,360);self.top.transient(parent)
         ttk.Label(self.top,text='Check up to three textures to prioritize their fidelity.',padding=10).pack(anchor='w')
-        ttk.Label(self.top,text='Other textures use the selected pipeline. Size and texture allocation limits still apply; reductions will be reported. Material color depth stays unchanged.',wraplength=590,padding=(10,0,10,8)).pack(anchor='w')
+        ttk.Label(self.top,text='Selected textures receive priority. Other textures may be reduced to fund their detail; all tradeoffs are reported. Model geometry and material color depth stay unchanged.',wraplength=590,padding=(10,0,10,8)).pack(anchor='w')
         footer=ttk.Frame(self.top,padding=10);footer.pack(side='bottom',fill='x')
         self.count=tk.StringVar();ttk.Label(footer,textvariable=self.count).pack(side='left')
         ttk.Button(footer,text='Continue conversion',command=self.accept).pack(side='right')

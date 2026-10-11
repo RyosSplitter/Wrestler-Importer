@@ -572,3 +572,13 @@ RGB is per-alpha Lanczos/median-cut; alpha is nearest-sampled exactly. The actua
 whole PAC, not image area, determines fit. Non-texture stored/decoded hashes,
 allocation and native structure must pass. The greedy heuristic is not globally
 optimal and does not certify game compatibility. Reports document all losses.
+PRIORITY REALLOCATION ADDENDUM (v0.25.5, experimental)
+Read docs/portable-priority-reallocation.md. Freezing all unselected GIMs while
+capping pixel/CLUT memory to the already-full Default allocation can make manual
+priorities ineffective. Start at exact Default incumbents, permit controlled
+unselected donor reductions and measure the combined PAC and pixel/CLUT usage.
+Never downgrade a selected map to fund another selection. Keep cranial/cutout
+guards, fixed material depth, source ceilings and exact non-texture payloads.
+Report all donor changes and unrecovered source fidelity. The bounded greedy
+exchange search is not a global optimum; gameplay compatibility is unproven
+until tested. See desktop/texture_optimizer/priorities.py and generated tests.

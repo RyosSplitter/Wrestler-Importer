@@ -6,12 +6,18 @@ runs on Windows; exports will be tested in PPSSPP.
 
 ## Developer reference and recommended baselines
 
+The isolated [v0.25.5 priority reallocation experiment](docs/portable-priority-reallocation.md)
+restores selected texture detail by funding upgrades from reported texture-only
+donor changes. [Jericho comparison and test PAC](downloads/priority-reallocation/)
+use the exact user-supplied output; geometry/rigging remain identical.
+
 The [v0.25.3 Textures dropdown](docs/portable-texture-review.md) offers Default (best for most models), ATO, Priority Selection (up to three source maps), and Downgrade (one, two or three steps). Default remains selected on startup; existing conversion paths and accepted baselines are preserved.
 
 The isolated [v0.25.1 scalp compatibility update](docs/portable-scalp-compatibility.md)
 adds the visually accepted single-slot adaptation and full-head QA, preserving
 both texture paths. Main and accepted PAC baselines remain unchanged.
-[Download the verified Windows v0.25.3 preview](https://github.com/RyosSplitter/Wrestler-Importer/releases/tag/portable-preview-24-caeb76bdf16000aebcbeb727aff7c2ef22bfa41b).
+[Download the verified Windows v0.25.4 preview](https://github.com/RyosSplitter/Wrestler-Importer/releases/tag/portable-preview-25-32317d1949c71193be542ab16ad4faec1c3c040e).
+It includes Maximum Downgrade; the priority reallocation fix requires v0.25.5.
 
 Read the [standalone HCTP → PSP developer reference](docs/hctp-psp/README.md)
 and [REIMPLEMENTATION_GUIDE.txt](REIMPLEMENTATION_GUIDE.txt). They document binary

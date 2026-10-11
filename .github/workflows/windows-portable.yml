@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches: [feature/portable-ps2psp, fix/hctp-primary-model, experiment/precision-budget-fit, experiment/multi-yobj-accessories, experiment/content-aware-textures, experiment/scalp-compatibility-update, experiment/texture-fidelity-selection]
-    paths: ['desktop/**', 'model_qa/**', 'tests/test_head_qa.py', 'tests/test_skin_palette_padding.py', 'tests/test_portable_skinning.py', 'ps2psp_converter.py', 'app/ps2_textures.py', 'tools/build_portable.py', 'tools/portable_fixture.py', 'tools/blender_reduce.py', 'tools/pac_inspect.py', 'tools/pac_repack.py', 'tools/hctp_read.py', 'tools/hctp_weights.py', 'tools/yobj_read.py', 'requirements-desktop.txt', 'docs/portable-*.md', 'tests/test_portable_*.py', 'tests/test_adaptive_textures.py', 'tests/test_texture_review.py', 'tests/test_texture_modes.py', 'tests/test_maximum_downgrade.py', 'tests/test_main_model_selection.py', '.github/workflows/windows-portable.yml']
+    paths: ['desktop/**', 'model_qa/**', 'tests/test_head_qa.py', 'tests/test_skin_palette_padding.py', 'tests/test_portable_skinning.py', 'ps2psp_converter.py', 'app/ps2_textures.py', 'tools/build_portable.py', 'tools/portable_fixture.py', 'tools/blender_reduce.py', 'tools/pac_inspect.py', 'tools/pac_repack.py', 'tools/hctp_read.py', 'tools/hctp_weights.py', 'tools/yobj_read.py', 'requirements-desktop.txt', 'docs/portable-*.md', 'tests/test_portable_*.py', 'tests/test_adaptive_textures.py', 'tests/test_texture_review.py', 'tests/test_priority_reallocation.py', 'tests/test_texture_modes.py', 'tests/test_maximum_downgrade.py', 'tests/test_main_model_selection.py', '.github/workflows/windows-portable.yml']
 permissions:
   contents: write
 jobs:
@@ -183,6 +183,8 @@ jobs:
               for section,raw in before.items():
                   if section!=9:assert raw==after[section]
               report=json.loads((job/'work/texture-priorities/report.json').read_text())
+              assert report['priority_reallocation'] is True
+              assert 'donor' in report['unselected_policy']
               assert report['pixel_palette_bytes']<=report['pixel_palette_budget']
               assert result['bytes']<=148000
               assert all(t['priority_quality_improvement']>=-1e-10 for t in report['textures'] if t['manual_priority'])
@@ -287,6 +289,6 @@ jobs:
         run: |
           $tag = "portable-preview-${{ github.run_number }}-${{ github.sha }}"
           @'
-          PS2PSP v0.25.4 Windows x64 preview. Adds opt-in Maximum Downgrade: frozen Default geometry candidate, automatic sub-64 native-observed texture reductions and useful-color reductions, exact non-texture preservation, measured PAC budget and sampled-alpha checks. Existing modes remain unchanged. Adds a Textures section with Default (best for most models), ATO, Priority Selection (source previews, up to three priorities), and Downgrade (one, two or three halving steps with a 64-pixel floor). Default remains the startup mode. Default/ATO algorithms and accepted baselines are unchanged; the UI modes are mutually exclusive. Priorities report remaining reductions. Downgrade enforces actual serialized PAC size and conservative baseline padded pixels/CLUT allocation; it withholds settings that cannot fit rather than silently lowering the floor or changing geometry. Reports preserve decisions and failure diagnostics. Includes scalp compatibility, complete head QA, Windows 7-style interface, bundled Blender, sources and notices; no game assets. Requires your own supported PSP base and Windows 10/11 x64. No main merge; PPSSPP validation required.
+          PS2PSP v0.25.5 Windows x64 preview. Fixes blocked Priority Selection upgrades by allowing controlled, reported texture-only donor exchanges under actual PAC and padded pixel/CLUT budgets. Selected maps never lose measured quality; cranial/cutout guards and material depth remain. Results show selected dimensions/colors, donor count and blocked improvements. Geometry/rigging are unchanged by the texture stage. Includes Maximum Downgrade, existing Default/ATO/Downgrade modes, scalp compatibility, full QA, classic interface, bundled Blender, source and notices; no game assets. Requires your own supported PSP base and Windows 10/11 x64. Main and accepted PACs remain unchanged. PPSSPP validation required; review donor tradeoffs, not only selected maps.
           '@ | Set-Content "$env:RUNNER_TEMP/release-notes.txt" -Encoding utf8NoBOM
-          gh release create $tag dist/*.zip dist/*.sha256 dist/*.png --target '${{ github.sha }}' --prerelease --title 'PS2PSP v0.25.4 — Maximum Downgrade' --notes-file "$env:RUNNER_TEMP/release-notes.txt"
+          gh release create $tag dist/*.zip dist/*.sha256 dist/*.png --target '${{ github.sha }}' --prerelease --title 'PS2PSP v0.25.5 — Priority texture reallocation' --notes-file "$env:RUNNER_TEMP/release-notes.txt"

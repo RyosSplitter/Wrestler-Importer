@@ -430,7 +430,8 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
         (work/'before-texture-priorities.pac').write_bytes(candidate)
         candidate,priority_report=optimize_pac(candidate,decoded,work/'texture-priorities',
             target=profile['max_pac_bytes'],cancel=check,progress=lambda message:progress(64,message),
-            priority_textures=request.priority_textures,freeze_unselected=not request.use_adaptive)
+            priority_textures=request.priority_textures,freeze_unselected=False,
+            rebalance_priorities=True)
         texture_reader=priority_reader
     downgrade_report=None
     if request.downgrade_steps:
@@ -544,6 +545,8 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
         result['texture_priorities']=dict(names=list(request.priority_textures),
             report=str(work/'texture-priorities/report.html'),reductions=reductions,
             baseline_pac=str(work/'before-texture-priorities.pac'),
+            donor_textures=[t['name'] for t in priority_report['textures'] if 'donor_change' in t],
+            unimproved_textures=[t['name'] for t in selected if t['priority_quality_improvement']<=1e-10],
             selected_settings=[dict(name=t['name'],**t['priority_reduction_report']) for t in selected])
         result['review_flags']+=sum(bool(t['quality_review_flags']) for t in priority_report['textures'])
     if downgrade_report is not None:

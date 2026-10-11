@@ -1,0 +1,60 @@
+newmtl texture_0
+Kd 1 1 1
+map_Kd texture_00.png
+newmtl texture_1
+Kd 1 1 1
+map_Kd texture_01.png
+newmtl texture_2
+Kd 1 1 1
+map_Kd texture_02.png
+newmtl texture_3
+Kd 1 1 1
+map_Kd texture_03.png
+newmtl texture_4
+Kd 1 1 1
+map_Kd texture_04.png
+newmtl texture_5
+Kd 1 1 1
+map_Kd texture_05.png
+newmtl texture_6
+Kd 1 1 1
+map_Kd texture_06.png
+newmtl texture_7
+Kd 1 1 1
+map_Kd texture_07.png
+newmtl texture_8
+Kd 1 1 1
+map_Kd texture_08.png
+newmtl texture_9
+Kd 1 1 1
+map_Kd texture_09.png
+newmtl texture_10
+Kd 1 1 1
+map_Kd texture_10.png
+newmtl texture_11
+Kd 1 1 1
+map_Kd texture_11.png
+newmtl texture_12
+Kd 1 1 1
+map_Kd texture_12.png
+newmtl texture_13
+Kd 1 1 1
+map_Kd texture_13.png
+newmtl texture_14
+Kd 1 1 1
+map_Kd texture_14.png
+newmtl texture_15
+Kd 1 1 1
+map_Kd texture_15.png
+newmtl texture_16
+Kd 1 1 1
+map_Kd texture_16.png
+newmtl texture_17
+Kd 1 1 1
+map_Kd texture_17.png
+newmtl texture_18
+Kd 1 1 1
+map_Kd texture_18.png
+newmtl texture_19
+Kd 1 1 1
+map_Kd texture_19.png

@@ -1,5 +1,10 @@
 # Texture modes and optional source review (v0.25.3)
 
+The original behavior below is preserved as a historical reproduction path.
+**v0.25.5 Priority Selection** fixes a blocked-upgrade policy by allowing reported
+texture-only donor exchanges. See [priority reallocation](portable-priority-reallocation.md)
+for the exact Jericho trial, tradeoffs, safeguards and reproduction commands.
+
 The **Textures** section has four established mutually exclusive modes: **Default** (best for most models; selected on startup), **ATO** (the existing experimental adaptive system), **Priority Selection** (use when Default and ATO do not give good visual results), and **Downgrade** (one, two or three halving steps). Default and ATO retain their existing algorithms. The previous separate adaptive/review checkboxes are replaced by this selector; skin compatibility remains independent.
 
 Choose **Priority Selection**, then a source and your own PSP base, and press **Convert**. The dialog shows decoded PS2 textures before conversion, including accessory dependencies. Click a thumbnail to enlarge it. Check zero to three maps and select **Continue conversion**; **Cancel** starts no job. A fourth checkbox is disabled until a selection is cleared. Changing the source clears selections. Priority Selection starts with the established Default conversion, then applies manual priorities. The worker still accepts historical advanced requests that combine adaptive analysis and priorities for reproducible older A/B jobs; the UI no longer combines those modes.

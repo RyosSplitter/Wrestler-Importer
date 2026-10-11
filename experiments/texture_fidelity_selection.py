@@ -15,7 +15,7 @@ from desktop.texture_optimizer.candidates import read_gim
 from tools.psp_mesh_merge_trial import sections
 
 
-def run(source,baseline,output,names,adaptive=False,render=True):
+def run(source,baseline,output,names,adaptive=False,render=True,rebalance=False):
     source,baseline,output=map(Path,(source,baseline,output))
     if output.exists():raise FileExistsError('Refusing to overwrite experiment '+str(output))
     original=baseline.read_bytes();source_bytes=source.read_bytes()
@@ -23,7 +23,8 @@ def run(source,baseline,output,names,adaptive=False,render=True):
     accessories,dependencies=source_models(source,model)
     decoded=decode_dependencies(source,decoded,dependencies)
     candidate,report=optimize_pac(original,decoded,output/'textures',priority_textures=names,
-        freeze_unselected=not adaptive,progress=lambda m:print(m,flush=True))
+        freeze_unselected=not adaptive and not rebalance,rebalance_priorities=rebalance,
+        progress=lambda m:print(m,flush=True))
     native,gims=validate_pac(candidate,gim_reader=read_gim)
     a={s['id']:raw for s,raw in sections(original)};b={s['id']:raw for s,raw in sections(candidate)}
     assert a.keys()==b.keys()
@@ -54,6 +55,7 @@ if __name__=='__main__':
     parser=argparse.ArgumentParser(__doc__)
     parser.add_argument('source');parser.add_argument('baseline');parser.add_argument('output')
     parser.add_argument('--select',nargs='+',required=True);parser.add_argument('--adaptive',action='store_true')
+    parser.add_argument('--rebalance',action='store_true',help='Experimental priority/donor exchanges over the frozen model')
     parser.add_argument('--no-renders',action='store_true');args=parser.parse_args()
-    summary=run(args.source,args.baseline,args.output,args.select,args.adaptive,not args.no_renders)
+    summary=run(args.source,args.baseline,args.output,args.select,args.adaptive,not args.no_renders,args.rebalance)
     print(json.dumps({k:v for k,v in summary.items() if k!='selected'},indent=2),flush=True)

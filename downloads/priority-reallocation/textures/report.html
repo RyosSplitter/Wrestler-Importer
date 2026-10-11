@@ -1,0 +1,100 @@
+<html><meta charset="utf-8"><title>Selected texture fidelity priorities</title><body><h1>Selected texture fidelity priorities</h1>
+<p>Actual PAC: 147456 / 148000 bytes. Current: 143360 bytes. Gameplay validation pending.</p>
+<p><a href="report.json">All candidate configurations, metrics, ceilings, allocation decisions and proofs</a></p>
+<h2>y2j_arm</h2><p>Detail coverage 2.6%; importance 1.575. Selected 32x16, 16 palette slots, 9 used colors, 528 encoded bytes.</p>
+<p><strong>Review: Retains less than one eighth of source pixels; inspect fine-detail legibility</strong></p>
+<figure style="display:inline-block"><figcaption>Source</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_arm-source.png"></figure>
+<figure style="display:inline-block"><figcaption>Current</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_arm-current.png"></figure>
+<figure style="display:inline-block"><figcaption>Prioritized</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_arm.png"></figure>
+<h2>y2j_body</h2><p>Detail coverage 5.1%; importance 1.643. Selected 32x16, 16 palette slots, 10 used colors, 528 encoded bytes.</p>
+<p><strong>Review: Retains less than one eighth of source pixels; inspect fine-detail legibility</strong></p>
+<p><strong>Review: Near-opaque alpha was resampled/quantized; measured alpha MAE 0.2500</strong></p>
+<figure style="display:inline-block"><figcaption>Source</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_body-source.png"></figure>
+<figure style="display:inline-block"><figcaption>Current</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_body-current.png"></figure>
+<figure style="display:inline-block"><figcaption>Prioritized</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_body.png"></figure>
+<h2>y2j_hiji</h2><p>Detail coverage 9.2%; importance 1.301. Selected 32x16, 16 palette slots, 5 used colors, 528 encoded bytes.</p>
+<p><strong>Review: Near-opaque alpha was resampled/quantized; measured alpha MAE 2.3516</strong></p>
+<figure style="display:inline-block"><figcaption>Source</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_hiji-source.png"></figure>
+<figure style="display:inline-block"><figcaption>Current</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_hiji-current.png"></figure>
+<figure style="display:inline-block"><figcaption>Prioritized</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_hiji.png"></figure>
+<h2>y2j_eye</h2><p>Detail coverage 39.2%; importance 1.401. Selected 32x16, 16 palette slots, 15 used colors, 528 encoded bytes.</p>
+<figure style="display:inline-block"><figcaption>Source</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_eye-source.png"></figure>
+<figure style="display:inline-block"><figcaption>Current</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_eye-current.png"></figure>
+<figure style="display:inline-block"><figcaption>Prioritized</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_eye.png"></figure>
+<h2>y2j_face</h2><p>Detail coverage 21.8%; importance 1.628. Selected 64x64, 256 palette slots, 256 used colors, 5328 encoded bytes.</p>
+<p><strong>Texture donor:</strong> 128x64 → 64x64; 4096 padded pixel/CLUT bytes reclaimed; perceptual loss change 0.020066. Model data unchanged.</p>
+<p><strong>Review: Retains less than one eighth of source pixels; inspect fine-detail legibility</strong></p>
+<p><strong>Review: Individual detail metric regresses despite aggregate allocation; human visual review required</strong></p>
+<p><strong>Review: Unselected texture changed to fund selected fidelity; compare source/current/final images.</strong></p>
+<figure style="display:inline-block"><figcaption>Source</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_face-source.png"></figure>
+<figure style="display:inline-block"><figcaption>Current</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_face-current.png"></figure>
+<figure style="display:inline-block"><figcaption>Prioritized</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_face.png"></figure>
+<h2>y2j_ha</h2><p>Detail coverage 75.2%; importance 2.456. Selected 32x8, 16 palette slots, 16 used colors, 400 encoded bytes.</p>
+<p><strong>Review: Near-opaque alpha was resampled/quantized; measured alpha MAE 2.9531</strong></p>
+<figure style="display:inline-block"><figcaption>Source</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_ha-source.png"></figure>
+<figure style="display:inline-block"><figcaption>Current</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_ha-current.png"></figure>
+<figure style="display:inline-block"><figcaption>Prioritized</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_ha.png"></figure>
+<h2>y2j_hair</h2><p>Detail coverage 75.2%; importance 2.389. Selected 64x64, 256 palette slots, 251 used colors, 5328 encoded bytes.</p>
+<figure style="display:inline-block"><figcaption>Source</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_hair-source.png"></figure>
+<figure style="display:inline-block"><figcaption>Current</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_hair-current.png"></figure>
+<figure style="display:inline-block"><figcaption>Prioritized</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_hair.png"></figure>
+<h2>y2j_hand</h2><p>Detail coverage 4.6%; importance 1.131. Selected 32x8, 16 palette slots, 5 used colors, 400 encoded bytes.</p>
+<p><strong>Review: Near-opaque alpha was resampled/quantized; measured alpha MAE 1.4883</strong></p>
+<figure style="display:inline-block"><figcaption>Source</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_hand-source.png"></figure>
+<figure style="display:inline-block"><figcaption>Current</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_hand-current.png"></figure>
+<figure style="display:inline-block"><figcaption>Prioritized</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_hand.png"></figure>
+<h2>y2j_head</h2><p>Detail coverage 52.0%; importance 1.910. Selected 32x16, 16 palette slots, 15 used colors, 528 encoded bytes.</p>
+<figure style="display:inline-block"><figcaption>Source</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_head-source.png"></figure>
+<figure style="display:inline-block"><figcaption>Current</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_head-current.png"></figure>
+<figure style="display:inline-block"><figcaption>Prioritized</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_head.png"></figure>
+<h2>y2j_hige</h2><p>Detail coverage 36.0%; importance 1.235. Selected 32x16, 16 palette slots, 14 used colors, 528 encoded bytes.</p>
+<p><strong>Review: Near-opaque alpha was resampled/quantized; measured alpha MAE 0.5000</strong></p>
+<figure style="display:inline-block"><figcaption>Source</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_hige-source.png"></figure>
+<figure style="display:inline-block"><figcaption>Current</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_hige-current.png"></figure>
+<figure style="display:inline-block"><figcaption>Prioritized</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_hige.png"></figure>
+<h2>y2j_knee</h2><p>Detail coverage 14.8%; importance 1.499. Selected 32x16, 16 palette slots, 7 used colors, 528 encoded bytes.</p>
+<p><strong>Review: Near-opaque alpha was resampled/quantized; measured alpha MAE 1.9766</strong></p>
+<figure style="display:inline-block"><figcaption>Source</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_knee-source.png"></figure>
+<figure style="display:inline-block"><figcaption>Current</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_knee-current.png"></figure>
+<figure style="display:inline-block"><figcaption>Prioritized</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_knee.png"></figure>
+<h2>y2j_kuti</h2><p>Detail coverage 15.2%; importance 0.944. Selected 32x16, 16 palette slots, 15 used colors, 528 encoded bytes.</p>
+<p><strong>Review: Near-opaque alpha was resampled/quantized; measured alpha MAE 1.9805</strong></p>
+<figure style="display:inline-block"><figcaption>Source</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_kuti-source.png"></figure>
+<figure style="display:inline-block"><figcaption>Current</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_kuti-current.png"></figure>
+<figure style="display:inline-block"><figcaption>Prioritized</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_kuti.png"></figure>
+<h2>y2j_kutu</h2><p>Detail coverage 35.9%; importance 2.019. Selected 32x8, 16 palette slots, 8 used colors, 400 encoded bytes.</p>
+<figure style="display:inline-block"><figcaption>Source</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_kutu-source.png"></figure>
+<figure style="display:inline-block"><figcaption>Current</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_kutu-current.png"></figure>
+<figure style="display:inline-block"><figcaption>Prioritized</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_kutu.png"></figure>
+<h2>y2j_sune</h2><p>Detail coverage 25.1%; importance 2.217. Selected 32x16, 16 palette slots, 15 used colors, 528 encoded bytes.</p>
+<p><strong>Review: Near-opaque alpha was resampled/quantized; measured alpha MAE 0.9941</strong></p>
+<figure style="display:inline-block"><figcaption>Source</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_sune-source.png"></figure>
+<figure style="display:inline-block"><figcaption>Current</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_sune-current.png"></figure>
+<figure style="display:inline-block"><figcaption>Prioritized</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_sune.png"></figure>
+<h2>y2j_su_r</h2><p>Detail coverage 39.1%; importance 2.465. Selected 32x16, 16 palette slots, 13 used colors, 528 encoded bytes.</p>
+<figure style="display:inline-block"><figcaption>Source</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_su_r-source.png"></figure>
+<figure style="display:inline-block"><figcaption>Current</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_su_r-current.png"></figure>
+<figure style="display:inline-block"><figcaption>Prioritized</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_su_r.png"></figure>
+<h2>y2j_tail</h2><p>Detail coverage 50.1%; importance 1.878. Selected 32x16, 16 palette slots, 14 used colors, 528 encoded bytes.</p>
+<figure style="display:inline-block"><figcaption>Source</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_tail-source.png"></figure>
+<figure style="display:inline-block"><figcaption>Current</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_tail-current.png"></figure>
+<figure style="display:inline-block"><figcaption>Prioritized</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_tail.png"></figure>
+<h2>y2j_wrist</h2><p>Detail coverage 0.0%; importance 0.770. Selected 32x8, 16 palette slots, 3 used colors, 400 encoded bytes.</p>
+<figure style="display:inline-block"><figcaption>Source</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_wrist-source.png"></figure>
+<figure style="display:inline-block"><figcaption>Current</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_wrist-current.png"></figure>
+<figure style="display:inline-block"><figcaption>Prioritized</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_wrist.png"></figure>
+<h2>y2j_mata</h2><p>Detail coverage 37.4%; importance 3.394. Selected 128x64, 16 palette slots, 16 used colors, 4368 encoded bytes.</p>
+<p><strong>Selected for fidelity priority.</strong> Priority is weighted 8x. Ordinary maps can fund improvements through reported texture-only exchanges; facial/cutout safeguards remain. Source ceilings, unchanged material depth, measured PAC size and existing pixel/CLUT envelope still apply. See rejected_upgrades for budget reasons.</p>
+<p><strong>Review: Selected texture remains reduced or palette-quantized; manual priority does not guarantee exact source fidelity. See priority_reduction_report.</strong></p>
+<figure style="display:inline-block"><figcaption>Source</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_mata-source.png"></figure>
+<figure style="display:inline-block"><figcaption>Current</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_mata-current.png"></figure>
+<figure style="display:inline-block"><figcaption>Prioritized</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_mata.png"></figure>
+<h2>y2j_top</h2><p>Detail coverage 50.7%; importance 1.816. Selected 32x16, 16 palette slots, 13 used colors, 528 encoded bytes.</p>
+<figure style="display:inline-block"><figcaption>Source</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_top-source.png"></figure>
+<figure style="display:inline-block"><figcaption>Current</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_top-current.png"></figure>
+<figure style="display:inline-block"><figcaption>Prioritized</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_top.png"></figure>
+<h2>y2j_yubi</h2><p>Detail coverage 3.8%; importance 1.028. Selected 32x16, 16 palette slots, 5 used colors, 528 encoded bytes.</p>
+<figure style="display:inline-block"><figcaption>Source</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_yubi-source.png"></figure>
+<figure style="display:inline-block"><figcaption>Current</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_yubi-current.png"></figure>
+<figure style="display:inline-block"><figcaption>Prioritized</figcaption><img style="width:256px;image-rendering:pixelated" src="y2j_yubi.png"></figure>
+</body></html>
