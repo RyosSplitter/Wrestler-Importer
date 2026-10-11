@@ -114,3 +114,39 @@ mode retain their existing adaptive/priority booleans and behavior. The UI
 always writes an explicit mode, initializes Default on every launch and opens
 the chooser only in Priority Selection. Save As selects the extended verified
 GIM reader for any optional texture stage before copying the reviewed output.
+
+## Verified Windows release and regression evidence
+
+**CONFIRMED:** Windows run [38110923042](https://github.com/RyosSplitter/Wrestler-Importer/actions/runs/38110923042)
+completed successfully for converter commit `caeb76bdf16000aebcbeb727aff7c2ef22bfa41b`.
+All 274 unit tests passed on both local Linux and the Windows build runner.
+Frozen Windows checks passed: native Vista UI/DND/bundled Blender, Default mode
+initialization and all four choices, downgrade controls, minimum-window sidebar
+access, three-selection/deselect/Continue/Cancel, single-slot preservation,
+Lance/Jericho/multi-model conversion and complete reference/pose QA, explicit ATO,
+source previews and both historical priority job paths, plus an explicit Downgrade
+worker and immutable-payload/palette/budget proof. Runner checks use modified
+HCTP fixtures built from development IR and generated checker textures; they
+are not a clean user Windows installation or an in-game PPSSPP trial.
+
+**CONFIRMED:** All 15 isolated texture-only Downgrade checks on the real Rock,
+Lance, Jericho, Benoit and 0401 accepted baselines passed (each at 1/2/3 steps).
+The reports verify all non-costume-texture stored/decoded payloads exactly and
+preserve every palette byte. PAC bytes respectively: 143360, 135168, 145408,
+120832 and 137216. The three choices produce the same result for these samples
+because their Default maps reach the floor after at most one effective step.
+The selected level never bypasses a floor to force additional reduction.
+Generated fixtures independently exercise all three mathematical levels.
+`downloads/texture-modes-update/reference-results.json` contains sizes, hashes,
+actual dimensions, effective steps and structural/preservation proof. Rejected
+source-based trials are retained alongside it as a separate JSON record.
+
+The release ZIP is 556771433 bytes. Runner checksum and GitHub
+asset digest match SHA-256 `188f5fdb9b6d191caa8e7f51f3fd5fd40cccd4ec7c60064b0aa59f6a9f2b4d3b`.
+The large ZIP was not independently downloaded/rehashed locally; the producer
+checksum was compared to GitHub's computed asset digest. The actual Windows UI
+and chooser screenshots were downloaded and visually inspected. See
+`downloads/texture-modes-update/windows-release.json`, its checksum file and
+screenshots. Release remains a prerelease on the isolated experiment branch;
+main and accepted reference PACs were not modified. Game runtime limits beyond
+the existing demonstrated envelope remain **UNKNOWN**.

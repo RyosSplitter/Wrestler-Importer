@@ -1,0 +1,15 @@
+{
+  "version": "0.25.3",
+  "commit": "caeb76bdf16000aebcbeb727aff7c2ef22bfa41b",
+  "run_id": 38110923042,
+  "run_url": "https://github.com/RyosSplitter/Wrestler-Importer/actions/runs/38110923042",
+  "conclusion": "success",
+  "tag": "portable-preview-24-caeb76bdf16000aebcbeb727aff7c2ef22bfa41b",
+  "release_url": "https://github.com/RyosSplitter/Wrestler-Importer/releases/tag/portable-preview-24-caeb76bdf16000aebcbeb727aff7c2ef22bfa41b",
+  "zip_url": "https://github.com/RyosSplitter/Wrestler-Importer/releases/download/portable-preview-24-caeb76bdf16000aebcbeb727aff7c2ef22bfa41b/PS2PSP-Pac-Converter-Windows-x64.zip",
+  "zip_bytes": 556771433,
+  "zip_sha256": "188f5fdb9b6d191caa8e7f51f3fd5fd40cccd4ec7c60064b0aa59f6a9f2b4d3b",
+  "verification": "Successful Windows runner build and native/QA/mode checks. Runner checksum equals GitHub asset digest. ZIP not independently re-downloaded locally.",
+  "tests_passed": 274,
+  "main_merged": false
+}
