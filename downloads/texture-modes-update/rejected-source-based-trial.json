@@ -1,0 +1,95 @@
+{
+  "note": "Rejected design; user selected reducing Default output. No candidate PAC exported.",
+  "trials": [
+    {
+      "name": "Rock",
+      "steps": 1,
+      "status": "withheld",
+      "reason": "Selected Downgrade setting cannot fit: PAC 178176 / 148000 bytes; padded textures/CLUT 60096 / 28224 bytes. The 64-pixel floor was retained. Try more steps if an image is still above the floor, or use Default/ATO. No geometry was changed. Diagnostics: local/texture-modes-reference/Rock-1/failure-report.json"
+    },
+    {
+      "name": "Rock",
+      "steps": 2,
+      "status": "withheld",
+      "reason": "Selected Downgrade setting cannot fit: PAC 167936 / 148000 bytes; padded textures/CLUT 47808 / 28224 bytes. The 64-pixel floor was retained. Try more steps if an image is still above the floor, or use Default/ATO. No geometry was changed. Diagnostics: local/texture-modes-reference/Rock-2/failure-report.json"
+    },
+    {
+      "name": "Rock",
+      "steps": 3,
+      "status": "withheld",
+      "reason": "Selected Downgrade setting cannot fit: PAC 167936 / 148000 bytes; padded textures/CLUT 47808 / 28224 bytes. The 64-pixel floor was retained. Try more steps if an image is still above the floor, or use Default/ATO. No geometry was changed. Diagnostics: local/texture-modes-reference/Rock-3/failure-report.json"
+    },
+    {
+      "name": "Lance",
+      "steps": 1,
+      "status": "withheld",
+      "reason": "Selected Downgrade setting cannot fit: PAC 167936 / 148000 bytes; padded textures/CLUT 58688 / 28992 bytes. The 64-pixel floor was retained. Try more steps if an image is still above the floor, or use Default/ATO. No geometry was changed. Diagnostics: local/texture-modes-reference/Lance-1/failure-report.json"
+    },
+    {
+      "name": "Lance",
+      "steps": 2,
+      "status": "withheld",
+      "reason": "Selected Downgrade setting cannot fit: PAC 157696 / 148000 bytes; padded textures/CLUT 46400 / 28992 bytes. The 64-pixel floor was retained. Try more steps if an image is still above the floor, or use Default/ATO. No geometry was changed. Diagnostics: local/texture-modes-reference/Lance-2/failure-report.json"
+    },
+    {
+      "name": "Lance",
+      "steps": 3,
+      "status": "withheld",
+      "reason": "Selected Downgrade setting cannot fit: PAC 157696 / 148000 bytes; padded textures/CLUT 46400 / 28992 bytes. The 64-pixel floor was retained. Try more steps if an image is still above the floor, or use Default/ATO. No geometry was changed. Diagnostics: local/texture-modes-reference/Lance-3/failure-report.json"
+    },
+    {
+      "name": "Jericho",
+      "steps": 1,
+      "status": "withheld",
+      "reason": "Selected Downgrade setting cannot fit: PAC 178176 / 148000 bytes; padded textures/CLUT 56384 / 25792 bytes. The 64-pixel floor was retained. Try more steps if an image is still above the floor, or use Default/ATO. No geometry was changed. Diagnostics: local/texture-modes-reference/Jericho-1/failure-report.json"
+    },
+    {
+      "name": "Jericho",
+      "steps": 2,
+      "status": "withheld",
+      "reason": "Selected Downgrade setting cannot fit: PAC 167936 / 148000 bytes; padded textures/CLUT 44096 / 25792 bytes. The 64-pixel floor was retained. Try more steps if an image is still above the floor, or use Default/ATO. No geometry was changed. Diagnostics: local/texture-modes-reference/Jericho-2/failure-report.json"
+    },
+    {
+      "name": "Jericho",
+      "steps": 3,
+      "status": "withheld",
+      "reason": "Selected Downgrade setting cannot fit: PAC 167936 / 148000 bytes; padded textures/CLUT 44096 / 25792 bytes. The 64-pixel floor was retained. Try more steps if an image is still above the floor, or use Default/ATO. No geometry was changed. Diagnostics: local/texture-modes-reference/Jericho-3/failure-report.json"
+    },
+    {
+      "name": "Benoit",
+      "steps": 1,
+      "status": "withheld",
+      "reason": "Unobserved dimensions or changed aspect ratio Diagnostics: local/texture-modes-reference/Benoit-1/failure-report.json"
+    },
+    {
+      "name": "Benoit",
+      "steps": 2,
+      "status": "withheld",
+      "reason": "Unobserved dimensions or changed aspect ratio Diagnostics: local/texture-modes-reference/Benoit-2/failure-report.json"
+    },
+    {
+      "name": "Benoit",
+      "steps": 3,
+      "status": "withheld",
+      "reason": "Unobserved dimensions or changed aspect ratio Diagnostics: local/texture-modes-reference/Benoit-3/failure-report.json"
+    },
+    {
+      "name": "0401",
+      "steps": 1,
+      "status": "withheld",
+      "reason": "Unobserved dimensions or changed aspect ratio Diagnostics: local/texture-modes-reference/0401-1/failure-report.json"
+    },
+    {
+      "name": "0401",
+      "steps": 2,
+      "status": "withheld",
+      "reason": "Unobserved dimensions or changed aspect ratio Diagnostics: local/texture-modes-reference/0401-2/failure-report.json"
+    },
+    {
+      "name": "0401",
+      "steps": 3,
+      "status": "withheld",
+      "reason": "Unobserved dimensions or changed aspect ratio Diagnostics: local/texture-modes-reference/0401-3/failure-report.json"
+    }
+  ]
+}

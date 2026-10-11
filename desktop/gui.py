@@ -13,6 +13,7 @@ from PIL import Image,ImageTk
 from desktop import NAME,VERSION
 from desktop.adapters import FORMATS
 from desktop.storage import data_dir,load_settings,save_settings,save_as
+from desktop.texture_modes import MODES,HELP
 
 BG='#f0f0f0';PANEL='#e3e5e8';FG='#202020';MUTED='#606060'
 
@@ -31,9 +32,10 @@ class Application:
         self.inspector=None;self.inspect_root=None;self.view='front-left';self.zoom='full';self.photo=None
         self.base=tk.StringVar(value=self.settings.get('base',''));self.status=tk.StringVar(value='Choose your PSP base once, then drop an HCTP PAC.')
         # Session-only and deliberately OFF, even when an earlier job enabled it.
-        self.adaptive_textures=tk.BooleanVar(value=False)
+        self.texture_mode=tk.StringVar(value='Default')
+        self.downgrade_steps=tk.StringVar(value='1 size')
+        self.texture_help=tk.StringVar(value=HELP['Default'])
         self.skin_palette_compatibility=tk.BooleanVar(value=True)
-        self.review_textures=tk.BooleanVar(value=False)
         self.priority_textures=();self.source_inspection=None
         self.info=tk.StringVar(value='No source selected');self.output=tk.StringVar(value='Your converted PSP output will appear here.')
         # Vista is Tk's native Windows 7-era control theme. Keep native button,
@@ -73,7 +75,23 @@ class Application:
         status_row.bind('<Configure>',lambda e:self.status_label.configure(wraplength=max(200,e.width-90)))
 
         body=ttk.Frame(self.root,padding=(12,10,12,0));body.pack(fill='both',expand=True)
-        left=ttk.Frame(body,width=340);left.pack(side='left',fill='y',padx=(0,12));left.pack_propagate(False)
+        sidebar=ttk.Frame(body,width=352);sidebar.pack(side='left',fill='y',padx=(0,12));sidebar.pack_propagate(False)
+        self.left_canvas=tk.Canvas(sidebar,width=340,bg=BG,highlightthickness=0)
+        self.left_canvas.pack(side='left',fill='both',expand=True)
+        self.left_scrollbar=ttk.Scrollbar(sidebar,orient='vertical',command=self.left_canvas.yview)
+        self.left_canvas.configure(yscrollcommand=self.left_scrollbar.set)
+        left=ttk.Frame(self.left_canvas)
+        self.left_window=self.left_canvas.create_window((0,0),window=left,anchor='nw')
+        def sidebar_layout(event=None):
+            self.left_canvas.configure(scrollregion=self.left_canvas.bbox('all'))
+            if left.winfo_reqheight()>self.left_canvas.winfo_height():
+                self.left_scrollbar.pack(side='right',fill='y')
+            else:self.left_scrollbar.pack_forget();self.left_canvas.yview_moveto(0)
+        def sidebar_width(event):
+            self.left_canvas.itemconfigure(self.left_window,width=event.width);sidebar_layout()
+        left.bind('<Configure>',sidebar_layout);self.left_canvas.bind('<Configure>',sidebar_width)
+        self.root.bind('<MouseWheel>',self.scroll_sidebar,add='+')
+        self.root.bind('<Button-4>',self.scroll_sidebar,add='+');self.root.bind('<Button-5>',self.scroll_sidebar,add='+')
         right=ttk.Frame(body);right.pack(side='left',fill='both',expand=True)
         source_group=ttk.LabelFrame(left,text='Source PAC',padding=10);source_group.pack(fill='x')
         menu=ttk.Menubutton(source_group,text=FORMATS[2].label)
@@ -82,7 +100,7 @@ class Application:
         menu.configure(menu=choices);menu.pack(fill='x',pady=(0,10))
         self.source_menu=choices
         self.drop=tk.Label(source_group,text='Drop an HCTP .pac here\nor click to browse',bg='#ffffff',fg=MUTED,
-            height=5,cursor='hand2',relief='sunken',borderwidth=1,wraplength=290)
+            height=4,cursor='hand2',relief='sunken',borderwidth=1,wraplength=290)
         self.drop.pack(fill='x');self.drop.bind('<Button-1>',lambda e:self.browse_source());self.drop.drop_target_register(DND_FILES)
         self.drop.dnd_bind('<<Drop>>',self.dropped)
         ttk.Label(source_group,textvariable=self.info,style='Muted.TLabel',wraplength=310,justify='left').pack(fill='x',pady=(8,0))
@@ -90,21 +108,22 @@ class Application:
         ttk.Label(base_group,textvariable=self.base,wraplength=310,justify='left').pack(fill='x',pady=(0,8))
         self.base_button=self.button(base_group,'Choose PSP base PAC...',self.choose_base);self.base_button.pack(fill='x')
         ttk.Label(base_group,text='Remembered on this computer.',style='Muted.TLabel').pack(anchor='w',pady=(6,0))
-        options=ttk.LabelFrame(left,text='Options',padding=10);options.pack(fill='x',pady=(10,0))
-        # The wrapped classic checkbox retains the exact option label and keeps
-        # it readable at larger system font scales without clipping the sidebar.
-        self.adaptive_checkbox=tk.Checkbutton(options,text='Adaptive Texture Optimization (Experimental)',
-            variable=self.adaptive_textures,bg=BG,fg=FG,selectcolor='#ffffff',activebackground=BG,
-            activeforeground=FG,anchor='w',justify='left',wraplength=280)
-        self.adaptive_checkbox.pack(fill='x')
+        texture_group=ttk.LabelFrame(left,text='Textures',padding=8);texture_group.pack(fill='x',pady=(8,0))
+        self.texture_dropdown=ttk.Combobox(texture_group,textvariable=self.texture_mode,values=MODES,state='readonly')
+        self.texture_dropdown.pack(fill='x')
+        self.texture_dropdown.bind('<<ComboboxSelected>>',lambda e:self.update_texture_mode())
+        self.downgrade_row=ttk.Frame(texture_group)
+        ttk.Label(self.downgrade_row,text='Reduce by:').pack(side='left',padx=(0,8))
+        self.downgrade_dropdown=ttk.Combobox(self.downgrade_row,textvariable=self.downgrade_steps,
+            values=('1 size','2 sizes','3 sizes'),state='readonly',width=12)
+        self.downgrade_dropdown.pack(side='left')
+        self.texture_help_label=ttk.Label(texture_group,textvariable=self.texture_help,style='Muted.TLabel',wraplength=305,justify='left')
+        self.texture_help_label.pack(fill='x',pady=(6,0))
+        options=ttk.LabelFrame(left,text='Options',padding=8);options.pack(fill='x',pady=(8,0))
         self.skin_checkbox=tk.Checkbutton(options,text='Single-slot skinning compatibility',
             variable=self.skin_palette_compatibility,bg=BG,fg=FG,selectcolor='#ffffff',activebackground=BG,
             activeforeground=FG,anchor='w',justify='left',wraplength=280)
         self.skin_checkbox.pack(fill='x')
-        self.review_checkbox=tk.Checkbutton(options,text='Review textures before conversion (up to 3 priorities)',
-            variable=self.review_textures,bg=BG,fg=FG,selectcolor='#ffffff',activebackground=BG,
-            activeforeground=FG,anchor='w',justify='left',wraplength=280)
-        self.review_checkbox.pack(fill='x')
         ttk.Label(left,text='Target: SVR 2011 PSP\nHCTP and compatible custom PACs supported.',
             style='Muted.TLabel',wraplength=330,justify='left').pack(fill='x',pady=12)
 
@@ -160,6 +179,17 @@ class Application:
         if self.busy():return
         chosen=filedialog.askopenfilename(title='Select your own PSP SVR base wrestler PAC',filetypes=[('PAC files','*.pac *.PAC')])
         if chosen:self.base.set(chosen);self.settings['base']=chosen;save_settings(self.settings)
+    def update_texture_mode(self):
+        mode=self.texture_mode.get();self.texture_help.set(HELP[mode])
+        if mode=='Downgrade':self.downgrade_row.pack(fill='x',pady=(6,0),before=self.texture_help_label)
+        else:self.downgrade_row.pack_forget()
+    def scroll_sidebar(self,event):
+        canvas=self.left_canvas
+        if not canvas.winfo_rootx()<=event.x_root<canvas.winfo_rootx()+canvas.winfo_width():return
+        if not self.left_scrollbar.winfo_ismapped():return
+        if event.num in (4,5):step=-1 if event.num==4 else 1
+        else:step=-1 if event.delta>0 else 1
+        canvas.yview_scroll(step*3,'units')
     def start(self):
         if self.busy() or self.inspector is not None:return
         if not self.source:messagebox.showerror(NAME,'Choose a supported HCTP source first.');return
@@ -169,7 +199,8 @@ class Application:
         try:Request(self.source,self.base.get()).validate()
         except Exception as e:messagebox.showerror(NAME,str(e));return
         priorities=()
-        if self.review_textures.get():
+        mode=self.texture_mode.get()
+        if mode=='Priority Selection':
             from desktop.texture_review import TextureChooser
             if not self.source_inspection or not self.source_inspection.get('texture_previews'):
                 messagebox.showerror(NAME,'Source previews are unavailable. Select the source again.');return
@@ -177,16 +208,16 @@ class Application:
             if selection is None:return
             self.priority_textures=selection;priorities=selection
         options=dict(source=self.source,base=self.base.get(),source_format='hctp',
-            adaptive_textures=self.adaptive_textures.get(),skin_palette_compatibility=self.skin_palette_compatibility.get(),
+            texture_mode=mode,adaptive_textures=mode=='ATO',skin_palette_compatibility=self.skin_palette_compatibility.get(),
+            downgrade_steps=int(self.downgrade_steps.get()[0]) if mode=='Downgrade' else 0,
             priority_textures=list(priorities),texture_review_sha256=self.source_inspection['source_sha256'] if priorities else '')
         try:Request(**options).validate()
         except Exception as e:messagebox.showerror(NAME,str(e));return
         self.job=data_dir()/'jobs'/uuid.uuid4().hex;self.job.mkdir(parents=True)
         (self.job/'request.json').write_text(json.dumps(options),encoding='utf-8')
         self.result=None;self.save.configure(state='disabled');self.convert.configure(state='disabled');self.base_button.configure(state='disabled');self.cancel.configure(state='normal')
-        self.adaptive_checkbox.configure(state='disabled')
+        self.texture_dropdown.configure(state='disabled');self.downgrade_dropdown.configure(state='disabled')
         self.skin_checkbox.configure(state='disabled')
-        self.review_checkbox.configure(state='disabled')
         self.output.set('Building an experimental PSP candidate…');self.preview.configure(image='',text='Converting…');self.progress['value']=0
         self.process=self.spawn(['--worker',str(self.job/'request.json')]);self.status.set('Starting isolated conversion job…')
     def cancel_job(self):
@@ -210,9 +241,8 @@ class Application:
                 except (ValueError,IndexError):pass
             if self.process.poll() is not None:
                 self.process=None;self.cancel.configure(state='disabled');self.convert.configure(state='normal');self.base_button.configure(state='normal')
-                self.adaptive_checkbox.configure(state='normal')
+                self.texture_dropdown.configure(state='readonly');self.downgrade_dropdown.configure(state='readonly')
                 self.skin_checkbox.configure(state='normal')
-                self.review_checkbox.configure(state='normal')
                 try:
                     if not (self.job/'success.json').exists():
                         failure=json.loads((self.job/'failure.json').read_text(encoding='utf-8'));self.status.set(failure['error'])
@@ -224,6 +254,8 @@ class Application:
                             self.output.set(self.output.get()+f"\nAdaptive textures: {r['adaptive_textures']['review_flags']} texture tradeoffs — open QA report")
                         if r.get('texture_priorities'):
                             t=r['texture_priorities'];self.output.set(self.output.get()+f"\nTexture priorities: {len(t['names'])} selected; {t['reductions']} still reduced — open QA report")
+                        if r.get('texture_downgrade'):
+                            self.output.set(self.output.get()+f"\nDowngrade: {r['texture_downgrade']['steps']} steps from Default, 64-pixel floor — open QA report")
                         self.save.configure(state='normal');self.status.set('Review the PSP preview and QA report before saving.');self.show_preview()
                 except Exception as e:self.status.set('Worker ended unexpectedly; inspect Logs.');messagebox.showerror(NAME,str(e))
         if self.closing and not self.busy() and self.inspector is None:self.clean_inspection();self.root.destroy();return

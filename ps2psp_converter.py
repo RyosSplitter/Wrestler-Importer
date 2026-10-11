@@ -75,11 +75,23 @@ def main():
         states=[app.source_menu.entrycget(i,'state') for i in range(4)]
         if states!=['disabled','disabled','normal','disabled']:raise ValueError('Source selector states are incorrect.')
         if not app.root.tk.call('info','commands','::tkdnd::drop_target'):raise ValueError('Drag/drop runtime command missing.')
-        if app.adaptive_textures.get() is not False:raise ValueError('Experimental adaptive checkbox must default OFF.')
-        if app.adaptive_checkbox.cget('text')!='Adaptive Texture Optimization (Experimental)':raise ValueError('Adaptive checkbox label is incorrect.')
+        from desktop.texture_modes import MODES
+        if app.texture_mode.get()!='Default':raise ValueError('Textures must default to Default.')
+        if tuple(app.texture_dropdown.cget('values'))!=MODES:raise ValueError('Texture modes are incorrect.')
+        if app.downgrade_row.winfo_manager():raise ValueError('Downgrade controls should be hidden in Default mode.')
+        app.texture_mode.set('Downgrade');app.update_texture_mode();app.root.update()
+        if not app.downgrade_row.winfo_ismapped():raise ValueError('Downgrade selector is missing.')
+        if tuple(app.downgrade_dropdown.cget('values'))!=('1 size','2 sizes','3 sizes'):raise ValueError('Downgrade steps are incorrect.')
+        if app.texture_help_label.winfo_rooty()+app.texture_help_label.winfo_height()>app.progress.winfo_rooty():raise ValueError('Texture controls clipped at minimum window size.')
+        old_geometry=app.root.geometry();old_base=app.base.get();old_info=app.info.get()
+        app.root.geometry('940x640');app.base.set('C:/Users/Example/Documents/PSP Models/Original/SVR2007 Non-Converted Models/Kurt-Angle-Ring.PAC')
+        app.info.set('HCTP PS2 • Example\n500,000 bytes • 3,000 main-model triangles\n3 models • 19 textures');app.root.update()
+        app.left_canvas.yview_moveto(1);app.root.update()
+        if app.skin_checkbox.winfo_rooty()+app.skin_checkbox.winfo_height()>app.left_canvas.winfo_rooty()+app.left_canvas.winfo_height():raise ValueError('Sidebar controls inaccessible with a long base path.')
+        app.base.set(old_base);app.info.set(old_info);app.root.geometry(old_geometry);app.left_canvas.yview_moveto(0)
+        app.texture_mode.set('Default');app.update_texture_mode();app.root.update()
         if app.skin_palette_compatibility.get() is not True:raise ValueError('Single-slot compatibility must default ON.')
         if app.skin_checkbox.cget('text')!='Single-slot skinning compatibility':raise ValueError('Skin compatibility checkbox label is incorrect.')
-        if app.review_textures.get() is not False:raise ValueError('Texture review must default OFF.')
         from desktop.texture_review import TextureChooser,source_previews
         import numpy as np
         import tempfile
@@ -109,9 +121,9 @@ def main():
         from desktop.preview import VIEWS
         dump(sys.argv[2],dict(gui=True,drag_drop_command_verified=True,source_menu_states=states,
                               bundled_blender=version.splitlines()[0],preview_views=list(VIEWS),base_required=True,
-                              adaptive_textures_default=False,adaptive_checkbox_verified=True,
+                              texture_mode_default='Default',texture_modes=list(MODES),downgrade_controls_verified=True,scrollable_sidebar_verified=True,
                               skin_palette_compatibility_default=True,skin_checkbox_verified=True,
-                              texture_review_default=False,three_selection_limit_verified=True,texture_dialog_cancel_verified=True,
+                              three_selection_limit_verified=True,texture_dialog_cancel_verified=True,
                               ui_theme=app.ui_theme,convert_above_preview=True,
                               initial_button_states_verified=True))
         if sys.platform=='win32':

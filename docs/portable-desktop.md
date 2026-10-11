@@ -18,17 +18,17 @@ installation is required. Conversion and previews work offline.
    [Compatibility and full-head QA details](portable-scalp-compatibility.md).
    Convert. Processing, native validation, reference QA and preview rendering
    run in an isolated job. Cancel removes incomplete geometry and retains logs.
-   **Adaptive Texture Optimization (Experimental)** defaults OFF. Check it to
-   run source-bounded content analysis and measured texture budget allocation
-   after the unchanged current converter. Its A/B baseline and per-texture
-   decision report are retained in the job and linked from QA. See
-   [adaptive texture documentation](portable-adaptive-textures.md). No model or
-   material payloads change in that stage; gameplay validation remains required.
-   Optionally enable **Review textures before conversion (up to 3 priorities)**
-   to inspect source maps when you press Convert. Select up to three quality
-   priorities; Cancel starts no conversion. Remaining reductions appear in the
-   output summary and linked QA report. Review defaults OFF.
-   [Selection behavior and budget limits](portable-texture-review.md).
+   The **Textures** dropdown defaults to **Default** (best for most models).
+   **ATO** uses the existing experimental content-aware allocator. **Priority
+   Selection** previews source maps when Convert is pressed and lets you select
+   up to three quality priorities; Cancel starts no job. Use it when Default and
+   ATO do not give good visual results. Remaining reductions are reported.
+   **Downgrade** offers one, two or three halving steps from Default output, with squares stopping at 64×64;
+   rectangles preserve aspect, smaller textures are not upscaled, and actual
+   PAC/allocation checks still apply.
+   These four UI modes are mutually exclusive. Single-slot skinning compatibility
+   remains an independent option. See [texture mode documentation](portable-texture-review.md)
+   and [adaptive analysis](portable-adaptive-textures.md).
 4. Review the **final PSP output**. Use front/rear/sides/three-quarter, Zoom and
    click the preview to enlarge it. Open the QA report for source comparisons,
    analytical poses, heatmaps and material-boundary findings.

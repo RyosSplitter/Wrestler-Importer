@@ -6,7 +6,7 @@ runs on Windows; exports will be tested in PPSSPP.
 
 ## Developer reference and recommended baselines
 
-The optional [v0.25.2 source texture review](docs/portable-texture-review.md) lets you inspect source maps and choose up to three fidelity priorities before conversion, with measured budget enforcement. Review defaults OFF and the established texture modes remain available.
+The [v0.25.3 Textures dropdown](docs/portable-texture-review.md) offers Default (best for most models), ATO, Priority Selection (up to three source maps), and Downgrade (one, two or three steps). Default remains selected on startup; existing conversion paths and accepted baselines are preserved.
 
 The isolated [v0.25.1 scalp compatibility update](docs/portable-scalp-compatibility.md)
 adds the visually accepted single-slot adaptation and full-head QA, preserving

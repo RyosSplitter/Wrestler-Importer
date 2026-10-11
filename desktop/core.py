@@ -50,10 +50,23 @@ class Request:
     skin_palette_compatibility:bool=True
     priority_textures:tuple=()
     texture_review_sha256:str=''
+    texture_mode:str=''
+    downgrade_steps:int=0
+
+    @property
+    def use_adaptive(self):
+        return self.texture_mode=='ATO' if self.texture_mode else self.adaptive_textures
 
     def validate(self):
         from desktop.texture_review import validate_selection
         selected=validate_selection(self.priority_textures)
+        from desktop.texture_modes import MODES
+        if self.texture_mode and self.texture_mode not in MODES:raise ValueError('Unknown texture mode.')
+        if type(self.downgrade_steps) is not int or self.downgrade_steps not in (0,1,2,3):raise ValueError('Downgrade must be one, two or three sizes.')
+        if self.texture_mode and self.texture_mode!='ATO' and self.adaptive_textures:raise ValueError('Choose one texture mode; ATO cannot be combined with this mode.')
+        if self.texture_mode and self.texture_mode!='Priority Selection' and selected:raise ValueError('Selected textures require Priority Selection mode.')
+        if self.texture_mode=='Downgrade' and not self.downgrade_steps:raise ValueError('Choose one, two or three downgrade steps.')
+        if self.downgrade_steps and (self.texture_mode not in ('','Downgrade') or self.use_adaptive or selected):raise ValueError('Downgrade cannot be combined with ATO or priorities.')
         if selected and (not isinstance(self.texture_review_sha256,str) or not re.fullmatch('[0-9a-f]{64}',self.texture_review_sha256)):
             raise ValueError('Selected textures require the source preview SHA-256; review textures again.')
         if not isinstance(self.adaptive_textures,bool):raise ValueError('Adaptive texture option must be a boolean.')
@@ -368,7 +381,7 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
     dump(work/'reduced.json',reduced);dump(work/'packed.json',packed)
     texture_reader=read_gim
     adaptive_report=None
-    if request.adaptive_textures:
+    if request.use_adaptive:
         # The established conversion (including geometry selection) runs exactly
         # as before. The opt-in stage is allowed to replace only texture table 9.
         from desktop.texture_optimizer import optimize_pac
@@ -411,8 +424,17 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
         (work/'before-texture-priorities.pac').write_bytes(candidate)
         candidate,priority_report=optimize_pac(candidate,decoded,work/'texture-priorities',
             target=profile['max_pac_bytes'],cancel=check,progress=lambda message:progress(64,message),
-            priority_textures=request.priority_textures,freeze_unselected=not request.adaptive_textures)
+            priority_textures=request.priority_textures,freeze_unselected=not request.use_adaptive)
         texture_reader=priority_reader
+    downgrade_report=None
+    if request.downgrade_steps:
+        from desktop.texture_modes import downgrade_pac
+        from desktop.texture_optimizer.candidates import read_gim as downgrade_reader
+        step(64,'Applying the selected Default-texture downgrade; checking actual PAC and texture allocation')
+        (work/'before-texture-downgrade.pac').write_bytes(candidate)
+        candidate,downgrade_report=downgrade_pac(candidate,decoded,work/'texture-downgrade',
+            steps=request.downgrade_steps,target=profile['max_pac_bytes'],cancel=check)
+        texture_reader=downgrade_reader
     step(65,'Validating final PAC pointers, buffers, weights, rendering records and size')
     native,gim_map=validate_pac(candidate,base_bytes,profile['max_pac_bytes'],accessory_models=accessory_prepared,gim_reader=texture_reader,
         lossless_texture_sections={r['section'] for report in (adaptive_report,priority_report) if report for r in report['lossless_retained_texture_storage']})
@@ -421,7 +443,8 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
     unpacked=next(r for s,r in sections(candidate) if s['id']==2)
     if unpacked!=yobj:raise ValueError('Preview model differs from final PAC.')
     stem=re.sub(r'[^A-Za-z0-9_.-]','_',source.stem)[:48].strip('.') or 'wrestler'
-    pac=work/(stem+('-PSP-adaptive-experimental.pac' if request.adaptive_textures else '-PSP-experimental.pac'));pac.write_bytes(candidate)
+    suffix='-PSP-adaptive-experimental.pac' if request.use_adaptive else ('-PSP-downgrade-%d-experimental.pac'%request.downgrade_steps if request.downgrade_steps else '-PSP-experimental.pac')
+    pac=work/(stem+suffix);pac.write_bytes(candidate)
     preview=work/'preview';preview.mkdir();(preview/'output.yobj').write_bytes(yobj)
     accessory_native=[audit_yobj(raw) for raw in accessory_yobjs.values()]
     visual=combined_preview(native,accessory_native);write_preview(visual,preview/'output.obj')
@@ -464,6 +487,8 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
         note+='<p>Single-slot skinning compatibility: %d meshes adapted, %d additional decoded vertex-buffer bytes. <a href="../skin-compatibility.json">Exact geometry, effective weights and analytical pose preservation checks</a>. Other small palettes remain review findings; no universal minimum is claimed.</p>'%(compatibility_report['changed_meshes'],compatibility_report['added_vertex_buffer_bytes'])
     if priority_report is not None:
         note+='<p>Manual texture priorities: <a href="../texture-priorities/report.html">Source/current/final previews, selected settings, reductions and budget decisions</a>. Up to three selections; size limits and source ceilings remain enforced.</p>'
+    if downgrade_report is not None:
+        note+='<p>Texture downgrade: <a href="../texture-downgrade/report.html">Requested source reductions, actual dimensions, palette/alpha checks and serialized budget</a>. No additional texture reduction or geometry changes were used to force this setting to fit.</p>'
     text=text.replace('</body>',note+'</body>')
     html.write_text(text,encoding='utf-8')
     step(92,'Rendering textured views of the actual final PSP output')
@@ -497,6 +522,12 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
             baseline_pac=str(work/'before-texture-priorities.pac'),
             selected_settings=[dict(name=t['name'],**t['priority_reduction_report']) for t in selected])
         result['review_flags']+=sum(bool(t['quality_review_flags']) for t in priority_report['textures'])
+    if downgrade_report is not None:
+        result['texture_downgrade']=dict(report=str(work/'texture-downgrade/report.html'),
+            steps=request.downgrade_steps,baseline_pac=str(work/'before-texture-downgrade.pac'),
+            pixel_palette_bytes=downgrade_report['pixel_palette_bytes'],
+            pixel_palette_budget=downgrade_report['pixel_palette_budget'])
+    result['texture_mode']=request.texture_mode or ('Downgrade' if request.downgrade_steps else 'ATO' if request.use_adaptive else 'Priority Selection' if request.priority_textures else 'Default')
     if compatibility_report is not None:
         result['skin_palette_compatibility']=dict(report=str(work/'skin-compatibility.json'),
             baseline_pac=str(work/'before-skin-compatibility.pac'),

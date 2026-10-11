@@ -530,3 +530,34 @@ desktop/texture_optimizer/pac.py and tests/test_texture_review.py.
 Reproduce independent A/B over your own PACs with
 python -m experiments.texture_fidelity_selection SOURCE BASELINE FRESH_OUTPUT
     --select NAME1 NAME2 NAME3 [--adaptive]
+
+
+v0.25.3 EXPLICIT TEXTURE MODES
+==============================
+CONFIRMED implementation: Textures is a read-only dropdown: Default (startup,
+best for most models), ATO, Priority Selection, Downgrade. These UI paths are
+exclusive; skin compatibility stays independent. Priority Selection uses
+Default then at most three manual priorities. Old advanced worker request
+schemas remain supported without changing their established behavior.
+
+Downgrade runs after Default and skin compatibility, over their frozen PAC.
+Halve both axes 1/2/3 times. Squares stop at 64x64; rectangles keep aspect and
+stop at a 64-pixel longer axis; existing smaller images remain exact. Resize
+indices with nearest sampling, preserve every CLUT byte and material depth,
+verify sampled alpha, and serialize only table 9. Require exact stored and
+decoded identity of all other sections. Independently validate final PAC size,
+padding/pointers, GIM/material contracts and unchanged baseline pixel/CLUT
+allocation. An unsupported generated native-layout pair or oversized PAC
+withholds export and records active texture/dimensions. Do not silently shrink
+below the floor, alter rigging, or decimate more geometry to fit this option.
+
+CONFIRMED rejected design: source-based halving with a square 64x64 floor made
+Rock 167936 bytes at two steps against 148000 policy, with 47808 padded
+pixel/CLUT bytes against 28224. Default already uses some 64x32 maps. The user
+chose reducing Default output. Never infer that a source floor necessarily
+produces a smaller PAC than an already aggressively reduced incumbent.
+
+See desktop/texture_modes.py, tests/test_texture_modes.py,
+docs/portable-texture-review.md and the frozen Windows workflow. The existing
+baseline envelope is conservative policy (INFERRED compatibility protection),
+not a measured game heap limit (UNKNOWN). Review actual PPSSPP output.

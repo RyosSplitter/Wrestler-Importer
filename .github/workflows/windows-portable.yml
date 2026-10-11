@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches: [feature/portable-ps2psp, fix/hctp-primary-model, experiment/precision-budget-fit, experiment/multi-yobj-accessories, experiment/content-aware-textures, experiment/scalp-compatibility-update, experiment/texture-fidelity-selection]
-    paths: ['desktop/**', 'model_qa/**', 'tests/test_head_qa.py', 'tests/test_skin_palette_padding.py', 'tests/test_portable_skinning.py', 'ps2psp_converter.py', 'app/ps2_textures.py', 'tools/build_portable.py', 'tools/portable_fixture.py', 'tools/blender_reduce.py', 'tools/pac_inspect.py', 'tools/pac_repack.py', 'tools/hctp_read.py', 'tools/hctp_weights.py', 'tools/yobj_read.py', 'requirements-desktop.txt', 'docs/portable-*.md', 'tests/test_portable_*.py', 'tests/test_adaptive_textures.py', 'tests/test_texture_review.py', 'tests/test_main_model_selection.py', '.github/workflows/windows-portable.yml']
+    paths: ['desktop/**', 'model_qa/**', 'tests/test_head_qa.py', 'tests/test_skin_palette_padding.py', 'tests/test_portable_skinning.py', 'ps2psp_converter.py', 'app/ps2_textures.py', 'tools/build_portable.py', 'tools/portable_fixture.py', 'tools/blender_reduce.py', 'tools/pac_inspect.py', 'tools/pac_repack.py', 'tools/hctp_read.py', 'tools/hctp_weights.py', 'tools/yobj_read.py', 'requirements-desktop.txt', 'docs/portable-*.md', 'tests/test_portable_*.py', 'tests/test_adaptive_textures.py', 'tests/test_texture_review.py', 'tests/test_texture_modes.py', 'tests/test_main_model_selection.py', '.github/workflows/windows-portable.yml']
 permissions:
   contents: write
 jobs:
@@ -118,7 +118,7 @@ jobs:
           $env:PATH = "$env:SystemRoot\System32;$env:SystemRoot"
           $job = "$env:RUNNER_TEMP\portable-adaptive"
           New-Item -ItemType Directory -Path $job | Out-Null
-          @{source=(Resolve-Path 'build/test-inputs/Lance-modified-HCTP.pac').Path; base=(Resolve-Path 'assets/Kurt-Angle-Ring.PAC').Path; source_format='hctp'; adaptive_textures=$true} | ConvertTo-Json | Set-Content "$job/request.json" -Encoding utf8NoBOM
+          @{source=(Resolve-Path 'build/test-inputs/Lance-modified-HCTP.pac').Path; base=(Resolve-Path 'assets/Kurt-Angle-Ring.PAC').Path; source_format='hctp'; texture_mode='ATO'} | ConvertTo-Json | Set-Content "$job/request.json" -Encoding utf8NoBOM
           $p = Start-Process dist/PS2PSP-Pac-Converter/PS2PSP-Pac-Converter.exe -ArgumentList @('--worker',"$job/request.json") -PassThru -Wait
           if ($p.ExitCode -ne 0) { Get-Content "$job/error.log"; throw 'Frozen adaptive job failed' }
           Get-Content "$job/success.json"
@@ -172,7 +172,7 @@ jobs:
           for adaptive in (False,True):
               job=root/('adaptive' if adaptive else 'default');job.mkdir()
               request=dict(source=str(source),base=str(Path('assets/Kurt-Angle-Ring.PAC').resolve()),source_format='hctp',
-                  adaptive_textures=adaptive,priority_textures=chosen,texture_review_sha256=info['source_sha256'])
+                  adaptive_textures=adaptive,texture_mode='' if adaptive else 'Priority Selection',priority_textures=chosen,texture_review_sha256=info['source_sha256'])
               (job/'request.json').write_text(json.dumps(request))
               subprocess.run([exe,'--worker',str(job/'request.json')],check=True,timeout=420)
               result=json.loads((job/'success.json').read_text())
@@ -187,6 +187,36 @@ jobs:
               assert result['bytes']<=148000
               assert all(t['priority_quality_improvement']>=-1e-10 for t in report['textures'] if t['manual_priority'])
               print('Frozen priority mode:',adaptive,'bytes:',result['bytes'],'reductions:',priority['reductions'])
+      - name: Frozen Downgrade mode and unchanged model verification
+        if: steps.scope.outputs.full == 'true'
+        timeout-minutes: 8
+        shell: python
+        run: |
+          import json,os,subprocess,sys
+          from pathlib import Path
+          sys.path.insert(0,str(Path.cwd()))
+          from tools.psp_mesh_merge_trial import sections
+          from desktop.core import validate_pac
+          from desktop.texture_optimizer.candidates import read_gim
+          exe='dist/PS2PSP-Pac-Converter/PS2PSP-Pac-Converter.exe'
+          root=Path(os.environ['RUNNER_TEMP'],'portable-downgrade');root.mkdir()
+          request=dict(source=str(Path('build/test-inputs/Lance-modified-HCTP.pac').resolve()),
+              base=str(Path('assets/Kurt-Angle-Ring.PAC').resolve()),source_format='hctp',
+              texture_mode='Downgrade',downgrade_steps=2)
+          (root/'request.json').write_text(json.dumps(request))
+          subprocess.run([exe,'--worker',str(root/'request.json')],check=True,timeout=420)
+          result=json.loads((root/'success.json').read_text())
+          assert result['texture_mode']=='Downgrade' and result['texture_downgrade']['steps']==2
+          validate_pac(Path(result['pac']).read_bytes(),gim_reader=read_gim)
+          report=json.loads((root/'work/texture-downgrade/report.json').read_text())
+          assert report['export_eligible'] and not report['source_based']
+          assert report['pixel_palette_bytes']<=report['pixel_palette_budget'] and result['bytes']<=148000
+          before={s['id']:(s,raw) for s,raw in sections(Path(result['texture_downgrade']['baseline_pac']).read_bytes())}
+          after={s['id']:(s,raw) for s,raw in sections(Path(result['pac']).read_bytes())}
+          for section,(s,raw) in before.items():
+              if section!=9:assert raw==after[section][1] and s['sha256']==after[section][0]['sha256']
+          assert all(t['palette_bytes_identical'] for t in report['textures'])
+          print('Frozen Downgrade bytes:',result['bytes'],'pixels:',report['pixel_palette_bytes'])
       - name: Main geometry remains identical with independent accessory models
         if: steps.scope.outputs.full == 'true'
         shell: python
@@ -228,6 +258,6 @@ jobs:
         run: |
           $tag = "portable-preview-${{ github.run_number }}-${{ github.sha }}"
           @'
-          PS2PSP v0.25.2 Windows x64 preview. Adds an optional source-texture review before conversion: inspect exact decoded source previews and select up to three fidelity priorities. Review defaults OFF; no selections preserve the existing conversion behavior. In ordinary mode, unselected costume GIM payloads remain exact. In adaptive mode, selected maps receive 8x importance and may reclaim texture budget from other maps through the existing allocator. Selected textures never worsen the chosen pipeline's aggregate quality metric; source ceilings, alpha protections, immutable material bit depth, measured 148000-byte PAC cap and conservative baseline pixel/CLUT envelope remain enforced. Priority allocation follows skin compatibility, so its overhead is already budgeted. Reports show remaining reductions and rejected upgrades. Geometry, UVs, skeleton, weights and non-texture payloads remain unchanged. Source checksum prevents stale preview selections. Includes scalp compatibility, complete head QA, Windows 7-style interface, bundled Blender, sources and notices; no game assets. Requires your own supported PSP base; use Windows 10/11 x64. No main merge; PPSSPP validation required.
+          PS2PSP v0.25.3 Windows x64 preview. Adds a Textures section with Default (best for most models), ATO, Priority Selection (source previews, up to three priorities), and Downgrade (one, two or three halving steps with a 64-pixel floor). Default remains the startup mode. Default/ATO algorithms and accepted baselines are unchanged; the UI modes are mutually exclusive. Priorities report remaining reductions. Downgrade enforces actual serialized PAC size and conservative baseline padded pixels/CLUT allocation; it withholds settings that cannot fit rather than silently lowering the floor or changing geometry. Reports preserve decisions and failure diagnostics. Includes scalp compatibility, complete head QA, Windows 7-style interface, bundled Blender, sources and notices; no game assets. Requires your own supported PSP base and Windows 10/11 x64. No main merge; PPSSPP validation required.
           '@ | Set-Content "$env:RUNNER_TEMP/release-notes.txt" -Encoding utf8NoBOM
-          gh release create $tag dist/*.zip dist/*.sha256 dist/*.png --target '${{ github.sha }}' --prerelease --title 'PS2PSP v0.25.2 — optional texture fidelity selection' --notes-file "$env:RUNNER_TEMP/release-notes.txt"
+          gh release create $tag dist/*.zip dist/*.sha256 dist/*.png --target '${{ github.sha }}' --prerelease --title 'PS2PSP v0.25.3 — texture mode selector' --notes-file "$env:RUNNER_TEMP/release-notes.txt"
