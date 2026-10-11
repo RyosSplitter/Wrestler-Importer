@@ -13,6 +13,7 @@ from .geometry import align_reference,geometry,posed,posed_original,read_model,s
 from .metrics import DEFAULT_PROFILE,detect,measure,influence_groups
 from .regions import regions
 from .render import DIRECTIONS,camera,save_pair
+from .head import compare_head,controller_probes,layout_review
 
 
 POSES = {
@@ -81,6 +82,30 @@ def render_views(reference,candidate,bind,rois,height,heat,folder,pose='rest',re
     return entries,views
 
 
+def stage_diagnosis(flags,trace):
+    """Match the specific finding; sharing a region is not stage causation."""
+    first=[]
+    for flag in flags:
+        if flag['severity']=='insufficient-evidence' or flag['region']=='whole-model':continue
+        matches=[s for s in trace if any(f['region']==flag['region'] and f['pose']==flag['pose'] and
+                    f['kind']==flag['kind'] and f['severity']!='insufficient-evidence' for f in s['flags'])]
+        first.append(dict(region=flag['region'],pose=flag['pose'],first_flagged_supplied_stage=matches[0]['label'] if matches else None,
+                          kind=flag['kind'],
+                          caveat='First among supplied ordered stages, not proof that earlier unsaved stages were correct'))
+    diagnosis=[]
+    for region in sorted({f['region'] for f in flags if f['severity']!='insufficient-evidence' and f['region']!='whole-model'}):
+        events=[x for x in first if x['region']==region]
+        static=[x for x in events if x['pose']=='rest']
+        dynamic=[x for x in events if x['pose']!='rest']
+        diagnosis.append(dict(region=region,rest_deviation_flagged=bool(static),pose_deviation_flagged=bool(dynamic),
+            first_supplied_stages=sorted({x['first_flagged_supplied_stage'] for x in events if x['first_flagged_supplied_stage']}),
+            suspected_origin=('Unvalidated native rendering layout; runtime cause unresolved' if
+                any(f['region']==region and f['kind']=='unvalidated-small-skinned-palette' for f in flags) else
+                'Geometry processing before animation' if static else 'Rig/weight adaptation; geometry is within rest tolerances'),
+            evidence_policy='Stage measurements and identical-PSP-rig source-weight control; cause is provisional, not an automatic correction instruction'))
+    return first,diagnosis
+
+
 def run(source_path,candidate_path,output,*,profile=None,stages=(),samples=16000,resolution=320,
         animations=True,renders=True,poses=None,save_depth=False,progress=lambda message:None):
     source_path,candidate_path,output=map(Path,(source_path,candidate_path,output))
@@ -110,6 +135,12 @@ def run(source_path,candidate_path,output,*,profile=None,stages=(),samples=16000
         gallery+=entries
         for name,metrics in views.items():rest['regions'][name]['views']=metrics
     flags=detect(rest,thresholds);motion={};pose_controls=poses or POSES
+    head_resolution=min(resolution,160)
+    head_rest=compare_head(reference,candidate,resolution=head_resolution,
+        render_folder=output/'renders' if renders else None)
+    native_head_flags=[dict(f,region='head',pose='rest') for f in layout_review(target)]
+    flags+=head_rest['flags']+native_head_flags;gallery+=head_rest['gallery']
+    head_poses={}
     if renders:
         gallery+=render_material_flags(reference,candidate,rest,flags,output/'renders',height,resolution)
     if animations:
@@ -132,6 +163,15 @@ def run(source_path,candidate_path,output,*,profile=None,stages=(),samples=16000
                 gallery+=entries
                 for region,metrics in views.items():comparison['regions'][region]['views']=metrics
             motion[name]=comparison;flags+=pose_flags
+        from .ocular import skin
+        progress('Checking complete cranial support under facial and head-controller stress probes')
+        for name,probe in controller_probes(target).items():
+            rp,unsupported=skin(mapped_reference,probe);cp,unsupported_candidate=skin(candidate,probe)
+            h=compare_head(rp,cp,mapped_reference,candidate,resolution=head_resolution,
+                pose='head-probe-'+name,render_folder=output/'renders' if renders and name in
+                ('head-turn','neck-turn','jaw-open','psp-brow-local','eye-lid-neck-jaw') else None)
+            h['probe']=probe;h['unsupported_controllers']=sorted(set(unsupported+unsupported_candidate))
+            head_poses[name]=h;flags+=h['flags'];gallery+=h['gallery']
     progress('Tracing optional stages in the single fixed reference frame')
     trace=[]
     for stage in stages:
@@ -143,6 +183,8 @@ def run(source_path,candidate_path,output,*,profile=None,stages=(),samples=16000
         elif space!='target':raise ValueError('Stage space must explicitly be source or target')
         sg=geometry(sm);metrics,_=measure(reference,sg,rois,height,count=samples)
         stage_flags=detect(metrics,thresholds)
+        stage_head=compare_head(reference,sg,resolution=head_resolution)
+        stage_flags+=stage_head['flags']
         skeleton_matches=len(sm['bones'])==len(target['bones']) and all(a['name']==b['name'] and np.allclose(a['local_position'],b['local_position'],atol=1e-6) and np.allclose(a['rotation'],b['rotation'],atol=1e-6) for a,b in zip(sm['bones'],target['bones']))
         stage_motion={}
         if animations and skeleton_matches:
@@ -152,7 +194,8 @@ def run(source_path,candidate_path,output,*,profile=None,stages=(),samples=16000
                     m,_=measure(posed(mapped_reference,controls),posed(sg,controls),rois,height,reference,sg,count=samples)
                     stage_motion[pose_name]=m;stage_flags+=detect(m,thresholds,pose_name,metrics)
         trace.append(dict(label=stage['label'],path=str(Path(stage['path']).resolve()),sha256=sha(stage['path']),space=space,
-                          skeleton_matches_final=skeleton_matches,rest=metrics,poses=stage_motion,flags=stage_flags))
+                          skeleton_matches_final=skeleton_matches,rest=metrics,poses=stage_motion,flags=stage_flags,
+                          head_diagnostics=stage_head))
     # A source-weight control isolates rig remapping from transferred hybrid weights.
     bridge=None
     if animations:
@@ -167,21 +210,7 @@ def run(source_path,candidate_path,output,*,profile=None,stages=(),samples=16000
             original_rig_comparison,_=measure(posed_original(source,alignment,controls),posed(candidate,controls),rois,height,reference,candidate,count=samples)
             bridge_poses[name]=dict(original_rig_vs_mapped_original_weights=m, mapped_original_weights_vs_final=hybrid_deviation,original_hctp_rig_vs_final=original_rig_comparison)
         bridge=dict(description='Analytical control only: original geometry and source ancestor-mapped weights on final PSP rig; no model is written',rest=bridge_rest,poses=bridge_poses)
-    first=[]
-    for flag in flags:
-        if flag['severity']=='insufficient-evidence' or flag['region']=='whole-model':continue
-        matches=[s for s in trace if any(f['region']==flag['region'] and f['pose']==flag['pose'] and f['severity']!='insufficient-evidence' for f in s['flags'])]
-        first.append(dict(region=flag['region'],pose=flag['pose'],first_flagged_supplied_stage=matches[0]['label'] if matches else None,
-                          caveat='First among supplied ordered stages, not proof that earlier unsaved stages were correct'))
-    diagnosis=[]
-    for region in sorted({f['region'] for f in flags if f['severity']!='insufficient-evidence' and f['region']!='whole-model'}):
-        events=[x for x in first if x['region']==region]
-        static=[x for x in events if x['pose']=='rest']
-        dynamic=[x for x in events if x['pose']!='rest']
-        diagnosis.append(dict(region=region,rest_deviation_flagged=bool(static),pose_deviation_flagged=bool(dynamic),
-            first_supplied_stages=sorted({x['first_flagged_supplied_stage'] for x in events if x['first_flagged_supplied_stage']}),
-            suspected_origin='Geometry processing before animation' if static else 'Rig/weight adaptation; geometry is within rest tolerances',
-            evidence_policy='Stage measurements and identical-PSP-rig source-weight control; cause is provisional, not an automatic correction instruction'))
+    first,diagnosis=stage_diagnosis(flags,trace)
     native=isinstance(target.get('report'),dict) and 'allocations' in target['report']
     fmt=dict(native_psp_audit_passed=native,within_148000_byte_budget=candidate_path.stat().st_size<=148000 if candidate_path.suffix.lower()=='.pac' else None,
              pac_bytes=candidate_path.stat().st_size if candidate_path.suffix.lower()=='.pac' else None)
@@ -193,6 +222,8 @@ def run(source_path,candidate_path,output,*,profile=None,stages=(),samples=16000
     report=dict(qa_version=VERSION,mode='comparison-and-report-only',inputs=dict(source=str(source_path.resolve()),candidate=str(candidate_path.resolve()),sha256=hashes),
         reference_height=height,alignment=alignment,canonical_axes='Proper rotation (x,-y,-z): x=wrestler left, y=up, z=forward',
         thresholds=thresholds,rest=rest,poses=motion,pose_controls=pose_controls if animations else {},
+        head_diagnostics=dict(rest=head_rest,poses=head_poses,native_layout_review=native_head_flags,
+            limitation='Provisional full-head/outlier/winding/controller review. CPU cull conventions are diagnostic; actual SVR loader, GPU state and clips are not emulated.'),
         animation_method='Primary: original HCTP geometry and ancestor-mapped source weights vs final geometry/weights, both on the identical PSP rig and poses. Additional original-HCTP-rig controls isolate rig adaptation.',
         animation_limitations=['Analytical LBS poses, not real game clips or a PPSSPP test','Original facial controller semantics and absent source bones may differ intentionally'],
         stage_trace=trace,defect_first_appearance=first,rig_mapping_control=bridge,format=fmt,flags=flags,gallery=gallery,numeric_pixel_depth_saved=save_depth,

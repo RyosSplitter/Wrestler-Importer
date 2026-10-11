@@ -46,7 +46,9 @@ def camera(points, view, resolution=320):
     return Camera(view,center,right,up,direction,span,resolution)
 
 
-def raster(g, cam, errors=None, heat_limit=None):
+def raster(g, cam, errors=None, heat_limit=None, *, cull='none'):
+    if cull not in ('none','back','front'):
+        raise ValueError('Culling must be none, back or front')
     n=cam.resolution;position=g.vertices-cam.center
     xy=np.column_stack((position@cam.right,-position@cam.up))*n/cam.span+n*.5
     z=position@cam.direction
@@ -55,6 +57,8 @@ def raster(g, cam, errors=None, heat_limit=None):
     light=cam.direction+.45*cam.right+.7*cam.up;light/=np.linalg.norm(light)
     normals=g.mesh.face_normals
     for fi,face in enumerate(g.faces):
+        facing=float(np.dot(normals[fi],cam.direction))
+        if (cull=='back' and facing<=0) or (cull=='front' and facing>=0):continue
         a,b,c=xy[face]
         denom=(b[1]-c[1])*(a[0]-c[0])+(c[0]-b[0])*(a[1]-c[1])
         if abs(denom)<1e-9:continue
@@ -96,18 +100,18 @@ def comparison(a,b,cam,height):
     return report
 
 
-def save_pair(folder,stem,reference,candidate,cam,height,heat=None,save_depth=False):
+def save_pair(folder,stem,reference,candidate,cam,height,heat=None,save_depth=False,*,cull='none'):
     folder=Path(folder);folder.mkdir(parents=True,exist_ok=True)
-    a=raster(reference,cam);b=raster(candidate,cam)
+    a=raster(reference,cam,cull=cull);b=raster(candidate,cam,cull=cull)
     difference=np.zeros((cam.resolution,cam.resolution,3),dtype=np.uint8)
     difference[a['mask']]=(80,160,245);difference[b['mask']]=(240,120,65);difference[a['mask']&b['mask']]=(135,135,135)
     tiles=[a['rgb'],b['rgb'],difference];labels=['HCTP geometry reference','PSP candidate','Silhouette: source blue / PSP orange']
     if heat is not None:
-        tiles.append(raster(candidate,cam,heat,height*.006)['rgb']);labels.append('Error: blue 0 / red >=0.6% height')
+        tiles.append(raster(candidate,cam,heat,height*.006,cull=cull)['rgb']);labels.append('Error: blue 0 / red >=0.6% height')
     image=Image.new('RGB',(cam.resolution*len(tiles),cam.resolution+46),(24,24,24));draw=ImageDraw.Draw(image)
     for i,(tile,label) in enumerate(zip(tiles,labels)):
         image.paste(Image.fromarray(tile),(i*cam.resolution,30));draw.text((i*cam.resolution+8,8),label,fill='white')
-    draw.text((8,cam.resolution+32),stem+' | Identical orthographic camera, lighting and pose | QA clay render',fill='white')
+    draw.text((8,cam.resolution+32),stem+' | Identical cameras | QA clay render | Cull: '+cull,fill='white')
     image.save(folder/(stem+'.png'))
     for suffix,tile in [('reference',tiles[0]),('candidate',tiles[1]),('silhouette',tiles[2])]:
         Image.fromarray(tile).save(folder/(stem+'-'+suffix+'.png'))
@@ -115,4 +119,4 @@ def save_pair(folder,stem,reference,candidate,cam,height,heat=None,save_depth=Fa
     # Optional pixel exports use float32; measurements remain float64.
     if save_depth:
         np.savez_compressed(folder/(stem+'-depth.npz'),source=np.where(a['mask'],a['depth'],np.nan).astype(np.float32),candidate=np.where(b['mask'],b['depth'],np.nan).astype(np.float32))
-    return comparison(a,b,cam,height),cam.describe()
+    return comparison(a,b,cam,height),dict(cam.describe(),cull=cull)

@@ -39,6 +39,12 @@ def regions(reference, target):
     out = {}
     def add(name, lo, hi, views=('front','back','left','right')):
         out[name] = Region(name,np.array(lo,dtype=float),np.array(hi,dtype=float),views)
+    # The face ROI starts in front of the skull and cannot cover the rear scalp.
+    # Reference-only bounds keep the entire skull in the comparison, without
+    # rescaling the candidate to hide defects. Escaped vertices also need the
+    # bind-selected maximum-error check in model_qa.head.
+    add('head',head.min(0)-.005*h,head.max(0)+.005*h,
+        ('front','back','left','right','front-left','front-right','back-left','back-right'))
     add('face',[x-width,neck,front],[x+width,head_top, .2*h],('front','left','right','front-left','front-right'))
     add('jaw',[x-width,neck-.012*h,front],[x+width,mouth+.019*h,.2*h],('front','left','right','front-left','front-right'))
     add('chin',[x-.6*width,neck,front],[x+.6*width,mouth-.006*h,.2*h],('front','left','right'))

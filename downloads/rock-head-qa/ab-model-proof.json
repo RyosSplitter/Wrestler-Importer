@@ -1,0 +1,16 @@
+{
+  "current_pac_sha256": "ae56c7e0f18f230a865790a5f7bb18796003c354c65fa1f1be744e1c4581a16e",
+  "adaptive_pac_sha256": "a36d20b854f7e51843345179c8eabf8c9bcebd8d55926fd67d97387bcd8d9eab",
+  "model_sections": [
+    2,
+    26,
+    27
+  ],
+  "decoded_yobjs_identical": true,
+  "yobj_hashes": {
+    "2": "0136497494db33cdbe764d0d742d157f872254ac17e00e59de677674b637a030",
+    "26": "53e2470230bb9308536786e0f2074730035cbcb496558fec66816da49351ac52",
+    "27": "8f749b7ee9f625efeb62ba5b4757b0bfc0574ac545501fe9807c268ecf9d5a01"
+  },
+  "no_claim_of_identity_with_user_export": true
+}
