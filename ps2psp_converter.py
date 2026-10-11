@@ -42,7 +42,7 @@ def main():
     if len(sys.argv)>1 and sys.argv[1]=='--inspect':
         from desktop.adapters import adapter
         from desktop.core import dump
-        try:dump(sys.argv[3],dict(ok=True,info=adapter('hctp').inspect(sys.argv[2])))
+        try:dump(sys.argv[3],dict(ok=True,info=adapter('hctp').inspect(sys.argv[2],Path(sys.argv[3]).parent/'textures')))
         except Exception as exc:dump(sys.argv[3],dict(ok=False,error=str(exc)))
         return 0
     if len(sys.argv)>1 and sys.argv[1]=='--qa':
@@ -79,6 +79,28 @@ def main():
         if app.adaptive_checkbox.cget('text')!='Adaptive Texture Optimization (Experimental)':raise ValueError('Adaptive checkbox label is incorrect.')
         if app.skin_palette_compatibility.get() is not True:raise ValueError('Single-slot compatibility must default ON.')
         if app.skin_checkbox.cget('text')!='Single-slot skinning compatibility':raise ValueError('Skin compatibility checkbox label is incorrect.')
+        if app.review_textures.get() is not False:raise ValueError('Texture review must default OFF.')
+        from desktop.texture_review import TextureChooser,source_previews
+        import numpy as np
+        preview_root=Path(sys.argv[2]).with_suffix('');preview_root.mkdir(parents=True,exist_ok=True)
+        rgba=np.zeros((32,32,4),np.uint8);rgba[4:28,4:28]=[100,130,170,255]
+        entries=source_previews([(i,'Example '+str(i+1),b'',rgba,{}) for i in range(4)],preview_root)
+        dialog=TextureChooser(app.root,entries)
+        for name in list(dialog.variables)[:3]:dialog.variables[name].set(True)
+        dialog.refresh()
+        if 'disabled' not in dialog.checkboxes[entries[3]['name']].state():raise ValueError('Fourth texture must be disabled at three selections.')
+        dialog.variables[entries[0]['name']].set(False);dialog.refresh()
+        if 'disabled' in dialog.checkboxes[entries[3]['name']].state():raise ValueError('Deselect must allow a new texture.')
+        dialog.variables[entries[3]['name']].set(True);dialog.refresh();app.root.update()
+        if sys.platform=='win32':
+            from PIL import ImageGrab
+            x,y=dialog.top.winfo_rootx(),dialog.top.winfo_rooty()
+            ImageGrab.grab(bbox=(x,y,x+dialog.top.winfo_width(),y+dialog.top.winfo_height())).save(Path(sys.argv[2]).with_name('texture-chooser.png'))
+        app.root.after(10,dialog.accept)
+        if len(dialog.show())!=3:raise ValueError('Texture chooser did not return three selections.')
+        cancelled=TextureChooser(app.root,entries);app.root.after(10,cancelled.top.destroy)
+        if cancelled.show() is not None:raise ValueError('Cancelled texture chooser must not convert.')
+        shutil.rmtree(preview_root)
         if app.convert.winfo_rooty()+app.convert.winfo_height()>app.preview.winfo_rooty():raise ValueError('Convert must be above the preview.')
         if app.convert.winfo_rootx()<app.preview.winfo_rootx():raise ValueError('Convert must be in the preview column.')
         if 'disabled' not in app.cancel.state() or 'disabled' not in app.save.state():raise ValueError('Cancel and Save must start disabled.')
@@ -88,6 +110,7 @@ def main():
                               bundled_blender=version.splitlines()[0],preview_views=list(VIEWS),base_required=True,
                               adaptive_textures_default=False,adaptive_checkbox_verified=True,
                               skin_palette_compatibility_default=True,skin_checkbox_verified=True,
+                              texture_review_default=False,three_selection_limit_verified=True,texture_dialog_cancel_verified=True,
                               ui_theme=app.ui_theme,convert_above_preview=True,
                               initial_button_states_verified=True))
         if sys.platform=='win32':

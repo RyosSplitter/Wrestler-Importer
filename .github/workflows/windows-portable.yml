@@ -2,8 +2,8 @@ name: Build portable PS2PSP preview
 on:
   workflow_dispatch:
   push:
-    branches: [feature/portable-ps2psp, fix/hctp-primary-model, experiment/precision-budget-fit, experiment/multi-yobj-accessories, experiment/content-aware-textures, experiment/scalp-compatibility-update]
-    paths: ['desktop/**', 'model_qa/**', 'tests/test_head_qa.py', 'tests/test_skin_palette_padding.py', 'tests/test_portable_skinning.py', 'ps2psp_converter.py', 'app/ps2_textures.py', 'tools/build_portable.py', 'tools/portable_fixture.py', 'tools/blender_reduce.py', 'tools/pac_inspect.py', 'tools/pac_repack.py', 'tools/hctp_read.py', 'tools/hctp_weights.py', 'tools/yobj_read.py', 'requirements-desktop.txt', 'docs/portable-*.md', 'tests/test_portable_*.py', 'tests/test_adaptive_textures.py', 'tests/test_main_model_selection.py', '.github/workflows/windows-portable.yml']
+    branches: [feature/portable-ps2psp, fix/hctp-primary-model, experiment/precision-budget-fit, experiment/multi-yobj-accessories, experiment/content-aware-textures, experiment/scalp-compatibility-update, experiment/texture-fidelity-selection]
+    paths: ['desktop/**', 'model_qa/**', 'tests/test_head_qa.py', 'tests/test_skin_palette_padding.py', 'tests/test_portable_skinning.py', 'ps2psp_converter.py', 'app/ps2_textures.py', 'tools/build_portable.py', 'tools/portable_fixture.py', 'tools/blender_reduce.py', 'tools/pac_inspect.py', 'tools/pac_repack.py', 'tools/hctp_read.py', 'tools/hctp_weights.py', 'tools/yobj_read.py', 'requirements-desktop.txt', 'docs/portable-*.md', 'tests/test_portable_*.py', 'tests/test_adaptive_textures.py', 'tests/test_texture_review.py', 'tests/test_main_model_selection.py', '.github/workflows/windows-portable.yml']
 permissions:
   contents: write
 jobs:
@@ -69,6 +69,7 @@ jobs:
           if ($p.ExitCode -ne 0) { throw 'Frozen GUI/runtime smoke test failed' }
           Get-Content $output
           Copy-Item ([System.IO.Path]::ChangeExtension($output,'png')) dist/PS2PSP-converter-preview.png
+          Copy-Item "$env:RUNNER_TEMP/texture-chooser.png" dist/PS2PSP-texture-chooser.png
       - name: Frozen single-slot layout control and exact preservation
         shell: python
         run: |
@@ -144,6 +145,48 @@ jobs:
           for section,raw in a.items():
               if section!=9: assert raw==b[section]
           assert len(result)<=148000
+      - name: Frozen source texture previews and priority conversions in both modes
+        if: steps.scope.outputs.full == 'true'
+        timeout-minutes: 15
+        shell: python
+        run: |
+          import hashlib,json,os,subprocess,sys
+          from pathlib import Path
+          from PIL import Image
+          sys.path.insert(0,str(Path.cwd()))
+          from tools.psp_mesh_merge_trial import sections
+          from desktop.core import validate_pac
+          from desktop.texture_optimizer.candidates import read_gim
+          exe='dist/PS2PSP-Pac-Converter/PS2PSP-Pac-Converter.exe'
+          root=Path(os.environ['RUNNER_TEMP'],'portable-priorities');root.mkdir()
+          source=Path('build/test-inputs/Lance-modified-HCTP.pac').resolve()
+          manifest=root/'inspection.json'
+          subprocess.run([exe,'--inspect',str(source),str(manifest)],check=True,timeout=120)
+          info=json.loads(manifest.read_text())
+          assert info['ok'],info
+          info=info['info'];previews=info['texture_previews']
+          assert len(previews)==info['textures'] and len(previews)>=3
+          for row in previews:
+              assert Image.open(row['png']).size==(row['width'],row['height'])
+          chosen=[p['name'] for p in previews[:3]]
+          for adaptive in (False,True):
+              job=root/('adaptive' if adaptive else 'default');job.mkdir()
+              request=dict(source=str(source),base=str(Path('assets/Kurt-Angle-Ring.PAC').resolve()),source_format='hctp',
+                  adaptive_textures=adaptive,priority_textures=chosen,texture_review_sha256=info['source_sha256'])
+              (job/'request.json').write_text(json.dumps(request))
+              subprocess.run([exe,'--worker',str(job/'request.json')],check=True,timeout=420)
+              result=json.loads((job/'success.json').read_text())
+              validate_pac(Path(result['pac']).read_bytes(),gim_reader=read_gim)
+              priority=result['texture_priorities'];assert priority['names']==chosen
+              before={s['id']:raw for s,raw in sections(Path(priority['baseline_pac']).read_bytes())}
+              after={s['id']:raw for s,raw in sections(Path(result['pac']).read_bytes())}
+              for section,raw in before.items():
+                  if section!=9:assert raw==after[section]
+              report=json.loads((job/'work/texture-priorities/report.json').read_text())
+              assert report['pixel_palette_bytes']<=report['pixel_palette_budget']
+              assert result['bytes']<=148000
+              assert all(t['priority_quality_improvement']>=-1e-10 for t in report['textures'] if t['manual_priority'])
+              print('Frozen priority mode:',adaptive,'bytes:',result['bytes'],'reductions:',priority['reductions'])
       - name: Main geometry remains identical with independent accessory models
         if: steps.scope.outputs.full == 'true'
         shell: python
@@ -185,6 +228,6 @@ jobs:
         run: |
           $tag = "portable-preview-${{ github.run_number }}-${{ github.sha }}"
           @'
-          PS2PSP v0.25.1 Windows x64 preview. Adds automatic single-slot float skinning compatibility, based on the Rock control visually accepted in SVR 2011 PSP. The default-ON option adds two zero-weight slots, preserving positions, normals, UVs, colors, materials, effective bone weights, skeleton and analytical motion exactly. Disable only for A/B comparison with the previous app. Two-slot and rigid buffers remain unchanged. PACs that cannot fit the additional layout overhead are withheld rather than reducing geometry or textures. Complete head QA now covers the rear scalp, culled multi-view renders, vertex outliers, winding and head/neck/jaw/eye/eyebrow probes. Reports include the precise layout changes and added decoded vertex-buffer memory. These offline checks do not emulate the SVR loader or certify all animation/runtime behavior. Adaptive Texture Optimization stays OFF by default and both texture algorithms remain unchanged. The Windows 7-style interface and Convert placement remain. Requires your own supported PSP base; use Windows 10/11 x64. Includes bundled Blender, sources and notices, no game assets. Accepted PACs preserved; no main merge. See docs/portable-scalp-compatibility.md for evidence and limitations.
+          PS2PSP v0.25.2 Windows x64 preview. Adds an optional source-texture review before conversion: inspect exact decoded source previews and select up to three fidelity priorities. Review defaults OFF; no selections preserve the existing conversion behavior. In ordinary mode, unselected costume GIM payloads remain exact. In adaptive mode, selected maps receive 8x importance and may reclaim texture budget from other maps through the existing allocator. Selected textures never worsen the chosen pipeline's aggregate quality metric; source ceilings, alpha protections, immutable material bit depth, measured 148000-byte PAC cap and conservative baseline pixel/CLUT envelope remain enforced. Priority allocation follows skin compatibility, so its overhead is already budgeted. Reports show remaining reductions and rejected upgrades. Geometry, UVs, skeleton, weights and non-texture payloads remain unchanged. Source checksum prevents stale preview selections. Includes scalp compatibility, complete head QA, Windows 7-style interface, bundled Blender, sources and notices; no game assets. Requires your own supported PSP base; use Windows 10/11 x64. No main merge; PPSSPP validation required.
           '@ | Set-Content "$env:RUNNER_TEMP/release-notes.txt" -Encoding utf8NoBOM
-          gh release create $tag dist/*.zip dist/*.sha256 dist/*.png --target '${{ github.sha }}' --prerelease --title 'PS2PSP v0.25.1 — scalp compatibility and full-head QA' --notes-file "$env:RUNNER_TEMP/release-notes.txt"
+          gh release create $tag dist/*.zip dist/*.sha256 dist/*.png --target '${{ github.sha }}' --prerelease --title 'PS2PSP v0.25.2 — optional texture fidelity selection' --notes-file "$env:RUNNER_TEMP/release-notes.txt"

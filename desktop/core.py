@@ -48,8 +48,14 @@ class Request:
     source_format:str='hctp'
     adaptive_textures:bool=False
     skin_palette_compatibility:bool=True
+    priority_textures:tuple=()
+    texture_review_sha256:str=''
 
     def validate(self):
+        from desktop.texture_review import validate_selection
+        selected=validate_selection(self.priority_textures)
+        if selected and (not isinstance(self.texture_review_sha256,str) or not re.fullmatch('[0-9a-f]{64}',self.texture_review_sha256)):
+            raise ValueError('Selected textures require the source preview SHA-256; review textures again.')
         if not isinstance(self.adaptive_textures,bool):raise ValueError('Adaptive texture option must be a boolean.')
         if not isinstance(self.skin_palette_compatibility,bool):raise ValueError('Skin palette compatibility option must be a boolean.')
         adapter(self.source_format)
@@ -58,6 +64,8 @@ class Request:
             if not p.is_file() or p.suffix.lower()!='.pac':raise ValueError('Choose an existing .pac file.')
             if p.stat().st_size>32*1024*1024:raise ValueError('The supported input budget is 32 MiB.')
         if Path(self.source).resolve()==Path(self.base).resolve():raise ValueError('Source and PSP base must be different files.')
+        if selected and digest(self.source)!=self.texture_review_sha256:
+            raise ValueError('Source PAC changed since texture review; select the source and review textures again.')
 
 def base_model(path):
     data=Path(path).read_bytes();report=inspect_pac(data)
@@ -267,6 +275,10 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
     original,decoded=adapter(request.source_format).read(source);base_bytes,target=base_model(base)
     accessories,texture_names=source_models(source,original)
     decoded=decode_dependencies(source,decoded,texture_names)
+    from desktop.texture_review import validate_selection
+    validate_selection(request.priority_textures,[n for i,n,raw,rgba,details in decoded])
+    if request.priority_textures and digest(source)!=request.texture_review_sha256:
+        raise ValueError('Source PAC changed since texture review; review textures again.')
     source_roles={a['target_section'] for a in accessories}
     base_roles={s['id'] for s,r in sections(base_bytes) if s['id']!=2 and r.startswith(b'YOBJ')}
     if not base_roles<=source_roles:raise ValueError('The PSP base contains unmatched accessory models; choose a base without them or a source with matching supported accessories.')
@@ -391,9 +403,19 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
                 count=len(change['new_palette'])-len(change['old_palette'])
                 for vertex in mesh['vertices']:vertex['weights']=vertex['weights']+[0.]*count
             accessory_prepared[section]=expected
+    priority_report=None
+    if request.priority_textures:
+        from desktop.texture_optimizer import optimize_pac
+        from desktop.texture_optimizer.candidates import read_gim as priority_reader
+        step(64,'Allocating the selected texture fidelity priorities within the final model budget')
+        (work/'before-texture-priorities.pac').write_bytes(candidate)
+        candidate,priority_report=optimize_pac(candidate,decoded,work/'texture-priorities',
+            target=profile['max_pac_bytes'],cancel=check,progress=lambda message:progress(64,message),
+            priority_textures=request.priority_textures,freeze_unselected=not request.adaptive_textures)
+        texture_reader=priority_reader
     step(65,'Validating final PAC pointers, buffers, weights, rendering records and size')
     native,gim_map=validate_pac(candidate,base_bytes,profile['max_pac_bytes'],accessory_models=accessory_prepared,gim_reader=texture_reader,
-        lossless_texture_sections=[r['section'] for r in adaptive_report['lossless_retained_texture_storage']] if adaptive_report else ())
+        lossless_texture_sections={r['section'] for report in (adaptive_report,priority_report) if report for r in report['lossless_retained_texture_storage']})
     dump(work/'accessory-qa.json',dict(status='pass',models=accessory_reports,
          limitation='Exact source-derived geometry and direct weights, native structure and analytical poses; removal/throw behavior requires in-game validation.'))
     unpacked=next(r for s,r in sections(candidate) if s['id']==2)
@@ -440,6 +462,8 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
         note+='<p>Adaptive textures enabled: %d textures have tradeoffs requiring review. <a href="../adaptive-textures/report.html">Source/current/adaptive textures and allocation report</a>. The texture stage preserves every non-texture payload; any subsequent skin-layout adaptation is reported separately.</p>'%texture_flags
     if compatibility_report is not None:
         note+='<p>Single-slot skinning compatibility: %d meshes adapted, %d additional decoded vertex-buffer bytes. <a href="../skin-compatibility.json">Exact geometry, effective weights and analytical pose preservation checks</a>. Other small palettes remain review findings; no universal minimum is claimed.</p>'%(compatibility_report['changed_meshes'],compatibility_report['added_vertex_buffer_bytes'])
+    if priority_report is not None:
+        note+='<p>Manual texture priorities: <a href="../texture-priorities/report.html">Source/current/final previews, selected settings, reductions and budget decisions</a>. Up to three selections; size limits and source ceilings remain enforced.</p>'
     text=text.replace('</body>',note+'</body>')
     html.write_text(text,encoding='utf-8')
     step(92,'Rendering textured views of the actual final PSP output')
@@ -465,6 +489,14 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
             preservation_scope='Texture stage; subsequent skin-layout changes validated separately.',
             review_flags=texture_flags)
         result['review_flags']+=texture_flags
+    if priority_report is not None:
+        selected=[t for t in priority_report['textures'] if t['manual_priority']]
+        reductions=sum(not t['priority_reduction_report']['full_source_preserved'] for t in selected)
+        result['texture_priorities']=dict(names=list(request.priority_textures),
+            report=str(work/'texture-priorities/report.html'),reductions=reductions,
+            baseline_pac=str(work/'before-texture-priorities.pac'),
+            selected_settings=[dict(name=t['name'],**t['priority_reduction_report']) for t in selected])
+        result['review_flags']+=sum(bool(t['quality_review_flags']) for t in priority_report['textures'])
     if compatibility_report is not None:
         result['skin_palette_compatibility']=dict(report=str(work/'skin-compatibility.json'),
             baseline_pac=str(work/'before-skin-compatibility.pac'),

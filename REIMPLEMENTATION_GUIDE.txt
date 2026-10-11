@@ -501,3 +501,32 @@ checks because the failing Rock had an intact stored scalp and smooth offline
 renders. QA remains independent and does not emulate the game loader/GPU/clips.
 See docs/portable-scalp-compatibility.md, docs/rock-scalp-layout-control.md and
 downloads/scalp-compatibility-update/ for measured evidence and reproduction.
+
+
+v0.25.2 OPTIONAL SOURCE TEXTURE REVIEW
+====================================
+CONFIRMED implementation: source inspection decodes all main/accessory texture
+dependencies to exact RGBA PNGs and binds their names to the PAC SHA-256. The
+session-only review option defaults OFF. A scrollable chooser returns at most
+three unique names; Cancel starts no job, changing source clears selection.
+The worker validates names, source fingerprint and the count independently.
+Empty selections bypass the additional stage, preserving old PAC behavior.
+
+CONFIRMED implementation: after ordinary/adaptive textures and the existing
+skin-layout adapter, a separate opt-in priority allocation keeps the final
+model/material/skeleton/UV/weight payloads immutable. Ordinary unselected GIMs
+are exact incumbents. Adaptive unselected maps remain allocatable. Selected
+maps get 8x measured importance and may not exceed their incumbent aggregate
+perceptual loss. This factor is a heuristic, not a proven perception threshold.
+Measured 148000-byte PAC budget and conservative baseline padded pixel/CLUT
+envelope still apply; the true game heap ceiling remains UNKNOWN. Do not
+silently increase palette storage depth or reduce geometry to fund this stage.
+Source ceilings, exact cutout alpha and native-dimension evidence still apply.
+Priority does not guarantee original source quality. Every remaining reduction
+and rejected upgrade is exposed in JSON/HTML reports linked from the QA page.
+
+See docs/portable-texture-review.md, desktop/texture_review.py,
+desktop/texture_optimizer/pac.py and tests/test_texture_review.py.
+Reproduce independent A/B over your own PACs with
+python -m experiments.texture_fidelity_selection SOURCE BASELINE FRESH_OUTPUT
+    --select NAME1 NAME2 NAME3 [--adaptive]

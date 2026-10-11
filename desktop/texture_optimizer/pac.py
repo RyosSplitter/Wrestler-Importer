@@ -22,7 +22,8 @@ def sha(data):return hashlib.sha256(data).hexdigest()
 
 
 def optimize_pac(baseline,decoded,output,*,target=148000,cancel=lambda:None,
-                 progress=lambda message:None,max_pixel_bytes=None):
+                 progress=lambda message:None,max_pixel_bytes=None,
+                 priority_textures=(),freeze_unselected=False):
     """Preserve every stored section except costume texture table 9 exactly.
 
     Useful colors are bounded by actual source usage. Fixed native CLUT slots
@@ -33,6 +34,8 @@ def optimize_pac(baseline,decoded,output,*,target=148000,cancel=lambda:None,
     unpacked={s['id']:(s,raw) for s,raw in sections(baseline)}
     models={i:audit_yobj(raw) for i,(s,raw) in unpacked.items() if raw.startswith(b'YOBJ')}
     names=models[2]['texture_names'];table=unpacked[9][1]
+    from desktop.texture_review import validate_selection
+    priorities=set(validate_selection(priority_textures,names))
     if any(not re.fullmatch(r'[A-Za-z0-9_-]+',n) for n in names):raise ValueError('Unsafe preview texture name')
     gims={r['name']:table[r['offset']:r['offset']+r['size']] for r in parse_textures(table)}
     sources={n:r for i,n,raw,r,d in decoded};details={n:d for i,n,raw,r,d in decoded}
@@ -92,12 +95,33 @@ def optimize_pac(baseline,decoded,output,*,target=148000,cancel=lambda:None,
                 source_details=features,required_rendering_bits=bits,source_format=details[n],
                 rejected_configurations=rejected),indent=2)+'\n')
             raise ValueError(n+': no source-bounded native candidate passes safeguards; diagnostics: '+str(output/'failure-report.json'))
+        if priorities:
+            if n not in priorities and freeze_unselected:
+                # The ordinary path's unselected textures stay byte-for-byte
+                # intact, including legacy aspect ratios and palette choices.
+                incumbent=next((r for r in rows if r['raw']==gims[n]),None)
+                if incumbent is None:
+                    incumbent=dict(raw=gims[n],entry=dict(width=p.shape[1],height=p.shape[0],bits=bits,
+                        palette_entries=len(c),used_palette_colors=color_count,serialized_bytes=len(gims[n]),
+                        pixel_palette_bytes=len(gims[n])-208,metrics=measure(sources[n],rgba,scoring['mask']),
+                        source_quality_ceiling=features['source_quality_ceiling'],fully_preserved=False,
+                        reason='Unselected: exact existing default representation'))
+                rows=[incumbent]
+            elif n in priorities:
+                # A priority is an upgrade request, never permission to make
+                # that texture worse to fund another selection. Keep source
+                # ceilings and exact cutout alpha protections above.
+                ceiling=measure(sources[n],rgba,scoring['mask'])['perceptual_loss']
+                rows=[r for r in rows if r['entry']['metrics']['perceptual_loss']<=ceiling+1e-10]
+                if not rows:raise ValueError(n+': no source-bounded candidate preserves baseline quality; export withheld')
         choices.append(rows)
         reports.append(dict(name=n,source_palette_format=details[n],**features,
             head_fraction=usage[n]['head_fraction'],uv_coverage_used=usage[n]['uv_mask'] is not None,
             uv_coverage_fraction=None if usage[n]['uv_mask'] is None else float(usage[n]['uv_mask'].mean()),
             required_rendering_bits=bits,available_candidates=[r['entry'] for r in rows],
-            rejected_configurations=rejected,current_configuration=dict(width=p.shape[1],height=p.shape[0],bits=bits,
+            rejected_configurations=rejected,manual_priority=n in priorities,
+            priority_multiplier=8 if n in priorities else 1,
+            current_configuration=dict(width=p.shape[1],height=p.shape[0],bits=bits,
                 palette_entries=len(c),used_palette_colors=len(np.unique(c[p].reshape(-1,4),axis=0)),
                 metrics=measure(sources[n],c[p],scoring['mask']))))
     limit=existing_pixels+retained_pixels if max_pixel_bytes is None else max_pixel_bytes
@@ -122,7 +146,7 @@ def optimize_pac(baseline,decoded,output,*,target=148000,cancel=lambda:None,
                        pixel_palette_bytes=retained_pixels+sum(r['entry']['pixel_palette_bytes'] for r in rows))
     progress('Allocating measured texture upgrades within the frozen model budget')
     try:
-        payload,selection,allocation=allocate(choices,[r['importance_score'] for r in reports],build,target,limit,cancel)
+        payload,selection,allocation=allocate(choices,[r['importance_score']*r['priority_multiplier'] for r in reports],build,target,limit,cancel)
     except ValueError as exc:
         (output/'failure-report.json').write_text(json.dumps(dict(error=str(exc),target=target,
             pixel_palette_budget=limit,textures=reports,lossless_texture_storage=lossless_report),indent=2,allow_nan=False)+'\n',encoding='utf-8')
@@ -144,6 +168,19 @@ def optimize_pac(baseline,decoded,output,*,target=148000,cancel=lambda:None,
         row['decision']='Selected by measured marginal information/byte with immutable material, source, alpha and detail safeguards'
         row['quality_review_flags']=[]
         e=selected['entry'];b=row['current_configuration']['metrics'];m=e['metrics']
+        if n in priorities:e['fully_preserved']=m['rgb_rmse_255']==0 and m['alpha_exact']
+        if n in priorities:
+            best=min(rows,key=lambda r:r['entry']['metrics']['perceptual_loss'])['entry']
+            row['best_supported_configuration']=best
+            row['priority_quality_improvement']=b['perceptual_loss']-m['perceptual_loss']
+            row['priority_reduction_report']=dict(source_dimensions=list(sources[n].shape[1::-1]),
+                selected_dimensions=[e['width'],e['height']],fixed_rendering_bits=e['bits'],
+                source_useful_colors=row['useful_source_colors'],selected_used_colors=e['used_palette_colors'],
+                full_source_preserved=bool(e['fully_preserved']),
+                best_supported_quality_reached=m['perceptual_loss']<=best['metrics']['perceptual_loss']+1e-10,
+                explanation='Priority is weighted 8x; source ceilings, unchanged material depth, measured PAC size and existing pixel/CLUT envelope still apply. See rejected_upgrades for exact budget reasons.')
+            if not e['fully_preserved']:
+                row['quality_review_flags'].append('Selected texture remains reduced or palette-quantized; manual priority does not guarantee exact source fidelity. See priority_reduction_report.')
         if e['width']*e['height'] < sources[n].shape[0]*sources[n].shape[1]/8:
             row['quality_review_flags'].append('Retains less than one eighth of source pixels; inspect fine-detail legibility')
         if m['luminance_ssim'] < b['luminance_ssim']-.05 or m['fine_feature_loss'] > b['fine_feature_loss']+.15:
@@ -162,6 +199,7 @@ def optimize_pac(baseline,decoded,output,*,target=148000,cancel=lambda:None,
     fixed_stored=sum(s['size'] for s in sizes if s['id']!=9)+8+8*len(sizes)
     nontexture_stored=fixed_stored-retained_texture_stored
     report=dict(version=1,experimental=True,baseline_sha256=sha(baseline),sha256=sha(payload),
+        priority_textures=sorted(priorities),priority_multiplier=8,unselected_policy='exact default GIM bytes' if freeze_unselected else 'adaptive allocation',
         baseline_bytes=len(baseline),**allocation,textures=reports,unchanged_sections=proof,
         lossless_retained_texture_storage=lossless_report,
         configured_target=target,effective_padded_target=target//2048*2048,
@@ -183,14 +221,16 @@ def optimize_pac(baseline,decoded,output,*,target=148000,cancel=lambda:None,
                   'Retained GIM tables may use proven lossless BPE storage; decoded texture bytes are unchanged.',
                   'PAC pointers may relocate during existing aligned repacking; non-texture section payloads are unchanged.'])
     (output/'report.json').write_text(json.dumps(report,indent=2,allow_nan=False)+'\n',encoding='utf-8')
-    body=['<html><meta charset="utf-8"><title>Adaptive texture experiment</title><body><h1>Adaptive texture optimization — experimental</h1>',
+    heading='Selected texture fidelity priorities' if priorities else 'Adaptive texture optimization — experimental'
+    body=['<html><meta charset="utf-8"><title>'+heading+'</title><body><h1>'+heading+'</h1>',
           '<p>Actual PAC: %d / %d bytes. Current: %d bytes. Gameplay validation pending.</p>'%(len(payload),target,len(baseline)),
           '<p><a href="report.json">All candidate configurations, metrics, ceilings, allocation decisions and proofs</a></p>']
     for row in reports:
         n=row['name'];e=row['selected_configuration']
         body.append('<h2>%s</h2><p>Detail coverage %.1f%%; importance %.3f. Selected %dx%d, %d palette slots, %d used colors, %d encoded bytes.</p>'%(html.escape(n),row['detail_coverage_percent'],row['importance_score'],e['width'],e['height'],e['palette_entries'],e['used_palette_colors'],e['serialized_bytes']))
+        if row['manual_priority']:body.append('<p><strong>Selected for fidelity priority.</strong> '+html.escape(row['priority_reduction_report']['explanation'])+'</p>')
         for warning in row['quality_review_flags']:body.append('<p><strong>Review: '+html.escape(warning)+'</strong></p>')
-        for label,suffix in [('Source','-source'),('Current','-current'),('Adaptive','')]:
+        for label,suffix in [('Source','-source'),('Current','-current'),('Prioritized' if priorities else 'Adaptive','')]:
             body.append('<figure style="display:inline-block"><figcaption>%s</figcaption><img style="width:256px;image-rendering:pixelated" src="%s%s.png"></figure>'%(label,html.escape(n,quote=True),suffix))
     body.append('</body></html>');(output/'report.html').write_text('\n'.join(body),encoding='utf-8')
     return payload,report

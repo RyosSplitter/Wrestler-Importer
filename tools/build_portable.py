@@ -53,6 +53,8 @@ def build():
     sources=destination/'sources';sources.mkdir();shutil.copy2(source,sources/source.name)
     for folder in ('desktop','tools','model_qa','app','stable_pipeline'):
         shutil.copytree(ROOT/folder,sources/'converter'/folder,ignore=shutil.ignore_patterns('__pycache__','*.pyc'))
+    (sources/'converter/experiments').mkdir()
+    shutil.copy2(ROOT/'experiments/texture_fidelity_selection.py',sources/'converter/experiments/texture_fidelity_selection.py')
     for filename in ('ps2psp_converter.py','requirements-desktop.txt','requirements-qa.txt','requirements.txt','REIMPLEMENTATION_GUIDE.txt'):
         shutil.copy2(ROOT/filename,sources/'converter'/filename)
     shutil.copytree(ROOT/'docs/hctp-psp',sources/'converter/docs/hctp-psp')

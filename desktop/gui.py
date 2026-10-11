@@ -33,6 +33,8 @@ class Application:
         # Session-only and deliberately OFF, even when an earlier job enabled it.
         self.adaptive_textures=tk.BooleanVar(value=False)
         self.skin_palette_compatibility=tk.BooleanVar(value=True)
+        self.review_textures=tk.BooleanVar(value=False)
+        self.priority_textures=();self.source_inspection=None
         self.info=tk.StringVar(value='No source selected');self.output=tk.StringVar(value='Your converted PSP output will appear here.')
         # Vista is Tk's native Windows 7-era control theme. Keep native button,
         # checkbox, focus and disabled rendering; use a light fallback elsewhere.
@@ -99,6 +101,10 @@ class Application:
             variable=self.skin_palette_compatibility,bg=BG,fg=FG,selectcolor='#ffffff',activebackground=BG,
             activeforeground=FG,anchor='w',justify='left',wraplength=280)
         self.skin_checkbox.pack(fill='x')
+        self.review_checkbox=tk.Checkbutton(options,text='Review textures before conversion (up to 3 priorities)',
+            variable=self.review_textures,bg=BG,fg=FG,selectcolor='#ffffff',activebackground=BG,
+            activeforeground=FG,anchor='w',justify='left',wraplength=280)
+        self.review_checkbox.pack(fill='x')
         ttk.Label(left,text='Target: SVR 2011 PSP\nHCTP and compatible custom PACs supported.',
             style='Muted.TLabel',wraplength=330,justify='left').pack(fill='x',pady=12)
 
@@ -144,6 +150,8 @@ class Application:
         if self.inspector is not None:messagebox.showinfo(NAME,'Wait for the current input check to finish.');return
         path=Path(path)
         if not path.is_file() or path.suffix.lower()!='.pac':messagebox.showerror(NAME,'Select an existing .pac file.');return
+        self.clean_inspection()
+        self.priority_textures=();self.source_inspection=None
         self.source=None;self.result=None;self.save.configure(state='disabled');self.convert.configure(state='disabled')
         self.drop.configure(text=path.name);self.info.set('Checking container and PS2 textures…');self.output.set('Your converted PSP output will appear here.');self.preview.configure(image='',text='Checking source…')
         self.inspect_root=Path(tempfile.mkdtemp(prefix='inspect-',dir=data_dir()));self.pending_source=str(path.resolve())
@@ -160,11 +168,25 @@ class Application:
         from desktop.core import Request
         try:Request(self.source,self.base.get()).validate()
         except Exception as e:messagebox.showerror(NAME,str(e));return
+        priorities=()
+        if self.review_textures.get():
+            from desktop.texture_review import TextureChooser
+            if not self.source_inspection or not self.source_inspection.get('texture_previews'):
+                messagebox.showerror(NAME,'Source previews are unavailable. Select the source again.');return
+            selection=TextureChooser(self.root,self.source_inspection['texture_previews'],self.priority_textures).show()
+            if selection is None:return
+            self.priority_textures=selection;priorities=selection
+        options=dict(source=self.source,base=self.base.get(),source_format='hctp',
+            adaptive_textures=self.adaptive_textures.get(),skin_palette_compatibility=self.skin_palette_compatibility.get(),
+            priority_textures=list(priorities),texture_review_sha256=self.source_inspection['source_sha256'] if priorities else '')
+        try:Request(**options).validate()
+        except Exception as e:messagebox.showerror(NAME,str(e));return
         self.job=data_dir()/'jobs'/uuid.uuid4().hex;self.job.mkdir(parents=True)
-        (self.job/'request.json').write_text(json.dumps(dict(source=self.source,base=self.base.get(),source_format='hctp',adaptive_textures=self.adaptive_textures.get(),skin_palette_compatibility=self.skin_palette_compatibility.get())),encoding='utf-8')
+        (self.job/'request.json').write_text(json.dumps(options),encoding='utf-8')
         self.result=None;self.save.configure(state='disabled');self.convert.configure(state='disabled');self.base_button.configure(state='disabled');self.cancel.configure(state='normal')
         self.adaptive_checkbox.configure(state='disabled')
         self.skin_checkbox.configure(state='disabled')
+        self.review_checkbox.configure(state='disabled')
         self.output.set('Building an experimental PSP candidate…');self.preview.configure(image='',text='Converting…');self.progress['value']=0
         self.process=self.spawn(['--worker',str(self.job/'request.json')]);self.status.set('Starting isolated conversion job…')
     def cancel_job(self):
@@ -175,10 +197,11 @@ class Application:
                 r=json.loads((self.inspect_root/'result.json').read_text())
                 if not r['ok']:raise ValueError(r['error'])
                 self.source=self.pending_source;v=r['info'];self.info.set(f"{v['format']} • {v['model']}\n{v['bytes']:,} bytes • {v['triangles']:,} main-model triangles\n{v.get('model_count',1)} models • {v['textures']} textures")
+                self.source_inspection=v
                 self.status.set('Source validated. Ready to convert.')
             except Exception as e:self.info.set('Input rejected');self.status.set(str(e));messagebox.showerror('Input check',str(e))
-            import shutil
-            shutil.rmtree(self.inspect_root,ignore_errors=True);self.inspector=None;self.convert.configure(state='normal')
+            if self.source is None:self.clean_inspection()
+            self.inspector=None;self.convert.configure(state='normal')
         if self.busy():
             events=self.job/'events.jsonl'
             if events.exists():
@@ -189,6 +212,7 @@ class Application:
                 self.process=None;self.cancel.configure(state='disabled');self.convert.configure(state='normal');self.base_button.configure(state='normal')
                 self.adaptive_checkbox.configure(state='normal')
                 self.skin_checkbox.configure(state='normal')
+                self.review_checkbox.configure(state='normal')
                 try:
                     if not (self.job/'success.json').exists():
                         failure=json.loads((self.job/'failure.json').read_text(encoding='utf-8'));self.status.set(failure['error'])
@@ -198,9 +222,11 @@ class Application:
                         self.output.set(f"{Path(r['pac']).name}  •  {r['bytes']:,} bytes\nNative checks passed • {r.get('model_count',1)} models • {r.get('total_meshes',r['meshes'])} meshes • {r.get('total_triangles',r['triangles']):,} triangles\nQA: {r['review_flags']} findings to review • PPSSPP validation required")
                         if r.get('adaptive_textures'):
                             self.output.set(self.output.get()+f"\nAdaptive textures: {r['adaptive_textures']['review_flags']} texture tradeoffs — open QA report")
+                        if r.get('texture_priorities'):
+                            t=r['texture_priorities'];self.output.set(self.output.get()+f"\nTexture priorities: {len(t['names'])} selected; {t['reductions']} still reduced — open QA report")
                         self.save.configure(state='normal');self.status.set('Review the PSP preview and QA report before saving.');self.show_preview()
                 except Exception as e:self.status.set('Worker ended unexpectedly; inspect Logs.');messagebox.showerror(NAME,str(e))
-        if self.closing and not self.busy() and self.inspector is None:self.root.destroy();return
+        if self.closing and not self.busy() and self.inspector is None:self.clean_inspection();self.root.destroy();return
         self.root.after(200,self.poll)
     def set_view(self,view):self.view=view;self.show_preview()
     def toggle_zoom(self):self.zoom='zoom' if self.zoom=='full' else 'full';self.show_preview()
@@ -230,7 +256,11 @@ class Application:
         if self.saved:self.open_path(Path(self.saved).parent)
         elif self.result:self.open_path(Path(self.result['pac']).parent)
     def open_logs(self):self.open_path(self.job if hasattr(self,'job') else data_dir())
+    def clean_inspection(self):
+        import shutil
+        if self.inspect_root is not None:shutil.rmtree(self.inspect_root,ignore_errors=True)
+        self.inspect_root=None
     def close(self):
         self.closing=True
         if self.busy():self.cancel_job()
-        elif self.inspector is None:self.root.destroy()
+        elif self.inspector is None:self.clean_inspection();self.root.destroy()

@@ -24,6 +24,11 @@ installation is required. Conversion and previews work offline.
    decision report are retained in the job and linked from QA. See
    [adaptive texture documentation](portable-adaptive-textures.md). No model or
    material payloads change in that stage; gameplay validation remains required.
+   Optionally enable **Review textures before conversion (up to 3 priorities)**
+   to inspect source maps when you press Convert. Select up to three quality
+   priorities; Cancel starts no conversion. Remaining reductions appear in the
+   output summary and linked QA report. Review defaults OFF.
+   [Selection behavior and budget limits](portable-texture-review.md).
 4. Review the **final PSP output**. Use front/rear/sides/three-quarter, Zoom and
    click the preview to enlarge it. Open the QA report for source comparisons,
    analytical poses, heatmaps and material-boundary findings.
