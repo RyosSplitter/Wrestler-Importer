@@ -28,7 +28,7 @@ class TextureReviewTests(unittest.TestCase):
         rgba=np.zeros((16,32,4),np.uint8);rgba[4:8,4:8]=[50,60,70,127]
         with tempfile.TemporaryDirectory() as t:
             row=source_previews([(0,'../unsafe',b'',rgba,{'format':'synthetic'})],t)[0]
-            self.assertEqual(Path(row['png']).parent,Path(t))
+            self.assertEqual(Path(row['png']).parent,Path(t).resolve())
             np.testing.assert_array_equal(np.asarray(Image.open(row['png'])),rgba)
 
             self.assertEqual((row['width'],row['height'],row['useful_colors']),(32,16,1))

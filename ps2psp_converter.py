@@ -82,7 +82,8 @@ def main():
         if app.review_textures.get() is not False:raise ValueError('Texture review must default OFF.')
         from desktop.texture_review import TextureChooser,source_previews
         import numpy as np
-        preview_root=Path(sys.argv[2]).with_suffix('');preview_root.mkdir(parents=True,exist_ok=True)
+        import tempfile
+        preview_root=Path(tempfile.mkdtemp(prefix='texture-smoke-',dir=Path(sys.argv[2]).parent))
         rgba=np.zeros((32,32,4),np.uint8);rgba[4:28,4:28]=[100,130,170,255]
         entries=source_previews([(i,'Example '+str(i+1),b'',rgba,{}) for i in range(4)],preview_root)
         dialog=TextureChooser(app.root,entries)
