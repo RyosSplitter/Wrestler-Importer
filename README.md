@@ -16,8 +16,8 @@ The [v0.25.3 Textures dropdown](docs/portable-texture-review.md) offers Default 
 The isolated [v0.25.1 scalp compatibility update](docs/portable-scalp-compatibility.md)
 adds the visually accepted single-slot adaptation and full-head QA, preserving
 both texture paths. Main and accepted PAC baselines remain unchanged.
-[Download the verified Windows v0.25.4 preview](https://github.com/RyosSplitter/Wrestler-Importer/releases/tag/portable-preview-25-32317d1949c71193be542ab16ad4faec1c3c040e).
-It includes Maximum Downgrade; the priority reallocation fix requires v0.25.5.
+[Download the verified Windows v0.25.5 preview](https://github.com/RyosSplitter/Wrestler-Importer/releases/tag/portable-preview-26-d90edbbd716d301fc27bd913538c26904fca26f6).
+It includes Maximum Downgrade and the priority reallocation fix.
 
 Read the [standalone HCTP → PSP developer reference](docs/hctp-psp/README.md)
 and [REIMPLEMENTATION_GUIDE.txt](REIMPLEMENTATION_GUIDE.txt). They document binary

@@ -96,3 +96,11 @@ selected-quality floors and the same padded-memory/PAC budgets. Some selections
 receive no upgrade under those guards; the UI now reports this explicitly.
 See `downloads/priority-reallocation/reference-results.json`. These trials run
 over retained historical priority baselines, not fresh geometry conversions.
+
+**CONFIRMED Windows release:** All 23 build steps passed, including the full
+unit suite, frozen UI/runtime, source conversions and QA, ATO, both priority
+paths, Downgrade, Maximum and exact model checks. The v0.25.5 ZIP is 556822584 bytes.
+Producer SHA-256 and GitHub asset digest agree: `ee507ae511d889add851fb01e77fbe3c9491e286728fc7d58791136b195c9572`.
+Small screenshot/checksum assets were downloaded and hashed locally. The large
+ZIP was not independently downloaded/rehashed. See
+`downloads/priority-reallocation/windows-release.json`. PPSSPP remains pending.
