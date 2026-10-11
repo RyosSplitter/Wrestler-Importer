@@ -122,3 +122,53 @@ and recalculate shading normals afterward. Smoothing vertex positions is a
 shape change, not a substitute for reducing triangles. This update adds no new
 geometry mode; preserving shape must be measured against the accepted baseline
 before any future simplification is enabled.
+
+## Supplied Black Biker Shorts trial
+
+**CONFIRMED local binary/QA evidence:** Source SHA-256
+`962311ecf26ef5b686cd83e08d689087b478676888416ebdf96b30a17eff9e94`.
+Using the existing Kurt PSP donor, unmodified Default fitting reproduced the
+reported151552-byte rejection. Its first unbounded-precision model alone plus
+retained data exceeded the cap, so texture fitting uses the established
+bounded-precision candidate, not an undocumented extra anatomy operation.
+
+| Quantity | Frozen candidate | Maximum final |
+|---|---:|---:|
+| PAC bytes |151552|147456|
+| Stored model bytes |109803|109803|
+| Stored costume texture table bytes |34390|29084|
+| Padded costume pixels/CLUT bytes |50304|41984|
+| Meshes |51|51|
+| Vertices |2875|2875|
+| Triangles |2576|2576|
+| Textures |27|27|
+
+Final PAC SHA-256:
+`513df934d4da2820c337911b1670a8a47bbfae82608f318eaa9a2800bf503e27`.
+The stored and decoded model section2 and retained section8 are exact. Nine
+GIMs changed: eight changes have zero measured occupied-area information loss;
+the meaningful tradeoff is `kami_b`128×128→64×128, retaining256 useful RGBA
+colors/slots. A first fitting64×64 candidate143360 bytes was refined upward;
+the final fills the largest allowed padded archive block. Hair-detail loss is
+reported, not called lossless. CPU front/rear renders show the same geometry.
+
+The complete static, regional, analytical-pose and head QA was run on both
+texture candidates. `rest`, `poses`, `head_diagnostics`, `flags` and
+`unresolved_review` are numerically identical. **47 existing review findings
+remain**; this is a no-new-geometric-regression result, not an all-regions-pass
+claim. Native structural, material-depth, palette, weight, eye replay, size and
+non-texture preservation checks passed. Actual PPSSPP compatibility remains
+**UNKNOWN** until the user tests this output.
+
+**CONFIRMED local regression evidence:** All282 tests passed before adding the
+independent recovery-optimality check; the expanded nine-test Maximum suite
+also passed. Existing accepted Rock, Lance, Jericho, Benoit and0401 current PACs
+are byte-identical when selected for Maximum and already fitting. The Tk smoke
+verified Default startup, five exclusive modes, conditional fixed-step controls,
+three-priority limit and the existing sidebar. A Windows build/verification run
+is tracked separately; local Linux evidence is not called a clean-Windows test.
+
+See `downloads/maximum-downgrade/verification.json`, its texture report and the
+separate test bundle. This output does not overwrite any accepted PAC. The user
+chose to keep this update texture-only; Geometry Downgrade remains a separate
+future experiment.

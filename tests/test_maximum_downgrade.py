@@ -85,6 +85,22 @@ class MaximumDowngradeTests(unittest.TestCase):
             b,s=fit_pac(baseline,Path(t)/'b',target=target)
             self.assertEqual(a,b);self.assertEqual(r,s)
 
+    def test_spare_budget_does_not_leave_a_dominated_single_texture(self):
+        baseline=self.baseline();target=len(baseline)-2048
+        table=next(raw for s,raw in sections(baseline) if s['id']==9)
+        from tools.pac_inspect import parse_textures
+        texture=parse_textures(table)[0];raw=table[texture['offset']:texture['offset']+texture['size']]
+        with tempfile.TemporaryDirectory() as t:
+            data,report=fit_pac(baseline,t,target=target)
+            selected=report['textures'][0]['selected']['metrics']['perceptual_loss']
+            # Independent exhaustive one-map check, rather than replaying the
+            # shortlist/greedy logic: no better legal generated row may fit.
+            for row in candidates(raw):
+                if row['metrics']['perceptual_loss']>=selected-1e-12:continue
+                new_table=texture_table(['skin'],[row['raw']],gim_reader=read_gim)
+                costs=[len(replace_sections(baseline,{9:compress(new_table,max_distinct=n)})) for n in (200,220)]
+                self.assertGreater(min(costs),target)
+
     def test_cancellation_propagates(self):
         def cancel():raise RuntimeError('cancelled')
         with tempfile.TemporaryDirectory() as t:

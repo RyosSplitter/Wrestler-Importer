@@ -1,0 +1,167 @@
+{
+  "status": "pass",
+  "ordered_topology_exact": true,
+  "dense_weights_exact": true,
+  "opaque_rendering_and_draw_records_exact": true,
+  "held_ocular_vertex_records": 135,
+  "poses": {
+    "rest": {
+      "maximum_position_error_height": 2.121409585750335e-05,
+      "maximum_ocular_error_height": 0.0,
+      "finite_positions": true
+    },
+    "standing": {
+      "maximum_position_error_height": 2.121409585750335e-05,
+      "maximum_ocular_error_height": 0.0,
+      "finite_positions": true
+    },
+    "walk-left": {
+      "maximum_position_error_height": 2.1214095857503888e-05,
+      "maximum_ocular_error_height": 0.0,
+      "finite_positions": true
+    },
+    "walk-right": {
+      "maximum_position_error_height": 2.1214095857503806e-05,
+      "maximum_ocular_error_height": 0.0,
+      "finite_positions": true
+    },
+    "bend": {
+      "maximum_position_error_height": 2.121409585750335e-05,
+      "maximum_ocular_error_height": 0.0,
+      "finite_positions": true
+    },
+    "crouch": {
+      "maximum_position_error_height": 2.1214095857507235e-05,
+      "maximum_ocular_error_height": 0.0,
+      "finite_positions": true
+    },
+    "shoulders-up": {
+      "maximum_position_error_height": 2.121409585750335e-05,
+      "maximum_ocular_error_height": 0.0,
+      "finite_positions": true
+    },
+    "neck-turn": {
+      "maximum_position_error_height": 2.121409585750335e-05,
+      "maximum_ocular_error_height": 0.0,
+      "finite_positions": true
+    },
+    "head-tilt": {
+      "maximum_position_error_height": 2.121409585750335e-05,
+      "maximum_ocular_error_height": 0.0,
+      "finite_positions": true
+    },
+    "jaw-06": {
+      "maximum_position_error_height": 2.121409585750335e-05,
+      "maximum_ocular_error_height": 0.0,
+      "finite_positions": true
+    },
+    "jaw-12": {
+      "maximum_position_error_height": 2.121409585750335e-05,
+      "maximum_ocular_error_height": 0.0,
+      "finite_positions": true
+    },
+    "jaw-18": {
+      "maximum_position_error_height": 2.121409585750335e-05,
+      "maximum_ocular_error_height": 0.0,
+      "finite_positions": true
+    },
+    "jaw-25": {
+      "maximum_position_error_height": 2.121409585750335e-05,
+      "maximum_ocular_error_height": 0.0,
+      "finite_positions": true
+    },
+    "elbow-flex-left": {
+      "maximum_position_error_height": 2.121409585750335e-05,
+      "maximum_ocular_error_height": 0.0,
+      "finite_positions": true
+    },
+    "elbow-flex-right": {
+      "maximum_position_error_height": 2.121409585750335e-05,
+      "maximum_ocular_error_height": 0.0,
+      "finite_positions": true
+    }
+  },
+  "ocular_probes": {
+    "rest": {
+      "maximum_position_error_height": 2.121409585750335e-05,
+      "maximum_ocular_error_height": 0.0,
+      "finite_positions": true
+    },
+    "eyes-world-x--25": {
+      "maximum_position_error_height": 2.121409585750335e-05,
+      "maximum_ocular_error_height": 0.0,
+      "finite_positions": true
+    },
+    "eyes-world-x-25": {
+      "maximum_position_error_height": 2.121409585750335e-05,
+      "maximum_ocular_error_height": 0.0,
+      "finite_positions": true
+    },
+    "eyes-world-y--25": {
+      "maximum_position_error_height": 2.121409585750335e-05,
+      "maximum_ocular_error_height": 0.0,
+      "finite_positions": true
+    },
+    "eyes-world-y-25": {
+      "maximum_position_error_height": 2.121409585750335e-05,
+      "maximum_ocular_error_height": 0.0,
+      "finite_positions": true
+    },
+    "eyes-world-z--25": {
+      "maximum_position_error_height": 2.121409585750335e-05,
+      "maximum_ocular_error_height": 0.0,
+      "finite_positions": true
+    },
+    "eyes-world-z-25": {
+      "maximum_position_error_height": 2.121409585750335e-05,
+      "maximum_ocular_error_height": 0.0,
+      "finite_positions": true
+    },
+    "l-eye-local-turn": {
+      "maximum_position_error_height": 2.121409585750335e-05,
+      "maximum_ocular_error_height": 0.0,
+      "finite_positions": true
+    },
+    "l-lid-local-close": {
+      "maximum_position_error_height": 2.121409585750335e-05,
+      "maximum_ocular_error_height": 0.0,
+      "finite_positions": true
+    },
+    "r-eye-local-turn": {
+      "maximum_position_error_height": 2.121409585750335e-05,
+      "maximum_ocular_error_height": 0.0,
+      "finite_positions": true
+    },
+    "r-lid-local-close": {
+      "maximum_position_error_height": 2.121409585750335e-05,
+      "maximum_ocular_error_height": 0.0,
+      "finite_positions": true
+    },
+    "ocular-local-translate-x": {
+      "maximum_position_error_height": 2.121409585750335e-05,
+      "maximum_ocular_error_height": 0.0,
+      "finite_positions": true
+    },
+    "ocular-local-translate-y": {
+      "maximum_position_error_height": 2.121409585750335e-05,
+      "maximum_ocular_error_height": 0.0,
+      "finite_positions": true
+    },
+    "ocular-local-translate-z": {
+      "maximum_position_error_height": 2.121409585750335e-05,
+      "maximum_ocular_error_height": 0.0,
+      "finite_positions": true
+    },
+    "eye-lid-neck-jaw": {
+      "maximum_position_error_height": 2.121409585750335e-05,
+      "maximum_ocular_error_height": 0.0,
+      "finite_positions": true
+    },
+    "psp-brow-local": {
+      "maximum_position_error_height": 2.121409585750335e-05,
+      "maximum_ocular_error_height": 0.0,
+      "finite_positions": true
+    }
+  },
+  "limitation": "Analytical poses on the selected PSP rig; PPSSPP gameplay validation remains required."
+}

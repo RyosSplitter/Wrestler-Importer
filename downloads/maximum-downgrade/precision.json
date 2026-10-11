@@ -1,0 +1,25 @@
+{
+  "status": "bounded_experiment_pending_native_pose_and_visual_validation",
+  "position_divisions": 32768,
+  "position_step": 0.00048828125,
+  "maximum_position_error_height": 2.121409585750335e-05,
+  "maximum_uv_error": 3.0517578125e-05,
+  "maximum_normal_angle_degrees": 0.17193541132046747,
+  "maximum_normal_length_error": 0.0028345235867681673,
+  "changed_vertex_records": {
+    "position": 2740,
+    "uv": 2667,
+    "normal": 2740
+  },
+  "held_ocular_vertex_records": 135,
+  "triangle_count_unchanged": true,
+  "vertex_count_unchanged": true,
+  "weights_and_bone_palettes_unchanged": true,
+  "textures_unchanged": true,
+  "limits": {
+    "position_error_height": 3e-05,
+    "uv_error": 3.0517578125e-05,
+    "normal_angle_degrees": 0.25,
+    "normal_length_error": 0.007
+  }
+}

@@ -1,0 +1,131 @@
+{
+  "final_pac_bytes": 147456,
+  "baseline_pac_bytes": 151552,
+  "sha256": "513df934d4da2820c337911b1670a8a47bbfae82608f318eaa9a2800bf503e27",
+  "target": 148000,
+  "model_bytes_exact": true,
+  "stored_model_hash_exact": true,
+  "non_texture_sections_exact": true,
+  "unchanged_sections": [
+    2,
+    8
+  ],
+  "native_validation": "passed",
+  "ocular_validation": {
+    "status": "pass",
+    "selected_source_records": 82,
+    "serialized_ocular_records": 135,
+    "poses": {
+      "rest": {
+        "maximum_legacy_eye_motion_delta": 1.7763568394002505e-15,
+        "unsupported_controllers": [],
+        "finite_positions": true
+      },
+      "eyes-world-x--25": {
+        "maximum_legacy_eye_motion_delta": 7.916050037692912e-10,
+        "unsupported_controllers": [],
+        "finite_positions": true
+      },
+      "eyes-world-x-25": {
+        "maximum_legacy_eye_motion_delta": 7.551381742132435e-10,
+        "unsupported_controllers": [],
+        "finite_positions": true
+      },
+      "eyes-world-y--25": {
+        "maximum_legacy_eye_motion_delta": 7.820025182958545e-10,
+        "unsupported_controllers": [],
+        "finite_positions": true
+      },
+      "eyes-world-y-25": {
+        "maximum_legacy_eye_motion_delta": 7.647378841291186e-10,
+        "unsupported_controllers": [],
+        "finite_positions": true
+      },
+      "eyes-world-z--25": {
+        "maximum_legacy_eye_motion_delta": 1.2737899623971316e-10,
+        "unsupported_controllers": [],
+        "finite_positions": true
+      },
+      "eyes-world-z-25": {
+        "maximum_legacy_eye_motion_delta": 1.2262396653639485e-10,
+        "unsupported_controllers": [],
+        "finite_positions": true
+      },
+      "l-eye-local-turn": {
+        "maximum_legacy_eye_motion_delta": 1.7677365127255484e-10,
+        "unsupported_controllers": [],
+        "finite_positions": true
+      },
+      "l-lid-local-close": {
+        "maximum_legacy_eye_motion_delta": 3.21298709859974e-10,
+        "unsupported_controllers": [],
+        "finite_positions": true
+      },
+      "r-eye-local-turn": {
+        "maximum_legacy_eye_motion_delta": 7.647378286179674e-10,
+        "unsupported_controllers": [],
+        "finite_positions": true
+      },
+      "r-lid-local-close": {
+        "maximum_legacy_eye_motion_delta": 6.068301416917166e-10,
+        "unsupported_controllers": [],
+        "finite_positions": true
+      },
+      "ocular-local-translate-x": {
+        "maximum_legacy_eye_motion_delta": 1.1688645606966475e-09,
+        "unsupported_controllers": [],
+        "finite_positions": true
+      },
+      "ocular-local-translate-y": {
+        "maximum_legacy_eye_motion_delta": 1.1688623402505982e-09,
+        "unsupported_controllers": [],
+        "finite_positions": true
+      },
+      "ocular-local-translate-z": {
+        "maximum_legacy_eye_motion_delta": 1.1688646162077987e-09,
+        "unsupported_controllers": [],
+        "finite_positions": true
+      },
+      "eye-lid-neck-jaw": {
+        "maximum_legacy_eye_motion_delta": 6.449393796792435e-10,
+        "unsupported_controllers": [],
+        "finite_positions": true
+      },
+      "psp-brow-local": {
+        "maximum_legacy_eye_motion_delta": 4.795184249672957e-10,
+        "unsupported_controllers": [],
+        "finite_positions": true
+      }
+    },
+    "limitation": "Compatibility with the selected donor transfer, not proof of actual SVR eye animation semantics; PPSSPP validation required."
+  },
+  "before": {
+    "meshes": 51,
+    "vertices": 2875,
+    "triangles": 2576,
+    "textures": 27,
+    "stored_model_bytes": 109803,
+    "stored_textures": 34390
+  },
+  "game_validation": "Pending PPSSPP; structural and analytical evidence is not a gameplay certificate.",
+  "after": {
+    "meshes": 51,
+    "vertices": 2875,
+    "triangles": 2576,
+    "textures": 27,
+    "stored_model_bytes": 109803,
+    "stored_textures": 29084
+  },
+  "source_sha256": "962311ecf26ef5b686cd83e08d689087b478676888416ebdf96b30a17eff9e94",
+  "geometric_qa_before_after_exact": {
+    "rest": true,
+    "poses": true,
+    "head_diagnostics": true,
+    "flags": true,
+    "unresolved_review": true
+  },
+  "existing_qa_review_findings": 47,
+  "full_qa_samples": 24000,
+  "full_qa_render_resolution": 320,
+  "qa": "Full static, regional, head and analytical-pose suite completed; existing findings unchanged."
+}

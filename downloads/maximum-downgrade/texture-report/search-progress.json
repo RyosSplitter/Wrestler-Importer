@@ -1,0 +1,48 @@
+{
+  "pac_bytes": 143360,
+  "stored_texture_bytes": 25736,
+  "decisions": [
+    {
+      "reason": "Batched zero-measured-loss texture reductions",
+      "selected_candidates": [
+        1,
+        20,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        10,
+        0,
+        10,
+        0,
+        0,
+        0,
+        20,
+        0,
+        0,
+        20,
+        0,
+        0,
+        20,
+        20,
+        0,
+        0
+      ],
+      "pac_bytes": 151552,
+      "stored_texture_bytes": 34335
+    },
+    {
+      "texture": "kami_b",
+      "from_candidate": 0,
+      "to_candidate": 7,
+      "priority_adjusted_loss": 0.6008368466769045,
+      "pac_bytes": 143360,
+      "stored_texture_bytes": 25736
+    }
+  ]
+}
