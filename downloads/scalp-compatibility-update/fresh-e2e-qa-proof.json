@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "fresh_full_conversions": true,
+  "qa_samples_each_direction": 24000,
+  "body_render_resolution": 320,
+  "head_render_resolution": 160,
+  "checks": {
+    "rest": true,
+    "poses": true,
+    "pose_controls": true,
+    "head_rest": true,
+    "head_poses": true
+  },
+  "legacy_sha256": "ae56c7e0f18f230a865790a5f7bb18796003c354c65fa1f1be744e1c4581a16e",
+  "legacy_bytes": 143360,
+  "updated_adaptive_sha256": "d7f92e56ad594657d0b8aa29e2fd3a7fd50438ff0029b4b7a0c5bbd7d6f2228f",
+  "updated_adaptive_bytes": 147456,
+  "old_geometry_review_findings": 44,
+  "new_geometry_review_findings": 43,
+  "known_layout_warning_removed": true,
+  "inputs_unchanged": true,
+  "note": "Texture modes differ intentionally; clay geometry/body/head/pose metrics match exactly. Compatibility OFF reproduces the previously published current-method PAC SHA-256."
+}

@@ -1,0 +1,118 @@
+{
+  "enabled": true,
+  "status": "pass",
+  "policy": "One-slot float32 skinned buffers padded to three with exact zero weights; two-slot and rigid layouts unchanged.",
+  "changed_models": [
+    {
+      "section": 2,
+      "changed_meshes": [
+        {
+          "mesh": 0,
+          "old_palette": [
+            4
+          ],
+          "new_palette": [
+            4,
+            3,
+            2
+          ],
+          "old_stride": 40,
+          "new_stride": 48,
+          "old_flag": "0x17ff",
+          "new_flag": "0x97ff",
+          "vertices": 131
+        }
+      ],
+      "added_vertex_buffer_bytes": 1048,
+      "original_decoded_bytes": 187888,
+      "decoded_bytes": 188928,
+      "preservation": {
+        "vertex_suffix_bits_identical": true,
+        "per_bone_nonzero_weight_bits_identical": true,
+        "ordered_global_indices_and_triangle_winding_identical": true,
+        "ordered_material_state_and_strip_metadata_identical": true,
+        "skeleton_texture_names_model_name_byte_identical": true,
+        "secondary_model_descriptor_count_matches_mesh_count": true,
+        "opaque_mesh_palette_model_metadata_identical": true,
+        "unmerged_bounds_identical_and_merged_bounds_enclose_original_spheres": true,
+        "before_and_after_allocation_palette_index_weight_relocation_audit_passed": true
+      },
+      "poses": {
+        "status": "pass",
+        "effective_positions_faces_dense_weights_exact": true,
+        "body_pose_maximum_component_deltas": {
+          "standing": 0.0,
+          "walk-left": 0.0,
+          "walk-right": 0.0,
+          "bend": 0.0,
+          "crouch": 0.0,
+          "shoulders-up": 0.0,
+          "neck-turn": 0.0,
+          "head-tilt": 0.0,
+          "jaw-06": 0.0,
+          "jaw-12": 0.0,
+          "jaw-18": 0.0,
+          "jaw-25": 0.0,
+          "elbow-flex-left": 0.0,
+          "elbow-flex-right": 0.0
+        },
+        "head_probe_maximum_component_deltas": {
+          "rest": 0.0,
+          "eyes-world-x--25": 0.0,
+          "eyes-world-x-25": 0.0,
+          "eyes-world-y--25": 0.0,
+          "eyes-world-y-25": 0.0,
+          "eyes-world-z--25": 0.0,
+          "eyes-world-z-25": 0.0,
+          "l-eye-local-turn": 0.0,
+          "l-lid-local-close": 0.0,
+          "r-eye-local-turn": 0.0,
+          "r-lid-local-close": 0.0,
+          "ocular-local-translate-x": 0.0,
+          "ocular-local-translate-y": 0.0,
+          "ocular-local-translate-z": 0.0,
+          "eye-lid-neck-jaw": 0.0,
+          "psp-brow-local": 0.0,
+          "l_mayu_00-local-x": 0.0,
+          "l_mayu_00-local-y": 0.0,
+          "l_mayu_00-local-z": 0.0,
+          "l_mayu_01-local-x": 0.0,
+          "l_mayu_01-local-y": 0.0,
+          "l_mayu_01-local-z": 0.0,
+          "l_mayu_02-local-x": 0.0,
+          "l_mayu_02-local-y": 0.0,
+          "l_mayu_02-local-z": 0.0,
+          "r_mayu_00-local-x": 0.0,
+          "r_mayu_00-local-y": 0.0,
+          "r_mayu_00-local-z": 0.0,
+          "r_mayu_01-local-x": 0.0,
+          "r_mayu_01-local-y": 0.0,
+          "r_mayu_01-local-z": 0.0,
+          "r_mayu_02-local-x": 0.0,
+          "r_mayu_02-local-y": 0.0,
+          "r_mayu_02-local-z": 0.0,
+          "head-turn": 0.0,
+          "neck-turn": 0.0,
+          "jaw-open": 0.0
+        },
+        "limitation": "Exact analytical LBS replay; cannot prove SVR runtime interpretation."
+      },
+      "unselected_mesh_layouts_exact": true
+    }
+  ],
+  "changed_meshes": 1,
+  "added_vertex_buffer_bytes": 1048,
+  "original_bytes": 147456,
+  "bytes": 147456,
+  "max_pac_bytes": 148000,
+  "input_sha256": "a36d20b854f7e51843345179c8eabf8c9bcebd8d55926fd67d97387bcd8d9eab",
+  "sha256": "d7f92e56ad594657d0b8aa29e2fd3a7fd50438ff0029b4b7a0c5bbd7d6f2228f",
+  "packaging_attempts": [
+    {
+      "max_distinct": 200,
+      "pac_bytes": 147456
+    }
+  ],
+  "unrelated_stored_and_decoded_sections_exact": true,
+  "limitation": "Rock control visually accepted by user in SVR 2011 PSP; general loader semantics and expanded runtime memory limits remain unknown."
+}

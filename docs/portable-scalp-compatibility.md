@@ -52,7 +52,7 @@ QA now selects the entire head through cranial bone ancestry, including the rear
 scalp, before applying poses. Vertices that escape the original head bounds
 remain selected. It checks reference surface distances, vertex outliers and
 opposed nearby face normals, with matched front, back, side and three-quarter
-renders under both face-culling conventions as well as uncullled views. Head,
+renders under both face-culling conventions as well as unculled views. Head,
 neck, jaw, eye, eyelid and eyebrow probes exercise facial deformation. Synthetic
 regressions demonstrate detection of stored spikes, inverted faces and defects
 that only appear under controller motion. Stage attribution matches region,
@@ -97,6 +97,30 @@ python ps2psp_converter.py --skin-compatibility input.pac fresh-output-directory
 
 The diagnostic command refuses existing output directories and writes a validated
 PAC and preservation report. Normal app conversions run this same adapter.
+All **253 automated tests pass** on the development runtime. Ten existing PACs
+(five wrestlers, both texture modes) pass the adapter and structural checks:
+
+| Sample | Current bytes, before → after | Adaptive bytes, before → after | Adapted meshes | Added vertex-buffer bytes |
+| --- | ---: | ---: | ---: | ---: |
+| Rock | 143360 → 143360 | 147456 → 147456 | 1 | 1048 |
+| Lance | 137216 → 137216 | 135168 → 135168 | 0 | 0 |
+| Jericho | 147456 → 147456 | 147456 → 147456 | 0 | 0 |
+| Benoit | 120832 → 120832 | 118784 → 118784 | 0 | 0 |
+| 0401 | 147456 → 147456 | 145408 → 145408 | 1 | 88 |
+
+For unchanged layouts the entire PAC is byte-identical. For adapted layouts the
+native geometry, attribute bits, effective weights and all analytical pose
+positions are identical. Neither textures nor unrelated sections change.
+This does not constitute new gameplay validation for 0401.
+
+Fresh Rock end-to-end conversions also completed with 24000 surface samples in
+each direction, 320-pixel body renders and 160-pixel full-head renders. With
+compatibility OFF, the current texture path reproduced the prior published PAC
+SHA-256 exactly. With compatibility ON and adaptive textures, its native checks
+passed at 147456 bytes. Rest, all 14 body-pose and all 37 head-probe geometric
+metrics match the OFF baseline exactly. The single-slot layout warning is
+removed; other QA review findings remain visible rather than being suppressed.
+
 Regression evidence is in `downloads/scalp-compatibility-update/` in the repository.
 The Windows workflow also tests the frozen executable with a generated one-slot
 native fixture, the packaged GUI/runtime, full converted Lance/Jericho/multi-model

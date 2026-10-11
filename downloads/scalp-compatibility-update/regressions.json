@@ -1,0 +1,112 @@
+[
+  {
+    "sample": "Rock",
+    "input": "local/content-aware/published/Rock/Rock-adaptive-experimental.pac",
+    "output": "local/scalp-update/Rock-adaptive-experimental-compatible.pac",
+    "bytes_before": 147456,
+    "bytes_after": 147456,
+    "changed_meshes": 1,
+    "added_vertex_buffer_bytes": 1048,
+    "validation": "passed",
+    "sha256": "d7f92e56ad594657d0b8aa29e2fd3a7fd50438ff0029b4b7a0c5bbd7d6f2228f"
+  },
+  {
+    "sample": "Rock",
+    "input": "local/content-aware/published/Rock/Rock-current-experimental.pac",
+    "output": "local/scalp-update/Rock-current-experimental-compatible.pac",
+    "bytes_before": 143360,
+    "bytes_after": 143360,
+    "changed_meshes": 1,
+    "added_vertex_buffer_bytes": 1048,
+    "validation": "passed",
+    "sha256": "14511317cf494c1b8234fc5569ff6dfa53d64821bbf0f95d3b2cddbaf676cc28"
+  },
+  {
+    "sample": "Lance",
+    "input": "local/content-aware/published/Lance/Lance-adaptive-experimental.pac",
+    "output": "local/scalp-update/Lance-adaptive-experimental-compatible.pac",
+    "bytes_before": 135168,
+    "bytes_after": 135168,
+    "changed_meshes": 0,
+    "added_vertex_buffer_bytes": 0,
+    "validation": "passed",
+    "sha256": "e730cb4e7c5163dd2c5819a9268ae88e80f4264c3f85c5a58aa18c050a01d6bf"
+  },
+  {
+    "sample": "Lance",
+    "input": "local/content-aware/published/Lance/Lance-current-experimental.pac",
+    "output": "local/scalp-update/Lance-current-experimental-compatible.pac",
+    "bytes_before": 137216,
+    "bytes_after": 137216,
+    "changed_meshes": 0,
+    "added_vertex_buffer_bytes": 0,
+    "validation": "passed",
+    "sha256": "1cb83929f9bdd948f2460c56d9306109fe25e0354febf09183babc72fdac50c4"
+  },
+  {
+    "sample": "Jericho",
+    "input": "local/content-aware/published/Jericho/Jericho-adaptive-experimental.pac",
+    "output": "local/scalp-update/Jericho-adaptive-experimental-compatible.pac",
+    "bytes_before": 147456,
+    "bytes_after": 147456,
+    "changed_meshes": 0,
+    "added_vertex_buffer_bytes": 0,
+    "validation": "passed",
+    "sha256": "d9841e6bc3bec17b122747578a89b624f2b4885d9a15ae0f654b51608ec78189"
+  },
+  {
+    "sample": "Jericho",
+    "input": "local/content-aware/published/Jericho/Jericho-current-experimental.pac",
+    "output": "local/scalp-update/Jericho-current-experimental-compatible.pac",
+    "bytes_before": 147456,
+    "bytes_after": 147456,
+    "changed_meshes": 0,
+    "added_vertex_buffer_bytes": 0,
+    "validation": "passed",
+    "sha256": "9e410b2580495b57bd3d5e42d06d6415674e1a475a19e95632c932ac05b1b715"
+  },
+  {
+    "sample": "Benoit",
+    "input": "local/content-aware/published/Benoit/Benoit-adaptive-experimental.pac",
+    "output": "local/scalp-update/Benoit-adaptive-experimental-compatible.pac",
+    "bytes_before": 118784,
+    "bytes_after": 118784,
+    "changed_meshes": 0,
+    "added_vertex_buffer_bytes": 0,
+    "validation": "passed",
+    "sha256": "2f59a79ad4db257dfc12855b7fe62956c593da8e19931e0a4901fd03b32ffb7a"
+  },
+  {
+    "sample": "Benoit",
+    "input": "local/content-aware/published/Benoit/Benoit-current-experimental.pac",
+    "output": "local/scalp-update/Benoit-current-experimental-compatible.pac",
+    "bytes_before": 120832,
+    "bytes_after": 120832,
+    "changed_meshes": 0,
+    "added_vertex_buffer_bytes": 0,
+    "validation": "passed",
+    "sha256": "bc1dfcbe9e91a12cb32f3c8ed045cad95a093b003b01ab8d899f93e46fbaccc1"
+  },
+  {
+    "sample": "0401",
+    "input": "local/content-aware/published/0401/0401-adaptive-experimental.pac",
+    "output": "local/scalp-update/0401-adaptive-experimental-compatible.pac",
+    "bytes_before": 145408,
+    "bytes_after": 145408,
+    "changed_meshes": 1,
+    "added_vertex_buffer_bytes": 88,
+    "validation": "passed",
+    "sha256": "f6b3ff047eab665ebbee27c521054d834b8526cd3e999f3b22e59ace1b093924"
+  },
+  {
+    "sample": "0401",
+    "input": "local/content-aware/published/0401/0401-current-experimental.pac",
+    "output": "local/scalp-update/0401-current-experimental-compatible.pac",
+    "bytes_before": 147456,
+    "bytes_after": 147456,
+    "changed_meshes": 1,
+    "added_vertex_buffer_bytes": 88,
+    "validation": "passed",
+    "sha256": "c10eb906ef49ba8594355e8a0d55b737c027e13c82175087a63a60b9f755332a"
+  }
+]
