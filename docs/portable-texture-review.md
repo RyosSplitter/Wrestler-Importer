@@ -36,3 +36,22 @@ python -m experiments.texture_fidelity_selection source-HCTP.pac accepted-PSP.pa
 ```
 
 Add `--adaptive` when testing an adaptive baseline. The script refuses an existing output directory, proves decoded non-texture identity, audits the candidate, checks source/baseline immutability and renders matching before/after views. It does not rerun geometry. `textures/report.json` lists all supported candidates, selected/rejected upgrades, source ceilings, selected/current loss and `priority_reduction_report`. `summary.json` records hashes, size and selected-map settings. These generated source-dependent reports/images are not redistributed inside the application.
+
+## Development failure retained as evidence
+
+The first Jericho ordinary-mode priority trial was correctly withheld at 26304
+pixel/CLUT bytes against a 25792-byte envelope, although its PAC fit. Investigation
+showed that the candidate generator had excluded the accepted near-opaque
+incumbents for `y2j_body` and `y2j_hiji`: their source alpha levels were respectively
+239/255 and 219/233/237/239/255. Requiring a source-sized exact-alpha replacement
+unnecessarily added 512 allocation bytes. The priority stage now permits exact
+existing incumbent bytes when **both source and incumbent stay >=128 alpha**.
+This introduces no new alpha loss; remaining incumbent alpha differences are
+reported. True cutouts still require exact source dimensions and alpha. The
+ordinary/adaptive zero-selection behavior remains unchanged. A generated
+near-opaque fixture reproduces and verifies this fallback without game assets.
+The original failed report remains in the local trial evidence; no PAC was exported.
+
+An initial Windows test also compared short-name (`RUNNER~1`) and long-name
+(`runneradmin`) aliases of the same temporary directory. Resolving both sides
+fixed the test assertion; PNG output paths were already canonical.

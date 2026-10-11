@@ -79,6 +79,21 @@ class TextureReviewTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,'no longer'):
                 optimize_pac(vectors()['psp-quad.pac'],[],t,priority_textures=['missing'])
 
+    def test_existing_near_opaque_incumbent_remains_safe_budget_fallback(self):
+        from experiments.texture_quality.frozen import FrozenPac
+        from desktop.texture_optimizer.candidates import write_gim
+        f=vectors();p,c=read_gim(f['skin-t4.gim'])
+        p=np.resize(p,(16,32)).astype(np.uint8);c[:,3]=255
+        baseline,_=FrozenPac(f['psp-quad.pac']).build({'skin':write_gim(p,c,4)})
+        source=np.resize(c[p],(32,32,4)).copy();source[::2,:,3]=239
+        with tempfile.TemporaryDirectory() as t:
+            data,r=optimize_pac(baseline,[(0,'skin',b'',source,{})],t,priority_textures=['skin'],freeze_unselected=True)
+            self.assertLessEqual(r['pixel_palette_bytes'],r['pixel_palette_budget'])
+            row=r['textures'][0]
+            self.assertGreaterEqual(row['priority_quality_improvement'],-1e-10)
+            self.assertEqual(row['selected_configuration']['height'],16)
+            self.assertFalse(row['priority_reduction_report']['full_source_preserved'])
+
     def test_final_size_cannot_be_bypassed_by_priority(self):
         f=vectors();p,c=read_gim(f['skin-t4.gim'])
         with tempfile.TemporaryDirectory() as t:

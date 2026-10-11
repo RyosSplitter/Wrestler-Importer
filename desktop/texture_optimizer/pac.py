@@ -79,6 +79,13 @@ def optimize_pac(baseline,decoded,output,*,target=148000,cancel=lambda:None,
         native_ok=bits in (4,8)
         within_source=p.shape[1]<=sources[n].shape[1] and p.shape[0]<=sources[n].shape[0] and color_count<=features['useful_source_colors']+int(features['transparent_color_required'])
         alpha_ok=not features['has_alpha'] or (rgba.shape==sources[n].shape and np.array_equal(rgba[:,:,3],sources[n][:,:,3]))
+        if priorities and np.all(sources[n][:,:,3]>=128) and np.all(rgba[:,:,3]>=128):
+            # Existing ordinary maps can contain near-opaque PS2 alpha levels
+            # quantized by the accepted pipeline. Retaining those exact bytes
+            # is a safe fallback; requiring new source-sized storage merely to
+            # retain them would consume unavailable memory. True cutouts still
+            # require exact source dimensions/alpha. No new alpha loss here.
+            alpha_ok=True
         if native_ok and within_source and alpha_ok and all(r['raw']!=gims[n] for r in rows):
             rows.append(dict(raw=gims[n],entry=dict(width=p.shape[1],height=p.shape[0],bits=bits,
                 palette_entries=len(c),requested_useful_colors=color_count,used_palette_colors=color_count,
