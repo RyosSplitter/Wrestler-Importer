@@ -34,6 +34,7 @@ from .texture_convert import read_rtx3,read_gim,write_gim4,write_gim8,budget_tex
 from .weight_trial_review import map_source,transfer,descendant_names,deform,POSES
 from .yobj_read import read_yobj
 from .yukes_bpe import compress,decompress
+from .vertex_identity import annotate, weight_key, validate_locked
 
 SOURCE_SHA='052da6cb97e1adcf865a89fd8d7d8544de8298025b36344f38de74ec600e9b1e'
 BASE_SHA='bf935a51fe30bfd2df929f8eb9e50be5d793426ea05125ca9411ce21b19ead80'
@@ -110,18 +111,23 @@ def textures(source,output):
 
 
 def pack(model,target):
+    model=annotate(copy.deepcopy(model))
     donor=copy.deepcopy(target)
     for m in donor['meshes']:m['materials']=[a for a in m['materials'] if a['control'] not in (0x115,0x117)]
     surface=Surface(donor);corners={};buckets=defaultdict(list);removed=[]
-    # Cache weight pruning by position so UV/material/region seam copies stay
-    # identical after interpolation. Keep float weights and at most four slots.
+    # Share pruning only for copies of the same proven source point. Coincident
+    # records with different topology/influences retain independent weight data.
     cache={}
     for m in model['meshes']:
         for vi,v in enumerate(m['vertices']):
-            p=tuple(v['position']);w=np.array(v['weights'])
+            validate_locked(v,m['bone_palette'])
+            p=weight_key(v,m['bone_palette'],m['index']);w=np.zeros(model['bone_count'])
+            w[m['bone_palette']]=v['weights']
+            old=w.sum();w[np.argsort(w)[:-4]]=0;removed.append(float(old-w.sum()));w/=w.sum()
+            validate_locked(dict(v,weights=w.tolist()),list(range(model['bone_count'])))
             if p not in cache:
-                old=w.sum();w[np.argsort(w)[:-4]]=0;removed.append(float(old-w.sum()));w/=w.sum();cache[p]=w
-            elif np.max(np.abs(cache[p]-w/w.sum()))>2e-6 and np.count_nonzero(w>1e-7)<=4:raise ValueError('Conflicting seam weights')
+                cache[p]=w
+            elif np.max(np.abs(cache[p]-w))>2e-6:raise ValueError('Inconsistent copies of source skinning record')
             corners[m['index'],vi]=(v,cache[p])
     for m in model['meshes']:
         for mat in m['materials']:
@@ -153,7 +159,7 @@ def pack(model,target):
                         v,w=corners[idx];v=copy.deepcopy(v);v['weights']=w[palette].tolist()
                         # Only identical serialized attributes may share an index.
                         # Materials and draw records remain separate and ordered.
-                        key=(attributes(idx),idx if idx in independent else None)
+                        key=(attributes(idx),tuple(v['skin_domain']),idx if idx in independent else None)
                         if key in attribute_map:
                             vmap[idx]=attribute_map[key];duplicates_removed+=1
                         else:
@@ -201,9 +207,22 @@ def check_protected(reference,model):
     return comparisons
 
 
-def pose_checks(model,poses):
+def pose_checks(model,poses,source_reference=None):
     ps,ws=dense(model);groups=defaultdict(list)
     for i,p in enumerate(ps):groups[struct.pack('<3f',*p)].append(i)
+    divergent=any(len(rows)>1 and np.max(np.ptp(ws[rows],axis=0))>2e-6 for rows in groups.values())
+    if divergent:
+        if source_reference is None:raise ValueError('Source reference required to classify coincident skinning differences')
+        from model_qa.skinning_records import compare
+        compare(source_reference,model,poses=poses)
+    equivalent=[]
+    for rows in groups.values():
+        classes=[]
+        for i in rows:
+            group=next((c for c in classes if np.max(np.abs(ws[i]-ws[c[0]]))<=2e-6),None)
+            if group is None:classes.append([i])
+            else:group.append(i)
+        equivalent.extend(classes)
     triangles=[];offset=0
     for m in model['meshes']:
         for a in m['materials']:
@@ -214,7 +233,7 @@ def pose_checks(model,poses):
     for name,pose in poses.items():
         q=deform(dict(bones=model['bones'],bone_count=len(model['bones'])),ps,ws,pose)
         if not np.isfinite(q).all():raise ValueError('Nonfinite pose: '+name)
-        gap=max((float(np.max(np.abs(q[rows]-q[rows[0]]))) for rows in groups.values() if len(rows)>1),default=0.)
+        gap=max((float(np.max(np.abs(q[rows]-q[rows[0]]))) for rows in equivalent if len(rows)>1),default=0.)
         if gap>2e-6:raise ValueError('Coincident seam separates in pose: '+name)
         ratios=[];original_zero=0
         for t in triangles:

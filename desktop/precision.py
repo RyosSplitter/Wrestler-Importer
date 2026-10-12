@@ -23,9 +23,10 @@ def ocular_positions(source_weight_control):
             if sum(w for b,w in zip(m['bone_palette'],v['weights']) if b in ids)>1e-7}
 
 
-def bounded_precision(model, held_positions, divisions=65536):
+def bounded_precision(model, held_positions, divisions=65536, *, attributes=('position','uv','normal')):
     if divisions not in (65536, 32768):
         raise ValueError('Unsupported position precision trial')
+    if not attributes or set(attributes)-{'position','uv','normal'}:raise ValueError('Unsupported attribute precision trial')
     original = [v for m in model['meshes'] for v in m['vertices']]
     height = float(np.ptp([v['position'][1] for v in original]))
     if not np.isfinite(height) or height<=0:
@@ -40,6 +41,7 @@ def bounded_precision(model, held_positions, divisions=65536):
             held += 1
             continue
         for name,quantum in (('position',step), ('uv',1/16384), ('normal',1/256)):
+            if name not in attributes:continue
             old = np.asarray(before[name], dtype=np.float32).astype(float)
             new = (np.rint(old/quantum)*quantum).astype(np.float32).astype(float)
             after[name] = new.tolist()
@@ -72,6 +74,7 @@ def bounded_precision(model, held_positions, divisions=65536):
         if np.any(np.sum(old[valid]*new[valid],axis=1)<=0):
             raise ValueError('Attribute precision introduced a collapsed or flipped face')
     report = dict(status='bounded_experiment_pending_native_pose_and_visual_validation',
+                  attributes=list(attributes),geometry_positions_exact='position' not in attributes,
                   position_divisions=divisions,position_step=step,
                   maximum_position_error_height=maximum_position,
                   maximum_uv_error=maximum_uv,maximum_normal_angle_degrees=maximum_angle,

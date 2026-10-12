@@ -30,6 +30,7 @@ from tools.texture_convert import write_gim4,write_gim8,read_gim,budget_texture
 from tools.yukes_bpe import compress,decompress
 from tools.weight_trial_review import map_source,transfer,descendant_names
 from tools.jericho_hybrid_trial import pack
+from tools.vertex_identity import annotate, protected_face_positions
 from model_qa.geometry import align_reference,geometry
 from model_qa.ocular import OCULAR_NAMES,probes,skin
 
@@ -135,6 +136,9 @@ def prepare(source,target):
                    preparation_report=dict(alignment=fit,hybrid_weights=dict(ancestor_redirects=redirects,donor_transfer=transfer_report,
                    ocular_selected_records=int(selected.sum()),jaw_source_mapping_preserved=True,
                    policy='Source-derived body/jaw; legacy PSP donor transfer only on source eye/eyelid support')))
+        annotate(out)
+        from model_qa.skinning_records import contact_shape_guards
+        out['source_contact_shape_guards']=contact_shape_guards(out)
         return out
     return stage(weights),stage(legacy),stage(jaw_weights)
 
@@ -352,11 +356,16 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
     # runs for a candidate that already fits the established size budget.
     if len(candidate)>profile['max_pac_bytes']:
         step(60,'Testing bounded attribute precision; keeping weights, textures and ocular records')
-        original_packed=packed;original_yobj=yobj;held_positions=ocular_positions(jaw)
+        original_packed=packed;original_yobj=yobj;held_positions=ocular_positions(jaw)|protected_face_positions(packed)
         precision_rejections=[]
-        for divisions in (65536,32768):
+        # Intentional skinning contacts must not be collapsed by position
+        # rounding. Keep every position exact for these source models; only
+        # bounded shading/UV precision is considered outside protected faces.
+        preserve_contacts=prepared['source_skinning_identity']['conflicting_positions']>0
+        precision_trials=[(65536,('normal',)),(65536,('normal','uv'))] if preserve_contacts else [(n,('position','uv','normal')) for n in (65536,32768)]
+        for divisions,attributes in precision_trials:
             check()
-            try:limited,precision_report=bounded_precision(original_packed,held_positions,divisions)
+            try:limited,precision_report=bounded_precision(original_packed,held_positions,divisions,attributes=attributes)
             except ValueError as exc:
                 precision_rejections.append(dict(position_divisions=divisions,error=str(exc)))
                 dump(work/'precision-rejections.json',precision_rejections);continue
@@ -461,6 +470,11 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
     step(65,'Validating final PAC pointers, buffers, weights, rendering records and size')
     native,gim_map=validate_pac(candidate,base_bytes,profile['max_pac_bytes'],accessory_models=accessory_prepared,gim_reader=texture_reader,
         lossless_texture_sections={r['section'] for report in (adaptive_report,priority_report) if report for r in report['lossless_retained_texture_storage']})
+    from model_qa.skinning_records import compare as compare_skinning_records
+    skinning_identity=compare_skinning_records(prepared,native,strict=False)
+    dump(work/'skinning-identity-qa.json',skinning_identity)
+    if skinning_identity['status']!='pass':
+        raise ValueError('Source skinning validation failed; read skinning-identity-qa.json. '+skinning_identity['issues'][0]['kind'])
     dump(work/'accessory-qa.json',dict(status='pass',models=accessory_reports,
          limitation='Exact source-derived geometry and direct weights, native structure and analytical poses; removal/throw behavior requires in-game validation.'))
     unpacked=next(r for s,r in sections(candidate) if s['id']==2)
@@ -494,6 +508,9 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
     qa['model_set_validation']=dict(status='pass',model_count=1+len(accessory_yobjs),
         accessory_sections=sorted(accessory_yobjs),report='../accessory-qa.json',
         scope='Every native YOBJ audited; independent accessories compared against prepared source attributes and analytical poses.')
+    qa['source_skinning_identity']=dict(status=skinning_identity['status'],report='../skinning-identity-qa.json',
+        conflicting_source_locations=skinning_identity['source_conflicting_locations'],
+        maximum_motion_error=skinning_identity['maximum_motion_error'])
     if compatibility_report is not None:
         qa['skin_palette_compatibility']=dict(report='../skin-compatibility.json',
             changed_meshes=compatibility_report['changed_meshes'],
@@ -503,6 +520,7 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
     html=work/'qa/report.html'
     text=html.read_text(encoding='utf-8')
     note='<p>Native model set: %d models. <a href="../accessory-qa.json">Independent accessory structure, attributes and pose validation</a>. <a href="../preview/output.obj">Combined OBJ preview</a>. Actual in-game pad removal/throw behavior remains unverified.</p>'%(1+len(accessory_yobjs))
+    note+='<p>Source-authorized coincident skinning: %d locations. <a href="../skinning-identity-qa.json">Protected face correspondence, effective weights and analytical motion/gap checks</a>. Distinct source branches are retained; newly introduced inconsistencies stop export.</p>'%skinning_identity['source_conflicting_locations']
     if adaptive_report is not None:
         texture_flags=sum(bool(t['quality_review_flags']) for t in adaptive_report['textures'])
         note+='<p>Adaptive textures enabled: %d textures have tradeoffs requiring review. <a href="../adaptive-textures/report.html">Source/current/adaptive textures and allocation report</a>. The texture stage preserves every non-texture payload; any subsequent skin-layout adaptation is reported separately.</p>'%texture_flags
@@ -529,6 +547,7 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
                 total_triangles=packed['triangle_count']+sum(a['triangles'] for a in accessory_reports),
                 total_vertices=packed['vertex_count']+sum(a['vertices'] for a in accessory_reports),
                 native_validation='passed',review_flags=len(qa['unresolved_review']),ocular_validation=ocular['status'],
+                skinning_identity_validation=skinning_identity['status'],
                 attribute_precision=packed.get('attribute_precision_report'),
                 precision_validation=precision_validation,
                 status='Experimental conversion; review QA and test in PPSSPP. File checks do not certify game compatibility.')

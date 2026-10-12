@@ -13,6 +13,7 @@ import sys
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'tools'))
 import region_mesh
+from vertex_identity import annotate, validate_locked
 
 
 def select_guards(model):
@@ -38,6 +39,7 @@ def select_guards(model):
     # surface when torso support identifies a substantial part of it.
     torso_materials={tid for tid,n in all_faces.items() if torso_faces[tid]/n>=.3}
     decisions=[]
+    contact_faces={tuple(x) for x in model.get('source_contact_shape_guards',{}).get('faces',[])}
     for mesh in model['meshes']:
         for mat in mesh['materials']:
             for ti,tri in enumerate(mat['triangles']):
@@ -47,13 +49,14 @@ def select_guards(model):
                 seam=any(tuple(v['position']) in boundary for v in vertices)
                 cutout=mat['texture_id'] in model.get('cutout_texture_ids',[])
                 attachment=any(tuple(v['position']) in attachments for v in vertices)
-                decisions.append((mesh['index'],mat['texture_id'],ti,torso>.5 or mat['texture_id'] in torso_materials or eyes or seam or cutout or attachment))
+                skinning=any(v.get('skin_locked') for v in vertices) or (mesh['index'],mat['texture_id'],ti) in contact_faces
+                decisions.append((mesh['index'],mat['texture_id'],ti,torso>.5 or mat['texture_id'] in torso_materials or eyes or seam or cutout or attachment or skinning))
     return decisions
 
 
 def run(source_path,output_path,profile_path):
     import blender_reduce
-    model=json.loads(Path(source_path).read_text());profile=json.loads(Path(profile_path).read_text())
+    model=annotate(json.loads(Path(source_path).read_text()));profile=json.loads(Path(profile_path).read_text())
     if Path(output_path).exists():raise FileExistsError(output_path)
     region_mesh.RATIOS.update(profile['ratios']);blender_reduce.RATIOS.update(profile['ratios'])
     selections={(mi,tid,ti):held for mi,tid,ti,held in select_guards(model)}
@@ -129,6 +132,9 @@ def run(source_path,output_path,profile_path):
                 original_uv=next(iter(candidates))
                 if tuple(v['uv'])!=original_uv:v['uv']=list(original_uv);restored+=1
     result['reduction_report']['exact_original_uv_records_restored']=restored
+    for mesh in result['meshes']:
+        for vertex in mesh['vertices']:validate_locked(vertex,mesh['bone_palette'])
+    result['reduction_report']['source_skinning_identity']=model['source_skinning_identity']
     result['reduction_report']['guard_policy']='Source torso/pelvis, eye-controller support, cutouts and all shared material-boundary rings; no budget redistribution'
     result['reduction_report']['protected_triangles']=held['triangle_count']
     Path(output_path).write_text(json.dumps(result,allow_nan=False))

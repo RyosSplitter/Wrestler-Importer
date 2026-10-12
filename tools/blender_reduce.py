@@ -8,16 +8,19 @@ import sys
 import bpy
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from region_mesh import DETAIL_TEXTURES, RATIOS, make_regions, smooth_normals
+from vertex_identity import annotate, point_key, position_key, validate_locked
 
 
 def reduce(source, ratio, detail_profile=False, regional=False, preserved_regions=(), retention_reserve=None):
     if not 0 < ratio <= 1:
         raise ValueError('Reduction ratio must be between zero and one')
     bpy.ops.wm.read_factory_settings(use_empty=True)
+    if regional:
+        source = annotate(copy.deepcopy(source))
     owners = {}
     for entry in source['meshes']:
         for v in entry['vertices']:
-            owners.setdefault(tuple(v['position']), set()).add(entry['index'])
+            owners.setdefault(tuple(v['position']), set()).add((entry['index'],tuple(v.get('skin_id',[entry['index']]))))
     protected = {p for p, meshes in owners.items() if len(meshes) > 1}
     detail_textures = DETAIL_TEXTURES if detail_profile else set()
     if detail_profile:
@@ -27,6 +30,8 @@ def reduce(source, ratio, detail_profile=False, regional=False, preserved_region
                     protected.update(tuple(entry['vertices'][i]['position'])
                                      for tri in material['triangles'] for i in tri)
     result = copy.deepcopy(source)
+    expected_source_points={(tuple(v['skin_id']),position_key(v)) for m in source['meshes'] for v in m['vertices']
+                            if regional and v.get('skin_locked')}
     stats = []
     for entry in result['meshes']:
         if entry.get('region') in preserved_regions:
@@ -38,13 +43,15 @@ def reduce(source, ratio, detail_profile=False, regional=False, preserved_region
                           'geometry_preserved_without_modifier': True})
             continue
         original_vertices = entry['vertices']
-        # Weld geometric points while keeping the original per-corner UVs/colors.
-        remap, points, source_indices = {}, [], []
+        # Keep bone-incompatible points and disconnected source domains separate.
+        # Compatible corner UVs/colors remain independent Blender loop attributes.
+        remap, points, source_indices, provenance = {}, [], [], []
         for v in original_vertices:
-            key = tuple(v['position'])
+            key = point_key(v, entry['bone_palette'], entry['index']) if regional else tuple(v['position'])
             if key not in remap:
                 remap[key] = len(points)
-                points.append(key)
+                points.append(tuple(v['position']))
+                provenance.append(copy.deepcopy(v))
             source_indices.append(remap[key])
         original_faces, face_materials, corner_vertices = [], [], []
         for slot, mat in enumerate(entry['materials']):
@@ -55,6 +62,9 @@ def reduce(source, ratio, detail_profile=False, regional=False, preserved_region
         mesh = bpy.data.meshes.new('source')
         mesh.from_pydata(points, [], original_faces)
         mesh.update()
+        if regional:
+            identity = mesh.attributes.new(name='source_skin_id',type='INT',domain='POINT')
+            for i in range(len(points)):identity.data[i].value=i
         obj = bpy.data.objects.new('source', mesh)
         bpy.context.collection.objects.link(obj)
         bpy.context.view_layer.objects.active = obj
@@ -164,6 +174,15 @@ def reduce(source, ratio, detail_profile=False, regional=False, preserved_region
                     output.append({'position': position, 'normal': normal, 'uv': texcoord,
                                    'color': color, 'weights': weights, 'smoothing_group': smoothing,
                                    'source_vertex_index': loop.vertex_index})
+                    if regional:
+                        identity = mesh.attributes.get('source_skin_id')
+                        if identity is None:raise ValueError('Decimation lost source skinning provenance')
+                        pi=identity.data[loop.vertex_index].value
+                        if pi<0 or pi>=len(provenance):raise ValueError('Invalid decimated source skinning provenance')
+                        parent=provenance[pi]
+                        for k in ('skin_id','skin_domain','source_records','skin_locked','skin_expected','skin_bind_position'):
+                            if k in parent:output[-1][k]=copy.deepcopy(parent[k])
+                        validate_locked(output[-1],entry['bone_palette'])
                 tri.append(vertex_map[key])
             if len(set(tri)) == 3:
                 triangles[face.material_index].append(tri)
@@ -188,6 +207,9 @@ def reduce(source, ratio, detail_profile=False, regional=False, preserved_region
             stats[-1].update(region=entry['region'], target_ratio=RATIOS[entry['region']],
                              actual_ratio=after/before)
         bpy.data.objects.remove(obj, do_unlink=True)
+    if regional:
+        actual={(tuple(v['skin_id']),position_key(v)) for m in result['meshes'] for v in m['vertices']}
+        if expected_source_points-actual:raise ValueError('Decimation lost a protected source skinning branch')
     result['triangle_count'] = sum(s['output_triangles'] for s in stats)
     result['vertex_count'] = sum(len(m['vertices']) for m in result['meshes'])
     result['reduction_report'] = {'method': 'Blender collapse with shared seam vertices protected',

@@ -5,8 +5,10 @@ import math
 
 try:
     from .stripify import join_strips, stripify
+    from .vertex_identity import annotate, weight_key, validate_locked
 except ImportError:
     from stripify import join_strips, stripify
+    from vertex_identity import annotate, weight_key, validate_locked
 
 RATIOS = {'Head': .8, 'Torso': .5, 'Arms': .35, 'Legs': .35}
 DETAIL_TEXTURES = {'rvd_eye', 'bn_ha', 'bn_ha2', 'ts_naka'}
@@ -42,6 +44,7 @@ def weight_regions(weights, regions):
 
 
 def make_regions(prepared):
+    prepared = annotate(copy.deepcopy(prepared))
     result = copy.deepcopy(prepared)
     regions = bone_regions(prepared['bones'])
     buckets = {name: {'vertices': [], 'map': {}, 'materials': defaultdict(list)} for name in RATIOS}
@@ -65,10 +68,13 @@ def make_regions(prepared):
                     v = copy.deepcopy(mesh['vertices'][vi])
                     v['weights'] = dense[vi]
                     v['region_strength'] = weight_regions(dense[vi], regions)[region]
-                    key = tuple(tuple(v[k]) for k in ('position', 'uv', 'color', 'weights'))
+                    key = (tuple(v['skin_domain']), tuple(tuple(v[k]) for k in ('position', 'uv', 'color', 'weights')))
                     if key not in bucket['map']:
                         bucket['map'][key] = len(bucket['vertices'])
                         bucket['vertices'].append(v)
+                    else:
+                        records = bucket['vertices'][bucket['map'][key]]['source_records']
+                        records.extend(r for r in v['source_records'] if r not in records)
                     indices.append(bucket['map'][key])
                 bucket['materials'][tid].append(indices)
     result['meshes'] = []
@@ -133,14 +139,29 @@ def quantize_weights(weights, denominator=32768):
 def pack_regions(model, max_influences=4, weight_encoding='psp_u16'):
     if weight_encoding not in ('float', 'psp_u8', 'psp_u16'):
         raise ValueError('Unsupported PSP weight encoding')
+    model = copy.deepcopy(model)
+    # This legacy entry point also accepts explicitly dense region records
+    # without a skeleton/palette, unlike PAC readers. Make that API explicit.
+    for index,mesh in enumerate(model['meshes']):
+        mesh.setdefault('index',index)
+        if 'bone_palette' not in mesh:
+            lengths={len(v['weights']) for v in mesh['vertices']}
+            if len(lengths)!=1:raise ValueError('Inconsistent dense region weight widths')
+            mesh['bone_palette']=list(range(next(iter(lengths))))
+    model = annotate(model)
     result = copy.deepcopy(model)
     cache, source_weights, removed = {}, {}, []
     for mesh in model['meshes']:
         for v in mesh['vertices']:
-            key = tuple(v['position'])
+            validate_locked(v,mesh['bone_palette'])
+            key = weight_key(v,mesh['bone_palette'],mesh['index'])
+            source = {b: w for b, w in zip(mesh['bone_palette'],v['weights']) if w > 1e-7}
+            if not source:raise ValueError('No usable source skinning influences')
             if key in cache:
+                old=source_weights[key];a=sum(old.values());b=sum(source.values())
+                if max(abs(old.get(i,0.)/a-source.get(i,0.)/b) for i in set(old)|set(source))>2e-6:
+                    raise ValueError('Inconsistent copies of source skinning record')
                 continue
-            source = {b: w for b, w in enumerate(v['weights']) if w > 1e-7}
             source_weights[key] = source
             selected = dict(sorted(source.items(), key=lambda t: (-t[1], t[0]))[:max_influences])
             total = sum(selected.values())
@@ -152,7 +173,7 @@ def pack_regions(model, max_influences=4, weight_encoding='psp_u16'):
     for mesh in model['meshes']:
         for material in mesh['materials']:
             for tri in material['triangles']:
-                keys = [tuple(mesh['vertices'][i]['position']) for i in tri]
+                keys = [weight_key(mesh['vertices'][i],mesh['bone_palette'],mesh['index']) for i in tri]
                 while len(set().union(*(cache[k] for k in keys))) > 8:
                     options = [(w, key, b) for key in keys for b, w in cache[key].items() if len(cache[key]) > 1]
                     _, key, bone = min(options)
@@ -170,8 +191,8 @@ def pack_regions(model, max_influences=4, weight_encoding='psp_u16'):
             cache[key] = {b: w for b, w in zip(bones, after) if w > 0}
     bins = defaultdict(list)
     for mesh, tid, tri in faces:
-        support = set().union(*(cache[tuple(mesh['vertices'][i]['position'])] for i in tri))
-        corners = {tuple(tuple(mesh['vertices'][i][k]) for k in ('position', 'normal', 'uv', 'color')) for i in tri}
+        support = set().union(*(cache[weight_key(mesh['vertices'][i],mesh['bone_palette'],mesh['index'])] for i in tri))
+        corners = {(tuple(mesh['vertices'][i]['skin_domain']),tuple(tuple(mesh['vertices'][i][k]) for k in ('position','normal','uv','color','weights'))) for i in tri}
         candidates = [b for b in bins[mesh['region']] if len(b['palette'] | support) <= 8]
         def stride(count):
             width = {'float': 4, 'psp_u8': 1, 'psp_u16': 2}[weight_encoding]
@@ -200,8 +221,9 @@ def pack_regions(model, max_influences=4, weight_encoding='psp_u16'):
                 face = []
                 for i in tri:
                     v = copy.deepcopy(source['vertices'][i])
-                    v['weights'] = [cache[tuple(v['position'])].get(b, 0.) for b in palette]
-                    key = tuple(tuple(v[k]) for k in ('position', 'normal', 'uv', 'color', 'weights'))
+                    v['weights'] = [cache[weight_key(v,source['bone_palette'],source['index'])].get(b, 0.) for b in palette]
+                    validate_locked(v,palette)
+                    key = (tuple(v['skin_domain']),tuple(tuple(v[k]) for k in ('position', 'normal', 'uv', 'color', 'weights')))
                     if key not in mapping:
                         mapping[key] = len(vertices)
                         vertices.append(v)
@@ -229,5 +251,5 @@ def pack_regions(model, max_influences=4, weight_encoding='psp_u16'):
                                  for k, weights in cache.items()), default=0.),
         'weight_encoding': weight_encoding, 'max_quantization_error': quantization_error,
         'weight_sum': 1.,
-        'method': 'Interpolate transferred PSP bone groups through decimation; seam weights shared'}
+        'method': 'Interpolate transferred PSP bone groups through decimation; pruning shared only by compatible source identities'}
     return result

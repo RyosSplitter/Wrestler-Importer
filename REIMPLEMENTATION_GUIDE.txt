@@ -582,3 +582,18 @@ guards, fixed material depth, source ceilings and exact non-texture payloads.
 Report all donor changes and unrecovered source fidelity. The bounded greedy
 exchange search is not a global optimum; gameplay compatibility is unproven
 until tested. See desktop/texture_optimizer/priorities.py and generated tests.
+
+SOURCE SKINNING IDENTITY ADDENDUM (isolated 0101 experiment)
+Read docs/source-skinning-identity.md. Position alone is not vertex identity.
+Resolve palette offsets to global influences and retain original topology domains.
+Only verified compatible manifold edges may connect storage chunks; UV/color/
+normal corners remain separate. Preserve source-differing skinning contacts and
+incident faces with provenance through Blender. Keep regional source volume around
+those contacts. Validate final native faces by cyclic position/UV/material and
+effective weights; reject new inconsistencies without averaging original branches.
+Require unchanged target bind transforms. Do not round source-contact positions
+for budget fitting; disclosed bounded normal precision can be tried separately.
+Source skinning QA and seven-pose regional nonregression are separate reusable
+stages. Existing full QA warnings and actual PPSSPP limitations remain reportable.
+See tools/vertex_identity.py, model_qa/skinning_records.py, the two source_skinning
+report tools and tests/test_source_skinning_identity.py. Main/baselines are unchanged.

@@ -62,6 +62,10 @@ The project goal is broader than the demonstrated coverage.
    assumptions, actual fixes and remaining uncertainty.
 7. [Evidence ledger](evidence-ledger.md) and [fixtures/tests](fixtures-and-tests.md).
 
+8. [Source skinning identity experiment](../source-skinning-identity.md): legitimate
+   original coincident weight differences, topology-aware decimation/packing,
+   protected contact surfaces, all-location correspondence and pose regression.
+
 **CONFIRMED [E23]:** The small conformance fixtures are generated solely from
 synthetic triangles, colors and weights. They require no original game PAC or
 third-party editor. Published game-derived review bundles are separate historical
