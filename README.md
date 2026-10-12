@@ -6,6 +6,11 @@ runs on Windows; exports will be tested in PPSSPP.
 
 ## Developer reference and recommended baselines
 
+A separate [experimental Noesis PSP PAC/YOBJ plugin](plugins/noesis/README.md)
+previews verified PSP model layouts and embedded GIM textures without OBJ
+extraction. Decoder/Noesis-callback mock tests and 116 native-file comparisons
+passed; real Noesis Python-runtime viewer verification remains pending.
+
 The isolated [v0.25.5 priority reallocation experiment](docs/portable-priority-reallocation.md)
 restores selected texture detail by funding upgrades from reported texture-only
 donor changes. [Jericho comparison and test PAC](downloads/priority-reallocation/)
