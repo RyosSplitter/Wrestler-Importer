@@ -1,4 +1,4 @@
-"""WWE SVR PSP PAC/YOBJ static preview for Noesis. Version 0.1.0.
+"""WWE SVR PSP PAC/YOBJ static preview for Noesis. Version 0.1.1.
 
 Self-contained: Python standard library + Noesis, no extraction utilities.
 Reads verified PSP GE vertex layouts, native strips, UVs and indexed GIMs.
@@ -356,6 +356,9 @@ def load_model(data, mdl_list):
         if not models:
             raise ValueError('No main section 2 model')
         ctx = rapi.rpgCreateContext()
+        # Native strips agree with stored outward normals, but Noesis uses the
+        # opposite front-face convention. Adapt only the preview renderer.
+        rapi.rpgSetOption(noesis.RPGOPT_TRIWINDBACKWARD, 1)
         textures, materials, material_names = [], [], {}
         folder = rapi.getDirForFilePath(rapi.getInputName())
         for section, model in models:
@@ -407,6 +410,8 @@ def load_model(data, mdl_list):
         if mdl is None:
             raise ValueError('No renderable triangles')
         mdl.setModelMaterials(NoeModelMaterials(textures, materials))
+        # Start upright without requiring the orientation toggle on every load.
+        rapi.setPreviewOption("setAngOfs", "0 90 0")
         mdl_list.append(mdl)
         print('WWE PSP: loaded %d YOBJ model(s), %d texture(s); native rest geometry, no animation emulation.' % (len(models), len(textures)))
         return 1

@@ -10,7 +10,7 @@ from tools.psp_mesh_audit import audit_yobj
 from tools.yukes_bpe import compress
 from desktop.texture_optimizer.candidates import write_gim, read_gim
 
-spec=importlib.util.spec_from_file_location('wwe_psp_plugin',Path(__file__).resolve().parents[1]/'plugins/noesis/fmt_wwe_psp_yobj.py')
+spec=importlib.util.spec_from_file_location('wwe_psp_plugin',Path(__file__).resolve().parents[1]/'plugins/noesis/fmt_00_wwe_psp_yobj.py')
 plugin=importlib.util.module_from_spec(spec);spec.loader.exec_module(plugin)
 
 
@@ -81,7 +81,7 @@ class NoesisPSPTests(unittest.TestCase):
     def test_noesis_callback_uses_native_indices_embedded_images_and_rgba(self):
         from types import SimpleNamespace
         from unittest.mock import patch
-        captures=[];bindings={};result=[]
+        captures=[];bindings={};result=[];options=[];preview=[]
         class Texture:
             def __init__(self,name,w,h,rgba,pixel_type):self.name=name;self.rgba=rgba
         class Material:
@@ -96,12 +96,14 @@ class NoesisPSPTests(unittest.TestCase):
         rapi=SimpleNamespace(rpgCreateContext=lambda:None,getDirForFilePath=lambda x:'',getInputName=lambda:'sample.pac',
             rpgBindPositionBuffer=bind('positions'),rpgBindNormalBuffer=bind('normals'),rpgBindUV1Buffer=bind('uv'),
             rpgBindColorBufferOfs=bind('colors'),rpgSetName=lambda x:None,rpgSetMaterial=lambda x:None,
+            rpgSetOption=lambda k,v:options.append((k,v)),setPreviewOption=lambda k,v:preview.append((k,v)),
             rpgCommitTriangles=commit,rpgClearBufferBinds=lambda:bindings.clear(),rpgConstructModel=lambda:Model())
         api=SimpleNamespace(optWasInvoked=lambda x:False,NOESISTEX_RGBA32=0,RPGEODATA_FLOAT=0,
-            RPGEODATA_UBYTE=1,RPGEODATA_INT=2,RPGEO_TRIANGLE=3,logPopup=lambda:None)
+            RPGEODATA_UBYTE=1,RPGEODATA_INT=2,RPGEO_TRIANGLE=3,RPGOPT_TRIWINDBACKWARD=4,logPopup=lambda:None)
         with patch.multiple(plugin,noesis=api,rapi=rapi,NoeTexture=Texture,NoeMaterial=Material,
                             NoeModelMaterials=lambda a,b:(a,b),create=True):
             self.assertEqual(plugin.load_model(vectors()['psp-quad.pac'],result),1)
+        self.assertEqual(options,[(4,1)]);self.assertEqual(preview,[("setAngOfs","0 90 0")])
         self.assertEqual(len(result),1);buffers,indices,count=captures[0]
         self.assertEqual(count,6)
         self.assertEqual(struct.unpack('<6I',indices),(0,1,2,1,3,2))
