@@ -613,3 +613,22 @@ the general allocator already accepts max_pixel_bytes without changing defaults.
 Keep all non-texture stored/decoded payloads exact and disclose donor decisions.
 Tests/test_texture_budget_trial.py uses generated assets for both independent
 budget failures, source ceilings, model preservation and preview material mapping.
+
+v0.25.6 DEFAULT TEXTURE INTEGRATION
+Read docs/portable-default-textures.md and desktop/default_textures.py.
+Default's independent modeled allocation is max(34176, actual Legacy allocation)
+including retained GIM tables; the file limit remains 148000 with real padding.
+Automatic attention = importance * occupied detail coverage * measured incumbent
+fine-feature loss. Eligible dominant maps (at most3, half-largest score) receive
+the existing 8x boost and measured donor exchanges. No names/hashes select them.
+Legacy preserves the previous texture path, ATO the previous adaptive comparison;
+manual Priority Selection uses the new allowance. Downgrade starts from new
+Default, Maximum Downgrade keeps its prior rescue baseline. Texture stages cannot
+invoke geometry changes. Strict source ceilings require rebuilding illegal old
+upscaled seeds, including unselected narrow rectangles; do not impose a donor
+height/allocation floor based on an invalid seed. All repairs and unresolved
+detail losses are reported. Source-ceiling remediation is explicit in reports.
+The fixed RVD candidate has user-reported gameplay success; the generalized
+budget/attention rules remain model-specific runtime hypotheses, not guarantees.
+Tests/test_default_textures.py and the frozen Windows workflow verify routing,
+source ceilings, allocation/file budgets, independent UI modes and model identity.

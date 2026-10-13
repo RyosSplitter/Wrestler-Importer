@@ -30,7 +30,7 @@ def save_as(result,destination):
     if destination.resolve() in {Path(result[k]).resolve() for k in ('source','base','pac')}:raise ValueError('Save As cannot overwrite the source, PSP base or review candidate.')
     if destination.exists() and any(os.path.samefile(destination,result[k]) for k in ('source','base','pac')):raise ValueError('Save As points to a protected input through a hard link.')
     if digest(candidate)!=result['sha256']:raise ValueError('Review candidate changed; export withheld.')
-    if any(result.get(k) for k in ('adaptive_textures','texture_priorities','texture_downgrade','maximum_downgrade')):
+    if any(result.get(k) for k in ('default_textures','adaptive_textures','texture_priorities','texture_downgrade','maximum_downgrade')):
         from desktop.texture_optimizer.candidates import read_gim
         validate_pac(candidate.read_bytes(),gim_reader=read_gim)
     else:validate_pac(candidate.read_bytes())

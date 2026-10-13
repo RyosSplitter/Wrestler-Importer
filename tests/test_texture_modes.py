@@ -16,7 +16,7 @@ from tools.yukes_bpe import compress
 
 class TextureModeTests(unittest.TestCase):
     def test_default_and_legacy_jobs_remain_default(self):
-        self.assertEqual(MODES,('Default','ATO','Priority Selection','Downgrade','Maximum Downgrade'))
+        self.assertEqual(MODES,('Default','Legacy','ATO','Priority Selection','Downgrade','Maximum Downgrade'))
         self.assertEqual(Request('a','b').texture_mode,'')
         self.assertFalse(Request('a','b').use_adaptive)
         self.assertTrue(Request('a','b',adaptive_textures=True).use_adaptive)

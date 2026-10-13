@@ -23,7 +23,8 @@ def sha(data):return hashlib.sha256(data).hexdigest()
 
 def optimize_pac(baseline,decoded,output,*,target=148000,cancel=lambda:None,
                  progress=lambda message:None,max_pixel_bytes=None,
-                 priority_textures=(),freeze_unselected=False,rebalance_priorities=False):
+                 priority_textures=(),freeze_unselected=False,rebalance_priorities=False,
+                 strict_source_ceilings=False):
     """Preserve every stored section except costume texture table 9 exactly.
 
     Useful colors are bounded by actual source usage. Fixed native CLUT slots
@@ -58,7 +59,7 @@ def optimize_pac(baseline,decoded,output,*,target=148000,cancel=lambda:None,
                 lossless_storage[section]=encoded
                 lossless_report.append(dict(section=section,before_stored_bytes=s['size'],
                     after_stored_bytes=len(encoded),decoded_sha256=sha(raw),decoded_bytes_identical=True))
-    existing_pixels=0;usage=model_usage(models,sources);choices=[];reports=[];initial=[]
+    existing_pixels=0;usage=model_usage(models,sources);choices=[];reports=[];initial=[];seed_rebuilt=False
     for n in names:
         cancel();progress('Analyzing texture '+n)
         p,c=read_gim(gims[n]);bits=4 if len(c)==16 else 8
@@ -98,7 +99,7 @@ def optimize_pac(baseline,decoded,output,*,target=148000,cancel=lambda:None,
                 native_corpus_layout_observed=observed_layout,
                 reason='Verified legal incumbent with normalized UVs; no new aspect-ratio distortion introduced')))
             rows.sort(key=lambda r:(r['entry']['serialized_bytes'],r['entry']['metrics']['perceptual_loss'],r['entry']['width'],r['entry']['bits']))
-        if rebalance_priorities and all(r['raw']!=gims[n] for r in rows):
+        if rebalance_priorities and (within_source or not strict_source_ceilings) and all(r['raw']!=gims[n] for r in rows):
             # Preserve a fitting Default incumbent, including previously
             # accepted cutout sampling. Newly generated maps still obey the
             # existing source/alpha/native safeguards; no new cutout loss.
@@ -129,15 +130,25 @@ def optimize_pac(baseline,decoded,output,*,target=148000,cancel=lambda:None,
                 # A priority is an upgrade request, never permission to make
                 # that texture worse to fund another selection. Keep source
                 # ceilings and exact cutout alpha protections above.
-                ceiling=measure(sources[n],rgba,scoring['mask'])['perceptual_loss']
+                ceiling=measure(sources[n],rgba,scoring['mask'])['perceptual_loss'] if within_source or not strict_source_ceilings else float('inf')
                 rows=[r for r in rows if r['entry']['metrics']['perceptual_loss']<=ceiling+1e-10]
                 if not rows:raise ValueError(n+': no source-bounded candidate preserves baseline quality; export withheld')
-        if rebalance_priorities and n not in priorities:
+        if rebalance_priorities and n not in priorities and (within_source or not strict_source_ceilings):
             rows=[r for r in rows if r['raw']==gims[n] or
                   (r['entry']['width']<=p.shape[1] and r['entry']['height']<=p.shape[0] and
                    r['entry']['pixel_palette_bytes']<=len(gims[n])-208)]
         if rebalance_priorities:
-            initial.append(next(i for i,r in enumerate(rows) if r['raw']==gims[n]))
+            if not rows:
+                (output/'failure-report.json').write_text(json.dumps(dict(texture=n,error='No legal source-bounded priority seed',
+                    source_details=features,incumbent_dimensions=list(p.shape[1::-1]),required_bits=bits,
+                    rejected_configurations=rejected),indent=2)+'\n')
+                raise ValueError(n+': no legal source-bounded priority seed; diagnostics: '+str(output/'failure-report.json'))
+            incumbent=next((i for i,r in enumerate(rows) if r['raw']==gims[n]),None)
+            if incumbent is None:
+                if not strict_source_ceilings:raise ValueError('Priority baseline incumbent missing')
+                seed_rebuilt=True
+                incumbent=min(range(len(rows)),key=lambda i:rows[i]['entry']['metrics']['perceptual_loss'])
+            initial.append(incumbent)
         choices.append(rows)
         reports.append(dict(name=n,source_palette_format=details[n],**features,
             head_fraction=usage[n]['head_fraction'],uv_coverage_used=usage[n]['uv_mask'] is not None,
@@ -171,7 +182,7 @@ def optimize_pac(baseline,decoded,output,*,target=148000,cancel=lambda:None,
     progress('Allocating measured texture upgrades within the frozen model budget')
     try:
         weights=[r['importance_score']*r['priority_multiplier'] for r in reports]
-        if rebalance_priorities:
+        if rebalance_priorities and not seed_rebuilt:
             from .priorities import allocate_priorities
             payload,selection,allocation=allocate_priorities(choices,weights,build,target,limit,
                 initial,[i for i,n in enumerate(names) if n in priorities],cancel)
@@ -208,7 +219,7 @@ def optimize_pac(baseline,decoded,output,*,target=148000,cancel=lambda:None,
                 source_useful_colors=row['useful_source_colors'],selected_used_colors=e['used_palette_colors'],
                 full_source_preserved=bool(e['fully_preserved']),
                 best_supported_quality_reached=m['perceptual_loss']<=best['metrics']['perceptual_loss']+1e-10,
-                explanation=('Priority is weighted 8x. Ordinary maps can fund improvements through reported texture-only exchanges; facial/cutout safeguards remain.' if rebalance_priorities else 'Priority is weighted 8x; unselected policy applies.')+' Source ceilings, unchanged material depth, measured PAC size and existing pixel/CLUT envelope still apply. See rejected_upgrades for budget reasons.')
+                explanation=('Priority is weighted 8x. Ordinary maps can fund improvements through reported texture-only exchanges; facial/cutout safeguards remain.' if rebalance_priorities else 'Priority is weighted 8x; unselected policy applies.')+' Source ceilings, unchanged material depth, measured PAC size and the configured pixel/CLUT envelope still apply. See rejected_upgrades for budget reasons.')
             if not e['fully_preserved']:
                 row['quality_review_flags'].append('Selected texture remains reduced or palette-quantized; manual priority does not guarantee exact source fidelity. See priority_reduction_report.')
         if e['width']*e['height'] < sources[n].shape[0]*sources[n].shape[1]/8:
@@ -235,8 +246,8 @@ def optimize_pac(baseline,decoded,output,*,target=148000,cancel=lambda:None,
     nontexture_stored=fixed_stored-retained_texture_stored
     report=dict(version=1,experimental=True,baseline_sha256=sha(baseline),sha256=sha(payload),
         priority_textures=sorted(priorities),priority_multiplier=8,
-        priority_reallocation=rebalance_priorities,
-        unselected_policy='reported Default donor exchanges; no unselected allocation increase' if rebalance_priorities else 'exact default GIM bytes' if freeze_unselected else 'adaptive allocation',
+        priority_reallocation=rebalance_priorities,source_ceiling_seed_rebuilt=seed_rebuilt,
+        unselected_policy='explicit source-ceiling seed repair followed by measured adaptive allocation; invalid legacy axes/colors are not retained' if seed_rebuilt else 'reported Default donor exchanges; no unselected allocation increase' if rebalance_priorities else 'exact default GIM bytes' if freeze_unselected else 'adaptive allocation',
         baseline_bytes=len(baseline),**allocation,textures=reports,unchanged_sections=proof,
         lossless_retained_texture_storage=lossless_report,
         configured_target=target,effective_padded_target=target//2048*2048,

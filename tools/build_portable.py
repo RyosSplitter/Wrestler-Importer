@@ -55,13 +55,20 @@ def build():
         shutil.copytree(ROOT/folder,sources/'converter'/folder,ignore=shutil.ignore_patterns('__pycache__','*.pyc'))
     (sources/'converter/experiments').mkdir()
     shutil.copy2(ROOT/'experiments/texture_fidelity_selection.py',sources/'converter/experiments/texture_fidelity_selection.py')
+    for filename in ('default_texture_quality.py','texture_budget_trial.py'):
+        shutil.copy2(ROOT/'experiments'/filename,sources/'converter/experiments'/filename)
     for filename in ('ps2psp_converter.py','requirements-desktop.txt','requirements-qa.txt','requirements.txt','REIMPLEMENTATION_GUIDE.txt'):
         shutil.copy2(ROOT/filename,sources/'converter'/filename)
     shutil.copytree(ROOT/'docs/hctp-psp',sources/'converter/docs/hctp-psp')
     for path in (ROOT/'docs').glob('portable-*'):
         if path.is_file():shutil.copy2(path,sources/'converter/docs'/path.name)
-    for filename in ('rock-head-qa-investigation.md','rock-scalp-layout-control.md','next-update.md'):
+    for filename in ('rock-head-qa-investigation.md','rock-scalp-layout-control.md','next-update.md',
+                     'rvd-texture-budget-experiment.md','source-skinning-identity.md','texture-quality-v025-native-summary.json'):
         shutil.copy2(ROOT/'docs'/filename,sources/'converter/docs'/filename)
+    focused_tests=sources/'converter/tests';focused_tests.mkdir()
+    (focused_tests/'__init__.py').write_text('')
+    for filename in ('test_default_textures.py','test_texture_budget_trial.py'):
+        shutil.copy2(ROOT/'tests'/filename,focused_tests/filename)
     notices=destination/'licenses';notices.mkdir();manifest=[]
     for dist in metadata.distributions():
         license_files=[]

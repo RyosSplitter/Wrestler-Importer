@@ -2,14 +2,14 @@ name: Build portable PS2PSP preview
 on:
   workflow_dispatch:
   push:
-    branches: [feature/portable-ps2psp, fix/hctp-primary-model, experiment/precision-budget-fit, experiment/multi-yobj-accessories, experiment/content-aware-textures, experiment/scalp-compatibility-update, experiment/texture-fidelity-selection]
+    branches: [feature/portable-ps2psp, fix/hctp-primary-model, experiment/precision-budget-fit, experiment/multi-yobj-accessories, experiment/content-aware-textures, experiment/scalp-compatibility-update, experiment/texture-fidelity-selection, feature/default-texture-quality]
     paths: ['desktop/**', 'model_qa/**', 'tests/test_head_qa.py', 'tests/test_skin_palette_padding.py', 'tests/test_portable_skinning.py', 'ps2psp_converter.py', 'app/ps2_textures.py', 'tools/build_portable.py', 'tools/portable_fixture.py', 'tools/blender_reduce.py', 'tools/pac_inspect.py', 'tools/pac_repack.py', 'tools/hctp_read.py', 'tools/hctp_weights.py', 'tools/yobj_read.py', 'requirements-desktop.txt', 'docs/portable-*.md', 'tests/test_portable_*.py', 'tests/test_adaptive_textures.py', 'tests/test_texture_review.py', 'tests/test_priority_reallocation.py', 'tests/test_texture_modes.py', 'tests/test_maximum_downgrade.py', 'tests/test_main_model_selection.py', '.github/workflows/windows-portable.yml']
 permissions:
   contents: write
 jobs:
   portable:
     runs-on: windows-latest
-    timeout-minutes: 50
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
         with:
@@ -94,7 +94,7 @@ jobs:
           print('Frozen one-slot adaptation and exact effective geometry/weight replay passed.')
       - name: Frozen conversion, QA and textured previews including multi-YOBJ source
         if: steps.scope.outputs.full == 'true'
-        timeout-minutes: 25
+        timeout-minutes: 35
         shell: pwsh
         run: |
           $env:PATH = "$env:SystemRoot\System32;$env:SystemRoot"
@@ -111,6 +111,51 @@ jobs:
           if ($multi.model_count -ne 3 -or $multi.accessory_sections.Count -ne 2) { throw 'Accessory source models were dropped' }
           if ($single.sha256 -eq $multi.sha256) { throw 'Multi-model output unexpectedly equals main-only output' }
           Write-Output 'Multi-model input retains two independently audited PSP accessories.'
+      - name: Check new Default texture budget, automatic attention and exact model preservation
+        if: steps.scope.outputs.full == 'true'
+        shell: python
+        run: |
+          import json,os,sys
+          from pathlib import Path
+          sys.path.insert(0,str(Path.cwd()))
+          from tools.psp_mesh_merge_trial import sections
+          from desktop.default_textures import REFERENCE_PIXEL_BYTES
+          from desktop.core import validate_pac
+          from desktop.texture_optimizer.candidates import read_gim
+          for name in ('Lance','Jericho','LanceMulti'):
+              job=Path(os.environ['RUNNER_TEMP'],'portable-'+name)
+              r=json.loads((job/'success.json').read_text())
+              assert r['texture_mode']=='Default' and r['default_textures']['unchanged_model_payloads']
+              report=json.loads((job/'work/default-textures/report.json').read_text())
+              assert report['pixel_palette_budget']>=REFERENCE_PIXEL_BYTES
+              assert report['default_policy']['priority_origin']=='automatic-content'
+              assert len(report['default_policy']['chosen_priorities'])<=3
+              validate_pac(Path(r['pac']).read_bytes(),gim_reader=read_gim)
+              before={s['id']:raw for s,raw in sections(Path(r['default_textures']['baseline_pac']).read_bytes())}
+              after={s['id']:raw for s,raw in sections(Path(r['pac']).read_bytes())}
+              assert before.keys()==after.keys()
+              for section,raw in before.items():
+                  if section!=9:assert raw==after[section]
+              assert r['bytes']<=148000
+              print('Frozen new Default:',name,r['bytes'],report['pixel_palette_bytes'],report['default_policy']['chosen_priorities'])
+      - name: Frozen Legacy comparison mode
+        if: steps.scope.outputs.full == 'true'
+        timeout-minutes: 12
+        shell: python
+        run: |
+          import json,os,subprocess,sys
+          from pathlib import Path
+          sys.path.insert(0,str(Path.cwd()))
+          from desktop.core import validate_pac
+          root=Path(os.environ['RUNNER_TEMP'],'portable-legacy');root.mkdir()
+          request=dict(source=str(Path('build/test-inputs/Lance-modified-HCTP.pac').resolve()),
+              base=str(Path('assets/Kurt-Angle-Ring.PAC').resolve()),texture_mode='Legacy')
+          (root/'request.json').write_text(json.dumps(request))
+          subprocess.run(['dist/PS2PSP-Pac-Converter/PS2PSP-Pac-Converter.exe','--worker',str(root/'request.json')],check=True,timeout=600)
+          r=json.loads((root/'success.json').read_text())
+          assert r['texture_mode']=='Legacy' and 'default_textures' not in r
+          validate_pac(Path(r['pac']).read_bytes())
+          print('Frozen Legacy generation remains available:',r['bytes'])
       - name: Frozen adaptive texture A/B and immutable model verification
         timeout-minutes: 15
         shell: pwsh
@@ -289,6 +334,6 @@ jobs:
         run: |
           $tag = "portable-preview-${{ github.run_number }}-${{ github.sha }}"
           @'
-          PS2PSP v0.25.5 Windows x64 preview. Fixes blocked Priority Selection upgrades by allowing controlled, reported texture-only donor exchanges under actual PAC and padded pixel/CLUT budgets. Selected maps never lose measured quality; cranial/cutout guards and material depth remain. Results show selected dimensions/colors, donor count and blocked improvements. Geometry/rigging are unchanged by the texture stage. Includes Maximum Downgrade, existing Default/ATO/Downgrade modes, scalp compatibility, full QA, classic interface, bundled Blender, source and notices; no game assets. Requires your own supported PSP base and Windows 10/11 x64. Main and accepted PACs remain unchanged. PPSSPP validation required; review donor tradeoffs, not only selected maps.
+          PS2PSP v0.25.6 Windows x64. Default now automatically favors lost fine texture detail using a separately measured native-reference pixel/CLUT allowance and actual 148000-byte PAC fitting. No wrestler-specific names or hashes select detail priorities. Legacy preserves the previous Default texture path; ATO remains the earlier adaptive comparison. Manual Priority Selection uses the new reference allowance, and Downgrade reduces new Default textures. Maximum Downgrade remains available. Texture stages preserve geometry, rigging, UVs and material depth. Includes source skinning identity validation, full QA, classic interface, bundled Blender, source and notices; no game assets. The fixed RVD singlet candidate was reported successful in SVR 2011 by the user; this generalized policy still requires model-specific PPSSPP testing. Requires your own supported PSP base and Windows 10/11 x64. Accepted PACs and main remain preserved.
           '@ | Set-Content "$env:RUNNER_TEMP/release-notes.txt" -Encoding utf8NoBOM
-          gh release create $tag dist/*.zip dist/*.sha256 dist/*.png --target '${{ github.sha }}' --prerelease --title 'PS2PSP v0.25.5 — Priority texture reallocation' --notes-file "$env:RUNNER_TEMP/release-notes.txt"
+          gh release create $tag dist/*.zip dist/*.sha256 dist/*.png --target '${{ github.sha }}' --prerelease --title 'PS2PSP v0.25.6 — Default texture quality' --notes-file "$env:RUNNER_TEMP/release-notes.txt"

@@ -62,6 +62,12 @@ class Request:
     def maximum_downgrade(self):
         return self.texture_mode=='Maximum Downgrade'
 
+    @property
+    def default_texture_quality(self):
+        if self.use_adaptive or self.maximum_downgrade or self.priority_textures:
+            return False
+        return self.texture_mode in ('','Default','Downgrade','Priority Selection')
+
     def validate(self):
         from desktop.texture_review import validate_selection
         selected=validate_selection(self.priority_textures)
@@ -431,16 +437,24 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
                 count=len(change['new_palette'])-len(change['old_palette'])
                 for vertex in mesh['vertices']:vertex['weights']=vertex['weights']+[0.]*count
             accessory_prepared[section]=expected
+    default_report=None
+    if request.default_texture_quality:
+        from desktop.default_textures import upgrade
+        from desktop.texture_optimizer.candidates import read_gim as default_reader
+        step(64,'Preserving source texture detail within the final model and native-reference budget')
+        (work/'legacy-texture-method.pac').write_bytes(candidate)
+        candidate,default_report=upgrade(candidate,decoded,work/'default-textures',
+            target=profile['max_pac_bytes'],cancel=check,progress=lambda message:progress(64,message))
+        texture_reader=default_reader
     priority_report=None
     if request.priority_textures:
-        from desktop.texture_optimizer import optimize_pac
+        from desktop.default_textures import upgrade
         from desktop.texture_optimizer.candidates import read_gim as priority_reader
         step(64,'Allocating the selected texture fidelity priorities within the final model budget')
         (work/'before-texture-priorities.pac').write_bytes(candidate)
-        candidate,priority_report=optimize_pac(candidate,decoded,work/'texture-priorities',
+        candidate,priority_report=upgrade(candidate,decoded,work/'texture-priorities',
             target=profile['max_pac_bytes'],cancel=check,progress=lambda message:progress(64,message),
-            priority_textures=request.priority_textures,freeze_unselected=False,
-            rebalance_priorities=True)
+            priority_textures=request.priority_textures)
         texture_reader=priority_reader
     downgrade_report=None
     if request.downgrade_steps:
@@ -469,7 +483,7 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
         size_report.finish(True)
     step(65,'Validating final PAC pointers, buffers, weights, rendering records and size')
     native,gim_map=validate_pac(candidate,base_bytes,profile['max_pac_bytes'],accessory_models=accessory_prepared,gim_reader=texture_reader,
-        lossless_texture_sections={r['section'] for report in (adaptive_report,priority_report) if report for r in report['lossless_retained_texture_storage']})
+        lossless_texture_sections={r['section'] for report in (default_report,adaptive_report,priority_report) if report for r in report['lossless_retained_texture_storage']})
     from model_qa.skinning_records import compare as compare_skinning_records
     skinning_identity=compare_skinning_records(prepared,native,strict=False)
     dump(work/'skinning-identity-qa.json',skinning_identity)
@@ -511,6 +525,11 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
     qa['source_skinning_identity']=dict(status=skinning_identity['status'],report='../skinning-identity-qa.json',
         conflicting_source_locations=skinning_identity['source_conflicting_locations'],
         maximum_motion_error=skinning_identity['maximum_motion_error'])
+    if default_report is not None:
+        qa['default_texture_quality']=dict(report='../default-textures/report.html',
+            automatic_priorities=default_report['default_policy']['chosen_priorities'],
+            pixel_palette_bytes=default_report['pixel_palette_bytes'],pixel_palette_budget=default_report['pixel_palette_budget'],
+            unchanged_model_payloads=True,detail_review_textures=default_report['default_policy']['detail_review_textures'])
     if compatibility_report is not None:
         qa['skin_palette_compatibility']=dict(report='../skin-compatibility.json',
             changed_meshes=compatibility_report['changed_meshes'],
@@ -521,6 +540,8 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
     text=html.read_text(encoding='utf-8')
     note='<p>Native model set: %d models. <a href="../accessory-qa.json">Independent accessory structure, attributes and pose validation</a>. <a href="../preview/output.obj">Combined OBJ preview</a>. Actual in-game pad removal/throw behavior remains unverified.</p>'%(1+len(accessory_yobjs))
     note+='<p>Source-authorized coincident skinning: %d locations. <a href="../skinning-identity-qa.json">Protected face correspondence, effective weights and analytical motion/gap checks</a>. Distinct source branches are retained; newly introduced inconsistencies stop export.</p>'%skinning_identity['source_conflicting_locations']
+    if default_report is not None:
+        note+='<p>Default textures: <a href="../default-textures/report.html">Automatic detail priorities, source/final images and independent texture budget</a>. The final model data is unchanged by this texture stage. <a href="../legacy-texture-method.pac">Legacy comparison PAC</a>.</p>'
     if adaptive_report is not None:
         texture_flags=sum(bool(t['quality_review_flags']) for t in adaptive_report['textures'])
         note+='<p>Adaptive textures enabled: %d textures have tradeoffs requiring review. <a href="../adaptive-textures/report.html">Source/current/adaptive textures and allocation report</a>. The texture stage preserves every non-texture payload; any subsequent skin-layout adaptation is reported separately.</p>'%texture_flags
@@ -558,6 +579,14 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
             preservation_scope='Texture stage; subsequent skin-layout changes validated separately.',
             review_flags=texture_flags)
         result['review_flags']+=texture_flags
+    if default_report is not None:
+        policy=default_report['default_policy']
+        result['default_textures']=dict(report=str(work/'default-textures/report.html'),
+            baseline_pac=str(work/'legacy-texture-method.pac'),
+            automatic_priorities=policy['chosen_priorities'],detail_review_textures=policy['detail_review_textures'],
+            pixel_palette_bytes=default_report['pixel_palette_bytes'],pixel_palette_budget=default_report['pixel_palette_budget'],
+            unchanged_model_payloads=True,policy=policy['id'])
+        result['review_flags']+=sum(bool(t['quality_review_flags']) for t in default_report['textures'])
     if priority_report is not None:
         selected=[t for t in priority_report['textures'] if t['manual_priority']]
         reductions=sum(not t['priority_reduction_report']['full_source_preserved'] for t in selected)

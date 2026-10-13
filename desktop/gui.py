@@ -252,6 +252,11 @@ class Application:
                         self.output.set(f"{Path(r['pac']).name}  •  {r['bytes']:,} bytes\nNative checks passed • {r.get('model_count',1)} models • {r.get('total_meshes',r['meshes'])} meshes • {r.get('total_triangles',r['triangles']):,} triangles\nQA: {r['review_flags']} findings to review • PPSSPP validation required")
                         if r.get('adaptive_textures'):
                             self.output.set(self.output.get()+f"\nAdaptive textures: {r['adaptive_textures']['review_flags']} texture tradeoffs — open QA report")
+                        if r.get('default_textures'):
+                            t=r['default_textures']
+                            self.output.set(self.output.get()+f"\nDefault textures: {len(t['automatic_priorities'])} automatic detail priorities — open QA report")
+                            if t['detail_review_textures']:
+                                self.output.set(self.output.get()+"\nDetail remains reduced: "+', '.join(t['detail_review_textures'])+" — inspect the preview or use Priority Selection")
                         if r.get('texture_priorities'):
                             t=r['texture_priorities'];self.output.set(self.output.get()+f"\nTexture priorities: {len(t['names'])} selected; {t['reductions']} still reduced — open QA report")
                             for selected in t['selected_settings']:

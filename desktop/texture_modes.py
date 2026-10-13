@@ -18,11 +18,12 @@ from tools.pac_repack import replace_sections,texture_table
 from tools.psp_mesh_merge_trial import sections
 from tools.yukes_bpe import compress
 
-MODES=('Default','ATO','Priority Selection','Downgrade','Maximum Downgrade')
+MODES=('Default','Legacy','ATO','Priority Selection','Downgrade','Maximum Downgrade')
 HELP={
-    'Default':'Best for most models. Uses the established texture pipeline.',
-    'ATO':'Experimental content-aware optimization within the texture budget.',
-    'Priority Selection':'Prioritize up to 3 source textures. Reallocate texture space from other maps where needed; all reductions are reported.',
+    'Default':'Best for most models. Automatically prioritizes lost fine detail within the PAC and native-reference texture budget.',
+    'Legacy':'Previous Default texture method. Compact fixed reductions for comparison or troubleshooting.',
+    'ATO':'Earlier experimental adaptive method using the Legacy texture allocation budget.',
+    'Priority Selection':'Choose up to 3 detail priorities using the new Default texture allowance. Other maps may fund upgrades; reductions are reported.',
     'Downgrade':'Reduce Default textures by 1, 2 or 3 sizes. Squares stop at 64×64; rectangles keep their aspect ratio. Smaller maps stay unchanged.',
     'Maximum Downgrade':'Last resort: keep the converted model unchanged and reduce texture resolution/colors below normal floors only as needed to fit. Quality losses are reported.'}
 

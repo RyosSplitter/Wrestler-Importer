@@ -19,10 +19,15 @@ installation is required. Conversion and previews work offline.
    Convert. Processing, native validation, reference QA and preview rendering
    run in an isolated job. Cancel removes incomplete geometry and retains logs.
    The **Textures** dropdown defaults to **Default** (best for most models).
-   **ATO** uses the existing experimental content-aware allocator. **Priority
+   In v0.25.6, Default automatically prioritizes lost fine detail using an
+   independent native-reference texture allowance. **Legacy** retains the prior
+   fixed-reduction method for comparison. **ATO** uses the earlier experimental
+   allocator and Legacy allocation envelope. **Priority
    Selection** previews source maps when Convert is pressed and lets you select
    up to three quality priorities; Cancel starts no job. Use it when Default and
    ATO do not give good visual results. Remaining reductions are reported.
+   Manual priorities use the new Default allocation allowance. See
+   [Default texture quality](portable-default-textures.md) for evidence and limits.
    **Downgrade** offers one, two or three halving steps from Default output, with squares stopping at 64×64;
    rectangles preserve aspect, smaller textures are not upscaled, and actual
    PAC/allocation checks still apply.
