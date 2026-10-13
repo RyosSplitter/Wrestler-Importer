@@ -1,0 +1,263 @@
+[
+  {
+    "reference": "Kurt-Angle-Ring.PAC",
+    "bytes": 180224,
+    "models": [
+      {
+        "section": 2,
+        "blood_draws": [
+          {
+            "mesh": 21,
+            "texture": "blood_b",
+            "control": "0x115",
+            "triangles": 21,
+            "weight_slots": 5
+          },
+          {
+            "mesh": 22,
+            "texture": "blood",
+            "control": "0x115",
+            "triangles": 35,
+            "weight_slots": 8
+          },
+          {
+            "mesh": 23,
+            "texture": "blood",
+            "control": "0x115",
+            "triangles": 43,
+            "weight_slots": 8
+          },
+          {
+            "mesh": 24,
+            "texture": "blood",
+            "control": "0x115",
+            "triangles": 24,
+            "weight_slots": 8
+          },
+          {
+            "mesh": 25,
+            "texture": "blood",
+            "control": "0x115",
+            "triangles": 7,
+            "weight_slots": 8
+          },
+          {
+            "mesh": 26,
+            "texture": "blood",
+            "control": "0x115",
+            "triangles": 7,
+            "weight_slots": 8
+          },
+          {
+            "mesh": 27,
+            "texture": "blood",
+            "control": "0x115",
+            "triangles": 5,
+            "weight_slots": 8
+          },
+          {
+            "mesh": 28,
+            "texture": "blood",
+            "control": "0x115",
+            "triangles": 3,
+            "weight_slots": 5
+          }
+        ]
+      }
+    ],
+    "effect_tables": [
+      "blood1",
+      "blood2",
+      "blood_b1"
+    ]
+  },
+  {
+    "reference": "Sgt-Slaughter-Ring-.PAC",
+    "bytes": 104448,
+    "models": [
+      {
+        "section": 2,
+        "blood_draws": [
+          {
+            "mesh": 17,
+            "texture": "blood_b",
+            "control": "0x117",
+            "triangles": 10,
+            "weight_slots": 8
+          },
+          {
+            "mesh": 17,
+            "texture": "blood",
+            "control": "0x117",
+            "triangles": 53,
+            "weight_slots": 8
+          },
+          {
+            "mesh": 18,
+            "texture": "blood",
+            "control": "0x117",
+            "triangles": 23,
+            "weight_slots": 8
+          },
+          {
+            "mesh": 19,
+            "texture": "blood",
+            "control": "0x117",
+            "triangles": 26,
+            "weight_slots": 8
+          },
+          {
+            "mesh": 20,
+            "texture": "blood",
+            "control": "0x117",
+            "triangles": 11,
+            "weight_slots": 8
+          },
+          {
+            "mesh": 21,
+            "texture": "blood",
+            "control": "0x117",
+            "triangles": 6,
+            "weight_slots": 7
+          }
+        ]
+      }
+    ],
+    "effect_tables": [
+      "blood1",
+      "blood2",
+      "blood_b1"
+    ]
+  },
+  {
+    "reference": "Rock.PAC",
+    "bytes": 153600,
+    "models": [
+      {
+        "section": 2,
+        "blood_draws": [
+          {
+            "mesh": 22,
+            "texture": "blood_b",
+            "control": "0x115",
+            "triangles": 21,
+            "weight_slots": 8
+          },
+          {
+            "mesh": 22,
+            "texture": "blood",
+            "control": "0x115",
+            "triangles": 31,
+            "weight_slots": 8
+          },
+          {
+            "mesh": 23,
+            "texture": "blood",
+            "control": "0x115",
+            "triangles": 22,
+            "weight_slots": 8
+          },
+          {
+            "mesh": 24,
+            "texture": "blood",
+            "control": "0x115",
+            "triangles": 25,
+            "weight_slots": 8
+          },
+          {
+            "mesh": 25,
+            "texture": "blood",
+            "control": "0x115",
+            "triangles": 16,
+            "weight_slots": 8
+          },
+          {
+            "mesh": 26,
+            "texture": "blood",
+            "control": "0x115",
+            "triangles": 12,
+            "weight_slots": 8
+          },
+          {
+            "mesh": 27,
+            "texture": "blood",
+            "control": "0x115",
+            "triangles": 5,
+            "weight_slots": 8
+          }
+        ]
+      },
+      {
+        "section": 26,
+        "blood_draws": []
+      },
+      {
+        "section": 27,
+        "blood_draws": []
+      }
+    ],
+    "effect_tables": [
+      "blood1",
+      "blood2",
+      "blood_b1"
+    ]
+  },
+  {
+    "reference": "Chris Jericho.pac",
+    "bytes": 140032,
+    "models": [
+      {
+        "section": 2,
+        "blood_draws": [
+          {
+            "mesh": 20,
+            "texture": "blood_b",
+            "control": "0x117",
+            "triangles": 21,
+            "weight_slots": 8
+          },
+          {
+            "mesh": 20,
+            "texture": "blood",
+            "control": "0x117",
+            "triangles": 17,
+            "weight_slots": 8
+          },
+          {
+            "mesh": 21,
+            "texture": "blood",
+            "control": "0x117",
+            "triangles": 27,
+            "weight_slots": 8
+          },
+          {
+            "mesh": 22,
+            "texture": "blood",
+            "control": "0x117",
+            "triangles": 9,
+            "weight_slots": 8
+          },
+          {
+            "mesh": 23,
+            "texture": "blood",
+            "control": "0x117",
+            "triangles": 16,
+            "weight_slots": 7
+          },
+          {
+            "mesh": 24,
+            "texture": "blood",
+            "control": "0x117",
+            "triangles": 2,
+            "weight_slots": 6
+          }
+        ]
+      }
+    ],
+    "effect_tables": [
+      "blood1",
+      "blood2",
+      "blood_b1"
+    ]
+  }
+]

@@ -1,0 +1,20 @@
+{
+  "unit_tests": {
+    "executed": 331,
+    "passed": 331,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "evidence": "full-suite.log"
+  },
+  "generated_overlay_tests": 8,
+  "native_relocations_checked": 1273,
+  "existing_body_analytical_poses": 14,
+  "existing_body_cranial_probes": 37,
+  "maximum_existing_body_position_difference": 0,
+  "live_noesis": false,
+  "ppsspp_gameplay": false,
+  "production_converter_modified": false,
+  "branch": "experiment/psp-blood-overlays",
+  "notes": "CPU previews force initial blood visible; blood-stage activation and heap behavior require gameplay testing."
+}

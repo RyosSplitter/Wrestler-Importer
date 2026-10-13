@@ -1,0 +1,13 @@
+test_added_index_corruption_is_refused_by_native_auditor (tests.test_blood_overlay_trial.BloodOverlayTests.test_added_index_corruption_is_refused_by_native_auditor) ... ok
+test_coincident_control_has_zero_geometric_attachment_error (tests.test_blood_overlay_trial.BloodOverlayTests.test_coincident_control_has_zero_geometric_attachment_error) ... ok
+test_existing_skin_records_remain_exact_and_inputs_are_immutable (tests.test_blood_overlay_trial.BloodOverlayTests.test_existing_skin_records_remain_exact_and_inputs_are_immutable) ... ok
+test_material_state_is_copied_except_texture_index_and_writer_pointers (tests.test_blood_overlay_trial.BloodOverlayTests.test_material_state_is_copied_except_texture_index_and_writer_pointers) ... ok
+test_off_surface_layer_is_detected_even_with_valid_weights (tests.test_blood_overlay_trial.BloodOverlayTests.test_off_surface_layer_is_detected_even_with_valid_weights) ... ok
+test_oversize_trial_preserves_inputs_and_withholds_pac (tests.test_blood_overlay_trial.BloodOverlayTests.test_oversize_trial_preserves_inputs_and_withholds_pac) ... ok
+test_rig_mismatch_existing_blood_and_missing_patch_are_refused (tests.test_blood_overlay_trial.BloodOverlayTests.test_rig_mismatch_existing_blood_and_missing_patch_are_refused) ... ok
+test_valid_but_changed_overlay_weights_are_detected (tests.test_blood_overlay_trial.BloodOverlayTests.test_valid_but_changed_overlay_weights_are_detected) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.983s
+
+OK

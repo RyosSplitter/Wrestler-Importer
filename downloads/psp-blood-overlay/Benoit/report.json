@@ -1,0 +1,3364 @@
+{
+  "status": "experimental PAC ready for gameplay test",
+  "input_sha256": "109f3ad9b6785cd7a11febe63d29e1bab62216b5b5c59facf58d91397f441e8e",
+  "donor_sha256": "bf935a51fe30bfd2df929f8eb9e50be5d793426ea05125ca9411ce21b19ead80",
+  "sha256": "6f34fdc205d8ad6dc57611ec0291ebcc88c838b468699403947d754c73a83672",
+  "before_bytes": 120832,
+  "candidate_bytes": 135168,
+  "max_pac_bytes": 148000,
+  "before_modeled_texture_bytes": 34176,
+  "modeled_texture_bytes": 38400,
+  "oversize_bytes": 0,
+  "compression_attempts": [
+    {
+      "max_distinct": 200,
+      "bytes": 139264,
+      "model_stored_bytes": 113954,
+      "textures_stored_bytes": 19288
+    },
+    {
+      "max_distinct": 220,
+      "bytes": 135168,
+      "model_stored_bytes": 111841,
+      "textures_stored_bytes": 19228
+    }
+  ],
+  "before": {
+    "meshes": 38,
+    "vertices": 2040,
+    "triangles": 2380,
+    "textures": 15,
+    "expanded_bytes": 168368
+  },
+  "after": {
+    "meshes": 50,
+    "vertices": 2354,
+    "triangles": 2721,
+    "textures": 17,
+    "expanded_bytes": 195328
+  },
+  "patches": {
+    "blood_b": {
+      "native_meshes": [
+        21
+      ],
+      "native_triangles": 21,
+      "native_gap_range": [
+        0.006293408899679985,
+        0.08289657387987429
+      ],
+      "signed_normal_gap_median": -0.019853362620960352,
+      "applied_normal_offset": -0.019853362620960352,
+      "coverage_tolerance": 0.08290657387987428,
+      "added_triangles": 46
+    },
+    "blood": {
+      "native_meshes": [
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28
+      ],
+      "native_triangles": 124,
+      "native_gap_range": [
+        0.0020739614372602706,
+        0.12010345082979491
+      ],
+      "signed_normal_gap_median": -0.025491602886866534,
+      "applied_normal_offset": -0.025491602886866534,
+      "coverage_tolerance": 0.12011345082979491,
+      "added_triangles": 295
+    }
+  },
+  "vertex_provenance": [
+    {
+      "mesh": 38,
+      "vertex": 0,
+      "body_mesh": 12,
+      "body_vertex": 3,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.15290671233825856,
+      "donor_patch_distance": 0.3759488665403802
+    },
+    {
+      "mesh": 38,
+      "vertex": 1,
+      "body_mesh": 12,
+      "body_vertex": 72,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.008535765137438056,
+      "donor_patch_distance": 0.029976014502124008
+    },
+    {
+      "mesh": 38,
+      "vertex": 2,
+      "body_mesh": 12,
+      "body_vertex": 73,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.0940247501014583,
+      "donor_patch_distance": 0.03492170308981324
+    },
+    {
+      "mesh": 38,
+      "vertex": 3,
+      "body_mesh": 12,
+      "body_vertex": 68,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.031700770916945537,
+      "donor_patch_distance": 0.10228129971031284
+    },
+    {
+      "mesh": 38,
+      "vertex": 4,
+      "body_mesh": 12,
+      "body_vertex": 69,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.09704024818238043,
+      "donor_patch_distance": 0.017610381360702098
+    },
+    {
+      "mesh": 38,
+      "vertex": 5,
+      "body_mesh": 12,
+      "body_vertex": 7,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.13905411715031143,
+      "donor_patch_distance": 0.37863570185491247
+    },
+    {
+      "mesh": 38,
+      "vertex": 6,
+      "body_mesh": 12,
+      "body_vertex": 70,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.023718746076136398,
+      "donor_patch_distance": 0.03000951181793634
+    },
+    {
+      "mesh": 38,
+      "vertex": 7,
+      "body_mesh": 12,
+      "body_vertex": 71,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.03260298122778439,
+      "donor_patch_distance": 0.04862448314534855
+    },
+    {
+      "mesh": 38,
+      "vertex": 8,
+      "body_mesh": 12,
+      "body_vertex": 4,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.12213045214576264,
+      "donor_patch_distance": 0.29849600358847234
+    },
+    {
+      "mesh": 38,
+      "vertex": 9,
+      "body_mesh": 12,
+      "body_vertex": 0,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.13039593799341734,
+      "donor_patch_distance": 0.2967794395957844
+    },
+    {
+      "mesh": 38,
+      "vertex": 10,
+      "body_mesh": 12,
+      "body_vertex": 74,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.0637191076611796,
+      "donor_patch_distance": 0.08386658280565612
+    },
+    {
+      "mesh": 38,
+      "vertex": 11,
+      "body_mesh": 12,
+      "body_vertex": 81,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.11936171941518238,
+      "donor_patch_distance": 0.10978407980289583
+    },
+    {
+      "mesh": 38,
+      "vertex": 12,
+      "body_mesh": 12,
+      "body_vertex": 82,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.08326228746129044,
+      "donor_patch_distance": 0.018552911254974776
+    },
+    {
+      "mesh": 38,
+      "vertex": 13,
+      "body_mesh": 12,
+      "body_vertex": 83,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.1637208377747507,
+      "donor_patch_distance": 0.0688517400531376
+    },
+    {
+      "mesh": 38,
+      "vertex": 14,
+      "body_mesh": 12,
+      "body_vertex": 84,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.09704024818238043,
+      "donor_patch_distance": 0.017610381360702098
+    },
+    {
+      "mesh": 38,
+      "vertex": 15,
+      "body_mesh": 12,
+      "body_vertex": 85,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.023254885984134315,
+      "donor_patch_distance": 0.3336206267210936
+    },
+    {
+      "mesh": 38,
+      "vertex": 16,
+      "body_mesh": 12,
+      "body_vertex": 86,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.031700770916945537,
+      "donor_patch_distance": 0.10228129971031284
+    },
+    {
+      "mesh": 38,
+      "vertex": 17,
+      "body_mesh": 12,
+      "body_vertex": 93,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.0637191076611796,
+      "donor_patch_distance": 0.08386658280565612
+    },
+    {
+      "mesh": 38,
+      "vertex": 18,
+      "body_mesh": 12,
+      "body_vertex": 95,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.0940247501014583,
+      "donor_patch_distance": 0.03492170308981324
+    },
+    {
+      "mesh": 38,
+      "vertex": 19,
+      "body_mesh": 12,
+      "body_vertex": 94,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.07830525197117026,
+      "donor_patch_distance": 0.2644281996822638
+    },
+    {
+      "mesh": 38,
+      "vertex": 20,
+      "body_mesh": 12,
+      "body_vertex": 96,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.20826848585266705,
+      "donor_patch_distance": 0.06992966998465898
+    },
+    {
+      "mesh": 38,
+      "vertex": 21,
+      "body_mesh": 12,
+      "body_vertex": 97,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.14881940184687426,
+      "donor_patch_distance": 0.018863757602822145
+    },
+    {
+      "mesh": 38,
+      "vertex": 22,
+      "body_mesh": 12,
+      "body_vertex": 165,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.11651686757154148,
+      "donor_patch_distance": 0.10714070526863369
+    },
+    {
+      "mesh": 38,
+      "vertex": 23,
+      "body_mesh": 12,
+      "body_vertex": 112,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.008535765137438056,
+      "donor_patch_distance": 0.029976014502124008
+    },
+    {
+      "mesh": 38,
+      "vertex": 24,
+      "body_mesh": 12,
+      "body_vertex": 113,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.023718746076136398,
+      "donor_patch_distance": 0.03000951181793634
+    },
+    {
+      "mesh": 38,
+      "vertex": 25,
+      "body_mesh": 12,
+      "body_vertex": 170,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.05732375116131472,
+      "donor_patch_distance": 0.020962825043228717
+    },
+    {
+      "mesh": 38,
+      "vertex": 26,
+      "body_mesh": 12,
+      "body_vertex": 171,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.14705039108697665,
+      "donor_patch_distance": 0.014935083448861502
+    },
+    {
+      "mesh": 38,
+      "vertex": 27,
+      "body_mesh": 12,
+      "body_vertex": 167,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.15934204498398125,
+      "donor_patch_distance": 0.04825176494244475
+    },
+    {
+      "mesh": 39,
+      "vertex": 0,
+      "body_mesh": 13,
+      "body_vertex": 24,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.16250198503618346,
+      "donor_patch_distance": 0.05782513278953988
+    },
+    {
+      "mesh": 39,
+      "vertex": 1,
+      "body_mesh": 13,
+      "body_vertex": 25,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.1175794404164689,
+      "donor_patch_distance": 0.04068682045510159
+    },
+    {
+      "mesh": 39,
+      "vertex": 2,
+      "body_mesh": 13,
+      "body_vertex": 23,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.14429607080656257,
+      "donor_patch_distance": 0.013494391284438342
+    },
+    {
+      "mesh": 39,
+      "vertex": 3,
+      "body_mesh": 13,
+      "body_vertex": 42,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.10517445720821843,
+      "donor_patch_distance": 0.031134846814700162
+    },
+    {
+      "mesh": 39,
+      "vertex": 4,
+      "body_mesh": 13,
+      "body_vertex": 43,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.032264307601844865,
+      "donor_patch_distance": 0.01852771279499407
+    },
+    {
+      "mesh": 39,
+      "vertex": 5,
+      "body_mesh": 13,
+      "body_vertex": 44,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.11936171941518238,
+      "donor_patch_distance": 0.10978407980289583
+    },
+    {
+      "mesh": 39,
+      "vertex": 6,
+      "body_mesh": 13,
+      "body_vertex": 45,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.1236437171286601,
+      "donor_patch_distance": 0.2734063655633194
+    },
+    {
+      "mesh": 39,
+      "vertex": 7,
+      "body_mesh": 13,
+      "body_vertex": 39,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.11490385981582552,
+      "donor_patch_distance": 0.30914863596133607
+    },
+    {
+      "mesh": 39,
+      "vertex": 8,
+      "body_mesh": 13,
+      "body_vertex": 38,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.15934204498398125,
+      "donor_patch_distance": 0.04825176494244475
+    },
+    {
+      "mesh": 39,
+      "vertex": 9,
+      "body_mesh": 13,
+      "body_vertex": 53,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.12204982528562645,
+      "donor_patch_distance": 0.036088501167781346
+    },
+    {
+      "mesh": 39,
+      "vertex": 10,
+      "body_mesh": 13,
+      "body_vertex": 54,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.14705039108697665,
+      "donor_patch_distance": 0.014935083448861502
+    },
+    {
+      "mesh": 39,
+      "vertex": 11,
+      "body_mesh": 13,
+      "body_vertex": 56,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.08326228746129044,
+      "donor_patch_distance": 0.018552911254974776
+    },
+    {
+      "mesh": 39,
+      "vertex": 12,
+      "body_mesh": 13,
+      "body_vertex": 57,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.08429316345329194,
+      "donor_patch_distance": 0.019632648789334337
+    },
+    {
+      "mesh": 39,
+      "vertex": 13,
+      "body_mesh": 13,
+      "body_vertex": 58,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.023718746076136398,
+      "donor_patch_distance": 0.03000951181793634
+    },
+    {
+      "mesh": 39,
+      "vertex": 14,
+      "body_mesh": 13,
+      "body_vertex": 59,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.03260298122778439,
+      "donor_patch_distance": 0.04862448314534855
+    },
+    {
+      "mesh": 39,
+      "vertex": 15,
+      "body_mesh": 13,
+      "body_vertex": 60,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.008535765137438056,
+      "donor_patch_distance": 0.029976014502124008
+    },
+    {
+      "mesh": 39,
+      "vertex": 16,
+      "body_mesh": 13,
+      "body_vertex": 61,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.14881940184687426,
+      "donor_patch_distance": 0.018863757602822145
+    },
+    {
+      "mesh": 40,
+      "vertex": 0,
+      "body_mesh": 34,
+      "body_vertex": 16,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.16381755463097797,
+      "donor_patch_distance": 0.3744667238941213
+    },
+    {
+      "mesh": 40,
+      "vertex": 1,
+      "body_mesh": 34,
+      "body_vertex": 18,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.08344701185726537,
+      "donor_patch_distance": 0.11013381524195578
+    },
+    {
+      "mesh": 40,
+      "vertex": 2,
+      "body_mesh": 34,
+      "body_vertex": 17,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.09559740671350371,
+      "donor_patch_distance": 0.019861458769552885
+    },
+    {
+      "mesh": 40,
+      "vertex": 3,
+      "body_mesh": 34,
+      "body_vertex": 19,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.14429607080656257,
+      "donor_patch_distance": 0.013494391284438342
+    },
+    {
+      "mesh": 40,
+      "vertex": 4,
+      "body_mesh": 34,
+      "body_vertex": 58,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.06160670579271682,
+      "donor_patch_distance": 0.09614995988798491
+    },
+    {
+      "mesh": 40,
+      "vertex": 5,
+      "body_mesh": 34,
+      "body_vertex": 47,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.10517445720821843,
+      "donor_patch_distance": 0.031134846814700162
+    },
+    {
+      "mesh": 40,
+      "vertex": 6,
+      "body_mesh": 34,
+      "body_vertex": 59,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.14705039108697665,
+      "donor_patch_distance": 0.014935083448861502
+    },
+    {
+      "mesh": 40,
+      "vertex": 7,
+      "body_mesh": 34,
+      "body_vertex": 46,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.05732375116131472,
+      "donor_patch_distance": 0.020962825043228717
+    },
+    {
+      "mesh": 40,
+      "vertex": 8,
+      "body_mesh": 34,
+      "body_vertex": 23,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.1175794404164689,
+      "donor_patch_distance": 0.04068682045510159
+    },
+    {
+      "mesh": 40,
+      "vertex": 9,
+      "body_mesh": 34,
+      "body_vertex": 44,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.14881940184687426,
+      "donor_patch_distance": 0.018863757602822145
+    },
+    {
+      "mesh": 40,
+      "vertex": 10,
+      "body_mesh": 34,
+      "body_vertex": 45,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.08429316345329194,
+      "donor_patch_distance": 0.019632648789334337
+    },
+    {
+      "mesh": 40,
+      "vertex": 11,
+      "body_mesh": 34,
+      "body_vertex": 48,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.032264307601844865,
+      "donor_patch_distance": 0.01852771279499407
+    },
+    {
+      "mesh": 40,
+      "vertex": 12,
+      "body_mesh": 34,
+      "body_vertex": 74,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.08326228746129044,
+      "donor_patch_distance": 0.018552911254974776
+    },
+    {
+      "mesh": 40,
+      "vertex": 13,
+      "body_mesh": 34,
+      "body_vertex": 49,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.09964879507695171,
+      "donor_patch_distance": 0.017251656485464013
+    },
+    {
+      "mesh": 40,
+      "vertex": 14,
+      "body_mesh": 34,
+      "body_vertex": 60,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.12204982528562645,
+      "donor_patch_distance": 0.036088501167781346
+    },
+    {
+      "mesh": 40,
+      "vertex": 15,
+      "body_mesh": 34,
+      "body_vertex": 61,
+      "texture": "blood_b",
+      "native_offset": -0.019853362620960352,
+      "donor_body_distance": 0.004947491858595543,
+      "donor_patch_distance": 0.4581785308740606
+    },
+    {
+      "mesh": 41,
+      "vertex": 0,
+      "body_mesh": 0,
+      "body_vertex": 1,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.015633259764287283,
+      "donor_patch_distance": 0.03704091453136621
+    },
+    {
+      "mesh": 41,
+      "vertex": 1,
+      "body_mesh": 0,
+      "body_vertex": 2,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.012772685375746322,
+      "donor_patch_distance": 0.03657653909834219
+    },
+    {
+      "mesh": 41,
+      "vertex": 2,
+      "body_mesh": 0,
+      "body_vertex": 0,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.07491204769637844,
+      "donor_patch_distance": 0.03573875477653813
+    },
+    {
+      "mesh": 41,
+      "vertex": 3,
+      "body_mesh": 0,
+      "body_vertex": 23,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.050663432561516016,
+      "donor_patch_distance": 0.12784946848008538
+    },
+    {
+      "mesh": 41,
+      "vertex": 4,
+      "body_mesh": 0,
+      "body_vertex": 8,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.0738246243518835,
+      "donor_patch_distance": 0.014655439880332946
+    },
+    {
+      "mesh": 41,
+      "vertex": 5,
+      "body_mesh": 0,
+      "body_vertex": 10,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.06988086988428314,
+      "donor_patch_distance": 0.15803620873962984
+    },
+    {
+      "mesh": 41,
+      "vertex": 6,
+      "body_mesh": 0,
+      "body_vertex": 9,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.012987815180581147,
+      "donor_patch_distance": 0.022894514928810353
+    },
+    {
+      "mesh": 41,
+      "vertex": 7,
+      "body_mesh": 0,
+      "body_vertex": 11,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.027546140928091288,
+      "donor_patch_distance": 0.06281665894229921
+    },
+    {
+      "mesh": 41,
+      "vertex": 8,
+      "body_mesh": 0,
+      "body_vertex": 157,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.06936395734648358,
+      "donor_patch_distance": 0.021115900710089973
+    },
+    {
+      "mesh": 41,
+      "vertex": 9,
+      "body_mesh": 0,
+      "body_vertex": 160,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.07739015083585862,
+      "donor_patch_distance": 0.04350355739126782
+    },
+    {
+      "mesh": 41,
+      "vertex": 10,
+      "body_mesh": 0,
+      "body_vertex": 156,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.09335437305153957,
+      "donor_patch_distance": 0.023521886193607133
+    },
+    {
+      "mesh": 41,
+      "vertex": 11,
+      "body_mesh": 0,
+      "body_vertex": 159,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.1310180321919412,
+      "donor_patch_distance": 0.038444467933072
+    },
+    {
+      "mesh": 41,
+      "vertex": 12,
+      "body_mesh": 0,
+      "body_vertex": 158,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.18050851578240606,
+      "donor_patch_distance": 0.029202859895749302
+    },
+    {
+      "mesh": 41,
+      "vertex": 13,
+      "body_mesh": 0,
+      "body_vertex": 165,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.1528874927468102,
+      "donor_patch_distance": 0.020528261677051796
+    },
+    {
+      "mesh": 41,
+      "vertex": 14,
+      "body_mesh": 0,
+      "body_vertex": 164,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.1363241773747903,
+      "donor_patch_distance": 0.03288187897621912
+    },
+    {
+      "mesh": 41,
+      "vertex": 15,
+      "body_mesh": 0,
+      "body_vertex": 38,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.11924979613596974,
+      "donor_patch_distance": 0.01128206721599222
+    },
+    {
+      "mesh": 41,
+      "vertex": 16,
+      "body_mesh": 0,
+      "body_vertex": 3,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.16721887641070682,
+      "donor_patch_distance": 0.1679109024271452
+    },
+    {
+      "mesh": 41,
+      "vertex": 17,
+      "body_mesh": 0,
+      "body_vertex": 4,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.09412751386461606,
+      "donor_patch_distance": 0.0258903904397416
+    },
+    {
+      "mesh": 41,
+      "vertex": 18,
+      "body_mesh": 0,
+      "body_vertex": 5,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.059228485101273196,
+      "donor_patch_distance": 0.011957805218815306
+    },
+    {
+      "mesh": 41,
+      "vertex": 19,
+      "body_mesh": 0,
+      "body_vertex": 6,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.013912200732007227,
+      "donor_patch_distance": 0.02702198241556718
+    },
+    {
+      "mesh": 41,
+      "vertex": 20,
+      "body_mesh": 0,
+      "body_vertex": 13,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.049888763504853814,
+      "donor_patch_distance": 0.015476484909749353
+    },
+    {
+      "mesh": 41,
+      "vertex": 21,
+      "body_mesh": 0,
+      "body_vertex": 14,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.035001981425266296,
+      "donor_patch_distance": 0.06797003972106377
+    },
+    {
+      "mesh": 41,
+      "vertex": 22,
+      "body_mesh": 0,
+      "body_vertex": 7,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.05059399665408989,
+      "donor_patch_distance": 0.02511526462340198
+    },
+    {
+      "mesh": 41,
+      "vertex": 23,
+      "body_mesh": 0,
+      "body_vertex": 24,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.04005320926497867,
+      "donor_patch_distance": 0.031736806278353985
+    },
+    {
+      "mesh": 41,
+      "vertex": 24,
+      "body_mesh": 0,
+      "body_vertex": 15,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.006826372894204411,
+      "donor_patch_distance": 0.03941840057804116
+    },
+    {
+      "mesh": 41,
+      "vertex": 25,
+      "body_mesh": 0,
+      "body_vertex": 16,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.023975922664222854,
+      "donor_patch_distance": 0.11651041816349082
+    },
+    {
+      "mesh": 41,
+      "vertex": 26,
+      "body_mesh": 0,
+      "body_vertex": 17,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.004574534830092405,
+      "donor_patch_distance": 0.00842211772064277
+    },
+    {
+      "mesh": 41,
+      "vertex": 27,
+      "body_mesh": 0,
+      "body_vertex": 29,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.006389239614095905,
+      "donor_patch_distance": 0.008763114846047844
+    },
+    {
+      "mesh": 41,
+      "vertex": 28,
+      "body_mesh": 0,
+      "body_vertex": 48,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.006243098582583707,
+      "donor_patch_distance": 0.041248156491940996
+    },
+    {
+      "mesh": 41,
+      "vertex": 29,
+      "body_mesh": 0,
+      "body_vertex": 30,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.02695959645310828,
+      "donor_patch_distance": 0.10932584446519868
+    },
+    {
+      "mesh": 41,
+      "vertex": 30,
+      "body_mesh": 0,
+      "body_vertex": 19,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.03252237464469234,
+      "donor_patch_distance": 0.05012559117731021
+    },
+    {
+      "mesh": 41,
+      "vertex": 31,
+      "body_mesh": 0,
+      "body_vertex": 18,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.033867587292286755,
+      "donor_patch_distance": 0.023336822569008285
+    },
+    {
+      "mesh": 41,
+      "vertex": 32,
+      "body_mesh": 0,
+      "body_vertex": 22,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.030945139523693807,
+      "donor_patch_distance": 0.0706728210821622
+    },
+    {
+      "mesh": 41,
+      "vertex": 33,
+      "body_mesh": 0,
+      "body_vertex": 25,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.024814928328755245,
+      "donor_patch_distance": 0.06458178252021429
+    },
+    {
+      "mesh": 41,
+      "vertex": 34,
+      "body_mesh": 0,
+      "body_vertex": 26,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.04932014175538637,
+      "donor_patch_distance": 0.02384043487269811
+    },
+    {
+      "mesh": 41,
+      "vertex": 35,
+      "body_mesh": 0,
+      "body_vertex": 27,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.07675394618877858,
+      "donor_patch_distance": 0.029993939276709517
+    },
+    {
+      "mesh": 41,
+      "vertex": 36,
+      "body_mesh": 0,
+      "body_vertex": 28,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.1558308710517747,
+      "donor_patch_distance": 0.15962137145019106
+    },
+    {
+      "mesh": 41,
+      "vertex": 37,
+      "body_mesh": 0,
+      "body_vertex": 31,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.20240294385311214,
+      "donor_patch_distance": 0.017269524493435155
+    },
+    {
+      "mesh": 41,
+      "vertex": 38,
+      "body_mesh": 0,
+      "body_vertex": 32,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.1301396112417063,
+      "donor_patch_distance": 0.011282083695303147
+    },
+    {
+      "mesh": 41,
+      "vertex": 39,
+      "body_mesh": 0,
+      "body_vertex": 33,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.22496739867739526,
+      "donor_patch_distance": 0.059512478656151446
+    },
+    {
+      "mesh": 41,
+      "vertex": 40,
+      "body_mesh": 0,
+      "body_vertex": 34,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.2012315409691141,
+      "donor_patch_distance": 0.14816960198412593
+    },
+    {
+      "mesh": 41,
+      "vertex": 41,
+      "body_mesh": 0,
+      "body_vertex": 37,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.1797876744089725,
+      "donor_patch_distance": 0.034360895509763754
+    },
+    {
+      "mesh": 41,
+      "vertex": 42,
+      "body_mesh": 0,
+      "body_vertex": 39,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.21865704495158877,
+      "donor_patch_distance": 0.06995698739173192
+    },
+    {
+      "mesh": 41,
+      "vertex": 43,
+      "body_mesh": 0,
+      "body_vertex": 40,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.1898440246989876,
+      "donor_patch_distance": 0.016849877033884797
+    },
+    {
+      "mesh": 41,
+      "vertex": 44,
+      "body_mesh": 0,
+      "body_vertex": 41,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.24169535314225388,
+      "donor_patch_distance": 0.13000141993789371
+    },
+    {
+      "mesh": 41,
+      "vertex": 45,
+      "body_mesh": 0,
+      "body_vertex": 42,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.15621865015240133,
+      "donor_patch_distance": 0.050482180370912885
+    },
+    {
+      "mesh": 41,
+      "vertex": 46,
+      "body_mesh": 0,
+      "body_vertex": 46,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.2532144744892632,
+      "donor_patch_distance": 0.13360078172345458
+    },
+    {
+      "mesh": 41,
+      "vertex": 47,
+      "body_mesh": 0,
+      "body_vertex": 47,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.16866610973624033,
+      "donor_patch_distance": 0.04718818804141059
+    },
+    {
+      "mesh": 41,
+      "vertex": 48,
+      "body_mesh": 0,
+      "body_vertex": 168,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.1528400926264921,
+      "donor_patch_distance": 0.03122856881507194
+    },
+    {
+      "mesh": 41,
+      "vertex": 49,
+      "body_mesh": 0,
+      "body_vertex": 171,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.07260542197029524,
+      "donor_patch_distance": 0.0675086152285573
+    },
+    {
+      "mesh": 41,
+      "vertex": 50,
+      "body_mesh": 0,
+      "body_vertex": 53,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.12096596567406301,
+      "donor_patch_distance": 0.20334256676188492
+    },
+    {
+      "mesh": 41,
+      "vertex": 51,
+      "body_mesh": 0,
+      "body_vertex": 154,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.13364699446426295,
+      "donor_patch_distance": 0.03613513212252876
+    },
+    {
+      "mesh": 41,
+      "vertex": 52,
+      "body_mesh": 0,
+      "body_vertex": 155,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.0363045717799592,
+      "donor_patch_distance": 0.05207852924907077
+    },
+    {
+      "mesh": 41,
+      "vertex": 53,
+      "body_mesh": 0,
+      "body_vertex": 161,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.13996344781026004,
+      "donor_patch_distance": 0.030192541239129785
+    },
+    {
+      "mesh": 41,
+      "vertex": 54,
+      "body_mesh": 0,
+      "body_vertex": 162,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.05628740425527584,
+      "donor_patch_distance": 0.061482030247569854
+    },
+    {
+      "mesh": 41,
+      "vertex": 55,
+      "body_mesh": 0,
+      "body_vertex": 44,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.10646771077805967,
+      "donor_patch_distance": 0.19776099166321462
+    },
+    {
+      "mesh": 41,
+      "vertex": 56,
+      "body_mesh": 0,
+      "body_vertex": 163,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.0657204418305543,
+      "donor_patch_distance": 0.22317353750175573
+    },
+    {
+      "mesh": 41,
+      "vertex": 57,
+      "body_mesh": 0,
+      "body_vertex": 166,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.14398479104046247,
+      "donor_patch_distance": 0.03746654615491691
+    },
+    {
+      "mesh": 41,
+      "vertex": 58,
+      "body_mesh": 0,
+      "body_vertex": 167,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.1658363367199659,
+      "donor_patch_distance": 0.02154598476012707
+    },
+    {
+      "mesh": 41,
+      "vertex": 59,
+      "body_mesh": 0,
+      "body_vertex": 173,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.19332511008277203,
+      "donor_patch_distance": 0.030214119109905735
+    },
+    {
+      "mesh": 41,
+      "vertex": 60,
+      "body_mesh": 0,
+      "body_vertex": 174,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.1454293599613025,
+      "donor_patch_distance": 0.03296656083125448
+    },
+    {
+      "mesh": 42,
+      "vertex": 0,
+      "body_mesh": 2,
+      "body_vertex": 2,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.0738246243518835,
+      "donor_patch_distance": 0.014655439880332946
+    },
+    {
+      "mesh": 42,
+      "vertex": 1,
+      "body_mesh": 2,
+      "body_vertex": 0,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.01398236429462659,
+      "donor_patch_distance": 0.01566242809036702
+    },
+    {
+      "mesh": 42,
+      "vertex": 2,
+      "body_mesh": 2,
+      "body_vertex": 1,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.05757620802093225,
+      "donor_patch_distance": 0.051271978816613974
+    },
+    {
+      "mesh": 42,
+      "vertex": 3,
+      "body_mesh": 2,
+      "body_vertex": 5,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.0677665816264369,
+      "donor_patch_distance": 0.01956571629644339
+    },
+    {
+      "mesh": 42,
+      "vertex": 4,
+      "body_mesh": 2,
+      "body_vertex": 7,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.04597180407990733,
+      "donor_patch_distance": 0.008101269573637401
+    },
+    {
+      "mesh": 42,
+      "vertex": 5,
+      "body_mesh": 2,
+      "body_vertex": 14,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.08863718583572738,
+      "donor_patch_distance": 0.011957951493021502
+    },
+    {
+      "mesh": 42,
+      "vertex": 6,
+      "body_mesh": 2,
+      "body_vertex": 9,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.04355147353153218,
+      "donor_patch_distance": 0.029339466946278897
+    },
+    {
+      "mesh": 42,
+      "vertex": 7,
+      "body_mesh": 2,
+      "body_vertex": 11,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.13454207958405665,
+      "donor_patch_distance": 0.010332103338273781
+    },
+    {
+      "mesh": 42,
+      "vertex": 8,
+      "body_mesh": 2,
+      "body_vertex": 22,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.060540694788284465,
+      "donor_patch_distance": 0.009203399177145731
+    },
+    {
+      "mesh": 42,
+      "vertex": 9,
+      "body_mesh": 2,
+      "body_vertex": 28,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.14030941330240737,
+      "donor_patch_distance": 0.02369542496126845
+    },
+    {
+      "mesh": 42,
+      "vertex": 10,
+      "body_mesh": 2,
+      "body_vertex": 29,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.02790374889983884,
+      "donor_patch_distance": 0.02428455842872561
+    },
+    {
+      "mesh": 42,
+      "vertex": 11,
+      "body_mesh": 2,
+      "body_vertex": 44,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.07035436614982747,
+      "donor_patch_distance": 0.011181825754622024
+    },
+    {
+      "mesh": 42,
+      "vertex": 12,
+      "body_mesh": 2,
+      "body_vertex": 30,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.05601020510805272,
+      "donor_patch_distance": 0.023380466328781668
+    },
+    {
+      "mesh": 42,
+      "vertex": 13,
+      "body_mesh": 2,
+      "body_vertex": 48,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.027972810437153654,
+      "donor_patch_distance": 0.024103283156011863
+    },
+    {
+      "mesh": 42,
+      "vertex": 14,
+      "body_mesh": 2,
+      "body_vertex": 45,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.021941298071818938,
+      "donor_patch_distance": 0.03510088956180024
+    },
+    {
+      "mesh": 42,
+      "vertex": 15,
+      "body_mesh": 2,
+      "body_vertex": 39,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.07964064283816055,
+      "donor_patch_distance": 0.03704914469185954
+    },
+    {
+      "mesh": 42,
+      "vertex": 16,
+      "body_mesh": 2,
+      "body_vertex": 43,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.14537726571283166,
+      "donor_patch_distance": 0.011914012321230112
+    },
+    {
+      "mesh": 42,
+      "vertex": 17,
+      "body_mesh": 2,
+      "body_vertex": 37,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.10426900741061508,
+      "donor_patch_distance": 0.010533443460694403
+    },
+    {
+      "mesh": 42,
+      "vertex": 18,
+      "body_mesh": 2,
+      "body_vertex": 42,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.1057897703255344,
+      "donor_patch_distance": 0.03881342064089196
+    },
+    {
+      "mesh": 42,
+      "vertex": 19,
+      "body_mesh": 2,
+      "body_vertex": 41,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.10658773864336203,
+      "donor_patch_distance": 0.01968091554730414
+    },
+    {
+      "mesh": 42,
+      "vertex": 20,
+      "body_mesh": 2,
+      "body_vertex": 40,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.08874880747155399,
+      "donor_patch_distance": 0.024402146237869186
+    },
+    {
+      "mesh": 42,
+      "vertex": 21,
+      "body_mesh": 2,
+      "body_vertex": 3,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.07491204769637844,
+      "donor_patch_distance": 0.03573875477653813
+    },
+    {
+      "mesh": 42,
+      "vertex": 22,
+      "body_mesh": 2,
+      "body_vertex": 4,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.015633259764287283,
+      "donor_patch_distance": 0.03704091453136621
+    },
+    {
+      "mesh": 42,
+      "vertex": 23,
+      "body_mesh": 2,
+      "body_vertex": 6,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.0028684359336931206,
+      "donor_patch_distance": 0.0481051583919017
+    },
+    {
+      "mesh": 42,
+      "vertex": 24,
+      "body_mesh": 2,
+      "body_vertex": 19,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.0701277947908842,
+      "donor_patch_distance": 0.015444731484381233
+    },
+    {
+      "mesh": 42,
+      "vertex": 25,
+      "body_mesh": 2,
+      "body_vertex": 31,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.004830048608053263,
+      "donor_patch_distance": 0.04816248051658455
+    },
+    {
+      "mesh": 42,
+      "vertex": 26,
+      "body_mesh": 2,
+      "body_vertex": 18,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.00757903533796512,
+      "donor_patch_distance": 0.018701604136486527
+    },
+    {
+      "mesh": 42,
+      "vertex": 27,
+      "body_mesh": 2,
+      "body_vertex": 8,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.042059139116939995,
+      "donor_patch_distance": 0.020223183989218085
+    },
+    {
+      "mesh": 42,
+      "vertex": 28,
+      "body_mesh": 2,
+      "body_vertex": 23,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.0426109899411091,
+      "donor_patch_distance": 0.014080500416043702
+    },
+    {
+      "mesh": 42,
+      "vertex": 29,
+      "body_mesh": 2,
+      "body_vertex": 21,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.06972019166036222,
+      "donor_patch_distance": 0.017675967736633876
+    },
+    {
+      "mesh": 42,
+      "vertex": 30,
+      "body_mesh": 2,
+      "body_vertex": 35,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.06404626125206045,
+      "donor_patch_distance": 0.0312056484878278
+    },
+    {
+      "mesh": 42,
+      "vertex": 31,
+      "body_mesh": 2,
+      "body_vertex": 49,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.026065549973451473,
+      "donor_patch_distance": 0.028142471947845433
+    },
+    {
+      "mesh": 42,
+      "vertex": 32,
+      "body_mesh": 2,
+      "body_vertex": 52,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.06305894524198408,
+      "donor_patch_distance": 0.048103158496598554
+    },
+    {
+      "mesh": 42,
+      "vertex": 33,
+      "body_mesh": 2,
+      "body_vertex": 12,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.0901464058660217,
+      "donor_patch_distance": 0.014750161894412517
+    },
+    {
+      "mesh": 42,
+      "vertex": 34,
+      "body_mesh": 2,
+      "body_vertex": 10,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.10154124205624812,
+      "donor_patch_distance": 0.03954746964441482
+    },
+    {
+      "mesh": 42,
+      "vertex": 35,
+      "body_mesh": 2,
+      "body_vertex": 27,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.19413797278743156,
+      "donor_patch_distance": 0.020846591768024576
+    },
+    {
+      "mesh": 42,
+      "vertex": 36,
+      "body_mesh": 2,
+      "body_vertex": 13,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.09499285977820293,
+      "donor_patch_distance": 0.03838138030377031
+    },
+    {
+      "mesh": 42,
+      "vertex": 37,
+      "body_mesh": 2,
+      "body_vertex": 15,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.004574534830092405,
+      "donor_patch_distance": 0.00842211772064277
+    },
+    {
+      "mesh": 42,
+      "vertex": 38,
+      "body_mesh": 2,
+      "body_vertex": 16,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.012557122419970163,
+      "donor_patch_distance": 0.03808372394868311
+    },
+    {
+      "mesh": 42,
+      "vertex": 39,
+      "body_mesh": 2,
+      "body_vertex": 17,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.03392530711777987,
+      "donor_patch_distance": 0.02508689212873917
+    },
+    {
+      "mesh": 42,
+      "vertex": 40,
+      "body_mesh": 2,
+      "body_vertex": 20,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.027078297198772593,
+      "donor_patch_distance": 0.033671773525020175
+    },
+    {
+      "mesh": 42,
+      "vertex": 41,
+      "body_mesh": 2,
+      "body_vertex": 36,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.025239364595681386,
+      "donor_patch_distance": 0.02621454363997268
+    },
+    {
+      "mesh": 42,
+      "vertex": 42,
+      "body_mesh": 2,
+      "body_vertex": 50,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.023653550463414243,
+      "donor_patch_distance": 0.030716848768620297
+    },
+    {
+      "mesh": 42,
+      "vertex": 43,
+      "body_mesh": 2,
+      "body_vertex": 68,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.05068445891101642,
+      "donor_patch_distance": 0.03020912888781426
+    },
+    {
+      "mesh": 42,
+      "vertex": 44,
+      "body_mesh": 2,
+      "body_vertex": 47,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.0007269154035796842,
+      "donor_patch_distance": 0.012539635503309334
+    },
+    {
+      "mesh": 42,
+      "vertex": 45,
+      "body_mesh": 2,
+      "body_vertex": 24,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.006389239614095905,
+      "donor_patch_distance": 0.008763114846047844
+    },
+    {
+      "mesh": 42,
+      "vertex": 46,
+      "body_mesh": 2,
+      "body_vertex": 25,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.025684710250507815,
+      "donor_patch_distance": 0.021250131487668508
+    },
+    {
+      "mesh": 42,
+      "vertex": 47,
+      "body_mesh": 2,
+      "body_vertex": 51,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.0008501988737974359,
+      "donor_patch_distance": 0.045584125872678016
+    },
+    {
+      "mesh": 42,
+      "vertex": 48,
+      "body_mesh": 2,
+      "body_vertex": 26,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.15976468767050978,
+      "donor_patch_distance": 0.01742679463559086
+    },
+    {
+      "mesh": 42,
+      "vertex": 49,
+      "body_mesh": 2,
+      "body_vertex": 38,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.04757923940098292,
+      "donor_patch_distance": 0.008190290862772445
+    },
+    {
+      "mesh": 42,
+      "vertex": 50,
+      "body_mesh": 2,
+      "body_vertex": 46,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.011044542507746013,
+      "donor_patch_distance": 0.048399177269861114
+    },
+    {
+      "mesh": 42,
+      "vertex": 51,
+      "body_mesh": 2,
+      "body_vertex": 61,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.05666631712525104,
+      "donor_patch_distance": 0.033779498328328245
+    },
+    {
+      "mesh": 43,
+      "vertex": 0,
+      "body_mesh": 3,
+      "body_vertex": 0,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.1540997113985463,
+      "donor_patch_distance": 0.15798321078550442
+    },
+    {
+      "mesh": 43,
+      "vertex": 1,
+      "body_mesh": 3,
+      "body_vertex": 1,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.027201728210651113,
+      "donor_patch_distance": 0.049549755133658564
+    },
+    {
+      "mesh": 43,
+      "vertex": 2,
+      "body_mesh": 3,
+      "body_vertex": 2,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.14318706578546486,
+      "donor_patch_distance": 0.0902256326782627
+    },
+    {
+      "mesh": 43,
+      "vertex": 3,
+      "body_mesh": 3,
+      "body_vertex": 3,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.03163124775774255,
+      "donor_patch_distance": 0.055621599172940184
+    },
+    {
+      "mesh": 43,
+      "vertex": 4,
+      "body_mesh": 3,
+      "body_vertex": 4,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.07006636728180933,
+      "donor_patch_distance": 0.07154085481912573
+    },
+    {
+      "mesh": 43,
+      "vertex": 5,
+      "body_mesh": 3,
+      "body_vertex": 62,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.00719750746678064,
+      "donor_patch_distance": 0.05857743281902664
+    },
+    {
+      "mesh": 43,
+      "vertex": 6,
+      "body_mesh": 3,
+      "body_vertex": 63,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.08759742404078645,
+      "donor_patch_distance": 0.06481826773507908
+    },
+    {
+      "mesh": 43,
+      "vertex": 7,
+      "body_mesh": 3,
+      "body_vertex": 64,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.04367830467680146,
+      "donor_patch_distance": 0.05295302934620664
+    },
+    {
+      "mesh": 43,
+      "vertex": 8,
+      "body_mesh": 3,
+      "body_vertex": 65,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.13364699446426295,
+      "donor_patch_distance": 0.03613513212252876
+    },
+    {
+      "mesh": 43,
+      "vertex": 9,
+      "body_mesh": 3,
+      "body_vertex": 66,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.0363045717799592,
+      "donor_patch_distance": 0.05207852924907077
+    },
+    {
+      "mesh": 43,
+      "vertex": 10,
+      "body_mesh": 3,
+      "body_vertex": 5,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.08963545815115663,
+      "donor_patch_distance": 0.07664183317146082
+    },
+    {
+      "mesh": 43,
+      "vertex": 11,
+      "body_mesh": 3,
+      "body_vertex": 6,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.1863106749879629,
+      "donor_patch_distance": 0.09511506475091068
+    },
+    {
+      "mesh": 43,
+      "vertex": 12,
+      "body_mesh": 3,
+      "body_vertex": 8,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.01398236429462659,
+      "donor_patch_distance": 0.01566242809036702
+    },
+    {
+      "mesh": 43,
+      "vertex": 13,
+      "body_mesh": 3,
+      "body_vertex": 7,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.07207507463869556,
+      "donor_patch_distance": 0.06943381467684903
+    },
+    {
+      "mesh": 43,
+      "vertex": 14,
+      "body_mesh": 3,
+      "body_vertex": 9,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.10734032789618952,
+      "donor_patch_distance": 0.10091488313521658
+    },
+    {
+      "mesh": 43,
+      "vertex": 15,
+      "body_mesh": 3,
+      "body_vertex": 10,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.02889827844653218,
+      "donor_patch_distance": 0.09185344655760004
+    },
+    {
+      "mesh": 43,
+      "vertex": 16,
+      "body_mesh": 3,
+      "body_vertex": 13,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.005982761251191503,
+      "donor_patch_distance": 0.07431616782139036
+    },
+    {
+      "mesh": 43,
+      "vertex": 17,
+      "body_mesh": 3,
+      "body_vertex": 12,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.005984918972890998,
+      "donor_patch_distance": 0.0743503817739299
+    },
+    {
+      "mesh": 43,
+      "vertex": 18,
+      "body_mesh": 3,
+      "body_vertex": 79,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.011362079358360104,
+      "donor_patch_distance": 0.04767017156336538
+    },
+    {
+      "mesh": 43,
+      "vertex": 19,
+      "body_mesh": 3,
+      "body_vertex": 52,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.11142674750760899,
+      "donor_patch_distance": 0.09113131248425001
+    },
+    {
+      "mesh": 43,
+      "vertex": 20,
+      "body_mesh": 3,
+      "body_vertex": 53,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.0644284000954912,
+      "donor_patch_distance": 0.06591524055918789
+    },
+    {
+      "mesh": 43,
+      "vertex": 21,
+      "body_mesh": 3,
+      "body_vertex": 47,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.19937797255545545,
+      "donor_patch_distance": 0.0601730543417816
+    },
+    {
+      "mesh": 43,
+      "vertex": 22,
+      "body_mesh": 3,
+      "body_vertex": 54,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.04011683362997189,
+      "donor_patch_distance": 0.05467834150705338
+    },
+    {
+      "mesh": 43,
+      "vertex": 23,
+      "body_mesh": 3,
+      "body_vertex": 45,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.048602484740639364,
+      "donor_patch_distance": 0.05239675296651934
+    },
+    {
+      "mesh": 43,
+      "vertex": 24,
+      "body_mesh": 3,
+      "body_vertex": 11,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.10154124205624812,
+      "donor_patch_distance": 0.03954746964441482
+    },
+    {
+      "mesh": 43,
+      "vertex": 25,
+      "body_mesh": 3,
+      "body_vertex": 18,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.15976468767050978,
+      "donor_patch_distance": 0.01742679463559086
+    },
+    {
+      "mesh": 43,
+      "vertex": 26,
+      "body_mesh": 3,
+      "body_vertex": 14,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.0489214878282917,
+      "donor_patch_distance": 0.07979171895245785
+    },
+    {
+      "mesh": 43,
+      "vertex": 27,
+      "body_mesh": 3,
+      "body_vertex": 15,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.031088859262978347,
+      "donor_patch_distance": 0.06373374991701694
+    },
+    {
+      "mesh": 43,
+      "vertex": 28,
+      "body_mesh": 3,
+      "body_vertex": 16,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.05059399665408989,
+      "donor_patch_distance": 0.02511526462340198
+    },
+    {
+      "mesh": 43,
+      "vertex": 29,
+      "body_mesh": 3,
+      "body_vertex": 19,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.012987815180581147,
+      "donor_patch_distance": 0.022894514928810353
+    },
+    {
+      "mesh": 43,
+      "vertex": 30,
+      "body_mesh": 3,
+      "body_vertex": 17,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.028900771510887678,
+      "donor_patch_distance": 0.0918153048177976
+    },
+    {
+      "mesh": 43,
+      "vertex": 31,
+      "body_mesh": 3,
+      "body_vertex": 51,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.08178415098843865,
+      "donor_patch_distance": 0.058460188830253335
+    },
+    {
+      "mesh": 43,
+      "vertex": 32,
+      "body_mesh": 3,
+      "body_vertex": 61,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.1057897703255344,
+      "donor_patch_distance": 0.03881342064089196
+    },
+    {
+      "mesh": 43,
+      "vertex": 33,
+      "body_mesh": 3,
+      "body_vertex": 20,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.03252237464469234,
+      "donor_patch_distance": 0.05012559117731021
+    },
+    {
+      "mesh": 43,
+      "vertex": 34,
+      "body_mesh": 3,
+      "body_vertex": 26,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.07775284093179902,
+      "donor_patch_distance": 0.038374405446003984
+    },
+    {
+      "mesh": 43,
+      "vertex": 35,
+      "body_mesh": 3,
+      "body_vertex": 21,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.033867587292286755,
+      "donor_patch_distance": 0.023336822569008285
+    },
+    {
+      "mesh": 43,
+      "vertex": 36,
+      "body_mesh": 3,
+      "body_vertex": 22,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.03705402955276697,
+      "donor_patch_distance": 0.05377055962578591
+    },
+    {
+      "mesh": 43,
+      "vertex": 37,
+      "body_mesh": 3,
+      "body_vertex": 24,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.02832777184090595,
+      "donor_patch_distance": 0.051597645143911096
+    },
+    {
+      "mesh": 43,
+      "vertex": 38,
+      "body_mesh": 3,
+      "body_vertex": 29,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.020991021591498404,
+      "donor_patch_distance": 0.05678931127045863
+    },
+    {
+      "mesh": 43,
+      "vertex": 39,
+      "body_mesh": 3,
+      "body_vertex": 30,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.05655392738408814,
+      "donor_patch_distance": 0.02061949398773123
+    },
+    {
+      "mesh": 43,
+      "vertex": 40,
+      "body_mesh": 3,
+      "body_vertex": 31,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.018760919794694547,
+      "donor_patch_distance": 0.06231238310078409
+    },
+    {
+      "mesh": 43,
+      "vertex": 41,
+      "body_mesh": 3,
+      "body_vertex": 32,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.03724153370051949,
+      "donor_patch_distance": 0.020569180515023783
+    },
+    {
+      "mesh": 43,
+      "vertex": 42,
+      "body_mesh": 3,
+      "body_vertex": 33,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.004878864927114319,
+      "donor_patch_distance": 0.0233283331657483
+    },
+    {
+      "mesh": 43,
+      "vertex": 43,
+      "body_mesh": 3,
+      "body_vertex": 50,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.08162861464163017,
+      "donor_patch_distance": 0.00658205820212566
+    },
+    {
+      "mesh": 43,
+      "vertex": 44,
+      "body_mesh": 3,
+      "body_vertex": 49,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.0873496817940689,
+      "donor_patch_distance": 0.15530999277409385
+    },
+    {
+      "mesh": 43,
+      "vertex": 45,
+      "body_mesh": 3,
+      "body_vertex": 34,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.019498871299842836,
+      "donor_patch_distance": 0.049049787447985216
+    },
+    {
+      "mesh": 43,
+      "vertex": 46,
+      "body_mesh": 3,
+      "body_vertex": 35,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.02116840325514508,
+      "donor_patch_distance": 0.01858314119355426
+    },
+    {
+      "mesh": 43,
+      "vertex": 47,
+      "body_mesh": 3,
+      "body_vertex": 80,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.08735924671557153,
+      "donor_patch_distance": 0.021572555700056676
+    },
+    {
+      "mesh": 43,
+      "vertex": 48,
+      "body_mesh": 3,
+      "body_vertex": 81,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.10616341038490644,
+      "donor_patch_distance": 0.01870097359978233
+    },
+    {
+      "mesh": 43,
+      "vertex": 49,
+      "body_mesh": 3,
+      "body_vertex": 82,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.09436502049132996,
+      "donor_patch_distance": 0.049160690192137764
+    },
+    {
+      "mesh": 43,
+      "vertex": 50,
+      "body_mesh": 3,
+      "body_vertex": 83,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.14398479104046247,
+      "donor_patch_distance": 0.03746654615491691
+    },
+    {
+      "mesh": 43,
+      "vertex": 51,
+      "body_mesh": 3,
+      "body_vertex": 84,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.1528400926264921,
+      "donor_patch_distance": 0.03122856881507194
+    },
+    {
+      "mesh": 43,
+      "vertex": 52,
+      "body_mesh": 3,
+      "body_vertex": 36,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.049600639442693745,
+      "donor_patch_distance": 0.05465200955339148
+    },
+    {
+      "mesh": 43,
+      "vertex": 53,
+      "body_mesh": 3,
+      "body_vertex": 74,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.0488610019687881,
+      "donor_patch_distance": 0.05150504381443671
+    },
+    {
+      "mesh": 43,
+      "vertex": 54,
+      "body_mesh": 3,
+      "body_vertex": 85,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.14659968929386322,
+      "donor_patch_distance": 0.03741269555315776
+    },
+    {
+      "mesh": 43,
+      "vertex": 55,
+      "body_mesh": 3,
+      "body_vertex": 86,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.19332511008277203,
+      "donor_patch_distance": 0.030214119109905735
+    },
+    {
+      "mesh": 43,
+      "vertex": 56,
+      "body_mesh": 3,
+      "body_vertex": 37,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.10064373025633173,
+      "donor_patch_distance": 0.0484880964705608
+    },
+    {
+      "mesh": 43,
+      "vertex": 57,
+      "body_mesh": 3,
+      "body_vertex": 38,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.13764224575139322,
+      "donor_patch_distance": 0.05288882274809439
+    },
+    {
+      "mesh": 43,
+      "vertex": 58,
+      "body_mesh": 3,
+      "body_vertex": 46,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.160152670155388,
+      "donor_patch_distance": 0.054128896613910835
+    },
+    {
+      "mesh": 43,
+      "vertex": 59,
+      "body_mesh": 3,
+      "body_vertex": 48,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.04419953852845219,
+      "donor_patch_distance": 0.06774045167220925
+    },
+    {
+      "mesh": 43,
+      "vertex": 60,
+      "body_mesh": 3,
+      "body_vertex": 55,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.13649514686701722,
+      "donor_patch_distance": 0.15798212047284213
+    },
+    {
+      "mesh": 43,
+      "vertex": 61,
+      "body_mesh": 3,
+      "body_vertex": 57,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.03167259082464878,
+      "donor_patch_distance": 0.057670185122906295
+    },
+    {
+      "mesh": 43,
+      "vertex": 62,
+      "body_mesh": 3,
+      "body_vertex": 56,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.03513752349210092,
+      "donor_patch_distance": 0.04788416155480246
+    },
+    {
+      "mesh": 43,
+      "vertex": 63,
+      "body_mesh": 3,
+      "body_vertex": 67,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.011435531161215965,
+      "donor_patch_distance": 0.04769699793345965
+    },
+    {
+      "mesh": 43,
+      "vertex": 64,
+      "body_mesh": 3,
+      "body_vertex": 68,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.14504120994610148,
+      "donor_patch_distance": 0.065285079896702
+    },
+    {
+      "mesh": 43,
+      "vertex": 65,
+      "body_mesh": 3,
+      "body_vertex": 69,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.1418783253648415,
+      "donor_patch_distance": 0.057888320088234586
+    },
+    {
+      "mesh": 43,
+      "vertex": 66,
+      "body_mesh": 3,
+      "body_vertex": 70,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.18050851578240606,
+      "donor_patch_distance": 0.029202859895749302
+    },
+    {
+      "mesh": 43,
+      "vertex": 67,
+      "body_mesh": 3,
+      "body_vertex": 71,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.16492266135143052,
+      "donor_patch_distance": 0.06127943577435471
+    },
+    {
+      "mesh": 43,
+      "vertex": 68,
+      "body_mesh": 3,
+      "body_vertex": 89,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.16488360251615655,
+      "donor_patch_distance": 0.06130339759227472
+    },
+    {
+      "mesh": 43,
+      "vertex": 69,
+      "body_mesh": 3,
+      "body_vertex": 78,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.14492253663246615,
+      "donor_patch_distance": 0.06524143153257236
+    },
+    {
+      "mesh": 43,
+      "vertex": 70,
+      "body_mesh": 3,
+      "body_vertex": 87,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.1508793092384841,
+      "donor_patch_distance": 0.0579675612143168
+    },
+    {
+      "mesh": 43,
+      "vertex": 71,
+      "body_mesh": 3,
+      "body_vertex": 77,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.09452112191279079,
+      "donor_patch_distance": 0.06284570738582902
+    },
+    {
+      "mesh": 43,
+      "vertex": 72,
+      "body_mesh": 3,
+      "body_vertex": 75,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.05049578653096075,
+      "donor_patch_distance": 0.050060231463793736
+    },
+    {
+      "mesh": 43,
+      "vertex": 73,
+      "body_mesh": 3,
+      "body_vertex": 72,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.1363241773747903,
+      "donor_patch_distance": 0.03288187897621912
+    },
+    {
+      "mesh": 43,
+      "vertex": 74,
+      "body_mesh": 3,
+      "body_vertex": 73,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.11924979613596974,
+      "donor_patch_distance": 0.01128206721599222
+    },
+    {
+      "mesh": 43,
+      "vertex": 75,
+      "body_mesh": 3,
+      "body_vertex": 91,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.1797876744089725,
+      "donor_patch_distance": 0.034360895509763754
+    },
+    {
+      "mesh": 43,
+      "vertex": 76,
+      "body_mesh": 3,
+      "body_vertex": 76,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.01805869805399564,
+      "donor_patch_distance": 0.05646030138330584
+    },
+    {
+      "mesh": 43,
+      "vertex": 77,
+      "body_mesh": 3,
+      "body_vertex": 88,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.1454293599613025,
+      "donor_patch_distance": 0.03296656083125448
+    },
+    {
+      "mesh": 43,
+      "vertex": 78,
+      "body_mesh": 3,
+      "body_vertex": 90,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.1301396112417063,
+      "donor_patch_distance": 0.011282083695303147
+    },
+    {
+      "mesh": 43,
+      "vertex": 79,
+      "body_mesh": 3,
+      "body_vertex": 92,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.07260542197029524,
+      "donor_patch_distance": 0.0675086152285573
+    },
+    {
+      "mesh": 43,
+      "vertex": 80,
+      "body_mesh": 3,
+      "body_vertex": 93,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.08272521654221134,
+      "donor_patch_distance": 0.22913551261647958
+    },
+    {
+      "mesh": 44,
+      "vertex": 0,
+      "body_mesh": 4,
+      "body_vertex": 1,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.14743109617666647,
+      "donor_patch_distance": 0.15798212047284213
+    },
+    {
+      "mesh": 44,
+      "vertex": 1,
+      "body_mesh": 4,
+      "body_vertex": 3,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.160152670155388,
+      "donor_patch_distance": 0.054128896613910835
+    },
+    {
+      "mesh": 44,
+      "vertex": 2,
+      "body_mesh": 4,
+      "body_vertex": 2,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.048602484740639364,
+      "donor_patch_distance": 0.05239675296651934
+    },
+    {
+      "mesh": 45,
+      "vertex": 0,
+      "body_mesh": 6,
+      "body_vertex": 6,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.0738246243518835,
+      "donor_patch_distance": 0.014655439880332946
+    },
+    {
+      "mesh": 45,
+      "vertex": 1,
+      "body_mesh": 6,
+      "body_vertex": 13,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.05059399665408989,
+      "donor_patch_distance": 0.02511526462340198
+    },
+    {
+      "mesh": 45,
+      "vertex": 2,
+      "body_mesh": 6,
+      "body_vertex": 4,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.0489214878282917,
+      "donor_patch_distance": 0.07979171895245785
+    },
+    {
+      "mesh": 45,
+      "vertex": 3,
+      "body_mesh": 6,
+      "body_vertex": 8,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.07207507463869556,
+      "donor_patch_distance": 0.06943381467684903
+    },
+    {
+      "mesh": 45,
+      "vertex": 4,
+      "body_mesh": 6,
+      "body_vertex": 9,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.09499285977820293,
+      "donor_patch_distance": 0.03838138030377031
+    },
+    {
+      "mesh": 45,
+      "vertex": 5,
+      "body_mesh": 6,
+      "body_vertex": 5,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.01398236429462659,
+      "donor_patch_distance": 0.01566242809036702
+    },
+    {
+      "mesh": 45,
+      "vertex": 6,
+      "body_mesh": 6,
+      "body_vertex": 10,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.0677665816264369,
+      "donor_patch_distance": 0.01956571629644339
+    },
+    {
+      "mesh": 45,
+      "vertex": 7,
+      "body_mesh": 6,
+      "body_vertex": 14,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.10154124205624812,
+      "donor_patch_distance": 0.03954746964441482
+    },
+    {
+      "mesh": 46,
+      "vertex": 0,
+      "body_mesh": 8,
+      "body_vertex": 0,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.006826372894204411,
+      "donor_patch_distance": 0.03941840057804116
+    },
+    {
+      "mesh": 46,
+      "vertex": 1,
+      "body_mesh": 8,
+      "body_vertex": 1,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.0028684359336931206,
+      "donor_patch_distance": 0.0481051583919017
+    },
+    {
+      "mesh": 46,
+      "vertex": 2,
+      "body_mesh": 8,
+      "body_vertex": 2,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.004574534830092405,
+      "donor_patch_distance": 0.00842211772064277
+    },
+    {
+      "mesh": 46,
+      "vertex": 3,
+      "body_mesh": 8,
+      "body_vertex": 3,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.000853745113066833,
+      "donor_patch_distance": 0.047720150944830335
+    },
+    {
+      "mesh": 46,
+      "vertex": 4,
+      "body_mesh": 8,
+      "body_vertex": 4,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.012557122419970163,
+      "donor_patch_distance": 0.03808372394868311
+    },
+    {
+      "mesh": 46,
+      "vertex": 5,
+      "body_mesh": 8,
+      "body_vertex": 5,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.004830048608053263,
+      "donor_patch_distance": 0.04816248051658455
+    },
+    {
+      "mesh": 46,
+      "vertex": 6,
+      "body_mesh": 8,
+      "body_vertex": 9,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.020694799169473872,
+      "donor_patch_distance": 0.047366099435508506
+    },
+    {
+      "mesh": 46,
+      "vertex": 7,
+      "body_mesh": 8,
+      "body_vertex": 6,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.015633259764287283,
+      "donor_patch_distance": 0.03704091453136621
+    },
+    {
+      "mesh": 46,
+      "vertex": 8,
+      "body_mesh": 8,
+      "body_vertex": 7,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.013912200732007227,
+      "donor_patch_distance": 0.02702198241556718
+    },
+    {
+      "mesh": 47,
+      "vertex": 0,
+      "body_mesh": 9,
+      "body_vertex": 2,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.04005320926497867,
+      "donor_patch_distance": 0.031736806278353985
+    },
+    {
+      "mesh": 47,
+      "vertex": 1,
+      "body_mesh": 9,
+      "body_vertex": 5,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.04932014175538637,
+      "donor_patch_distance": 0.02384043487269811
+    },
+    {
+      "mesh": 47,
+      "vertex": 2,
+      "body_mesh": 9,
+      "body_vertex": 0,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.1558308710517747,
+      "donor_patch_distance": 0.15962137145019106
+    },
+    {
+      "mesh": 47,
+      "vertex": 3,
+      "body_mesh": 9,
+      "body_vertex": 3,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.024814928328755245,
+      "donor_patch_distance": 0.06458178252021429
+    },
+    {
+      "mesh": 47,
+      "vertex": 4,
+      "body_mesh": 9,
+      "body_vertex": 4,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.009367205131790284,
+      "donor_patch_distance": 0.019556897790513044
+    },
+    {
+      "mesh": 47,
+      "vertex": 5,
+      "body_mesh": 9,
+      "body_vertex": 12,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.006243098582583707,
+      "donor_patch_distance": 0.041248156491940996
+    },
+    {
+      "mesh": 47,
+      "vertex": 6,
+      "body_mesh": 9,
+      "body_vertex": 15,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.019047849813390742,
+      "donor_patch_distance": 0.033052096945116655
+    },
+    {
+      "mesh": 47,
+      "vertex": 7,
+      "body_mesh": 9,
+      "body_vertex": 6,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.009075419712011822,
+      "donor_patch_distance": 0.048339888627104546
+    },
+    {
+      "mesh": 47,
+      "vertex": 8,
+      "body_mesh": 9,
+      "body_vertex": 16,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.07675394618877858,
+      "donor_patch_distance": 0.029993939276709517
+    },
+    {
+      "mesh": 47,
+      "vertex": 9,
+      "body_mesh": 9,
+      "body_vertex": 8,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.06404626125206045,
+      "donor_patch_distance": 0.0312056484878278
+    },
+    {
+      "mesh": 47,
+      "vertex": 10,
+      "body_mesh": 9,
+      "body_vertex": 7,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.011044542507746013,
+      "donor_patch_distance": 0.048399177269861114
+    },
+    {
+      "mesh": 47,
+      "vertex": 11,
+      "body_mesh": 9,
+      "body_vertex": 10,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.005351544893710382,
+      "donor_patch_distance": 0.04795644499187582
+    },
+    {
+      "mesh": 47,
+      "vertex": 12,
+      "body_mesh": 9,
+      "body_vertex": 25,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.014487145261610409,
+      "donor_patch_distance": 0.047604611823677215
+    },
+    {
+      "mesh": 47,
+      "vertex": 13,
+      "body_mesh": 9,
+      "body_vertex": 9,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.0008501988737974359,
+      "donor_patch_distance": 0.045584125872678016
+    },
+    {
+      "mesh": 47,
+      "vertex": 14,
+      "body_mesh": 9,
+      "body_vertex": 11,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.006389239614095905,
+      "donor_patch_distance": 0.008763114846047844
+    },
+    {
+      "mesh": 47,
+      "vertex": 15,
+      "body_mesh": 9,
+      "body_vertex": 13,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.015435182272518404,
+      "donor_patch_distance": 0.07512452007003187
+    },
+    {
+      "mesh": 47,
+      "vertex": 16,
+      "body_mesh": 9,
+      "body_vertex": 14,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 2.7848985986989356e-05,
+      "donor_patch_distance": 0.03786911179654367
+    },
+    {
+      "mesh": 47,
+      "vertex": 17,
+      "body_mesh": 9,
+      "body_vertex": 19,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.02695959645310828,
+      "donor_patch_distance": 0.10932584446519868
+    },
+    {
+      "mesh": 48,
+      "vertex": 0,
+      "body_mesh": 10,
+      "body_vertex": 0,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.0873496817940689,
+      "donor_patch_distance": 0.15530999277409385
+    },
+    {
+      "mesh": 48,
+      "vertex": 1,
+      "body_mesh": 10,
+      "body_vertex": 1,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.06698959044084006,
+      "donor_patch_distance": 0.13217513469417555
+    },
+    {
+      "mesh": 48,
+      "vertex": 2,
+      "body_mesh": 10,
+      "body_vertex": 2,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.08162861464163017,
+      "donor_patch_distance": 0.00658205820212566
+    },
+    {
+      "mesh": 48,
+      "vertex": 3,
+      "body_mesh": 10,
+      "body_vertex": 3,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.08805654415299123,
+      "donor_patch_distance": 0.036557573376878705
+    },
+    {
+      "mesh": 48,
+      "vertex": 4,
+      "body_mesh": 10,
+      "body_vertex": 7,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.06305894524198408,
+      "donor_patch_distance": 0.048103158496598554
+    },
+    {
+      "mesh": 48,
+      "vertex": 5,
+      "body_mesh": 10,
+      "body_vertex": 5,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.019047849813390742,
+      "donor_patch_distance": 0.033052096945116655
+    },
+    {
+      "mesh": 48,
+      "vertex": 6,
+      "body_mesh": 10,
+      "body_vertex": 6,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.009075419712011822,
+      "donor_patch_distance": 0.048339888627104546
+    },
+    {
+      "mesh": 48,
+      "vertex": 7,
+      "body_mesh": 10,
+      "body_vertex": 4,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 2.7848985986989356e-05,
+      "donor_patch_distance": 0.03786911179654367
+    },
+    {
+      "mesh": 48,
+      "vertex": 8,
+      "body_mesh": 10,
+      "body_vertex": 8,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.06404626125206045,
+      "donor_patch_distance": 0.0312056484878278
+    },
+    {
+      "mesh": 48,
+      "vertex": 9,
+      "body_mesh": 10,
+      "body_vertex": 9,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.026065549973451473,
+      "donor_patch_distance": 0.028142471947845433
+    },
+    {
+      "mesh": 48,
+      "vertex": 10,
+      "body_mesh": 10,
+      "body_vertex": 10,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.04757923940098292,
+      "donor_patch_distance": 0.008190290862772445
+    },
+    {
+      "mesh": 48,
+      "vertex": 11,
+      "body_mesh": 10,
+      "body_vertex": 11,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.08874880747155399,
+      "donor_patch_distance": 0.024402146237869186
+    },
+    {
+      "mesh": 48,
+      "vertex": 12,
+      "body_mesh": 10,
+      "body_vertex": 14,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.01961713431571304,
+      "donor_patch_distance": 0.01876919906558937
+    },
+    {
+      "mesh": 48,
+      "vertex": 13,
+      "body_mesh": 10,
+      "body_vertex": 15,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.10426900741061508,
+      "donor_patch_distance": 0.010533443460694403
+    },
+    {
+      "mesh": 48,
+      "vertex": 14,
+      "body_mesh": 10,
+      "body_vertex": 16,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.10658773864336203,
+      "donor_patch_distance": 0.01968091554730414
+    },
+    {
+      "mesh": 48,
+      "vertex": 15,
+      "body_mesh": 10,
+      "body_vertex": 17,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.015435182272518404,
+      "donor_patch_distance": 0.07512452007003187
+    },
+    {
+      "mesh": 49,
+      "vertex": 0,
+      "body_mesh": 11,
+      "body_vertex": 1,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.01961713431571304,
+      "donor_patch_distance": 0.01876919906558937
+    },
+    {
+      "mesh": 49,
+      "vertex": 1,
+      "body_mesh": 11,
+      "body_vertex": 3,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.08178415098843865,
+      "donor_patch_distance": 0.058460188830253335
+    },
+    {
+      "mesh": 49,
+      "vertex": 2,
+      "body_mesh": 11,
+      "body_vertex": 2,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.19937797255545545,
+      "donor_patch_distance": 0.0601730543417816
+    },
+    {
+      "mesh": 49,
+      "vertex": 3,
+      "body_mesh": 11,
+      "body_vertex": 4,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.08874880747155399,
+      "donor_patch_distance": 0.024402146237869186
+    },
+    {
+      "mesh": 49,
+      "vertex": 4,
+      "body_mesh": 11,
+      "body_vertex": 5,
+      "texture": "blood",
+      "native_offset": -0.025491602886866534,
+      "donor_body_distance": 0.1057897703255344,
+      "donor_patch_distance": 0.03881342064089196
+    }
+  ],
+  "validation": {
+    "body": {
+      "status": "pass",
+      "effective_positions_faces_dense_weights_exact": true,
+      "body_pose_maximum_component_deltas": {
+        "standing": 0.0,
+        "walk-left": 0.0,
+        "walk-right": 0.0,
+        "bend": 0.0,
+        "crouch": 0.0,
+        "shoulders-up": 0.0,
+        "neck-turn": 0.0,
+        "head-tilt": 0.0,
+        "jaw-06": 0.0,
+        "jaw-12": 0.0,
+        "jaw-18": 0.0,
+        "jaw-25": 0.0,
+        "elbow-flex-left": 0.0,
+        "elbow-flex-right": 0.0
+      },
+      "head_probe_maximum_component_deltas": {
+        "rest": 0.0,
+        "eyes-world-x--25": 0.0,
+        "eyes-world-x-25": 0.0,
+        "eyes-world-y--25": 0.0,
+        "eyes-world-y-25": 0.0,
+        "eyes-world-z--25": 0.0,
+        "eyes-world-z-25": 0.0,
+        "l-eye-local-turn": 0.0,
+        "l-lid-local-close": 0.0,
+        "r-eye-local-turn": 0.0,
+        "r-lid-local-close": 0.0,
+        "ocular-local-translate-x": 0.0,
+        "ocular-local-translate-y": 0.0,
+        "ocular-local-translate-z": 0.0,
+        "eye-lid-neck-jaw": 0.0,
+        "psp-brow-local": 0.0,
+        "l_mayu_00-local-x": 0.0,
+        "l_mayu_00-local-y": 0.0,
+        "l_mayu_00-local-z": 0.0,
+        "l_mayu_01-local-x": 0.0,
+        "l_mayu_01-local-y": 0.0,
+        "l_mayu_01-local-z": 0.0,
+        "l_mayu_02-local-x": 0.0,
+        "l_mayu_02-local-y": 0.0,
+        "l_mayu_02-local-z": 0.0,
+        "r_mayu_00-local-x": 0.0,
+        "r_mayu_00-local-y": 0.0,
+        "r_mayu_00-local-z": 0.0,
+        "r_mayu_01-local-x": 0.0,
+        "r_mayu_01-local-y": 0.0,
+        "r_mayu_01-local-z": 0.0,
+        "r_mayu_02-local-x": 0.0,
+        "r_mayu_02-local-y": 0.0,
+        "r_mayu_02-local-z": 0.0,
+        "head-turn": 0.0,
+        "neck-turn": 0.0,
+        "jaw-open": 0.0
+      },
+      "limitation": "Exact analytical LBS replay; cannot prove SVR runtime interpretation."
+    },
+    "overlay_pose_gaps": {
+      "standing": 0.025491965455683233,
+      "walk-left": 0.025491965455683233,
+      "walk-right": 0.025491965455683233,
+      "bend": 0.02549196545568261,
+      "crouch": 0.025491965455682813,
+      "shoulders-up": 0.025491965455683233,
+      "neck-turn": 0.02549196545568324,
+      "head-tilt": 0.02549196545568344,
+      "jaw-06": 0.025491924300299156,
+      "jaw-12": 0.025491924300299156,
+      "jaw-18": 0.025491924300299156,
+      "jaw-25": 0.025491924300299156,
+      "elbow-flex-left": 0.025491965455683233,
+      "elbow-flex-right": 0.025491965455683233
+    },
+    "overlay_cranial_gaps": {
+      "rest": 0.025491965455683233,
+      "eyes-world-x--25": 0.025491965455683233,
+      "eyes-world-x-25": 0.025491965455683233,
+      "eyes-world-y--25": 0.025491965455683233,
+      "eyes-world-y-25": 0.025491965455683233,
+      "eyes-world-z--25": 0.025491965455683233,
+      "eyes-world-z-25": 0.025491965455683233,
+      "l-eye-local-turn": 0.025491965455683233,
+      "l-lid-local-close": 0.025491965455683233,
+      "r-eye-local-turn": 0.025491965455683233,
+      "r-lid-local-close": 0.025491965455683233,
+      "ocular-local-translate-x": 0.025491965455683233,
+      "ocular-local-translate-y": 0.025491965455683233,
+      "ocular-local-translate-z": 0.025491965455683233,
+      "eye-lid-neck-jaw": 0.025491924300299573,
+      "psp-brow-local": 0.025491965455683233,
+      "l_mayu_00-local-x": 0.025491965455683233,
+      "l_mayu_00-local-y": 0.025491965455683233,
+      "l_mayu_00-local-z": 0.025491965455683233,
+      "l_mayu_01-local-x": 0.025491965455683233,
+      "l_mayu_01-local-y": 0.025491965455683233,
+      "l_mayu_01-local-z": 0.025491965455683233,
+      "l_mayu_02-local-x": 0.025491965455683233,
+      "l_mayu_02-local-y": 0.025491965455683233,
+      "l_mayu_02-local-z": 0.025491965455683233,
+      "r_mayu_00-local-x": 0.025491965455683233,
+      "r_mayu_00-local-y": 0.025491965455683233,
+      "r_mayu_00-local-z": 0.025491965455683233,
+      "r_mayu_01-local-x": 0.025491965455683233,
+      "r_mayu_01-local-y": 0.025491965455683233,
+      "r_mayu_01-local-z": 0.025491965455683233,
+      "r_mayu_02-local-x": 0.025491965455683233,
+      "r_mayu_02-local-y": 0.025491965455683233,
+      "r_mayu_02-local-z": 0.025491965455683233,
+      "head-turn": 0.025491965455682386,
+      "neck-turn": 0.025491965455684433,
+      "jaw-open": 0.025491924300299156
+    },
+    "maximum_allowed_gap": 0.025493602886866532,
+    "bind_rig_exact": true,
+    "limitation": "Synthetic analytical LBS; game activation, depth testing and runtime memory remain untested"
+  },
+  "existing_body_textures_exact": true,
+  "unrelated_sections_exact": true,
+  "blood_images_exact_to_donor": true,
+  "production_converter_changed": false,
+  "confirmed": [
+    "Copied native blood image bytes and complete material non-pointer state",
+    "Existing body attributes, topology, materials, weights and rig are exact",
+    "New blood layers inherit corresponding target body weights with no pruning or transfer"
+  ],
+  "inferred": [
+    "Donor-surface coverage and native measured normal gap provide suitable converted blood layers"
+  ],
+  "unknown": [
+    "SVR blood-stage activation and name lookup",
+    "Coincident depth testing and offset behavior",
+    "Extra mesh/allocation runtime heap tolerance",
+    "Appearance under actual gameplay animations"
+  ],
+  "native_checks": {
+    "offsets_ranges_indices_palettes_weights_valid": true,
+    "relocation_count": 1273,
+    "pac_section_alignment": 16,
+    "pac_padded_alignment": 2048,
+    "final_size_within_configured_cap": true,
+    "model_bpe_roundtrip_exact": true
+  }
+}
