@@ -597,3 +597,19 @@ Source skinning QA and seven-pose regional nonregression are separate reusable
 stages. Existing full QA warnings and actual PPSSPP limitations remain reportable.
 See tools/vertex_identity.py, model_qa/skinning_records.py, the two source_skinning
 report tools and tests/test_source_skinning_identity.py. Main/baselines are unchanged.
+
+TEXTURE ALLOCATION EXPERIMENT ADDENDUM (0400 RVD, gameplay pending)
+Read docs/rvd-texture-budget-experiment.md. Default's current modeled texture
+allocation is a policy envelope, not a measured engine heap limit. A poor Default
+allocation can prevent manual priorities from recovering detail even with spare
+compressed PAC bytes. Measure padded/swizzled pixels and fixed CLUTs separately
+from compressed PAC storage, including retained texture tables. Test independent
+reference envelopes against native observations and actual gameplay before
+changing production policy. The explicit 34176-byte experimental allowance
+recovers RVD front/back at 128x64/128x32 T4 within a 147456-byte whole PAC.
+This is evidence for an experiment, not a universal compatibility guarantee.
+Use experiments/texture_budget_trial.py for frozen-model, selected-map trials;
+the general allocator already accepts max_pixel_bytes without changing defaults.
+Keep all non-texture stored/decoded payloads exact and disclose donor decisions.
+Tests/test_texture_budget_trial.py uses generated assets for both independent
+budget failures, source ceilings, model preservation and preview material mapping.
