@@ -26,3 +26,13 @@ reasoning, the narrow-source failure/repair and reproduction.
 The app update is built/published through the Windows portable workflow on
 feature/default-texture-quality. No original game PACs or third-party tools are
 bundled in the application. Accepted baselines and main remain preserved.
+
+Windows portable run 27 passed all checks, including frozen Default,
+Legacy, ATO, Priority Selection, Downgrade, Maximum Downgrade, GUI and independent
+accessory preservation. The 323 unit tests passed.
+
+[Download v0.25.6](https://github.com/RyosSplitter/Wrestler-Importer/releases/tag/portable-preview-27-e2aa421c532ba12f2064d72113dded7980da9476)
+
+ZIP: 556,929,997 bytes. SHA-256: `7d94cb4c53a807a58fc177f2790e72f19532cab5584d258ffa0b6584428bbb2c`. The downloaded
+checksum matches GitHub's uploaded asset digest. `windows-build.json` records
+the tested code commit, complete check outcomes and release evidence.

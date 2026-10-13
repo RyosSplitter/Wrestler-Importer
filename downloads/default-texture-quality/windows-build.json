@@ -1,0 +1,125 @@
+{
+  "version": "0.25.6",
+  "branch": "feature/default-texture-quality",
+  "code_commit": "e2aa421c532ba12f2064d72113dded7980da9476",
+  "run_url": "https://github.com/RyosSplitter/Wrestler-Importer/actions/runs/38445371369",
+  "run_number": 27,
+  "conclusion": "success",
+  "checks": [
+    {
+      "name": "Set up job",
+      "conclusion": "success"
+    },
+    {
+      "name": "Run actions/checkout@v4",
+      "conclusion": "success"
+    },
+    {
+      "name": "Determine whether conversion code changed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Run actions/setup-python@v5",
+      "conclusion": "success"
+    },
+    {
+      "name": "Run python -m pip install -r requirements-desktop.txt",
+      "conclusion": "success"
+    },
+    {
+      "name": "Prepare development-only PSP donor and modified HCTP trials",
+      "conclusion": "success"
+    },
+    {
+      "name": "Run python -m tools.ci_tests",
+      "conclusion": "success"
+    },
+    {
+      "name": "Build app, audited runtime, source bundle and notices",
+      "conclusion": "success"
+    },
+    {
+      "name": "Packaged UI and bundled runtime with developer tools removed from PATH",
+      "conclusion": "success"
+    },
+    {
+      "name": "Frozen single-slot layout control and exact preservation",
+      "conclusion": "success"
+    },
+    {
+      "name": "Frozen conversion, QA and textured previews including multi-YOBJ source",
+      "conclusion": "success"
+    },
+    {
+      "name": "Check new Default texture budget, automatic attention and exact model preservation",
+      "conclusion": "success"
+    },
+    {
+      "name": "Frozen Legacy comparison mode",
+      "conclusion": "success"
+    },
+    {
+      "name": "Frozen adaptive texture A/B and immutable model verification",
+      "conclusion": "success"
+    },
+    {
+      "name": "Check frozen adaptive output and unchanged model payloads",
+      "conclusion": "success"
+    },
+    {
+      "name": "Frozen source texture previews and priority conversions in both modes",
+      "conclusion": "success"
+    },
+    {
+      "name": "Frozen Downgrade mode and unchanged model verification",
+      "conclusion": "success"
+    },
+    {
+      "name": "Frozen Maximum Downgrade rescue and unchanged model verification",
+      "conclusion": "success"
+    },
+    {
+      "name": "Main geometry remains identical with independent accessory models",
+      "conclusion": "success"
+    },
+    {
+      "name": "Package portable ZIP",
+      "conclusion": "success"
+    },
+    {
+      "name": "Run actions/upload-artifact@v4",
+      "conclusion": "success"
+    },
+    {
+      "name": "Publish isolated preview build",
+      "conclusion": "success"
+    },
+    {
+      "name": "Post Run actions/setup-python@v5",
+      "conclusion": "success"
+    },
+    {
+      "name": "Post Run actions/checkout@v4",
+      "conclusion": "success"
+    },
+    {
+      "name": "Complete job",
+      "conclusion": "success"
+    }
+  ],
+  "release_url": "https://github.com/RyosSplitter/Wrestler-Importer/releases/tag/portable-preview-27-e2aa421c532ba12f2064d72113dded7980da9476",
+  "release_tag": "portable-preview-27-e2aa421c532ba12f2064d72113dded7980da9476",
+  "prerelease": true,
+  "zip": {
+    "name": "PS2PSP-Pac-Converter-Windows-x64.zip",
+    "size_bytes": 556929997,
+    "download_url": "https://github.com/RyosSplitter/Wrestler-Importer/releases/download/portable-preview-27-e2aa421c532ba12f2064d72113dded7980da9476/PS2PSP-Pac-Converter-Windows-x64.zip",
+    "sha256": "7d94cb4c53a807a58fc177f2790e72f19532cab5584d258ffa0b6584428bbb2c",
+    "checksum_verified_against_github_asset_digest": true
+  },
+  "unit_tests": 323,
+  "limitations": [
+    "Windows hosted runner, not a fresh user-owned Windows installation.",
+    "Generalized outputs require model-specific PPSSPP testing; the preceding isolated RVD candidate has user-reported gameplay success."
+  ]
+}
