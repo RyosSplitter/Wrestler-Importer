@@ -1,0 +1,70 @@
+{
+  "status": "EXPERIMENTAL: offline memory replay verified; live gameplay untested",
+  "before": {
+    "version": "v1.20.4",
+    "state_sha256": "76ab73b5e6aa2d8a5fdf4cf72b916200ffb7dd4df820a97325c5f702be227260",
+    "ram_bytes": 33554432,
+    "vram_bytes": 2097152,
+    "source_modified": false
+  },
+  "after": {
+    "version": "v1.20.4",
+    "state_sha256": "e87c48994687cfbcea117edef7507a0a09cb39a0c4752f1ca9d874e611262b77",
+    "ram_bytes": 33554432,
+    "vram_bytes": 2097152,
+    "source_modified": false
+  },
+  "binding": {
+    "player": 2,
+    "slot": 1,
+    "actor": "0x920cfa0",
+    "vtable": "0x8ccd3f4",
+    "manager": "0x9f0eee0",
+    "array": "0x9f0ef20",
+    "cache": "0x9f0f140",
+    "model_id": "0x69dd",
+    "texture": "0x917b7d0",
+    "reader": "0x917b980",
+    "header_cell": "0x917b990",
+    "header": "0x4140a00",
+    "palette": "0x4140a40",
+    "source_palette": "0x9f0f1c0",
+    "blood_level_address": "0x920d75a",
+    "bleeding_flag_address": "0x920d761"
+  },
+  "verified_native_blood_data": {
+    "before_level": 0,
+    "after_level": 1,
+    "before_bleeding_flag": 0,
+    "after_bleeding_flag": 1,
+    "pre_blood_palette_all_transparent": true,
+    "post_blood_palette_exact_to_cached_first_stage": true
+  },
+  "replay": {
+    "status": "offline replay passed",
+    "writes": [
+      {
+        "address": 68422208,
+        "bytes": 64
+      },
+      {
+        "address": 153147226,
+        "bytes": 1
+      },
+      {
+        "address": 153147233,
+        "bytes": 1
+      }
+    ]
+  },
+  "only_target_blood_records_changed": true,
+  "other_player_unchanged": true,
+  "game_code_pac_and_save_states_modified": false,
+  "guard_count": 14,
+  "limitations": [
+    "Captured allocation layout only; guards stop it in different layouts.",
+    "It holds the initial blood stage while enabled; disable after activation to test progression.",
+    "It reproduces blood flags/palette, not every native bleeding callback or statistic.",
+    "First Blood may finish when the flag is observed; use a standard match for prolonged viewing."
+  ]
+}

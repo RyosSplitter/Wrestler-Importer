@@ -1,0 +1,12 @@
+test_bounded_uncompressed_state_reader_and_markers (tests.test_svr2011_blood_cheat.InstantBloodTests.test_bounded_uncompressed_state_reader_and_markers) ... ok
+test_changed_actor_palette_pointer_cache_owner_or_code_stops_all_writes (tests.test_svr2011_blood_cheat.InstantBloodTests.test_changed_actor_palette_pointer_cache_owner_or_code_stops_all_writes) ... ok
+test_invalid_handle_layout_and_missing_blood_are_rejected (tests.test_svr2011_blood_cheat.InstantBloodTests.test_invalid_handle_layout_and_missing_blood_are_rejected) ... ok
+test_other_player_and_match_end_field_are_unchanged (tests.test_svr2011_blood_cheat.InstantBloodTests.test_other_player_and_match_end_field_are_unchanged) ... ok
+test_pointer_copy_updates_vram_and_exactly_two_ram_flag_bytes (tests.test_svr2011_blood_cheat.InstantBloodTests.test_pointer_copy_updates_vram_and_exactly_two_ram_flag_bytes) ... ok
+test_reader_rejects_wrong_version_and_pointer_commands_outside_emitted_subset (tests.test_svr2011_blood_cheat.InstantBloodTests.test_reader_rejects_wrong_version_and_pointer_commands_outside_emitted_subset) ... ok
+test_replaying_enabled_code_is_idempotent (tests.test_svr2011_blood_cheat.InstantBloodTests.test_replaying_enabled_code_is_idempotent) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.522s
+
+OK
