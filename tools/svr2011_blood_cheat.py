@@ -217,6 +217,73 @@ def replay(memory, lines):
     return result,dict(status='offline replay passed',writes=writes)
 
 
+def validate_activation(memory, binding, lines):
+    """Check an activation against native first-stage semantics without an after state."""
+    for key in ('blood_level_address', 'bleeding_flag_address'):
+        if memory.read(binding[key], 1) != b'\0':
+            raise ValueError('Snapshot is not before the first-blood transition')
+    if memory.read(binding['palette'], 64) != bytes(64):
+        raise ValueError('Snapshot live blood palette is already visible or unsupported')
+    changed, check = replay(memory, lines)
+    expected = [(binding['palette'], 64), (binding['blood_level_address'], 1),
+                (binding['bleeding_flag_address'], 1)]
+    if check['status'] != 'offline replay passed' or check['writes'] != [
+            dict(address=address, bytes=size) for address, size in expected]:
+        raise ValueError('Activation did not perform exactly the declared blood writes')
+    if changed.read(binding['palette'], 64) != memory.read(binding['source_palette'], 64):
+        raise ValueError('Activation failed to copy the native first-stage palette')
+    for key in ('blood_level_address', 'bleeding_flag_address'):
+        if changed.read(binding[key], 1) != b'\1':
+            raise ValueError('Activation failed to set the native blood records')
+    restored = changed.clone()
+    for address, size in expected:
+        restored.write(address, memory.read(address, size))
+    if restored.ram != memory.ram or restored.vram != memory.vram:
+        raise ValueError('Activation changed unrelated memory')
+    repeated, _ = replay(changed, lines)
+    if repeated.ram != changed.ram or repeated.vram != changed.vram:
+        raise ValueError('Activation was not idempotent')
+    return changed, check
+
+
+def run_snapshot(before_path, output, player):
+    """Generate a new guarded layout using the previously validated native profile.
+
+    There is deliberately no claim of an observed after-state comparison here.
+    """
+    output = Path(output)
+    if output.exists():
+        raise FileExistsError(output)
+    before_bytes = Path(before_path).read_bytes()
+    memory, metadata = parse_state(before_bytes)
+    binding = layout(memory, player)
+    lines = generate(memory, binding)
+    _, check = validate_activation(memory, binding, lines)
+    text = '_S ULUS-10543\n_G WWE SmackDown vs. RAW 2011 [US]\n'
+    text += '_C0 Instant Blood P%d - Snapshot Layout TEST\n' % player
+    text += ''.join('_L 0x%08X 0x%08X\n' % line for line in lines)
+    report = dict(
+        status='EXPERIMENTAL: single-state offline activation verified; this layout awaits gameplay testing',
+        before=metadata, after=None, observed_after_state_comparison=False,
+        binding={k: hex(v) if k not in ('player', 'slot') else v for k, v in binding.items()},
+        native_profile='ULUS10543 first-blood profile established from the original before/after pair; user reports that code worked in its captured match',
+        pre_blood_palette_all_transparent=True,
+        cached_first_stage_palette_sha256=hashlib.sha256(memory.read(binding['source_palette'], 64)).hexdigest(),
+        replay=check, only_target_blood_records_changed=True, idempotence_verified=True,
+        other_player_unchanged=True, game_code_pac_and_save_states_modified=False,
+        guard_count=len(lines)-5,
+        limitations=['Only this captured allocation layout; guards stop it if allocations change.',
+                     'Disable after activation; leaving enabled holds the first blood stage.',
+                     'Copies native cached palette and sets flags; does not reproduce every callback or statistic.',
+                     'No observed after state or live test for this new layout yet.'])
+    if Path(before_path).read_bytes() != before_bytes:
+        raise ValueError('Source snapshot changed during analysis')
+    output.mkdir(parents=True)
+    (output/'ULUS10543-Instant-Blood-TEST.ini').write_text(text)
+    (output/'report.json').write_text(json.dumps(report, indent=2)+'\n')
+    return report
+
+
 def run(before_path, after_path, output, player):
     output=Path(output)
     if output.exists():raise FileExistsError(output)
@@ -260,7 +327,16 @@ def run(before_path, after_path, output, player):
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('before',type=Path);parser.add_argument('after',type=Path);parser.add_argument('output',type=Path)
+    parser.add_argument('before',type=Path)
+    parser.add_argument('after',type=Path,nargs='?',help='Omit with --snapshot-only')
+    parser.add_argument('output',type=Path)
+    parser.add_argument('--snapshot-only',action='store_true',help='Use the validated native profile without an observed after state')
     parser.add_argument('--player',type=int,choices=(1,2),required=True)
-    args=parser.parse_args();r=run(args.before,args.after,args.output,args.player)
+    args=parser.parse_args()
+    if args.snapshot_only:
+        if args.after is not None:parser.error('--snapshot-only accepts before and output, without an after state')
+        r=run_snapshot(args.before,args.output,args.player)
+    else:
+        if args.after is None:parser.error('An after state is required unless --snapshot-only is specified')
+        r=run(args.before,args.after,args.output,args.player)
     print(r['status'])

@@ -1,8 +1,11 @@
 """Synthetic RAM/VRAM vectors; no uploaded save state or game image is used."""
 import struct
+import json
+from pathlib import Path
+import tempfile
 import unittest
 
-from tools.svr2011_blood_cheat import Memory, FINGERPRINT, ACTOR_TABLE, GP, layout, generate, replay, parse_state, offset
+from tools.svr2011_blood_cheat import Memory, FINGERPRINT, ACTOR_TABLE, GP, layout, generate, replay, parse_state, offset, validate_activation, run_snapshot
 
 
 def fixture():
@@ -60,6 +63,40 @@ class InstantBloodTests(unittest.TestCase):
     def test_replaying_enabled_code_is_idempotent(self):
         m=self.memory;lines=generate(m,layout(m,2));first,_=replay(m,lines);second,_=replay(first,lines)
         self.assertEqual(first.ram,second.ram);self.assertEqual(first.vram,second.vram)
+
+    def test_new_layout_rejects_old_code_and_accepts_regenerated_code(self):
+        m=self.memory;old=layout(m,2);old_lines=generate(m,old)
+        moved=m.clone();new_actor=old['actor']+0x10000
+        moved.write(new_actor,m.read(old['actor'],0x1000))
+        moved.write(ACTOR_TABLE+4,struct.pack('<I',new_actor))
+        _,stopped=replay(moved,old_lines)
+        self.assertEqual(stopped,dict(status='guard stopped',writes=[]))
+        binding=layout(moved,2)
+        changed,check=validate_activation(moved,binding,generate(moved,binding))
+        self.assertEqual(check['status'],'offline replay passed')
+        self.assertEqual(changed.read(binding['blood_level_address'],1),b'\1')
+        self.assertEqual(changed.read(old['blood_level_address'],1),b'\0')
+
+    def test_single_state_activation_rejects_visible_palette_or_existing_blood(self):
+        m=self.memory;x=layout(m,2)
+        for key,size in [('palette',64),('blood_level_address',1),('bleeding_flag_address',1)]:
+            wrong=m.clone();wrong.write(x[key],bytes([1])*size)
+            with self.assertRaises(ValueError):validate_activation(wrong,x,generate(wrong,x))
+
+    def test_single_state_generation_labels_missing_after_evidence_and_preserves_input(self):
+        m=self.memory
+        raw=b'\0'*40+b'Memory'.ljust(16,b'\0')+struct.pack('<4I',3,1,0x42,len(m.ram))
+        raw+=m.ram+struct.pack('<I',0x42)+m.vram+struct.pack('<I',0x42)
+        header=struct.pack('<4I',5,0,len(raw),len(raw))+b'v1.20.4\0'.ljust(32,b'\0')+bytes(128)
+        with tempfile.TemporaryDirectory() as root:
+            source=Path(root)/'before.ppst';source.write_bytes(header+raw)
+            output=Path(root)/'out';report=run_snapshot(source,output,2)
+            self.assertIsNone(report['after']);self.assertFalse(report['observed_after_state_comparison'])
+            self.assertTrue(report['only_target_blood_records_changed'])
+            self.assertEqual(source.read_bytes(),header+raw)
+            self.assertEqual(json.loads((output/'report.json').read_text()),report)
+            self.assertIn('_C0 Instant Blood P2 - Snapshot Layout TEST',(output/'ULUS10543-Instant-Blood-TEST.ini').read_text())
+            with self.assertRaises(FileExistsError):run_snapshot(source,output,2)
 
     def test_invalid_handle_layout_and_missing_blood_are_rejected(self):
         m=self.memory;x=layout(m,2)

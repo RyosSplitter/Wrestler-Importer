@@ -1,0 +1,103 @@
+{
+  "status": "EXPERIMENTAL: single-state offline activation verified; this layout awaits gameplay testing",
+  "before": {
+    "version": "v1.20.4",
+    "state_sha256": "72cb16a29dc4522c5d4271d34ab06bc0483f1e78cf528cc17d21bb9c6af04b7f",
+    "ram_bytes": 33554432,
+    "vram_bytes": 2097152,
+    "source_modified": false
+  },
+  "after": null,
+  "observed_after_state_comparison": false,
+  "binding": {
+    "player": 2,
+    "slot": 1,
+    "actor": "0x921e210",
+    "vtable": "0x8ccd3f4",
+    "manager": "0x9f0eee0",
+    "array": "0x9f0ef20",
+    "cache": "0x9f0f140",
+    "model_id": "0x2711",
+    "texture": "0x918c320",
+    "reader": "0x918c4d0",
+    "header_cell": "0x918c4e0",
+    "header": "0x4140a40",
+    "palette": "0x4140a80",
+    "source_palette": "0x9f0f1c0",
+    "blood_level_address": "0x921e9ca",
+    "bleeding_flag_address": "0x921e9d1"
+  },
+  "native_profile": "ULUS10543 first-blood profile established from the original before/after pair; user reports that code worked in its captured match",
+  "pre_blood_palette_all_transparent": true,
+  "cached_first_stage_palette_sha256": "77a23c0515880be1a4492b1ec335e3944f6175768be1131ff7912213b0f15ad8",
+  "replay": {
+    "status": "offline replay passed",
+    "writes": [
+      {
+        "address": 68422272,
+        "bytes": 64
+      },
+      {
+        "address": 153217482,
+        "bytes": 1
+      },
+      {
+        "address": 153217489,
+        "bytes": 1
+      }
+    ]
+  },
+  "only_target_blood_records_changed": true,
+  "idempotence_verified": true,
+  "other_player_unchanged": true,
+  "game_code_pac_and_save_states_modified": false,
+  "guard_count": 14,
+  "limitations": [
+    "Only this captured allocation layout; guards stop it if allocations change.",
+    "Disable after activation; leaving enabled holds the first blood stage.",
+    "Copies native cached palette and sets flags; does not reproduce every callback or statistic.",
+    "No observed after state or live test for this new layout yet."
+  ],
+  "cheat_label": "Instant Blood P2 - Benoit Match TEST",
+  "old_code_replay": {
+    "status": "guard stopped",
+    "writes": []
+  },
+  "old_guard_mismatches": [
+    {
+      "address": "0x8d0f7b0",
+      "expected": "0x920cfa0",
+      "actual": "0x921e210"
+    },
+    {
+      "address": "0x920cfa0",
+      "expected": "0x8ccd3f4",
+      "actual": "0x0"
+    },
+    {
+      "address": "0x920d424",
+      "expected": "0x1",
+      "actual": "0x0"
+    },
+    {
+      "address": "0x920cff0",
+      "expected": "0x69dd",
+      "actual": "0x125"
+    },
+    {
+      "address": "0x9f0f158",
+      "expected": "0x69dd",
+      "actual": "0x2711"
+    },
+    {
+      "address": "0x917b828",
+      "expected": "0x917b960",
+      "actual": "0x0"
+    },
+    {
+      "address": "0x917b990",
+      "expected": "0x4140a00",
+      "actual": "0x0"
+    }
+  ]
+}

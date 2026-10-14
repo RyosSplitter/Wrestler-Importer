@@ -41,9 +41,12 @@ an unclassified 0-to-1 memory scan.
 
 **INFERRED:** Reproducing those blood records should immediately display the
 first blood stage and let the native emitter observe the bleeding flag.
-**UNKNOWN:** Live success, texture-cache timing, game statistics, callback effects,
-and match-rule handling without running every original transition callback.
-The distributed code must be tested in PPSSPP. It does not emulate the game.
+**CONFIRMED (user-reported gameplay):** The original captured-match code worked
+in the user's test match. This establishes that layout's activation in PPSSPP,
+not compatibility with every wrestler or fresh match allocation.
+**UNKNOWN:** Success in other layouts, texture-cache timing in other situations,
+game statistics, callback effects and match-rule handling without running every
+original transition callback. New codes still require gameplay testing.
 
 ## Resolving the native CLUT
 
@@ -102,7 +105,7 @@ to the original before snapshot. Player 1 and unrelated data remain untouched;
 the separate match-end singleton is not written. This validates the encoding
 and memory footprint, not execution in the actual emulator.
 
-Seven synthetic-fixture tests verify the copy, two byte writes, other-player and
+Ten synthetic-fixture tests verify the copy, two byte writes, other-player and
 unrelated-memory preservation, guard rejection, idempotence, palette/handle
 rejection, file boundaries, version rejection and truncated commands. The tests
 contain no game/save-state data. The source and independent field measurements
@@ -144,3 +147,41 @@ python -m unittest tests.test_svr2011_blood_cheat -v
 The generation profile currently requires v1.20.4, 32 MiB main RAM, supported
 blood CLUT structure, identical allocations between states, and the observed
 0→1/transparent→cached-first-stage transition. Other cases fail explicitly.
+
+## New-layout activation from one before state
+
+The original paired-state generation remains available and unchanged. Once the
+native activation profile has been established, a new match can be inspected
+and given its own guarded code without requiring blood to activate naturally:
+
+```sh
+python -m tools.svr2011_blood_cheat before.ppst new-output --snapshot-only --player 2
+```
+
+**CONFIRMED implementation:** This mode verifies the same code fingerprint,
+actor/cache identity, texture handle and palette structure. It requires zero
+blood status bytes and a transparent live CLUT. Offline replay must copy exactly
+the cached 64-byte palette and set exactly the two target bytes. Restoring these
+three declared writes must recover all original RAM and VRAM; repeated replay
+must be idempotent. Reports explicitly mark `after: null` and
+`observed_after_state_comparison: false`. This is a native-profile replay, not
+an observed after-state comparison. Uploaded states remain private and unchanged.
+
+**CONFIRMED binary observations in the supplied Benoit before state:** The old
+code stops at the Player 2 actor-pointer guard before performing any writes.
+Player 2 has a loaded named `blood` texture and a visible cached first-stage
+palette, while both blood flags and the live palette are initially zero.
+
+| Record | First captured match | New Benoit match |
+|---|---|---|
+| Actor | 0x0920CFA0 | 0x0921E210 |
+| Cached model ID | 0x69DD | 0x2711 |
+| Blood level | 0x0920D75A | 0x0921E9CA |
+| Bleeding flag | 0x0920D761 | 0x0921E9D1 |
+| Palette header pointer cell | 0x0917B990 | 0x0918C4E0 |
+| Live face palette | 0x04140A40 | 0x04140A80 |
+| Cached first-stage palette | 0x09F0F1C0 | 0x09F0F1C0 |
+
+**UNKNOWN:** Visible overlay coverage and appearance on the experimental Benoit
+PAC until the user tests this new code. A loaded blood resource alone does not
+prove correct rendered overlays or identify the complete PAC by its hash.
