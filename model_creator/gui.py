@@ -24,7 +24,7 @@ class App:
         self.preview_after=None;self.preview_revision=0;self.refresh_after=None
         root.title('PSP Model Creator — Experimental '+VERSION)
         width=min(1100,root.winfo_screenwidth()-40);height=min(830,root.winfo_screenheight()-100)
-        self.preview_size=min(448,max(256,root.winfo_screenheight()-400))
+        self.preview_size=min(448,max(256,root.winfo_screenheight()-480))
         root.geometry(f'{width}x{height}+10+10');root.minsize(min(1000,width),min(700,height))
         style=ttk.Style(root)
         if 'vista' in style.theme_names():style.theme_use('vista')
@@ -42,10 +42,10 @@ class App:
         left=ttk.LabelFrame(work,text='Body parts',padding=12);left.pack(side='left',fill='y',padx=(0,12))
         self.choices={};self.controls=[]
         for part in PARTS:
-            ttk.Label(left,text=part).pack(anchor='w',pady=(8,3));v=tk.StringVar();self.choices[part]=v
+            ttk.Label(left,text=part).pack(anchor='w',pady=(3,0));v=tk.StringVar();self.choices[part]=v
             box=ttk.Combobox(left,textvariable=v,state='readonly',width=25);box.pack(fill='x');box.bind('<<ComboboxSelected>>',lambda _:self.dirty());self.controls.append(box)
-        self.assemble_button=ttk.Button(left,text='Assemble and validate',command=self.assemble);self.assemble_button.pack(fill='x',pady=(20,8))
-        ttk.Label(left,text='148,000-byte export limit.\nOriginal textures retained.\nOversized exports withheld.\n\nPreview first, then validate.\nTest exported PACs in PPSSPP.',justify='left').pack(anchor='w',pady=8)
+        self.assemble_button=ttk.Button(left,text='Assemble and validate',command=self.assemble);self.assemble_button.pack(fill='x',pady=(12,4))
+        ttk.Label(left,text='148,000-byte export limit.\nTest exports in PPSSPP.',justify='left').pack(anchor='w',pady=8)
         right=ttk.Frame(work);right.pack(fill='both',expand=True)
         top=ttk.Frame(right);top.pack(fill='x',pady=(0,6))
         ttk.Label(top,text='Pose:').pack(side='left');self.pose=tk.StringVar(value='rest')
@@ -61,7 +61,14 @@ class App:
             button=ttk.Button(export,text=text,command=fn);button.pack(side='left',padx=(0,6));self.export_buttons.append(button)
         self.progress=ttk.Progressbar(shell,mode='indeterminate');self.progress.pack(fill='x')
         self.status=tk.StringVar(value='Ready. Originals are copied into a private project and never overwritten.')
-        ttk.Label(shell,textvariable=self.status,wraplength=980).pack(anchor='w',pady=6)
+        status_label=ttk.Label(shell,textvariable=self.status,wraplength=900)
+        # Reserve controls/status BEFORE the expandable preview gets remaining
+        # space. Otherwise Tk can shrink late-packed buttons to unlabeled slivers.
+        work.pack_forget();export.pack_forget();self.progress.pack_forget()
+        status_label.pack(side='bottom',fill='x',pady=6)
+        self.progress.pack(side='bottom',fill='x')
+        export.pack(side='bottom',fill='x',pady=8)
+        work.pack(fill='both',expand=True)
         root.after(75,self.poll)
 
     def task(self,fn,done):

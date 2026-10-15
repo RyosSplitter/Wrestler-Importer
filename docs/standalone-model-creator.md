@@ -211,6 +211,10 @@ cover tampered/moved snapshots, duplicate destinations, hierarchy/bind mismatch,
 source interior attributes, facial parent mapping, palette capacity, UV/weight
 interpolation, seam samples, invalid selections and actual budget enforcement.
 The full repository suite had **403 passing tests** during development.
+The GUI also has a 1024×768 visibility regression check: export buttons must be
+fully visible at their requested height, rather than merely mapped by Tk.
+Preview size adapts to the display, and the footer is reserved before the
+expandable model area.
 
 The isolated `windows-creator.yml` workflow builds with Python 3.13/PyInstaller
 and runs the frozen self-check with the development Python directory removed

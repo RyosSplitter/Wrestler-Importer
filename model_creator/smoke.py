@@ -38,7 +38,7 @@ def run(app,output):
         x,y=app.root.winfo_rootx(),app.root.winfo_rooty();w,h=app.root.winfo_width(),app.root.winfo_height()
         for button in app.export_buttons:
             bottom=button.winfo_rooty()+button.winfo_height();right=button.winfo_rootx()+button.winfo_width()
-            if not button.winfo_ismapped() or bottom>min(y+h,app.root.winfo_screenheight()-35) or right>x+w:
+            if not button.winfo_ismapped() or button.winfo_height()<button.winfo_reqheight() or bottom>min(y+h,app.root.winfo_screenheight()-35) or right>x+w:
                 raise ValueError('An export control is outside the visible window/screen.')
         ImageGrab.grab(bbox=(x,y,x+w,y+h)).save(output.with_name('creator-window.png'))
         dump(output,dict(passed=True,part_selectors=True,live_selection_preview_before_export=True,stale_export_blocked=True,all_export_buttons_visible=True,background_assembly=True,native_export=True,
