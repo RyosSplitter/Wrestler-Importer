@@ -1,0 +1,62 @@
+{
+  "version": "0.3.0",
+  "release": "creator-preview-8-0c7661b1e26ca8769c974f588602cce4b14002a6",
+  "workflow_id": 38702844891,
+  "windows_frozen_full_app_and_original_02_overlay_passed": true,
+  "download_verification": {
+    "PSP-Model-Creator-0.3.0-Windows-x64.zip": {
+      "bytes": 68350970,
+      "sha256": "1fdc2f879005db1630d198d76919bfd653eb52bebd87ba7409f509686b1c5be7",
+      "manifest_files_checked": 1569
+    },
+    "PSP-Model-Creator-0.3.0-Creator-Patch.zip": {
+      "bytes": 10895736,
+      "sha256": "92cee2ca08a463e6b9c86381112467c28759965ef0e1c127ee61379bd453fb2b",
+      "manifest_files_checked": 11
+    }
+  },
+  "full_repository_tests_passed": 426,
+  "part_trials_passed": 120,
+  "part_trials_total": 124,
+  "targeted_pair_combinations_passed": 48,
+  "source_gui_report": {
+    "passed": true,
+    "part_selectors": true,
+    "live_selection_preview_before_export": true,
+    "stale_export_blocked": true,
+    "all_export_buttons_visible": true,
+    "background_assembly": true,
+    "native_export": true,
+    "analytical_poses": 10,
+    "preview_views": true,
+    "editable_texture_roundtrip_exact": true,
+    "pac_bytes": 4096,
+    "assets": "Synthetic fixtures plus explicitly supplied prepared native library",
+    "prepared_models": 31,
+    "prepared_library_all_native_readers_passed": true,
+    "prepared_live_preview_without_import": true,
+    "prepared_hair_groups_preserved": true,
+    "prepared_mixed_pac_bytes": 129024,
+    "prepared_array_texture_roundtrip_exact": true,
+    "add_donors_button": true,
+    "import_batch_add_duplicate_reject": true,
+    "imported_donor_persists_without_original": true,
+    "imported_donor_mixed_preview_and_export": true,
+    "oversized_gui_warning_shown": true,
+    "oversized_pac_export_allowed": true,
+    "maximum_texture_checkbox": true,
+    "maximum_texture_gui_rescue": true,
+    "texture_option_stale_export_blocked": true,
+    "frozen_hardy_bind_fit": true,
+    "local_axis_pose_regressions_checked": true
+  },
+  "texture_trial": {
+    "before": 161792,
+    "after": 143360,
+    "target": 148000,
+    "changed_textures": 11,
+    "unchanged_non_texture_payloads": true
+  },
+  "ppsspp_validation_of_new_mixed_models": "pending user testing",
+  "main_branch_modified": false
+}
