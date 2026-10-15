@@ -1,0 +1,381 @@
+{
+  "schema": "psp-model-creator.pair-study/1",
+  "source_inputs": [
+    {
+      "label": "Kenny-Dykstra",
+      "sha256": "004e8e4c16d10bf9a2447b35be9861e996e42a47c4719e64b00d535ee41e80d4"
+    },
+    {
+      "label": "Brian-Kenderick(Ring)",
+      "sha256": "3c8909413f7adb3f69de6cb745648382a38a3b791c0faf2530743faf69f90005"
+    }
+  ],
+  "parts_order": [
+    "Head",
+    "Torso",
+    "Arms",
+    "Legs"
+  ],
+  "code_zero": "Kenny Dykstra",
+  "code_one": "Brian Kendrick",
+  "configured_pac_cap": 148000,
+  "exported": 15,
+  "withheld": 1,
+  "in_game_validation": false,
+  "results": [
+    {
+      "combination": "0000",
+      "selections": {
+        "Head": 0,
+        "Torso": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "passed": true,
+      "pac_bytes": 108544,
+      "sha256": "004e8e4c16d10bf9a2447b35be9861e996e42a47c4719e64b00d535ee41e80d4",
+      "meshes": 24,
+      "vertices": 1394,
+      "triangles": 1771,
+      "texture_count": 18,
+      "textures_byte_exact": true,
+      "pose_count": 10,
+      "review_findings": [],
+      "maximum_interior_pose_delta": 0.0
+    },
+    {
+      "combination": "0001",
+      "selections": {
+        "Head": 0,
+        "Torso": 0,
+        "Arms": 0,
+        "Legs": 1
+      },
+      "passed": true,
+      "pac_bytes": 122880,
+      "sha256": "0b56f013fe50bf389bb8e632f4cb00accf49e7f9f56541afda4d4b5a88150891",
+      "meshes": 27,
+      "vertices": 1551,
+      "triangles": 2012,
+      "texture_count": 15,
+      "textures_byte_exact": true,
+      "pose_count": 10,
+      "review_findings": [],
+      "maximum_interior_pose_delta": 0.0
+    },
+    {
+      "combination": "0010",
+      "selections": {
+        "Head": 0,
+        "Torso": 0,
+        "Arms": 1,
+        "Legs": 0
+      },
+      "passed": true,
+      "pac_bytes": 126976,
+      "sha256": "a57099c0b4a756074d9c655956533de2abcfa73b0f72c4e618007be692e838be",
+      "meshes": 26,
+      "vertices": 1631,
+      "triangles": 2001,
+      "texture_count": 16,
+      "textures_byte_exact": true,
+      "pose_count": 10,
+      "review_findings": [],
+      "maximum_interior_pose_delta": 0.0
+    },
+    {
+      "combination": "0011",
+      "selections": {
+        "Head": 0,
+        "Torso": 0,
+        "Arms": 1,
+        "Legs": 1
+      },
+      "passed": true,
+      "pac_bytes": 131072,
+      "sha256": "5da6a084f526f90e6e88fbcd520c458dd301e40a3174fc9591b587b8b413e14b",
+      "meshes": 29,
+      "vertices": 1644,
+      "triangles": 2062,
+      "texture_count": 15,
+      "textures_byte_exact": true,
+      "pose_count": 10,
+      "review_findings": [],
+      "maximum_interior_pose_delta": 0.0
+    },
+    {
+      "combination": "0100",
+      "selections": {
+        "Head": 0,
+        "Torso": 1,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "passed": false,
+      "export_withheld": true,
+      "reason": "Assembly is 149,504 bytes, exceeding 148,000. Export withheld; no geometry or textures were reduced. Try fewer mixed parts or a different torso donor."
+    },
+    {
+      "combination": "0101",
+      "selections": {
+        "Head": 0,
+        "Torso": 1,
+        "Arms": 0,
+        "Legs": 1
+      },
+      "passed": true,
+      "pac_bytes": 139264,
+      "sha256": "a491fe54dd7de41f6d4d1543f35a19c80042765dd10a0f51a1fe92b4e2d08052",
+      "meshes": 38,
+      "vertices": 1804,
+      "triangles": 2209,
+      "texture_count": 17,
+      "textures_byte_exact": true,
+      "pose_count": 10,
+      "review_findings": [
+        {
+          "joint": "neck",
+          "unstitched_ambiguous_records": 7,
+          "explanation": "Some cut records lie inside the chosen outer radial contour. They are retained, not assumed invalid. Visual and in-game seam review is required."
+        }
+      ],
+      "maximum_interior_pose_delta": 1.7798229048217483e-15
+    },
+    {
+      "combination": "0110",
+      "selections": {
+        "Head": 0,
+        "Torso": 1,
+        "Arms": 1,
+        "Legs": 0
+      },
+      "passed": true,
+      "pac_bytes": 143360,
+      "sha256": "dd7720bebde2d3f7aec8bbacc4aa54763b3d0bb82529b055967a1016ee4c4068",
+      "meshes": 36,
+      "vertices": 1825,
+      "triangles": 2162,
+      "texture_count": 17,
+      "textures_byte_exact": true,
+      "pose_count": 10,
+      "review_findings": [
+        {
+          "joint": "neck",
+          "unstitched_ambiguous_records": 7,
+          "explanation": "Some cut records lie inside the chosen outer radial contour. They are retained, not assumed invalid. Visual and in-game seam review is required."
+        }
+      ],
+      "maximum_interior_pose_delta": 1.7798229048217483e-15
+    },
+    {
+      "combination": "0111",
+      "selections": {
+        "Head": 0,
+        "Torso": 1,
+        "Arms": 1,
+        "Legs": 1
+      },
+      "passed": true,
+      "pac_bytes": 133120,
+      "sha256": "cc11229679368f7a01de43b72073fba7d4330af8b4a673bb67ae412d41491095",
+      "meshes": 36,
+      "vertices": 1684,
+      "triangles": 2139,
+      "texture_count": 14,
+      "textures_byte_exact": true,
+      "pose_count": 10,
+      "review_findings": [
+        {
+          "joint": "neck",
+          "unstitched_ambiguous_records": 7,
+          "explanation": "Some cut records lie inside the chosen outer radial contour. They are retained, not assumed invalid. Visual and in-game seam review is required."
+        }
+      ],
+      "maximum_interior_pose_delta": 1.7798229048217483e-15
+    },
+    {
+      "combination": "1000",
+      "selections": {
+        "Head": 1,
+        "Torso": 0,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "passed": true,
+      "pac_bytes": 133120,
+      "sha256": "74d6cddd6a637bb6b0b93137988207a85f62be0905ae429f3cae3c11b6115c91",
+      "meshes": 36,
+      "vertices": 1774,
+      "triangles": 2038,
+      "texture_count": 22,
+      "textures_byte_exact": true,
+      "pose_count": 10,
+      "review_findings": [
+        {
+          "joint": "neck",
+          "unstitched_ambiguous_records": 11,
+          "explanation": "Some cut records lie inside the chosen outer radial contour. They are retained, not assumed invalid. Visual and in-game seam review is required."
+        }
+      ],
+      "maximum_interior_pose_delta": 1.7763568394002505e-15
+    },
+    {
+      "combination": "1001",
+      "selections": {
+        "Head": 1,
+        "Torso": 0,
+        "Arms": 0,
+        "Legs": 1
+      },
+      "passed": true,
+      "pac_bytes": 137216,
+      "sha256": "66624f71b25958b92ed2548b687314b988fec8bd57dfb8c5a30ac23b1552d92f",
+      "meshes": 36,
+      "vertices": 1787,
+      "triangles": 2099,
+      "texture_count": 21,
+      "textures_byte_exact": true,
+      "pose_count": 10,
+      "review_findings": [
+        {
+          "joint": "neck",
+          "unstitched_ambiguous_records": 11,
+          "explanation": "Some cut records lie inside the chosen outer radial contour. They are retained, not assumed invalid. Visual and in-game seam review is required."
+        }
+      ],
+      "maximum_interior_pose_delta": 1.7763568394002505e-15
+    },
+    {
+      "combination": "1010",
+      "selections": {
+        "Head": 1,
+        "Torso": 0,
+        "Arms": 1,
+        "Legs": 0
+      },
+      "passed": true,
+      "pac_bytes": 141312,
+      "sha256": "c951d745160b09598a4f04d0f03b4d9d8dfdd3be38eb8e315c21a63c72dd6b03",
+      "meshes": 34,
+      "vertices": 1867,
+      "triangles": 2088,
+      "texture_count": 22,
+      "textures_byte_exact": true,
+      "pose_count": 10,
+      "review_findings": [
+        {
+          "joint": "neck",
+          "unstitched_ambiguous_records": 11,
+          "explanation": "Some cut records lie inside the chosen outer radial contour. They are retained, not assumed invalid. Visual and in-game seam review is required."
+        }
+      ],
+      "maximum_interior_pose_delta": 1.7763568394002505e-15
+    },
+    {
+      "combination": "1011",
+      "selections": {
+        "Head": 1,
+        "Torso": 0,
+        "Arms": 1,
+        "Legs": 1
+      },
+      "passed": true,
+      "pac_bytes": 143360,
+      "sha256": "bc036e52d9bc4b9a703a36f68049120abf9cd79816b9ac223d4ac076af31798f",
+      "meshes": 34,
+      "vertices": 1880,
+      "triangles": 2149,
+      "texture_count": 21,
+      "textures_byte_exact": true,
+      "pose_count": 10,
+      "review_findings": [
+        {
+          "joint": "neck",
+          "unstitched_ambiguous_records": 11,
+          "explanation": "Some cut records lie inside the chosen outer radial contour. They are retained, not assumed invalid. Visual and in-game seam review is required."
+        }
+      ],
+      "maximum_interior_pose_delta": 1.7763568394002505e-15
+    },
+    {
+      "combination": "1100",
+      "selections": {
+        "Head": 1,
+        "Torso": 1,
+        "Arms": 0,
+        "Legs": 0
+      },
+      "passed": true,
+      "pac_bytes": 131072,
+      "sha256": "2fb5762d9c4a8e86618f2241f44c5396265e589453be37fb45cfc814bc774265",
+      "meshes": 30,
+      "vertices": 1746,
+      "triangles": 2004,
+      "texture_count": 22,
+      "textures_byte_exact": true,
+      "pose_count": 10,
+      "review_findings": [],
+      "maximum_interior_pose_delta": 0.0
+    },
+    {
+      "combination": "1101",
+      "selections": {
+        "Head": 1,
+        "Torso": 1,
+        "Arms": 0,
+        "Legs": 1
+      },
+      "passed": true,
+      "pac_bytes": 120832,
+      "sha256": "523818e97833bfb46adffea9e7b4542d706038ca13326d5e9c2a5df299e82b65",
+      "meshes": 27,
+      "vertices": 1605,
+      "triangles": 1981,
+      "texture_count": 19,
+      "textures_byte_exact": true,
+      "pose_count": 10,
+      "review_findings": [],
+      "maximum_interior_pose_delta": 0.0
+    },
+    {
+      "combination": "1110",
+      "selections": {
+        "Head": 1,
+        "Torso": 1,
+        "Arms": 1,
+        "Legs": 0
+      },
+      "passed": true,
+      "pac_bytes": 122880,
+      "sha256": "8bfb6a001bfa6239b23e579e80e3dc36324fb495e826ca8c4e03204ed8c88e68",
+      "meshes": 24,
+      "vertices": 1626,
+      "triangles": 1934,
+      "texture_count": 19,
+      "textures_byte_exact": true,
+      "pose_count": 10,
+      "review_findings": [],
+      "maximum_interior_pose_delta": 0.0
+    },
+    {
+      "combination": "1111",
+      "selections": {
+        "Head": 1,
+        "Torso": 1,
+        "Arms": 1,
+        "Legs": 1
+      },
+      "passed": true,
+      "pac_bytes": 135168,
+      "sha256": "3c8909413f7adb3f69de6cb745648382a38a3b791c0faf2530743faf69f90005",
+      "meshes": 21,
+      "vertices": 1343,
+      "triangles": 1746,
+      "texture_count": 16,
+      "textures_byte_exact": true,
+      "pose_count": 10,
+      "review_findings": [],
+      "maximum_interior_pose_delta": 0.0
+    }
+  ]
+}

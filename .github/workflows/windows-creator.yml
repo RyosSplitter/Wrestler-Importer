@@ -1,0 +1,58 @@
+name: Build standalone PSP Model Creator
+on:
+  push:
+    branches: [feature/standalone-model-creator]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  creator:
+    runs-on: windows-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: python -m pip install -r requirements-desktop.txt
+      - name: Original synthetic creator regression tests
+        run: python -m unittest tests.test_model_creator -v
+      - name: Build separate portable application
+        run: python -m tools.build_creator
+      - name: Frozen creator live selection preview, assembly, native export and texture roundtrip
+        shell: pwsh
+        run: |
+          $env:PATH = "$env:SystemRoot\System32;$env:SystemRoot"
+          $output = "$env:RUNNER_TEMP\creator-smoke\report.json"
+          New-Item -ItemType Directory -Path (Split-Path $output) | Out-Null
+          $p = Start-Process dist/PSP-Model-Creator/PSP-Model-Creator.exe -ArgumentList @('--smoke-test',$output) -PassThru -Wait
+          if ($p.ExitCode -ne 0) { throw 'Frozen creator functional self-check failed' }
+          $report = Get-Content $output -Raw | ConvertFrom-Json
+          if (-not $report.passed -or -not $report.live_selection_preview_before_export) { throw 'Creator self-check missing successful live preview' }
+          Copy-Item $output dist/creator-smoke.json
+          Copy-Item "$env:RUNNER_TEMP/creator-smoke/*.png" dist/
+      - name: Package standalone application
+        shell: python
+        run: |
+          import hashlib,shutil
+          from pathlib import Path
+          path=Path(shutil.make_archive('dist/PSP-Model-Creator-0.1-Windows-x64','zip','dist','PSP-Model-Creator'))
+          Path(str(path)+'.sha256').write_text(hashlib.file_digest(path.open('rb'),'sha256').hexdigest()+'  '+path.name+'\n')
+      - uses: actions/upload-artifact@v4
+        with:
+          name: PSP-Model-Creator-0.1-Windows-x64
+          path: |
+            dist/*.zip
+            dist/*.sha256
+            dist/creator-*.png
+            dist/creator-smoke.json
+      - name: Publish isolated experimental creator
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          @'
+          Separate experimental Kenny Dykstra / Brian Kendrick modular PSP creator. Select your own two original PSP PACs once; source 1 supplies the mixed output container. Choose head, torso, arms and legs with automatic textured/green selection previews, five camera views and analytical poses. Assemble and validate before exporting a PAC; stale selections cannot export an older build. Includes native structural/palette/offset checks, explicit attachment QA, original-texture preservation, editable PNG export/pack, per-build reports, private snapshots, source and licenses. No Blender, Noesis or game assets are bundled. Existing suite/converter and main are unchanged. Prepared-pair prototype: ambiguous internal neck intersections require visual review, oversized combinations are withheld, and PPSSPP gameplay validation remains required. See README for the actual 16-combination study and limitations. Windows 10/11 x64 runner tested; a clean personal-machine test remains necessary.
+          '@ | Set-Content "$env:RUNNER_TEMP/creator-notes.txt" -Encoding utf8NoBOM
+          $tag = "creator-preview-${{ github.run_number }}-${{ github.sha }}"
+          gh release create $tag dist/*.zip dist/*.sha256 dist/creator-window.png --target '${{ github.sha }}' --prerelease --title 'PSP Model Creator 0.1 — standalone experimental preview' --notes-file "$env:RUNNER_TEMP/creator-notes.txt"
