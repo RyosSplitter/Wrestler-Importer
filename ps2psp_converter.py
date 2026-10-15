@@ -24,6 +24,20 @@ def worker(job_path):
         dump(root/'failure.json',dict(error=str(exc),cancelled=cancelled,logs=str(root)));return 2 if cancelled else 1
 
 def main():
+    if len(sys.argv)>1 and sys.argv[1]=='--suite-pack':
+        from desktop.edit_folder import pack_folder
+        from desktop.workspace import dump
+        request,job=map(Path,sys.argv[2:4])
+        try:
+            options=json.loads(request.read_text(encoding='utf-8'))
+            report=pack_folder(options['folder'],options['destination'])
+            dump(job/'pack-report.json',report)
+            dump(job/'result.json',dict(ok=True,report=report))
+            return 0
+        except Exception as exc:
+            (job/'error.log').write_text(traceback.format_exc(),encoding='utf-8')
+            dump(job/'result.json',dict(ok=False,error=str(exc)))
+            return 1
     if len(sys.argv)>1 and sys.argv[1]=='--suite-inspect':
         from desktop.workspace import inspect_workspace,dump
         source,job=map(Path,sys.argv[2:4])

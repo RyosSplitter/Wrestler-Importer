@@ -10,12 +10,12 @@ Accepted PAC baselines and main remain preserved.
 | Module | This milestone |
 |---|---|
 | Converter | Existing HCTP workflow, texture modes, PSP base preference, QA and Save As |
-| PSP Model Editor | Native PSP PAC inspection, every YOBJ section, per-mesh counts, five rest views, preview export, exact unchanged PAC copy |
+| PSP Model Editor | PAC library, native inspection, editable folder export, PNG texture editing/repacking, five rest views, exact unchanged PAC copy |
 | Textures | Shared native texture browser, dimensions, encoded cost, palette/used-color counts, transparency preview; conversion settings remain in Converter |
 | Quality Assurance | Native structural inspection and access to existing conversion HTML reports |
 | Model Creator | Explicit development roadmap; assembly/export and asset libraries are not implemented |
 
-SYM/JBI/PS2 SVR/PS3-X360 SVR/WK conversion, PS1 texture styling, texture replacement,
+SYM/JBI/PS2 SVR/PS3-X360 SVR/WK conversion, PS1 texture styling,
 UV editing, OBJ reimport and creator assembly remain planned. Unsupported formats
 are not passed to the HCTP parser as if they were supported.
 
@@ -55,10 +55,16 @@ Previews are actual offline CPU renders of decoded rest geometry, not Noesis or
 PPSSPP captures. Unsupported or ambiguous resources are reported, not replaced
 by invented pixels.
 
+Use **Export folder...** to create a self-contained editable directory. Edit its
+named PNGs in Photoshop/GIMP, then use **Pack folder...** to produce a new PAC in
+the library. Read the [folder-editing contract and limitations](portable-edit-folders.md).
+Texture dimensions/palette capacity remain fixed; native geometry reimport is
+not supported. Edited PACs are previewed automatically and still require testing.
+
 **Save unchanged copy** writes the captured PAC byte for byte to a new filename.
 It is a validated exact-copy round trip, not a PAC rebuild or model edit. Existing
-destinations and the original input are protected from overwrite. **Export
-previews** creates a new ZIP containing each original decoded YOBJ, its structural
+destinations and the original input are protected from overwrite. The developer
+preview-ZIP API creates a new ZIP containing each original decoded YOBJ, its structural
 audit, OBJ/MTL, numeric texture filenames, PNGs and views. OBJ has no armature,
 weights or PSP draw metadata. It is not the authoritative project representation.
 
@@ -132,6 +138,5 @@ On Windows, build with `python -m tools.build_portable --suite`. The separate
 the established converter release workflow. The initial Linux validation and
 Windows run results are recorded in `downloads/model-suite-foundation/`.
 
-Next milestone: validated texture replacement with strict texture/material depth,
-source snapshot, size, offset/alignment and unrelated-byte preservation checks.
-UV/geometry editing comes after that, with explicit topology and skinning mapping.
+Texture-folder editing/repacking is now available. UV/geometry editing is the
+next milestone, with explicit topology and skinning mapping.

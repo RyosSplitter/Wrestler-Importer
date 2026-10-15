@@ -24,6 +24,9 @@ class SuiteShell:
         self.job = None
         self.active_source = None
         self.pending_source = None
+        self.job_kind = 'inspect'
+        self.edit_folder = None
+        self.last_pack = None
         self.model_index = 0
         self.view = 'front-left'
         self.photo = self.texture_photo = None
@@ -60,8 +63,10 @@ class SuiteShell:
         toolbar.pack(fill='x')
         self.open_button = self.button(toolbar, 'Open PSP PAC...', self.browse)
         self.open_button.pack(side='left')
-        self.export_button = self.button(toolbar, 'Export previews...', self.export)
+        self.export_button = self.button(toolbar, 'Export folder...', self.export)
         self.export_button.pack(side='left', padx=6)
+        self.pack_button = self.button(toolbar, 'Pack folder...', self.pack_folder)
+        self.pack_button.pack(side='left', padx=(0,6))
         self.copy_button = self.button(toolbar, 'Save unchanged copy...', self.save_copy)
         self.copy_button.pack(side='left')
         for button in (self.export_button, self.copy_button):
@@ -112,7 +117,7 @@ class SuiteShell:
         toolbar.pack(fill='x')
         self.button(toolbar, 'Open PSP PAC...', self.browse).pack(side='left')
         self.button(toolbar, 'Conversion texture options', lambda: self.tabs.select(self.converter)).pack(side='left', padx=6)
-        ttk.Label(page, text='Inspect original embedded textures here. Choose conversion policies in Converter.',
+        ttk.Label(page, text='Inspect textures here. Use Model Editor → Export folder / Pack folder for external PNG editing.',
                   padding=(10, 0, 10, 8)).pack(fill='x')
         split = ttk.Panedwindow(page, orient='horizontal')
         split.pack(fill='both', expand=True, padx=10, pady=(0, 10))
@@ -143,6 +148,7 @@ class SuiteShell:
         self.button(toolbar, 'Latest conversion report', self.conversion_report).pack(side='left')
         self.button(toolbar, 'Open saved QA report...', self.saved_report).pack(side='left', padx=6)
         self.button(toolbar, 'Inspection folder', self.open_folder).pack(side='left')
+        self.button(toolbar, 'Last packing report', self.packing_report).pack(side='left', padx=6)
         self.qa_text = tk.Text(page, wrap='word', bg='white', fg='#202020', relief='sunken', borderwidth=1)
         scroll = ttk.Scrollbar(page, orient='vertical', command=self.qa_text.yview)
         self.qa_text.configure(yscrollcommand=scroll.set)
@@ -159,7 +165,8 @@ class SuiteShell:
         group = ttk.LabelFrame(page, text='Development sequence', padding=12)
         group.pack(fill='x', padx=16)
         for text in ('1. Native PSP inspection and exact-copy validation — available in Model Editor',
-                     '2. Validated texture replacement, UV editing and geometry reimport — planned',
+                     '2. External PNG texture editing and validated PAC packing — available in Model Editor',
+                     '3. UV editing and geometry reimport — planned',
                      '3. Compatible modular parts, seam handling and skinning — planned',
                      '4. Body, head, limb and hair libraries — planned; no game assets bundled'):
             ttk.Label(group, text=text, wraplength=800).pack(anchor='w', pady=5)
@@ -192,10 +199,12 @@ class SuiteShell:
             # Keep list/keyboard navigation live. Only the latest request wins;
             # never display an older completed job over a newer selected file.
             self.pending_source = path if path!=self.active_source else None
-            self.status.set('Waiting to open '+path.name+' — finishing the current read-only inspection.')
+            action = 'packing job' if self.job_kind=='pack' else 'read-only inspection'
+            self.status.set('Waiting to open '+path.name+' — finishing the current '+action+'.')
             return
         self.active_source = path
         self.pending_source = None
+        self.job_kind = 'inspect'
         self.job = data_dir()/'suite'/'jobs'/uuid.uuid4().hex
         self.job.mkdir(parents=True)
         self.log = (self.job/'inspection.log').open('w', encoding='utf-8')
@@ -211,6 +220,9 @@ class SuiteShell:
             return
         self.status.set('Inspecting '+Path(path).name+' — previous workspace remains available when inspection fails.')
         self.open_button.configure(state='disabled')
+        self.pack_button.configure(state='disabled')
+        self.export_button.configure(state='disabled')
+        self.copy_button.configure(state='disabled')
 
     def poll(self):
         if self.process is not None and self.process.poll() is not None:
@@ -223,7 +235,12 @@ class SuiteShell:
             self.active_source = None
             if not self.closing:
                 self.open_button.configure(state='normal')
-                if pending is not None:
+                self.pack_button.configure(state='normal')
+                for button in (self.export_button,self.copy_button):
+                    button.configure(state='normal' if self.manifest else 'disabled')
+                if self.job_kind=='pack':
+                    self.finish_pack(code, pending)
+                elif pending is not None:
                     self.open_pac(pending)
                 else:
                     try:
@@ -356,6 +373,12 @@ class SuiteShell:
         if path:
             webbrowser.open(Path(path).resolve().as_uri())
 
+    def packing_report(self):
+        if self.last_pack:
+            self.app.open_path(Path(self.last_pack['report_path']))
+        else:
+            messagebox.showinfo('Packing report','Pack an edit folder first. Reports are saved beside the rebuilt PAC.')
+
     def open_folder(self):
         if self.manifest:
             self.app.open_path(self.manifest_path.parent)
@@ -376,15 +399,91 @@ class SuiteShell:
     def export(self):
         if not self.manifest:
             return
-        path = filedialog.asksaveasfilename(title='Export native YOBJ and OBJ/texture previews',
-            defaultextension='.zip', initialfile=Path(self.manifest['source']).stem+'-previews.zip', filetypes=[('ZIP archive', '*.zip')])
-        if path:
-            from desktop.workspace import export_previews
+        parent = filedialog.askdirectory(title='Choose parent folder for editable export',
+            initialdir=str(self.pac_browser.folder or Path(self.manifest['source']).parent))
+        if parent:
+            stem = Path(self.manifest['source']).stem+'-edit'
+            destination = Path(parent)/stem
+            number = 2
+            while destination.exists():
+                destination = Path(parent)/(stem+'-'+str(number))
+                number += 1
             try:
-                export_previews(self.manifest_path, path)
-                self.status.set('Exported previews: '+path)
+                self.export_to(destination)
             except (ValueError, OSError) as exc:
-                messagebox.showerror('Preview export', str(exc))
+                messagebox.showerror('Folder export', str(exc))
+
+    def export_to(self, destination):
+        from desktop.edit_folder import export_folder
+        self.edit_folder = Path(export_folder(self.manifest_path, destination))
+        self.status.set('Exported '+str(self.edit_folder)+' — edit textures/*.png, then choose Pack folder.')
+        return self.edit_folder
+
+    def pack_folder(self):
+        if self.busy():
+            return
+        folder = filedialog.askdirectory(title='Select exported edit folder containing project.json',
+            initialdir=str(self.edit_folder or self.pac_browser.folder or Path.home()))
+        if not folder:
+            return
+        try:
+            project = json.loads((Path(folder)/'project.json').read_text(encoding='utf-8'))
+            name = Path(project.get('source_name', 'Wrestler.pac')).stem+'-edited.pac'
+        except (ValueError,OSError) as exc:
+            messagebox.showerror('Pack folder', 'Select an exported edit folder containing project.json.\n'+str(exc))
+            return
+        destination = filedialog.asksaveasfilename(title='Save rebuilt PAC using a NEW filename',
+            initialdir=str(self.pac_browser.folder or Path(folder).parent),
+            initialfile=name, defaultextension='.pac', filetypes=[('PSP PAC','*.pac')],confirmoverwrite=False)
+        if destination:
+            self.start_pack(folder, destination)
+
+    def start_pack(self, folder, destination):
+        if self.busy() or self.closing:
+            return
+        self.job = data_dir()/'suite'/'jobs'/uuid.uuid4().hex
+        self.job.mkdir(parents=True)
+        request = self.job/'pack-request.json'
+        request.write_text(json.dumps(dict(folder=str(Path(folder).resolve()), destination=str(Path(destination).resolve()))), encoding='utf-8')
+        self.log = (self.job/'packing.log').open('w',encoding='utf-8')
+        try:
+            self.process = subprocess.Popen(self.app.entry()+['--suite-pack', str(request), str(self.job)],
+                stdout=self.log, stderr=self.log, creationflags=0x08000000 if __import__('os').name=='nt' else 0)
+        except OSError as exc:
+            self.log.close()
+            self.log = None
+            messagebox.showerror('Pack folder', str(exc))
+            return
+        self.job_kind = 'pack'
+        self.active_source = None
+        self.pending_source = None
+        self.last_pack = None
+        self.edit_folder = Path(folder)
+        self.pack_button.configure(state='disabled')
+        self.open_button.configure(state='disabled')
+        self.export_button.configure(state='disabled')
+        self.copy_button.configure(state='disabled')
+        self.status.set('Packing edited texture PNGs; validating the native model and PAC before saving…')
+
+    def finish_pack(self, code, pending):
+        try:
+            response = json.loads((self.job/'result.json').read_text(encoding='utf-8'))
+            if code or not response['ok']:
+                raise ValueError(response.get('error','Packing worker failed.'))
+            self.last_pack = response['report']
+            destination = Path(self.last_pack['pac'])
+            self.pac_browser.refresh()
+            if destination.parent==self.pac_browser.folder and pending is None:
+                self.pac_browser.query.set('')
+                self.pac_browser.selected_path = destination
+                self.pac_browser.update_list()
+            self.status.set('Saved '+str(destination)+' — '+str(self.last_pack['changed_textures'])+' textures edited; native models preserved.')
+            self.open_pac(pending or destination)
+        except (ValueError,OSError,KeyError) as exc:
+            self.status.set('Packing failed; previous workspace retained. Logs: '+str(self.job))
+            messagebox.showerror('Pack withheld',str(exc)+'\n\nLogs: '+str(self.job))
+            if pending is not None:
+                self.open_pac(pending)
 
     def close(self):
         self.closing = True

@@ -131,6 +131,39 @@ def run(app, output):
         if (root/'copy.pac').read_bytes()!=data or source.read_bytes()!=data:
             raise ValueError('Suite round trip modified the input PAC.')
         export_previews(shell.manifest_path, root/'preview.zip')
+        # Exercise the real folder export and frozen background packer, including
+        # a visible texture edit. Library refresh must expose the new PAC.
+        project_folder = shell.export_to(root/'Synthetic-edit')
+        def pack_and_wait(destination):
+            with patch('desktop.suite.messagebox.showerror') as errors:
+                shell.start_pack(project_folder,destination)
+                deadline=time.monotonic()+90
+                while shell.busy() and time.monotonic()<deadline:
+                    app.root.update()
+                    time.sleep(.01)
+                if errors.called:
+                    raise ValueError('Pack/preview worker error: '+str(errors.call_args))
+                if shell.busy():
+                    raise TimeoutError('Pack/preview worker did not finish.')
+        unchanged = root/'Roundtrip.pac'
+        pack_and_wait(unchanged)
+        if shell.busy() or not shell.last_pack or unchanged.read_bytes()!=data:
+            raise ValueError('Unedited exported folder did not pack to the exact original PAC.')
+        from PIL import Image
+        import numpy as np
+        png = next((project_folder/'textures').glob('*.png'))
+        with Image.open(png) as image:
+            rgba=np.array(image.convert('RGBA'))
+        rgba[:,:,:3]=[20,90,210]
+        Image.fromarray(rgba).save(png)
+        edited=root/'Texture-edited.pac'
+        pack_and_wait(edited)
+        if shell.busy() or not shell.last_pack or shell.last_pack['changed_textures']!=1:
+            raise ValueError('Edited PNG was not packed by the frozen folder worker.')
+        if Path(shell.manifest['source'])!=edited or edited not in browser.files:
+            raise ValueError('Packed PAC was not refreshed and previewed in the library.')
+        if not shell.last_pack['all_model_payloads_exact'] or source.read_bytes()!=data:
+            raise ValueError('Texture editing altered native models or original input.')
         for name in TABS:
             shell.tabs.select(shell.pages[name])
             app.root.update()
@@ -159,6 +192,8 @@ def run(app, output):
                 folder_preference_verified=True, latest_selection_wins_verified=True,
                 folder_refresh_preserves_selection=True,
                 single_click_debounce_verified=True, failed_file_preserves_workspace=True,
+                editable_folder_export_verified=True, unedited_folder_exact_round_trip=True,
+                edited_png_packed_and_previewed=True, native_models_preserved_on_pack=True,
                 creator_status='planned', game_assets_used=False)
     output.write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
     shell.tabs.select(shell.converter)

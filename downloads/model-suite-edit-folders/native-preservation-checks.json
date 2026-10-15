@@ -1,0 +1,52 @@
+[
+  {
+    "label": "KurtCase",
+    "unchanged_exact": true,
+    "edited_texture": "KA_body",
+    "original_bytes": 180224,
+    "final_bytes": 180224,
+    "all_models_exact": true,
+    "model_count": 1,
+    "allocation_unchanged": true
+  },
+  {
+    "label": "BenoitBlood",
+    "unchanged_exact": true,
+    "edited_texture": "bn_asil",
+    "original_bytes": 135168,
+    "final_bytes": 133120,
+    "all_models_exact": true,
+    "model_count": 1,
+    "allocation_unchanged": true
+  },
+  {
+    "label": "Lance",
+    "unchanged_exact": true,
+    "edited_texture": "boots",
+    "original_bytes": 145408,
+    "final_bytes": 143360,
+    "all_models_exact": true,
+    "model_count": 1,
+    "allocation_unchanged": true
+  },
+  {
+    "label": "Jericho",
+    "unchanged_exact": true,
+    "edited_texture": "y2j_face",
+    "original_bytes": 143360,
+    "final_bytes": 141312,
+    "all_models_exact": true,
+    "model_count": 1,
+    "allocation_unchanged": true
+  },
+  {
+    "label": "Rock",
+    "unchanged_exact": true,
+    "edited_texture": "rc_hiza",
+    "original_bytes": 147456,
+    "final_bytes": 145408,
+    "all_models_exact": true,
+    "model_count": 3,
+    "allocation_unchanged": true
+  }
+]

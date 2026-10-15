@@ -2,8 +2,9 @@
 
 The [PSP Model Suite foundation](docs/portable-model-suite.md) adds a classic
 tabbed shell around the existing HCTP converter, native PSP PAC/model/texture
-inspection, preview exports and byte-identical PAC copies. The editor's mutation
-tools, creator and additional source adapters remain planned. The foundation
+inspection, [editable texture folders and PAC rebuilding](docs/portable-edit-folders.md),
+preview exports and byte-identical PAC copies. UV/geometry import, creator and
+additional source adapters remain planned. The foundation
 is isolated on `feature/psp-model-suite`; accepted baselines remain preserved.
 [Download the Windows suite preview](https://github.com/RyosSplitter/Wrestler-Importer/releases/tag/suite-foundation-2-8ab5474b8a16d93d659ecec91854fff9e56201a7).
 
