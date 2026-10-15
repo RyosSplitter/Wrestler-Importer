@@ -81,3 +81,31 @@ class DonorImportTests(unittest.TestCase):
             library,path=self.setup_library(Path(temp));target=library/'pacs'/('user-'+digest(path.read_bytes())+'.pac');target.write_bytes(b'unrelated data')
             before=(library/'catalog.json').read_bytes();r=add_donors([path],library)
             self.assertFalse(r['added']);self.assertEqual(len(r['rejected']),1);self.assertEqual(target.read_bytes(),b'unrelated data');self.assertEqual(before,(library/'catalog.json').read_bytes())
+
+    def test_explicit_oversize_policy_exports_with_exact_native_bytes_and_warning(self):
+        from model_creator.core import PARTS,build,load_source
+        from model_creator.library import create_project
+        with tempfile.TemporaryDirectory() as temp:
+            root=Path(temp);library,path=self.setup_library(root);source=load_source(path,library=True)
+            project=create_project([source],dict.fromkeys(PARTS,0),root/'Project')
+            with patch('model_creator.core.MAX_BYTES',1):
+                report=build(project,dict.fromkeys(PARTS,0),root/'Build',resolution=64,library=True,allow_oversize=True)
+            self.assertFalse(report['within_budget']);self.assertEqual(report['budget_warning']['over_by_bytes'],len(source['data'])-1)
+            self.assertEqual((root/'Build/created-model.pac').read_bytes(),source['data'])
+            self.assertIn('OVER BUDGET',(root/'Build/README.txt').read_text())
+            self.assertTrue(report['qa']['native_structural_audit']['offsets_ranges_indices_palettes_weights_valid'])
+
+    def test_allow_oversize_does_not_allow_out_of_range_indices(self):
+        import struct
+        from model_creator.core import PARTS,build
+        from tools.psp_mesh_merge_trial import sections
+        from tools.psp_mesh_audit import audit_yobj
+        from tools.pac_repack import replace_sections
+        with tempfile.TemporaryDirectory() as temp:
+            root=Path(temp);library,path=self.setup_library(root)
+            raw=bytearray(next(r for s,r in sections(self.assets[1]) if s['id']==2));model=audit_yobj(bytes(raw))
+            start=model['report']['mesh_reports'][0]['submeshes'][0]['index_ranges'][0]['start'];struct.pack_into('<H',raw,start,65535)
+            damaged=replace_sections(self.assets[1],{2:bytes(raw)});project=root/'Project';project.mkdir();(project/'source-0.pac').write_bytes(damaged)
+            (project/'project.json').write_text(json.dumps(dict(schema='psp-model-creator.library-project/1',sources=[dict(file='source-0.pac',sha256=digest(damaged),label='Damaged')],selections=dict.fromkeys(PARTS,0))))
+            with self.assertRaisesRegex(ValueError,'Index outside'):build(project/'project.json',dict.fromkeys(PARTS,0),root/'No',resolution=64,library=True,allow_oversize=True)
+            self.assertFalse((root/'No').exists())

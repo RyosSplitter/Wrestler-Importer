@@ -113,6 +113,18 @@ def run_donor_import(app,output):
         while app.busy and time.monotonic()<deadline:app.root.update();time.sleep(.02)
         if app.result is None or not app.last_report['within_budget']:raise ValueError('Imported donor failed guarded assembly')
         if Library(library).source(1)['data']!=second:raise ValueError('Import changed native PAC bytes')
+        # A size overrun warns in the GUI and still permits an actual Save PAC.
+        # A deliberately tiny target exercises the policy on valid synthetic
+        # geometry without weakening any native/rigging checks.
+        with patch('model_creator.core.MAX_BYTES',1),patch('model_creator.gui.messagebox.showwarning') as warning:
+            app.assemble();deadline=time.monotonic()+90
+            while app.busy and time.monotonic()<deadline:app.root.update();time.sleep(.02)
+            if app.result is None or app.last_report['within_budget'] or not app.last_report.get('budget_warning'):raise ValueError('Oversize export policy did not retain its warning')
+            if not warning.called:raise ValueError('Oversized GUI build did not display a warning')
+        destination=temp/'Saved-over-budget.pac'
+        with patch('model_creator.gui.filedialog.asksaveasfilename',return_value=str(destination)):app.export_pac()
+        if not destination.is_file() or destination.read_bytes()!=(app.result/'created-model.pac').read_bytes():raise ValueError('Size warning still blocked actual Save PAC')
         report=json.loads(output.read_text());report.update(add_donors_button=True,import_batch_add_duplicate_reject=True,
-            imported_donor_persists_without_original=True,imported_donor_mixed_preview_and_export=True)
+            imported_donor_persists_without_original=True,imported_donor_mixed_preview_and_export=True,
+            oversized_gui_warning_shown=True,oversized_pac_export_allowed=True)
         dump(output,report)

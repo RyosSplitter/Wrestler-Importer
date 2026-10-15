@@ -47,7 +47,7 @@ class App:
         self.assemble_button=ttk.Button(left,text='Assemble and validate',command=self.assemble);self.assemble_button.pack(fill='x',pady=(12,4))
         ttk.Button(left,text='Preview whole head donor',command=self.whole_donor).pack(fill='x',pady=4)
         ttk.Button(left,text='Selection details',command=self.selection_details).pack(fill='x',pady=4)
-        ttk.Label(left,text='148,000-byte export limit.\nTest exports in PPSSPP.',justify='left').pack(anchor='w',pady=8)
+        ttk.Label(left,text='148,000-byte size target.\nOversized exports warn.\nTest exports in PPSSPP.',justify='left').pack(anchor='w',pady=8)
         right=ttk.Frame(work);right.pack(fill='both',expand=True)
         top=ttk.Frame(right);top.pack(fill='x',pady=(0,6))
         ttk.Label(top,text='Pose:').pack(side='left');self.pose=tk.StringVar(value='rest')
@@ -118,7 +118,7 @@ class App:
             self.labels=[f'{i+1}. {e["label"]}' for i,e in enumerate(self.library.entries)]
             for part,box in zip(PARTS,self.controls):box['values']=self.labels;self.choices[part].set(self.labels[choices[part]])
             self.result=None;self.model=None;self.textures=None
-            self.project_label.set(f'{len(self.labels)} prepared native models. Pick donors below; no PAC import needed. Mixed exports require matching body binds, passing seams/poses and the size budget.')
+            self.project_label.set(f'{len(self.labels)} native donors. No PAC import needed. Rig, seam and structural checks stay mandatory; exceeding the 148,000-byte size target gives a warning.')
             self.dirty()
         except Exception as exc:messagebox.showerror('Prepared library',str(exc),parent=self.root)
 
@@ -155,7 +155,7 @@ class App:
         for part in PARTS:
             s=sources[choices[part]];r=s['model']['report']
             lines.append(f'{part}: {s["label"]}\n{len(s["data"]):,} native PAC bytes; {r["vertices"]:,} vertices / {r["triangles"]:,} triangles; {r["meshes"]} meshes / {len(s["model"]["bones"])} bones.\nSHA-256: {s["sha256"]}\n')
-        messagebox.showinfo('Native donor details','\n'.join(lines)+'\nOriginal PAC size is not the size of a mixed assembly. Export is capped at 148,000 bytes.',parent=self.root)
+        messagebox.showinfo('Native donor details','\n'.join(lines)+'\nOriginal PAC size is not the size of a mixed assembly. The size target is 148,000 bytes; oversized exports give a warning.',parent=self.root)
 
     def current_sources(self):
         if self.library_project and self.library is not None:return self.library.selection(self.selected())
@@ -230,7 +230,7 @@ class App:
             if revision!=self.preview_revision:return
             self.model,self.textures,image=result;photo=ImageTk.PhotoImage(image)
             self.picture.configure(image=photo,text='');self.picture.image=photo
-            self.status.set('Current selections previewed. Assemble and validate to create their PAC; preview alone does not enforce the file-size budget.')
+            self.status.set('Current selections previewed. Assemble and validate to check native structure, poses and actual PAC size.')
         self.task(work,done)
 
     def save(self):
@@ -264,13 +264,20 @@ class App:
         else:
             self.save();project=self.project;output=self.project.parent/'builds'/uuid.uuid4().hex
         def work():
-            report=build(project,selections,output,library=library_mode,progress=lambda msg:self.events.put(('status',msg)))
+            report=build(project,selections,output,library=library_mode,allow_oversize=True,progress=lambda msg:self.events.put(('status',msg)))
             report['ui_selections']=original_selections
             source=load_source(output/'created-model.pac',library=library_mode)
             return output,report,source
         def done(result):
             self.result,self.last_report,source=result;self.model=source['model'];self.textures={n:source['textures'][n.casefold()] for n in self.model['texture_names']}
             self.status.set(f'Experimental build: {self.last_report["pac_bytes"]:,} / 148,000 bytes. Native checks passed; review seams and test in PPSSPP.')
+            if self.last_report.get('budget_warning'):
+                warning=self.last_report['budget_warning']
+                self.status.set(f'OVER BUDGET: {warning["pac_bytes"]:,} bytes; {warning["over_by_bytes"]:,} above {warning["target_bytes"]:,}. Export is available; in-game stability is unverified.')
+                messagebox.showwarning('PAC exceeds size target',
+                    f'This model is {warning["pac_bytes"]:,} bytes — {warning["over_by_bytes"]:,} over the {warning["target_bytes"]:,}-byte target.\n\n'
+                    'You can still export it. Oversized PACs may cause crashes or unrelated geometry corruption in-game.\n\n'
+                    'Native structural and rigging checks passed. Geometry and textures were not reduced to force a fit.',parent=self.root)
             self.refresh()
         self.task(work,done)
 
@@ -348,7 +355,7 @@ class App:
                 'Select any prepared donor for each part. Selections preview automatically.\n'
                 'Assemble and validate before export. Whole-source models retain their original bytes.\n'
                 'Mixed builds preserve textures and interior geometry; only attachment seams are stitched.\n'
-                'Different body binds, unsafe seams, controller regressions and oversized PACs are withheld.\n'
+                'Different body binds, unsafe seams and controller regressions block export. Oversized PACs give a warning and can be exported.\n'
                 'Jeff/Matt Hardy and JBL have differing body binds; some mixed combinations require future retargeting support.\n'
                 'Hair follows the selected head. Torso supplies the output container; other donor auxiliary PACs are not transferred.\n'
                 'Analytical poses are not in-game tests. Review all sides and test in PPSSPP.',parent=self.root)

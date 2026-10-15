@@ -21,7 +21,7 @@ from tools.weight_trial_review import descendant_names, deform
 from tools.prepare_model import bone_matrices
 from model_creator.parts import PARTS, JOINTS, extract, stitch, triangles
 
-VERSION = '0.2.1'
+VERSION = '0.2.2'
 SCHEMA = 'psp-model-creator/1'
 MAX_BYTES = 148000
 POSES = {'rest': {}, 'standing': {'l_ninoude': ('z',70), 'r_ninoude': ('z',-70)},
@@ -354,7 +354,7 @@ def preview(model,textures,view='front-left',resolution=640,pose='rest',green=Fa
     return render(shown,textures,view,resolution,gim_reader=read_gim)
 
 
-def build(project_path, selections, output, *, resolution=640, progress=lambda _:None, library=False):
+def build(project_path, selections, output, *, resolution=640, progress=lambda _:None, library=False, allow_oversize=False):
     from tools.yukes_bpe import compress,decompress
     reader=audit_yobj;project_reader=read_project
     if library:
@@ -407,7 +407,10 @@ def build(project_path, selections, output, *, resolution=640, progress=lambda _
         source_pixel_clut_bytes=[sum(len(v)-208 for v in s['textures'].values()) for s in sources],
         runtime_limit='UNKNOWN: file-size compliance is not proof of a safe game heap allocation.')
     if len(pac)>MAX_BYTES:
-        raise ValueError(f'Assembly is {len(pac):,} bytes, exceeding {MAX_BYTES:,}. Export withheld; no geometry or textures were reduced. Try fewer mixed parts or a different torso donor.')
+        if not allow_oversize:
+            raise ValueError(f'Assembly is {len(pac):,} bytes, exceeding {MAX_BYTES:,}. Export withheld; no geometry or textures were reduced. Try fewer mixed parts or a different torso donor.')
+        report['budget_warning']=dict(pac_bytes=len(pac),target_bytes=MAX_BYTES,over_by_bytes=len(pac)-MAX_BYTES,
+            message='Export exceeds the tested in-match PAC budget. It may crash or corrupt unrelated geometry in-game. Native structural checks do not establish runtime safety. No geometry or textures were reduced.')
     container=inspect_pac(pac)
     if len(pac)%2048:raise ValueError('PAC final alignment failed.')
     aligned=all(s['offset']%16==0 for s in container['sections'])
@@ -431,5 +434,6 @@ def build(project_path, selections, output, *, resolution=640, progress=lambda _
         progress('Rendering '+view);preview(model,textures,view,resolution).save(folder/(view+'.png'))
     (output/'SHA256SUMS.txt').write_text(report['pac_sha256']+'  created-model.pac\n',encoding='ascii')
     dump(output/'qa.json',report);dump(output/'recipe.json',dict(schema=SCHEMA,selections=selections,sources=project['sources']))
-    (output/'README.txt').write_text('Experimental native PSP assembly. Import created-model.pac into a COPY of the wrestler slot using your established PAC/ARC workflow. Rebuild the enclosing archive and update its ARC metadata before testing a copied ISO in PPSSPP. Do not overwrite accepted PACs. Analytical poses are not captured game animations. OBJ is preview-only; native YOBJ and PAC retain rigging. Blood overlay meshes are retained in PAC and OBJ, but hidden in normal preview PNGs. Review qa.json, standing/walking/crouching, facial motion and blood in-game.\n',encoding='utf-8')
+    warning=('OVER BUDGET: '+str(report['budget_warning']['over_by_bytes'])+' bytes over target. '+report['budget_warning']['message']+'\n\n') if report.get('budget_warning') else ''
+    (output/'README.txt').write_text(warning+'Experimental native PSP assembly. Import created-model.pac into a COPY of the wrestler slot using your established PAC/ARC workflow. Rebuild the enclosing archive and update its ARC metadata before testing a copied ISO in PPSSPP. Do not overwrite accepted PACs. Analytical poses are not captured game animations. OBJ is preview-only; native YOBJ and PAC retain rigging. Blood overlay meshes are retained in PAC and OBJ, but hidden in normal preview PNGs. Review qa.json, standing/walking/crouching, facial motion and blood in-game.\n',encoding='utf-8')
     return report

@@ -54,7 +54,7 @@ jobs:
           if (Test-Path $output) { Copy-Item $output dist/creator-patch-smoke.json }
           if ($p.ExitCode -ne 0) { throw 'Overlay on original 0.2 runtime failed' }
           $report = Get-Content $output -Raw | ConvertFrom-Json
-          if (-not $report.passed -or -not $report.add_donors_button -or -not $report.imported_donor_mixed_preview_and_export) { throw 'Donor import overlay checks failed' }
+          if (-not $report.passed -or -not $report.add_donors_button -or -not $report.imported_donor_mixed_preview_and_export -or -not $report.oversized_pac_export_allowed -or -not $report.oversized_gui_warning_shown) { throw 'Donor import overlay checks failed' }
           if ((Get-FileHash "$app/creator_library/catalog.json").Hash -ne $catalogBefore) { throw 'Bundled catalog changed during patch self-check' }
       - name: Package drop-in donor patch
         run: python -m tools.build_creator_patch
@@ -63,12 +63,12 @@ jobs:
         run: |
           import hashlib,shutil
           from pathlib import Path
-          path=Path(shutil.make_archive('dist/PSP-Model-Creator-0.2.1-Windows-x64','zip','dist','PSP-Model-Creator'))
+          path=Path(shutil.make_archive('dist/PSP-Model-Creator-0.2.2-Windows-x64','zip','dist','PSP-Model-Creator'))
           Path(str(path)+'.sha256').write_text(hashlib.file_digest(path.open('rb'),'sha256').hexdigest()+'  '+path.name+'\n')
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: PSP-Model-Creator-0.2.1-Windows-x64
+          name: PSP-Model-Creator-0.2.2-Windows-x64
           path: |
             dist/*.zip
             dist/*.sha256
@@ -81,7 +81,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           @'
-          PSP Model Creator 0.2.1: drop-in Add donors patch. Existing 0.2 users should download PSP-Model-Creator-0.2.1-Donor-Patch.zip, close the app and extract it into the existing app directory, replacing the executable. Keep the existing _internal and creator_library folders. The patch does not replace runtime files, donor PACs or catalog. Add donors selects one or more native PSP PACs, validates supported structures, stores byte-exact SHA-256 snapshots, generates previews and adds all four dropdown choices. Duplicate contents are skipped; invalid inputs are individually explained; catalog updates are locked, backed up and atomic. Future additions require no app rebuild. Existing mix, rig, pose and 148000-byte export checks remain active. A complete 0.2.1 ZIP is also provided for new installations. The patch is functionally tested over the actual released 0.2 runtime and original library. See ADD-DONORS-README.md for installation and limits.
+          PSP Model Creator 0.2.2: drop-in Add donors patch. Existing 0.2 users should download PSP-Model-Creator-0.2.2-Creator-Patch.zip, close the app and extract it into the existing app directory, replacing the executable. Keep the existing _internal and creator_library folders. The patch does not replace runtime files, donor PACs or catalog. Add donors selects one or more native PSP PACs, validates supported structures, stores byte-exact SHA-256 snapshots, generates previews and adds all four dropdown choices. Duplicate contents are skipped; invalid inputs are individually explained; catalog updates are locked, backed up and atomic. Future additions require no app rebuild. Models exceeding the 148000-byte size target now display an explicit warning and can still be exported. Actual size and excess bytes are recorded in QA; no geometry or textures are reduced. Rig, seam, pose, pointer, index and native-structure failures still block export. A complete 0.2.2 ZIP is also provided for new installations. The patch is functionally tested over the actual released 0.2 runtime and original library. See ADD-DONORS-README.md for installation and limits.
           '@ | Set-Content "$env:RUNNER_TEMP/creator-notes.txt" -Encoding utf8NoBOM
           $tag = "creator-preview-${{ github.run_number }}-${{ github.sha }}"
-          gh release create $tag dist/*.zip dist/*.sha256 dist/creator-window.png dist/creator-library-window.png --target '${{ github.sha }}' --prerelease --title 'PSP Model Creator 0.2.1 — Add donors drop-in patch' --notes-file "$env:RUNNER_TEMP/creator-notes.txt"
+          gh release create $tag dist/*.zip dist/*.sha256 dist/creator-window.png dist/creator-library-window.png --target '${{ github.sha }}' --prerelease --title 'PSP Model Creator 0.2.2 — Add donors + size warnings' --notes-file "$env:RUNNER_TEMP/creator-notes.txt"
