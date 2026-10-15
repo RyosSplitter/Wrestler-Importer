@@ -147,6 +147,7 @@ def compatible(sources,selections):
     if len(set(selections.values()))==1:return {'mode':'unchanged native source'}
     base=sources[selections['Torso']]['model'];body=BODY_BONES
     ref={b['name']:b for b in base['bones']}
+    differences=[]
     for source in sources:
         m=source['model']
         for b in m['bones']:
@@ -154,9 +155,13 @@ def compatible(sources,selections):
             if b['name'] not in ref:raise ValueError('Missing compatible native body bone in torso donor: '+b['name'])
             a=ref[b['name']]
             parent=lambda model,v:None if v['parent']==-1 else model['bones'][v['parent']]['name']
-            if parent(base,a)!=parent(m,b) or any(np.max(np.abs(np.array(a[k])-b[k]))>1e-5 for k in ('local_position','rotation')):
-                raise ValueError('Mixed-part body bind differs at '+b['name']+' in '+source['label']+'. Whole-model preview is available; automatic retargeting is withheld.')
-    return {'mode':'common native body bind; named controller mapping','tolerance':1e-5}
+            if parent(base,a)!=parent(m,b):raise ValueError('Incompatible body hierarchy: '+b['name'])
+            delta={k:float(np.max(np.abs(np.array(a[k])-b[k]))) for k in ('local_position','rotation')}
+            if max(delta.values())>1e-5:differences.append(dict(source=source['label'],bone=b['name'],**delta))
+    return {'mode':'Selected anatomical branch binds; native-source pose comparison is mandatory',
+            'body_bind_differences':differences,'pose_tolerance':.03,
+            'geometry_or_weights_retargeted':False}
+
 
 
 def skeleton(sources,selections):
@@ -165,8 +170,9 @@ def skeleton(sources,selections):
     head=sources[selections['Head']]['model'];facial=descendant_names(head,'atama')
     # Extra controllers belong to the geometry they actually influence. Names
     # such as "kami" are not sufficient evidence that a controller is for hair.
-    from .parts import extract
+    from .parts import extract, JOINTS
     active={name:set() for name in names}
+    preserved={}
     for part in PARTS:
         si=selections[part]
         source_bones=sources[si]['model']['bones']
@@ -175,6 +181,9 @@ def skeleton(sources,selections):
         for row in extract(sources[si]['model'],part,names):
             for vertex in row['poly']:
                 used.update(names[b] for b in np.flatnonzero(vertex['w']>0))
+                tag=vertex['tag']
+                if abs(tag[1]-tag[0]**2)<1e-8 and all(abs(vertex['p'][axis]-limit)>2e-6 for axis,limit in JOINTS.values()):
+                    preserved[(si,row['mesh'],int(round(tag[0])))]=(si,vertex['p'],vertex['w'])
         for name in used:
             b=by_name[name]
             while True:
@@ -183,7 +192,7 @@ def skeleton(sources,selections):
                 b=source_bones[b['parent']]
     records=bytearray()
     for name in names:
-        preferred=selections['Head'] if name in facial else selections['Arms'] if any(k in name for k in ('ninoude','kote','yubi')) or name in ('l_te','r_te') else selections['Legs'] if any(k in name for k in ('momo','sune','ashi','tsumasaki')) else selections['Torso']
+        preferred=selections['Head'] if name in facial or name=='kubi' else selections['Arms'] if any(k in name for k in ('sakotsu','ninoude','kote','yubi')) or name in ('l_te','r_te') else selections['Legs'] if any(k in name for k in ('momo','sune','ashi','tsumasaki')) else selections['Torso']
         donors=[s['model'] for s in sources if any(b['name']==name for b in s['model']['bones'])]
         donor=sources[preferred]['model']
         if name not in BODY_BONES and name not in facial and active[name]:
@@ -207,6 +216,8 @@ def skeleton(sources,selections):
         records.extend(r)
     base['bone_raw']=bytes(records)
     h=bytearray(base['header']);struct.pack_into('<I',h,28,len(names));base['header']=bytes(h)
+    from .rigging import choose_shared_neck
+    base['branch_bind_fit']=choose_shared_neck(base,names,list(preserved.values()),sources,selections)
     return base,names
 
 

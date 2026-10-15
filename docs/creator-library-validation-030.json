@@ -1,0 +1,5424 @@
+{
+  "schema": "psp-model-creator.library-validation/1",
+  "originals_unchanged": true,
+  "original_models": [
+    {
+      "label": "Batista",
+      "sha256": "d73e8d53df28b88d51d13ce608bf6d96fc837e8eb3b977fe6d11dbfc43e23288",
+      "bytes": 112640,
+      "native_audit": true,
+      "analytical_poses": 10,
+      "local_axis_poses": 10,
+      "descriptor_groups": [
+        26
+      ]
+    },
+    {
+      "label": "Booker-T",
+      "sha256": "eaf319d76dc05d9c7d6228b2f14273dffcb8ed0e733764eebfffc7653159bad0",
+      "bytes": 114688,
+      "native_audit": true,
+      "analytical_poses": 10,
+      "local_axis_poses": 10,
+      "descriptor_groups": [
+        26
+      ]
+    },
+    {
+      "label": "Bret-Hart",
+      "sha256": "08a4cdb1517a6086a14dc67b440990ffaf7a925a094207f49351c04335951ead",
+      "bytes": 112640,
+      "native_audit": true,
+      "analytical_poses": 10,
+      "local_axis_poses": 10,
+      "descriptor_groups": [
+        30
+      ]
+    },
+    {
+      "label": "British-Bulldog",
+      "sha256": "a95be24656679b5e7e1fb3fd20c57a528dbf7d88258079716315295bf2762d6f",
+      "bytes": 104448,
+      "native_audit": true,
+      "analytical_poses": 10,
+      "local_axis_poses": 10,
+      "descriptor_groups": [
+        24
+      ]
+    },
+    {
+      "label": "Carlito",
+      "sha256": "1ceb49f9c5eb45ebacf4bd1ead732cb22aeee4426999da314de22beb916acdba",
+      "bytes": 112640,
+      "native_audit": true,
+      "analytical_poses": 10,
+      "local_axis_poses": 10,
+      "descriptor_groups": [
+        25
+      ]
+    },
+    {
+      "label": "Charlie-Haas",
+      "sha256": "6b98d6a4f5ea2af751c76c016c298dc89edc9fa470a75cdc08b2bad5a90d9499",
+      "bytes": 116736,
+      "native_audit": true,
+      "analytical_poses": 10,
+      "local_axis_poses": 10,
+      "descriptor_groups": [
+        25
+      ]
+    },
+    {
+      "label": "Chavo-Guerrero",
+      "sha256": "963f2de471ad9b3513368dfdef35303d9ed1171973129a1e39ae0c511d715d92",
+      "bytes": 102400,
+      "native_audit": true,
+      "analytical_poses": 10,
+      "local_axis_poses": 10,
+      "descriptor_groups": [
+        20
+      ]
+    },
+    {
+      "label": "Chris-Benoit",
+      "sha256": "ba4f784d46920dbf6ca1db6c1480f8b84de613c2df2f7da32fb73fa19a1ca126",
+      "bytes": 102400,
+      "native_audit": true,
+      "analytical_poses": 10,
+      "local_axis_poses": 10,
+      "descriptor_groups": [
+        23
+      ]
+    },
+    {
+      "label": "Chris-Jericho",
+      "sha256": "b70ee55602c205e4d7d1901ed2b082243c1a63b5a80e8e661b9e7675afdb617d",
+      "bytes": 116736,
+      "native_audit": true,
+      "analytical_poses": 10,
+      "local_axis_poses": 10,
+      "descriptor_groups": [
+        27
+      ]
+    },
+    {
+      "label": "Chris-Masters",
+      "sha256": "cc6111731cdebb0c51c0df9e37b3f779ada2d09a263238c787d81ce3ee8b7c4b",
+      "bytes": 106496,
+      "native_audit": true,
+      "analytical_poses": 10,
+      "local_axis_poses": 10,
+      "descriptor_groups": [
+        25
+      ]
+    },
+    {
+      "label": "Christian",
+      "sha256": "0db1bb18e50c9b5bd66dd48c68301ae1ea204e93b397fbed125ea93fd1293cd9",
+      "bytes": 106496,
+      "native_audit": true,
+      "analytical_poses": 10,
+      "local_axis_poses": 10,
+      "descriptor_groups": [
+        26
+      ]
+    },
+    {
+      "label": "CM-Punk-Ring",
+      "sha256": "717655ce9ce66fc2e26e60e2ad82a88a1a3c35e1f2b1badc2cafb50025ff7597",
+      "bytes": 139264,
+      "native_audit": true,
+      "analytical_poses": 10,
+      "local_axis_poses": 10,
+      "descriptor_groups": [
+        24,
+        1
+      ]
+    },
+    {
+      "label": "Cody-Rhodes-Ring",
+      "sha256": "45e8adead68d26452de63849c0a3064013ee4e612be8c749a0788e532e006c82",
+      "bytes": 147456,
+      "native_audit": true,
+      "analytical_poses": 10,
+      "local_axis_poses": 10,
+      "descriptor_groups": [
+        26
+      ]
+    },
+    {
+      "label": "Danny-Basham",
+      "sha256": "4e3b4919abd1c58c02651da0bdcf5885b75c656ef217fdd387e05075159e32af",
+      "bytes": 178176,
+      "native_audit": true,
+      "analytical_poses": 10,
+      "local_axis_poses": 10,
+      "descriptor_groups": [
+        26
+      ]
+    },
+    {
+      "label": "Dolph-Ziggler",
+      "sha256": "fb9e750b5ee56d88742c32541e48553c2c625cc16129bcd028a594b2e01dd8ce",
+      "bytes": 147456,
+      "native_audit": true,
+      "analytical_poses": 10,
+      "local_axis_poses": 10,
+      "descriptor_groups": [
+        27
+      ]
+    },
+    {
+      "label": "Edge",
+      "sha256": "eab2627389d1122a243c555fe170f878b4f577f11a6b8dadc9a4cdf75bac9c09",
+      "bytes": 178176,
+      "native_audit": true,
+      "analytical_poses": 10,
+      "local_axis_poses": 10,
+      "descriptor_groups": [
+        28
+      ]
+    },
+    {
+      "label": "JBL(Suit)",
+      "sha256": "8c094f622746b1bff8138082e91f88b40127647318689757babc4fbbdd575cac",
+      "bytes": 169984,
+      "native_audit": true,
+      "analytical_poses": 10,
+      "local_axis_poses": 10,
+      "descriptor_groups": [
+        25
+      ]
+    },
+    {
+      "label": "Jeff-Hardy",
+      "sha256": "ed8b1fdd1a5f2cb29cc4ff5a718727eab23f46a0cf62e68265e44bdefcbbbaeb",
+      "bytes": 143360,
+      "native_audit": true,
+      "analytical_poses": 10,
+      "local_axis_poses": 10,
+      "descriptor_groups": [
+        27
+      ]
+    },
+    {
+      "label": "Joey-Mercury-Ring",
+      "sha256": "95a2e2ce5fa32b2fc55a9da03ba0cb38bfe9c810e0ca2481876add204a36177b",
+      "bytes": 190464,
+      "native_audit": true,
+      "analytical_poses": 10,
+      "local_axis_poses": 10,
+      "descriptor_groups": [
+        25,
+        5
+      ]
+    },
+    {
+      "label": "John-Cena-Ring(Green)",
+      "sha256": "8fd829750a4c051f08be31158ea3f0a43b2960e8a0d4cc360ca2063848100a0f",
+      "bytes": 198656,
+      "native_audit": true,
+      "analytical_poses": 10,
+      "local_axis_poses": 10,
+      "descriptor_groups": [
+        28
+      ]
+    },
+    {
+      "label": "KOFI_KINGSTON",
+      "sha256": "5bb373dbe944583f097daa4d666e86f5b92d3e1699229c49167d948f194f465c",
+      "bytes": 139264,
+      "native_audit": true,
+      "analytical_poses": 10,
+      "local_axis_poses": 10,
+      "descriptor_groups": [
+        25
+      ]
+    },
+    {
+      "label": "Matt-Hardy",
+      "sha256": "238514f933e59215d71dc4e0d46c86dddd2414fe451f061741b7b9a3c3476948",
+      "bytes": 176128,
+      "native_audit": true,
+      "analytical_poses": 10,
+      "local_axis_poses": 10,
+      "descriptor_groups": [
+        27,
+        4
+      ]
+    },
+    {
+      "label": "Randy-Orton",
+      "sha256": "e84132ef59efd479d1a361df3304e9d5172e467d74d4931f35b4266fce58379f",
+      "bytes": 108544,
+      "native_audit": true,
+      "analytical_poses": 10,
+      "local_axis_poses": 10,
+      "descriptor_groups": [
+        28
+      ]
+    },
+    {
+      "label": "Rob-Van-Dam",
+      "sha256": "888aa229b33d213c7bcf2ff744744004704bc0d6b6dc771ac37badcedebabae8",
+      "bytes": 190464,
+      "native_audit": true,
+      "analytical_poses": 10,
+      "local_axis_poses": 10,
+      "descriptor_groups": [
+        30
+      ]
+    },
+    {
+      "label": "Sabu-Ring",
+      "sha256": "552685542486dd40b9ffb6d0a6b3748db38bb525c3a182c7282f57362ae2e0f5",
+      "bytes": 110592,
+      "native_audit": true,
+      "analytical_poses": 10,
+      "local_axis_poses": 10,
+      "descriptor_groups": [
+        26
+      ]
+    },
+    {
+      "label": "Tyson-kidd",
+      "sha256": "ae425d686e84febc9f8ea8017904cd02cf7b0e3778c6c482d542fabd057c7abc",
+      "bytes": 141312,
+      "native_audit": true,
+      "analytical_poses": 10,
+      "local_axis_poses": 10,
+      "descriptor_groups": [
+        23
+      ]
+    },
+    {
+      "label": "Umaga (2)",
+      "sha256": "c5c14dd6c929997a97fb1ce2c9f3c738addaa92a951636e46fa88f59ce6efa46",
+      "bytes": 137216,
+      "native_audit": true,
+      "analytical_poses": 10,
+      "local_axis_poses": 10,
+      "descriptor_groups": [
+        23,
+        2
+      ]
+    },
+    {
+      "label": "Umaga",
+      "sha256": "f940edef975fe2931a0d006e87cb99c57b054d95430574aba1cd43d46b0b48b2",
+      "bytes": 188416,
+      "native_audit": true,
+      "analytical_poses": 10,
+      "local_axis_poses": 10,
+      "descriptor_groups": [
+        25
+      ]
+    },
+    {
+      "label": "Undertaker",
+      "sha256": "1729a0f48f986926fdcb77ceeb3c597fed0bc7906689410d5ce29c97b057a654",
+      "bytes": 198656,
+      "native_audit": true,
+      "analytical_poses": 10,
+      "local_axis_poses": 10,
+      "descriptor_groups": [
+        26
+      ]
+    },
+    {
+      "label": "Yoshi-Tatsu",
+      "sha256": "64c45999986a8429c7b6f4d66a622f1fe70aa82842a09725ae08844d8ccf30b4",
+      "bytes": 145408,
+      "native_audit": true,
+      "analytical_poses": 10,
+      "local_axis_poses": 10,
+      "descriptor_groups": [
+        27,
+        4
+      ]
+    },
+    {
+      "label": "Zack-Ryder",
+      "sha256": "7819f4bc872ee9f30e1369ae31a8e0c0daeeaabd68bce0513fb4a3d5ed3ad5be",
+      "bytes": 139264,
+      "native_audit": true,
+      "analytical_poses": 10,
+      "local_axis_poses": 10,
+      "descriptor_groups": [
+        25,
+        2
+      ]
+    }
+  ],
+  "body_bind_pairs": [
+    {
+      "a": "Batista",
+      "b": "Booker-T",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Batista",
+      "b": "Bret-Hart",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Batista",
+      "b": "British-Bulldog",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Batista",
+      "b": "Carlito",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Batista",
+      "b": "Charlie-Haas",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Batista",
+      "b": "Chavo-Guerrero",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Batista",
+      "b": "Chris-Benoit",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Batista",
+      "b": "Chris-Jericho",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Batista",
+      "b": "Chris-Masters",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Batista",
+      "b": "Christian",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Batista",
+      "b": "CM-Punk-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Batista",
+      "b": "Cody-Rhodes-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Batista",
+      "b": "Danny-Basham",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Batista",
+      "b": "Dolph-Ziggler",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Batista",
+      "b": "Edge",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Batista",
+      "b": "JBL(Suit)",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Batista",
+      "b": "Jeff-Hardy",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Batista",
+      "b": "Joey-Mercury-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Batista",
+      "b": "John-Cena-Ring(Green)",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Batista",
+      "b": "KOFI_KINGSTON",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Batista",
+      "b": "Matt-Hardy",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Batista",
+      "b": "Randy-Orton",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Batista",
+      "b": "Rob-Van-Dam",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Batista",
+      "b": "Sabu-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Batista",
+      "b": "Tyson-kidd",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Batista",
+      "b": "Umaga (2)",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Batista",
+      "b": "Umaga",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Batista",
+      "b": "Undertaker",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Batista",
+      "b": "Yoshi-Tatsu",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Batista",
+      "b": "Zack-Ryder",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Booker-T",
+      "b": "Bret-Hart",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Booker-T",
+      "b": "British-Bulldog",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Booker-T",
+      "b": "Carlito",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Booker-T",
+      "b": "Charlie-Haas",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Booker-T",
+      "b": "Chavo-Guerrero",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Booker-T",
+      "b": "Chris-Benoit",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Booker-T",
+      "b": "Chris-Jericho",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Booker-T",
+      "b": "Chris-Masters",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Booker-T",
+      "b": "Christian",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Booker-T",
+      "b": "CM-Punk-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Booker-T",
+      "b": "Cody-Rhodes-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Booker-T",
+      "b": "Danny-Basham",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Booker-T",
+      "b": "Dolph-Ziggler",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Booker-T",
+      "b": "Edge",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Booker-T",
+      "b": "JBL(Suit)",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Booker-T",
+      "b": "Jeff-Hardy",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Booker-T",
+      "b": "Joey-Mercury-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Booker-T",
+      "b": "John-Cena-Ring(Green)",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Booker-T",
+      "b": "KOFI_KINGSTON",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Booker-T",
+      "b": "Matt-Hardy",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Booker-T",
+      "b": "Randy-Orton",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Booker-T",
+      "b": "Rob-Van-Dam",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Booker-T",
+      "b": "Sabu-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Booker-T",
+      "b": "Tyson-kidd",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Booker-T",
+      "b": "Umaga (2)",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Booker-T",
+      "b": "Umaga",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Booker-T",
+      "b": "Undertaker",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Booker-T",
+      "b": "Yoshi-Tatsu",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Booker-T",
+      "b": "Zack-Ryder",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Bret-Hart",
+      "b": "British-Bulldog",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Bret-Hart",
+      "b": "Carlito",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Bret-Hart",
+      "b": "Charlie-Haas",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Bret-Hart",
+      "b": "Chavo-Guerrero",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Bret-Hart",
+      "b": "Chris-Benoit",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Bret-Hart",
+      "b": "Chris-Jericho",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Bret-Hart",
+      "b": "Chris-Masters",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Bret-Hart",
+      "b": "Christian",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Bret-Hart",
+      "b": "CM-Punk-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Bret-Hart",
+      "b": "Cody-Rhodes-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Bret-Hart",
+      "b": "Danny-Basham",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Bret-Hart",
+      "b": "Dolph-Ziggler",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Bret-Hart",
+      "b": "Edge",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Bret-Hart",
+      "b": "JBL(Suit)",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Bret-Hart",
+      "b": "Jeff-Hardy",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Bret-Hart",
+      "b": "Joey-Mercury-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Bret-Hart",
+      "b": "John-Cena-Ring(Green)",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Bret-Hart",
+      "b": "KOFI_KINGSTON",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Bret-Hart",
+      "b": "Matt-Hardy",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Bret-Hart",
+      "b": "Randy-Orton",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Bret-Hart",
+      "b": "Rob-Van-Dam",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Bret-Hart",
+      "b": "Sabu-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Bret-Hart",
+      "b": "Tyson-kidd",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Bret-Hart",
+      "b": "Umaga (2)",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Bret-Hart",
+      "b": "Umaga",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Bret-Hart",
+      "b": "Undertaker",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Bret-Hart",
+      "b": "Yoshi-Tatsu",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Bret-Hart",
+      "b": "Zack-Ryder",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "British-Bulldog",
+      "b": "Carlito",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "British-Bulldog",
+      "b": "Charlie-Haas",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "British-Bulldog",
+      "b": "Chavo-Guerrero",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "British-Bulldog",
+      "b": "Chris-Benoit",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "British-Bulldog",
+      "b": "Chris-Jericho",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "British-Bulldog",
+      "b": "Chris-Masters",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "British-Bulldog",
+      "b": "Christian",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "British-Bulldog",
+      "b": "CM-Punk-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "British-Bulldog",
+      "b": "Cody-Rhodes-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "British-Bulldog",
+      "b": "Danny-Basham",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "British-Bulldog",
+      "b": "Dolph-Ziggler",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "British-Bulldog",
+      "b": "Edge",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "British-Bulldog",
+      "b": "JBL(Suit)",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "British-Bulldog",
+      "b": "Jeff-Hardy",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "British-Bulldog",
+      "b": "Joey-Mercury-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "British-Bulldog",
+      "b": "John-Cena-Ring(Green)",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "British-Bulldog",
+      "b": "KOFI_KINGSTON",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "British-Bulldog",
+      "b": "Matt-Hardy",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "British-Bulldog",
+      "b": "Randy-Orton",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "British-Bulldog",
+      "b": "Rob-Van-Dam",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "British-Bulldog",
+      "b": "Sabu-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "British-Bulldog",
+      "b": "Tyson-kidd",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "British-Bulldog",
+      "b": "Umaga (2)",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "British-Bulldog",
+      "b": "Umaga",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "British-Bulldog",
+      "b": "Undertaker",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "British-Bulldog",
+      "b": "Yoshi-Tatsu",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "British-Bulldog",
+      "b": "Zack-Ryder",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Carlito",
+      "b": "Charlie-Haas",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Carlito",
+      "b": "Chavo-Guerrero",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Carlito",
+      "b": "Chris-Benoit",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Carlito",
+      "b": "Chris-Jericho",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Carlito",
+      "b": "Chris-Masters",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Carlito",
+      "b": "Christian",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Carlito",
+      "b": "CM-Punk-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Carlito",
+      "b": "Cody-Rhodes-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Carlito",
+      "b": "Danny-Basham",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Carlito",
+      "b": "Dolph-Ziggler",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Carlito",
+      "b": "Edge",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Carlito",
+      "b": "JBL(Suit)",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Carlito",
+      "b": "Jeff-Hardy",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Carlito",
+      "b": "Joey-Mercury-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Carlito",
+      "b": "John-Cena-Ring(Green)",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Carlito",
+      "b": "KOFI_KINGSTON",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Carlito",
+      "b": "Matt-Hardy",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Carlito",
+      "b": "Randy-Orton",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Carlito",
+      "b": "Rob-Van-Dam",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Carlito",
+      "b": "Sabu-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Carlito",
+      "b": "Tyson-kidd",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Carlito",
+      "b": "Umaga (2)",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Carlito",
+      "b": "Umaga",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Carlito",
+      "b": "Undertaker",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Carlito",
+      "b": "Yoshi-Tatsu",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Carlito",
+      "b": "Zack-Ryder",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Charlie-Haas",
+      "b": "Chavo-Guerrero",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Charlie-Haas",
+      "b": "Chris-Benoit",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Charlie-Haas",
+      "b": "Chris-Jericho",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Charlie-Haas",
+      "b": "Chris-Masters",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Charlie-Haas",
+      "b": "Christian",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Charlie-Haas",
+      "b": "CM-Punk-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Charlie-Haas",
+      "b": "Cody-Rhodes-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Charlie-Haas",
+      "b": "Danny-Basham",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Charlie-Haas",
+      "b": "Dolph-Ziggler",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Charlie-Haas",
+      "b": "Edge",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Charlie-Haas",
+      "b": "JBL(Suit)",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Charlie-Haas",
+      "b": "Jeff-Hardy",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Charlie-Haas",
+      "b": "Joey-Mercury-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Charlie-Haas",
+      "b": "John-Cena-Ring(Green)",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Charlie-Haas",
+      "b": "KOFI_KINGSTON",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Charlie-Haas",
+      "b": "Matt-Hardy",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Charlie-Haas",
+      "b": "Randy-Orton",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Charlie-Haas",
+      "b": "Rob-Van-Dam",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Charlie-Haas",
+      "b": "Sabu-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Charlie-Haas",
+      "b": "Tyson-kidd",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Charlie-Haas",
+      "b": "Umaga (2)",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Charlie-Haas",
+      "b": "Umaga",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Charlie-Haas",
+      "b": "Undertaker",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Charlie-Haas",
+      "b": "Yoshi-Tatsu",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Charlie-Haas",
+      "b": "Zack-Ryder",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chavo-Guerrero",
+      "b": "Chris-Benoit",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chavo-Guerrero",
+      "b": "Chris-Jericho",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chavo-Guerrero",
+      "b": "Chris-Masters",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chavo-Guerrero",
+      "b": "Christian",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chavo-Guerrero",
+      "b": "CM-Punk-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chavo-Guerrero",
+      "b": "Cody-Rhodes-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chavo-Guerrero",
+      "b": "Danny-Basham",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chavo-Guerrero",
+      "b": "Dolph-Ziggler",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chavo-Guerrero",
+      "b": "Edge",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chavo-Guerrero",
+      "b": "JBL(Suit)",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chavo-Guerrero",
+      "b": "Jeff-Hardy",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chavo-Guerrero",
+      "b": "Joey-Mercury-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chavo-Guerrero",
+      "b": "John-Cena-Ring(Green)",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chavo-Guerrero",
+      "b": "KOFI_KINGSTON",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chavo-Guerrero",
+      "b": "Matt-Hardy",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chavo-Guerrero",
+      "b": "Randy-Orton",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chavo-Guerrero",
+      "b": "Rob-Van-Dam",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chavo-Guerrero",
+      "b": "Sabu-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chavo-Guerrero",
+      "b": "Tyson-kidd",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chavo-Guerrero",
+      "b": "Umaga (2)",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chavo-Guerrero",
+      "b": "Umaga",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chavo-Guerrero",
+      "b": "Undertaker",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chavo-Guerrero",
+      "b": "Yoshi-Tatsu",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chavo-Guerrero",
+      "b": "Zack-Ryder",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Benoit",
+      "b": "Chris-Jericho",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Benoit",
+      "b": "Chris-Masters",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Benoit",
+      "b": "Christian",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Benoit",
+      "b": "CM-Punk-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Benoit",
+      "b": "Cody-Rhodes-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Benoit",
+      "b": "Danny-Basham",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Benoit",
+      "b": "Dolph-Ziggler",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Benoit",
+      "b": "Edge",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Benoit",
+      "b": "JBL(Suit)",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Benoit",
+      "b": "Jeff-Hardy",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Benoit",
+      "b": "Joey-Mercury-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Benoit",
+      "b": "John-Cena-Ring(Green)",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Benoit",
+      "b": "KOFI_KINGSTON",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Benoit",
+      "b": "Matt-Hardy",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Benoit",
+      "b": "Randy-Orton",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Benoit",
+      "b": "Rob-Van-Dam",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Benoit",
+      "b": "Sabu-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Benoit",
+      "b": "Tyson-kidd",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Benoit",
+      "b": "Umaga (2)",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Benoit",
+      "b": "Umaga",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Benoit",
+      "b": "Undertaker",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Benoit",
+      "b": "Yoshi-Tatsu",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Benoit",
+      "b": "Zack-Ryder",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Jericho",
+      "b": "Chris-Masters",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Jericho",
+      "b": "Christian",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Jericho",
+      "b": "CM-Punk-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Jericho",
+      "b": "Cody-Rhodes-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Jericho",
+      "b": "Danny-Basham",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Jericho",
+      "b": "Dolph-Ziggler",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Jericho",
+      "b": "Edge",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Jericho",
+      "b": "JBL(Suit)",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Jericho",
+      "b": "Jeff-Hardy",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Jericho",
+      "b": "Joey-Mercury-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Jericho",
+      "b": "John-Cena-Ring(Green)",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Jericho",
+      "b": "KOFI_KINGSTON",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Jericho",
+      "b": "Matt-Hardy",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Jericho",
+      "b": "Randy-Orton",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Jericho",
+      "b": "Rob-Van-Dam",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Jericho",
+      "b": "Sabu-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Jericho",
+      "b": "Tyson-kidd",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Jericho",
+      "b": "Umaga (2)",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Jericho",
+      "b": "Umaga",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Jericho",
+      "b": "Undertaker",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Jericho",
+      "b": "Yoshi-Tatsu",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Jericho",
+      "b": "Zack-Ryder",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Masters",
+      "b": "Christian",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Masters",
+      "b": "CM-Punk-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Masters",
+      "b": "Cody-Rhodes-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Masters",
+      "b": "Danny-Basham",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Masters",
+      "b": "Dolph-Ziggler",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Masters",
+      "b": "Edge",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Masters",
+      "b": "JBL(Suit)",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Masters",
+      "b": "Jeff-Hardy",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Masters",
+      "b": "Joey-Mercury-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Masters",
+      "b": "John-Cena-Ring(Green)",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Masters",
+      "b": "KOFI_KINGSTON",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Masters",
+      "b": "Matt-Hardy",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Masters",
+      "b": "Randy-Orton",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Masters",
+      "b": "Rob-Van-Dam",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Masters",
+      "b": "Sabu-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Masters",
+      "b": "Tyson-kidd",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Masters",
+      "b": "Umaga (2)",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Masters",
+      "b": "Umaga",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Masters",
+      "b": "Undertaker",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Masters",
+      "b": "Yoshi-Tatsu",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Chris-Masters",
+      "b": "Zack-Ryder",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Christian",
+      "b": "CM-Punk-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Christian",
+      "b": "Cody-Rhodes-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Christian",
+      "b": "Danny-Basham",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Christian",
+      "b": "Dolph-Ziggler",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Christian",
+      "b": "Edge",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Christian",
+      "b": "JBL(Suit)",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Christian",
+      "b": "Jeff-Hardy",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Christian",
+      "b": "Joey-Mercury-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Christian",
+      "b": "John-Cena-Ring(Green)",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Christian",
+      "b": "KOFI_KINGSTON",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Christian",
+      "b": "Matt-Hardy",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Christian",
+      "b": "Randy-Orton",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Christian",
+      "b": "Rob-Van-Dam",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Christian",
+      "b": "Sabu-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Christian",
+      "b": "Tyson-kidd",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Christian",
+      "b": "Umaga (2)",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Christian",
+      "b": "Umaga",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Christian",
+      "b": "Undertaker",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Christian",
+      "b": "Yoshi-Tatsu",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Christian",
+      "b": "Zack-Ryder",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "CM-Punk-Ring",
+      "b": "Cody-Rhodes-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "CM-Punk-Ring",
+      "b": "Danny-Basham",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "CM-Punk-Ring",
+      "b": "Dolph-Ziggler",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "CM-Punk-Ring",
+      "b": "Edge",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "CM-Punk-Ring",
+      "b": "JBL(Suit)",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "CM-Punk-Ring",
+      "b": "Jeff-Hardy",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "CM-Punk-Ring",
+      "b": "Joey-Mercury-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "CM-Punk-Ring",
+      "b": "John-Cena-Ring(Green)",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "CM-Punk-Ring",
+      "b": "KOFI_KINGSTON",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "CM-Punk-Ring",
+      "b": "Matt-Hardy",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "CM-Punk-Ring",
+      "b": "Randy-Orton",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "CM-Punk-Ring",
+      "b": "Rob-Van-Dam",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "CM-Punk-Ring",
+      "b": "Sabu-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "CM-Punk-Ring",
+      "b": "Tyson-kidd",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "CM-Punk-Ring",
+      "b": "Umaga (2)",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "CM-Punk-Ring",
+      "b": "Umaga",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "CM-Punk-Ring",
+      "b": "Undertaker",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "CM-Punk-Ring",
+      "b": "Yoshi-Tatsu",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "CM-Punk-Ring",
+      "b": "Zack-Ryder",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Cody-Rhodes-Ring",
+      "b": "Danny-Basham",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Cody-Rhodes-Ring",
+      "b": "Dolph-Ziggler",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Cody-Rhodes-Ring",
+      "b": "Edge",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Cody-Rhodes-Ring",
+      "b": "JBL(Suit)",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Cody-Rhodes-Ring",
+      "b": "Jeff-Hardy",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Cody-Rhodes-Ring",
+      "b": "Joey-Mercury-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Cody-Rhodes-Ring",
+      "b": "John-Cena-Ring(Green)",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Cody-Rhodes-Ring",
+      "b": "KOFI_KINGSTON",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Cody-Rhodes-Ring",
+      "b": "Matt-Hardy",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Cody-Rhodes-Ring",
+      "b": "Randy-Orton",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Cody-Rhodes-Ring",
+      "b": "Rob-Van-Dam",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Cody-Rhodes-Ring",
+      "b": "Sabu-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Cody-Rhodes-Ring",
+      "b": "Tyson-kidd",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Cody-Rhodes-Ring",
+      "b": "Umaga (2)",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Cody-Rhodes-Ring",
+      "b": "Umaga",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Cody-Rhodes-Ring",
+      "b": "Undertaker",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Cody-Rhodes-Ring",
+      "b": "Yoshi-Tatsu",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Cody-Rhodes-Ring",
+      "b": "Zack-Ryder",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Danny-Basham",
+      "b": "Dolph-Ziggler",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Danny-Basham",
+      "b": "Edge",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Danny-Basham",
+      "b": "JBL(Suit)",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Danny-Basham",
+      "b": "Jeff-Hardy",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Danny-Basham",
+      "b": "Joey-Mercury-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Danny-Basham",
+      "b": "John-Cena-Ring(Green)",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Danny-Basham",
+      "b": "KOFI_KINGSTON",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Danny-Basham",
+      "b": "Matt-Hardy",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Danny-Basham",
+      "b": "Randy-Orton",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Danny-Basham",
+      "b": "Rob-Van-Dam",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Danny-Basham",
+      "b": "Sabu-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Danny-Basham",
+      "b": "Tyson-kidd",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Danny-Basham",
+      "b": "Umaga (2)",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Danny-Basham",
+      "b": "Umaga",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Danny-Basham",
+      "b": "Undertaker",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Danny-Basham",
+      "b": "Yoshi-Tatsu",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Danny-Basham",
+      "b": "Zack-Ryder",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Dolph-Ziggler",
+      "b": "Edge",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Dolph-Ziggler",
+      "b": "JBL(Suit)",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Dolph-Ziggler",
+      "b": "Jeff-Hardy",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Dolph-Ziggler",
+      "b": "Joey-Mercury-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Dolph-Ziggler",
+      "b": "John-Cena-Ring(Green)",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Dolph-Ziggler",
+      "b": "KOFI_KINGSTON",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Dolph-Ziggler",
+      "b": "Matt-Hardy",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Dolph-Ziggler",
+      "b": "Randy-Orton",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Dolph-Ziggler",
+      "b": "Rob-Van-Dam",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Dolph-Ziggler",
+      "b": "Sabu-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Dolph-Ziggler",
+      "b": "Tyson-kidd",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Dolph-Ziggler",
+      "b": "Umaga (2)",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Dolph-Ziggler",
+      "b": "Umaga",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Dolph-Ziggler",
+      "b": "Undertaker",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Dolph-Ziggler",
+      "b": "Yoshi-Tatsu",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Dolph-Ziggler",
+      "b": "Zack-Ryder",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Edge",
+      "b": "JBL(Suit)",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Edge",
+      "b": "Jeff-Hardy",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Edge",
+      "b": "Joey-Mercury-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Edge",
+      "b": "John-Cena-Ring(Green)",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Edge",
+      "b": "KOFI_KINGSTON",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Edge",
+      "b": "Matt-Hardy",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Edge",
+      "b": "Randy-Orton",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Edge",
+      "b": "Rob-Van-Dam",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Edge",
+      "b": "Sabu-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Edge",
+      "b": "Tyson-kidd",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Edge",
+      "b": "Umaga (2)",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Edge",
+      "b": "Umaga",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Edge",
+      "b": "Undertaker",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Edge",
+      "b": "Yoshi-Tatsu",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Edge",
+      "b": "Zack-Ryder",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "JBL(Suit)",
+      "b": "Jeff-Hardy",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "JBL(Suit)",
+      "b": "Joey-Mercury-Ring",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "JBL(Suit)",
+      "b": "John-Cena-Ring(Green)",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "JBL(Suit)",
+      "b": "KOFI_KINGSTON",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "JBL(Suit)",
+      "b": "Matt-Hardy",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "JBL(Suit)",
+      "b": "Randy-Orton",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "JBL(Suit)",
+      "b": "Rob-Van-Dam",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "JBL(Suit)",
+      "b": "Sabu-Ring",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "JBL(Suit)",
+      "b": "Tyson-kidd",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "JBL(Suit)",
+      "b": "Umaga (2)",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "JBL(Suit)",
+      "b": "Umaga",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "JBL(Suit)",
+      "b": "Undertaker",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "JBL(Suit)",
+      "b": "Yoshi-Tatsu",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "JBL(Suit)",
+      "b": "Zack-Ryder",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Jeff-Hardy",
+      "b": "Joey-Mercury-Ring",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Jeff-Hardy",
+      "b": "John-Cena-Ring(Green)",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Jeff-Hardy",
+      "b": "KOFI_KINGSTON",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Jeff-Hardy",
+      "b": "Matt-Hardy",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Jeff-Hardy",
+      "b": "Randy-Orton",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Jeff-Hardy",
+      "b": "Rob-Van-Dam",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Jeff-Hardy",
+      "b": "Sabu-Ring",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Jeff-Hardy",
+      "b": "Tyson-kidd",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Jeff-Hardy",
+      "b": "Umaga (2)",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Jeff-Hardy",
+      "b": "Umaga",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Jeff-Hardy",
+      "b": "Undertaker",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Jeff-Hardy",
+      "b": "Yoshi-Tatsu",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Jeff-Hardy",
+      "b": "Zack-Ryder",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Joey-Mercury-Ring",
+      "b": "John-Cena-Ring(Green)",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Joey-Mercury-Ring",
+      "b": "KOFI_KINGSTON",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Joey-Mercury-Ring",
+      "b": "Matt-Hardy",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Joey-Mercury-Ring",
+      "b": "Randy-Orton",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Joey-Mercury-Ring",
+      "b": "Rob-Van-Dam",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Joey-Mercury-Ring",
+      "b": "Sabu-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Joey-Mercury-Ring",
+      "b": "Tyson-kidd",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Joey-Mercury-Ring",
+      "b": "Umaga (2)",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Joey-Mercury-Ring",
+      "b": "Umaga",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Joey-Mercury-Ring",
+      "b": "Undertaker",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Joey-Mercury-Ring",
+      "b": "Yoshi-Tatsu",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Joey-Mercury-Ring",
+      "b": "Zack-Ryder",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "John-Cena-Ring(Green)",
+      "b": "KOFI_KINGSTON",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "John-Cena-Ring(Green)",
+      "b": "Matt-Hardy",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "John-Cena-Ring(Green)",
+      "b": "Randy-Orton",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "John-Cena-Ring(Green)",
+      "b": "Rob-Van-Dam",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "John-Cena-Ring(Green)",
+      "b": "Sabu-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "John-Cena-Ring(Green)",
+      "b": "Tyson-kidd",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "John-Cena-Ring(Green)",
+      "b": "Umaga (2)",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "John-Cena-Ring(Green)",
+      "b": "Umaga",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "John-Cena-Ring(Green)",
+      "b": "Undertaker",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "John-Cena-Ring(Green)",
+      "b": "Yoshi-Tatsu",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "John-Cena-Ring(Green)",
+      "b": "Zack-Ryder",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "KOFI_KINGSTON",
+      "b": "Matt-Hardy",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "KOFI_KINGSTON",
+      "b": "Randy-Orton",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "KOFI_KINGSTON",
+      "b": "Rob-Van-Dam",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "KOFI_KINGSTON",
+      "b": "Sabu-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "KOFI_KINGSTON",
+      "b": "Tyson-kidd",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "KOFI_KINGSTON",
+      "b": "Umaga (2)",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "KOFI_KINGSTON",
+      "b": "Umaga",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "KOFI_KINGSTON",
+      "b": "Undertaker",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "KOFI_KINGSTON",
+      "b": "Yoshi-Tatsu",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "KOFI_KINGSTON",
+      "b": "Zack-Ryder",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Matt-Hardy",
+      "b": "Randy-Orton",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Matt-Hardy",
+      "b": "Rob-Van-Dam",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Matt-Hardy",
+      "b": "Sabu-Ring",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Matt-Hardy",
+      "b": "Tyson-kidd",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Matt-Hardy",
+      "b": "Umaga (2)",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Matt-Hardy",
+      "b": "Umaga",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Matt-Hardy",
+      "b": "Undertaker",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Matt-Hardy",
+      "b": "Yoshi-Tatsu",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Matt-Hardy",
+      "b": "Zack-Ryder",
+      "body_bind_compatible": false,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Randy-Orton",
+      "b": "Rob-Van-Dam",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Randy-Orton",
+      "b": "Sabu-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Randy-Orton",
+      "b": "Tyson-kidd",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Randy-Orton",
+      "b": "Umaga (2)",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Randy-Orton",
+      "b": "Umaga",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Randy-Orton",
+      "b": "Undertaker",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Randy-Orton",
+      "b": "Yoshi-Tatsu",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Randy-Orton",
+      "b": "Zack-Ryder",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Rob-Van-Dam",
+      "b": "Sabu-Ring",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Rob-Van-Dam",
+      "b": "Tyson-kidd",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Rob-Van-Dam",
+      "b": "Umaga (2)",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Rob-Van-Dam",
+      "b": "Umaga",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Rob-Van-Dam",
+      "b": "Undertaker",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Rob-Van-Dam",
+      "b": "Yoshi-Tatsu",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Rob-Van-Dam",
+      "b": "Zack-Ryder",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Sabu-Ring",
+      "b": "Tyson-kidd",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Sabu-Ring",
+      "b": "Umaga (2)",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Sabu-Ring",
+      "b": "Umaga",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Sabu-Ring",
+      "b": "Undertaker",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Sabu-Ring",
+      "b": "Yoshi-Tatsu",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Sabu-Ring",
+      "b": "Zack-Ryder",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Tyson-kidd",
+      "b": "Umaga (2)",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Tyson-kidd",
+      "b": "Umaga",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Tyson-kidd",
+      "b": "Undertaker",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Tyson-kidd",
+      "b": "Yoshi-Tatsu",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Tyson-kidd",
+      "b": "Zack-Ryder",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Umaga (2)",
+      "b": "Umaga",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Umaga (2)",
+      "b": "Undertaker",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Umaga (2)",
+      "b": "Yoshi-Tatsu",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Umaga (2)",
+      "b": "Zack-Ryder",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Umaga",
+      "b": "Undertaker",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Umaga",
+      "b": "Yoshi-Tatsu",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Umaga",
+      "b": "Zack-Ryder",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Undertaker",
+      "b": "Yoshi-Tatsu",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Undertaker",
+      "b": "Zack-Ryder",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    },
+    {
+      "a": "Yoshi-Tatsu",
+      "b": "Zack-Ryder",
+      "body_bind_compatible": true,
+      "branch_hierarchy_compatible": true,
+      "reason": null
+    }
+  ],
+  "individual_part_trials": [
+    {
+      "donor": "Batista",
+      "part": "Head",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 24
+    },
+    {
+      "donor": "Batista",
+      "part": "Torso",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 24
+    },
+    {
+      "donor": "Batista",
+      "part": "Arms",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 0
+    },
+    {
+      "donor": "Batista",
+      "part": "Legs",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 0
+    },
+    {
+      "donor": "Booker-T",
+      "part": "Head",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 4.3871947520199295e-10,
+      "maximum_local_axis_interior_pose_error": 4.3872863724707694e-10,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 56
+    },
+    {
+      "donor": "Booker-T",
+      "part": "Torso",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 1.1618559509639466e-08,
+      "maximum_local_axis_interior_pose_error": 1.1618559146571704e-08,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 75
+    },
+    {
+      "donor": "Booker-T",
+      "part": "Arms",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 1.1618559509639466e-08,
+      "maximum_local_axis_interior_pose_error": 1.1618560021096284e-08,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 0
+    },
+    {
+      "donor": "Booker-T",
+      "part": "Legs",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 0
+    },
+    {
+      "donor": "Bret-Hart",
+      "part": "Head",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 8.881784197001252e-16,
+      "maximum_local_axis_interior_pose_error": 8.886119947416683e-16,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 80
+    },
+    {
+      "donor": "Bret-Hart",
+      "part": "Torso",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 8.881784209330454e-16,
+      "maximum_local_axis_interior_pose_error": 1.1102230448199955e-16,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 70
+    },
+    {
+      "donor": "Bret-Hart",
+      "part": "Arms",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 0
+    },
+    {
+      "donor": "Bret-Hart",
+      "part": "Legs",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 0
+    },
+    {
+      "donor": "British-Bulldog",
+      "part": "Head",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 1.1102230246251565e-16,
+      "maximum_local_axis_interior_pose_error": 2.7755575615628914e-17,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 38
+    },
+    {
+      "donor": "British-Bulldog",
+      "part": "Torso",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 1.7763568394002505e-15,
+      "maximum_local_axis_interior_pose_error": 8.886119947416683e-16,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 32
+    },
+    {
+      "donor": "British-Bulldog",
+      "part": "Arms",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 0
+    },
+    {
+      "donor": "British-Bulldog",
+      "part": "Legs",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 0
+    },
+    {
+      "donor": "Carlito",
+      "part": "Head",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 1.1102230246251565e-16,
+      "maximum_local_axis_interior_pose_error": 2.7755575615628914e-17,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 30
+    },
+    {
+      "donor": "Carlito",
+      "part": "Torso",
+      "passed": false,
+      "withheld_reason": "Untouched source pose regressed: jaw 0.04816168449028819"
+    },
+    {
+      "donor": "Carlito",
+      "part": "Arms",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 0
+    },
+    {
+      "donor": "Carlito",
+      "part": "Legs",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 0
+    },
+    {
+      "donor": "Charlie-Haas",
+      "part": "Head",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 8.881784197001252e-16,
+      "maximum_local_axis_interior_pose_error": 1.1102230246251565e-16,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 62
+    },
+    {
+      "donor": "Charlie-Haas",
+      "part": "Torso",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 8.95090418262362e-16,
+      "maximum_local_axis_interior_pose_error": 8.950904185332877e-16,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 60
+    },
+    {
+      "donor": "Charlie-Haas",
+      "part": "Arms",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 0
+    },
+    {
+      "donor": "Charlie-Haas",
+      "part": "Legs",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 0
+    },
+    {
+      "donor": "Chavo-Guerrero",
+      "part": "Head",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 8.881784197001252e-16,
+      "maximum_local_axis_interior_pose_error": 1.1102230246251565e-16,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 24
+    },
+    {
+      "donor": "Chavo-Guerrero",
+      "part": "Torso",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 8.95090418262362e-16,
+      "maximum_local_axis_interior_pose_error": 4.44089217294688e-16,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 46
+    },
+    {
+      "donor": "Chavo-Guerrero",
+      "part": "Arms",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 0
+    },
+    {
+      "donor": "Chavo-Guerrero",
+      "part": "Legs",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 0
+    },
+    {
+      "donor": "Chris-Benoit",
+      "part": "Head",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 8.881784197001252e-16,
+      "maximum_local_axis_interior_pose_error": 1.1102230246251565e-16,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 52
+    },
+    {
+      "donor": "Chris-Benoit",
+      "part": "Torso",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 6.938893903907228e-18,
+      "maximum_local_axis_interior_pose_error": 1.2412670766236366e-16,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 52
+    },
+    {
+      "donor": "Chris-Benoit",
+      "part": "Arms",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 0
+    },
+    {
+      "donor": "Chris-Benoit",
+      "part": "Legs",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 8
+    },
+    {
+      "donor": "Chris-Jericho",
+      "part": "Head",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 8.881784197001252e-16,
+      "maximum_local_axis_interior_pose_error": 2.7755575615628914e-17,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 62
+    },
+    {
+      "donor": "Chris-Jericho",
+      "part": "Torso",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 1.7763568454073e-15,
+      "maximum_local_axis_interior_pose_error": 8.881784353401638e-16,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 66
+    },
+    {
+      "donor": "Chris-Jericho",
+      "part": "Arms",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 0
+    },
+    {
+      "donor": "Chris-Jericho",
+      "part": "Legs",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 0
+    },
+    {
+      "donor": "Chris-Masters",
+      "part": "Head",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 8.881784197001252e-16,
+      "maximum_local_axis_interior_pose_error": 1.1102230246251565e-16,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 50
+    },
+    {
+      "donor": "Chris-Masters",
+      "part": "Torso",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 4.8069119756681544e-20,
+      "maximum_local_axis_interior_pose_error": 8.881784197001252e-16,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 58
+    },
+    {
+      "donor": "Chris-Masters",
+      "part": "Arms",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 0
+    },
+    {
+      "donor": "Chris-Masters",
+      "part": "Legs",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 0
+    },
+    {
+      "donor": "Christian",
+      "part": "Head",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 8.881784197001252e-16,
+      "maximum_local_axis_interior_pose_error": 1.1102230246251565e-16,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 46
+    },
+    {
+      "donor": "Christian",
+      "part": "Torso",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 1.2560739669470201e-15,
+      "maximum_local_axis_interior_pose_error": 9.992007221626409e-16,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 68
+    },
+    {
+      "donor": "Christian",
+      "part": "Arms",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 0
+    },
+    {
+      "donor": "Christian",
+      "part": "Legs",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 0
+    },
+    {
+      "donor": "CM-Punk-Ring",
+      "part": "Head",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 2.5759837728519123e-11,
+      "maximum_local_axis_interior_pose_error": 1.9959726286779432e-08,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 69
+    },
+    {
+      "donor": "CM-Punk-Ring",
+      "part": "Torso",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 7.11052387745092e-07,
+      "maximum_local_axis_interior_pose_error": 7.110530081173347e-07,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 71
+    },
+    {
+      "donor": "CM-Punk-Ring",
+      "part": "Arms",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 7.484762074378506e-07,
+      "maximum_local_axis_interior_pose_error": 7.484769907978157e-07,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 0
+    },
+    {
+      "donor": "CM-Punk-Ring",
+      "part": "Legs",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 4.626860282627048e-14,
+      "maximum_local_axis_interior_pose_error": 5.2628318822070964e-14,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 0
+    },
+    {
+      "donor": "Cody-Rhodes-Ring",
+      "part": "Head",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 2.4698613933435825e-07,
+      "maximum_local_axis_interior_pose_error": 2.469866100690962e-07,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 80
+    },
+    {
+      "donor": "Cody-Rhodes-Ring",
+      "part": "Torso",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 5.987809745071498e-07,
+      "maximum_local_axis_interior_pose_error": 5.987804448698583e-07,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 74
+    },
+    {
+      "donor": "Cody-Rhodes-Ring",
+      "part": "Arms",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 7.484762074378506e-07,
+      "maximum_local_axis_interior_pose_error": 7.484769907978157e-07,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 0
+    },
+    {
+      "donor": "Cody-Rhodes-Ring",
+      "part": "Legs",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 4.626287695515124e-14,
+      "maximum_local_axis_interior_pose_error": 5.276491877713669e-14,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 2
+    },
+    {
+      "donor": "Danny-Basham",
+      "part": "Head",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 6.090874146291323e-13,
+      "maximum_local_axis_interior_pose_error": 5.1468665127015544e-11,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 33
+    },
+    {
+      "donor": "Danny-Basham",
+      "part": "Torso",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 1.9147848494183026e-12,
+      "maximum_local_axis_interior_pose_error": 1.6348391890108265e-10,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 46
+    },
+    {
+      "donor": "Danny-Basham",
+      "part": "Arms",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 0
+    },
+    {
+      "donor": "Danny-Basham",
+      "part": "Legs",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 0
+    },
+    {
+      "donor": "Dolph-Ziggler",
+      "part": "Head",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 2.9937713082350596e-07,
+      "maximum_local_axis_interior_pose_error": 2.9937579275419385e-07,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 89
+    },
+    {
+      "donor": "Dolph-Ziggler",
+      "part": "Torso",
+      "passed": false,
+      "withheld_reason": "Untouched source pose regressed: jaw 0.054926192500885734"
+    },
+    {
+      "donor": "Dolph-Ziggler",
+      "part": "Arms",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 7.484762074378506e-07,
+      "maximum_local_axis_interior_pose_error": 7.484769907978157e-07,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 0
+    },
+    {
+      "donor": "Dolph-Ziggler",
+      "part": "Legs",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 4.626207556805688e-14,
+      "maximum_local_axis_interior_pose_error": 5.335958701091598e-14,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 0
+    },
+    {
+      "donor": "Edge",
+      "part": "Head",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 1.1102230246251565e-16,
+      "maximum_local_axis_interior_pose_error": 2.7755575615628914e-17,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 76
+    },
+    {
+      "donor": "Edge",
+      "part": "Torso",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 76
+    },
+    {
+      "donor": "Edge",
+      "part": "Arms",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 0
+    },
+    {
+      "donor": "Edge",
+      "part": "Legs",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 0
+    },
+    {
+      "donor": "JBL(Suit)",
+      "part": "Head",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 1.1102230246251565e-16,
+      "maximum_local_axis_interior_pose_error": 2.7755575615628914e-17,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 18
+    },
+    {
+      "donor": "JBL(Suit)",
+      "part": "Torso",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 78
+    },
+    {
+      "donor": "JBL(Suit)",
+      "part": "Arms",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 16
+    },
+    {
+      "donor": "JBL(Suit)",
+      "part": "Legs",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 16
+    },
+    {
+      "donor": "Jeff-Hardy",
+      "part": "Head",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0015126530570685277,
+      "maximum_local_axis_interior_pose_error": 0.018136152002714363,
+      "shared_neck_fit": {
+        "applied": false,
+        "head_endpoint_error": 0.018136152002714363,
+        "reason": "Native selected-head pivot already passes both pose conventions"
+      },
+      "unstitched_ambiguous_records": 111
+    },
+    {
+      "donor": "Jeff-Hardy",
+      "part": "Torso",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.020335370418223645,
+      "maximum_local_axis_interior_pose_error": 0.028135613574444704,
+      "shared_neck_fit": {
+        "applied": true,
+        "head_native_position": [
+          2.9501092433929443,
+          -0.00024038100673351437,
+          9.679882350610569e-05
+        ],
+        "torso_native_position": [
+          2.7342095375061035,
+          -0.00022272086062002927,
+          -0.017973363399505615
+        ],
+        "torso_fraction": 0.29999998625873603,
+        "head_endpoint_error": 0.04019368770945635,
+        "predicted_worst_pose_error": 0.028135581977100456,
+        "verified_tolerance": 0.03,
+        "method": "Minimax native-endpoint neck translation; both model/local-axis poses; vertices and weights unchanged"
+      },
+      "unstitched_ambiguous_records": 80
+    },
+    {
+      "donor": "Jeff-Hardy",
+      "part": "Arms",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 0
+    },
+    {
+      "donor": "Jeff-Hardy",
+      "part": "Legs",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 1
+    },
+    {
+      "donor": "Joey-Mercury-Ring",
+      "part": "Head",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 8.881784197001252e-16,
+      "maximum_local_axis_interior_pose_error": 1.1102230246251565e-16,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 55
+    },
+    {
+      "donor": "Joey-Mercury-Ring",
+      "part": "Torso",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 2.7755575615628914e-17,
+      "maximum_local_axis_interior_pose_error": 2.220446049250313e-16,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 62
+    },
+    {
+      "donor": "Joey-Mercury-Ring",
+      "part": "Arms",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 0
+    },
+    {
+      "donor": "Joey-Mercury-Ring",
+      "part": "Legs",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 2
+    },
+    {
+      "donor": "John-Cena-Ring(Green)",
+      "part": "Head",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 1.1102230246251565e-16,
+      "maximum_local_axis_interior_pose_error": 8.881784197001252e-16,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 34
+    },
+    {
+      "donor": "John-Cena-Ring(Green)",
+      "part": "Torso",
+      "passed": false,
+      "withheld_reason": "Attachment contour is not star shaped: neck"
+    },
+    {
+      "donor": "John-Cena-Ring(Green)",
+      "part": "Arms",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 24
+    },
+    {
+      "donor": "John-Cena-Ring(Green)",
+      "part": "Legs",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 20
+    },
+    {
+      "donor": "KOFI_KINGSTON",
+      "part": "Head",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 8.881784197001252e-16,
+      "maximum_local_axis_interior_pose_error": 1.1102230246251565e-16,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 50
+    },
+    {
+      "donor": "KOFI_KINGSTON",
+      "part": "Torso",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 8.95090418262362e-16,
+      "maximum_local_axis_interior_pose_error": 9.155133597044475e-16,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 77
+    },
+    {
+      "donor": "KOFI_KINGSTON",
+      "part": "Arms",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 0
+    },
+    {
+      "donor": "KOFI_KINGSTON",
+      "part": "Legs",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 8
+    },
+    {
+      "donor": "Matt-Hardy",
+      "part": "Head",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0015126533689125297,
+      "maximum_local_axis_interior_pose_error": 0.018136151981465752,
+      "shared_neck_fit": {
+        "applied": false,
+        "head_endpoint_error": 0.018136151981465752,
+        "reason": "Native selected-head pivot already passes both pose conventions"
+      },
+      "unstitched_ambiguous_records": 36
+    },
+    {
+      "donor": "Matt-Hardy",
+      "part": "Torso",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.001766217804983473,
+      "maximum_local_axis_interior_pose_error": 0.021176295538852256,
+      "shared_neck_fit": {
+        "applied": false,
+        "head_endpoint_error": 0.021176295538852256,
+        "reason": "Native selected-head pivot already passes both pose conventions"
+      },
+      "unstitched_ambiguous_records": 56
+    },
+    {
+      "donor": "Matt-Hardy",
+      "part": "Arms",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 0
+    },
+    {
+      "donor": "Matt-Hardy",
+      "part": "Legs",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 0
+    },
+    {
+      "donor": "Randy-Orton",
+      "part": "Head",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 8.881784197001252e-16,
+      "maximum_local_axis_interior_pose_error": 1.1102230246251565e-16,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 70
+    },
+    {
+      "donor": "Randy-Orton",
+      "part": "Torso",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 8.882868333007365e-16,
+      "maximum_local_axis_interior_pose_error": 8.881784197001252e-16,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 64
+    },
+    {
+      "donor": "Randy-Orton",
+      "part": "Arms",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 0
+    },
+    {
+      "donor": "Randy-Orton",
+      "part": "Legs",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 0
+    },
+    {
+      "donor": "Rob-Van-Dam",
+      "part": "Head",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 8.881784197001252e-16,
+      "maximum_local_axis_interior_pose_error": 1.1102230246251565e-16,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 44
+    },
+    {
+      "donor": "Rob-Van-Dam",
+      "part": "Torso",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 1.7763568415845243e-15,
+      "maximum_local_axis_interior_pose_error": 1.047382310373375e-15,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 48
+    },
+    {
+      "donor": "Rob-Van-Dam",
+      "part": "Arms",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 0
+    },
+    {
+      "donor": "Rob-Van-Dam",
+      "part": "Legs",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 0
+    },
+    {
+      "donor": "Sabu-Ring",
+      "part": "Head",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 8.881784197001252e-16,
+      "maximum_local_axis_interior_pose_error": 1.1102230246251565e-16,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 88
+    },
+    {
+      "donor": "Sabu-Ring",
+      "part": "Torso",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 9.930136612989092e-16,
+      "maximum_local_axis_interior_pose_error": 9.155133597044475e-16,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 76
+    },
+    {
+      "donor": "Sabu-Ring",
+      "part": "Arms",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 0
+    },
+    {
+      "donor": "Sabu-Ring",
+      "part": "Legs",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 6
+    },
+    {
+      "donor": "Tyson-kidd",
+      "part": "Head",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 2.5760085434820618e-11,
+      "maximum_local_axis_interior_pose_error": 5.988456499831141e-08,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 74
+    },
+    {
+      "donor": "Tyson-kidd",
+      "part": "Torso",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 5.652879322003188e-07,
+      "maximum_local_axis_interior_pose_error": 5.652881192728093e-07,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 91
+    },
+    {
+      "donor": "Tyson-kidd",
+      "part": "Arms",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 7.484762074378506e-07,
+      "maximum_local_axis_interior_pose_error": 7.484769907978157e-07,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 0
+    },
+    {
+      "donor": "Tyson-kidd",
+      "part": "Legs",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 4.714880731166814e-14,
+      "maximum_local_axis_interior_pose_error": 5.418354724770973e-14,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 0
+    },
+    {
+      "donor": "Umaga (2)",
+      "part": "Head",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 1.1102230246251565e-16,
+      "maximum_local_axis_interior_pose_error": 2.7755575615628914e-17,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 46
+    },
+    {
+      "donor": "Umaga (2)",
+      "part": "Torso",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 1.1102230246251565e-16,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 90
+    },
+    {
+      "donor": "Umaga (2)",
+      "part": "Arms",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 18
+    },
+    {
+      "donor": "Umaga (2)",
+      "part": "Legs",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 8
+    },
+    {
+      "donor": "Umaga",
+      "part": "Head",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 1.1102230246251565e-16,
+      "maximum_local_axis_interior_pose_error": 2.7755575615628914e-17,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 90
+    },
+    {
+      "donor": "Umaga",
+      "part": "Torso",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 8.881784823868569e-16,
+      "maximum_local_axis_interior_pose_error": 9.15513371095064e-16,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 72
+    },
+    {
+      "donor": "Umaga",
+      "part": "Arms",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 0
+    },
+    {
+      "donor": "Umaga",
+      "part": "Legs",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 0
+    },
+    {
+      "donor": "Undertaker",
+      "part": "Head",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 8.881784197001252e-16,
+      "maximum_local_axis_interior_pose_error": 1.1102230246251565e-16,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 56
+    },
+    {
+      "donor": "Undertaker",
+      "part": "Torso",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 68
+    },
+    {
+      "donor": "Undertaker",
+      "part": "Arms",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 0
+    },
+    {
+      "donor": "Undertaker",
+      "part": "Legs",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 0
+    },
+    {
+      "donor": "Yoshi-Tatsu",
+      "part": "Head",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 2.9937713133289596e-07,
+      "maximum_local_axis_interior_pose_error": 2.9937556457666763e-07,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 70
+    },
+    {
+      "donor": "Yoshi-Tatsu",
+      "part": "Torso",
+      "passed": false,
+      "withheld_reason": "Untouched source pose regressed: jaw 0.0457263279301988"
+    },
+    {
+      "donor": "Yoshi-Tatsu",
+      "part": "Arms",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 7.484762074378506e-07,
+      "maximum_local_axis_interior_pose_error": 7.484769907978157e-07,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 0
+    },
+    {
+      "donor": "Yoshi-Tatsu",
+      "part": "Legs",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 4.720733054568282e-14,
+      "maximum_local_axis_interior_pose_error": 5.3116485459063916e-14,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 0
+    },
+    {
+      "donor": "Zack-Ryder",
+      "part": "Head",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 8.881784197001252e-16,
+      "maximum_local_axis_interior_pose_error": 1.1102230246251565e-16,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 70
+    },
+    {
+      "donor": "Zack-Ryder",
+      "part": "Torso",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.01733218462290209,
+      "maximum_local_axis_interior_pose_error": 0.00833443490825124,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 65
+    },
+    {
+      "donor": "Zack-Ryder",
+      "part": "Arms",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 0
+    },
+    {
+      "donor": "Zack-Ryder",
+      "part": "Legs",
+      "passed": true,
+      "native_audit": true,
+      "poses": 10,
+      "maximum_interior_pose_error": 0.0,
+      "maximum_local_axis_interior_pose_error": 0.0,
+      "shared_neck_fit": {
+        "applied": false
+      },
+      "unstitched_ambiguous_records": 4
+    }
+  ],
+  "serialized_builds": [
+    {
+      "recipe": {
+        "Head": "Chris-Jericho",
+        "Torso": "Batista",
+        "Arms": "Batista",
+        "Legs": "Batista"
+      },
+      "passed": true,
+      "within_budget": true,
+      "budget_warning": null,
+      "pac_bytes": 143360,
+      "pac_sha256": "9be7842acd8311f63849cb17a81e1d60d74cae6320f16e6bb1909928485de666",
+      "descriptor_groups": [
+        32
+      ],
+      "all_textures_original": true,
+      "original_interior_preserved": true,
+      "poses": 10,
+      "unrelated_sections_identical": [
+        8
+      ]
+    },
+    {
+      "recipe": {
+        "Head": "CM-Punk-Ring",
+        "Torso": "Batista",
+        "Arms": "Batista",
+        "Legs": "Batista"
+      },
+      "passed": true,
+      "within_budget": true,
+      "budget_warning": null,
+      "pac_bytes": 137216,
+      "pac_sha256": "949485cf742a7b030b7eeca352c1db8ca44719cfd89734624e7c45b6a8841fdf",
+      "descriptor_groups": [
+        31,
+        1
+      ],
+      "all_textures_original": true,
+      "original_interior_preserved": true,
+      "poses": 10,
+      "unrelated_sections_identical": [
+        8
+      ]
+    },
+    {
+      "recipe": {
+        "Head": "Joey-Mercury-Ring",
+        "Torso": "Batista",
+        "Arms": "Batista",
+        "Legs": "Batista"
+      },
+      "passed": true,
+      "within_budget": false,
+      "budget_warning": {
+        "pac_bytes": 149504,
+        "target_bytes": 148000,
+        "over_by_bytes": 1504,
+        "message": "Export exceeds the tested in-match PAC budget. It may crash or corrupt unrelated geometry in-game. Native structural checks do not establish runtime safety. No geometry was reduced."
+      },
+      "pac_bytes": 149504,
+      "pac_sha256": "125fb45f205c7a12ca277f5ff3fe2505d92d5f0a7ddb4793c4e991995770d0c2",
+      "descriptor_groups": [
+        35,
+        5
+      ],
+      "all_textures_original": true,
+      "original_interior_preserved": true,
+      "poses": 10,
+      "unrelated_sections_identical": [
+        8
+      ]
+    },
+    {
+      "recipe": {
+        "Head": "Yoshi-Tatsu",
+        "Torso": "Batista",
+        "Arms": "Batista",
+        "Legs": "Batista"
+      },
+      "passed": true,
+      "within_budget": true,
+      "budget_warning": null,
+      "pac_bytes": 147456,
+      "pac_sha256": "3ae294c49890f3db30edd380c817e532277c3a9de335c7996079bb2d305098a4",
+      "descriptor_groups": [
+        33,
+        4
+      ],
+      "all_textures_original": true,
+      "original_interior_preserved": true,
+      "poses": 10,
+      "unrelated_sections_identical": [
+        8
+      ]
+    },
+    {
+      "recipe": {
+        "Head": "Zack-Ryder",
+        "Torso": "Batista",
+        "Arms": "Batista",
+        "Legs": "Batista"
+      },
+      "passed": true,
+      "within_budget": true,
+      "budget_warning": null,
+      "pac_bytes": 141312,
+      "pac_sha256": "7749268b600895c0119929632b15dc1d050a3ed24f274c578f5b4609a7f8a77a",
+      "descriptor_groups": [
+        32,
+        2
+      ],
+      "all_textures_original": true,
+      "original_interior_preserved": true,
+      "poses": 10,
+      "unrelated_sections_identical": [
+        8
+      ]
+    },
+    {
+      "recipe": {
+        "Head": "Umaga (2)",
+        "Torso": "Batista",
+        "Arms": "Batista",
+        "Legs": "Batista"
+      },
+      "passed": true,
+      "within_budget": true,
+      "budget_warning": null,
+      "pac_bytes": 137216,
+      "pac_sha256": "d6acf7db4b24c2bf09329f1712b827239c708cef2f398ad2060653720737788d",
+      "descriptor_groups": [
+        29,
+        2
+      ],
+      "all_textures_original": true,
+      "original_interior_preserved": true,
+      "poses": 10,
+      "unrelated_sections_identical": [
+        8
+      ]
+    },
+    {
+      "recipe": {
+        "Head": "Sabu-Ring",
+        "Torso": "Sabu-Ring",
+        "Arms": "Booker-T",
+        "Legs": "Sabu-Ring"
+      },
+      "passed": true,
+      "within_budget": true,
+      "budget_warning": null,
+      "pac_bytes": 139264,
+      "pac_sha256": "8b1caa3c1ef074b8b785be52c669165a531033ea589f0d908487dc0ad1ea90ab",
+      "descriptor_groups": [
+        35
+      ],
+      "all_textures_original": true,
+      "original_interior_preserved": true,
+      "poses": 10,
+      "unrelated_sections_identical": [
+        5,
+        8
+      ]
+    },
+    {
+      "recipe": {
+        "Head": "Yoshi-Tatsu",
+        "Torso": "Batista",
+        "Arms": "Chris-Benoit",
+        "Legs": "Christian"
+      },
+      "passed": true,
+      "within_budget": false,
+      "budget_warning": {
+        "pac_bytes": 161792,
+        "target_bytes": 148000,
+        "over_by_bytes": 13792,
+        "message": "Export exceeds the tested in-match PAC budget. It may crash or corrupt unrelated geometry in-game. Native structural checks do not establish runtime safety. No geometry was reduced."
+      },
+      "pac_bytes": 161792,
+      "pac_sha256": "e7b912261733481f6997a5f13f34424e81dce328aec07bf27e4a92234c56792c",
+      "descriptor_groups": [
+        38,
+        4
+      ],
+      "all_textures_original": true,
+      "original_interior_preserved": true,
+      "poses": 10,
+      "unrelated_sections_identical": [
+        8
+      ]
+    }
+  ],
+  "summary": {
+    "originals": 31,
+    "body_bind_pairs": 465,
+    "body_bind_pairs_compatible": 379,
+    "individual_part_trials": 124,
+    "part_trials_passed": 120,
+    "serialized_builds": 8,
+    "builds_passed": 8,
+    "builds_within_budget": 6
+  },
+  "runtime_status": "Analytical/native checks only. PPSSPP validation of new mixed assemblies remains required.",
+  "coverage": "All originals; all pair body binds; each donor part against Batista; eight actual PAC recipes. Not every four-way combination."
+}

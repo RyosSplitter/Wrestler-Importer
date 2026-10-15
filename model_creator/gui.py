@@ -44,9 +44,13 @@ class App:
         for part in PARTS:
             ttk.Label(left,text=part).pack(anchor='w',pady=(3,0));v=tk.StringVar();self.choices[part]=v
             box=ttk.Combobox(left,textvariable=v,state='readonly',width=25);box.pack(fill='x');box.bind('<<ComboboxSelected>>',lambda _:self.dirty());self.controls.append(box)
-        self.assemble_button=ttk.Button(left,text='Assemble and validate',command=self.assemble);self.assemble_button.pack(fill='x',pady=(12,4))
-        ttk.Button(left,text='Preview whole head donor',command=self.whole_donor).pack(fill='x',pady=4)
-        ttk.Button(left,text='Selection details',command=self.selection_details).pack(fill='x',pady=4)
+        self.max_textures=tk.BooleanVar(value=False)
+        self.max_texture_checkbox=ttk.Checkbutton(left,text='Maximum texture downgrade',variable=self.max_textures,command=self.dirty)
+        self.max_texture_checkbox.pack(anchor='w',pady=(8,0))
+        self.assemble_button=ttk.Button(left,text='Assemble and validate',command=self.assemble);self.assemble_button.pack(fill='x',pady=(8,4))
+        donor_tools=ttk.Frame(left);donor_tools.pack(fill='x',pady=4)
+        ttk.Button(donor_tools,text='Whole donor',command=self.whole_donor).pack(side='left',expand=True,fill='x')
+        ttk.Button(donor_tools,text='Details',command=self.selection_details).pack(side='left',expand=True,fill='x',padx=(4,0))
         ttk.Label(left,text='148,000-byte size target.\nOversized exports warn.\nTest exports in PPSSPP.',justify='left').pack(anchor='w',pady=8)
         right=ttk.Frame(work);right.pack(fill='both',expand=True)
         top=ttk.Frame(right);top.pack(fill='x',pady=(0,6))
@@ -188,6 +192,7 @@ class App:
             from .library import read_project as reader
         else:reader=read_project
         project,sources=reader(path);self.project=Path(path);self.labels=[s['label'] for s in sources]
+        self.max_textures.set(project.get('maximum_textures') is True)
         # Include source numbers so even identical filenames are distinguishable.
         self.labels=[f'{i+1}. {label}' for i,label in enumerate(self.labels)]
         for part,box in zip(PARTS,self.controls):box['values']=self.labels;self.choices[part].set(self.labels[project['selections'][part]])
@@ -240,11 +245,12 @@ class App:
             if parent:
                 from .library import create_project as snapshot
                 sources,selections=self.current_sources();path=snapshot(sources,selections,Path(parent)/('Creator-project-'+uuid.uuid4().hex[:8]))
+                data=json.loads(path.read_text(encoding='utf-8'));data['maximum_textures']=self.max_textures.get();dump(path,data)
                 self.status.set('Saved independent snapshots and recipe: '+str(path))
             return
         if not self.project:return
         try:
-            project,_=read_project(self.project);project['selections']=self.selected()
+            project,_=read_project(self.project);project['selections']=self.selected();project['maximum_textures']=self.max_textures.get()
             history=self.project.parent/'history';history.mkdir(exist_ok=True)
             shutil.copy2(self.project,history/(uuid.uuid4().hex+'.json'))
             temp=self.project.with_suffix('.new');dump(temp,project);temp.replace(self.project)
@@ -256,15 +262,16 @@ class App:
         if not self.project and not self.library_project:messagebox.showinfo('Creator','Open the prepared library or a project first.',parent=self.root);return
         if self.preview_after is not None:self.root.after_cancel(self.preview_after);self.preview_after=None
         self.preview_revision+=1
-        original_selections=self.selected();sources,selections=self.current_sources();library_mode=self.library_project
+        original_selections=self.selected();sources,selections=self.current_sources();library_mode=self.library_project;maximum_textures=self.max_textures.get()
         if library_mode:
             from .library import create_project as snapshot
             parent=Path(os.environ.get('LOCALAPPDATA',Path.home()/'.local/share'))/'PSP Model Creator'/'jobs'/uuid.uuid4().hex
             project=snapshot(sources,selections,parent);output=parent/'build'
+            metadata=json.loads(project.read_text(encoding='utf-8'));metadata['maximum_textures']=maximum_textures;dump(project,metadata)
         else:
             self.save();project=self.project;output=self.project.parent/'builds'/uuid.uuid4().hex
         def work():
-            report=build(project,selections,output,library=library_mode,allow_oversize=True,progress=lambda msg:self.events.put(('status',msg)))
+            report=build(project,selections,output,library=library_mode,allow_oversize=True,maximum_textures=maximum_textures,progress=lambda msg:self.events.put(('status',msg)))
             report['ui_selections']=original_selections
             source=load_source(output/'created-model.pac',library=library_mode)
             return output,report,source
@@ -277,7 +284,8 @@ class App:
                 messagebox.showwarning('PAC exceeds size target',
                     f'This model is {warning["pac_bytes"]:,} bytes — {warning["over_by_bytes"]:,} over the {warning["target_bytes"]:,}-byte target.\n\n'
                     'You can still export it. Oversized PACs may cause crashes or unrelated geometry corruption in-game.\n\n'
-                    'Native structural and rigging checks passed. Geometry and textures were not reduced to force a fit.',parent=self.root)
+                    'Native structural and rigging checks passed. Geometry was preserved. '+
+                    ('Texture-only fitting was attempted; see the QA report.' if maximum_textures else 'Texture downgrade was not enabled.'),parent=self.root)
             self.refresh()
         self.task(work,done)
 
@@ -302,6 +310,8 @@ class App:
         if self.result is None:messagebox.showinfo('Creator','Assemble a model first.',parent=self.root);return False
         if self.last_report.get('ui_selections',self.last_report['selections'])!=self.selected():
             messagebox.showinfo('Selections changed','The preview uses your current choices. Assemble and validate this combination before exporting it. Your previous build is preserved.',parent=self.root);return False
+        if bool(self.last_report.get('maximum_texture_downgrade'))!=self.max_textures.get():
+            messagebox.showinfo('Texture option changed','Assemble and validate with the current texture option before exporting. The previous build is preserved.',parent=self.root);return False
         return True
 
     def export_pac(self):
@@ -356,7 +366,8 @@ class App:
                 'Assemble and validate before export. Whole-source models retain their original bytes.\n'
                 'Mixed builds preserve textures and interior geometry; only attachment seams are stitched.\n'
                 'Different body binds, unsafe seams and controller regressions block export. Oversized PACs give a warning and can be exported.\n'
-                'Jeff/Matt Hardy and JBL have differing body binds; some mixed combinations require future retargeting support.\n'
+                'Native bind branches follow the selected parts, including the head neck pivot. Source-pose checks remain mandatory.\n'
+                'Maximum texture downgrade tries to fit oversized models using textures only; an already fitting model keeps its textures.\n'
                 'Hair follows the selected head. Torso supplies the output container; other donor auxiliary PACs are not transferred.\n'
                 'Analytical poses are not in-game tests. Review all sides and test in PPSSPP.',parent=self.root)
             return

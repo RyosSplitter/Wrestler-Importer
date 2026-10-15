@@ -21,7 +21,7 @@ from tools.weight_trial_review import descendant_names, deform
 from tools.prepare_model import bone_matrices
 from model_creator.parts import PARTS, JOINTS, extract, stitch, triangles
 
-VERSION = '0.2.2'
+VERSION = '0.3.0'
 SCHEMA = 'psp-model-creator/1'
 MAX_BYTES = 148000
 POSES = {'rest': {}, 'standing': {'l_ninoude': ('z',70), 'r_ninoude': ('z',-70)},
@@ -140,7 +140,7 @@ def assemble(sources, selections, *, library=False):
         from .native import audit_yobj as reader
         from .library import compatible as library_compatible, skeleton as library_skeleton
     if set(selections)!=set(PARTS) or any(type(v)!=int or not 0<=v<len(sources) for v in selections.values()) or (not library and len(sources)!=2):raise ValueError('Choose a source for each of the four parts.')
-    if library:library_compatible(sources,selections)
+    if library:compatibility=library_compatible(sources,selections)
     else:compatible(*sources)
     if len(set(selections.values()))==1:
         s=sources[selections['Head']]
@@ -255,15 +255,18 @@ def assemble(sources, selections, *, library=False):
     offsets=np.cumsum([0]+[len(m['vertices']) for m in unmerged['meshes']])
     source_dense=[dense(s['model']) for s in sources]
     source_offsets=[np.cumsum([0]+[len(m['vertices']) for m in s['model']['meshes']]) for s in sources]
-    for label,controls in POSES.items():
-        output_pose=deform(dict(bones=unmerged['bones'],bone_count=len(names)),native_p,native_w,controls)
-        expected_poses=[deform(dict(bones=s['model']['bones'],bone_count=len(s['model']['bones'])),p,w,controls) for s,(p,w) in zip(sources,source_dense)]
+    def compare_pose(label,controls,pose_function):
+        output_pose=pose_function(dict(bones=unmerged['bones'],bone_count=len(names)),native_p,native_w,controls)
+        expected_poses=[pose_function(dict(bones=s['model']['bones'],bone_count=len(s['model']['bones'])),p,w,controls) for s,(p,w) in zip(sources,source_dense)]
         errors=[float(np.linalg.norm(output_pose[offsets[om]+ov]-expected_poses[si][source_offsets[si][sm]+sv])) for om,ov,si,sm,sv in comparisons]
         maximum=max(errors,default=0.)
-        # Mixed neck-influenced torso records can use the selected head pivot.
-        # Record that small differential explicitly rather than calling it exact.
-        pose_regressions[label]=dict(maximum_source_position_difference=maximum,records=len(errors),tolerance=.03,passed=maximum<=.03)
         if maximum>.03:raise ValueError('Untouched source pose regressed: '+label+' '+str(maximum))
+        return dict(maximum_source_position_difference=maximum,records=len(errors),tolerance=.03,passed=True)
+    for label,controls in POSES.items():pose_regressions[label]=compare_pose(label,controls,deform)
+    local_pose_regressions={}
+    if library:
+        from .rigging import deform_local
+        for label,controls in POSES.items():local_pose_regressions[label]=compare_pose('local-'+label,controls,deform_local)
     from collections import Counter
     oriented=lambda t:min(tuple(t[i:]+t[:i]) for i in range(3))
     for before,after in zip(meshes,unmerged['meshes']):
@@ -293,8 +296,9 @@ def assemble(sources, selections, *, library=False):
     return raw,textures,dict(mode='Prepared-pair stitched assembly',seams=seams,provenance=provenance,
         lossless_buffer_groups=groups,lossless_buffer_validation=merge_validation,
         single_slot_compatibility=slot_compatibility,
-        interior_source_records_verified=len(interior_checks),interior_pose_comparison=pose_regressions,
-        rig_policy='Native body bind; selected head facial subtree, remapped by name.',
+        interior_source_records_verified=len(interior_checks),interior_pose_comparison=pose_regressions,local_axis_interior_pose_comparison=local_pose_regressions,
+        rig_policy='Native selected-part binds; selected head includes its neck and facial subtree. No geometry or weight retargeting.' if library else 'Native body bind; selected head facial subtree, remapped by name.',
+        branch_bind_review=compatibility if library else None,shared_neck_fit=base.get('branch_bind_fit'),
         changed_geometry='Planar cut intersections, shared torso-surface attachment vertices and edge splits only. No decimation.',
         source_sha256=[s['sha256'] for s in sources],readback_attributes_and_topology=True)
 
@@ -338,7 +342,16 @@ def qa(raw, report, *, library=False):
         maximum=max((float(np.linalg.norm(posed[ids]-posed[ids[0]],axis=1).max()) for ids in seam_groups.values()),default=0.)
         if report['seams'] and maximum>height*2e-5:raise ValueError('Attachment opens under '+name+': '+str(maximum))
         results[name]=dict(shared_seam_maximum_gap=maximum,finite=True,analytical_not_game_animation=True)
-    return dict(native_structural_audit=model['report'],poses=results,
+    local_results={}
+    if library:
+        from .rigging import deform_local
+        for name,controls in POSES.items():
+            posed=deform_local(dict(bones=model['bones']),p,w,controls)
+            if not np.isfinite(posed).all():raise ValueError('Nonfinite local-axis pose '+name)
+            maximum=max((float(np.linalg.norm(posed[ids]-posed[ids[0]],axis=1).max()) for ids in seam_groups.values()),default=0.)
+            if report['seams'] and maximum>height*2e-5:raise ValueError('Attachment opens under local-axis '+name)
+            local_results[name]=dict(shared_seam_maximum_gap=maximum,finite=True,analytical_not_game_animation=True)
+    return dict(native_structural_audit=model['report'],poses=results,local_axis_poses=local_results,
                 seam_position_and_weight_equality=bool(report['seams']),
                 runtime_status='Experimental: PPSSPP import and animation testing still required.')
 
@@ -354,7 +367,7 @@ def preview(model,textures,view='front-left',resolution=640,pose='rest',green=Fa
     return render(shown,textures,view,resolution,gim_reader=read_gim)
 
 
-def build(project_path, selections, output, *, resolution=640, progress=lambda _:None, library=False, allow_oversize=False):
+def build(project_path, selections, output, *, resolution=640, progress=lambda _:None, library=False, allow_oversize=False, maximum_textures=False):
     from tools.yukes_bpe import compress,decompress
     reader=audit_yobj;project_reader=read_project
     if library:
@@ -395,8 +408,16 @@ def build(project_path, selections, output, *, resolution=640, progress=lambda _
         if library:
             report['non_template_auxiliary_sections_not_assembled']=[dict(source=index,sections=[i for i in s['sections'] if i not in (2,8,9)])
                 for index,s in enumerate(sources) if index!=template]
-    report.update(selections=selections,labels=[s['label'] for s in sources],pac_bytes=len(pac),max_pac_bytes=MAX_BYTES,
-                  pac_sha256=digest(pac),yobj_sha256=digest(raw),textures_byte_exact=True,
+    texture_report=None;texture_diagnostics=None
+    if maximum_textures:
+        import tempfile
+        from .textures import fit_textures
+        texture_diagnostics=tempfile.TemporaryDirectory(prefix='creator-textures-')
+        try:pac,texture_report,textures=fit_textures(pac,Path(texture_diagnostics.name),target=MAX_BYTES,progress=progress)
+        except Exception:
+            texture_diagnostics.cleanup();raise
+    report.update(maximum_texture_downgrade=texture_report,selections=selections,labels=[s['label'] for s in sources],pac_bytes=len(pac),max_pac_bytes=MAX_BYTES,
+                  pac_sha256=digest(pac),yobj_sha256=digest(raw),textures_byte_exact=not texture_report or texture_report['changed_textures']==0,
                   geometry_decimation=False,within_budget=len(pac)<=MAX_BYTES)
     report['source_allocation_fill']=[s['allocation_fill'] for s in sources]
     report['review_findings']=[dict(joint=s['joint'],unstitched_ambiguous_records=s['unstitched_internal_records'],
@@ -410,7 +431,7 @@ def build(project_path, selections, output, *, resolution=640, progress=lambda _
         if not allow_oversize:
             raise ValueError(f'Assembly is {len(pac):,} bytes, exceeding {MAX_BYTES:,}. Export withheld; no geometry or textures were reduced. Try fewer mixed parts or a different torso donor.')
         report['budget_warning']=dict(pac_bytes=len(pac),target_bytes=MAX_BYTES,over_by_bytes=len(pac)-MAX_BYTES,
-            message='Export exceeds the tested in-match PAC budget. It may crash or corrupt unrelated geometry in-game. Native structural checks do not establish runtime safety. No geometry or textures were reduced.')
+            message='Export exceeds the tested in-match PAC budget. It may crash or corrupt unrelated geometry in-game. Native structural checks do not establish runtime safety. No geometry was reduced.')
     container=inspect_pac(pac)
     if len(pac)%2048:raise ValueError('PAC final alignment failed.')
     aligned=all(s['offset']%16==0 for s in container['sections'])
@@ -421,6 +442,9 @@ def build(project_path, selections, output, *, resolution=640, progress=lambda _
     if finalraw!=raw:raise ValueError('Exported PAC and preview model differ.')
     # Output directory is created only after all mandatory checks pass.
     output.mkdir(parents=True);folder=output/'preview';folder.mkdir()
+    if texture_diagnostics is not None:
+        import shutil
+        shutil.copytree(texture_diagnostics.name,output/'maximum-textures');texture_diagnostics.cleanup()
     (output/'created-model.pac').write_bytes(pac);(folder/'model.yobj').write_bytes(finalraw)
     ordinary=copy.deepcopy(model)
     for mesh in ordinary['meshes']:
@@ -433,7 +457,7 @@ def build(project_path, selections, output, *, resolution=640, progress=lambda _
     for view in ('front','back','left','right','front-left'):
         progress('Rendering '+view);preview(model,textures,view,resolution).save(folder/(view+'.png'))
     (output/'SHA256SUMS.txt').write_text(report['pac_sha256']+'  created-model.pac\n',encoding='ascii')
-    dump(output/'qa.json',report);dump(output/'recipe.json',dict(schema=SCHEMA,selections=selections,sources=project['sources']))
+    dump(output/'qa.json',report);dump(output/'recipe.json',dict(schema=SCHEMA,selections=selections,sources=project['sources'],maximum_textures=maximum_textures))
     warning=('OVER BUDGET: '+str(report['budget_warning']['over_by_bytes'])+' bytes over target. '+report['budget_warning']['message']+'\n\n') if report.get('budget_warning') else ''
     (output/'README.txt').write_text(warning+'Experimental native PSP assembly. Import created-model.pac into a COPY of the wrestler slot using your established PAC/ARC workflow. Rebuild the enclosing archive and update its ARC metadata before testing a copied ISO in PPSSPP. Do not overwrite accepted PACs. Analytical poses are not captured game animations. OBJ is preview-only; native YOBJ and PAC retain rigging. Blood overlay meshes are retained in PAC and OBJ, but hidden in normal preview PNGs. Review qa.json, standing/walking/crouching, facial motion and blood in-game.\n',encoding='utf-8')
     return report

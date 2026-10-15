@@ -1,0 +1,990 @@
+[
+  {
+    "donors": [
+      "Batista",
+      "Jeff-Hardy"
+    ],
+    "selections": {
+      "Head": 0,
+      "Torso": 0,
+      "Arms": 0,
+      "Legs": 0
+    },
+    "passed": true,
+    "model_axis_error": 0,
+    "local_axis_error": 0,
+    "shared_neck": null
+  },
+  {
+    "donors": [
+      "Batista",
+      "Jeff-Hardy"
+    ],
+    "selections": {
+      "Head": 0,
+      "Torso": 0,
+      "Arms": 0,
+      "Legs": 1
+    },
+    "passed": true,
+    "model_axis_error": 0.0,
+    "local_axis_error": 0.0,
+    "shared_neck": {
+      "applied": false
+    }
+  },
+  {
+    "donors": [
+      "Batista",
+      "Jeff-Hardy"
+    ],
+    "selections": {
+      "Head": 0,
+      "Torso": 0,
+      "Arms": 1,
+      "Legs": 0
+    },
+    "passed": true,
+    "model_axis_error": 0.0,
+    "local_axis_error": 0.0,
+    "shared_neck": {
+      "applied": false
+    }
+  },
+  {
+    "donors": [
+      "Batista",
+      "Jeff-Hardy"
+    ],
+    "selections": {
+      "Head": 0,
+      "Torso": 0,
+      "Arms": 1,
+      "Legs": 1
+    },
+    "passed": true,
+    "model_axis_error": 0.0,
+    "local_axis_error": 0.0,
+    "shared_neck": {
+      "applied": false
+    }
+  },
+  {
+    "donors": [
+      "Batista",
+      "Jeff-Hardy"
+    ],
+    "selections": {
+      "Head": 0,
+      "Torso": 1,
+      "Arms": 0,
+      "Legs": 0
+    },
+    "passed": true,
+    "model_axis_error": 0.020335370418223645,
+    "local_axis_error": 0.028135613574444704,
+    "shared_neck": {
+      "applied": true,
+      "head_native_position": [
+        2.9501092433929443,
+        -0.00024038100673351437,
+        9.679882350610569e-05
+      ],
+      "torso_native_position": [
+        2.7342095375061035,
+        -0.00022272086062002927,
+        -0.017973363399505615
+      ],
+      "torso_fraction": 0.29999998625873603,
+      "head_endpoint_error": 0.04019368770945635,
+      "predicted_worst_pose_error": 0.028135581977100456,
+      "verified_tolerance": 0.03,
+      "method": "Minimax native-endpoint neck translation; both model/local-axis poses; vertices and weights unchanged"
+    }
+  },
+  {
+    "donors": [
+      "Batista",
+      "Jeff-Hardy"
+    ],
+    "selections": {
+      "Head": 0,
+      "Torso": 1,
+      "Arms": 0,
+      "Legs": 1
+    },
+    "passed": true,
+    "model_axis_error": 0.020335370418223645,
+    "local_axis_error": 0.028135613574444704,
+    "shared_neck": {
+      "applied": true,
+      "head_native_position": [
+        2.9501092433929443,
+        -0.00024038100673351437,
+        9.679882350610569e-05
+      ],
+      "torso_native_position": [
+        2.7342095375061035,
+        -0.00022272086062002927,
+        -0.017973363399505615
+      ],
+      "torso_fraction": 0.29999998625873603,
+      "head_endpoint_error": 0.04019368770945635,
+      "predicted_worst_pose_error": 0.028135581977100456,
+      "verified_tolerance": 0.03,
+      "method": "Minimax native-endpoint neck translation; both model/local-axis poses; vertices and weights unchanged"
+    }
+  },
+  {
+    "donors": [
+      "Batista",
+      "Jeff-Hardy"
+    ],
+    "selections": {
+      "Head": 0,
+      "Torso": 1,
+      "Arms": 1,
+      "Legs": 0
+    },
+    "passed": true,
+    "model_axis_error": 0.020335370418223645,
+    "local_axis_error": 0.028135613574444704,
+    "shared_neck": {
+      "applied": true,
+      "head_native_position": [
+        2.9501092433929443,
+        -0.00024038100673351437,
+        9.679882350610569e-05
+      ],
+      "torso_native_position": [
+        2.7342095375061035,
+        -0.00022272086062002927,
+        -0.017973363399505615
+      ],
+      "torso_fraction": 0.29999998625873603,
+      "head_endpoint_error": 0.04019368770945635,
+      "predicted_worst_pose_error": 0.028135581977100456,
+      "verified_tolerance": 0.03,
+      "method": "Minimax native-endpoint neck translation; both model/local-axis poses; vertices and weights unchanged"
+    }
+  },
+  {
+    "donors": [
+      "Batista",
+      "Jeff-Hardy"
+    ],
+    "selections": {
+      "Head": 0,
+      "Torso": 1,
+      "Arms": 1,
+      "Legs": 1
+    },
+    "passed": true,
+    "model_axis_error": 0.020335370418223645,
+    "local_axis_error": 0.028135613574444704,
+    "shared_neck": {
+      "applied": true,
+      "head_native_position": [
+        2.9501092433929443,
+        -0.00024038100673351437,
+        9.679882350610569e-05
+      ],
+      "torso_native_position": [
+        2.7342095375061035,
+        -0.00022272086062002927,
+        -0.017973363399505615
+      ],
+      "torso_fraction": 0.29999998625873603,
+      "head_endpoint_error": 0.04019368770945635,
+      "predicted_worst_pose_error": 0.028135581977100456,
+      "verified_tolerance": 0.03,
+      "method": "Minimax native-endpoint neck translation; both model/local-axis poses; vertices and weights unchanged"
+    }
+  },
+  {
+    "donors": [
+      "Batista",
+      "Jeff-Hardy"
+    ],
+    "selections": {
+      "Head": 1,
+      "Torso": 0,
+      "Arms": 0,
+      "Legs": 0
+    },
+    "passed": true,
+    "model_axis_error": 0.0015126530570685277,
+    "local_axis_error": 0.018136152002714363,
+    "shared_neck": {
+      "applied": false,
+      "head_endpoint_error": 0.018136152002714363,
+      "reason": "Native selected-head pivot already passes both pose conventions"
+    }
+  },
+  {
+    "donors": [
+      "Batista",
+      "Jeff-Hardy"
+    ],
+    "selections": {
+      "Head": 1,
+      "Torso": 0,
+      "Arms": 0,
+      "Legs": 1
+    },
+    "passed": true,
+    "model_axis_error": 0.0015126530570685277,
+    "local_axis_error": 0.018136152002714363,
+    "shared_neck": {
+      "applied": false,
+      "head_endpoint_error": 0.018136152002714363,
+      "reason": "Native selected-head pivot already passes both pose conventions"
+    }
+  },
+  {
+    "donors": [
+      "Batista",
+      "Jeff-Hardy"
+    ],
+    "selections": {
+      "Head": 1,
+      "Torso": 0,
+      "Arms": 1,
+      "Legs": 0
+    },
+    "passed": true,
+    "model_axis_error": 0.0015126530570685277,
+    "local_axis_error": 0.018136152002714363,
+    "shared_neck": {
+      "applied": false,
+      "head_endpoint_error": 0.018136152002714363,
+      "reason": "Native selected-head pivot already passes both pose conventions"
+    }
+  },
+  {
+    "donors": [
+      "Batista",
+      "Jeff-Hardy"
+    ],
+    "selections": {
+      "Head": 1,
+      "Torso": 0,
+      "Arms": 1,
+      "Legs": 1
+    },
+    "passed": true,
+    "model_axis_error": 0.0015126530570685277,
+    "local_axis_error": 0.018136152002714363,
+    "shared_neck": {
+      "applied": false,
+      "head_endpoint_error": 0.018136152002714363,
+      "reason": "Native selected-head pivot already passes both pose conventions"
+    }
+  },
+  {
+    "donors": [
+      "Batista",
+      "Jeff-Hardy"
+    ],
+    "selections": {
+      "Head": 1,
+      "Torso": 1,
+      "Arms": 0,
+      "Legs": 0
+    },
+    "passed": true,
+    "model_axis_error": 0.0,
+    "local_axis_error": 0.0,
+    "shared_neck": {
+      "applied": false
+    }
+  },
+  {
+    "donors": [
+      "Batista",
+      "Jeff-Hardy"
+    ],
+    "selections": {
+      "Head": 1,
+      "Torso": 1,
+      "Arms": 0,
+      "Legs": 1
+    },
+    "passed": true,
+    "model_axis_error": 0.0,
+    "local_axis_error": 0.0,
+    "shared_neck": {
+      "applied": false
+    }
+  },
+  {
+    "donors": [
+      "Batista",
+      "Jeff-Hardy"
+    ],
+    "selections": {
+      "Head": 1,
+      "Torso": 1,
+      "Arms": 1,
+      "Legs": 0
+    },
+    "passed": true,
+    "model_axis_error": 0.0,
+    "local_axis_error": 0.0,
+    "shared_neck": {
+      "applied": false
+    }
+  },
+  {
+    "donors": [
+      "Batista",
+      "Jeff-Hardy"
+    ],
+    "selections": {
+      "Head": 1,
+      "Torso": 1,
+      "Arms": 1,
+      "Legs": 1
+    },
+    "passed": true,
+    "model_axis_error": 0,
+    "local_axis_error": 0,
+    "shared_neck": null
+  },
+  {
+    "donors": [
+      "Batista",
+      "JBL(Suit)"
+    ],
+    "selections": {
+      "Head": 0,
+      "Torso": 0,
+      "Arms": 0,
+      "Legs": 0
+    },
+    "passed": true,
+    "model_axis_error": 0,
+    "local_axis_error": 0,
+    "shared_neck": null
+  },
+  {
+    "donors": [
+      "Batista",
+      "JBL(Suit)"
+    ],
+    "selections": {
+      "Head": 0,
+      "Torso": 0,
+      "Arms": 0,
+      "Legs": 1
+    },
+    "passed": true,
+    "model_axis_error": 0.0,
+    "local_axis_error": 0.0,
+    "shared_neck": {
+      "applied": false
+    }
+  },
+  {
+    "donors": [
+      "Batista",
+      "JBL(Suit)"
+    ],
+    "selections": {
+      "Head": 0,
+      "Torso": 0,
+      "Arms": 1,
+      "Legs": 0
+    },
+    "passed": true,
+    "model_axis_error": 0.0,
+    "local_axis_error": 0.0,
+    "shared_neck": {
+      "applied": false
+    }
+  },
+  {
+    "donors": [
+      "Batista",
+      "JBL(Suit)"
+    ],
+    "selections": {
+      "Head": 0,
+      "Torso": 0,
+      "Arms": 1,
+      "Legs": 1
+    },
+    "passed": true,
+    "model_axis_error": 0.0,
+    "local_axis_error": 0.0,
+    "shared_neck": {
+      "applied": false
+    }
+  },
+  {
+    "donors": [
+      "Batista",
+      "JBL(Suit)"
+    ],
+    "selections": {
+      "Head": 0,
+      "Torso": 1,
+      "Arms": 0,
+      "Legs": 0
+    },
+    "passed": true,
+    "model_axis_error": 0.0,
+    "local_axis_error": 0.0,
+    "shared_neck": {
+      "applied": false
+    }
+  },
+  {
+    "donors": [
+      "Batista",
+      "JBL(Suit)"
+    ],
+    "selections": {
+      "Head": 0,
+      "Torso": 1,
+      "Arms": 0,
+      "Legs": 1
+    },
+    "passed": true,
+    "model_axis_error": 0.0,
+    "local_axis_error": 0.0,
+    "shared_neck": {
+      "applied": false
+    }
+  },
+  {
+    "donors": [
+      "Batista",
+      "JBL(Suit)"
+    ],
+    "selections": {
+      "Head": 0,
+      "Torso": 1,
+      "Arms": 1,
+      "Legs": 0
+    },
+    "passed": true,
+    "model_axis_error": 0.0,
+    "local_axis_error": 0.0,
+    "shared_neck": {
+      "applied": false
+    }
+  },
+  {
+    "donors": [
+      "Batista",
+      "JBL(Suit)"
+    ],
+    "selections": {
+      "Head": 0,
+      "Torso": 1,
+      "Arms": 1,
+      "Legs": 1
+    },
+    "passed": true,
+    "model_axis_error": 0.0,
+    "local_axis_error": 0.0,
+    "shared_neck": {
+      "applied": false
+    }
+  },
+  {
+    "donors": [
+      "Batista",
+      "JBL(Suit)"
+    ],
+    "selections": {
+      "Head": 1,
+      "Torso": 0,
+      "Arms": 0,
+      "Legs": 0
+    },
+    "passed": true,
+    "model_axis_error": 1.1102230246251565e-16,
+    "local_axis_error": 2.7755575615628914e-17,
+    "shared_neck": {
+      "applied": false
+    }
+  },
+  {
+    "donors": [
+      "Batista",
+      "JBL(Suit)"
+    ],
+    "selections": {
+      "Head": 1,
+      "Torso": 0,
+      "Arms": 0,
+      "Legs": 1
+    },
+    "passed": true,
+    "model_axis_error": 1.1102230246251565e-16,
+    "local_axis_error": 2.7755575615628914e-17,
+    "shared_neck": {
+      "applied": false
+    }
+  },
+  {
+    "donors": [
+      "Batista",
+      "JBL(Suit)"
+    ],
+    "selections": {
+      "Head": 1,
+      "Torso": 0,
+      "Arms": 1,
+      "Legs": 0
+    },
+    "passed": true,
+    "model_axis_error": 1.1102230246251565e-16,
+    "local_axis_error": 2.7755575615628914e-17,
+    "shared_neck": {
+      "applied": false
+    }
+  },
+  {
+    "donors": [
+      "Batista",
+      "JBL(Suit)"
+    ],
+    "selections": {
+      "Head": 1,
+      "Torso": 0,
+      "Arms": 1,
+      "Legs": 1
+    },
+    "passed": true,
+    "model_axis_error": 1.1102230246251565e-16,
+    "local_axis_error": 2.7755575615628914e-17,
+    "shared_neck": {
+      "applied": false
+    }
+  },
+  {
+    "donors": [
+      "Batista",
+      "JBL(Suit)"
+    ],
+    "selections": {
+      "Head": 1,
+      "Torso": 1,
+      "Arms": 0,
+      "Legs": 0
+    },
+    "passed": true,
+    "model_axis_error": 0.0,
+    "local_axis_error": 0.0,
+    "shared_neck": {
+      "applied": false
+    }
+  },
+  {
+    "donors": [
+      "Batista",
+      "JBL(Suit)"
+    ],
+    "selections": {
+      "Head": 1,
+      "Torso": 1,
+      "Arms": 0,
+      "Legs": 1
+    },
+    "passed": true,
+    "model_axis_error": 0.0,
+    "local_axis_error": 0.0,
+    "shared_neck": {
+      "applied": false
+    }
+  },
+  {
+    "donors": [
+      "Batista",
+      "JBL(Suit)"
+    ],
+    "selections": {
+      "Head": 1,
+      "Torso": 1,
+      "Arms": 1,
+      "Legs": 0
+    },
+    "passed": true,
+    "model_axis_error": 0.0,
+    "local_axis_error": 0.0,
+    "shared_neck": {
+      "applied": false
+    }
+  },
+  {
+    "donors": [
+      "Batista",
+      "JBL(Suit)"
+    ],
+    "selections": {
+      "Head": 1,
+      "Torso": 1,
+      "Arms": 1,
+      "Legs": 1
+    },
+    "passed": true,
+    "model_axis_error": 0,
+    "local_axis_error": 0,
+    "shared_neck": null
+  },
+  {
+    "donors": [
+      "Jeff-Hardy",
+      "JBL(Suit)"
+    ],
+    "selections": {
+      "Head": 0,
+      "Torso": 0,
+      "Arms": 0,
+      "Legs": 0
+    },
+    "passed": true,
+    "model_axis_error": 0,
+    "local_axis_error": 0,
+    "shared_neck": null
+  },
+  {
+    "donors": [
+      "Jeff-Hardy",
+      "JBL(Suit)"
+    ],
+    "selections": {
+      "Head": 0,
+      "Torso": 0,
+      "Arms": 0,
+      "Legs": 1
+    },
+    "passed": true,
+    "model_axis_error": 0.0,
+    "local_axis_error": 0.0,
+    "shared_neck": {
+      "applied": false
+    }
+  },
+  {
+    "donors": [
+      "Jeff-Hardy",
+      "JBL(Suit)"
+    ],
+    "selections": {
+      "Head": 0,
+      "Torso": 0,
+      "Arms": 1,
+      "Legs": 0
+    },
+    "passed": true,
+    "model_axis_error": 0.0,
+    "local_axis_error": 0.0,
+    "shared_neck": {
+      "applied": false
+    }
+  },
+  {
+    "donors": [
+      "Jeff-Hardy",
+      "JBL(Suit)"
+    ],
+    "selections": {
+      "Head": 0,
+      "Torso": 0,
+      "Arms": 1,
+      "Legs": 1
+    },
+    "passed": true,
+    "model_axis_error": 0.0,
+    "local_axis_error": 0.0,
+    "shared_neck": {
+      "applied": false
+    }
+  },
+  {
+    "donors": [
+      "Jeff-Hardy",
+      "JBL(Suit)"
+    ],
+    "selections": {
+      "Head": 0,
+      "Torso": 1,
+      "Arms": 0,
+      "Legs": 0
+    },
+    "passed": true,
+    "model_axis_error": 0.0009202614687990882,
+    "local_axis_error": 0.011033595489884416,
+    "shared_neck": {
+      "applied": false,
+      "head_endpoint_error": 0.011033595489884416,
+      "reason": "Native selected-head pivot already passes both pose conventions"
+    }
+  },
+  {
+    "donors": [
+      "Jeff-Hardy",
+      "JBL(Suit)"
+    ],
+    "selections": {
+      "Head": 0,
+      "Torso": 1,
+      "Arms": 0,
+      "Legs": 1
+    },
+    "passed": true,
+    "model_axis_error": 0.0009202614687990882,
+    "local_axis_error": 0.011033595489884416,
+    "shared_neck": {
+      "applied": false,
+      "head_endpoint_error": 0.011033595489884416,
+      "reason": "Native selected-head pivot already passes both pose conventions"
+    }
+  },
+  {
+    "donors": [
+      "Jeff-Hardy",
+      "JBL(Suit)"
+    ],
+    "selections": {
+      "Head": 0,
+      "Torso": 1,
+      "Arms": 1,
+      "Legs": 0
+    },
+    "passed": true,
+    "model_axis_error": 0.0009202614687990882,
+    "local_axis_error": 0.011033595489884416,
+    "shared_neck": {
+      "applied": false,
+      "head_endpoint_error": 0.011033595489884416,
+      "reason": "Native selected-head pivot already passes both pose conventions"
+    }
+  },
+  {
+    "donors": [
+      "Jeff-Hardy",
+      "JBL(Suit)"
+    ],
+    "selections": {
+      "Head": 0,
+      "Torso": 1,
+      "Arms": 1,
+      "Legs": 1
+    },
+    "passed": true,
+    "model_axis_error": 0.0009202614687990882,
+    "local_axis_error": 0.011033595489884416,
+    "shared_neck": {
+      "applied": false,
+      "head_endpoint_error": 0.011033595489884416,
+      "reason": "Native selected-head pivot already passes both pose conventions"
+    }
+  },
+  {
+    "donors": [
+      "Jeff-Hardy",
+      "JBL(Suit)"
+    ],
+    "selections": {
+      "Head": 1,
+      "Torso": 0,
+      "Arms": 0,
+      "Legs": 0
+    },
+    "passed": true,
+    "model_axis_error": 0.020335370418225144,
+    "local_axis_error": 0.028135613993697805,
+    "shared_neck": {
+      "applied": true,
+      "head_native_position": [
+        2.9501092433929443,
+        -0.00024038100673351437,
+        9.679882350610569e-05
+      ],
+      "torso_native_position": [
+        2.7342095375061035,
+        -0.00022272086062002927,
+        -0.017973363399505615
+      ],
+      "torso_fraction": 0.2999999829994874,
+      "head_endpoint_error": 0.04019368770945636,
+      "predicted_worst_pose_error": 0.028135582108101617,
+      "verified_tolerance": 0.03,
+      "method": "Minimax native-endpoint neck translation; both model/local-axis poses; vertices and weights unchanged"
+    }
+  },
+  {
+    "donors": [
+      "Jeff-Hardy",
+      "JBL(Suit)"
+    ],
+    "selections": {
+      "Head": 1,
+      "Torso": 0,
+      "Arms": 0,
+      "Legs": 1
+    },
+    "passed": true,
+    "model_axis_error": 0.020335370418225144,
+    "local_axis_error": 0.028135613993697805,
+    "shared_neck": {
+      "applied": true,
+      "head_native_position": [
+        2.9501092433929443,
+        -0.00024038100673351437,
+        9.679882350610569e-05
+      ],
+      "torso_native_position": [
+        2.7342095375061035,
+        -0.00022272086062002927,
+        -0.017973363399505615
+      ],
+      "torso_fraction": 0.2999999829994874,
+      "head_endpoint_error": 0.04019368770945636,
+      "predicted_worst_pose_error": 0.028135582108101617,
+      "verified_tolerance": 0.03,
+      "method": "Minimax native-endpoint neck translation; both model/local-axis poses; vertices and weights unchanged"
+    }
+  },
+  {
+    "donors": [
+      "Jeff-Hardy",
+      "JBL(Suit)"
+    ],
+    "selections": {
+      "Head": 1,
+      "Torso": 0,
+      "Arms": 1,
+      "Legs": 0
+    },
+    "passed": true,
+    "model_axis_error": 0.020335370418225144,
+    "local_axis_error": 0.028135613993697805,
+    "shared_neck": {
+      "applied": true,
+      "head_native_position": [
+        2.9501092433929443,
+        -0.00024038100673351437,
+        9.679882350610569e-05
+      ],
+      "torso_native_position": [
+        2.7342095375061035,
+        -0.00022272086062002927,
+        -0.017973363399505615
+      ],
+      "torso_fraction": 0.2999999829994874,
+      "head_endpoint_error": 0.04019368770945636,
+      "predicted_worst_pose_error": 0.028135582108101617,
+      "verified_tolerance": 0.03,
+      "method": "Minimax native-endpoint neck translation; both model/local-axis poses; vertices and weights unchanged"
+    }
+  },
+  {
+    "donors": [
+      "Jeff-Hardy",
+      "JBL(Suit)"
+    ],
+    "selections": {
+      "Head": 1,
+      "Torso": 0,
+      "Arms": 1,
+      "Legs": 1
+    },
+    "passed": true,
+    "model_axis_error": 0.020335370418225144,
+    "local_axis_error": 0.028135613993697805,
+    "shared_neck": {
+      "applied": true,
+      "head_native_position": [
+        2.9501092433929443,
+        -0.00024038100673351437,
+        9.679882350610569e-05
+      ],
+      "torso_native_position": [
+        2.7342095375061035,
+        -0.00022272086062002927,
+        -0.017973363399505615
+      ],
+      "torso_fraction": 0.2999999829994874,
+      "head_endpoint_error": 0.04019368770945636,
+      "predicted_worst_pose_error": 0.028135582108101617,
+      "verified_tolerance": 0.03,
+      "method": "Minimax native-endpoint neck translation; both model/local-axis poses; vertices and weights unchanged"
+    }
+  },
+  {
+    "donors": [
+      "Jeff-Hardy",
+      "JBL(Suit)"
+    ],
+    "selections": {
+      "Head": 1,
+      "Torso": 1,
+      "Arms": 0,
+      "Legs": 0
+    },
+    "passed": true,
+    "model_axis_error": 0.0,
+    "local_axis_error": 0.0,
+    "shared_neck": {
+      "applied": false
+    }
+  },
+  {
+    "donors": [
+      "Jeff-Hardy",
+      "JBL(Suit)"
+    ],
+    "selections": {
+      "Head": 1,
+      "Torso": 1,
+      "Arms": 0,
+      "Legs": 1
+    },
+    "passed": true,
+    "model_axis_error": 0.0,
+    "local_axis_error": 0.0,
+    "shared_neck": {
+      "applied": false
+    }
+  },
+  {
+    "donors": [
+      "Jeff-Hardy",
+      "JBL(Suit)"
+    ],
+    "selections": {
+      "Head": 1,
+      "Torso": 1,
+      "Arms": 1,
+      "Legs": 0
+    },
+    "passed": true,
+    "model_axis_error": 0.0,
+    "local_axis_error": 0.0,
+    "shared_neck": {
+      "applied": false
+    }
+  },
+  {
+    "donors": [
+      "Jeff-Hardy",
+      "JBL(Suit)"
+    ],
+    "selections": {
+      "Head": 1,
+      "Torso": 1,
+      "Arms": 1,
+      "Legs": 1
+    },
+    "passed": true,
+    "model_axis_error": 0,
+    "local_axis_error": 0,
+    "shared_neck": null
+  }
+]

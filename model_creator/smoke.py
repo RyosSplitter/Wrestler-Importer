@@ -83,6 +83,55 @@ def run_library(app,output):
         prepared_array_texture_roundtrip_exact=True,assets='Synthetic fixtures plus explicitly supplied prepared native library')
     dump(output,report)
     run_donor_import(app,output)
+    run_creator030(app,output)
+
+
+def run_creator030(app,output):
+    import json
+    import numpy as np
+    from unittest.mock import patch
+    from .core import digest
+    from .library import create_project
+    from desktop.texture_optimizer.candidates import write_gim,read_gim
+    from tools.pac_repack import replace_sections,texture_table
+    from tools.yukes_bpe import compress
+    with tempfile.TemporaryDirectory(prefix='creator-texture-option-',dir=output.parent) as temp:
+        temp=Path(temp);data=pair()[0];palette=np.zeros((16,4),np.uint8);palette[:,3]=255
+        palette[:,:3]=np.arange(16,dtype=np.uint8)[:,None]*16
+        pixels=np.random.default_rng(37).integers(0,16,(128,128),dtype=np.uint8)
+        gim=write_gim(pixels,palette,4);table=texture_table(['skin'],[gim],gim_reader=read_gim)
+        data=replace_sections(data,{9:compress(table)});source=temp/'Texture test.pac';source.write_bytes(data)
+        project=create_project([load_source(source,library=True)],dict.fromkeys(PARTS,0),temp/'Project');app.load(project);app.max_texture_checkbox.invoke()
+        deadline=time.monotonic()+90
+        while (app.preview_after is not None or app.busy) and time.monotonic()<deadline:app.root.update();time.sleep(.02)
+        if not app.max_textures.get():raise ValueError('Maximum texture checkbox did not enable')
+        with patch('model_creator.core.MAX_BYTES',len(data)-2048),patch('model_creator.gui.messagebox.showwarning'):
+            app.assemble();deadline=time.monotonic()+180
+            while app.busy and time.monotonic()<deadline:app.root.update();time.sleep(.02)
+        if app.result is None or not app.last_report['maximum_texture_downgrade'] or not app.last_report['within_budget']:raise ValueError('Maximum texture checkbox did not rescue a real oversized texture table')
+        if not app.last_report['maximum_texture_downgrade']['unchanged_non_texture_payloads']:raise ValueError('Texture option altered geometry/rigging')
+        app.max_textures.set(False)
+        with patch('model_creator.gui.messagebox.showinfo'):
+            if app.require_result():raise ValueError('Changed texture option allowed stale export')
+        app.max_textures.set(True)
+        report=json.loads(output.read_text());report.update(maximum_texture_checkbox=True,maximum_texture_gui_rescue=True,texture_option_stale_export_blocked=True)
+        dump(output,report)
+    # Exercise the shared native neck bind solver in the actual frozen app.
+    app.max_textures.set(False);app.open_library();labels={e['label']:app.labels[i] for i,e in enumerate(app.library.entries)}
+    for part in PARTS:app.choices[part].set(labels['Batista'])
+    app.choices['Torso'].set(labels['Jeff-Hardy']);app.dirty();deadline=time.monotonic()+90
+    while (app.preview_after is not None or app.busy) and time.monotonic()<deadline:app.root.update();time.sleep(.02)
+    if app.model is None:raise ValueError('Jeff Hardy torso bind compatibility preview failed')
+    with patch('model_creator.gui.messagebox.showwarning'):
+        app.assemble();deadline=time.monotonic()+90
+        while app.busy and time.monotonic()<deadline:app.root.update();time.sleep(.02)
+    if app.result is None or not app.last_report.get('shared_neck_fit',{}).get('applied'):raise ValueError('Shared neck fit did not run in frozen app')
+    if any(not c['passed'] for c in app.last_report['local_axis_interior_pose_comparison'].values()):raise ValueError('Frozen Hardy source-pose regression')
+    from PIL import ImageGrab
+    app.root.update();x,y=app.root.winfo_rootx(),app.root.winfo_rooty();w,h=app.root.winfo_width(),app.root.winfo_height()
+    ImageGrab.grab(bbox=(x,y,x+w,y+h)).save(output.with_name('creator-030-window.png'))
+    report=json.loads(output.read_text());report.update(frozen_hardy_bind_fit=True,local_axis_pose_regressions_checked=True)
+    dump(output,report)
 
 
 def run_donor_import(app,output):

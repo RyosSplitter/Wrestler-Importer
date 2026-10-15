@@ -16,7 +16,7 @@ jobs:
           python-version: '3.13'
       - run: python -m pip install -r requirements-desktop.txt
       - name: Original synthetic creator regression tests
-        run: python -m unittest tests.test_model_creator tests.test_creator_library tests.test_creator_donor_import -v
+        run: python -m unittest tests.test_model_creator tests.test_creator_library tests.test_creator_donor_import tests.test_creator_030 -v
       - name: Build separate portable application
         run: python -m tools.build_creator
       - name: Frozen creator live selection preview, assembly, native export and texture roundtrip
@@ -54,7 +54,7 @@ jobs:
           if (Test-Path $output) { Copy-Item $output dist/creator-patch-smoke.json }
           if ($p.ExitCode -ne 0) { throw 'Overlay on original 0.2 runtime failed' }
           $report = Get-Content $output -Raw | ConvertFrom-Json
-          if (-not $report.passed -or -not $report.add_donors_button -or -not $report.imported_donor_mixed_preview_and_export -or -not $report.oversized_pac_export_allowed -or -not $report.oversized_gui_warning_shown) { throw 'Donor import overlay checks failed' }
+          if (-not $report.passed -or -not $report.add_donors_button -or -not $report.imported_donor_mixed_preview_and_export -or -not $report.oversized_pac_export_allowed -or -not $report.oversized_gui_warning_shown -or -not $report.maximum_texture_gui_rescue -or -not $report.frozen_hardy_bind_fit) { throw 'Donor import overlay checks failed' }
           if ((Get-FileHash "$app/creator_library/catalog.json").Hash -ne $catalogBefore) { throw 'Bundled catalog changed during patch self-check' }
       - name: Package drop-in donor patch
         run: python -m tools.build_creator_patch
@@ -63,12 +63,12 @@ jobs:
         run: |
           import hashlib,shutil
           from pathlib import Path
-          path=Path(shutil.make_archive('dist/PSP-Model-Creator-0.2.2-Windows-x64','zip','dist','PSP-Model-Creator'))
+          path=Path(shutil.make_archive('dist/PSP-Model-Creator-0.3.0-Windows-x64','zip','dist','PSP-Model-Creator'))
           Path(str(path)+'.sha256').write_text(hashlib.file_digest(path.open('rb'),'sha256').hexdigest()+'  '+path.name+'\n')
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: PSP-Model-Creator-0.2.2-Windows-x64
+          name: PSP-Model-Creator-0.3.0-Windows-x64
           path: |
             dist/*.zip
             dist/*.sha256
@@ -81,7 +81,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           @'
-          PSP Model Creator 0.2.2: drop-in Add donors patch. Existing 0.2 users should download PSP-Model-Creator-0.2.2-Creator-Patch.zip, close the app and extract it into the existing app directory, replacing the executable. Keep the existing _internal and creator_library folders. The patch does not replace runtime files, donor PACs or catalog. Add donors selects one or more native PSP PACs, validates supported structures, stores byte-exact SHA-256 snapshots, generates previews and adds all four dropdown choices. Duplicate contents are skipped; invalid inputs are individually explained; catalog updates are locked, backed up and atomic. Future additions require no app rebuild. Models exceeding the 148000-byte size target now display an explicit warning and can still be exported. Actual size and excess bytes are recorded in QA; no geometry or textures are reduced. Rig, seam, pose, pointer, index and native-structure failures still block export. A complete 0.2.2 ZIP is also provided for new installations. The patch is functionally tested over the actual released 0.2 runtime and original library. See ADD-DONORS-README.md for installation and limits.
+          PSP Model Creator 0.3: full app plus optional drop-in patch. Includes in-app Add donors, oversized exports with explicit warnings, and a Maximum texture downgrade checkbox that attempts texture-only fitting without changing model geometry or rigging. Native selected-part bind branches fix the old blanket rejection of Hardy/JBL donors; a measured shared-neck solver is used only when needed, with unchanged source weights/positions and the existing .03 pose tolerance. QA adds native local-axis animation probes. 48/48 tested Batista/Jeff, Batista/JBL and Jeff/JBL part combinations pass native and analytical checks; 120/124 individual part trials pass across the 31-model library. Remaining unsafe combinations are still withheld. New mixes require SVR 2011 PSP/PPSSPP testing; no exhaustive or in-game certification is claimed. Existing users can extract PSP-Model-Creator-0.3.0-Creator-Patch.zip over their app, replacing the executable while retaining _internal and creator_library. The full Windows ZIP includes all 31 prepared donors. See README for bind root causes, texture decisions and scope.
           '@ | Set-Content "$env:RUNNER_TEMP/creator-notes.txt" -Encoding utf8NoBOM
           $tag = "creator-preview-${{ github.run_number }}-${{ github.sha }}"
-          gh release create $tag dist/*.zip dist/*.sha256 dist/creator-window.png dist/creator-library-window.png --target '${{ github.sha }}' --prerelease --title 'PSP Model Creator 0.2.2 — Add donors + size warnings' --notes-file "$env:RUNNER_TEMP/creator-notes.txt"
+          gh release create $tag dist/*.zip dist/*.sha256 dist/creator-window.png dist/creator-library-window.png dist/creator-030-window.png --target '${{ github.sha }}' --prerelease --title 'PSP Model Creator 0.3 — texture rescue and donor binds' --notes-file "$env:RUNNER_TEMP/creator-notes.txt"
