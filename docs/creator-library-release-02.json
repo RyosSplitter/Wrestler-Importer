@@ -1,0 +1,46 @@
+{
+  "version": "0.2.0",
+  "zip_bytes": 68300942,
+  "sha256": "f215fa3062e240fb4eb50abb680a8d2069f73d3c0a55b454d1c617ab5e2b3105",
+  "prepared_models": 31,
+  "manifest_files_verified": 1563,
+  "workflow": 38697168031,
+  "workflow_passed": true,
+  "windows_frozen_preview_export_and_texture_edit_passed": true,
+  "build_commit": "bf7111bd55032b469cb6dc861410de03b7bbb02b",
+  "release_url": "https://github.com/RyosSplitter/Wrestler-Importer/releases/tag/creator-preview-5-bf7111bd55032b469cb6dc861410de03b7bbb02b",
+  "repository_tests": 410,
+  "repository_tests_passed": true,
+  "linux_gui_resolutions": [
+    "1280x900",
+    "1024x768"
+  ],
+  "source_gui_report": {
+    "passed": true,
+    "part_selectors": true,
+    "live_selection_preview_before_export": true,
+    "stale_export_blocked": true,
+    "all_export_buttons_visible": true,
+    "background_assembly": true,
+    "native_export": true,
+    "analytical_poses": 10,
+    "preview_views": true,
+    "editable_texture_roundtrip_exact": true,
+    "pac_bytes": 4096,
+    "assets": "Synthetic fixtures plus explicitly supplied prepared native library",
+    "prepared_models": 31,
+    "prepared_library_all_native_readers_passed": true,
+    "prepared_live_preview_without_import": true,
+    "prepared_hair_groups_preserved": true,
+    "prepared_mixed_pac_bytes": 129024,
+    "prepared_array_texture_roundtrip_exact": true
+  },
+  "final_controlled_study_reproduced_exactly": true,
+  "clean_user_windows_test": false,
+  "ppsspp_new_library_mixes_tested": false,
+  "caveats": [
+    "Not every four-way combination has been tested.",
+    "Differing body binds, unsafe attachments, source-pose regressions and oversized PACs are withheld.",
+    "Model content is included at the explicit request of the repository owner; rights remain with their respective holders."
+  ]
+}
