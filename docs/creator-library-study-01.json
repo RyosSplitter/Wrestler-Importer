@@ -115,7 +115,6 @@
       "8x16": 1,
       "256x128": 1
     },
-    "texture_pngs_rendered": 25,
     "multi_descriptor_interpretation": "INFERRED: header uint32 at byte 52 counts contiguous 32-byte named records; counts at descriptor+24 sum to header+24 across all 31 files. Runtime semantics unknown; no rewrites enabled.",
     "app_modified": false,
     "pacs_rebuilt": false,
@@ -124,7 +123,10 @@
       "Cody-Rhodes-Ring.PAC",
       "Dolph-Ziggler.PAC",
       "KOFI_KINGSTON.pac"
-    ]
+    ],
+    "ordinary_front_previews": 25,
+    "diagnostic_front_previews": 6,
+    "total_front_rear_previews": 62
   },
   "files": [
     {
@@ -2254,5 +2256,9 @@
       "input_unchanged": true,
       "texture_entries": 20
     }
-  ]
+  ],
+  "reference": {
+    "filename": "Kenny-Dykstra.PAC",
+    "sha256": "004e8e4c16d10bf9a2447b35be9861e996e42a47c4719e64b00d535ee41e80d4"
+  }
 }
