@@ -7,7 +7,7 @@ a [standalone PAC validator with verified repair copies](docs/portable-pac-valid
 preview exports and byte-identical PAC copies. UV/geometry import, creator and
 additional source adapters remain planned. The foundation
 is isolated on `feature/psp-model-suite`; accepted baselines remain preserved.
-[Download the Windows suite preview](https://github.com/RyosSplitter/Wrestler-Importer/releases/tag/suite-foundation-2-8ab5474b8a16d93d659ecec91854fff9e56201a7).
+[Download the Windows suite preview](https://github.com/RyosSplitter/Wrestler-Importer/releases/tag/suite-foundation-5-1f670a80002ab89094dfac63f00bfb1339d0fe5e).
 
 Goal: turn a PS2 wrestler PAC from SYM, JBI, HCTP, or PS2 SVR into a PSP SVR
 wrestler PAC using a target PSP base skeleton and body layout. The intended app
