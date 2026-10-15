@@ -82,3 +82,37 @@ def run_library(app,output):
         prepared_hair_groups_preserved=True,prepared_mixed_pac_bytes=app.last_report['pac_bytes'],
         prepared_array_texture_roundtrip_exact=True,assets='Synthetic fixtures plus explicitly supplied prepared native library')
     dump(output,report)
+    run_donor_import(app,output)
+
+
+def run_donor_import(app,output):
+    """Exercise the new button path on a disposable library, then restart it."""
+    import json
+    from .library import Library
+    from .core import digest
+    with tempfile.TemporaryDirectory(prefix='creator-import-',dir=output.parent) as temp:
+        temp=Path(temp);library=temp/'creator_library';(library/'pacs').mkdir(parents=True)
+        first,second=pair();(library/'pacs/first.pac').write_bytes(first)
+        dump(library/'catalog.json',dict(schema='psp-model-creator.library/1',models=[dict(label='Original',file='pacs/first.pac',sha256=digest(first))]))
+        incoming=temp/'New native donor.PAC';incoming.write_bytes(second)
+        bad=temp/'Unsupported.pac';bad.write_bytes(b'not a PAC')
+        app.reload_library(library);app.root.update();deadline=time.monotonic()+90
+        while (app.preview_after is not None or app.busy) and time.monotonic()<deadline:app.root.update();time.sleep(.02)
+        from unittest.mock import patch
+        with patch('model_creator.gui.filedialog.askopenfilenames',return_value=(str(incoming),str(bad),str(incoming))):app.add_donors()
+        deadline=time.monotonic()+90
+        while (app.preview_after is not None or app.busy) and time.monotonic()<deadline:app.root.update();time.sleep(.02)
+        r=app.last_import_report
+        if len(r['added'])!=1 or len(r['duplicates'])!=1 or len(r['rejected'])!=1:raise ValueError('Import batch results differ')
+        incoming.unlink();app.reload_library(library);app.root.update()
+        for part in PARTS:app.choices[part].set(app.labels[int(part=='Head')])
+        app.dirty();deadline=time.monotonic()+90
+        while (app.preview_after is not None or app.busy) and time.monotonic()<deadline:app.root.update();time.sleep(.02)
+        if app.model is None or len(app.labels)!=2:raise ValueError('Imported donor failed preview after reload/input removal')
+        app.assemble();deadline=time.monotonic()+90
+        while app.busy and time.monotonic()<deadline:app.root.update();time.sleep(.02)
+        if app.result is None or not app.last_report['within_budget']:raise ValueError('Imported donor failed guarded assembly')
+        if Library(library).source(1)['data']!=second:raise ValueError('Import changed native PAC bytes')
+        report=json.loads(output.read_text());report.update(add_donors_button=True,import_batch_add_duplicate_reject=True,
+            imported_donor_persists_without_original=True,imported_donor_mixed_preview_and_export=True)
+        dump(output,report)

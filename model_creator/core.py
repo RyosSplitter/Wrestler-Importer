@@ -21,7 +21,7 @@ from tools.weight_trial_review import descendant_names, deform
 from tools.prepare_model import bone_matrices
 from model_creator.parts import PARTS, JOINTS, extract, stitch, triangles
 
-VERSION = '0.2.0'
+VERSION = '0.2.1'
 SCHEMA = 'psp-model-creator/1'
 MAX_BYTES = 148000
 POSES = {'rest': {}, 'standing': {'l_ninoude': ('z',70), 'r_ninoude': ('z',-70)},

@@ -4,11 +4,14 @@ Library PACs are immutable snapshots, not converter templates. No resampling,
 retargeting, decimation or texture optimization is performed by this module.
 """
 import copy
+from contextlib import contextmanager
 import json
 import os
 from pathlib import Path
 import struct
 import sys
+import tempfile
+import uuid
 
 import numpy as np
 
@@ -51,6 +54,95 @@ class Library:
         return [self.source(i) for i in ids],{p:ids.index(choices[p]) for p in PARTS}
 
 
+@contextmanager
+def catalog_lock(root):
+    """OS-owned lock: another importer cannot lose an existing catalog update.
+
+    The OS releases the lock on process exit, including an interrupted import.
+    Readers continue to see a complete old or new catalog via atomic replace.
+    """
+    with (Path(root)/'.donor-import.lock').open('a+b') as stream:
+        if stream.seek(0,2)==0:stream.write(b'0');stream.flush()
+        stream.seek(0)
+        if sys.platform=='win32':
+            import msvcrt
+            try:msvcrt.locking(stream.fileno(),msvcrt.LK_NBLCK,1)
+            except OSError as exc:raise ValueError('Another donor import is running. Try again when it finishes.') from exc
+        else:
+            import fcntl
+            try:fcntl.flock(stream.fileno(),fcntl.LOCK_EX|fcntl.LOCK_NB)
+            except OSError as exc:raise ValueError('Another donor import is running. Try again when it finishes.') from exc
+        try:yield
+        finally:
+            stream.seek(0)
+            if sys.platform=='win32':msvcrt.locking(stream.fileno(),msvcrt.LK_UNLCK,1)
+            else:fcntl.flock(stream.fileno(),fcntl.LOCK_UN)
+
+
+def add_donors(paths, root=None, *, progress=lambda _:None):
+    """Register validated native PSP snapshots; never edit or replace a donor.
+
+    Each valid input gets its own report entry. Invalid inputs do not prevent
+    other valid files in the batch from being added. Existing entries keep their
+    order/identity so saved UI selections remain meaningful after a refresh.
+    """
+    from .core import preview
+    from desktop.edit_folder import publish_new
+    root=Path(root or bundled_root()).resolve()
+    report=dict(added=[],duplicates=[],rejected=[],catalog_backup=None)
+    with catalog_lock(root):
+        library=Library(root);catalog=copy.deepcopy(library.catalog)
+        known={entry['sha256']:entry for entry in catalog['models']}
+        new_files=[]
+        try:
+            for filename in paths:
+                path=Path(filename)
+                progress('Checking donor: '+path.name)
+                created=[]
+                try:
+                    if path.suffix.casefold()!='.pac' or path.is_symlink():raise ValueError('Select an ordinary native PSP .pac file')
+                    source=load_source(path,library=True)
+                    sha=source['sha256']
+                    if sha in known:
+                        report['duplicates'].append(dict(file=str(path),label=known[sha]['label'],sha256=sha));continue
+                    model=source['model'];stats=model['report'];textures={n:source['textures'][n.casefold()] for n in model['texture_names']}
+                    previews={};images={}
+                    import io
+                    for view in ('front','back'):
+                        name=f'previews/user-{sha}-{view}.png';buffer=io.BytesIO()
+                        preview(model,textures,view,256).save(buffer,format='PNG');images[name]=buffer.getvalue();previews[view]=name
+                    if path.read_bytes()!=source['data']:raise ValueError('Input changed during import; finish saving it and retry')
+                    relative=f'pacs/user-{sha}.pac';payloads={relative:source['data'],**images}
+                    for name,data in payloads.items():
+                        target=root/name;target.parent.mkdir(parents=True,exist_ok=True)
+                        if target.exists():
+                            if target.is_symlink() or target.read_bytes()!=data:raise ValueError('Existing library object differs: '+name)
+                        else:publish_new(target,data);created.append(target)
+                    entry=dict(label=path.stem,file=relative,sha256=sha,pac_bytes=len(source['data']),
+                        preview_only_over_budget=len(source['data'])>148000,previews=previews,origin='user-added',
+                        **{k:stats[k] for k in ('meshes','bones','vertices','triangles','textures','descriptor_count','descriptor_mesh_counts')})
+                    catalog['models'].append(entry);known[sha]=entry;new_files.extend(created)
+                    report['added'].append(dict(file=str(path),label=entry['label'],sha256=sha,pac_bytes=entry['pac_bytes']))
+                except (OSError,ValueError,IndexError,KeyError,UnicodeError,struct.error) as exc:
+                    for target in created:target.unlink(missing_ok=True)
+                    report['rejected'].append(dict(file=str(path),reason=str(exc)))
+            if report['added']:
+                backup=root/'backups'/('catalog-'+uuid.uuid4().hex+'.json');backup.parent.mkdir(exist_ok=True)
+                publish_new(backup,(root/'catalog.json').read_bytes());report['catalog_backup']=str(backup)
+                # Write and fsync before atomic replace; a failed write leaves
+                # the old catalog authoritative and all existing models intact.
+                fd,name=tempfile.mkstemp(prefix='.catalog-',suffix='.tmp',dir=root)
+                try:
+                    with os.fdopen(fd,'w',encoding='utf-8') as stream:
+                        stream.write(json.dumps(catalog,indent=2,allow_nan=False)+'\n');stream.flush();os.fsync(stream.fileno())
+                    os.replace(name,root/'catalog.json')
+                finally:Path(name).unlink(missing_ok=True)
+        except Exception:
+            for target in new_files:target.unlink(missing_ok=True)
+            raise
+    return report
+
+
 def compatible(sources,selections):
     if len(set(selections.values()))==1:return {'mode':'unchanged native source'}
     base=sources[selections['Torso']]['model'];body=BODY_BONES
@@ -59,6 +151,7 @@ def compatible(sources,selections):
         m=source['model']
         for b in m['bones']:
             if b['name'] not in body:continue
+            if b['name'] not in ref:raise ValueError('Missing compatible native body bone in torso donor: '+b['name'])
             a=ref[b['name']]
             parent=lambda model,v:None if v['parent']==-1 else model['bones'][v['parent']]['name']
             if parent(base,a)!=parent(m,b) or any(np.max(np.abs(np.array(a[k])-b[k]))>1e-5 for k in ('local_position','rotation')):

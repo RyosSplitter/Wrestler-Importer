@@ -32,7 +32,7 @@ class App:
         root.option_add('*Font', ('Segoe UI',10))
         shell=ttk.Frame(root,padding=12);shell.pack(fill='both',expand=True)
         toolbar=ttk.Frame(shell);toolbar.pack(fill='x')
-        for text,fn in (('Prepared library',self.open_library),('New project…',self.new),('Open project…',self.open),('Save choices',self.save),('Help',self.help)):
+        for text,fn in (('Prepared library',self.open_library),('Add donors…',self.add_donors),('New project…',self.new),('Open project…',self.open),('Save choices',self.save),('Help',self.help)):
             ttk.Button(toolbar,text=text,command=fn).pack(side='left',padx=(0,6))
         ttk.Label(shell,text='PSP Model Creator',font=('Segoe UI',19)).pack(anchor='w',pady=(12,2))
         ttk.Label(shell,text='Native PSP parts · Prepared model library · Separate from the converter').pack(anchor='w')
@@ -108,15 +108,40 @@ class App:
 
     def open_library(self):
         if not self.require_idle():return
+        self.reload_library()
+
+    def reload_library(self, root=None, preserve=False):
         from .library import Library
         try:
-            self.library=Library();self.library_project=True;self.project=None;self.green.set(False)
+            choices=self.selected() if preserve and self.library is not None else dict.fromkeys(PARTS,0)
+            self.library=Library(root);self.library_project=True;self.project=None;self.green.set(False)
             self.labels=[f'{i+1}. {e["label"]}' for i,e in enumerate(self.library.entries)]
-            for part,box in zip(PARTS,self.controls):box['values']=self.labels;self.choices[part].set(self.labels[0])
+            for part,box in zip(PARTS,self.controls):box['values']=self.labels;self.choices[part].set(self.labels[choices[part]])
             self.result=None;self.model=None;self.textures=None
             self.project_label.set(f'{len(self.labels)} prepared native models. Pick donors below; no PAC import needed. Mixed exports require matching body binds, passing seams/poses and the size budget.')
             self.dirty()
         except Exception as exc:messagebox.showerror('Prepared library',str(exc),parent=self.root)
+
+    def add_donors(self):
+        if not self.require_idle():return
+        paths=filedialog.askopenfilenames(title='Add native PSP PAC donors (select one or several)',filetypes=[('PSP PAC','*.pac *.PAC')])
+        if paths:self.import_donors(paths)
+
+    def import_donors(self, paths):
+        """Also callable by the frozen overlay self-check without file dialogs."""
+        from .library import add_donors, bundled_root
+        root=self.library.root if self.library is not None else bundled_root()
+        def work():return add_donors(paths,root,progress=lambda text:self.events.put(('status',text)))
+        def done(report):
+            self.last_import_report=report
+            self.reload_library(root,preserve=self.library is not None)
+            summary=f'{len(report["added"])} donor(s) added; {len(report["duplicates"])} already present; {len(report["rejected"])} rejected.'
+            self.status.set(summary)
+            log=Path(tempfile.gettempdir())/'psp-model-creator-donor-import.json';dump(log,report)
+            if '--smoke-test' not in sys.argv:
+                reasons='\n'.join(Path(row['file']).name+': '+row['reason'] for row in report['rejected'])
+                messagebox.showinfo('Donor import',summary+('\n\n'+reasons if reasons else '')+'\n\nReport: '+str(log),parent=self.root)
+        self.task(work,done)
 
     def whole_donor(self):
         if not self.require_idle() or not hasattr(self,'labels'):return
