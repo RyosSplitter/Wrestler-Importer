@@ -5,7 +5,7 @@ tabbed shell around the existing HCTP converter, native PSP PAC/model/texture
 inspection, preview exports and byte-identical PAC copies. The editor's mutation
 tools, creator and additional source adapters remain planned. The foundation
 is isolated on `feature/psp-model-suite`; accepted baselines remain preserved.
-[Download the Windows suite preview](https://github.com/RyosSplitter/Wrestler-Importer/releases/tag/suite-foundation-1-fa0a5f22f762a7ae8d4c5233b3807f8493739fd6).
+[Download the Windows suite preview](https://github.com/RyosSplitter/Wrestler-Importer/releases/tag/suite-foundation-2-8ab5474b8a16d93d659ecec91854fff9e56201a7).
 
 Goal: turn a PS2 wrestler PAC from SYM, JBI, HCTP, or PS2 SVR into a PSP SVR
 wrestler PAC using a target PSP base skeleton and body layout. The intended app
