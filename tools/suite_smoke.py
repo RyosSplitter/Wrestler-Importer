@@ -7,6 +7,7 @@ import json
 from pathlib import Path
 import tempfile
 import time
+from unittest.mock import patch
 
 from desktop.suite import TABS
 from desktop.workspace import copy_original, export_previews
@@ -55,6 +56,67 @@ def run(app, output):
             raise ValueError('Suite inspection did not load its result: '+shell.status.get())
         if len(shell.model_tree.get_children())!=2 or len(shell.texture_tree.get_children())!=1:
             raise ValueError('Suite omitted an auxiliary model or texture.')
+        # Folder browsing uses real background workers, including a superseded
+        # result. Only the latest selected PAC may replace the loaded workspace.
+        second = root/'Second model.PAC'
+        second.write_bytes(data)
+        (root/'not-a-model.txt').write_text('Do not list this file.')
+        (root/'nested.pac').mkdir()
+        browser = shell.pac_browser
+        browser.set_folder(root)
+        app.root.update()
+        if len(browser.tree.get_children())!=2:
+            raise ValueError('Folder browser must list only direct PAC files.')
+        from desktop.storage import load_settings
+        if load_settings().get('editor_pac_folder')!=str(root):
+            raise ValueError('Editor PAC folder was not remembered.')
+        browser.query.set('SECOND')
+        app.root.update()
+        if len(browser.tree.get_children())!=1:
+            raise ValueError('Case-insensitive PAC filtering failed.')
+        browser.tree.selection_set('0')
+        app.root.update()
+        deadline=time.monotonic()+10
+        while not shell.busy() and time.monotonic()<deadline:
+            app.root.update()
+            time.sleep(.01)
+        if not shell.busy():
+            raise ValueError('Single-click PAC selection did not start a debounced load.')
+        browser.query.set('')
+        browser.tree.selection_set(str(browser.visible.index(source)))
+        browser.open_selected()
+        if shell.pending_source!=source:
+            raise ValueError('Latest PAC selection was lost during inspection.')
+        with patch.object(shell,'load_workspace',wraps=shell.load_workspace) as loaded:
+            deadline=time.monotonic()+90
+            while shell.busy() and time.monotonic()<deadline:
+                app.root.update()
+                time.sleep(.01)
+            if shell.busy() or loaded.call_count!=1 or Path(shell.manifest['source'])!=source:
+                raise ValueError('An older inspector result replaced the latest folder selection.')
+        browser.refresh()
+        app.root.update()
+        if browser.selected_path!=source:
+            raise ValueError('Refresh lost the PAC selection.')
+        browser.query.set('no such file')
+        app.root.update()
+        if browser.tree.get_children() or Path(shell.manifest['source'])!=source:
+            raise ValueError('Empty filtering must retain the loaded model.')
+        browser.query.set('')
+        app.root.update()
+        # A bad PAC must not discard the last successfully loaded workspace or
+        # make the folder list unusable. Acknowledge its dialog in this smoke.
+        bad = root/'Invalid.pac'
+        bad.write_bytes(b'Unsupported PAC test data')
+        with patch('desktop.suite.messagebox.showerror') as error:
+            shell.open_pac(bad)
+            deadline=time.monotonic()+30
+            while shell.busy() and time.monotonic()<deadline:
+                app.root.update()
+                time.sleep(.01)
+            if shell.busy() or error.call_count!=1 or Path(shell.manifest['source'])!=source:
+                raise ValueError('Failed folder item did not preserve the previous workspace.')
+        bad.unlink()
         shell.tabs.select(shell.pages['PSP Model Editor'])
         app.root.update()
         for i in (0,1):
@@ -93,6 +155,10 @@ def run(app, output):
                 converter_state_preserved=True, models=2, textures=1,
                 all_model_views_verified=True, exact_pac_copy=True, input_unchanged=True,
                 preview_export_verified=True, minimum_size_verified=True,
+                pac_folder_browser_verified=True, folder_filter_verified=True,
+                folder_preference_verified=True, latest_selection_wins_verified=True,
+                folder_refresh_preserves_selection=True,
+                single_click_debounce_verified=True, failed_file_preserves_workspace=True,
                 creator_status='planned', game_assets_used=False)
     output.write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
     shell.tabs.select(shell.converter)

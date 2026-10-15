@@ -1,4 +1,4 @@
-name: Build PSP Model Suite foundation
+name: Build PSP Model Suite preview
 on:
   push:
     branches: [feature/psp-model-suite]
@@ -37,7 +37,7 @@ jobs:
           if ($p.ExitCode -ne 0) { throw 'Existing converter GUI/runtime smoke failed' }
           Copy-Item $output dist/converter-smoke.json
           Copy-Item ([System.IO.Path]::ChangeExtension($output,'png')) dist/converter-smoke.png
-      - name: Frozen suite navigation, native model previews and exact PAC round trip
+      - name: Frozen suite folder browsing, queued selection, previews and exact PAC round trip
         shell: pwsh
         run: |
           $env:PS2PSP_DATA = "$env:RUNNER_TEMP\model-suite-smoke"
@@ -69,7 +69,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           @'
-          First PSP Model Suite foundation: classic tabbed interface, existing v0.25.6 HCTP converter, native PSP model/texture inspection, five offline rest views per supported model, native YOBJ plus OBJ/MTL/PNG preview exports and byte-identical unchanged PAC copies. Model mutation, creator assets/assembly and new game adapters remain planned. Existing conversion algorithms, accepted PACs and main are preserved. Includes the existing bundled Blender/runtime, source and notices; no game assets. Requires Windows 10/11 x64 and your own PAC files. Native inspection and analytical QA are not substitutes for PPSSPP testing.
+          PSP Model Suite folder-browser update: choose a PAC folder, scroll/select files inside Model Editor, filter filenames, refresh and restore the last folder. Rapid selections queue only the latest file, without displaying superseded results. Includes the classic suite interface, unchanged v0.25.6 HCTP converter, native PSP model/texture inspection, five offline rest views per supported model, YOBJ/OBJ/MTL/PNG preview exports and byte-identical unchanged PAC copies. Model mutation, creator assembly and new game adapters remain planned. Existing conversion algorithms, accepted PACs and main are preserved. Includes existing bundled Blender/runtime, source and notices; no game assets. Requires Windows 10/11 x64 and your own PAC files. Native inspection and analytical QA are not substitutes for PPSSPP testing.
           '@ | Set-Content "$env:RUNNER_TEMP/suite-release-notes.txt" -Encoding utf8NoBOM
           $tag = "suite-foundation-${{ github.run_number }}-${{ github.sha }}"
-          gh release create $tag dist/*.zip dist/*.sha256 dist/*.png --target '${{ github.sha }}' --prerelease --title 'PSP Model Suite — Foundation preview' --notes-file "$env:RUNNER_TEMP/suite-release-notes.txt"
+          gh release create $tag dist/*.zip dist/*.sha256 dist/*.png --target '${{ github.sha }}' --prerelease --title 'PSP Model Suite — PAC folder browser' --notes-file "$env:RUNNER_TEMP/suite-release-notes.txt"

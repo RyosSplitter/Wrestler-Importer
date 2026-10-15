@@ -33,7 +33,21 @@ remembered PSP base uses the existing settings directory. Switching tabs does no
 reset a conversion, its base, or texture choices. Conversion still runs in its
 existing isolated process. `--converter-only` opens the standalone converter UI.
 
-In **PSP Model Editor**, open your own native PSP PAC. Select each model or expand
+In **PSP Model Editor**, click **Choose folder...** to list PAC files inside the
+app. Single-click a file or use the arrow keys to load it; double-click or Enter
+reloads the selection. Scroll through the list, filter filenames, or use Refresh
+after adding/removing files. `.pac` matching is case-insensitive, filenames sort
+naturally (Model2 before Model10), and only the selected folder's direct files are
+listed. The last folder is remembered alongside the existing PSP-base preference;
+starting the app restores the list without automatically loading a model. Empty
+and missing folders are reported explicitly. Individual PAC opening still works.
+
+Selection is debounced while moving quickly. If a model is already being inspected,
+the latest requested PAC loads next; intermediate results cannot replace the final
+selection. The previous workspace remains available until its successor loads
+successfully. Filtering and switching tabs preserve the loaded workspace.
+
+Open your own native PSP PAC. Select each model or expand
 its mesh rows, then choose front/rear/left/right/three-quarter views. The **Textures**
 tab shows the same workspace's images, with transparency on a checkerboard and
 no upscaling. Stage/blood palettes in additional named tables are listed too.
@@ -53,6 +67,7 @@ weights or PSP draw metadata. It is not the authoritative project representation
 New modules are separate from converter algorithms:
 
 - `desktop/suite.py`: navigation and shared native workspace UI.
+- `desktop/pac_browser.py`: folder listing/filtering, remembered directory and debounced file selection; never decodes PACs.
 - `desktop/workspace.py`: inspection, snapshot verification, exact-copy and preview export.
 - `desktop/gui.py`: hosts the existing converter page and shuts down both job types.
 - `ps2psp_converter.py --suite-inspect SOURCE JOB_DIRECTORY`: isolated inspector.
@@ -100,6 +115,7 @@ Use the established desktop requirements and runtime; no new dependency is added
 python ps2psp_converter.py
 python ps2psp_converter.py --converter-only
 python -m unittest tests.test_suite_workspace -v
+python -m unittest tests.test_pac_browser -v
 python -m tools.ci_tests
 python ps2psp_converter.py --suite-smoke-test local/suite-smoke.json
 python ps2psp_converter.py --smoke-test local/converter-smoke.json

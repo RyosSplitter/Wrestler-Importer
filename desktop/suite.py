@@ -9,7 +9,7 @@ import webbrowser
 
 from PIL import Image, ImageTk
 
-from desktop.storage import data_dir
+from desktop.storage import data_dir, save_settings
 
 TABS = ('Converter', 'PSP Model Editor', 'Textures', 'Quality Assurance', 'Model Creator')
 
@@ -22,6 +22,8 @@ class SuiteShell:
         self.log = None
         self.manifest = None
         self.job = None
+        self.active_source = None
+        self.pending_source = None
         self.model_index = 0
         self.view = 'front-left'
         self.photo = self.texture_photo = None
@@ -44,6 +46,9 @@ class SuiteShell:
         self.build_textures()
         self.build_qa()
         self.build_creator()
+        remembered = app.settings.get('editor_pac_folder')
+        if remembered:
+            self.pac_browser.set_folder(remembered, remember=False, show_errors=False)
         self.root.after(150, self.poll)
 
     def button(self, parent, text, command):
@@ -64,9 +69,20 @@ class SuiteShell:
         ttk.Label(page, textvariable=self.status, wraplength=880, padding=(10, 0, 10, 6)).pack(fill='x')
         split = ttk.Panedwindow(page, orient='horizontal')
         split.pack(fill='both', expand=True, padx=10, pady=(0, 10))
+        from desktop.pac_browser import PacBrowser
+        self.pac_browser = PacBrowser(split, on_select=self.open_pac, on_folder=self.remember_folder)
         left, right = ttk.Frame(split), ttk.LabelFrame(split, text='Native PSP rest preview', padding=8)
+        split.add(self.pac_browser, weight=0)
         split.add(left, weight=2)
         split.add(right, weight=3)
+        self.editor_split = split
+        self.editor_layout_ready = False
+        def initial_layout(event=None):
+            if not self.editor_layout_ready and split.winfo_width()>500:
+                split.sashpos(0, 210)
+                split.sashpos(1, max(420, split.winfo_width()-430))
+                self.editor_layout_ready = True
+        split.bind('<Configure>', initial_layout)
         self.model_tree = ttk.Treeview(left, columns=('vertices', 'triangles', 'state'), selectmode='browse')
         self.model_tree.heading('#0', text='Model / mesh')
         self.model_tree.column('#0', width=155, minwidth=80)
@@ -74,8 +90,10 @@ class SuiteShell:
             self.model_tree.heading(name, text=title)
             self.model_tree.column(name, width=width, minwidth=45)
         scroll = ttk.Scrollbar(left, orient='vertical', command=self.model_tree.yview)
-        self.model_tree.configure(yscrollcommand=scroll.set)
+        horizontal = ttk.Scrollbar(left, orient='horizontal', command=self.model_tree.xview)
+        self.model_tree.configure(yscrollcommand=scroll.set, xscrollcommand=horizontal.set)
         scroll.pack(side='right', fill='y')
+        horizontal.pack(side='bottom', fill='x')
         self.model_tree.pack(fill='both', expand=True)
         self.model_tree.bind('<<TreeviewSelect>>', self.select_model)
         views = ttk.Frame(right)
@@ -162,9 +180,22 @@ class SuiteShell:
     def busy(self):
         return self.process is not None
 
+    def remember_folder(self, path):
+        self.app.settings['editor_pac_folder'] = str(path)
+        save_settings(self.app.settings)
+
     def open_pac(self, path):
-        if self.busy() or self.closing:
+        if self.closing:
             return
+        path = Path(path).resolve()
+        if self.busy():
+            # Keep list/keyboard navigation live. Only the latest request wins;
+            # never display an older completed job over a newer selected file.
+            self.pending_source = path if path!=self.active_source else None
+            self.status.set('Waiting to open '+path.name+' — finishing the current read-only inspection.')
+            return
+        self.active_source = path
+        self.pending_source = None
         self.job = data_dir()/'suite'/'jobs'/uuid.uuid4().hex
         self.job.mkdir(parents=True)
         self.log = (self.job/'inspection.log').open('w', encoding='utf-8')
@@ -187,16 +218,22 @@ class SuiteShell:
             self.process = None
             self.log.close()
             self.log = None
+            pending = self.pending_source
+            self.pending_source = None
+            self.active_source = None
             if not self.closing:
                 self.open_button.configure(state='normal')
-                try:
-                    response = json.loads((self.job/'result.json').read_text(encoding='utf-8'))
-                    if code or not response['ok']:
-                        raise ValueError(response.get('error', 'Inspection worker failed.'))
-                    self.load_workspace(response['manifest'])
-                except (ValueError, OSError, KeyError) as exc:
-                    self.status.set('Inspection failed. Previous workspace retained. Logs: '+str(self.job))
-                    messagebox.showerror('PSP inspection', str(exc)+'\n\nLogs: '+str(self.job))
+                if pending is not None:
+                    self.open_pac(pending)
+                else:
+                    try:
+                        response = json.loads((self.job/'result.json').read_text(encoding='utf-8'))
+                        if code or not response['ok']:
+                            raise ValueError(response.get('error', 'Inspection worker failed.'))
+                        self.load_workspace(response['manifest'])
+                    except (ValueError, OSError, KeyError) as exc:
+                        self.status.set('Inspection failed. Previous workspace retained. Logs: '+str(self.job))
+                        messagebox.showerror('PSP inspection', str(exc)+'\n\nLogs: '+str(self.job))
         if not self.closing or self.busy():
             self.root.after(150, self.poll)
 
@@ -351,5 +388,7 @@ class SuiteShell:
 
     def close(self):
         self.closing = True
+        self.pending_source = None
+        self.pac_browser.cancel_selection()
         if self.process is not None and self.process.poll() is None:
             self.process.terminate()

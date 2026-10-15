@@ -1,0 +1,46 @@
+{
+  "desktop/core.py": {
+    "unchanged": true,
+    "sha256": "14cee6b2b5fd2a95b74abe1fbb69843ced0723cf038c3fab216bfb00d5b1ae99"
+  },
+  "desktop/gui.py": {
+    "unchanged": true,
+    "sha256": "430eb415b4e755540f6c531c6611208837119b3bc186ebac6af10a63025c9a07"
+  },
+  "desktop/workspace.py": {
+    "unchanged": true,
+    "sha256": "6a3f373707aaf0613e9485e37d5c38c8f0fa085f1f44442f9760c76095a727b3"
+  },
+  "desktop/geometry_worker.py": {
+    "unchanged": true,
+    "sha256": "6d09d2dcffc840767f5dcd76e611fc0f95a39118e5b77535b1ebeb1b2d12c802"
+  },
+  "desktop/native.py": {
+    "unchanged": true,
+    "sha256": "a06209f7354f66fbc836a8e3a6ed7c1a5f7068b49109c61bbdee35ddcd9e05fa"
+  },
+  "desktop/default_textures.py": {
+    "unchanged": true,
+    "sha256": "0482b995d4111c75a9fb3341947e128c6900604006f63b29452c6e1416c95a05"
+  },
+  "desktop/accessories.py": {
+    "unchanged": true,
+    "sha256": "8abfa847372fa7635b7736482c2275e12cc7242ccfdebbe2e72efe1c93373bbf"
+  },
+  "desktop/skinning.py": {
+    "unchanged": true,
+    "sha256": "c2c97cfd1d0fcf8bdaa29b280bfd4e484f708d62949f40b57fff4ac82682b136"
+  },
+  "tools/jericho_hybrid_trial.py": {
+    "unchanged": true,
+    "sha256": "5f7e6a61cc1f43c66a96274f79898344795002f7e8b464e4c297a5a05ab3421a"
+  },
+  "tools/blender_reduce.py": {
+    "unchanged": true,
+    "sha256": "854b5d20c39eb84c90ca5b0ff8fc196418ee6c8d7de79617725723355110503f"
+  },
+  "tools/pac_repack.py": {
+    "unchanged": true,
+    "sha256": "c03b7b6b1057195113d48d4dee113234c1a039fca3e2bdc93d0709cab14be27b"
+  }
+}
