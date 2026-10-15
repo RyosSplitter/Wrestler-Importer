@@ -1,111 +1,162 @@
-# Standalone PAC validator (experimental)
+# PAC compatibility validator: Textures, Model, Full
 
-Open **Quality Assurance → Validate PAC...**. Select an existing PSP wrestler
-PAC, optionally its original HCTP PAC, and a parent folder for a new results
-directory. The configured size budget defaults to **148000 bytes**. This is the
-existing conversion target, not a universal native PSP loader limit. A larger
-native reference can be inspected using an explicitly larger budget; doing so
-does not establish game compatibility.
+Use **Quality Assurance → Validate PAC...**. Select the PAC to validate and a
+**working PSP base PAC**. The base defaults to the remembered validator base or
+existing converter base. Select **Textures**, **Model**, or **Full** (default).
+Leave **Apply verified repairs to a new copy** checked to make corrections.
 
-**Apply verified repairs to a new copy** defaults on. Turn it off for report-only
-inspection. The validator runs separately from the converter and folder packer.
-Its output never overwrites its input or an existing results directory.
+The objective is a PAC the app can load and preview using supported PSP
+structures. The base supplies format/rendering conventions. Its wrestler shape,
+skeleton, weights, textures and arbitrary mesh counts are **not** replacement
+assets or anatomical targets. A different valid bone count or mesh count is not
+an error. Shapes, rigging, UVs, materials' texture bindings and topology stay intact.
 
-## Checks and outputs
+## Modes
 
-- `original.pac`: exact input snapshot and SHA-256 provenance.
-- `before/`: all supported native YOBJ structural audits, OBJ/MTL/PNG exports and
-  five textured CPU rest views per model; texture inventory includes extra tables.
-- Native pointer ranges, allocation overlaps, index ranges, palettes, finite
-  attributes and weight sums use the established strict binary reader.
-- Material controls are checked against the resolved GIM palette depth. Texture
-  resolution is case-insensitive and requires an unambiguous mapping, preferring
-  section 9. Unknown layouts and decode failures block repairs.
-- Every supported model receives analytical standing, walking, bending, crouching,
-  shoulder, neck, head, jaw, elbow and ocular/controller probes. Missing bones are
-  **unsupported**, never silently counted as passing. Seam displacement is a
-  diagnostic; coincident vertices are never averaged or welded.
-- `after/`: corresponding inspection when a repair candidate exists.
-- Optional HCTP reference: existing `model_qa.pipeline.run` surface/depth/curvature,
-  regional anatomy, silhouette, head/culling and posed comparisons, matched clay
-  renders and heatmaps in `reference-before/` and `reference-after/`. This existing
-  comparator evaluates the **main model**; auxiliary models receive native and
-  analytical checks, without an invented HCTP correspondence.
-- `report.html` and `report.json`: findings, unsupported checks, exact changes,
-  sizes, hashes, repair rejection reasons and links to reference reports.
-- `repaired.pac`: emitted only when an allowlisted repair passed revalidation,
-  preservation checks, the configured byte budget and optional reference review.
-  No redundant PAC is emitted if no repair was performed.
+| Mode | Selected checks and repairs | Protected bytes |
+|---|---|---|
+| Textures | Texture tables, indexed GIM layout/lengths, swizzling, alpha and texture bit depth required by existing model materials | Every stored YOBJ/model payload; skeleton, geometry, UVs, weights, rendering records |
+| Model | YOBJ pointers/allocations/indices/palettes/attributes, recoverable metadata aliases, material depth settings, base-compatible skinning layout, analytical poses | Every stored texture-table payload; no texture resizing or quantization |
+| Full | Both domains; prefers retaining valid texture pixels and correcting model depth settings; requires actual successful app previews after repair | Shape, skeleton, effective weights, topology, UVs, unrelated PAC sections |
 
-The UI retains the report under **Last validation report**. Folder navigation
-remains live; a requested PAC loads after validation, without discarding the
-completed validation report. Closing the app terminates the worker. Any incomplete
-results folder is not a successful report; a published PAC is an atomic full-file
-write, never a partial named PAC.
+Container bounds, unique section IDs, actual PAC size and payload preservation
+are always checked. PAC wrapper alignment can be repaired in every mode; it does
+not change protected section payloads. **148000 bytes** remains the default
+conversion target. This is not a universal native loader limit; native references
+can be larger. The base itself is not constrained to the output PAC budget.
 
-## Repairs currently implemented
+A single-domain success does not certify the other domain. For example, Textures
+can repair linear GIMs while leaving a broken YOBJ untouched. Its report must say
+Model **Skipped**, report app preview as unavailable, and retain the model bytes.
+Use Full when the goal is a completely previewable result. A fully alpha-hidden
+main model is not falsely certified just because five empty preview files exist;
+alpha intent is reported rather than guessed from another wrestler.
 
-1. **PAC outer alignment**: rebuild with the existing section writer, align section
-   addresses to 16 bytes and the file to 2048 bytes. Verify section IDs/order and
-   every stored section hash remain exact. Refuse nonzero unclassified gaps or
-   trailers that the writer cannot preserve. These alignments are converter
-   conventions, not proof that every unaligned native PAC is defective.
-2. **Single-slot rendering compatibility**: reuse
-   `desktop.skinning.apply_single_slot_compatibility`. Supported one-slot float32
-   skinned buffers are padded to three slots using exact zero weights and existing
-   bones. Re-serialize/compress only changed models with the established writer.
-   Verify positions, faces, UVs, normals, material state, skeleton and effective
-   nonzero weights remain exact; compare analytical body/head motion exactly.
-   Unrelated stored and decoded sections remain exact. No two-slot, integer-weight
-   or rigid layout is generalized into this policy without evidence.
+## Reference comparison
 
-If any attempted repair fails, no repaired PAC is published. Candidates that
-would exceed the budget are withheld without reducing textures or anatomy. With a
-source reference, new `(region, pose, kind, severity)` findings also block export.
-Layout-only transformations additionally require exact effective geometry/weight
-preservation; this is stronger than relying on flag counts to hide small geometric
-regressions. The current repair set never changes anatomical vertex positions.
+The PSP base must pass native structural/material/texture checks and produce the
+app's actual offline previews. The report records its hash, model sections,
+formats, weight-slot conventions, material controls, texture dimensions and
+pixel/CLUT allocation. Source bone names are compared diagnostically; missing or
+different valid bones do not trigger replacement or weight transfer.
 
-## Evidence and limits
+**CONFIRMED:** target output uses the established indexed4/indexed8 swizzled GIM
+and RGBA8888 CLUT reader/writer and the native dimensions whitelist from the
+supplied corpus. Different valid dimensions from the base are not automatically
+wrong. Material depth bits follow verified T4/T8 behavior while retaining other
+known rendering bits. A base with only T4 images is not evidence that all T8
+images are forbidden; the existing native corpus also establishes T8 support.
 
-**CONFIRMED:** synthetic conformance tests exercise no-op preservation, exact
-single-slot repair, multi-model/unrelated-section preservation, alignment repair,
-unsafe-gap rejection, invalid-container/size failure, report-only mode and input
-protection. The same previously user-accepted Rock compatibility implementation
-is reused. Native regression inspections cover Lance, Jericho, Rock (three
-models), Benoit/blood and Kurt references. Tests and runtime smoke evidence are
-in `downloads/model-suite-validator/`.
+The base is a compatibility reference, not an HCTP shape reference. The earlier
+anatomical comparison remains available separately in
+`desktop.source_reference_qa.validate_pac` and the existing conversion QA stage.
+It is no longer the standalone validation dialog's workflow.
 
-**CONFIRMED:** when supplied a real HCTP reference, the validator invokes the
-existing comparison/report system without modifying that source or converter.
-Matched images are CPU geometry renders, **not Noesis or PPSSPP captures**.
+## Automatic repairs and evidence
 
-**INFERRED:** extending the accepted Rock rendering-layout policy to other models
-with the same verified one-slot record layout is useful; it is an experimental
-compatibility policy, not a fully decoded SVR engine requirement.
+**CONFIRMED by synthetic fixtures and strict round trips:**
 
-**UNKNOWN:** a finite analytical pose does not prove correct game facial-controller
-semantics or animation. A standalone PSP PAC does not establish its intended
-anatomical shape. Even with an HCTP reference, a previously exported PAC has no
-saved intermediate stages to identify where anatomical damage first occurred.
-Automatic jaw/pelvis reshaping, arbitrary weight replacement, invalid pointer
-reconstruction and texture redesign are deliberately unsupported repairs. Such
-findings require review/reconversion through the established guarded pipeline.
-Real game clips, runtime memory pressure and engine behavior require PPSSPP tests.
+- GIM normalization: convert a bounded padded linear pixel plane into the known
+  swizzled layout without changing pixels/palette/alpha. Repair redundant GIM
+  chunk lengths and pixel-pointer aliases only where header/frame address,
+  dimensions, exact allocation and RGBA CLUT independently establish the layout.
+  Opaque header bytes and row padding are retained. No palette or pixel data is
+  invented from the base.
+- Textures mode: if valid unchanged materials require another supported palette
+  depth, convert the texture to that depth at the **same resolution**. RGBA remains
+  exact when it fits. Otherwise RGB quantization is reported with RMSE/quantizer;
+  alpha must remain exact. Unsupported dimension/depth pairs are withheld.
+- Model/Full modes: fix a known T4/T8 material-depth mismatch by changing only the
+  depth bit, retaining known remaining render-state bits. Do not copy donor
+  material blobs or change material IDs. Unknown rendering states are reported.
+- Model aliases: recover duplicate YOBJ size/descriptor-count/first-index aliases
+  and final POF0 length from bounded authoritative arrays, strip addresses and
+  the located POF0 boundary. Then strictly audit *all* allocations, indices,
+  relocation entries and weights. An invalid authoritative index is never removed
+  or substituted. The report lists every metadata byte offset and old/new value.
+- Single-slot adaptation: pad float32 one-slot skinned buffers with zero-weight
+  slots using a supported multi-slot convention observed in the base. Additional
+  palette entries come from the **input** skeleton, never donor bone IDs. Exact
+  vertex suffix/nonzero-weight bits, topology, materials, skeleton and opaque
+  metadata are verified with the established native writer/preservation checker.
+  No arbitrary larger palette limit or donor mesh count is imposed.
+- POF0 zero padding and outer PAC alignment: retain relocation semantics and
+  section identities/order. Refuse to discard unclassified nonzero gaps/trailers.
+  Same-size section patches can preserve the complete existing wrapper in place.
+- Reuse existing BPE compression when demonstrated by source/base storage for
+  that role; always verify decoded equality. Oversized input may try selected
+  sections' lossless base-compatible storage, without sacrificing model shape or
+  silently downgrading textures.
 
-## Reusable API / worker
+**INFERRED:** applying the previously user-accepted Rock zero-slot compatibility
+policy to the same supported layout using a base's slot convention is useful.
+Native conventions are evidence, not universal SVR hardware/loader requirements.
+
+## Post-repair acceptance
+
+Build a private candidate, then run fresh native checks, selected-domain checks,
+actual app extraction/export/rendering, and independent preservation checks.
+Full requires five generated views for every model and a main model not provably
+fully hidden by the app's alpha test. Every readable input model must retain its
+positions, normals, UVs, vertex colors, effective bone weights, skeleton and
+ordered triangles. Metadata-recovered models differ only at listed redundant
+metadata offsets before their first successful audit. Never weld coincident
+vertices or average legitimate distinct skinning records.
+
+Measure final serialized bytes including headers/compression/padding. Texture
+repairs also cannot increase total pixel/CLUT allocation beyond **both** the input
+and usable base's observed allocation; report that envelope separately. It is a
+reference safeguard, not a decoded engine heap limit. Try Model validation for a
+depth mismatch that would otherwise grow textures too much.
+
+If selected checks, allocation/size constraints or preservation fail, withhold the
+repaired PAC. Keep diagnostic snapshots/reports. Never overwrite the input, base,
+accepted baselines or an existing result folder. The converter is not changed.
+
+## Output and reports
+
+- `original.pac`, `base-psp.pac`: byte-exact snapshots and hashes.
+- `base-preview/`: actual base app preview and native inventory.
+- `before/`, `after/`: native audits, OBJ/MTL/PNG and five textured CPU rest views
+  where recoverable. Failed previews remain explicit. Images are not Noesis/game
+  screenshots. Auxiliary model identity is retained.
+- `report.html`: selected/skipped domains, before/after findings, actual preview
+  status/images, repairs, sizes, allocation, reference conventions and failures.
+- `report.json`: machine-readable version 2 schema and complete preservation data.
+- `repaired.pac`: only for a changed, accepted candidate. No redundant copy is
+  created for an already compatible PAC.
+
+**Last validation report** reopens the result. Validation runs in a background
+worker; library navigation remains live. Originals and unselected data survive
+cancellation. A final named PAC is atomically published, never partially written.
+
+**UNKNOWN:** finite analytical poses and app preview do not prove actual SVR eye,
+jaw, rigid attachment, animation, loader or runtime-memory semantics. Test changed
+PACs in PPSSPP. Missing pixels, ambiguous texture bindings, invalid authoritative
+indices/weights and unsupported GE formats are not reconstructible just by
+looking at a different wrestler. They are reported for recovery/reconversion.
+No HCTP anatomical correction or skeleton retargeting occurs in this validator.
+
+## Developer API / evidence
 
 ```python
 from desktop.pac_validator import validate_pac
 report = validate_pac(
     'Existing.pac', 'Existing-qa-new',
-    reference='Original-HCTP.pac',  # optional
-    repair=True, max_bytes=148000, resolution=256, samples=4000,
+    base='Known-working-PSP.pac', mode='full',  # textures / model / full
+    repair=True, max_bytes=148000, resolution=256,
 )
 ```
 
-Frozen and source worker entry:
-`PSP-Model-Suite.exe --suite-validate REQUEST.json EXISTING_JOB_DIRECTORY`.
-The request contains the API arguments above; the job receives `result.json` and
-worker failures receive `error.log`. A completed report requiring human review
-is a successful inspection job, not a claim that its PAC passed.
+The frozen/source worker remains `--suite-validate REQUEST.json JOB_DIRECTORY`;
+requests now require `base` and may set `mode`. `samples` is accepted for worker
+backward compatibility but surface sampling belongs to the separate HCTP stage.
+A completed inspection can still contain failed checks; inspect
+`selected_validation_passed`, `app_viewable` and the selected-domain issues.
+
+Tests: `tests/test_compatibility_validator.py` covers scopes, base-driven slots,
+metadata/linear GIM/pointer recovery, depth mismatch choices, alpha, palette/RGB
+preservation, unrelated payloads, unknown/corrupt data, size/allocation ceilings,
+mode separation, no-op models and a different valid mesh count from the base.
+Historical HCTP-source QA regression tests stay in `tests/test_pac_validator.py`.
+Current evidence is in `downloads/model-suite-scoped-validator/`.

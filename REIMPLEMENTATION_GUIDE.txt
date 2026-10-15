@@ -1,16 +1,15 @@
 HCTP -> PSP REIMPLEMENTATION GUIDE
 ================================
 
-CONFIRMED — 2026-10-15 standalone suite PAC validation:
-Read docs/portable-pac-validator.md for the isolated native/pose/reference QA
-entry point, no-overwrite snapshots, JSON/HTML reports and allowlisted repair
-policy. Reuse the existing PAC section writer for payload-exact outer alignment
-and the accepted single-slot rendering adapter with exact zero-weight padding.
-Revalidate every model, preserve distinct source skinning records and unrelated
-stored sections, enforce actual serialized size, and withhold unverified changes.
-Existing PACs do not supply intermediate-stage provenance: do not infer an
-anatomical repair from a single model without evidence. Reference renders are
-CPU comparisons; real engine and animation behavior still need PPSSPP tests.
+CONFIRMED — 2026-10-15 scoped PSP-base compatibility validation:
+Read docs/portable-pac-validator.md. Standalone validation now requires a working
+PSP base and has Textures / Model / Full scopes. The base supplies format and
+rendering conventions, never donor anatomy, weights or replacement image data.
+Repair only recoverable metadata aliases and bounded texture layouts; preserve
+unselected stored sections, geometry, skeleton and effective weights. Full must
+produce actual app previews after repair. Verify serialized size and input/base
+pixel/CLUT allocation envelopes. Historical HCTP anatomical comparison remains
+separate in desktop/source_reference_qa.py and model_qa.pipeline.
 
 CONFIRMED — 2026-10-10 optional texture experiment:
 Read docs/portable-adaptive-textures.md and portable-adaptive-texture-results.md

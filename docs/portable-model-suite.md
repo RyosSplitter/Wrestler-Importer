@@ -12,7 +12,7 @@ Accepted PAC baselines and main remain preserved.
 | Converter | Existing HCTP workflow, texture modes, PSP base preference, QA and Save As |
 | PSP Model Editor | PAC library, native inspection, editable folder export, PNG texture editing/repacking, five rest views, exact unchanged PAC copy |
 | Textures | Shared native texture browser, dimensions, encoded cost, palette/used-color counts, transparency preview; conversion settings remain in Converter |
-| Quality Assurance | Standalone PAC validator, verified repair copies, optional HCTP reference comparison, conversion reports |
+| Quality Assurance | Textures / Model / Full PSP-base compatibility validation, verified repair copies, conversion reports |
 | Model Creator | Explicit development roadmap; assembly/export and asset libraries are not implemented |
 
 SYM/JBI/PS2 SVR/PS3-X360 SVR/WK conversion, PS1 texture styling,
@@ -58,7 +58,7 @@ by invented pixels.
 Use **Export folder...** to create a self-contained editable directory. Edit its
 named PNGs in Photoshop/GIMP, then use **Pack folder...** to produce a new PAC in
 the library. Read the [folder-editing contract and limitations](portable-edit-folders.md).
-Use **Quality Assurance → Validate PAC...** to check an existing PSP PAC and write a separate verified repair copy where supported. An optional original HCTP reference enables anatomical comparisons. Read the [validator scope](portable-pac-validator.md).
+Use **Quality Assurance → Validate PAC...** to check an existing PSP PAC and write a separate verified repair copy where supported. Choose a working PSP base and Textures, Model or Full compatibility validation. HCTP anatomical comparison stays separate. Read the [validator scope](portable-pac-validator.md).
 
 Texture dimensions/palette capacity remain fixed; native geometry reimport is
 not supported. Edited PACs are previewed automatically and still require testing.

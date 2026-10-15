@@ -1,0 +1,110 @@
+[
+  {
+    "label": "BenoitBlood",
+    "mode": "textures",
+    "status": "Selected validation passed; no changes needed.",
+    "passed": true,
+    "viewable": true,
+    "repairs": 0,
+    "failures": []
+  },
+  {
+    "label": "BenoitBlood",
+    "mode": "model",
+    "status": "Selected validation passed; no changes needed.",
+    "passed": true,
+    "viewable": true,
+    "repairs": 0,
+    "failures": []
+  },
+  {
+    "label": "BenoitBlood",
+    "mode": "full",
+    "status": "Selected validation passed; no changes needed.",
+    "passed": true,
+    "viewable": true,
+    "repairs": 0,
+    "failures": []
+  },
+  {
+    "label": "Jericho",
+    "mode": "textures",
+    "status": "Selected validation passed; no changes needed.",
+    "passed": true,
+    "viewable": true,
+    "repairs": 0,
+    "failures": []
+  },
+  {
+    "label": "Jericho",
+    "mode": "model",
+    "status": "Selected validation passed; no changes needed.",
+    "passed": true,
+    "viewable": true,
+    "repairs": 0,
+    "failures": []
+  },
+  {
+    "label": "Jericho",
+    "mode": "full",
+    "status": "Selected validation passed; no changes needed.",
+    "passed": true,
+    "viewable": true,
+    "repairs": 0,
+    "failures": []
+  },
+  {
+    "label": "Lance",
+    "mode": "textures",
+    "status": "Selected validation passed; no changes needed.",
+    "passed": true,
+    "viewable": true,
+    "repairs": 0,
+    "failures": []
+  },
+  {
+    "label": "Lance",
+    "mode": "model",
+    "status": "Selected validation passed; no changes needed.",
+    "passed": true,
+    "viewable": true,
+    "repairs": 0,
+    "failures": []
+  },
+  {
+    "label": "Lance",
+    "mode": "full",
+    "status": "Selected validation passed; no changes needed.",
+    "passed": true,
+    "viewable": true,
+    "repairs": 0,
+    "failures": []
+  },
+  {
+    "label": "Rock",
+    "mode": "textures",
+    "status": "Selected validation passed; no changes needed.",
+    "passed": true,
+    "viewable": true,
+    "repairs": 0,
+    "failures": []
+  },
+  {
+    "label": "Rock",
+    "mode": "model",
+    "status": "Selected validation passed; no changes needed.",
+    "passed": true,
+    "viewable": true,
+    "repairs": 0,
+    "failures": []
+  },
+  {
+    "label": "Rock",
+    "mode": "full",
+    "status": "Selected validation passed; no changes needed.",
+    "passed": true,
+    "viewable": true,
+    "repairs": 0,
+    "failures": []
+  }
+]

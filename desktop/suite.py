@@ -355,7 +355,11 @@ class SuiteShell:
         text = 'QUALITY ASSURANCE\n\nConversion reports retain the existing source comparison, stage traces, '
         text += 'anatomical checks and analytical poses. Open the latest conversion report above.\n\n'
         if self.last_validation:
-            text += 'STANDALONE PAC VALIDATOR\n'+json.dumps(self.last_validation,indent=2)+'\n\n'
+            v=self.last_validation
+            text += 'PAC COMPATIBILITY VALIDATOR — '+v.get('mode','Full').title()+'\n'+v['status']+'\n'
+            text += 'App preview: '+('viewable' if v.get('app_viewable') else 'incomplete / unavailable')+'\n'
+            text += 'Original PAC and PSP base preserved. Open Last validation report for before/after views.\n\n'
+            text += json.dumps(v,indent=2)+'\n\n'
         if self.manifest:
             m = self.manifest
             text += f"PSP inspection: {Path(m['source']).name}\nSHA-256: {m['source_sha256']}\n"
@@ -507,10 +511,11 @@ class SuiteShell:
         frame=ttk.Frame(dialog,padding=12)
         frame.pack(fill='both',expand=True)
         source=tk.StringVar(value=self.manifest['source'] if self.manifest else '')
-        reference=tk.StringVar()
+        base=tk.StringVar(value=self.app.settings.get('validator_base_pac') or self.app.base.get())
+        mode=tk.StringVar(value='Full')
         budget=tk.StringVar(value='148000')
         repair=tk.BooleanVar(value=True)
-        for row,(label,var) in enumerate((('PSP PAC',source),('Original HCTP PAC (optional)',reference))):
+        for row,(label,var) in enumerate((('PAC to validate',source),('Compatible PSP base PAC',base))):
             ttk.Label(frame,text=label).grid(row=row,column=0,sticky='w',pady=5)
             ttk.Entry(frame,textvariable=var,width=48).grid(row=row,column=1,padx=6)
             def choose(v=var):
@@ -518,29 +523,37 @@ class SuiteShell:
                     initialdir=str(self.pac_browser.folder or Path.home()),filetypes=[('PAC files','*.pac *.PAC')])
                 if path:v.set(path)
             self.button(frame,'Browse...',choose).grid(row=row,column=2)
-        ttk.Label(frame,text='PAC budget (bytes)').grid(row=2,column=0,sticky='w')
-        ttk.Entry(frame,textvariable=budget,width=16).grid(row=2,column=1,sticky='w',padx=6)
-        ttk.Checkbutton(frame,text='Apply verified repairs to a new copy',variable=repair).grid(row=3,column=0,columnspan=3,sticky='w',pady=8)
-        ttk.Label(frame,text='Checks every native model, textures and analytical poses.\n'
-            'Optional HCTP reference enables shape/volume and posed comparison.\n'
-            'Unsupported defects are reported; originals stay unchanged.',wraplength=600).grid(row=4,column=0,columnspan=3,sticky='w')
+        ttk.Label(frame,text='Validation').grid(row=2,column=0,sticky='w',pady=5)
+        ttk.Combobox(frame,textvariable=mode,values=('Textures','Model','Full'),state='readonly',width=20).grid(row=2,column=1,sticky='w',padx=6)
+        ttk.Label(frame,text='PAC budget (bytes)').grid(row=3,column=0,sticky='w')
+        ttk.Entry(frame,textvariable=budget,width=16).grid(row=3,column=1,sticky='w',padx=6)
+        ttk.Checkbutton(frame,text='Apply verified repairs to a new copy',variable=repair).grid(row=4,column=0,columnspan=3,sticky='w',pady=8)
+        ttk.Label(frame,text='Textures: fix texture storage and material-depth compatibility; keep model bytes.\n'
+            'Model: fix model metadata, rendering and skinning layout; keep texture bytes.\n'
+            'Full: repair both and verify the result in the app viewer.\n'
+            'The PSP base supplies conventions. Your model’s shape and rigging stay intact.',
+            wraplength=620).grid(row=5,column=0,columnspan=3,sticky='w',pady=8)
         def start():
             try:
                 amount=int(budget.get())
                 if amount<=0 or not Path(source.get()).is_file():raise ValueError('Select a PSP PAC and a positive byte budget.')
-                if reference.get() and not Path(reference.get()).is_file():raise ValueError('Reference PAC does not exist.')
+                if not base.get() or not Path(base.get()).is_file():raise ValueError('Select a working PSP base PAC.')
                 folder=filedialog.askdirectory(parent=dialog,title='Choose parent folder for new QA results',
                     initialdir=str(self.pac_browser.folder or Path(source.get()).parent))
                 if not folder:return
                 output=Path(folder)/(Path(source.get()).stem+'-qa-'+uuid.uuid4().hex[:8])
-                self.start_validation(source.get(),output,reference=reference.get() or None,
+                self.app.settings['validator_base_pac']=base.get()
+                save_settings(self.app.settings)
+                self.start_validation(source.get(),output,base=base.get(),mode=mode.get().lower(),
                                       repair=repair.get(),max_bytes=amount)
                 dialog.destroy()
             except (ValueError,OSError) as exc:messagebox.showerror('PAC validator',str(exc),parent=dialog)
-        self.button(frame,'Validate',start).grid(row=5,column=2,pady=(12,0))
+        self.button(frame,'Validate',start).grid(row=6,column=2,pady=(12,0))
 
     def start_validation(self, source, output, **options):
         if self.busy() or self.closing:return
+        options=dict(options)
+        if options.get('base') is not None:options['base']=str(Path(options['base']).resolve())
         self.job=data_dir()/'suite'/'jobs'/uuid.uuid4().hex
         self.job.mkdir(parents=True)
         request=self.job/'validate-request.json'

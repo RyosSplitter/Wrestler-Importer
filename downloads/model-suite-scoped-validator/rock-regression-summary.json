@@ -1,0 +1,55 @@
+{
+  "source": "User-provided the rock 2.pac",
+  "mode": "full",
+  "status": "Selected validation passed; repaired copy saved.",
+  "app_viewable": true,
+  "original_sha256": "2228eabd964bf0584a8c89909b997baeba3c84929ab46fdd28d074b1879b1406",
+  "original_pac_bytes": 147456,
+  "final_pac_bytes": 145408,
+  "repairs": [
+    {
+      "scope": "model",
+      "kind": "base-compatible skinning layout",
+      "section": 2,
+      "evidence": [
+        {
+          "kind": "base-compatible zero-weight slots",
+          "meshes": [
+            0
+          ],
+          "slots": 3,
+          "preservation": {
+            "vertex_suffix_bits_identical": true,
+            "per_bone_nonzero_weight_bits_identical": true,
+            "ordered_global_indices_and_triangle_winding_identical": true,
+            "ordered_material_state_and_strip_metadata_identical": true,
+            "skeleton_texture_names_model_name_byte_identical": true,
+            "secondary_model_descriptor_count_matches_mesh_count": true,
+            "opaque_mesh_palette_model_metadata_identical": true,
+            "unmerged_bounds_identical_and_merged_bounds_enclose_original_spheres": true,
+            "before_and_after_allocation_palette_index_weight_relocation_audit_passed": true
+          }
+        }
+      ]
+    }
+  ],
+  "preservation": {
+    "unselected_stored_sections_exact": true,
+    "readable_input_geometry_attributes_topology_exact": true,
+    "skeleton_and_effective_weights_exact": true,
+    "donor_assets_copied": false,
+    "metadata_recovered_models": "Only individually reported redundant metadata bytes may differ before the first successful strict audit."
+  },
+  "texture_allocation": {
+    "before": 28224,
+    "after": 28224,
+    "base": 54016,
+    "repair_envelope": 54016,
+    "policy": "Do not grow pixel/CLUT allocations beyond both input and usable PSP base. Observed reference envelope, not a hardware/engine heap limit."
+  },
+  "input_unchanged": true,
+  "base_unchanged": true,
+  "game_testing": "Not run in this cloud environment.",
+  "output_main_yobj_sha256": "40e24479c4a27b8b4189e3b6ded7df8697078b533b142ad444ee2e79acf7364f",
+  "output_pac_sha256": "dc7a05642a777328af9ca52c4dbe1dbde3bccf8dc688ca5dadc8878eeea99384"
+}

@@ -167,7 +167,7 @@ def run(app, output):
         # Exercise the real isolated validator from the frozen suite. A valid
         # model must receive a report without being needlessly rewritten.
         with patch('desktop.suite.messagebox.showerror') as errors:
-            shell.start_validation(edited,root/'standalone-qa',resolution=96,samples=2000)
+            shell.start_validation(edited,root/'standalone-qa',base=source,mode='full',resolution=96,samples=2000)
             deadline=time.monotonic()+90
             while shell.busy() and time.monotonic()<deadline:
                 app.root.update()
@@ -175,10 +175,30 @@ def run(app, output):
             if shell.busy() or errors.called or not shell.last_validation:
                 raise ValueError('Standalone validation worker did not complete.')
         validation=shell.last_validation
-        if validation['before']['blocking_findings'] or not validation['input_unchanged'] or validation['repaired_pac']:
+        if not validation['selected_validation_passed'] or not validation['input_unchanged'] or validation['repaired_pac']:
             raise ValueError('Validator changed an already valid PAC or failed its audit.')
         if not Path(validation['report_path']).is_file():
             raise ValueError('Standalone QA report missing.')
+        # Texture-only recovery must work in the frozen app as well: generate a
+        # bounded linear GIM independently of the repair implementation.
+        import struct
+        gim=files['skin-t4.gim'];linear=bytearray(gim)
+        fmt,order,w,h,bits=struct.unpack_from('<5H',gim,68)
+        pitch=((w*bits+7)//8+15)//16*16;ph=(h+7)//8*8
+        y,x=np.indices((ph,pitch));addresses=((y//8)*(pitch//16)+x//16)*128+(y%8)*16+x%16
+        end=128+pitch*ph
+        linear[128:end]=np.frombuffer(gim[128:end],np.uint8)[addresses].tobytes()
+        struct.pack_into('<H',linear,70,0)
+        table=struct.pack('<4I',1,0x100,0,16)+b'skin'.ljust(16,b'\0')+b'gim\0'+struct.pack('<3I',len(linear),48,0)+linear
+        texture_source=root/'Linear-texture.pac'
+        texture_source.write_bytes(pac([(2,files['psp-quad.yobj']),(9,table)]))
+        with patch('desktop.suite.messagebox.showerror') as errors:
+            shell.start_validation(texture_source,root/'texture-qa',base=source,mode='textures',resolution=96)
+            deadline=time.monotonic()+90
+            while shell.busy() and time.monotonic()<deadline:
+                app.root.update();time.sleep(.01)
+            if shell.busy() or errors.called or not shell.last_validation['repaired_pac'] or not shell.last_validation['app_viewable']:
+                raise ValueError('Frozen texture-only validation failed to repair linear GIM.')
         # Also cover the real repair path in the frozen build, without importing
         # a test package or distributing any game-derived fixture.
         import struct
@@ -196,12 +216,35 @@ def run(app, output):
         repair_source=root/'One-slot.pac'
         repair_source.write_bytes(pac([(2,write_model(m,[[0]])),(9,texture)]))
         with patch('desktop.suite.messagebox.showerror') as errors:
-            shell.start_validation(repair_source,root/'repair-qa',resolution=96,samples=2000)
+            shell.start_validation(repair_source,root/'repair-qa',base=source,mode='model',resolution=96,samples=2000)
             deadline=time.monotonic()+90
             while shell.busy() and time.monotonic()<deadline:
                 app.root.update();time.sleep(.01)
             if shell.busy() or errors.called or not shell.last_validation['repaired_pac']:
                 raise ValueError('Standalone frozen validator did not publish a verified repair.')
+        # Inspect the actual dialog so a worker-only success cannot hide missing
+        # mode controls or the required PSP-base selector.
+        saved_base=app.base.get();app.base.set(str(source))
+        shell.validate_dialog();app.root.update()
+        import tkinter as tk
+        from tkinter import ttk
+        dialogs=[w for w in app.root.winfo_children() if isinstance(w,tk.Toplevel)]
+        if len(dialogs)!=1:raise ValueError('Validation options dialog missing.')
+        dialog=dialogs[0]
+        def descendants(widget):
+            for child in widget.winfo_children():
+                yield child
+                yield from descendants(child)
+        controls=list(descendants(dialog))
+        modes=[w for w in controls if isinstance(w,ttk.Combobox)]
+        if len(modes)!=1 or tuple(modes[0].cget('values'))!=('Textures','Model','Full') or modes[0].get()!='Full':
+            raise ValueError('Validation modes/default are incorrect.')
+        if not any(isinstance(w,ttk.Entry) and w.get()==str(source) for w in controls):
+            raise ValueError('Validation dialog did not inherit the PSP base.')
+        from PIL import ImageGrab
+        x,y=dialog.winfo_rootx(),dialog.winfo_rooty()
+        ImageGrab.grab(bbox=(x,y,x+dialog.winfo_width(),y+dialog.winfo_height())).save(output.with_name('suite-validation-options.png'))
+        dialog.destroy();app.base.set(saved_base)
         for name in TABS:
             shell.tabs.select(shell.pages[name])
             app.root.update()
@@ -234,6 +277,8 @@ def run(app, output):
                 edited_png_packed_and_previewed=True, native_models_preserved_on_pack=True,
                 standalone_pac_validator_worker_verified=True,
                 standalone_verified_repair_worker_verified=True,
+                texture_model_full_validation_workers_verified=True,
+                validation_dialog_modes_and_base_verified=True,
                 creator_status='planned', game_assets_used=False)
     output.write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
     shell.tabs.select(shell.converter)

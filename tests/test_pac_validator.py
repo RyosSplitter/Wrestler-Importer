@@ -6,7 +6,7 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from desktop.pac_validator import validate_pac
+from desktop.source_reference_qa import validate_pac
 from tools.generate_conformance_fixtures import vectors,pac
 from tools.psp_mesh_merge_trial import sections
 from tools.psp_mesh_audit import audit_yobj
