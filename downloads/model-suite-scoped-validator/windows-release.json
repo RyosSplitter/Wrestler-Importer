@@ -1,0 +1,89 @@
+{
+  "url": "https://github.com/RyosSplitter/Wrestler-Importer/releases/tag/suite-foundation-6-3935d556451b1d7b27d5fedf5956e6850a2028b2",
+  "tag": "suite-foundation-6-3935d556451b1d7b27d5fedf5956e6850a2028b2",
+  "code_commit": "3935d556451b1d7b27d5fedf5956e6850a2028b2",
+  "run_url": "https://github.com/RyosSplitter/Wrestler-Importer/actions/runs/38686056828",
+  "windows_build_status": "success",
+  "asset": "PSP-Model-Suite-Foundation-Windows-x64.zip",
+  "bytes": 554056032,
+  "sha256": "23c9cb21a0bb8d6a625433b424a8bdfb7adbbc6c56dff62ff524d663f64f221a",
+  "github_asset_digest_verified": true,
+  "zip_downloaded_locally": false,
+  "steps": [
+    {
+      "name": "Set up job",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Run actions/checkout@v4",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Run actions/setup-python@v5",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Run python -m pip install -r requirements-desktop.txt",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Prepare existing development-only donor fixture",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Run python -m tools.ci_tests",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Build frozen suite and audited existing runtime",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Existing frozen converter controls and bundled Blender",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Frozen suite folder browsing, editable export, PNG import, PAC round trips and validator",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Package suite portable ZIP",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Run actions/upload-artifact@v4",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Publish isolated suite foundation preview",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Post Run actions/setup-python@v5",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Post Run actions/checkout@v4",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Complete job",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ]
+}
