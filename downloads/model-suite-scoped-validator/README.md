@@ -18,3 +18,7 @@ and the release asset digest matching its downloaded SHA-256 sidecar. These chec
 establish in-game compatibility.
 
 [Download the Windows update](https://github.com/RyosSplitter/Wrestler-Importer/releases/tag/suite-foundation-6-3935d556451b1d7b27d5fedf5956e6850a2028b2).
+
+Windows dialog controls were verified by widget assertions and real workers.
+A premature dialog capture showed the underlying main window, so that image
+was removed from the release and evidence rather than presented as a dialog screenshot.
