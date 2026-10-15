@@ -179,6 +179,29 @@ def run(app, output):
             raise ValueError('Validator changed an already valid PAC or failed its audit.')
         if not Path(validation['report_path']).is_file():
             raise ValueError('Standalone QA report missing.')
+        # Also cover the real repair path in the frozen build, without importing
+        # a test package or distributing any game-derived fixture.
+        import struct
+        from tools.psp_mesh_audit import audit_yobj
+        from tools.psp_mesh_merge import write_model
+        m=audit_yobj(files['psp-quad.yobj'])
+        record=bytearray(m['bone_raw'][:80]);record[:16]=b'extra'.ljust(16,b'\0')
+        struct.pack_into('<i',record,76,0)
+        m['bone_raw']+=record
+        header=bytearray(m['header']);struct.pack_into('<I',header,28,3);m['header']=bytes(header)
+        mesh=m['meshes'][0];stride=mesh['stride'];slots=mesh['weight_slots']
+        mesh['raw_vertices']=b''.join(struct.pack('<f',1.)+mesh['raw_vertices'][i*stride+4*slots:(i+1)*stride]
+                                      for i in range(len(mesh['vertices'])))
+        mesh.update(bone_palette=[0],stride=40,weight_slots=1)
+        repair_source=root/'One-slot.pac'
+        repair_source.write_bytes(pac([(2,write_model(m,[[0]])),(9,texture)]))
+        with patch('desktop.suite.messagebox.showerror') as errors:
+            shell.start_validation(repair_source,root/'repair-qa',resolution=96,samples=2000)
+            deadline=time.monotonic()+90
+            while shell.busy() and time.monotonic()<deadline:
+                app.root.update();time.sleep(.01)
+            if shell.busy() or errors.called or not shell.last_validation['repaired_pac']:
+                raise ValueError('Standalone frozen validator did not publish a verified repair.')
         for name in TABS:
             shell.tabs.select(shell.pages[name])
             app.root.update()
@@ -210,6 +233,7 @@ def run(app, output):
                 editable_folder_export_verified=True, unedited_folder_exact_round_trip=True,
                 edited_png_packed_and_previewed=True, native_models_preserved_on_pack=True,
                 standalone_pac_validator_worker_verified=True,
+                standalone_verified_repair_worker_verified=True,
                 creator_status='planned', game_assets_used=False)
     output.write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
     shell.tabs.select(shell.converter)

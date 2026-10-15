@@ -28,6 +28,7 @@
   "edited_png_packed_and_previewed": true,
   "native_models_preserved_on_pack": true,
   "standalone_pac_validator_worker_verified": true,
+  "standalone_verified_repair_worker_verified": true,
   "creator_status": "planned",
   "game_assets_used": false
 }

@@ -1,0 +1,25 @@
+{
+  "source": "Original HCTP 0600.pac",
+  "candidate": "Existing accepted Jericho PSP reference",
+  "inputs_unchanged": true,
+  "reference_samples": 2000,
+  "render_resolution": 96,
+  "analytical_body_poses": 14,
+  "analytical_head_eye_probes": 37,
+  "mean_surface_distance": 0.004643214287727421,
+  "p95_height": 0.001611361601013181,
+  "review_regions": {
+    "material:y2j_hand": 1,
+    "material:y2j_knee": 1,
+    "material:y2j_kutu": 1,
+    "material:y2j_su_r": 1,
+    "material:y2j_sune": 1,
+    "material:y2j_yubi": 1,
+    "left-feet": 1,
+    "right-feet": 1,
+    "head": 48
+  },
+  "findings_are_diagnostics_not_proven_errors": true,
+  "reference_qa_completed": true,
+  "automatic_anatomical_edits": false
+}

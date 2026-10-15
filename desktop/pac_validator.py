@@ -181,9 +181,11 @@ def validate_pac(source, output, *, reference=None, repair=True, max_bytes=14800
         if changed and not after['blocking_findings'] and not report['repair_failures'] and reference_ok:
             publish_new(output/'repaired.pac',candidate)
             report['repaired_pac']=str(output/'repaired.pac')
-            report['status']='repaired; game test required'
+            report['status']=('repaired; reference findings still require review' if report['anatomy_status']=='review required'
+                              else 'repaired; game test required')
         elif before['blocking_findings'] or after['blocking_findings'] or report['repair_failures'] or not reference_ok:
             report['status']='review required; repair withheld'
+        elif report['anatomy_status']=='review required':report['status']='reference review required; no supported repair'
         else:report['status']='no verified repair needed; game compatibility unverified'
         if private.exists():private.unlink()
     except Exception as exc:
