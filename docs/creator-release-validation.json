@@ -1,0 +1,65 @@
+{
+  "schema": "psp-model-creator.release-validation/1",
+  "release": "https://github.com/RyosSplitter/Wrestler-Importer/releases/tag/creator-preview-4-7ecf6eaa2fd6c724fcba553b74ba6f37f2a424c9",
+  "build_commit": "7ecf6eaa2fd6c724fcba553b74ba6f37f2a424c9",
+  "branch": "feature/standalone-model-creator",
+  "windows_run": "https://github.com/RyosSplitter/Wrestler-Importer/actions/runs/38690439113",
+  "windows_frozen_selfcheck": {
+    "passed": true,
+    "live_selection_preview": true,
+    "stale_export_blocked": true,
+    "export_controls_full_height_and_on_screen": true,
+    "synthetic_native_export": true,
+    "editable_folder_roundtrip": true
+  },
+  "tests": {
+    "full_suite": 403,
+    "creator_focused": 12,
+    "passed": true
+  },
+  "actual_pair": {
+    "combinations": 16,
+    "exported_within_148000_bytes": 15,
+    "withheld": 1,
+    "withheld_code": "0100",
+    "withheld_bytes": 149504,
+    "source_interior_pose_delta_maximum": 1.7798229048217483e-15
+  },
+  "actual_texture_edit_roundtrip": [
+    {
+      "combination": "0000",
+      "changed_textures": 1,
+      "main_model_exact": true,
+      "retained_base_data_exact": true,
+      "pac_bytes": 108544
+    },
+    {
+      "combination": "1010",
+      "changed_textures": 1,
+      "main_model_exact": true,
+      "retained_base_data_exact": true,
+      "pac_bytes": 141312
+    }
+  ],
+  "artifact": {
+    "filename": "PSP-Model-Creator-0.1-Windows-x64.zip",
+    "bytes": 64009823,
+    "sha256": "1cab652f6dbda9cae70c878858929192ac2581e6014b1814d68efc24b2a59f1d",
+    "verification": "GitHub asset digest matches downloaded checksum sidecar; ZIP was built and self-checked by Windows workflow."
+  },
+  "game_assets_bundled": false,
+  "blender_bundled": false,
+  "clean_personal_windows_install_tested": false,
+  "ppsspp_gameplay_tested": false,
+  "preserved": {
+    "existing_converter": true,
+    "suite": true,
+    "main": true,
+    "accepted_pacs": true
+  },
+  "unresolved": [
+    "Ambiguous neck intersections require visual and in-game review.",
+    "One combination is withheld rather than silently reducing native texture quality.",
+    "Game animation semantics, heap and culling behavior still need PPSSPP validation."
+  ]
+}

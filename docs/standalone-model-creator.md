@@ -232,3 +232,8 @@ profiles, validate the pair in-game, offer opt-in texture budget fitting for the
 one withheld combination, generalize verified attachment profiles, then integrate
 the proven creator module into the suite. None of those steps should be reported
 as already complete by this first standalone preview.
+
+The verified Windows download is https://github.com/RyosSplitter/Wrestler-Importer/releases/tag/creator-preview-4-7ecf6eaa2fd6c724fcba553b74ba6f37f2a424c9. The ZIP is 64,009,823 bytes;
+SHA-256 `1cab652f6dbda9cae70c878858929192ac2581e6014b1814d68efc24b2a59f1d`. See
+`creator-release-validation.json` for the build, checksum and test evidence.
+The release screenshot uses the original synthetic self-check fixture, not a game model.

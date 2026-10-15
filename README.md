@@ -14,6 +14,7 @@ prepares the Kenny Dykstra / Brian Kendrick pair for native part assembly, live
 selection previews, analytical pose checks and PAC/texture-folder export.
 Run `python psp_model_creator.py`; select your own original PSP PACs.
 It lives on `feature/standalone-model-creator` and is not integrated into the suite.
+[Download the standalone Windows creator (64 MB)](https://github.com/RyosSplitter/Wrestler-Importer/releases/tag/creator-preview-4-7ecf6eaa2fd6c724fcba553b74ba6f37f2a424c9).
 See the [sixteen-combination evidence](docs/creator-pair-results.json) and explicit
 seam/budget/runtime limitations before using its experimental PACs in PPSSPP.
 
