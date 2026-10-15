@@ -47,9 +47,16 @@ def load_source(path):
     if len(items)!=len(decoded):raise ValueError('Duplicate PAC section IDs are unsupported.')
     if 2 not in decoded or 9 not in decoded:raise ValueError('A native PSP main-model PAC with section 9 textures is required.')
     model = audit_yobj(decoded[2])
-    cursor=0
+    cursor=0;padding=[]
+    pointer_targets={8+struct.unpack_from('<I',decoded[2],a)[0] for a in model['report']['relocation_locations']}
     for allocation in sorted(model['report']['allocations'],key=lambda a:a['start']):
-        if allocation['start']>cursor and any(decoded[2][cursor:allocation['start']]):raise ValueError('Unclassified nonzero YOBJ data cannot be discarded safely.')
+        if allocation['start']>cursor and any(decoded[2][cursor:allocation['start']]):
+            gap=decoded[2][cursor:allocation['start']]
+            # The actual pair uses short 0xffffffff fill runs between native
+            # palettes/materials. No relocated pointer may target such a run.
+            if len(gap)>16 or len(gap)%4 or gap!=b'\xff'*len(gap) or any(cursor<=p<allocation['start'] for p in pointer_targets):
+                raise ValueError('Unclassified nonzero YOBJ data cannot be discarded safely.')
+            padding.append(dict(start=cursor,bytes=len(gap),value='ff',classification='INFERRED native allocation fill; rewritten layout uses zero padding'))
         cursor=max(cursor,allocation['end'])
     if any(decoded[2][cursor:model['report']['declared_yobj_end']]):raise ValueError('Unclassified trailing YOBJ data cannot be discarded safely.')
     if any(m['rigid'] or m['base_flag']!=0x17ff for m in model['meshes']):
@@ -63,7 +70,7 @@ def load_source(path):
         raw=decoded[9][e['offset']:e['offset']+e['size']];read_gim(raw);textures[key]=raw
     if any(n.casefold() not in textures for n in model['texture_names']):raise ValueError('Missing main texture references.')
     return dict(path=str(Path(path).resolve()), data=data, model=model, sections=decoded,
-                textures=textures, sha256=digest(data), label=Path(path).stem)
+                textures=textures, sha256=digest(data), label=Path(path).stem,allocation_fill=padding)
 
 
 def compatible(a,b):
@@ -350,6 +357,7 @@ def build(project_path, selections, output, *, resolution=640, progress=lambda _
     report.update(selections=selections,labels=[s['label'] for s in sources],pac_bytes=len(pac),max_pac_bytes=MAX_BYTES,
                   pac_sha256=digest(pac),yobj_sha256=digest(raw),textures_byte_exact=True,
                   geometry_decimation=False,within_budget=len(pac)<=MAX_BYTES)
+    report['source_allocation_fill']=[s['allocation_fill'] for s in sources]
     report['review_findings']=[dict(joint=s['joint'],unstitched_ambiguous_records=s['unstitched_internal_records'],
         explanation='Some cut records lie inside the chosen outer radial contour. They are retained, not assumed invalid. Visual and in-game seam review is required.')
         for s in report['seams'] if s['unstitched_internal_records']]

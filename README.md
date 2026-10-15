@@ -9,6 +9,14 @@ additional source adapters remain planned. The foundation
 is isolated on `feature/psp-model-suite`; accepted baselines remain preserved.
 [Download the Windows suite preview](https://github.com/RyosSplitter/Wrestler-Importer/releases/tag/suite-foundation-6-3935d556451b1d7b27d5fedf5956e6850a2028b2).
 
+The separate [PSP Model Creator 0.1 experiment](docs/standalone-model-creator.md)
+prepares the Kenny Dykstra / Brian Kendrick pair for native part assembly, live
+selection previews, analytical pose checks and PAC/texture-folder export.
+Run `python psp_model_creator.py`; select your own original PSP PACs.
+It lives on `feature/standalone-model-creator` and is not integrated into the suite.
+See the [sixteen-combination evidence](docs/creator-pair-results.json) and explicit
+seam/budget/runtime limitations before using its experimental PACs in PPSSPP.
+
 Goal: turn a PS2 wrestler PAC from SYM, JBI, HCTP, or PS2 SVR into a PSP SVR
 wrestler PAC using a target PSP base skeleton and body layout. The intended app
 runs on Windows; exports will be tested in PPSSPP.

@@ -140,6 +140,14 @@ relocation. The creator removes this one verified zero alias only from the
 temporary writer input and restores it explicitly in the output POF0. It does
 not weaken the converter writer's policy or accept a guessed nonzero pointer.
 
+**CONFIRMED — supplied bytes:** both originals have short runs of `0xffffffff`
+between some palette/material allocations. **INFERRED:** these are allocation
+fill, not additional active palette entries. The import guard accepts only a
+uniform FF run of at most 16 bytes, a multiple of four, with no relocation target
+inside it. Other nonzero unclassified data is rejected. Mixed rewrites use the
+audited writer's zero alignment padding and record these original ranges in QA;
+unchanged single-source outputs retain the original bytes exactly.
+
 The fields interpreted as mesh spheres are recomputed to enclose the assembled
 buffer. Bone center/radius records conservatively enclose both source records.
 **UNKNOWN:** whether this inferred union alone establishes all game-side culling

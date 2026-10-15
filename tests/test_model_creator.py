@@ -42,6 +42,19 @@ class CreatorTests(unittest.TestCase):
             root=Path(t);paths=self.sources(root);create_project(*paths,root/'Project')
             with self.assertRaises(FileExistsError):create_project(*paths,root/'Project')
 
+    def test_native_ff_allocation_fill_allowed_but_unknown_data_rejected(self):
+        from tools.generate_conformance_fixtures import vectors
+        from tools.pac_repack import replace_sections
+        f=vectors()
+        with tempfile.TemporaryDirectory() as t:
+            path=Path(t)/'Padding.pac'
+            for fill in (b'\xff'*8,b'UNKNOWN!'):
+                raw=bytearray(f['psp-quad.yobj']);raw[160:168]=fill
+                path.write_bytes(replace_sections(f['psp-quad.pac'],{2:bytes(raw)}))
+                if fill[0]==255:self.assertEqual(len(load_source(path)['allocation_fill']),1)
+                else:
+                    with self.assertRaisesRegex(ValueError,'Unclassified'):load_source(path)
+
     def test_same_source_is_byte_exact_including_opaque_payloads(self):
         with tempfile.TemporaryDirectory() as t:
             root=Path(t);project=create_project(*self.sources(root),root/'Project')
