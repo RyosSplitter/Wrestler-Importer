@@ -1,0 +1,77 @@
+{
+  "code_commit": "fa0a5f22f762a7ae8d4c5233b3807f8493739fd6",
+  "run": "https://github.com/RyosSplitter/Wrestler-Importer/actions/runs/38676317565",
+  "conclusion": "success",
+  "release": "https://github.com/RyosSplitter/Wrestler-Importer/releases/tag/suite-foundation-1-fa0a5f22f762a7ae8d4c5233b3807f8493739fd6",
+  "zip_url": "https://github.com/RyosSplitter/Wrestler-Importer/releases/download/suite-foundation-1-fa0a5f22f762a7ae8d4c5233b3807f8493739fd6/PSP-Model-Suite-Foundation-Windows-x64.zip",
+  "zip_bytes": 553832890,
+  "zip_sha256": "75a8f6cea30601a93dc9daf3a2438c7d7622d004e12fc6518cde1db41a1f1339",
+  "checksum_verified_against_github_asset_digest": true,
+  "steps": [
+    {
+      "name": "Set up job",
+      "conclusion": "success"
+    },
+    {
+      "name": "Run actions/checkout@v4",
+      "conclusion": "success"
+    },
+    {
+      "name": "Run actions/setup-python@v5",
+      "conclusion": "success"
+    },
+    {
+      "name": "Run python -m pip install -r requirements-desktop.txt",
+      "conclusion": "success"
+    },
+    {
+      "name": "Prepare existing development-only donor fixture",
+      "conclusion": "success"
+    },
+    {
+      "name": "Run python -m tools.ci_tests",
+      "conclusion": "success"
+    },
+    {
+      "name": "Build frozen suite and audited existing runtime",
+      "conclusion": "success"
+    },
+    {
+      "name": "Existing frozen converter controls and bundled Blender",
+      "conclusion": "success"
+    },
+    {
+      "name": "Frozen suite navigation, native model previews and exact PAC round trip",
+      "conclusion": "success"
+    },
+    {
+      "name": "Package suite portable ZIP",
+      "conclusion": "success"
+    },
+    {
+      "name": "Run actions/upload-artifact@v4",
+      "conclusion": "success"
+    },
+    {
+      "name": "Publish isolated suite foundation preview",
+      "conclusion": "success"
+    },
+    {
+      "name": "Post Run actions/setup-python@v5",
+      "conclusion": "success"
+    },
+    {
+      "name": "Post Run actions/checkout@v4",
+      "conclusion": "success"
+    },
+    {
+      "name": "Complete job",
+      "conclusion": "success"
+    }
+  ],
+  "verification_limits": [
+    "Hosted Windows runner with developer tools removed from PATH, not a clean end-user installation.",
+    "Raw CI log retrieval was denied by the cloud network route; check-step results were verified through the GitHub API.",
+    "New suite does not add gameplay validation or model mutation."
+  ]
+}
