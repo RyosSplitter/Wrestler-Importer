@@ -1,0 +1,2258 @@
+{
+  "schema": "psp-model-creator.library-study/1",
+  "archive": {
+    "filename": "Models for Codex.zip",
+    "sha256": "36969b92422be340f0c5c3320cba55304b4b380da25c636a321479d46fe505d5",
+    "bytes": 2919419
+  },
+  "summary": {
+    "pacs": 31,
+    "original_bytes": 4376576,
+    "ordinary_native_audit_passed": 25,
+    "diagnostic_multi_descriptor_reads": 6,
+    "creator_import_passed": 21,
+    "creator_import_blockers": {
+      "bounded_ff_fill_guard": 4,
+      "multiple_descriptors": 6
+    },
+    "unchanged_all": true,
+    "input_under_148000": 22,
+    "input_above_148000": 9,
+    "minimum_input_bytes": 102400,
+    "maximum_input_bytes": 198656,
+    "common_body_bind_matching_kenny": 28,
+    "body_bind_exceptions": [
+      {
+        "filename": "JBL(Suit).PAC",
+        "bones": [
+          {
+            "bone": "l_ashi",
+            "local_position_delta": 0.24007463455200195,
+            "rotation_delta": 0.019924165681002814
+          },
+          {
+            "bone": "l_momo",
+            "local_position_delta": 0.0,
+            "rotation_delta": 0.02224228158593371
+          },
+          {
+            "bone": "l_sune",
+            "local_position_delta": 0.23814773559570312,
+            "rotation_delta": 0.042165584862233915
+          },
+          {
+            "bone": "l_yubi01",
+            "local_position_delta": 5.371049667246552e-07,
+            "rotation_delta": 1.8329468730371445e-05
+          },
+          {
+            "bone": "r_ashi",
+            "local_position_delta": 0.24068975448608398,
+            "rotation_delta": 0.019920825958249812
+          },
+          {
+            "bone": "r_momo",
+            "local_position_delta": 0.0,
+            "rotation_delta": 0.022245669737460075
+          },
+          {
+            "bone": "r_sune",
+            "local_position_delta": 0.23876285552978516,
+            "rotation_delta": 0.04216634854674461
+          },
+          {
+            "bone": "r_yubi01",
+            "local_position_delta": 1.9478068224998424e-07,
+            "rotation_delta": 1.8073540012153444e-05
+          }
+        ]
+      },
+      {
+        "filename": "Jeff-Hardy.PAC",
+        "bones": [
+          {
+            "bone": "kubi",
+            "local_position_delta": 0.21589970588684082,
+            "rotation_delta": 3.08520968772541e-08
+          }
+        ]
+      },
+      {
+        "filename": "Matt-Hardy.PAC",
+        "bones": [
+          {
+            "bone": "kubi",
+            "local_position_delta": 0.21589970588684082,
+            "rotation_delta": 1.1831189219730504e-07
+          }
+        ]
+      }
+    ],
+    "bone_count_range": [
+      77,
+      107
+    ],
+    "texture_entries": 649,
+    "texture_decode_failures": 0,
+    "texture_bits": {
+      "4": 620,
+      "8": 29
+    },
+    "dimensions": {
+      "64x64": 247,
+      "64x32": 75,
+      "64x128": 63,
+      "128x128": 43,
+      "32x32": 108,
+      "32x16": 33,
+      "32x64": 35,
+      "128x64": 17,
+      "16x16": 7,
+      "32x128": 6,
+      "64x16": 7,
+      "16x64": 2,
+      "16x32": 4,
+      "8x16": 1,
+      "256x128": 1
+    },
+    "texture_pngs_rendered": 25,
+    "multi_descriptor_interpretation": "INFERRED: header uint32 at byte 52 counts contiguous 32-byte named records; counts at descriptor+24 sum to header+24 across all 31 files. Runtime semantics unknown; no rewrites enabled.",
+    "app_modified": false,
+    "pacs_rebuilt": false,
+    "gameplay_tested": false,
+    "strict_v01_compatible_with_kenny": [
+      "Cody-Rhodes-Ring.PAC",
+      "Dolph-Ziggler.PAC",
+      "KOFI_KINGSTON.pac"
+    ]
+  },
+  "files": [
+    {
+      "file": "Batista.PAC",
+      "sha256": "d73e8d53df28b88d51d13ce608bf6d96fc837e8eb3b977fe6d11dbfc43e23288",
+      "pac_bytes": 112640,
+      "creator_import_passed": false,
+      "creator_import_error": "Unclassified nonzero YOBJ data cannot be discarded safely.",
+      "models": [
+        {
+          "section": 2,
+          "descriptors": {
+            "count_at_header_52": 1,
+            "records": [
+              {
+                "name": "batista",
+                "words_16_20_24_28": [
+                  1,
+                  0,
+                  26,
+                  0
+                ]
+              }
+            ],
+            "global_mesh_count": 26,
+            "mesh_count_sum": 26,
+            "ordinary_audit_passed": true
+          },
+          "bones": 79,
+          "meshes": 26,
+          "vertices": 1514,
+          "triangles": 1497,
+          "material_records": 52,
+          "reference_body": {
+            "common_named_body_bind_matches": true,
+            "tolerance": 1e-05,
+            "differences": [],
+            "missing_reference_body_bones": [
+              "l_sakotsu_d",
+              "r_sakotsu_d",
+              "root_d"
+            ],
+            "extra_nonfacial_bones": [],
+            "strict_full_rig_gate_matches": false,
+            "strict_gate_reason": "Bone-name sets differ; automatic retargeting is unsupported.",
+            "meaning": "A common-bind match is a candidate classification, not seam, face-controller or game compatibility approval."
+          }
+        }
+      ],
+      "nested_pacs": [],
+      "input_unchanged": true,
+      "texture_entries": 22
+    },
+    {
+      "file": "Booker-T.PAC",
+      "sha256": "eaf319d76dc05d9c7d6228b2f14273dffcb8ed0e733764eebfffc7653159bad0",
+      "pac_bytes": 114688,
+      "creator_import_passed": true,
+      "creator_import_error": null,
+      "models": [
+        {
+          "section": 2,
+          "descriptors": {
+            "count_at_header_52": 1,
+            "records": [
+              {
+                "name": "08_BOOKERT",
+                "words_16_20_24_28": [
+                  1,
+                  0,
+                  26,
+                  0
+                ]
+              }
+            ],
+            "global_mesh_count": 26,
+            "mesh_count_sum": 26,
+            "ordinary_audit_passed": true
+          },
+          "bones": 97,
+          "meshes": 26,
+          "vertices": 1525,
+          "triangles": 1500,
+          "material_records": 62,
+          "reference_body": {
+            "common_named_body_bind_matches": true,
+            "tolerance": 1e-05,
+            "differences": [],
+            "missing_reference_body_bones": [
+              "l_sakotsu_d",
+              "r_sakotsu_d",
+              "root_d"
+            ],
+            "extra_nonfacial_bones": [
+              {
+                "name": "Dummy03",
+                "parent": "l_yubi22",
+                "weighted_vertex_records": 4
+              }
+            ],
+            "strict_full_rig_gate_matches": false,
+            "strict_gate_reason": "Bone-name sets differ; automatic retargeting is unsupported.",
+            "meaning": "A common-bind match is a candidate classification, not seam, face-controller or game compatibility approval."
+          }
+        }
+      ],
+      "nested_pacs": [],
+      "input_unchanged": true,
+      "texture_entries": 23
+    },
+    {
+      "file": "Bret-Hart.PAC",
+      "sha256": "08a4cdb1517a6086a14dc67b440990ffaf7a925a094207f49351c04335951ead",
+      "pac_bytes": 112640,
+      "creator_import_passed": true,
+      "creator_import_error": null,
+      "models": [
+        {
+          "section": 2,
+          "descriptors": {
+            "count_at_header_52": 1,
+            "records": [
+              {
+                "name": "77_Bret",
+                "words_16_20_24_28": [
+                  1,
+                  0,
+                  30,
+                  0
+                ]
+              }
+            ],
+            "global_mesh_count": 30,
+            "mesh_count_sum": 30,
+            "ordinary_audit_passed": true
+          },
+          "bones": 96,
+          "meshes": 30,
+          "vertices": 1504,
+          "triangles": 1502,
+          "material_records": 66,
+          "reference_body": {
+            "common_named_body_bind_matches": true,
+            "tolerance": 1e-05,
+            "differences": [],
+            "missing_reference_body_bones": [
+              "l_sakotsu_d",
+              "r_sakotsu_d",
+              "root_d"
+            ],
+            "extra_nonfacial_bones": [],
+            "strict_full_rig_gate_matches": false,
+            "strict_gate_reason": "Bone-name sets differ; automatic retargeting is unsupported.",
+            "meaning": "A common-bind match is a candidate classification, not seam, face-controller or game compatibility approval."
+          }
+        }
+      ],
+      "nested_pacs": [],
+      "input_unchanged": true,
+      "texture_entries": 25
+    },
+    {
+      "file": "British-Bulldog.PAC",
+      "sha256": "a95be24656679b5e7e1fb3fd20c57a528dbf7d88258079716315295bf2762d6f",
+      "pac_bytes": 104448,
+      "creator_import_passed": true,
+      "creator_import_error": null,
+      "models": [
+        {
+          "section": 2,
+          "descriptors": {
+            "count_at_header_52": 1,
+            "records": [
+              {
+                "name": "bull",
+                "words_16_20_24_28": [
+                  1,
+                  0,
+                  24,
+                  0
+                ]
+              }
+            ],
+            "global_mesh_count": 24,
+            "mesh_count_sum": 24,
+            "ordinary_audit_passed": true
+          },
+          "bones": 79,
+          "meshes": 24,
+          "vertices": 1424,
+          "triangles": 1500,
+          "material_records": 53,
+          "reference_body": {
+            "common_named_body_bind_matches": true,
+            "tolerance": 1e-05,
+            "differences": [],
+            "missing_reference_body_bones": [
+              "l_sakotsu_d",
+              "r_sakotsu_d",
+              "root_d"
+            ],
+            "extra_nonfacial_bones": [],
+            "strict_full_rig_gate_matches": false,
+            "strict_gate_reason": "Bone-name sets differ; automatic retargeting is unsupported.",
+            "meaning": "A common-bind match is a candidate classification, not seam, face-controller or game compatibility approval."
+          }
+        }
+      ],
+      "nested_pacs": [],
+      "input_unchanged": true,
+      "texture_entries": 22
+    },
+    {
+      "file": "Carlito.PAC",
+      "sha256": "1ceb49f9c5eb45ebacf4bd1ead732cb22aeee4426999da314de22beb916acdba",
+      "pac_bytes": 112640,
+      "creator_import_passed": true,
+      "creator_import_error": null,
+      "models": [
+        {
+          "section": 2,
+          "descriptors": {
+            "count_at_header_52": 1,
+            "records": [
+              {
+                "name": "Carlito",
+                "words_16_20_24_28": [
+                  1,
+                  0,
+                  25,
+                  0
+                ]
+              }
+            ],
+            "global_mesh_count": 25,
+            "mesh_count_sum": 25,
+            "ordinary_audit_passed": true
+          },
+          "bones": 79,
+          "meshes": 25,
+          "vertices": 1628,
+          "triangles": 1500,
+          "material_records": 50,
+          "reference_body": {
+            "common_named_body_bind_matches": true,
+            "tolerance": 1e-05,
+            "differences": [],
+            "missing_reference_body_bones": [
+              "l_sakotsu_d",
+              "r_sakotsu_d",
+              "root_d"
+            ],
+            "extra_nonfacial_bones": [],
+            "strict_full_rig_gate_matches": false,
+            "strict_gate_reason": "Bone-name sets differ; automatic retargeting is unsupported.",
+            "meaning": "A common-bind match is a candidate classification, not seam, face-controller or game compatibility approval."
+          }
+        }
+      ],
+      "nested_pacs": [],
+      "input_unchanged": true,
+      "texture_entries": 22
+    },
+    {
+      "file": "Charlie-Haas.PAC",
+      "sha256": "6b98d6a4f5ea2af751c76c016c298dc89edc9fa470a75cdc08b2bad5a90d9499",
+      "pac_bytes": 116736,
+      "creator_import_passed": true,
+      "creator_import_error": null,
+      "models": [
+        {
+          "section": 2,
+          "descriptors": {
+            "count_at_header_52": 1,
+            "records": [
+              {
+                "name": "CharlieHaas",
+                "words_16_20_24_28": [
+                  1,
+                  0,
+                  25,
+                  0
+                ]
+              }
+            ],
+            "global_mesh_count": 25,
+            "mesh_count_sum": 25,
+            "ordinary_audit_passed": true
+          },
+          "bones": 78,
+          "meshes": 25,
+          "vertices": 1658,
+          "triangles": 1452,
+          "material_records": 49,
+          "reference_body": {
+            "common_named_body_bind_matches": true,
+            "tolerance": 1e-05,
+            "differences": [],
+            "missing_reference_body_bones": [
+              "l_sakotsu_d",
+              "r_sakotsu_d",
+              "root_d"
+            ],
+            "extra_nonfacial_bones": [],
+            "strict_full_rig_gate_matches": false,
+            "strict_gate_reason": "Bone-name sets differ; automatic retargeting is unsupported.",
+            "meaning": "A common-bind match is a candidate classification, not seam, face-controller or game compatibility approval."
+          }
+        }
+      ],
+      "nested_pacs": [],
+      "input_unchanged": true,
+      "texture_entries": 21
+    },
+    {
+      "file": "Chavo-Guerrero.PAC",
+      "sha256": "963f2de471ad9b3513368dfdef35303d9ed1171973129a1e39ae0c511d715d92",
+      "pac_bytes": 102400,
+      "creator_import_passed": true,
+      "creator_import_error": null,
+      "models": [
+        {
+          "section": 2,
+          "descriptors": {
+            "count_at_header_52": 1,
+            "records": [
+              {
+                "name": "37_chavo",
+                "words_16_20_24_28": [
+                  1,
+                  0,
+                  20,
+                  0
+                ]
+              }
+            ],
+            "global_mesh_count": 20,
+            "mesh_count_sum": 20,
+            "ordinary_audit_passed": true
+          },
+          "bones": 79,
+          "meshes": 20,
+          "vertices": 1370,
+          "triangles": 1500,
+          "material_records": 50,
+          "reference_body": {
+            "common_named_body_bind_matches": true,
+            "tolerance": 1e-05,
+            "differences": [],
+            "missing_reference_body_bones": [
+              "l_sakotsu_d",
+              "r_sakotsu_d",
+              "root_d"
+            ],
+            "extra_nonfacial_bones": [],
+            "strict_full_rig_gate_matches": false,
+            "strict_gate_reason": "Bone-name sets differ; automatic retargeting is unsupported.",
+            "meaning": "A common-bind match is a candidate classification, not seam, face-controller or game compatibility approval."
+          }
+        }
+      ],
+      "nested_pacs": [],
+      "input_unchanged": true,
+      "texture_entries": 18
+    },
+    {
+      "file": "Chris-Benoit.PAC",
+      "sha256": "ba4f784d46920dbf6ca1db6c1480f8b84de613c2df2f7da32fb73fa19a1ca126",
+      "pac_bytes": 102400,
+      "creator_import_passed": true,
+      "creator_import_error": null,
+      "models": [
+        {
+          "section": 2,
+          "descriptors": {
+            "count_at_header_52": 1,
+            "records": [
+              {
+                "name": "body",
+                "words_16_20_24_28": [
+                  1,
+                  0,
+                  23,
+                  0
+                ]
+              }
+            ],
+            "global_mesh_count": 23,
+            "mesh_count_sum": 23,
+            "ordinary_audit_passed": true
+          },
+          "bones": 77,
+          "meshes": 23,
+          "vertices": 1308,
+          "triangles": 1499,
+          "material_records": 43,
+          "reference_body": {
+            "common_named_body_bind_matches": true,
+            "tolerance": 1e-05,
+            "differences": [],
+            "missing_reference_body_bones": [
+              "l_sakotsu_d",
+              "r_sakotsu_d",
+              "root_d"
+            ],
+            "extra_nonfacial_bones": [],
+            "strict_full_rig_gate_matches": false,
+            "strict_gate_reason": "Bone-name sets differ; automatic retargeting is unsupported.",
+            "meaning": "A common-bind match is a candidate classification, not seam, face-controller or game compatibility approval."
+          }
+        }
+      ],
+      "nested_pacs": [],
+      "input_unchanged": true,
+      "texture_entries": 19
+    },
+    {
+      "file": "Chris-Jericho.PAC",
+      "sha256": "b70ee55602c205e4d7d1901ed2b082243c1a63b5a80e8e661b9e7675afdb617d",
+      "pac_bytes": 116736,
+      "creator_import_passed": false,
+      "creator_import_error": "Unclassified nonzero YOBJ data cannot be discarded safely.",
+      "models": [
+        {
+          "section": 2,
+          "descriptors": {
+            "count_at_header_52": 1,
+            "records": [
+              {
+                "name": "jericho",
+                "words_16_20_24_28": [
+                  1,
+                  0,
+                  27,
+                  0
+                ]
+              }
+            ],
+            "global_mesh_count": 27,
+            "mesh_count_sum": 27,
+            "ordinary_audit_passed": true
+          },
+          "bones": 97,
+          "meshes": 27,
+          "vertices": 1522,
+          "triangles": 1500,
+          "material_records": 55,
+          "reference_body": {
+            "common_named_body_bind_matches": true,
+            "tolerance": 1e-05,
+            "differences": [],
+            "missing_reference_body_bones": [
+              "l_sakotsu_d",
+              "r_sakotsu_d",
+              "root_d"
+            ],
+            "extra_nonfacial_bones": [],
+            "strict_full_rig_gate_matches": false,
+            "strict_gate_reason": "Bone-name sets differ; automatic retargeting is unsupported.",
+            "meaning": "A common-bind match is a candidate classification, not seam, face-controller or game compatibility approval."
+          }
+        }
+      ],
+      "nested_pacs": [],
+      "input_unchanged": true,
+      "texture_entries": 22
+    },
+    {
+      "file": "Chris-Masters.PAC",
+      "sha256": "cc6111731cdebb0c51c0df9e37b3f779ada2d09a263238c787d81ce3ee8b7c4b",
+      "pac_bytes": 106496,
+      "creator_import_passed": true,
+      "creator_import_error": null,
+      "models": [
+        {
+          "section": 2,
+          "descriptors": {
+            "count_at_header_52": 1,
+            "records": [
+              {
+                "name": "Chris",
+                "words_16_20_24_28": [
+                  1,
+                  0,
+                  25,
+                  0
+                ]
+              }
+            ],
+            "global_mesh_count": 25,
+            "mesh_count_sum": 25,
+            "ordinary_audit_passed": true
+          },
+          "bones": 79,
+          "meshes": 25,
+          "vertices": 1352,
+          "triangles": 1499,
+          "material_records": 48,
+          "reference_body": {
+            "common_named_body_bind_matches": true,
+            "tolerance": 1e-05,
+            "differences": [],
+            "missing_reference_body_bones": [
+              "l_sakotsu_d",
+              "r_sakotsu_d",
+              "root_d"
+            ],
+            "extra_nonfacial_bones": [],
+            "strict_full_rig_gate_matches": false,
+            "strict_gate_reason": "Bone-name sets differ; automatic retargeting is unsupported.",
+            "meaning": "A common-bind match is a candidate classification, not seam, face-controller or game compatibility approval."
+          }
+        }
+      ],
+      "nested_pacs": [],
+      "input_unchanged": true,
+      "texture_entries": 20
+    },
+    {
+      "file": "Christian.PAC",
+      "sha256": "0db1bb18e50c9b5bd66dd48c68301ae1ea204e93b397fbed125ea93fd1293cd9",
+      "pac_bytes": 106496,
+      "creator_import_passed": true,
+      "creator_import_error": null,
+      "models": [
+        {
+          "section": 2,
+          "descriptors": {
+            "count_at_header_52": 1,
+            "records": [
+              {
+                "name": "christian",
+                "words_16_20_24_28": [
+                  1,
+                  0,
+                  26,
+                  0
+                ]
+              }
+            ],
+            "global_mesh_count": 26,
+            "mesh_count_sum": 26,
+            "ordinary_audit_passed": true
+          },
+          "bones": 79,
+          "meshes": 26,
+          "vertices": 1417,
+          "triangles": 1494,
+          "material_records": 43,
+          "reference_body": {
+            "common_named_body_bind_matches": true,
+            "tolerance": 1e-05,
+            "differences": [],
+            "missing_reference_body_bones": [
+              "l_sakotsu_d",
+              "r_sakotsu_d",
+              "root_d"
+            ],
+            "extra_nonfacial_bones": [],
+            "strict_full_rig_gate_matches": false,
+            "strict_gate_reason": "Bone-name sets differ; automatic retargeting is unsupported.",
+            "meaning": "A common-bind match is a candidate classification, not seam, face-controller or game compatibility approval."
+          }
+        }
+      ],
+      "nested_pacs": [],
+      "input_unchanged": true,
+      "texture_entries": 18
+    },
+    {
+      "file": "CM-Punk-Ring.PAC",
+      "sha256": "717655ce9ce66fc2e26e60e2ad82a88a1a3c35e1f2b1badc2cafb50025ff7597",
+      "pac_bytes": 139264,
+      "creator_import_passed": false,
+      "creator_import_error": "Secondary descriptor mesh count disagrees",
+      "models": [
+        {
+          "section": 2,
+          "descriptors": {
+            "count_at_header_52": 2,
+            "records": [
+              {
+                "name": "CM_Punk_1500",
+                "words_16_20_24_28": [
+                  1,
+                  0,
+                  24,
+                  0
+                ],
+                "inferred_contiguous_group_textures": [
+                  "blood",
+                  "blood_b",
+                  "cm_arm_01",
+                  "cm_arm_02",
+                  "cm_body",
+                  "cm_boo",
+                  "cm_earrings",
+                  "cm_eye",
+                  "cm_face",
+                  "cm_finger01",
+                  "cm_finger02",
+                  "cm_ha",
+                  "cm_hand",
+                  "cm_knee",
+                  "cm_momo",
+                  "cm_neck",
+                  "cm_pan",
+                  "cm_wrist",
+                  "cm_wrist_02"
+                ]
+              },
+              {
+                "name": "hair",
+                "words_16_20_24_28": [
+                  1,
+                  0,
+                  1,
+                  0
+                ],
+                "inferred_contiguous_group_textures": [
+                  "cm_a_hair"
+                ]
+              }
+            ],
+            "global_mesh_count": 25,
+            "mesh_count_sum": 25,
+            "ordinary_audit_passed": false,
+            "ordinary_audit_error": "Secondary descriptor mesh count disagrees",
+            "diagnostic_only": "First descriptor count overridden IN MEMORY to reuse the existing auditor. Other buffers checked; source descriptors remain unsupported for rewriting. No PAC or YOBJ exported."
+          },
+          "bones": 83,
+          "meshes": 25,
+          "vertices": 1411,
+          "triangles": 1725,
+          "material_records": 53,
+          "reference_body": {
+            "common_named_body_bind_matches": true,
+            "tolerance": 1e-05,
+            "differences": [],
+            "missing_reference_body_bones": [],
+            "extra_nonfacial_bones": [],
+            "strict_full_rig_gate_matches": true,
+            "strict_gate_reason": null,
+            "meaning": "A common-bind match is a candidate classification, not seam, face-controller or game compatibility approval."
+          }
+        }
+      ],
+      "nested_pacs": [
+        {
+          "section": 100,
+          "children": [
+            {
+              "id": 0,
+              "decoded_bytes": 7364,
+              "signature": "JUDE"
+            },
+            {
+              "id": 1,
+              "decoded_bytes": 131924,
+              "signature": "JUDE"
+            }
+          ]
+        }
+      ],
+      "input_unchanged": true,
+      "texture_entries": 23
+    },
+    {
+      "file": "Cody-Rhodes-Ring.PAC",
+      "sha256": "45e8adead68d26452de63849c0a3064013ee4e612be8c749a0788e532e006c82",
+      "pac_bytes": 147456,
+      "creator_import_passed": true,
+      "creator_import_error": null,
+      "models": [
+        {
+          "section": 2,
+          "descriptors": {
+            "count_at_header_52": 1,
+            "records": [
+              {
+                "name": "CodyRhodes_1500",
+                "words_16_20_24_28": [
+                  1,
+                  0,
+                  26,
+                  0
+                ]
+              }
+            ],
+            "global_mesh_count": 26,
+            "mesh_count_sum": 26,
+            "ordinary_audit_passed": true
+          },
+          "bones": 83,
+          "meshes": 26,
+          "vertices": 1573,
+          "triangles": 1820,
+          "material_records": 47,
+          "reference_body": {
+            "common_named_body_bind_matches": true,
+            "tolerance": 1e-05,
+            "differences": [],
+            "missing_reference_body_bones": [],
+            "extra_nonfacial_bones": [],
+            "strict_full_rig_gate_matches": true,
+            "strict_gate_reason": null,
+            "meaning": "A common-bind match is a candidate classification, not seam, face-controller or game compatibility approval."
+          }
+        }
+      ],
+      "nested_pacs": [
+        {
+          "section": 100,
+          "children": [
+            {
+              "id": 0,
+              "decoded_bytes": 7364,
+              "signature": "JUDE"
+            },
+            {
+              "id": 1,
+              "decoded_bytes": 131924,
+              "signature": "JUDE"
+            }
+          ]
+        }
+      ],
+      "input_unchanged": true,
+      "texture_entries": 21
+    },
+    {
+      "file": "Danny-Basham.PAC",
+      "sha256": "4e3b4919abd1c58c02651da0bdcf5885b75c656ef217fdd387e05075159e32af",
+      "pac_bytes": 178176,
+      "creator_import_passed": false,
+      "creator_import_error": "Unclassified nonzero YOBJ data cannot be discarded safely.",
+      "models": [
+        {
+          "section": 2,
+          "descriptors": {
+            "count_at_header_52": 1,
+            "records": [
+              {
+                "name": "DannyBasham",
+                "words_16_20_24_28": [
+                  1,
+                  0,
+                  26,
+                  0
+                ]
+              }
+            ],
+            "global_mesh_count": 26,
+            "mesh_count_sum": 26,
+            "ordinary_audit_passed": true
+          },
+          "bones": 79,
+          "meshes": 26,
+          "vertices": 1343,
+          "triangles": 1500,
+          "material_records": 45,
+          "reference_body": {
+            "common_named_body_bind_matches": true,
+            "tolerance": 1e-05,
+            "differences": [],
+            "missing_reference_body_bones": [
+              "l_sakotsu_d",
+              "r_sakotsu_d",
+              "root_d"
+            ],
+            "extra_nonfacial_bones": [],
+            "strict_full_rig_gate_matches": false,
+            "strict_gate_reason": "Bone-name sets differ; automatic retargeting is unsupported.",
+            "meaning": "A common-bind match is a candidate classification, not seam, face-controller or game compatibility approval."
+          }
+        }
+      ],
+      "nested_pacs": [],
+      "input_unchanged": true,
+      "texture_entries": 17
+    },
+    {
+      "file": "Dolph-Ziggler.PAC",
+      "sha256": "fb9e750b5ee56d88742c32541e48553c2c625cc16129bcd028a594b2e01dd8ce",
+      "pac_bytes": 147456,
+      "creator_import_passed": true,
+      "creator_import_error": null,
+      "models": [
+        {
+          "section": 2,
+          "descriptors": {
+            "count_at_header_52": 1,
+            "records": [
+              {
+                "name": "Dolph Ziggler_1",
+                "words_16_20_24_28": [
+                  1,
+                  0,
+                  27,
+                  0
+                ]
+              }
+            ],
+            "global_mesh_count": 27,
+            "mesh_count_sum": 27,
+            "ordinary_audit_passed": true
+          },
+          "bones": 83,
+          "meshes": 27,
+          "vertices": 1532,
+          "triangles": 1780,
+          "material_records": 47,
+          "reference_body": {
+            "common_named_body_bind_matches": true,
+            "tolerance": 1e-05,
+            "differences": [],
+            "missing_reference_body_bones": [],
+            "extra_nonfacial_bones": [],
+            "strict_full_rig_gate_matches": true,
+            "strict_gate_reason": null,
+            "meaning": "A common-bind match is a candidate classification, not seam, face-controller or game compatibility approval."
+          }
+        }
+      ],
+      "nested_pacs": [
+        {
+          "section": 100,
+          "children": [
+            {
+              "id": 0,
+              "decoded_bytes": 7364,
+              "signature": "JUDE"
+            },
+            {
+              "id": 1,
+              "decoded_bytes": 131924,
+              "signature": "JUDE"
+            }
+          ]
+        }
+      ],
+      "input_unchanged": true,
+      "texture_entries": 19
+    },
+    {
+      "file": "Edge.PAC",
+      "sha256": "eab2627389d1122a243c555fe170f878b4f577f11a6b8dadc9a4cdf75bac9c09",
+      "pac_bytes": 178176,
+      "creator_import_passed": true,
+      "creator_import_error": null,
+      "models": [
+        {
+          "section": 2,
+          "descriptors": {
+            "count_at_header_52": 1,
+            "records": [
+              {
+                "name": "Edge",
+                "words_16_20_24_28": [
+                  1,
+                  0,
+                  28,
+                  0
+                ]
+              }
+            ],
+            "global_mesh_count": 28,
+            "mesh_count_sum": 28,
+            "ordinary_audit_passed": true
+          },
+          "bones": 97,
+          "meshes": 28,
+          "vertices": 1395,
+          "triangles": 1497,
+          "material_records": 52,
+          "reference_body": {
+            "common_named_body_bind_matches": true,
+            "tolerance": 1e-05,
+            "differences": [],
+            "missing_reference_body_bones": [
+              "l_sakotsu_d",
+              "r_sakotsu_d",
+              "root_d"
+            ],
+            "extra_nonfacial_bones": [],
+            "strict_full_rig_gate_matches": false,
+            "strict_gate_reason": "Bone-name sets differ; automatic retargeting is unsupported.",
+            "meaning": "A common-bind match is a candidate classification, not seam, face-controller or game compatibility approval."
+          }
+        }
+      ],
+      "nested_pacs": [],
+      "input_unchanged": true,
+      "texture_entries": 20
+    },
+    {
+      "file": "JBL(Suit).PAC",
+      "sha256": "8c094f622746b1bff8138082e91f88b40127647318689757babc4fbbdd575cac",
+      "pac_bytes": 169984,
+      "creator_import_passed": true,
+      "creator_import_error": null,
+      "models": [
+        {
+          "section": 2,
+          "descriptors": {
+            "count_at_header_52": 1,
+            "records": [
+              {
+                "name": "JBL_2p_equip",
+                "words_16_20_24_28": [
+                  1,
+                  0,
+                  25,
+                  0
+                ]
+              }
+            ],
+            "global_mesh_count": 25,
+            "mesh_count_sum": 25,
+            "ordinary_audit_passed": true
+          },
+          "bones": 79,
+          "meshes": 25,
+          "vertices": 1397,
+          "triangles": 1417,
+          "material_records": 47,
+          "reference_body": {
+            "common_named_body_bind_matches": false,
+            "tolerance": 1e-05,
+            "differences": [
+              {
+                "bone": "l_ashi",
+                "position_delta": 0.24007463455200195,
+                "rotation_delta": 0.019924165681002814,
+                "parent_matches": true
+              },
+              {
+                "bone": "l_momo",
+                "position_delta": 0.0,
+                "rotation_delta": 0.02224228158593371,
+                "parent_matches": true
+              },
+              {
+                "bone": "l_sune",
+                "position_delta": 0.23814773559570312,
+                "rotation_delta": 0.042165584862233915,
+                "parent_matches": true
+              },
+              {
+                "bone": "l_yubi01",
+                "position_delta": 5.371049667246552e-07,
+                "rotation_delta": 1.8329468730371445e-05,
+                "parent_matches": true
+              },
+              {
+                "bone": "r_ashi",
+                "position_delta": 0.24068975448608398,
+                "rotation_delta": 0.019920825958249812,
+                "parent_matches": true
+              },
+              {
+                "bone": "r_momo",
+                "position_delta": 0.0,
+                "rotation_delta": 0.022245669737460075,
+                "parent_matches": true
+              },
+              {
+                "bone": "r_sune",
+                "position_delta": 0.23876285552978516,
+                "rotation_delta": 0.04216634854674461,
+                "parent_matches": true
+              },
+              {
+                "bone": "r_yubi01",
+                "position_delta": 1.9478068224998424e-07,
+                "rotation_delta": 1.8073540012153444e-05,
+                "parent_matches": true
+              }
+            ],
+            "missing_reference_body_bones": [
+              "l_sakotsu_d",
+              "r_sakotsu_d",
+              "root_d"
+            ],
+            "extra_nonfacial_bones": [],
+            "strict_full_rig_gate_matches": false,
+            "strict_gate_reason": "Bone-name sets differ; automatic retargeting is unsupported.",
+            "meaning": "A common-bind match is a candidate classification, not seam, face-controller or game compatibility approval."
+          }
+        }
+      ],
+      "nested_pacs": [],
+      "input_unchanged": true,
+      "texture_entries": 18
+    },
+    {
+      "file": "Jeff-Hardy.PAC",
+      "sha256": "ed8b1fdd1a5f2cb29cc4ff5a718727eab23f46a0cf62e68265e44bdefcbbbaeb",
+      "pac_bytes": 143360,
+      "creator_import_passed": true,
+      "creator_import_error": null,
+      "models": [
+        {
+          "section": 2,
+          "descriptors": {
+            "count_at_header_52": 1,
+            "records": [
+              {
+                "name": "Jeff",
+                "words_16_20_24_28": [
+                  1,
+                  0,
+                  27,
+                  0
+                ]
+              }
+            ],
+            "global_mesh_count": 27,
+            "mesh_count_sum": 27,
+            "ordinary_audit_passed": true
+          },
+          "bones": 98,
+          "meshes": 27,
+          "vertices": 1372,
+          "triangles": 1741,
+          "material_records": 57,
+          "reference_body": {
+            "common_named_body_bind_matches": false,
+            "tolerance": 1e-05,
+            "differences": [
+              {
+                "bone": "kubi",
+                "position_delta": 0.21589970588684082,
+                "rotation_delta": 3.08520968772541e-08,
+                "parent_matches": true
+              }
+            ],
+            "missing_reference_body_bones": [],
+            "extra_nonfacial_bones": [],
+            "strict_full_rig_gate_matches": false,
+            "strict_gate_reason": "Bone-name sets differ; automatic retargeting is unsupported.",
+            "meaning": "A common-bind match is a candidate classification, not seam, face-controller or game compatibility approval."
+          }
+        }
+      ],
+      "nested_pacs": [
+        {
+          "section": 100,
+          "children": [
+            {
+              "id": 0,
+              "decoded_bytes": 18036,
+              "signature": "JUDE"
+            },
+            {
+              "id": 1,
+              "decoded_bytes": 137724,
+              "signature": "JUDE"
+            },
+            {
+              "id": 2,
+              "decoded_bytes": 115,
+              "signature": "\u0003\u0003\u0005\u0005"
+            },
+            {
+              "id": 3,
+              "decoded_bytes": 410,
+              "signature": "\u0005\n\u000f\n"
+            },
+            {
+              "id": 4,
+              "decoded_bytes": 495,
+              "signature": "\u0005\u0005\u0005\u0005"
+            },
+            {
+              "id": 5,
+              "decoded_bytes": 535,
+              "signature": "\u0000\u0000\u0000\u0000"
+            },
+            {
+              "id": 6,
+              "decoded_bytes": 10,
+              "signature": "\t\n\n\n"
+            },
+            {
+              "id": 7,
+              "decoded_bytes": 800,
+              "signature": "\u0007\b\u0006\u0006"
+            },
+            {
+              "id": 8,
+              "decoded_bytes": 255,
+              "signature": "\u0019\u0019\u0019\u0019"
+            }
+          ]
+        }
+      ],
+      "input_unchanged": true,
+      "texture_entries": 22
+    },
+    {
+      "file": "Joey-Mercury-Ring.PAC",
+      "sha256": "95a2e2ce5fa32b2fc55a9da03ba0cb38bfe9c810e0ca2481876add204a36177b",
+      "pac_bytes": 190464,
+      "creator_import_passed": false,
+      "creator_import_error": "Secondary descriptor mesh count disagrees",
+      "models": [
+        {
+          "section": 2,
+          "descriptors": {
+            "count_at_header_52": 2,
+            "records": [
+              {
+                "name": "Mercury",
+                "words_16_20_24_28": [
+                  1,
+                  0,
+                  25,
+                  0
+                ],
+                "inferred_contiguous_group_textures": [
+                  "blood",
+                  "blood_b",
+                  "mel_arm",
+                  "mel_belto",
+                  "mel_body",
+                  "mel_eye",
+                  "mel_face",
+                  "mel_ha",
+                  "mel_hand",
+                  "mel_leg",
+                  "mel_neck",
+                  "mel_neckless",
+                  "mel_shose",
+                  "mel_suso",
+                  "mel_top",
+                  "mel_wris"
+                ]
+              },
+              {
+                "name": "Mercury_hair",
+                "words_16_20_24_28": [
+                  1,
+                  0,
+                  5,
+                  0
+                ],
+                "inferred_contiguous_group_textures": [
+                  "mel_haira",
+                  "mel_hairb"
+                ]
+              }
+            ],
+            "global_mesh_count": 30,
+            "mesh_count_sum": 30,
+            "ordinary_audit_passed": false,
+            "ordinary_audit_error": "Secondary descriptor mesh count disagrees",
+            "diagnostic_only": "First descriptor count overridden IN MEMORY to reuse the existing auditor. Other buffers checked; source descriptors remain unsupported for rewriting. No PAC or YOBJ exported."
+          },
+          "bones": 107,
+          "meshes": 30,
+          "vertices": 1426,
+          "triangles": 1486,
+          "material_records": 53,
+          "reference_body": {
+            "common_named_body_bind_matches": true,
+            "tolerance": 1e-05,
+            "differences": [],
+            "missing_reference_body_bones": [
+              "l_sakotsu_d",
+              "r_sakotsu_d",
+              "root_d"
+            ],
+            "extra_nonfacial_bones": [],
+            "strict_full_rig_gate_matches": false,
+            "strict_gate_reason": "Bone-name sets differ; automatic retargeting is unsupported.",
+            "meaning": "A common-bind match is a candidate classification, not seam, face-controller or game compatibility approval."
+          }
+        }
+      ],
+      "nested_pacs": [],
+      "input_unchanged": true,
+      "texture_entries": 21
+    },
+    {
+      "file": "John-Cena-Ring(Green).PAC",
+      "sha256": "8fd829750a4c051f08be31158ea3f0a43b2960e8a0d4cc360ca2063848100a0f",
+      "pac_bytes": 198656,
+      "creator_import_passed": false,
+      "creator_import_error": "Unclassified nonzero YOBJ data cannot be discarded safely.",
+      "models": [
+        {
+          "section": 2,
+          "descriptors": {
+            "count_at_header_52": 1,
+            "records": [
+              {
+                "name": "John Cena",
+                "words_16_20_24_28": [
+                  1,
+                  0,
+                  28,
+                  0
+                ]
+              }
+            ],
+            "global_mesh_count": 28,
+            "mesh_count_sum": 28,
+            "ordinary_audit_passed": true
+          },
+          "bones": 79,
+          "meshes": 28,
+          "vertices": 1557,
+          "triangles": 1500,
+          "material_records": 57,
+          "reference_body": {
+            "common_named_body_bind_matches": true,
+            "tolerance": 1e-05,
+            "differences": [],
+            "missing_reference_body_bones": [
+              "l_sakotsu_d",
+              "r_sakotsu_d",
+              "root_d"
+            ],
+            "extra_nonfacial_bones": [],
+            "strict_full_rig_gate_matches": false,
+            "strict_gate_reason": "Bone-name sets differ; automatic retargeting is unsupported.",
+            "meaning": "A common-bind match is a candidate classification, not seam, face-controller or game compatibility approval."
+          }
+        }
+      ],
+      "nested_pacs": [],
+      "input_unchanged": true,
+      "texture_entries": 23
+    },
+    {
+      "file": "KOFI_KINGSTON.pac",
+      "sha256": "5bb373dbe944583f097daa4d666e86f5b92d3e1699229c49167d948f194f465c",
+      "pac_bytes": 139264,
+      "creator_import_passed": true,
+      "creator_import_error": null,
+      "models": [
+        {
+          "section": 2,
+          "descriptors": {
+            "count_at_header_52": 1,
+            "records": [
+              {
+                "name": "kofi_1500",
+                "words_16_20_24_28": [
+                  1,
+                  0,
+                  25,
+                  0
+                ]
+              }
+            ],
+            "global_mesh_count": 25,
+            "mesh_count_sum": 25,
+            "ordinary_audit_passed": true
+          },
+          "bones": 83,
+          "meshes": 25,
+          "vertices": 1442,
+          "triangles": 1739,
+          "material_records": 43,
+          "reference_body": {
+            "common_named_body_bind_matches": true,
+            "tolerance": 1e-05,
+            "differences": [],
+            "missing_reference_body_bones": [],
+            "extra_nonfacial_bones": [],
+            "strict_full_rig_gate_matches": true,
+            "strict_gate_reason": null,
+            "meaning": "A common-bind match is a candidate classification, not seam, face-controller or game compatibility approval."
+          }
+        }
+      ],
+      "nested_pacs": [
+        {
+          "section": 100,
+          "children": [
+            {
+              "id": 0,
+              "decoded_bytes": 7132,
+              "signature": "JUDE"
+            },
+            {
+              "id": 1,
+              "decoded_bytes": 134452,
+              "signature": "JUDE"
+            },
+            {
+              "id": 2,
+              "decoded_bytes": 115,
+              "signature": "\u0003\u0003\u0005\u0005"
+            },
+            {
+              "id": 3,
+              "decoded_bytes": 410,
+              "signature": "\u0005\n\u000f\n"
+            },
+            {
+              "id": 4,
+              "decoded_bytes": 495,
+              "signature": "\u0005\u0005\u0005\u0005"
+            },
+            {
+              "id": 5,
+              "decoded_bytes": 535,
+              "signature": "\u0000\u0000\u0000\u0000"
+            },
+            {
+              "id": 6,
+              "decoded_bytes": 10,
+              "signature": "\t\n\n\n"
+            },
+            {
+              "id": 7,
+              "decoded_bytes": 800,
+              "signature": "\u0007\b\u0006\u0006"
+            },
+            {
+              "id": 8,
+              "decoded_bytes": 255,
+              "signature": "\u0019\u0019\u0019\u0019"
+            }
+          ]
+        }
+      ],
+      "input_unchanged": true,
+      "texture_entries": 17
+    },
+    {
+      "file": "Matt-Hardy.PAC",
+      "sha256": "238514f933e59215d71dc4e0d46c86dddd2414fe451f061741b7b9a3c3476948",
+      "pac_bytes": 176128,
+      "creator_import_passed": false,
+      "creator_import_error": "Secondary descriptor mesh count disagrees",
+      "models": [
+        {
+          "section": 2,
+          "descriptors": {
+            "count_at_header_52": 2,
+            "records": [
+              {
+                "name": "Matt",
+                "words_16_20_24_28": [
+                  1,
+                  0,
+                  27,
+                  0
+                ],
+                "inferred_contiguous_group_textures": [
+                  "arm_01",
+                  "arm_03",
+                  "blood",
+                  "blood_b",
+                  "body",
+                  "boot",
+                  "eye",
+                  "face",
+                  "ha",
+                  "hand",
+                  "neck",
+                  "top",
+                  "zubon"
+                ]
+              },
+              {
+                "name": "hair01",
+                "words_16_20_24_28": [
+                  1,
+                  0,
+                  4,
+                  0
+                ],
+                "inferred_contiguous_group_textures": [
+                  "_a_hair_01",
+                  "_a_hair_02"
+                ]
+              }
+            ],
+            "global_mesh_count": 31,
+            "mesh_count_sum": 31,
+            "ordinary_audit_passed": false,
+            "ordinary_audit_error": "Secondary descriptor mesh count disagrees",
+            "diagnostic_only": "First descriptor count overridden IN MEMORY to reuse the existing auditor. Other buffers checked; source descriptors remain unsupported for rewriting. No PAC or YOBJ exported."
+          },
+          "bones": 91,
+          "meshes": 31,
+          "vertices": 1402,
+          "triangles": 1496,
+          "material_records": 52,
+          "reference_body": {
+            "common_named_body_bind_matches": false,
+            "tolerance": 1e-05,
+            "differences": [
+              {
+                "bone": "kubi",
+                "position_delta": 0.21589970588684082,
+                "rotation_delta": 1.1831189219730504e-07,
+                "parent_matches": true
+              }
+            ],
+            "missing_reference_body_bones": [
+              "l_sakotsu_d",
+              "r_sakotsu_d",
+              "root_d"
+            ],
+            "extra_nonfacial_bones": [],
+            "strict_full_rig_gate_matches": false,
+            "strict_gate_reason": "Bone-name sets differ; automatic retargeting is unsupported.",
+            "meaning": "A common-bind match is a candidate classification, not seam, face-controller or game compatibility approval."
+          }
+        }
+      ],
+      "nested_pacs": [],
+      "input_unchanged": true,
+      "texture_entries": 18
+    },
+    {
+      "file": "Randy-Orton.PAC",
+      "sha256": "e84132ef59efd479d1a361df3304e9d5172e467d74d4931f35b4266fce58379f",
+      "pac_bytes": 108544,
+      "creator_import_passed": true,
+      "creator_import_error": null,
+      "models": [
+        {
+          "section": 2,
+          "descriptors": {
+            "count_at_header_52": 1,
+            "records": [
+              {
+                "name": "orton",
+                "words_16_20_24_28": [
+                  1,
+                  0,
+                  28,
+                  0
+                ]
+              }
+            ],
+            "global_mesh_count": 28,
+            "mesh_count_sum": 28,
+            "ordinary_audit_passed": true
+          },
+          "bones": 79,
+          "meshes": 28,
+          "vertices": 1478,
+          "triangles": 1497,
+          "material_records": 58,
+          "reference_body": {
+            "common_named_body_bind_matches": true,
+            "tolerance": 1e-05,
+            "differences": [],
+            "missing_reference_body_bones": [
+              "l_sakotsu_d",
+              "r_sakotsu_d",
+              "root_d"
+            ],
+            "extra_nonfacial_bones": [],
+            "strict_full_rig_gate_matches": false,
+            "strict_gate_reason": "Bone-name sets differ; automatic retargeting is unsupported.",
+            "meaning": "A common-bind match is a candidate classification, not seam, face-controller or game compatibility approval."
+          }
+        }
+      ],
+      "nested_pacs": [],
+      "input_unchanged": true,
+      "texture_entries": 23
+    },
+    {
+      "file": "Rob-Van-Dam.PAC",
+      "sha256": "888aa229b33d213c7bcf2ff744744004704bc0d6b6dc771ac37badcedebabae8",
+      "pac_bytes": 190464,
+      "creator_import_passed": true,
+      "creator_import_error": null,
+      "models": [
+        {
+          "section": 2,
+          "descriptors": {
+            "count_at_header_52": 1,
+            "records": [
+              {
+                "name": "RVD",
+                "words_16_20_24_28": [
+                  1,
+                  0,
+                  30,
+                  0
+                ]
+              }
+            ],
+            "global_mesh_count": 30,
+            "mesh_count_sum": 30,
+            "ordinary_audit_passed": true
+          },
+          "bones": 84,
+          "meshes": 30,
+          "vertices": 1499,
+          "triangles": 1485,
+          "material_records": 54,
+          "reference_body": {
+            "common_named_body_bind_matches": true,
+            "tolerance": 1e-05,
+            "differences": [],
+            "missing_reference_body_bones": [
+              "l_sakotsu_d",
+              "r_sakotsu_d",
+              "root_d"
+            ],
+            "extra_nonfacial_bones": [],
+            "strict_full_rig_gate_matches": false,
+            "strict_gate_reason": "Bone-name sets differ; automatic retargeting is unsupported.",
+            "meaning": "A common-bind match is a candidate classification, not seam, face-controller or game compatibility approval."
+          }
+        }
+      ],
+      "nested_pacs": [],
+      "input_unchanged": true,
+      "texture_entries": 20
+    },
+    {
+      "file": "Sabu-Ring.PAC",
+      "sha256": "552685542486dd40b9ffb6d0a6b3748db38bb525c3a182c7282f57362ae2e0f5",
+      "pac_bytes": 110592,
+      "creator_import_passed": true,
+      "creator_import_error": null,
+      "models": [
+        {
+          "section": 2,
+          "descriptors": {
+            "count_at_header_52": 1,
+            "records": [
+              {
+                "name": "sabu",
+                "words_16_20_24_28": [
+                  1,
+                  0,
+                  26,
+                  0
+                ]
+              }
+            ],
+            "global_mesh_count": 26,
+            "mesh_count_sum": 26,
+            "ordinary_audit_passed": true
+          },
+          "bones": 101,
+          "meshes": 26,
+          "vertices": 1407,
+          "triangles": 1759,
+          "material_records": 53,
+          "reference_body": {
+            "common_named_body_bind_matches": true,
+            "tolerance": 1e-05,
+            "differences": [],
+            "missing_reference_body_bones": [],
+            "extra_nonfacial_bones": [
+              {
+                "name": "kami04",
+                "parent": "root",
+                "weighted_vertex_records": 0
+              },
+              {
+                "name": "kami04_00",
+                "parent": "kami04",
+                "weighted_vertex_records": 5
+              },
+              {
+                "name": "kami04_01",
+                "parent": "kami04_00",
+                "weighted_vertex_records": 4
+              },
+              {
+                "name": "kami05",
+                "parent": "root",
+                "weighted_vertex_records": 0
+              },
+              {
+                "name": "kami05_00",
+                "parent": "kami05",
+                "weighted_vertex_records": 5
+              },
+              {
+                "name": "kami05_01",
+                "parent": "kami05_00",
+                "weighted_vertex_records": 4
+              }
+            ],
+            "strict_full_rig_gate_matches": false,
+            "strict_gate_reason": "Bone-name sets differ; automatic retargeting is unsupported.",
+            "meaning": "A common-bind match is a candidate classification, not seam, face-controller or game compatibility approval."
+          }
+        }
+      ],
+      "nested_pacs": [],
+      "input_unchanged": true,
+      "texture_entries": 20
+    },
+    {
+      "file": "Tyson-kidd.PAC",
+      "sha256": "ae425d686e84febc9f8ea8017904cd02cf7b0e3778c6c482d542fabd057c7abc",
+      "pac_bytes": 141312,
+      "creator_import_passed": true,
+      "creator_import_error": null,
+      "models": [
+        {
+          "section": 2,
+          "descriptors": {
+            "count_at_header_52": 1,
+            "records": [
+              {
+                "name": "Tyson_Kidd_1500",
+                "words_16_20_24_28": [
+                  1,
+                  0,
+                  23,
+                  0
+                ]
+              }
+            ],
+            "global_mesh_count": 23,
+            "mesh_count_sum": 23,
+            "ordinary_audit_passed": true
+          },
+          "bones": 83,
+          "meshes": 23,
+          "vertices": 1374,
+          "triangles": 1748,
+          "material_records": 44,
+          "reference_body": {
+            "common_named_body_bind_matches": true,
+            "tolerance": 1e-05,
+            "differences": [],
+            "missing_reference_body_bones": [],
+            "extra_nonfacial_bones": [],
+            "strict_full_rig_gate_matches": false,
+            "strict_gate_reason": "Bone-name sets differ; automatic retargeting is unsupported.",
+            "meaning": "A common-bind match is a candidate classification, not seam, face-controller or game compatibility approval."
+          }
+        }
+      ],
+      "nested_pacs": [
+        {
+          "section": 100,
+          "children": [
+            {
+              "id": 0,
+              "decoded_bytes": 7364,
+              "signature": "JUDE"
+            },
+            {
+              "id": 1,
+              "decoded_bytes": 131924,
+              "signature": "JUDE"
+            }
+          ]
+        }
+      ],
+      "input_unchanged": true,
+      "texture_entries": 17
+    },
+    {
+      "file": "Umaga (2).PAC",
+      "sha256": "c5c14dd6c929997a97fb1ce2c9f3c738addaa92a951636e46fa88f59ce6efa46",
+      "pac_bytes": 137216,
+      "creator_import_passed": false,
+      "creator_import_error": "Secondary descriptor mesh count disagrees",
+      "models": [
+        {
+          "section": 2,
+          "descriptors": {
+            "count_at_header_52": 2,
+            "records": [
+              {
+                "name": "Umaga_1500",
+                "words_16_20_24_28": [
+                  1,
+                  0,
+                  23,
+                  0
+                ],
+                "inferred_contiguous_group_textures": [
+                  "blood",
+                  "blood_b",
+                  "u_body",
+                  "u_body2",
+                  "u_calf",
+                  "u_elbow",
+                  "u_eye",
+                  "u_face",
+                  "u_foot",
+                  "u_hand",
+                  "u_head",
+                  "u_leg",
+                  "u_maku",
+                  "u_neck",
+                  "u_neckless",
+                  "u_neckless_top",
+                  "u_pants",
+                  "u_ring",
+                  "u_tatoo1",
+                  "u_tattoo_arm",
+                  "u_teeth",
+                  "u_umaga",
+                  "u_wrist"
+                ]
+              },
+              {
+                "name": "1500",
+                "words_16_20_24_28": [
+                  1,
+                  0,
+                  2,
+                  0
+                ],
+                "inferred_contiguous_group_textures": [
+                  "u_hair"
+                ]
+              }
+            ],
+            "global_mesh_count": 25,
+            "mesh_count_sum": 25,
+            "ordinary_audit_passed": false,
+            "ordinary_audit_error": "Secondary descriptor mesh count disagrees",
+            "diagnostic_only": "First descriptor count overridden IN MEMORY to reuse the existing auditor. Other buffers checked; source descriptors remain unsupported for rewriting. No PAC or YOBJ exported."
+          },
+          "bones": 97,
+          "meshes": 25,
+          "vertices": 1411,
+          "triangles": 1715,
+          "material_records": 54,
+          "reference_body": {
+            "common_named_body_bind_matches": true,
+            "tolerance": 1e-05,
+            "differences": [],
+            "missing_reference_body_bones": [],
+            "extra_nonfacial_bones": [],
+            "strict_full_rig_gate_matches": false,
+            "strict_gate_reason": "Bone-name sets differ; automatic retargeting is unsupported.",
+            "meaning": "A common-bind match is a candidate classification, not seam, face-controller or game compatibility approval."
+          }
+        }
+      ],
+      "nested_pacs": [
+        {
+          "section": 100,
+          "children": [
+            {
+              "id": 0,
+              "decoded_bytes": 7132,
+              "signature": "JUDE"
+            },
+            {
+              "id": 1,
+              "decoded_bytes": 134452,
+              "signature": "JUDE"
+            },
+            {
+              "id": 2,
+              "decoded_bytes": 115,
+              "signature": "\u0003\u0003\u0005\u0005"
+            },
+            {
+              "id": 3,
+              "decoded_bytes": 410,
+              "signature": "\u0005\n\u000f\n"
+            },
+            {
+              "id": 4,
+              "decoded_bytes": 495,
+              "signature": "\u0005\u0005\u0005\u0005"
+            },
+            {
+              "id": 5,
+              "decoded_bytes": 535,
+              "signature": "\u0000\u0000\u0000\u0000"
+            },
+            {
+              "id": 6,
+              "decoded_bytes": 10,
+              "signature": "\t\n\n\n"
+            },
+            {
+              "id": 7,
+              "decoded_bytes": 800,
+              "signature": "\u0007\b\u0006\u0006"
+            },
+            {
+              "id": 8,
+              "decoded_bytes": 255,
+              "signature": "\u0019\u0019\u0019\u0019"
+            }
+          ]
+        }
+      ],
+      "input_unchanged": true,
+      "texture_entries": 27
+    },
+    {
+      "file": "Umaga.PAC",
+      "sha256": "f940edef975fe2931a0d006e87cb99c57b054d95430574aba1cd43d46b0b48b2",
+      "pac_bytes": 188416,
+      "creator_import_passed": true,
+      "creator_import_error": null,
+      "models": [
+        {
+          "section": 2,
+          "descriptors": {
+            "count_at_header_52": 1,
+            "records": [
+              {
+                "name": "Umaga",
+                "words_16_20_24_28": [
+                  1,
+                  0,
+                  25,
+                  0
+                ]
+              }
+            ],
+            "global_mesh_count": 25,
+            "mesh_count_sum": 25,
+            "ordinary_audit_passed": true
+          },
+          "bones": 97,
+          "meshes": 25,
+          "vertices": 1440,
+          "triangles": 1496,
+          "material_records": 58,
+          "reference_body": {
+            "common_named_body_bind_matches": true,
+            "tolerance": 1e-05,
+            "differences": [],
+            "missing_reference_body_bones": [
+              "l_sakotsu_d",
+              "r_sakotsu_d",
+              "root_d"
+            ],
+            "extra_nonfacial_bones": [],
+            "strict_full_rig_gate_matches": false,
+            "strict_gate_reason": "Bone-name sets differ; automatic retargeting is unsupported.",
+            "meaning": "A common-bind match is a candidate classification, not seam, face-controller or game compatibility approval."
+          }
+        }
+      ],
+      "nested_pacs": [],
+      "input_unchanged": true,
+      "texture_entries": 24
+    },
+    {
+      "file": "Undertaker.PAC",
+      "sha256": "1729a0f48f986926fdcb77ceeb3c597fed0bc7906689410d5ce29c97b057a654",
+      "pac_bytes": 198656,
+      "creator_import_passed": true,
+      "creator_import_error": null,
+      "models": [
+        {
+          "section": 2,
+          "descriptors": {
+            "count_at_header_52": 1,
+            "records": [
+              {
+                "name": "undertaker2005",
+                "words_16_20_24_28": [
+                  1,
+                  0,
+                  26,
+                  0
+                ]
+              }
+            ],
+            "global_mesh_count": 26,
+            "mesh_count_sum": 26,
+            "ordinary_audit_passed": true
+          },
+          "bones": 99,
+          "meshes": 26,
+          "vertices": 1557,
+          "triangles": 1495,
+          "material_records": 58,
+          "reference_body": {
+            "common_named_body_bind_matches": true,
+            "tolerance": 1e-05,
+            "differences": [],
+            "missing_reference_body_bones": [
+              "l_sakotsu_d",
+              "r_sakotsu_d",
+              "root_d"
+            ],
+            "extra_nonfacial_bones": [],
+            "strict_full_rig_gate_matches": false,
+            "strict_gate_reason": "Bone-name sets differ; automatic retargeting is unsupported.",
+            "meaning": "A common-bind match is a candidate classification, not seam, face-controller or game compatibility approval."
+          }
+        }
+      ],
+      "nested_pacs": [],
+      "input_unchanged": true,
+      "texture_entries": 24
+    },
+    {
+      "file": "Yoshi-Tatsu.PAC",
+      "sha256": "64c45999986a8429c7b6f4d66a622f1fe70aa82842a09725ae08844d8ccf30b4",
+      "pac_bytes": 145408,
+      "creator_import_passed": false,
+      "creator_import_error": "Secondary descriptor mesh count disagrees",
+      "models": [
+        {
+          "section": 2,
+          "descriptors": {
+            "count_at_header_52": 2,
+            "records": [
+              {
+                "name": "YoshiTatsu_1500",
+                "words_16_20_24_28": [
+                  1,
+                  0,
+                  27,
+                  0
+                ],
+                "inferred_contiguous_group_textures": [
+                  "283_arm",
+                  "283_body",
+                  "283_eye",
+                  "283_face",
+                  "283_hairc",
+                  "283_hand",
+                  "283_hnmr",
+                  "283_matsu",
+                  "283_momo",
+                  "283_name",
+                  "283_neck",
+                  "283_shoe",
+                  "283_sune",
+                  "283_wrist",
+                  "blood",
+                  "blood_b"
+                ]
+              },
+              {
+                "name": "YoshiTatsu_hair",
+                "words_16_20_24_28": [
+                  1,
+                  0,
+                  4,
+                  0
+                ],
+                "inferred_contiguous_group_textures": [
+                  "283_haira",
+                  "283_hairb",
+                  "283_haird",
+                  "283_haire"
+                ]
+              }
+            ],
+            "global_mesh_count": 31,
+            "mesh_count_sum": 31,
+            "ordinary_audit_passed": false,
+            "ordinary_audit_error": "Secondary descriptor mesh count disagrees",
+            "diagnostic_only": "First descriptor count overridden IN MEMORY to reuse the existing auditor. Other buffers checked; source descriptors remain unsupported for rewriting. No PAC or YOBJ exported."
+          },
+          "bones": 101,
+          "meshes": 31,
+          "vertices": 1468,
+          "triangles": 1745,
+          "material_records": 53,
+          "reference_body": {
+            "common_named_body_bind_matches": true,
+            "tolerance": 1e-05,
+            "differences": [],
+            "missing_reference_body_bones": [],
+            "extra_nonfacial_bones": [],
+            "strict_full_rig_gate_matches": false,
+            "strict_gate_reason": "Bone-name sets differ; automatic retargeting is unsupported.",
+            "meaning": "A common-bind match is a candidate classification, not seam, face-controller or game compatibility approval."
+          }
+        }
+      ],
+      "nested_pacs": [
+        {
+          "section": 100,
+          "children": [
+            {
+              "id": 0,
+              "decoded_bytes": 7364,
+              "signature": "JUDE"
+            },
+            {
+              "id": 1,
+              "decoded_bytes": 131924,
+              "signature": "JUDE"
+            }
+          ]
+        }
+      ],
+      "input_unchanged": true,
+      "texture_entries": 23
+    },
+    {
+      "file": "Zack-Ryder.PAC",
+      "sha256": "7819f4bc872ee9f30e1369ae31a8e0c0daeeaabd68bce0513fb4a3d5ed3ad5be",
+      "pac_bytes": 139264,
+      "creator_import_passed": false,
+      "creator_import_error": "Secondary descriptor mesh count disagrees",
+      "models": [
+        {
+          "section": 2,
+          "descriptors": {
+            "count_at_header_52": 2,
+            "records": [
+              {
+                "name": "orton",
+                "words_16_20_24_28": [
+                  1,
+                  0,
+                  25,
+                  0
+                ],
+                "inferred_contiguous_group_textures": [
+                  "blood",
+                  "blood_b",
+                  "logo2",
+                  "ro_boo",
+                  "zack_arm",
+                  "zack_body",
+                  "zack_eye",
+                  "zack_face",
+                  "zack_ha",
+                  "zack_hand",
+                  "zack_leg",
+                  "zack_top",
+                  "zack_wrist"
+                ]
+              },
+              {
+                "name": "zack_hair",
+                "words_16_20_24_28": [
+                  1,
+                  0,
+                  2,
+                  0
+                ],
+                "inferred_contiguous_group_textures": [
+                  "zack_hair_a",
+                  "zack_hair_b"
+                ]
+              }
+            ],
+            "global_mesh_count": 27,
+            "mesh_count_sum": 27,
+            "ordinary_audit_passed": false,
+            "ordinary_audit_error": "Secondary descriptor mesh count disagrees",
+            "diagnostic_only": "First descriptor count overridden IN MEMORY to reuse the existing auditor. Other buffers checked; source descriptors remain unsupported for rewriting. No PAC or YOBJ exported."
+          },
+          "bones": 98,
+          "meshes": 27,
+          "vertices": 1372,
+          "triangles": 1710,
+          "material_records": 43,
+          "reference_body": {
+            "common_named_body_bind_matches": true,
+            "tolerance": 1e-05,
+            "differences": [],
+            "missing_reference_body_bones": [],
+            "extra_nonfacial_bones": [],
+            "strict_full_rig_gate_matches": false,
+            "strict_gate_reason": "Bone-name sets differ; automatic retargeting is unsupported.",
+            "meaning": "A common-bind match is a candidate classification, not seam, face-controller or game compatibility approval."
+          }
+        }
+      ],
+      "nested_pacs": [
+        {
+          "section": 100,
+          "children": [
+            {
+              "id": 0,
+              "decoded_bytes": 17976,
+              "signature": "JUDE"
+            },
+            {
+              "id": 1,
+              "decoded_bytes": 126804,
+              "signature": "JUDE"
+            },
+            {
+              "id": 2,
+              "decoded_bytes": 115,
+              "signature": "\u0003\u0003\u0005\u0005"
+            },
+            {
+              "id": 3,
+              "decoded_bytes": 410,
+              "signature": "\u0005\n\u000f\n"
+            },
+            {
+              "id": 4,
+              "decoded_bytes": 495,
+              "signature": "\u0005\u0005\u0005\u0005"
+            },
+            {
+              "id": 5,
+              "decoded_bytes": 535,
+              "signature": "\u0000\u0000\u0000\u0000"
+            },
+            {
+              "id": 6,
+              "decoded_bytes": 10,
+              "signature": "\t\n\n\n"
+            },
+            {
+              "id": 7,
+              "decoded_bytes": 800,
+              "signature": "\u0007\b\u0006\u0006"
+            },
+            {
+              "id": 8,
+              "decoded_bytes": 255,
+              "signature": "\u0019\u0019\u0019\u0019"
+            }
+          ]
+        }
+      ],
+      "input_unchanged": true,
+      "texture_entries": 20
+    }
+  ]
+}
