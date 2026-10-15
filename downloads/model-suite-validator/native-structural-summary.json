@@ -1,0 +1,44 @@
+[
+  {
+    "label": "BenoitBlood",
+    "status": "no verified repair needed; game compatibility unverified",
+    "bytes": 135168,
+    "blocking": [],
+    "failures": [],
+    "repairs": []
+  },
+  {
+    "label": "Jericho",
+    "status": "no verified repair needed; game compatibility unverified",
+    "bytes": 143360,
+    "blocking": [],
+    "failures": [],
+    "repairs": []
+  },
+  {
+    "label": "KurtCase",
+    "status": "review required; repair withheld",
+    "bytes": 180224,
+    "blocking": [
+      "PAC is 180224 bytes; configured budget is 148000."
+    ],
+    "failures": [],
+    "repairs": []
+  },
+  {
+    "label": "Lance",
+    "status": "no verified repair needed; game compatibility unverified",
+    "bytes": 145408,
+    "blocking": [],
+    "failures": [],
+    "repairs": []
+  },
+  {
+    "label": "Rock",
+    "status": "no verified repair needed; game compatibility unverified",
+    "bytes": 147456,
+    "blocking": [],
+    "failures": [],
+    "repairs": []
+  }
+]

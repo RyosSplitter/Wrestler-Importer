@@ -12,7 +12,7 @@ Accepted PAC baselines and main remain preserved.
 | Converter | Existing HCTP workflow, texture modes, PSP base preference, QA and Save As |
 | PSP Model Editor | PAC library, native inspection, editable folder export, PNG texture editing/repacking, five rest views, exact unchanged PAC copy |
 | Textures | Shared native texture browser, dimensions, encoded cost, palette/used-color counts, transparency preview; conversion settings remain in Converter |
-| Quality Assurance | Native structural inspection and access to existing conversion HTML reports |
+| Quality Assurance | Standalone PAC validator, verified repair copies, optional HCTP reference comparison, conversion reports |
 | Model Creator | Explicit development roadmap; assembly/export and asset libraries are not implemented |
 
 SYM/JBI/PS2 SVR/PS3-X360 SVR/WK conversion, PS1 texture styling,
@@ -58,6 +58,8 @@ by invented pixels.
 Use **Export folder...** to create a self-contained editable directory. Edit its
 named PNGs in Photoshop/GIMP, then use **Pack folder...** to produce a new PAC in
 the library. Read the [folder-editing contract and limitations](portable-edit-folders.md).
+Use **Quality Assurance → Validate PAC...** to check an existing PSP PAC and write a separate verified repair copy where supported. An optional original HCTP reference enables anatomical comparisons. Read the [validator scope](portable-pac-validator.md).
+
 Texture dimensions/palette capacity remain fixed; native geometry reimport is
 not supported. Edited PACs are previewed automatically and still require testing.
 
@@ -105,13 +107,12 @@ conversion budget or use conventions outside that profile; such files are still
 inspectable. A profile finding is not by itself proof of game corruption. The
 148000-byte cap remains unchanged in conversion. Native inspection does not run
 source comparison, anatomical QA, analytical poses or gameplay; the conversion
-QA report remains the route to those existing checks.
+QA report and [standalone PAC validator](portable-pac-validator.md) provide those checks separately.
 
 Failed inspections retain the previous loaded workspace. Closing the application
 cancels a conversion through its existing mechanism and terminates read-only
 inspection. It never overwrites accepted PACs or saves partial inspection as a
-successful manifest. This milestone does not introduce an editable project format;
-that must preserve native records and carry verified provenance for future edits.
+successful manifest. Editable texture folders retain verified native provenance; see the folder-editing contract. The standalone validator preserves a separate original snapshot and only publishes independently validated repair copies.
 
 ## Reproduce and validate
 

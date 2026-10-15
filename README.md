@@ -3,6 +3,7 @@
 The [PSP Model Suite foundation](docs/portable-model-suite.md) adds a classic
 tabbed shell around the existing HCTP converter, native PSP PAC/model/texture
 inspection, [editable texture folders and PAC rebuilding](docs/portable-edit-folders.md),
+a [standalone PAC validator with verified repair copies](docs/portable-pac-validator.md),
 preview exports and byte-identical PAC copies. UV/geometry import, creator and
 additional source adapters remain planned. The foundation
 is isolated on `feature/psp-model-suite`; accepted baselines remain preserved.

@@ -67,7 +67,7 @@ def build(name=NAME):
         shutil.copy2(ROOT/'docs'/filename,sources/'converter/docs'/filename)
     focused_tests=sources/'converter/tests';focused_tests.mkdir()
     (focused_tests/'__init__.py').write_text('')
-    for filename in ('test_default_textures.py','test_texture_budget_trial.py','test_suite_workspace.py','test_pac_browser.py','test_edit_folder.py'):
+    for filename in ('test_default_textures.py','test_texture_budget_trial.py','test_suite_workspace.py','test_pac_browser.py','test_edit_folder.py','test_pac_validator.py','test_portable_skinning.py'):
         shutil.copy2(ROOT/'tests'/filename,focused_tests/filename)
     notices=destination/'licenses';notices.mkdir();manifest=[]
     for dist in metadata.distributions():

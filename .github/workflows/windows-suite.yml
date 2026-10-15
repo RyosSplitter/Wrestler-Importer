@@ -37,7 +37,7 @@ jobs:
           if ($p.ExitCode -ne 0) { throw 'Existing converter GUI/runtime smoke failed' }
           Copy-Item $output dist/converter-smoke.json
           Copy-Item ([System.IO.Path]::ChangeExtension($output,'png')) dist/converter-smoke.png
-      - name: Frozen suite folder browsing, editable export, PNG import and PAC round trips
+      - name: Frozen suite folder browsing, editable export, PNG import, PAC round trips and validator
         shell: pwsh
         run: |
           $env:PS2PSP_DATA = "$env:RUNNER_TEMP\model-suite-smoke"
@@ -69,7 +69,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           @'
-          PSP Model Suite editable-folder update: choose a PAC library, Export folder, edit named texture PNGs in Photoshop/GIMP and Pack folder into a new PAC. Unedited folders round-trip byte exactly; edited PNGs retain native dimensions, palette capacity and exact alpha. Palette quantization is reported; oversized or unsupported edits are withheld. Native model/rigging/UV/material/auxiliary payloads stay exact. Geometry reimport, creator assembly and new game adapters remain planned. Includes the unchanged v0.25.6 HCTP converter, library browser, preview/QA tools, existing Blender/runtime, source and notices; no game assets. Windows 10/11 x64. Edited PACs still require PPSSPP testing.
+          PSP Model Suite editable-folder update: choose a PAC library, Export folder, edit named texture PNGs in Photoshop/GIMP and Pack folder into a new PAC. Unedited folders round-trip byte exactly; edited PNGs retain native dimensions, palette capacity and exact alpha. Palette quantization is reported; oversized or unsupported edits are withheld. Native model/rigging/UV/material/auxiliary payloads stay exact. Geometry reimport, creator assembly and new game adapters remain planned. Includes the unchanged v0.25.6 HCTP converter, library browser, preview/QA tools, existing Blender/runtime, source and notices; no game assets. Windows 10/11 x64. Standalone PAC validation adds native/pose QA, optional HCTP reference comparisons, reports and verified alignment/single-slot repair copies. Unsupported repairs are withheld; originals stay preserved. Edited and repaired PACs still require PPSSPP testing.
           '@ | Set-Content "$env:RUNNER_TEMP/suite-release-notes.txt" -Encoding utf8NoBOM
           $tag = "suite-foundation-${{ github.run_number }}-${{ github.sha }}"
-          gh release create $tag dist/*.zip dist/*.sha256 dist/*.png --target '${{ github.sha }}' --prerelease --title 'PSP Model Suite — Export, edit textures, pack PAC' --notes-file "$env:RUNNER_TEMP/suite-release-notes.txt"
+          gh release create $tag dist/*.zip dist/*.sha256 dist/*.png --target '${{ github.sha }}' --prerelease --title 'PSP Model Suite — Folder editing and PAC validator' --notes-file "$env:RUNNER_TEMP/suite-release-notes.txt"

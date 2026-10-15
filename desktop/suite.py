@@ -27,6 +27,7 @@ class SuiteShell:
         self.job_kind = 'inspect'
         self.edit_folder = None
         self.last_pack = None
+        self.last_validation = None
         self.model_index = 0
         self.view = 'front-left'
         self.photo = self.texture_photo = None
@@ -145,6 +146,11 @@ class SuiteShell:
         page = self.pages['Quality Assurance']
         toolbar = ttk.Frame(page, padding=10)
         toolbar.pack(fill='x')
+        self.validate_button = self.button(toolbar, 'Validate PAC...', self.validate_dialog)
+        self.validate_button.pack(side='left', padx=(0,6))
+        self.button(toolbar, 'Last validation report', self.validation_report).pack(side='left', padx=(0,6))
+        toolbar = ttk.Frame(page, padding=(10,0,10,8))
+        toolbar.pack(fill='x')
         self.button(toolbar, 'Latest conversion report', self.conversion_report).pack(side='left')
         self.button(toolbar, 'Open saved QA report...', self.saved_report).pack(side='left', padx=6)
         self.button(toolbar, 'Inspection folder', self.open_folder).pack(side='left')
@@ -199,7 +205,7 @@ class SuiteShell:
             # Keep list/keyboard navigation live. Only the latest request wins;
             # never display an older completed job over a newer selected file.
             self.pending_source = path if path!=self.active_source else None
-            action = 'packing job' if self.job_kind=='pack' else 'read-only inspection'
+            action = {'pack':'packing job','validate':'validation job'}.get(self.job_kind,'read-only inspection')
             self.status.set('Waiting to open '+path.name+' — finishing the current '+action+'.')
             return
         self.active_source = path
@@ -236,10 +242,13 @@ class SuiteShell:
             if not self.closing:
                 self.open_button.configure(state='normal')
                 self.pack_button.configure(state='normal')
+                self.validate_button.configure(state='normal')
                 for button in (self.export_button,self.copy_button):
                     button.configure(state='normal' if self.manifest else 'disabled')
                 if self.job_kind=='pack':
                     self.finish_pack(code, pending)
+                elif self.job_kind=='validate':
+                    self.finish_validation(code, pending)
                 elif pending is not None:
                     self.open_pac(pending)
                 else:
@@ -345,6 +354,8 @@ class SuiteShell:
     def update_qa(self):
         text = 'QUALITY ASSURANCE\n\nConversion reports retain the existing source comparison, stage traces, '
         text += 'anatomical checks and analytical poses. Open the latest conversion report above.\n\n'
+        if self.last_validation:
+            text += 'STANDALONE PAC VALIDATOR\n'+json.dumps(self.last_validation,indent=2)+'\n\n'
         if self.manifest:
             m = self.manifest
             text += f"PSP inspection: {Path(m['source']).name}\nSHA-256: {m['source_sha256']}\n"
@@ -484,6 +495,88 @@ class SuiteShell:
             messagebox.showerror('Pack withheld',str(exc)+'\n\nLogs: '+str(self.job))
             if pending is not None:
                 self.open_pac(pending)
+
+    def validate_dialog(self):
+        if self.busy():
+            messagebox.showinfo('PAC validator', 'Wait for the current suite job to finish.')
+            return
+        dialog = tk.Toplevel(self.root)
+        dialog.title('Validate existing PSP PAC')
+        dialog.transient(self.root)
+        dialog.grab_set()
+        frame=ttk.Frame(dialog,padding=12)
+        frame.pack(fill='both',expand=True)
+        source=tk.StringVar(value=self.manifest['source'] if self.manifest else '')
+        reference=tk.StringVar()
+        budget=tk.StringVar(value='148000')
+        repair=tk.BooleanVar(value=True)
+        for row,(label,var) in enumerate((('PSP PAC',source),('Original HCTP PAC (optional)',reference))):
+            ttk.Label(frame,text=label).grid(row=row,column=0,sticky='w',pady=5)
+            ttk.Entry(frame,textvariable=var,width=48).grid(row=row,column=1,padx=6)
+            def choose(v=var):
+                path=filedialog.askopenfilename(parent=dialog,title='Select PAC',
+                    initialdir=str(self.pac_browser.folder or Path.home()),filetypes=[('PAC files','*.pac *.PAC')])
+                if path:v.set(path)
+            self.button(frame,'Browse...',choose).grid(row=row,column=2)
+        ttk.Label(frame,text='PAC budget (bytes)').grid(row=2,column=0,sticky='w')
+        ttk.Entry(frame,textvariable=budget,width=16).grid(row=2,column=1,sticky='w',padx=6)
+        ttk.Checkbutton(frame,text='Apply verified repairs to a new copy',variable=repair).grid(row=3,column=0,columnspan=3,sticky='w',pady=8)
+        ttk.Label(frame,text='Checks every native model, textures and analytical poses.\n'
+            'Optional HCTP reference enables shape/volume and posed comparison.\n'
+            'Unsupported defects are reported; originals stay unchanged.',wraplength=600).grid(row=4,column=0,columnspan=3,sticky='w')
+        def start():
+            try:
+                amount=int(budget.get())
+                if amount<=0 or not Path(source.get()).is_file():raise ValueError('Select a PSP PAC and a positive byte budget.')
+                if reference.get() and not Path(reference.get()).is_file():raise ValueError('Reference PAC does not exist.')
+                folder=filedialog.askdirectory(parent=dialog,title='Choose parent folder for new QA results',
+                    initialdir=str(self.pac_browser.folder or Path(source.get()).parent))
+                if not folder:return
+                output=Path(folder)/(Path(source.get()).stem+'-qa-'+uuid.uuid4().hex[:8])
+                self.start_validation(source.get(),output,reference=reference.get() or None,
+                                      repair=repair.get(),max_bytes=amount)
+                dialog.destroy()
+            except (ValueError,OSError) as exc:messagebox.showerror('PAC validator',str(exc),parent=dialog)
+        self.button(frame,'Validate',start).grid(row=5,column=2,pady=(12,0))
+
+    def start_validation(self, source, output, **options):
+        if self.busy() or self.closing:return
+        self.job=data_dir()/'suite'/'jobs'/uuid.uuid4().hex
+        self.job.mkdir(parents=True)
+        request=self.job/'validate-request.json'
+        request.write_text(json.dumps(dict(source=str(Path(source).resolve()),output=str(Path(output).resolve()),**options)),encoding='utf-8')
+        self.log=(self.job/'validation.log').open('w',encoding='utf-8')
+        try:
+            self.process=subprocess.Popen(self.app.entry()+['--suite-validate',str(request),str(self.job)],
+                stdout=self.log,stderr=self.log,creationflags=0x08000000 if __import__('os').name=='nt' else 0)
+        except OSError:
+            self.log.close();self.log=None
+            raise
+        self.job_kind='validate'
+        self.active_source=None
+        self.pending_source=None
+        for button in (self.open_button,self.pack_button,self.export_button,self.copy_button,self.validate_button):
+            button.configure(state='disabled')
+        self.status.set('Validating PAC in background; originals are preserved. Results: '+str(output))
+        self.tabs.select(self.pages['Quality Assurance'])
+
+    def finish_validation(self, code, pending):
+        try:
+            response=json.loads((self.job/'result.json').read_text(encoding='utf-8'))
+            if code or not response['ok']:raise ValueError(response.get('error','Validation worker failed.'))
+            self.last_validation=response['report']
+            self.pac_browser.refresh()
+            self.status.set('PAC validator: '+self.last_validation['status'])
+            self.update_qa()
+            self.tabs.select(self.pages['Quality Assurance'])
+            if pending is not None:self.open_pac(pending)
+        except (ValueError,OSError,KeyError) as exc:
+            messagebox.showerror('PAC validation',str(exc)+'\n\nLogs: '+str(self.job))
+            if pending is not None:self.open_pac(pending)
+
+    def validation_report(self):
+        if self.last_validation:webbrowser.open(Path(self.last_validation['report_path']).as_uri())
+        else:messagebox.showinfo('PAC validator','Use Validate PAC first.')
 
     def close(self):
         self.closing = True
