@@ -22,7 +22,10 @@ class App:
     def __init__(self, root):
         self.root=root;self.project=None;self.result=None;self.model=None;self.textures=None;self.busy=False;self.events=queue.Queue()
         self.preview_after=None;self.preview_revision=0;self.refresh_after=None
-        root.title('PSP Model Creator — Experimental '+VERSION);root.geometry('1100x830');root.minsize(1000,790)
+        root.title('PSP Model Creator — Experimental '+VERSION)
+        width=min(1100,root.winfo_screenwidth()-40);height=min(830,root.winfo_screenheight()-100)
+        self.preview_size=min(448,max(256,root.winfo_screenheight()-400))
+        root.geometry(f'{width}x{height}+10+10');root.minsize(min(1000,width),min(700,height))
         style=ttk.Style(root)
         if 'vista' in style.theme_names():style.theme_use('vista')
         else:style.theme_use('clam')
@@ -42,7 +45,7 @@ class App:
             ttk.Label(left,text=part).pack(anchor='w',pady=(8,3));v=tk.StringVar();self.choices[part]=v
             box=ttk.Combobox(left,textvariable=v,state='readonly',width=25);box.pack(fill='x');box.bind('<<ComboboxSelected>>',lambda _:self.dirty());self.controls.append(box)
         self.assemble_button=ttk.Button(left,text='Assemble and validate',command=self.assemble);self.assemble_button.pack(fill='x',pady=(20,8))
-        ttk.Label(left,text='Output limit: 148,000 bytes\nTextures retain native quality.\nOversized results are withheld.\n\nSource 1 supplies the mixed\nPAC container. Source 2 supplies\nselected main-model parts.\n\nSeams and gameplay still need\nvisual and PPSSPP review.',justify='left').pack(anchor='w',pady=8)
+        ttk.Label(left,text='148,000-byte export limit.\nOriginal textures retained.\nOversized exports withheld.\n\nPreview first, then validate.\nTest exported PACs in PPSSPP.',justify='left').pack(anchor='w',pady=8)
         right=ttk.Frame(work);right.pack(fill='both',expand=True)
         top=ttk.Frame(right);top.pack(fill='x',pady=(0,6))
         ttk.Label(top,text='Pose:').pack(side='left');self.pose=tk.StringVar(value='rest')
@@ -53,8 +56,9 @@ class App:
         for label,view in (('¾','front-left'),('Front','front'),('Rear','back'),('Left','left'),('Right','right')):
             ttk.Button(views,text=label,command=lambda v=view:self.set_view(v),width=8).pack(side='left',padx=(0,4))
         export=ttk.Frame(shell);export.pack(fill='x',pady=8)
+        self.export_buttons=[]
         for text,fn in (('Save PAC as…',self.export_pac),('Export preview folder…',self.export_preview),('Export editable textures…',self.export_edit),('Pack edited folder…',self.pack_edit),('QA report',self.report)):
-            ttk.Button(export,text=text,command=fn).pack(side='left',padx=(0,6))
+            button=ttk.Button(export,text=text,command=fn);button.pack(side='left',padx=(0,6));self.export_buttons.append(button)
         self.progress=ttk.Progressbar(shell,mode='indeterminate');self.progress.pack(fill='x')
         self.status=tk.StringVar(value='Ready. Originals are copied into a private project and never overwritten.')
         ttk.Label(shell,textvariable=self.status,wraplength=980).pack(anchor='w',pady=6)
@@ -131,7 +135,7 @@ class App:
         view,pose,green=self.view,self.pose.get(),self.green.get()
         def work():
             _,sources=read_project(path);raw,textures,_=assemble(sources,selections);model=audit_yobj(raw)
-            return model,textures,preview(model,textures,view,448,pose,green)
+            return model,textures,preview(model,textures,view,self.preview_size,pose,green)
         def done(result):
             if revision!=self.preview_revision:return
             self.model,self.textures,image=result;photo=ImageTk.PhotoImage(image)
@@ -175,7 +179,7 @@ class App:
         model,textures,view,pose,green=self.model,self.textures,self.view,self.pose.get(),self.green.get()
         def done(image):
             photo=ImageTk.PhotoImage(image);self.picture.configure(image=photo,text='');self.picture.image=photo
-        self.task(lambda:preview(model,textures,view,448,pose,green),done)
+        self.task(lambda:preview(model,textures,view,self.preview_size,pose,green),done)
 
     def set_view(self,view):
         if not self.require_idle():return
