@@ -21,7 +21,7 @@ from tools.psp_mesh_audit import audit_yobj
 class App:
     def __init__(self, root):
         self.root=root;self.project=None;self.result=None;self.model=None;self.textures=None;self.busy=False;self.events=queue.Queue()
-        self.preview_after=None;self.preview_revision=0;self.refresh_after=None
+        self.preview_after=None;self.preview_revision=0;self.refresh_after=None;self.library=None;self.library_project=False
         root.title('PSP Model Creator — Experimental '+VERSION)
         width=min(1100,root.winfo_screenwidth()-40);height=min(830,root.winfo_screenheight()-100)
         self.preview_size=min(448,max(256,root.winfo_screenheight()-480))
@@ -32,11 +32,11 @@ class App:
         root.option_add('*Font', ('Segoe UI',10))
         shell=ttk.Frame(root,padding=12);shell.pack(fill='both',expand=True)
         toolbar=ttk.Frame(shell);toolbar.pack(fill='x')
-        for text,fn in (('New project…',self.new),('Open project…',self.open),('Save choices',self.save),('Help',self.help)):
+        for text,fn in (('Prepared library',self.open_library),('New project…',self.new),('Open project…',self.open),('Save choices',self.save),('Help',self.help)):
             ttk.Button(toolbar,text=text,command=fn).pack(side='left',padx=(0,6))
         ttk.Label(shell,text='PSP Model Creator',font=('Segoe UI',19)).pack(anchor='w',pady=(12,2))
-        ttk.Label(shell,text='Prepared Kenny Dykstra / Brian Kendrick pair · Native PSP parts · Separate from the converter').pack(anchor='w')
-        self.project_label=tk.StringVar(value='Create a project and select your two original PSP PACs. No game assets are bundled.')
+        ttk.Label(shell,text='Native PSP parts · Prepared model library · Separate from the converter').pack(anchor='w')
+        self.project_label=tk.StringVar(value='Open the prepared library to start, or create a project from your own PACs.')
         ttk.Label(shell,textvariable=self.project_label,wraplength=950).pack(anchor='w',pady=8)
         work=ttk.Frame(shell);work.pack(fill='both',expand=True)
         left=ttk.LabelFrame(work,text='Body parts',padding=12);left.pack(side='left',fill='y',padx=(0,12))
@@ -45,6 +45,8 @@ class App:
             ttk.Label(left,text=part).pack(anchor='w',pady=(3,0));v=tk.StringVar();self.choices[part]=v
             box=ttk.Combobox(left,textvariable=v,state='readonly',width=25);box.pack(fill='x');box.bind('<<ComboboxSelected>>',lambda _:self.dirty());self.controls.append(box)
         self.assemble_button=ttk.Button(left,text='Assemble and validate',command=self.assemble);self.assemble_button.pack(fill='x',pady=(12,4))
+        ttk.Button(left,text='Preview whole head donor',command=self.whole_donor).pack(fill='x',pady=4)
+        ttk.Button(left,text='Selection details',command=self.selection_details).pack(fill='x',pady=4)
         ttk.Label(left,text='148,000-byte export limit.\nTest exports in PPSSPP.',justify='left').pack(anchor='w',pady=8)
         right=ttk.Frame(work);right.pack(fill='both',expand=True)
         top=ttk.Frame(right);top.pack(fill='x',pady=(0,6))
@@ -70,6 +72,9 @@ class App:
         export.pack(side='bottom',fill='x',pady=8)
         work.pack(fill='both',expand=True)
         root.after(75,self.poll)
+        if '--smoke-test' not in sys.argv:
+            from .library import bundled_root
+            if (bundled_root()/'catalog.json').is_file():root.after(150,self.open_library)
 
     def task(self,fn,done):
         if self.busy:return
@@ -89,7 +94,8 @@ class App:
                     # Full diagnostic is retained locally and accessible in the dialog.
                     log=Path(tempfile.gettempdir())/'psp-model-creator-last-error.txt';log.write_text(event[1],encoding='utf-8')
                     self.status.set('Operation failed; previous result preserved. '+str(log))
-                    messagebox.showerror('Creator stopped',event[1].splitlines()[-1]+'\n\nFull log: '+str(log),parent=self.root)
+                    self.last_error=event[1]
+                    if '--smoke-test' not in sys.argv:messagebox.showerror('Creator stopped',event[1].splitlines()[-1]+'\n\nFull log: '+str(log),parent=self.root)
                 else:
                     try:event[1](event[2])
                     except Exception:messagebox.showerror('Creator',traceback.format_exc(),parent=self.root)
@@ -99,6 +105,40 @@ class App:
     def require_idle(self):
         if self.busy:self.status.set('Please wait for the current operation.');return False
         return True
+
+    def open_library(self):
+        if not self.require_idle():return
+        from .library import Library
+        try:
+            self.library=Library();self.library_project=True;self.project=None;self.green.set(False)
+            self.labels=[f'{i+1}. {e["label"]}' for i,e in enumerate(self.library.entries)]
+            for part,box in zip(PARTS,self.controls):box['values']=self.labels;self.choices[part].set(self.labels[0])
+            self.result=None;self.model=None;self.textures=None
+            self.project_label.set(f'{len(self.labels)} prepared native models. Pick donors below; no PAC import needed. Mixed exports require matching body binds, passing seams/poses and the size budget.')
+            self.dirty()
+        except Exception as exc:messagebox.showerror('Prepared library',str(exc),parent=self.root)
+
+    def whole_donor(self):
+        if not self.require_idle() or not hasattr(self,'labels'):return
+        label=self.choices['Head'].get()
+        for v in self.choices.values():v.set(label)
+        self.dirty()
+
+    def selection_details(self):
+        if not hasattr(self,'labels'):return
+        sources,choices=self.current_sources();lines=[]
+        for part in PARTS:
+            s=sources[choices[part]];r=s['model']['report']
+            lines.append(f'{part}: {s["label"]}\n{len(s["data"]):,} native PAC bytes; {r["vertices"]:,} vertices / {r["triangles"]:,} triangles; {r["meshes"]} meshes / {len(s["model"]["bones"])} bones.\nSHA-256: {s["sha256"]}\n')
+        messagebox.showinfo('Native donor details','\n'.join(lines)+'\nOriginal PAC size is not the size of a mixed assembly. Export is capped at 148,000 bytes.',parent=self.root)
+
+    def current_sources(self):
+        if self.library_project and self.library is not None:return self.library.selection(self.selected())
+        if self.library_project:
+            from .library import read_project as reader
+        else:reader=read_project
+        _,sources=reader(self.project)
+        return sources,self.selected()
 
     def new(self):
         if not self.require_idle():return
@@ -114,10 +154,15 @@ class App:
     def open(self):
         if not self.require_idle():return
         path=filedialog.askopenfilename(title='Open creator project.json',filetypes=[('Creator project','*.json')])
-        if path:self.task(lambda:(read_project(path),path),lambda result:self.load(result[1]))
+        if path:self.load(path)
 
     def load(self,path):
-        project,sources=read_project(path);self.project=Path(path);self.labels=[s['label'] for s in sources]
+        metadata=json.loads(Path(path).read_text(encoding='utf-8'))
+        self.library_project=metadata.get('schema')=='psp-model-creator.library-project/1';self.library=None
+        if self.library_project:
+            from .library import read_project as reader
+        else:reader=read_project
+        project,sources=reader(path);self.project=Path(path);self.labels=[s['label'] for s in sources]
         # Include source numbers so even identical filenames are distinguishable.
         self.labels=[f'{i+1}. {label}' for i,label in enumerate(self.labels)]
         for part,box in zip(PARTS,self.controls):box['values']=self.labels;self.choices[part].set(self.labels[project['selections'][part]])
@@ -129,19 +174,32 @@ class App:
 
     def dirty(self):
         self.preview_revision+=1
+        self.model=None;self.textures=None
+        self.picture.configure(image='',text='Preparing current selection…');self.picture.image=None
         self.status.set('Updating selection preview. Assemble and validate before exporting this combination.')
         if self.preview_after is not None:self.root.after_cancel(self.preview_after)
         self.preview_after=self.root.after(300,self.live_preview)
 
     def live_preview(self):
         self.preview_after=None
-        if not self.project:return
+        if not self.project and not self.library_project:return
         if self.busy:
             self.preview_after=self.root.after(150,self.live_preview);return
-        revision=self.preview_revision;selections=self.selected();path=self.project
+        revision=self.preview_revision;library_mode=self.library_project
+        choices=self.selected();library=self.library;path=self.project
         view,pose,green=self.view,self.pose.get(),self.green.get()
         def work():
-            _,sources=read_project(path);raw,textures,_=assemble(sources,selections);model=audit_yobj(raw)
+            if library_mode and library is not None:sources,selections=library.selection(choices)
+            else:
+                if library_mode:
+                    from .library import read_project as project_reader
+                else:project_reader=read_project
+                _,sources=project_reader(path);selections=choices
+            raw,textures,_=assemble(sources,selections,library=library_mode)
+            if library_mode:
+                from .native import audit_yobj as reader
+            else:reader=audit_yobj
+            model=reader(raw)
             return model,textures,preview(model,textures,view,self.preview_size,pose,green)
         def done(result):
             if revision!=self.preview_revision:return
@@ -151,7 +209,15 @@ class App:
         self.task(work,done)
 
     def save(self):
-        if not self.require_idle() or not self.project:return
+        if not self.require_idle():return
+        if self.library_project:
+            parent=filedialog.askdirectory(title='Save a NEW library project folder')
+            if parent:
+                from .library import create_project as snapshot
+                sources,selections=self.current_sources();path=snapshot(sources,selections,Path(parent)/('Creator-project-'+uuid.uuid4().hex[:8]))
+                self.status.set('Saved independent snapshots and recipe: '+str(path))
+            return
+        if not self.project:return
         try:
             project,_=read_project(self.project);project['selections']=self.selected()
             history=self.project.parent/'history';history.mkdir(exist_ok=True)
@@ -162,13 +228,20 @@ class App:
 
     def assemble(self):
         if not self.require_idle():return
-        if not self.project:messagebox.showinfo('Creator','Create or open a project first.',parent=self.root);return
+        if not self.project and not self.library_project:messagebox.showinfo('Creator','Open the prepared library or a project first.',parent=self.root);return
         if self.preview_after is not None:self.root.after_cancel(self.preview_after);self.preview_after=None
         self.preview_revision+=1
-        selections=self.selected();self.save();output=self.project.parent/'builds'/uuid.uuid4().hex
+        original_selections=self.selected();sources,selections=self.current_sources();library_mode=self.library_project
+        if library_mode:
+            from .library import create_project as snapshot
+            parent=Path(os.environ.get('LOCALAPPDATA',Path.home()/'.local/share'))/'PSP Model Creator'/'jobs'/uuid.uuid4().hex
+            project=snapshot(sources,selections,parent);output=parent/'build'
+        else:
+            self.save();project=self.project;output=self.project.parent/'builds'/uuid.uuid4().hex
         def work():
-            report=build(self.project,selections,output,progress=lambda msg:self.events.put(('status',msg)))
-            source=load_source(output/'created-model.pac')
+            report=build(project,selections,output,library=library_mode,progress=lambda msg:self.events.put(('status',msg)))
+            report['ui_selections']=original_selections
+            source=load_source(output/'created-model.pac',library=library_mode)
             return output,report,source
         def done(result):
             self.result,self.last_report,source=result;self.model=source['model'];self.textures={n:source['textures'][n.casefold()] for n in self.model['texture_names']}
@@ -195,7 +268,7 @@ class App:
     def require_result(self):
         if not self.require_idle():return False
         if self.result is None:messagebox.showinfo('Creator','Assemble a model first.',parent=self.root);return False
-        if self.last_report['selections']!=self.selected():
+        if self.last_report.get('ui_selections',self.last_report['selections'])!=self.selected():
             messagebox.showinfo('Selections changed','The preview uses your current choices. Assemble and validate this combination before exporting it. Your previous build is preserved.',parent=self.root);return False
         return True
 
@@ -223,7 +296,7 @@ class App:
             from desktop.workspace import inspect_workspace
             from desktop.edit_folder import export_folder
             with tempfile.TemporaryDirectory(prefix='creator-inspect-') as temp:
-                root=Path(temp)/'inspection';inspect_workspace(result/'created-model.pac',root,resolution=128)
+                root=Path(temp)/'inspection';inspect_workspace(result/'created-model.pac',root,resolution=128,native_descriptor_arrays=self.library_project)
                 export_folder(root/'manifest.json',destination)
             return destination
         self.task(work,lambda path:self.status.set('Edit named PNGs in '+str(path)+', then use Pack edited folder.'))
@@ -245,6 +318,16 @@ class App:
         text=tk.Text(window,wrap='word');text.pack(fill='both',expand=True);text.insert('end',(self.result/'qa.json').read_text(encoding='utf-8'));text.configure(state='disabled')
 
     def help(self):
+        if self.library_project:
+            messagebox.showinfo('Prepared library',
+                'Select any prepared donor for each part. Selections preview automatically.\n'
+                'Assemble and validate before export. Whole-source models retain their original bytes.\n'
+                'Mixed builds preserve textures and interior geometry; only attachment seams are stitched.\n'
+                'Different body binds, unsafe seams, controller regressions and oversized PACs are withheld.\n'
+                'Jeff/Matt Hardy and JBL have differing body binds; some mixed combinations require future retargeting support.\n'
+                'Hair follows the selected head. Torso supplies the output container; other donor auxiliary PACs are not transferred.\n'
+                'Analytical poses are not in-game tests. Review all sides and test in PPSSPP.',parent=self.root)
+            return
         messagebox.showinfo('Prepared-pair experimental creator',
             '1. New project: select original Kenny PSP PAC first, Brian PSP PAC second.\n'
             '2. Choose Head / Torso / Arms / Legs; the preview updates automatically.\n'

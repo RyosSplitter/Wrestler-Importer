@@ -21,7 +21,7 @@ from tools.weight_trial_review import descendant_names, deform
 from tools.prepare_model import bone_matrices
 from model_creator.parts import PARTS, JOINTS, extract, stitch, triangles
 
-VERSION = '0.1.0'
+VERSION = '0.2.0'
 SCHEMA = 'psp-model-creator/1'
 MAX_BYTES = 148000
 POSES = {'rest': {}, 'standing': {'l_ninoude': ('z',70), 'r_ninoude': ('z',-70)},
@@ -41,15 +41,18 @@ def dump(path, value):
     Path(path).write_text(json.dumps(value, indent=2, allow_nan=False)+'\n', encoding='utf-8')
 
 
-def load_source(path):
+def load_source(path, *, library=False):
     data = Path(path).read_bytes()
     items=list(sections(data));decoded = dict((s['id'],r) for s,r in items)
     if len(items)!=len(decoded):raise ValueError('Duplicate PAC section IDs are unsupported.')
     if 2 not in decoded or 9 not in decoded:raise ValueError('A native PSP main-model PAC with section 9 textures is required.')
-    model = audit_yobj(decoded[2])
-    cursor=0;padding=[]
+    if library:
+        from .native import audit_yobj as reader, allocation_fill
+        model=reader(decoded[2]);padding=allocation_fill(decoded[2],model)
+    else:model=audit_yobj(decoded[2])
+    cursor=0;padding=[] if not library else padding
     pointer_targets={8+struct.unpack_from('<I',decoded[2],a)[0] for a in model['report']['relocation_locations']}
-    for allocation in sorted(model['report']['allocations'],key=lambda a:a['start']):
+    for allocation in ([] if library else sorted(model['report']['allocations'],key=lambda a:a['start'])):
         if allocation['start']>cursor and any(decoded[2][cursor:allocation['start']]):
             gap=decoded[2][cursor:allocation['start']]
             # The actual pair uses short 0xffffffff fill runs between native
@@ -58,7 +61,7 @@ def load_source(path):
                 raise ValueError('Unclassified nonzero YOBJ data cannot be discarded safely.')
             padding.append(dict(start=cursor,bytes=len(gap),value='ff',classification='INFERRED native allocation fill; rewritten layout uses zero padding'))
         cursor=max(cursor,allocation['end'])
-    if any(decoded[2][cursor:model['report']['declared_yobj_end']]):raise ValueError('Unclassified trailing YOBJ data cannot be discarded safely.')
+    if not library and any(decoded[2][cursor:model['report']['declared_yobj_end']]):raise ValueError('Unclassified trailing YOBJ data cannot be discarded safely.')
     if any(m['rigid'] or m['base_flag']!=0x17ff for m in model['meshes']):
         raise ValueError('This prototype accepts the verified float32-skinned PSP layout only.')
     names = [b['name'] for b in model['bones']]
@@ -131,13 +134,18 @@ def skeleton(sources, selections):
     return base,names
 
 
-def assemble(sources, selections):
-    if set(selections)!=set(PARTS) or any(type(v)!=int or v not in (0,1) for v in selections.values()):raise ValueError('Choose a source for each of the four parts.')
-    compatible(*sources)
+def assemble(sources, selections, *, library=False):
+    reader=audit_yobj
+    if library:
+        from .native import audit_yobj as reader
+        from .library import compatible as library_compatible, skeleton as library_skeleton
+    if set(selections)!=set(PARTS) or any(type(v)!=int or not 0<=v<len(sources) for v in selections.values()) or (not library and len(sources)!=2):raise ValueError('Choose a source for each of the four parts.')
+    if library:library_compatible(sources,selections)
+    else:compatible(*sources)
     if len(set(selections.values()))==1:
         s=sources[selections['Head']]
         return s['sections'][2],{n:s['textures'][n.casefold()] for n in s['model']['texture_names']},dict(mode='Original native model',seams=[],sources=[s['sha256']],geometry_unchanged=True)
-    base,names=skeleton(sources,selections)
+    base,names=(library_skeleton(sources,selections) if library else skeleton(sources,selections))
     selected={part:extract(sources[selections[part]]['model'],part,names) for part in PARTS}
     reference=extract(sources[selections['Torso']]['model'],'Torso',names)
     joints=[]
@@ -148,7 +156,7 @@ def assemble(sources, selections):
     if max(s['maximum_displacement'] for s in seams)>1.0:raise ValueError('Attachment mismatch exceeds the prepared-pair tolerance; export withheld.')
     meshes=[];texture_names=[];textures={};provenance=[];interior_checks=[]
     # Stable source-part/material draw order; no merging across source boundaries.
-    for source_id in (0,1):
+    for source_id in range(len(sources)):
         source=sources[source_id];model=source['model']
         rows=[r for p in PARTS if selections[p]==source_id for r in selected[p]]
         rows.sort(key=lambda r:(r['mesh'],r['material'],r['triangle'],PARTS.index(r['part'])))
@@ -200,8 +208,24 @@ def assemble(sources, selections):
             mesh['raw_vertices']=b''.join(struct.pack('<'+'f'*len(palette)+'2f4B6f',*v['weights'],*v['uv'],*v['color'],*v['normal'],*v['position']) for v in vertices)
             points=np.array([v['position'] for v in vertices]);center=(points.min(0)+points.max(0))/2;radius=np.linalg.norm(points-center,axis=1).max()+.001
             header=bytearray(mesh['raw_header']);struct.pack_into('<4f',header,48,*center,float(radius));mesh['raw_header']=bytes(header)
-            provenance.append(dict(output_mesh=mesh['index'],source=source_id,source_mesh=mesh_id,source_material=mat_id,parts=sorted(bucket['parts']),texture=oldname,output_texture=texname))
+            provenance.append(dict(descriptor=donor.get('descriptor_owner',model.get('descriptor_owners',[0]*len(model['meshes']))[mesh_id]),output_mesh=mesh['index'],source=source_id,source_mesh=mesh_id,source_material=mat_id,parts=sorted(bucket['parts']),texture=oldname,output_texture=texname))
             meshes.append(mesh)
+    descriptor_records=None;descriptor_sizes=None
+    if library:
+        # Body draw groups precede the selected head's native hair groups.
+        # Keep stable ordering inside each group; never merge across them.
+        order=sorted(range(len(meshes)),key=lambda i:provenance[i]['descriptor'])
+        reverse={old:new for new,old in enumerate(order)}
+        meshes=[meshes[i] for i in order];provenance=[provenance[i] for i in order]
+        for i,(mesh,row) in enumerate(zip(meshes,provenance)):mesh['index']=i;row['output_mesh']=i
+        interior_checks=[(reverse[om],ov,si,sm,sv) for om,ov,si,sm,sv in interior_checks]
+        head=sources[selections['Head']]['model'];torso=sources[selections['Torso']]['model']
+        descriptor_records=[torso['descriptors'][0]]
+        descriptor_sizes=[sum(r['descriptor']==0 for r in provenance)]
+        for d in sorted({r['descriptor'] for r in provenance}-{0}):
+            descriptor_records.append(head['descriptors'][d]);descriptor_sizes.append(sum(r['descriptor']==d for r in provenance))
+        h=bytearray(base['header']);struct.pack_into('<I',h,52,1);base['header']=bytes(h)
+        base['model_descriptor_raw']=descriptor_records[0]
     base['meshes']=meshes;base['texture_names']=texture_names
     base['texture_raw']=b''.join(n.encode('ascii').ljust(16,b'\0') for n in texture_names)
     h=bytearray(base['header']);struct.pack_into('<I',h,32,len(texture_names));base['header']=bytes(h)
@@ -233,7 +257,7 @@ def assemble(sources, selections):
     source_offsets=[np.cumsum([0]+[len(m['vertices']) for m in s['model']['meshes']]) for s in sources]
     for label,controls in POSES.items():
         output_pose=deform(dict(bones=unmerged['bones'],bone_count=len(names)),native_p,native_w,controls)
-        expected_poses=[deform(dict(bones=s['model']['bones'],bone_count=len(names)),p,w,controls) for s,(p,w) in zip(sources,source_dense)]
+        expected_poses=[deform(dict(bones=s['model']['bones'],bone_count=len(s['model']['bones'])),p,w,controls) for s,(p,w) in zip(sources,source_dense)]
         errors=[float(np.linalg.norm(output_pose[offsets[om]+ov]-expected_poses[si][source_offsets[si][sm]+sv])) for om,ov,si,sm,sv in comparisons]
         maximum=max(errors,default=0.)
         # Mixed neck-influenced torso records can use the selected head pivot.
@@ -248,7 +272,7 @@ def assemble(sources, selections):
     # Rejoin only adjacent splits from the SAME original source buffer. The
     # existing lossless merge verifier checks weights, UVs, materials and winding.
     from tools.psp_mesh_merge import plan, rebuild, verify
-    origin=[(r['source'],r['source_mesh']) for r in provenance]
+    origin=[(r['source'],r['source_mesh'],r['descriptor']) for r in provenance]
     groups=plan(unmerged,origin)
     combined=rebuild(raw,groups,origin);merge_validation=verify(raw,combined,groups);raw=combined
     from desktop.skinning import adapt_yobj
@@ -259,7 +283,13 @@ def assemble(sources, selections):
         reloc=encode_relocations(sorted(audit_yobj(raw)['report']['relocation_locations']+[60]))
         end=8+struct.unpack_from('<I',raw,4)[0]
         raw=align_yobj_pof0(raw[:end]+b'POF0'+struct.pack('<I',len(reloc))+reloc)
-    native=audit_yobj(raw)
+    if library:
+        # Merge groups cannot cross descriptor owners. Recount after merging.
+        owners=[provenance[g[0]]['descriptor'] for g in groups]
+        ds=sorted(set(owners));descriptor_sizes=[owners.count(d) for d in ds]
+        from .native import restore_descriptors
+        raw=restore_descriptors(raw,descriptor_records,descriptor_sizes)
+    native=reader(raw)
     return raw,textures,dict(mode='Prepared-pair stitched assembly',seams=seams,provenance=provenance,
         lossless_buffer_groups=groups,lossless_buffer_validation=merge_validation,
         single_slot_compatibility=slot_compatibility,
@@ -289,8 +319,11 @@ def posed_model(model, pose):
     return result
 
 
-def qa(raw, report):
-    model=audit_yobj(raw);p,w=dense(model);height=float(np.ptp(p[:,1]));results={}
+def qa(raw, report, *, library=False):
+    reader=audit_yobj
+    if library:
+        from .native import audit_yobj as reader
+    model=reader(raw);p,w=dense(model);height=float(np.ptp(p[:,1]));results={}
     if not np.isfinite(p).all() or not np.isfinite(w).all():raise ValueError('Nonfinite model attributes.')
     # Test only the deliberately shared joins. Other coincident native records
     # can legitimately have different source weights and are not welded.
@@ -321,18 +354,23 @@ def preview(model,textures,view='front-left',resolution=640,pose='rest',green=Fa
     return render(shown,textures,view,resolution,gim_reader=read_gim)
 
 
-def build(project_path, selections, output, *, resolution=640, progress=lambda _:None):
+def build(project_path, selections, output, *, resolution=640, progress=lambda _:None, library=False):
     from tools.yukes_bpe import compress,decompress
-    project,sources=read_project(project_path);output=Path(output)
+    reader=audit_yobj;project_reader=read_project
+    if library:
+        from .native import audit_yobj as reader
+        from .library import read_project as project_reader
+    project,sources=project_reader(project_path);output=Path(output)
     if output.exists():raise FileExistsError('Output directory already exists; previous versions are preserved.')
     progress('Assembling native parts and attachment seams')
-    raw,textures,report=assemble(sources,selections)
+    raw,textures,report=assemble(sources,selections,library=library)
     progress('Checking native buffers, bone palettes and analytical poses')
-    report['qa']=qa(raw,report);model=audit_yobj(raw)
+    report['qa']=qa(raw,report,library=library);model=reader(raw)
     # Source 0 is the explicit output-container template for mixed assemblies.
     # This prototype assembles the main model, not optional source-1 auxiliary
     # nested PACs. Both complete originals remain in the private project.
-    donor=sources[0]
+    template=selections['Torso'] if library else 0
+    donor=sources[template]
     if len(set(selections.values()))==1:
         donor=sources[selections['Head']]
         pac=donor['data'];report['packaging']='Original PAC byte-exact (single-source assembly).'
@@ -352,8 +390,11 @@ def build(project_path, selections, output, *, resolution=640, progress=lambda _
                 if donor['data'][a['offset']:a['offset']+a['size']]!=pac[b['offset']:b['offset']+b['size']]:raise ValueError('Unrelated PAC payload changed.')
                 unchanged.append(a['id'])
         report['unrelated_stored_sections_identical']=unchanged
-        report['container_template_source']=0
+        report['container_template_source']=template
         report['source_1_auxiliary_sections_not_assembled']=[i for i in sources[1]['sections'] if i not in (2,8,9)]
+        if library:
+            report['non_template_auxiliary_sections_not_assembled']=[dict(source=index,sections=[i for i in s['sections'] if i not in (2,8,9)])
+                for index,s in enumerate(sources) if index!=template]
     report.update(selections=selections,labels=[s['label'] for s in sources],pac_bytes=len(pac),max_pac_bytes=MAX_BYTES,
                   pac_sha256=digest(pac),yobj_sha256=digest(raw),textures_byte_exact=True,
                   geometry_decimation=False,within_budget=len(pac)<=MAX_BYTES)

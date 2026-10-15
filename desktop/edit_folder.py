@@ -79,6 +79,7 @@ def export_folder(manifest_path, destination):
                    source_bytes=len(original), texture_editing_only=True,
                    max_pac_bytes=max(148000, len(original)),
                    budget_policy='148000-byte conversion envelope, or the larger existing native PAC size; no runtime texture allocation increase')
+    if manifest.get('native_descriptor_arrays'):project['native_descriptor_arrays']=True
     dump(destination/'project.json', project)
     with (destination/'textures.csv').open('w', newline='', encoding='utf-8-sig') as stream:
         writer = csv.writer(stream)
@@ -205,7 +206,7 @@ def pack_folder(project_folder, destination):
     # model counts, palette capacities or file mappings supplied by a project.
     with tempfile.TemporaryDirectory(prefix='psp-edit-check-') as temp:
         reference = Path(temp)/'reference'
-        baseline = inspect_workspace(folder/'original.pac', reference, resolution=64)
+        baseline = inspect_workspace(folder/'original.pac', reference, resolution=64, native_descriptor_arrays=project.get('native_descriptor_arrays') is True)
         if any(m['error'] for m in baseline['models']):
             raise ValueError('A native model is outside the verified PSP reader; texture repacking is withheld.')
         expected_geometry = set()

@@ -29,7 +29,10 @@ def dump(path, value):
     Path(path).write_text(json.dumps(value, indent=2, ensure_ascii=False, allow_nan=False)+'\n', encoding='utf-8')
 
 
-def inspect_workspace(source, output, *, resolution=512):
+def inspect_workspace(source, output, *, resolution=512, native_descriptor_arrays=False):
+    reader=audit_yobj
+    if native_descriptor_arrays:
+        from model_creator.native import audit_yobj as reader
     source, output = Path(source).resolve(), Path(output)
     if not 64 <= resolution <= 1024:
         raise ValueError('Preview resolution must be between 64 and 1024.')
@@ -46,6 +49,7 @@ def inspect_workspace(source, output, *, resolution=512):
                     within_conversion_budget=len(data)<=148000,
                     game_compatibility='Not established by structural inspection.',
                     geometry_or_skinning_modified=False)
+    if native_descriptor_arrays:manifest['native_descriptor_arrays']=True
     # Preserve each section verbatim, including compressed streams and opaque data.
     unpacked = []
     for section in container['sections']:
@@ -93,7 +97,7 @@ def inspect_workspace(source, output, *, resolution=512):
         (folder/'model.yobj').write_bytes(raw)
         manifest['models'].append(row)
         try:
-            model = audit_yobj(raw)
+            model = reader(raw)
         except (ValueError, IndexError, struct.error) as exc:
             row['error'] = str(exc)
             manifest['findings'].append(f"Model in section {section['id']} is outside the verified PSP reader: {exc}")

@@ -44,3 +44,41 @@ def run(app,output):
         dump(output,dict(passed=True,part_selectors=True,live_selection_preview_before_export=True,stale_export_blocked=True,all_export_buttons_visible=True,background_assembly=True,native_export=True,
                          analytical_poses=len(app.last_report['qa']['poses']),preview_views=True,
                          editable_texture_roundtrip_exact=True,pac_bytes=app.last_report['pac_bytes'],assets='Original synthetic geometry only'))
+    run_library(app,output)
+
+
+def run_library(app,output):
+    """Exercise the actual bundled data and GUI, not just metadata existence."""
+    import json
+    from .library import Library
+    library=Library()
+    for i in range(len(library.entries)):library.source(i)
+    app.open_library();app.root.update()
+    labels={entry['label']:app.labels[i] for i,entry in enumerate(app.library.entries)}
+    for part in PARTS:app.choices[part].set(labels['Christian'])
+    app.choices['Head'].set(labels['CM-Punk-Ring']);app.dirty()
+    deadline=time.monotonic()+120
+    while (app.preview_after is not None or app.busy) and time.monotonic()<deadline:app.root.update();time.sleep(.02)
+    if app.model is None or app.result is not None:raise ValueError('Prepared selections did not preview without an import')
+    if app.model['report']['descriptor_count']!=2:raise ValueError('Prepared hair descriptor group was lost')
+    app.assemble();deadline=time.monotonic()+120
+    while app.busy and time.monotonic()<deadline:app.root.update();time.sleep(.02)
+    if app.busy or app.result is None:raise ValueError('Prepared-library native PAC build failed')
+    from desktop.workspace import inspect_workspace
+    from desktop.edit_folder import export_folder,pack_folder
+    with tempfile.TemporaryDirectory(prefix='creator-array-edit-') as temp:
+        temp=Path(temp)
+        inspect_workspace(app.result/'created-model.pac',temp/'inspection',resolution=64,native_descriptor_arrays=True)
+        export_folder(temp/'inspection/manifest.json',temp/'editable');pack_folder(temp/'editable',temp/'repacked.pac')
+        if (temp/'repacked.pac').read_bytes()!=(app.result/'created-model.pac').read_bytes():raise ValueError('Multi-descriptor texture edit roundtrip differs')
+    from PIL import ImageGrab
+    app.root.lift();app.root.update();time.sleep(.3);app.root.update()
+    x,y=app.root.winfo_rootx(),app.root.winfo_rooty();w,h=app.root.winfo_width(),app.root.winfo_height()
+    for button in app.export_buttons:
+        if button.winfo_height()<button.winfo_reqheight() or button.winfo_rooty()+button.winfo_height()>y+h:raise ValueError('Library export button clipped')
+    ImageGrab.grab(bbox=(x,y,x+w,y+h)).save(output.with_name('creator-library-window.png'))
+    report=json.loads(output.read_text());report.update(prepared_models=len(library.entries),
+        prepared_library_all_native_readers_passed=True,prepared_live_preview_without_import=True,
+        prepared_hair_groups_preserved=True,prepared_mixed_pac_bytes=app.last_report['pac_bytes'],
+        prepared_array_texture_roundtrip_exact=True,assets='Synthetic fixtures plus explicitly supplied prepared native library')
+    dump(output,report)

@@ -1,0 +1,633 @@
+{
+  "schema": "psp-model-creator.library/1",
+  "models": [
+    {
+      "label": "Batista",
+      "file": "pacs/Batista.PAC",
+      "sha256": "d73e8d53df28b88d51d13ce608bf6d96fc837e8eb3b977fe6d11dbfc43e23288",
+      "pac_bytes": 112640,
+      "preview_only_over_budget": false,
+      "previews": {
+        "front": "previews/000-front.png",
+        "back": "previews/000-back.png"
+      },
+      "meshes": 26,
+      "bones": 79,
+      "vertices": 1514,
+      "triangles": 1497,
+      "textures": 19,
+      "descriptor_count": 1,
+      "descriptor_mesh_counts": [
+        26
+      ]
+    },
+    {
+      "label": "Booker-T",
+      "file": "pacs/Booker-T.PAC",
+      "sha256": "eaf319d76dc05d9c7d6228b2f14273dffcb8ed0e733764eebfffc7653159bad0",
+      "pac_bytes": 114688,
+      "preview_only_over_budget": false,
+      "previews": {
+        "front": "previews/001-front.png",
+        "back": "previews/001-back.png"
+      },
+      "meshes": 26,
+      "bones": 97,
+      "vertices": 1525,
+      "triangles": 1500,
+      "textures": 20,
+      "descriptor_count": 1,
+      "descriptor_mesh_counts": [
+        26
+      ]
+    },
+    {
+      "label": "Bret-Hart",
+      "file": "pacs/Bret-Hart.PAC",
+      "sha256": "08a4cdb1517a6086a14dc67b440990ffaf7a925a094207f49351c04335951ead",
+      "pac_bytes": 112640,
+      "preview_only_over_budget": false,
+      "previews": {
+        "front": "previews/002-front.png",
+        "back": "previews/002-back.png"
+      },
+      "meshes": 30,
+      "bones": 96,
+      "vertices": 1504,
+      "triangles": 1502,
+      "textures": 22,
+      "descriptor_count": 1,
+      "descriptor_mesh_counts": [
+        30
+      ]
+    },
+    {
+      "label": "British-Bulldog",
+      "file": "pacs/British-Bulldog.PAC",
+      "sha256": "a95be24656679b5e7e1fb3fd20c57a528dbf7d88258079716315295bf2762d6f",
+      "pac_bytes": 104448,
+      "preview_only_over_budget": false,
+      "previews": {
+        "front": "previews/003-front.png",
+        "back": "previews/003-back.png"
+      },
+      "meshes": 24,
+      "bones": 79,
+      "vertices": 1424,
+      "triangles": 1500,
+      "textures": 19,
+      "descriptor_count": 1,
+      "descriptor_mesh_counts": [
+        24
+      ]
+    },
+    {
+      "label": "Carlito",
+      "file": "pacs/Carlito.PAC",
+      "sha256": "1ceb49f9c5eb45ebacf4bd1ead732cb22aeee4426999da314de22beb916acdba",
+      "pac_bytes": 112640,
+      "preview_only_over_budget": false,
+      "previews": {
+        "front": "previews/004-front.png",
+        "back": "previews/004-back.png"
+      },
+      "meshes": 25,
+      "bones": 79,
+      "vertices": 1628,
+      "triangles": 1500,
+      "textures": 19,
+      "descriptor_count": 1,
+      "descriptor_mesh_counts": [
+        25
+      ]
+    },
+    {
+      "label": "Charlie-Haas",
+      "file": "pacs/Charlie-Haas.PAC",
+      "sha256": "6b98d6a4f5ea2af751c76c016c298dc89edc9fa470a75cdc08b2bad5a90d9499",
+      "pac_bytes": 116736,
+      "preview_only_over_budget": false,
+      "previews": {
+        "front": "previews/005-front.png",
+        "back": "previews/005-back.png"
+      },
+      "meshes": 25,
+      "bones": 78,
+      "vertices": 1658,
+      "triangles": 1452,
+      "textures": 18,
+      "descriptor_count": 1,
+      "descriptor_mesh_counts": [
+        25
+      ]
+    },
+    {
+      "label": "Chavo-Guerrero",
+      "file": "pacs/Chavo-Guerrero.PAC",
+      "sha256": "963f2de471ad9b3513368dfdef35303d9ed1171973129a1e39ae0c511d715d92",
+      "pac_bytes": 102400,
+      "preview_only_over_budget": false,
+      "previews": {
+        "front": "previews/006-front.png",
+        "back": "previews/006-back.png"
+      },
+      "meshes": 20,
+      "bones": 79,
+      "vertices": 1370,
+      "triangles": 1500,
+      "textures": 15,
+      "descriptor_count": 1,
+      "descriptor_mesh_counts": [
+        20
+      ]
+    },
+    {
+      "label": "Chris-Benoit",
+      "file": "pacs/Chris-Benoit.PAC",
+      "sha256": "ba4f784d46920dbf6ca1db6c1480f8b84de613c2df2f7da32fb73fa19a1ca126",
+      "pac_bytes": 102400,
+      "preview_only_over_budget": false,
+      "previews": {
+        "front": "previews/007-front.png",
+        "back": "previews/007-back.png"
+      },
+      "meshes": 23,
+      "bones": 77,
+      "vertices": 1308,
+      "triangles": 1499,
+      "textures": 16,
+      "descriptor_count": 1,
+      "descriptor_mesh_counts": [
+        23
+      ]
+    },
+    {
+      "label": "Chris-Jericho",
+      "file": "pacs/Chris-Jericho.PAC",
+      "sha256": "b70ee55602c205e4d7d1901ed2b082243c1a63b5a80e8e661b9e7675afdb617d",
+      "pac_bytes": 116736,
+      "preview_only_over_budget": false,
+      "previews": {
+        "front": "previews/008-front.png",
+        "back": "previews/008-back.png"
+      },
+      "meshes": 27,
+      "bones": 97,
+      "vertices": 1522,
+      "triangles": 1500,
+      "textures": 19,
+      "descriptor_count": 1,
+      "descriptor_mesh_counts": [
+        27
+      ]
+    },
+    {
+      "label": "Chris-Masters",
+      "file": "pacs/Chris-Masters.PAC",
+      "sha256": "cc6111731cdebb0c51c0df9e37b3f779ada2d09a263238c787d81ce3ee8b7c4b",
+      "pac_bytes": 106496,
+      "preview_only_over_budget": false,
+      "previews": {
+        "front": "previews/009-front.png",
+        "back": "previews/009-back.png"
+      },
+      "meshes": 25,
+      "bones": 79,
+      "vertices": 1352,
+      "triangles": 1499,
+      "textures": 17,
+      "descriptor_count": 1,
+      "descriptor_mesh_counts": [
+        25
+      ]
+    },
+    {
+      "label": "Christian",
+      "file": "pacs/Christian.PAC",
+      "sha256": "0db1bb18e50c9b5bd66dd48c68301ae1ea204e93b397fbed125ea93fd1293cd9",
+      "pac_bytes": 106496,
+      "preview_only_over_budget": false,
+      "previews": {
+        "front": "previews/010-front.png",
+        "back": "previews/010-back.png"
+      },
+      "meshes": 26,
+      "bones": 79,
+      "vertices": 1417,
+      "triangles": 1494,
+      "textures": 15,
+      "descriptor_count": 1,
+      "descriptor_mesh_counts": [
+        26
+      ]
+    },
+    {
+      "label": "CM-Punk-Ring",
+      "file": "pacs/CM-Punk-Ring.PAC",
+      "sha256": "717655ce9ce66fc2e26e60e2ad82a88a1a3c35e1f2b1badc2cafb50025ff7597",
+      "pac_bytes": 139264,
+      "preview_only_over_budget": false,
+      "previews": {
+        "front": "previews/011-front.png",
+        "back": "previews/011-back.png"
+      },
+      "meshes": 25,
+      "bones": 83,
+      "vertices": 1411,
+      "triangles": 1725,
+      "textures": 28,
+      "descriptor_count": 2,
+      "descriptor_mesh_counts": [
+        24,
+        1
+      ]
+    },
+    {
+      "label": "Cody-Rhodes-Ring",
+      "file": "pacs/Cody-Rhodes-Ring.PAC",
+      "sha256": "45e8adead68d26452de63849c0a3064013ee4e612be8c749a0788e532e006c82",
+      "pac_bytes": 147456,
+      "preview_only_over_budget": false,
+      "previews": {
+        "front": "previews/012-front.png",
+        "back": "previews/012-back.png"
+      },
+      "meshes": 26,
+      "bones": 83,
+      "vertices": 1573,
+      "triangles": 1820,
+      "textures": 21,
+      "descriptor_count": 1,
+      "descriptor_mesh_counts": [
+        26
+      ]
+    },
+    {
+      "label": "Danny-Basham",
+      "file": "pacs/Danny-Basham.PAC",
+      "sha256": "4e3b4919abd1c58c02651da0bdcf5885b75c656ef217fdd387e05075159e32af",
+      "pac_bytes": 178176,
+      "preview_only_over_budget": true,
+      "previews": {
+        "front": "previews/013-front.png",
+        "back": "previews/013-back.png"
+      },
+      "meshes": 26,
+      "bones": 79,
+      "vertices": 1343,
+      "triangles": 1500,
+      "textures": 14,
+      "descriptor_count": 1,
+      "descriptor_mesh_counts": [
+        26
+      ]
+    },
+    {
+      "label": "Dolph-Ziggler",
+      "file": "pacs/Dolph-Ziggler.PAC",
+      "sha256": "fb9e750b5ee56d88742c32541e48553c2c625cc16129bcd028a594b2e01dd8ce",
+      "pac_bytes": 147456,
+      "preview_only_over_budget": false,
+      "previews": {
+        "front": "previews/014-front.png",
+        "back": "previews/014-back.png"
+      },
+      "meshes": 27,
+      "bones": 83,
+      "vertices": 1532,
+      "triangles": 1780,
+      "textures": 19,
+      "descriptor_count": 1,
+      "descriptor_mesh_counts": [
+        27
+      ]
+    },
+    {
+      "label": "Edge",
+      "file": "pacs/Edge.PAC",
+      "sha256": "eab2627389d1122a243c555fe170f878b4f577f11a6b8dadc9a4cdf75bac9c09",
+      "pac_bytes": 178176,
+      "preview_only_over_budget": true,
+      "previews": {
+        "front": "previews/015-front.png",
+        "back": "previews/015-back.png"
+      },
+      "meshes": 28,
+      "bones": 97,
+      "vertices": 1395,
+      "triangles": 1497,
+      "textures": 17,
+      "descriptor_count": 1,
+      "descriptor_mesh_counts": [
+        28
+      ]
+    },
+    {
+      "label": "JBL(Suit)",
+      "file": "pacs/JBL(Suit).PAC",
+      "sha256": "8c094f622746b1bff8138082e91f88b40127647318689757babc4fbbdd575cac",
+      "pac_bytes": 169984,
+      "preview_only_over_budget": true,
+      "previews": {
+        "front": "previews/016-front.png",
+        "back": "previews/016-back.png"
+      },
+      "meshes": 25,
+      "bones": 79,
+      "vertices": 1397,
+      "triangles": 1417,
+      "textures": 18,
+      "descriptor_count": 1,
+      "descriptor_mesh_counts": [
+        25
+      ]
+    },
+    {
+      "label": "Jeff-Hardy",
+      "file": "pacs/Jeff-Hardy.PAC",
+      "sha256": "ed8b1fdd1a5f2cb29cc4ff5a718727eab23f46a0cf62e68265e44bdefcbbbaeb",
+      "pac_bytes": 143360,
+      "preview_only_over_budget": false,
+      "previews": {
+        "front": "previews/017-front.png",
+        "back": "previews/017-back.png"
+      },
+      "meshes": 27,
+      "bones": 98,
+      "vertices": 1372,
+      "triangles": 1741,
+      "textures": 24,
+      "descriptor_count": 1,
+      "descriptor_mesh_counts": [
+        27
+      ]
+    },
+    {
+      "label": "Joey-Mercury-Ring",
+      "file": "pacs/Joey-Mercury-Ring.PAC",
+      "sha256": "95a2e2ce5fa32b2fc55a9da03ba0cb38bfe9c810e0ca2481876add204a36177b",
+      "pac_bytes": 190464,
+      "preview_only_over_budget": true,
+      "previews": {
+        "front": "previews/018-front.png",
+        "back": "previews/018-back.png"
+      },
+      "meshes": 30,
+      "bones": 107,
+      "vertices": 1426,
+      "triangles": 1486,
+      "textures": 18,
+      "descriptor_count": 2,
+      "descriptor_mesh_counts": [
+        25,
+        5
+      ]
+    },
+    {
+      "label": "John-Cena-Ring(Green)",
+      "file": "pacs/John-Cena-Ring(Green).PAC",
+      "sha256": "8fd829750a4c051f08be31158ea3f0a43b2960e8a0d4cc360ca2063848100a0f",
+      "pac_bytes": 198656,
+      "preview_only_over_budget": true,
+      "previews": {
+        "front": "previews/019-front.png",
+        "back": "previews/019-back.png"
+      },
+      "meshes": 28,
+      "bones": 79,
+      "vertices": 1557,
+      "triangles": 1500,
+      "textures": 20,
+      "descriptor_count": 1,
+      "descriptor_mesh_counts": [
+        28
+      ]
+    },
+    {
+      "label": "KOFI_KINGSTON",
+      "file": "pacs/KOFI_KINGSTON.pac",
+      "sha256": "5bb373dbe944583f097daa4d666e86f5b92d3e1699229c49167d948f194f465c",
+      "pac_bytes": 139264,
+      "preview_only_over_budget": false,
+      "previews": {
+        "front": "previews/020-front.png",
+        "back": "previews/020-back.png"
+      },
+      "meshes": 25,
+      "bones": 83,
+      "vertices": 1442,
+      "triangles": 1739,
+      "textures": 14,
+      "descriptor_count": 1,
+      "descriptor_mesh_counts": [
+        25
+      ]
+    },
+    {
+      "label": "Matt-Hardy",
+      "file": "pacs/Matt-Hardy.PAC",
+      "sha256": "238514f933e59215d71dc4e0d46c86dddd2414fe451f061741b7b9a3c3476948",
+      "pac_bytes": 176128,
+      "preview_only_over_budget": true,
+      "previews": {
+        "front": "previews/021-front.png",
+        "back": "previews/021-back.png"
+      },
+      "meshes": 31,
+      "bones": 91,
+      "vertices": 1402,
+      "triangles": 1496,
+      "textures": 15,
+      "descriptor_count": 2,
+      "descriptor_mesh_counts": [
+        27,
+        4
+      ]
+    },
+    {
+      "label": "Randy-Orton",
+      "file": "pacs/Randy-Orton.PAC",
+      "sha256": "e84132ef59efd479d1a361df3304e9d5172e467d74d4931f35b4266fce58379f",
+      "pac_bytes": 108544,
+      "preview_only_over_budget": false,
+      "previews": {
+        "front": "previews/022-front.png",
+        "back": "previews/022-back.png"
+      },
+      "meshes": 28,
+      "bones": 79,
+      "vertices": 1478,
+      "triangles": 1497,
+      "textures": 20,
+      "descriptor_count": 1,
+      "descriptor_mesh_counts": [
+        28
+      ]
+    },
+    {
+      "label": "Rob-Van-Dam",
+      "file": "pacs/Rob-Van-Dam.PAC",
+      "sha256": "888aa229b33d213c7bcf2ff744744004704bc0d6b6dc771ac37badcedebabae8",
+      "pac_bytes": 190464,
+      "preview_only_over_budget": true,
+      "previews": {
+        "front": "previews/023-front.png",
+        "back": "previews/023-back.png"
+      },
+      "meshes": 30,
+      "bones": 84,
+      "vertices": 1499,
+      "triangles": 1485,
+      "textures": 17,
+      "descriptor_count": 1,
+      "descriptor_mesh_counts": [
+        30
+      ]
+    },
+    {
+      "label": "Sabu-Ring",
+      "file": "pacs/Sabu-Ring.PAC",
+      "sha256": "552685542486dd40b9ffb6d0a6b3748db38bb525c3a182c7282f57362ae2e0f5",
+      "pac_bytes": 110592,
+      "preview_only_over_budget": false,
+      "previews": {
+        "front": "previews/024-front.png",
+        "back": "previews/024-back.png"
+      },
+      "meshes": 26,
+      "bones": 101,
+      "vertices": 1407,
+      "triangles": 1759,
+      "textures": 24,
+      "descriptor_count": 1,
+      "descriptor_mesh_counts": [
+        26
+      ]
+    },
+    {
+      "label": "Tyson-kidd",
+      "file": "pacs/Tyson-kidd.PAC",
+      "sha256": "ae425d686e84febc9f8ea8017904cd02cf7b0e3778c6c482d542fabd057c7abc",
+      "pac_bytes": 141312,
+      "preview_only_over_budget": false,
+      "previews": {
+        "front": "previews/025-front.png",
+        "back": "previews/025-back.png"
+      },
+      "meshes": 23,
+      "bones": 83,
+      "vertices": 1374,
+      "triangles": 1748,
+      "textures": 17,
+      "descriptor_count": 1,
+      "descriptor_mesh_counts": [
+        23
+      ]
+    },
+    {
+      "label": "Umaga (2)",
+      "file": "pacs/Umaga (2).PAC",
+      "sha256": "c5c14dd6c929997a97fb1ce2c9f3c738addaa92a951636e46fa88f59ce6efa46",
+      "pac_bytes": 137216,
+      "preview_only_over_budget": false,
+      "previews": {
+        "front": "previews/026-front.png",
+        "back": "previews/026-back.png"
+      },
+      "meshes": 25,
+      "bones": 97,
+      "vertices": 1411,
+      "triangles": 1715,
+      "textures": 24,
+      "descriptor_count": 2,
+      "descriptor_mesh_counts": [
+        23,
+        2
+      ]
+    },
+    {
+      "label": "Umaga",
+      "file": "pacs/Umaga.PAC",
+      "sha256": "f940edef975fe2931a0d006e87cb99c57b054d95430574aba1cd43d46b0b48b2",
+      "pac_bytes": 188416,
+      "preview_only_over_budget": true,
+      "previews": {
+        "front": "previews/027-front.png",
+        "back": "previews/027-back.png"
+      },
+      "meshes": 25,
+      "bones": 97,
+      "vertices": 1440,
+      "triangles": 1496,
+      "textures": 21,
+      "descriptor_count": 1,
+      "descriptor_mesh_counts": [
+        25
+      ]
+    },
+    {
+      "label": "Undertaker",
+      "file": "pacs/Undertaker.PAC",
+      "sha256": "1729a0f48f986926fdcb77ceeb3c597fed0bc7906689410d5ce29c97b057a654",
+      "pac_bytes": 198656,
+      "preview_only_over_budget": true,
+      "previews": {
+        "front": "previews/028-front.png",
+        "back": "previews/028-back.png"
+      },
+      "meshes": 26,
+      "bones": 99,
+      "vertices": 1557,
+      "triangles": 1495,
+      "textures": 21,
+      "descriptor_count": 1,
+      "descriptor_mesh_counts": [
+        26
+      ]
+    },
+    {
+      "label": "Yoshi-Tatsu",
+      "file": "pacs/Yoshi-Tatsu.PAC",
+      "sha256": "64c45999986a8429c7b6f4d66a622f1fe70aa82842a09725ae08844d8ccf30b4",
+      "pac_bytes": 145408,
+      "preview_only_over_budget": false,
+      "previews": {
+        "front": "previews/029-front.png",
+        "back": "previews/029-back.png"
+      },
+      "meshes": 31,
+      "bones": 101,
+      "vertices": 1468,
+      "triangles": 1745,
+      "textures": 29,
+      "descriptor_count": 2,
+      "descriptor_mesh_counts": [
+        27,
+        4
+      ]
+    },
+    {
+      "label": "Zack-Ryder",
+      "file": "pacs/Zack-Ryder.PAC",
+      "sha256": "7819f4bc872ee9f30e1369ae31a8e0c0daeeaabd68bce0513fb4a3d5ed3ad5be",
+      "pac_bytes": 139264,
+      "preview_only_over_budget": false,
+      "previews": {
+        "front": "previews/030-front.png",
+        "back": "previews/030-back.png"
+      },
+      "meshes": 27,
+      "bones": 98,
+      "vertices": 1372,
+      "triangles": 1710,
+      "textures": 20,
+      "descriptor_count": 2,
+      "descriptor_mesh_counts": [
+        25,
+        2
+      ]
+    }
+  ],
+  "assets": "User-supplied native PSP PAC snapshots. Rights remain with their owners.",
+  "constraints": "Original preview is independent of the 148000-byte mixed export budget. Mixed builds require compatible body binds and passing native/pose/seam checks."
+}

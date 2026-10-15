@@ -16,7 +16,7 @@ jobs:
           python-version: '3.13'
       - run: python -m pip install -r requirements-desktop.txt
       - name: Original synthetic creator regression tests
-        run: python -m unittest tests.test_model_creator -v
+        run: python -m unittest tests.test_model_creator tests.test_creator_library -v
       - name: Build separate portable application
         run: python -m tools.build_creator
       - name: Frozen creator live selection preview, assembly, native export and texture roundtrip
@@ -26,6 +26,7 @@ jobs:
           $output = "$env:RUNNER_TEMP\creator-smoke\report.json"
           New-Item -ItemType Directory -Path (Split-Path $output) | Out-Null
           $p = Start-Process dist/PSP-Model-Creator/PSP-Model-Creator.exe -ArgumentList @('--smoke-test',$output) -PassThru -Wait
+          if (Test-Path $output) { Copy-Item $output dist/creator-smoke.json }
           if ($p.ExitCode -ne 0) { throw 'Frozen creator functional self-check failed' }
           $report = Get-Content $output -Raw | ConvertFrom-Json
           if (-not $report.passed -or -not $report.live_selection_preview_before_export) { throw 'Creator self-check missing successful live preview' }
@@ -36,11 +37,12 @@ jobs:
         run: |
           import hashlib,shutil
           from pathlib import Path
-          path=Path(shutil.make_archive('dist/PSP-Model-Creator-0.1-Windows-x64','zip','dist','PSP-Model-Creator'))
+          path=Path(shutil.make_archive('dist/PSP-Model-Creator-0.2-Windows-x64','zip','dist','PSP-Model-Creator'))
           Path(str(path)+'.sha256').write_text(hashlib.file_digest(path.open('rb'),'sha256').hexdigest()+'  '+path.name+'\n')
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
-          name: PSP-Model-Creator-0.1-Windows-x64
+          name: PSP-Model-Creator-0.2-Windows-x64
           path: |
             dist/*.zip
             dist/*.sha256
@@ -52,7 +54,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           @'
-          Separate experimental Kenny Dykstra / Brian Kendrick modular PSP creator. Select your own two original PSP PACs once; source 1 supplies the mixed output container. Choose head, torso, arms and legs with automatic textured/green selection previews, five camera views and analytical poses. Assemble and validate before exporting a PAC; stale selections cannot export an older build. Includes native structural/palette/offset checks, explicit attachment QA, original-texture preservation, editable PNG export/pack, per-build reports, private snapshots, source and licenses. No Blender, Noesis or game assets are bundled. Existing suite/converter and main are unchanged. Prepared-pair prototype: ambiguous internal neck intersections require visual review, oversized combinations are withheld, and PPSSPP gameplay validation remains required. See README for the actual 16-combination study and limitations. Windows 10/11 x64 runner tested; a clean personal-machine test remains necessary.
+          Standalone experimental PSP Model Creator 0.2, with 31 user-supplied native models prepared for direct selection: no PAC import required. Includes original hash-pinned PAC snapshots, catalog, front/rear previews, four donor selectors, live textured/green preview, five views, ten analytical poses, independent project snapshots and guarded native PAC export. Array-aware creator reader preserves separate hair descriptors; selected parts retain their native textures and original interior attributes/weights. Common body binds and compatible extra controllers are mapped by name. Differing body binds, unsafe seams/controller regressions and actual PACs over 148000 bytes are withheld. The library includes some larger native originals for preview; arbitrary four-way combinations are not all certified or guaranteed to fit. The torso supplies the output container; auxiliary models from other donors are not assembled. New mixed assemblies still need PPSSPP testing. Existing converter paths and accepted releases remain available. No Blender or Noesis is needed. Supplied model content remains the property of its respective rights holders; it is included at the repository owner's request. See LIBRARY.md for evidence and limits.
           '@ | Set-Content "$env:RUNNER_TEMP/creator-notes.txt" -Encoding utf8NoBOM
           $tag = "creator-preview-${{ github.run_number }}-${{ github.sha }}"
-          gh release create $tag dist/*.zip dist/*.sha256 dist/creator-window.png --target '${{ github.sha }}' --prerelease --title 'PSP Model Creator 0.1 — standalone experimental preview' --notes-file "$env:RUNNER_TEMP/creator-notes.txt"
+          gh release create $tag dist/*.zip dist/*.sha256 dist/creator-window.png dist/creator-library-window.png --target '${{ github.sha }}' --prerelease --title 'PSP Model Creator 0.2 — prepared library' --notes-file "$env:RUNNER_TEMP/creator-notes.txt"

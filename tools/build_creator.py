@@ -1,4 +1,4 @@
-"""Small separate Windows creator build. No Blender/Noesis or game assets."""
+"""Separate Windows creator build, with the explicitly supplied native library."""
 import hashlib
 import importlib.metadata as metadata
 import json
@@ -24,8 +24,14 @@ def build():
                 out=sources/path.relative_to(ROOT);out.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(path,out)
     for name in ('psp_model_creator.py','requirements.txt','requirements-qa.txt','requirements-desktop.txt'):
         shutil.copy2(ROOT/name,sources/name)
-    shutil.copy2(ROOT/'docs/standalone-model-creator.md',destination/'README.md')
+    shutil.copy2(ROOT/'docs/creator-library-02.md',destination/'README.md')
     shutil.copy2(ROOT/'docs/standalone-model-creator.md',sources/'CREATOR.md')
+    shutil.copy2(ROOT/'docs/creator-library-02.md',destination/'LIBRARY.md')
+    library=ROOT/'creator_library'
+    from model_creator.library import Library
+    prepared=Library(library)
+    for index in range(len(prepared.entries)):prepared.source(index)
+    shutil.copytree(library,destination/'creator_library')
     licenses=destination/'licenses';licenses.mkdir();distributions=[]
     for dist in metadata.distributions():
         rows=[]
@@ -42,10 +48,12 @@ def build():
             target=licenses/'Tcl-Tk'/path.relative_to(Path(sys.base_prefix)/'tcl');target.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(path,target)
     (licenses/'python-distributions.json').write_text(json.dumps(distributions,indent=2),encoding='utf-8')
     forbidden={'.pac','.yobj','.obj','.gim','.bms','.7z'}
+    approved_assets={destination/'creator_library'/entry['file'] for entry in prepared.entries}
     for p in destination.rglob('*'):
-        if p.suffix.casefold() in forbidden:raise ValueError('Unexpected asset in application bundle: '+str(p))
+        if p.suffix.casefold() in forbidden and p not in approved_assets:raise ValueError('Unexpected asset in application bundle: '+str(p))
     files={p.relative_to(destination).as_posix():hashlib.file_digest(p.open('rb'),'sha256').hexdigest() for p in destination.rglob('*') if p.is_file()}
-    (destination/'MANIFEST.json').write_text(json.dumps(dict(version='0.1.0',blender_bundled=False,game_assets_bundled=False,files=files),indent=2),encoding='utf-8')
+    (destination/'MANIFEST.json').write_text(json.dumps(dict(version='0.2.0',blender_bundled=False,game_assets_bundled=True,
+        prepared_models=len(prepared.entries),assets='User-supplied native library; original rights retained.',files=files),indent=2),encoding='utf-8')
     print('Creator ready:',destination)
 
 

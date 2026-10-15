@@ -1,3 +1,5 @@
+> Version 0.2 adds a prepared 31-model library. See [creator-library-02.md](creator-library-02.md) for current usage, supported native groups and compatibility limits. The original 0.1 pair study below is retained as development evidence.
+
 # PSP Model Creator 0.1 — standalone experimental application
 
 This is a separate prepared-pair prototype for the supplied **Kenny Dykstra** and
