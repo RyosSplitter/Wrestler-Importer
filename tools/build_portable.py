@@ -22,7 +22,7 @@ def download(url,path):
         detail=exc.read(600).decode('utf-8',errors='replace')
         raise RuntimeError('Official runtime download returned HTTP %d for %s: %s'%(exc.code,url,detail)) from exc
 
-def build():
+def build(name=NAME):
     if sys.platform!='win32':raise SystemExit('Build on Windows x64, or use the Windows portable GitHub workflow.')
     cache=ROOT/'build/portable-cache';cache.mkdir(parents=True,exist_ok=True)
     archive=cache/'blender-4.3.2-windows-x64.zip';checks=cache/'blender-4.3.2.sha256'
@@ -39,12 +39,12 @@ def build():
         for path in (ROOT/folder).rglob('*'):
             if path.suffix in ('.py','.json') and '__pycache__' not in path.parts:
                 dest=resource/path.relative_to(ROOT);dest.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(path,dest)
-    args=[sys.executable,'-m','PyInstaller','--noconfirm','--clean','--onedir','--windowed','--name',NAME,
+    args=[sys.executable,'-m','PyInstaller','--noconfirm','--clean','--onedir','--windowed','--name',name,
           '--collect-all','tkinterdnd2','--collect-all','rtree','--collect-submodules','tools','--collect-submodules','model_qa',
           '--collect-submodules','desktop','--collect-submodules','stable_pipeline']
     for folder in ('tools','desktop','model_qa'):args+=['--add-data',str(resource/folder)+';'+folder]
     args+=[str(ROOT/'ps2psp_converter.py')];subprocess.run(args,cwd=ROOT,check=True)
-    destination=ROOT/'dist'/NAME;runtime=destination/'runtime';runtime.mkdir()
+    destination=ROOT/'dist'/name;runtime=destination/'runtime';runtime.mkdir()
     with zipfile.ZipFile(archive) as z:
         for member in z.infolist():
             if Path(member.filename).is_absolute() or '..' in Path(member.filename).parts:raise ValueError('Unsafe Blender archive path')
@@ -67,7 +67,7 @@ def build():
         shutil.copy2(ROOT/'docs'/filename,sources/'converter/docs'/filename)
     focused_tests=sources/'converter/tests';focused_tests.mkdir()
     (focused_tests/'__init__.py').write_text('')
-    for filename in ('test_default_textures.py','test_texture_budget_trial.py'):
+    for filename in ('test_default_textures.py','test_texture_budget_trial.py','test_suite_workspace.py'):
         shutil.copy2(ROOT/'tests'/filename,focused_tests/filename)
     notices=destination/'licenses';notices.mkdir();manifest=[]
     for dist in metadata.distributions():
@@ -84,7 +84,7 @@ def build():
         if path.is_file() and path.name.lower().startswith(('license','copying')):
             dest=notices/'Tcl-Tk'/path.relative_to(Path(sys.base_prefix)/'tcl');dest.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(path,dest)
     (notices/'python-distributions.json').write_text(json.dumps(manifest,indent=2),encoding='utf-8')
-    shutil.copy2(ROOT/'docs/portable-desktop.md',destination/'README.md');shutil.copy2(ROOT/'docs/portable-distribution.md',destination/'DISTRIBUTION.md')
+    shutil.copy2(ROOT/('docs/portable-model-suite.md' if name=='PSP-Model-Suite' else 'docs/portable-desktop.md'),destination/'README.md');shutil.copy2(ROOT/'docs/portable-distribution.md',destination/'DISTRIBUTION.md')
     for path in destination.rglob('*'):
         if path.suffix.lower() in ('.pac','.yobj','.obj','.gim','.png') and 'runtime' not in path.parts:raise ValueError('Unexpected model/texture asset in portable build: '+str(path))
     files={str(p.relative_to(destination)).replace('\\','/'):hashlib.file_digest(p.open('rb'),'sha256').hexdigest() for p in destination.rglob('*') if p.is_file()}
@@ -92,7 +92,7 @@ def build():
     print(destination)
 
 if __name__=='__main__':
-    try:build()
+    try:build('PSP-Model-Suite' if '--suite' in sys.argv else NAME)
     except Exception:
         import traceback
         error=traceback.format_exc().replace('%','%25').replace('\r','%0D').replace('\n','%0A')

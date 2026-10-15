@@ -1,5 +1,11 @@
 # Wrestler Importer
 
+The [PSP Model Suite foundation](docs/portable-model-suite.md) adds a classic
+tabbed shell around the existing HCTP converter, native PSP PAC/model/texture
+inspection, preview exports and byte-identical PAC copies. The editor's mutation
+tools, creator and additional source adapters remain planned. The foundation
+is isolated on `feature/psp-model-suite`; accepted baselines remain preserved.
+
 Goal: turn a PS2 wrestler PAC from SYM, JBI, HCTP, or PS2 SVR into a PSP SVR
 wrestler PAC using a target PSP base skeleton and body layout. The intended app
 runs on Windows; exports will be tested in PPSSPP.

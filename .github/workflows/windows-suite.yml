@@ -1,0 +1,75 @@
+name: Build PSP Model Suite foundation
+on:
+  push:
+    branches: [feature/psp-model-suite]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  suite:
+    runs-on: windows-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: python -m pip install -r requirements-desktop.txt
+      - name: Prepare existing development-only donor fixture
+        shell: python
+        run: |
+          from pathlib import Path
+          import zipfile
+          Path('assets').mkdir(exist_ok=True)
+          with zipfile.ZipFile('downloads/Wrestler-Importer-beta-0.1.1.zip') as archive:
+              for name in ('Kurt-Angle-Ring.PAC','Full Body.yobj'):
+                  Path('assets',name).write_bytes(archive.read('WrestlerImporterBeta/assets/'+name))
+      - run: python -m tools.ci_tests
+      - name: Build frozen suite and audited existing runtime
+        run: python -m tools.build_portable --suite
+      - name: Existing frozen converter controls and bundled Blender
+        shell: pwsh
+        run: |
+          $env:PS2PSP_DATA = "$env:RUNNER_TEMP\suite-converter-smoke"
+          $env:PATH = "$env:SystemRoot\System32;$env:SystemRoot"
+          $output = "$env:RUNNER_TEMP\converter-smoke.json"
+          $p = Start-Process dist/PSP-Model-Suite/PSP-Model-Suite.exe -ArgumentList @('--smoke-test',$output) -PassThru -Wait
+          if ($p.ExitCode -ne 0) { throw 'Existing converter GUI/runtime smoke failed' }
+          Copy-Item $output dist/converter-smoke.json
+          Copy-Item ([System.IO.Path]::ChangeExtension($output,'png')) dist/converter-smoke.png
+      - name: Frozen suite navigation, native model previews and exact PAC round trip
+        shell: pwsh
+        run: |
+          $env:PS2PSP_DATA = "$env:RUNNER_TEMP\model-suite-smoke"
+          $env:PATH = "$env:SystemRoot\System32;$env:SystemRoot"
+          $output = "$env:RUNNER_TEMP\suite-smoke\report.json"
+          New-Item -ItemType Directory -Path (Split-Path $output) | Out-Null
+          $p = Start-Process dist/PSP-Model-Suite/PSP-Model-Suite.exe -ArgumentList @('--suite-smoke-test',$output) -PassThru -Wait
+          if ($p.ExitCode -ne 0) { throw 'Frozen suite functional smoke failed' }
+          Copy-Item $output dist/suite-smoke.json
+          Copy-Item "$env:RUNNER_TEMP/suite-smoke/*.png" dist/
+      - name: Package suite portable ZIP
+        shell: python
+        run: |
+          import hashlib,shutil
+          from pathlib import Path
+          path=Path(shutil.make_archive('dist/PSP-Model-Suite-Foundation-Windows-x64','zip','dist','PSP-Model-Suite'))
+          Path(str(path)+'.sha256').write_text(hashlib.file_digest(path.open('rb'),'sha256').hexdigest()+'  '+path.name+'\n')
+      - uses: actions/upload-artifact@v4
+        with:
+          name: PSP-Model-Suite-Foundation-Windows-x64
+          path: |
+            dist/*.zip
+            dist/*.sha256
+            dist/*.png
+            dist/*smoke.json
+      - name: Publish isolated suite foundation preview
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          @'
+          First PSP Model Suite foundation: classic tabbed interface, existing v0.25.6 HCTP converter, native PSP model/texture inspection, five offline rest views per supported model, native YOBJ plus OBJ/MTL/PNG preview exports and byte-identical unchanged PAC copies. Model mutation, creator assets/assembly and new game adapters remain planned. Existing conversion algorithms, accepted PACs and main are preserved. Includes the existing bundled Blender/runtime, source and notices; no game assets. Requires Windows 10/11 x64 and your own PAC files. Native inspection and analytical QA are not substitutes for PPSSPP testing.
+          '@ | Set-Content "$env:RUNNER_TEMP/suite-release-notes.txt" -Encoding utf8NoBOM
+          $tag = "suite-foundation-${{ github.run_number }}-${{ github.sha }}"
+          gh release create $tag dist/*.zip dist/*.sha256 dist/*.png --target '${{ github.sha }}' --prerelease --title 'PSP Model Suite — Foundation preview' --notes-file "$env:RUNNER_TEMP/suite-release-notes.txt"

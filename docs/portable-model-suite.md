@@ -1,0 +1,121 @@
+# PSP Model Suite — foundation preview
+
+This is the first suite milestone on `feature/psp-model-suite`. It extends the
+classic Windows interface around the established v0.25.6 HCTP converter. It does
+not implement the entire roadmap or integrate the separate blood experiment.
+Accepted PAC baselines and main remain preserved.
+
+## Available workflows
+
+| Module | This milestone |
+|---|---|
+| Converter | Existing HCTP workflow, texture modes, PSP base preference, QA and Save As |
+| PSP Model Editor | Native PSP PAC inspection, every YOBJ section, per-mesh counts, five rest views, preview export, exact unchanged PAC copy |
+| Textures | Shared native texture browser, dimensions, encoded cost, palette/used-color counts, transparency preview; conversion settings remain in Converter |
+| Quality Assurance | Native structural inspection and access to existing conversion HTML reports |
+| Model Creator | Explicit development roadmap; assembly/export and asset libraries are not implemented |
+
+SYM/JBI/PS2 SVR/PS3-X360 SVR/WK conversion, PS1 texture styling, texture replacement,
+UV editing, OBJ reimport and creator assembly remain planned. Unsupported formats
+are not passed to the HCTP parser as if they were supported.
+
+## Windows use
+
+Extract the entire portable ZIP and launch `PSP-Model-Suite.exe`. Keep its
+`_internal`, `runtime`, `sources` and `licenses` directories together. The same
+bundled Blender/runtime remains in this preview; the suite shell does not shrink
+that dependency. This is a Windows 10/11 x64 build with Windows 7-style controls,
+not a Windows 7 operating-system compatibility claim. No game assets are bundled.
+
+The Converter tab retains the Convert button above its preview and the current
+Default/Legacy/ATO/Priority Selection/Downgrade/Maximum Downgrade policies. The
+remembered PSP base uses the existing settings directory. Switching tabs does not
+reset a conversion, its base, or texture choices. Conversion still runs in its
+existing isolated process. `--converter-only` opens the standalone converter UI.
+
+In **PSP Model Editor**, open your own native PSP PAC. Select each model or expand
+its mesh rows, then choose front/rear/left/right/three-quarter views. The **Textures**
+tab shows the same workspace's images, with transparency on a checkerboard and
+no upscaling. Stage/blood palettes in additional named tables are listed too.
+Previews are actual offline CPU renders of decoded rest geometry, not Noesis or
+PPSSPP captures. Unsupported or ambiguous resources are reported, not replaced
+by invented pixels.
+
+**Save unchanged copy** writes the captured PAC byte for byte to a new filename.
+It is a validated exact-copy round trip, not a PAC rebuild or model edit. Existing
+destinations and the original input are protected from overwrite. **Export
+previews** creates a new ZIP containing each original decoded YOBJ, its structural
+audit, OBJ/MTL, numeric texture filenames, PNGs and views. OBJ has no armature,
+weights or PSP draw metadata. It is not the authoritative project representation.
+
+## Workspace contract and boundaries
+
+New modules are separate from converter algorithms:
+
+- `desktop/suite.py`: navigation and shared native workspace UI.
+- `desktop/workspace.py`: inspection, snapshot verification, exact-copy and preview export.
+- `desktop/gui.py`: hosts the existing converter page and shuts down both job types.
+- `ps2psp_converter.py --suite-inspect SOURCE JOB_DIRECTORY`: isolated inspector.
+- `tools/suite_smoke.py`: actual GUI/frozen-worker functional checks.
+
+Local jobs are under the existing app data directory, `suite/jobs/<id>/`. Each has
+`inspection.log`, `result.json`, optional `error.log`, and `workspace/manifest.json`.
+The schema is `psp-model-suite.workspace/1`:
+
+| Item | Purpose |
+|---|---|
+| `original.pac` | Exact immutable snapshot; SHA-256 checked before copies/exports |
+| `manifest.json` | Original path/hash/size, section inventory, models, textures, findings and explicit inspection scope |
+| `models/model_NNNN/model.yobj` | Original decompressed YOBJ; never reconstructed from OBJ |
+| `models/model_NNNN/audit.json` | Existing strict pointer/index/palette/weight audit |
+| `models/model_NNNN/model.obj`, `preview.mtl` | Rest-geometry exchange preview, material IDs retained |
+| `textures/texture_NNNN.bin`, `.png` | Original encoded texture bytes and decoded preview; embedded names remain metadata |
+
+Duplicate or ambiguous resources stay separate. Matching uses the native observed
+case-insensitive spelling convention, preferring texture section 9, with no
+guessing when multiple matches remain. Native model/mesh boundaries and all
+source skinning records remain untouched. Unknown section bytes remain in the
+original snapshot. An unsupported YOBJ layout retains its bytes and error;
+it is not certified or rewritten.
+
+Native inspection calls the existing strict converter export-profile validator
+as an additional check. Native PACs can exceed the configured 148000-byte
+conversion budget or use conventions outside that profile; such files are still
+inspectable. A profile finding is not by itself proof of game corruption. The
+148000-byte cap remains unchanged in conversion. Native inspection does not run
+source comparison, anatomical QA, analytical poses or gameplay; the conversion
+QA report remains the route to those existing checks.
+
+Failed inspections retain the previous loaded workspace. Closing the application
+cancels a conversion through its existing mechanism and terminates read-only
+inspection. It never overwrites accepted PACs or saves partial inspection as a
+successful manifest. This milestone does not introduce an editable project format;
+that must preserve native records and carry verified provenance for future edits.
+
+## Reproduce and validate
+
+Use the established desktop requirements and runtime; no new dependency is added.
+
+```sh
+python ps2psp_converter.py
+python ps2psp_converter.py --converter-only
+python -m unittest tests.test_suite_workspace -v
+python -m tools.ci_tests
+python ps2psp_converter.py --suite-smoke-test local/suite-smoke.json
+python ps2psp_converter.py --smoke-test local/converter-smoke.json
+```
+
+GUI checks need a graphical display. The smoke creates synthetic multi-model
+fixtures, starts the real isolated inspector, navigates every module and view,
+verifies texture display, exact PAC copying, preview export, preserved converter
+choices and minimum window layout, and captures actual application screenshots.
+No game fixtures are bundled in that smoke.
+
+On Windows, build with `python -m tools.build_portable --suite`. The separate
+`windows-suite.yml` workflow tests and packages the frozen suite without changing
+the established converter release workflow. The initial Linux validation and
+Windows run results are recorded in `downloads/model-suite-foundation/`.
+
+Next milestone: validated texture replacement with strict texture/material depth,
+source snapshot, size, offset/alignment and unrelated-byte preservation checks.
+UV/geometry editing comes after that, with explicit topology and skinning mapping.

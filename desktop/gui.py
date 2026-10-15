@@ -18,10 +18,10 @@ from desktop.texture_modes import MODES,HELP
 BG='#f0f0f0';PANEL='#e3e5e8';FG='#202020';MUTED='#606060'
 
 class Application:
-    def __init__(self):
+    def __init__(self, *, suite=True):
         from tkinterdnd2 import TkinterDnD,DND_FILES
         self.root=TkinterDnD.Tk();self.drag_drop=True
-        self.root.title(NAME);self.root.configure(bg=BG)
+        self.root.title('PSP Model Suite by RyosPrime' if suite else NAME);self.root.configure(bg=BG)
         # Leave room for the title bar/taskbar on a 1024x768 desktop. Explicit
         # placement also avoids the window manager's cascading off-screen origin.
         screen_w,screen_h=self.root.winfo_screenwidth(),self.root.winfo_screenheight()
@@ -58,15 +58,22 @@ class Application:
             style.configure('TMenubutton',background='#f5f5f5',foreground=FG,padding=(6,3))
             style.configure('TProgressbar',troughcolor='#ffffff',background='#52a651')
 
-        header=ttk.Frame(self.root,padding=(12,10,12,6));header.pack(fill='x')
-        ttk.Label(header,text='PS2PSP PAC Converter',font=('Segoe UI',12)).pack(side='left')
-        ttk.Label(header,text='by RyosPrime',style='Muted.TLabel').pack(side='left',padx=10)
-        ttk.Label(header,text='v'+VERSION,style='Muted.TLabel').pack(side='right')
-        ttk.Separator(self.root).pack(fill='x',padx=12)
+        self.suite=None
+        if suite:
+            from desktop.suite import SuiteShell
+            self.suite=SuiteShell(self)
+            container=self.suite.converter
+        else:
+            container=self.root
+            header=ttk.Frame(container,padding=(12,10,12,6));header.pack(fill='x')
+            ttk.Label(header,text='PS2PSP PAC Converter',font=('Segoe UI',12)).pack(side='left')
+            ttk.Label(header,text='by RyosPrime',style='Muted.TLabel').pack(side='left',padx=10)
+            ttk.Label(header,text='v'+VERSION,style='Muted.TLabel').pack(side='right')
+            ttk.Separator(container).pack(fill='x',padx=12)
 
         # Reserve the status bar before the expanding body so it remains visible
         # at the minimum window size and at enlarged Windows text scales.
-        footer=ttk.Frame(self.root,padding=(12,6,12,10));footer.pack(side='bottom',fill='x')
+        footer=ttk.Frame(container,padding=(12,6,12,10));footer.pack(side='bottom',fill='x')
         self.progress=ttk.Progressbar(footer,maximum=100);self.progress.pack(fill='x',pady=(0,6))
         status_row=ttk.Frame(footer);status_row.pack(fill='x')
         self.button(status_row,'Logs',self.open_logs).pack(side='right',padx=(8,0))
@@ -74,7 +81,7 @@ class Application:
         self.status_label.pack(side='left',fill='x',expand=True)
         status_row.bind('<Configure>',lambda e:self.status_label.configure(wraplength=max(200,e.width-90)))
 
-        body=ttk.Frame(self.root,padding=(12,10,12,0));body.pack(fill='both',expand=True)
+        body=ttk.Frame(container,padding=(12,10,12,0));body.pack(fill='both',expand=True)
         sidebar=ttk.Frame(body,width=352);sidebar.pack(side='left',fill='y',padx=(0,12));sidebar.pack_propagate(False)
         self.left_canvas=tk.Canvas(sidebar,width=340,bg=BG,highlightthickness=0)
         self.left_canvas.pack(side='left',fill='both',expand=True)
@@ -272,7 +279,7 @@ class Application:
                             self.output.set(self.output.get()+f"\nMaximum Downgrade: {r['maximum_downgrade']['changed_textures']} textures reduced; model unchanged — open QA report")
                         self.save.configure(state='normal');self.status.set('Review the PSP preview and QA report before saving.');self.show_preview()
                 except Exception as e:self.status.set('Worker ended unexpectedly; inspect Logs.');messagebox.showerror(NAME,str(e))
-        if self.closing and not self.busy() and self.inspector is None:self.clean_inspection();self.root.destroy();return
+        if self.closing and not self.busy() and self.inspector is None and not (self.suite and self.suite.busy()):self.clean_inspection();self.root.destroy();return
         self.root.after(200,self.poll)
     def set_view(self,view):self.view=view;self.show_preview()
     def toggle_zoom(self):self.zoom='zoom' if self.zoom=='full' else 'full';self.show_preview()
@@ -308,5 +315,6 @@ class Application:
         self.inspect_root=None
     def close(self):
         self.closing=True
+        if self.suite:self.suite.close()
         if self.busy():self.cancel_job()
-        elif self.inspector is None:self.clean_inspection();self.root.destroy()
+        elif self.inspector is None and not (self.suite and self.suite.busy()):self.clean_inspection();self.root.destroy()

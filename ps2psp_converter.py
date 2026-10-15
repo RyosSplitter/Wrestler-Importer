@@ -24,6 +24,17 @@ def worker(job_path):
         dump(root/'failure.json',dict(error=str(exc),cancelled=cancelled,logs=str(root)));return 2 if cancelled else 1
 
 def main():
+    if len(sys.argv)>1 and sys.argv[1]=='--suite-inspect':
+        from desktop.workspace import inspect_workspace,dump
+        source,job=map(Path,sys.argv[2:4])
+        try:
+            inspect_workspace(source,job/'workspace')
+            dump(job/'result.json',dict(ok=True,manifest=str((job/'workspace/manifest.json').resolve())))
+            return 0
+        except Exception as exc:
+            (job/'error.log').write_text(traceback.format_exc(),encoding='utf-8')
+            dump(job/'result.json',dict(ok=False,error=str(exc)))
+            return 1
     if len(sys.argv)>1 and sys.argv[1]=='--maximum-downgrade':
         from desktop.maximum_downgrade import fit_pac
         source,output=map(Path,sys.argv[2:4]);target=int(sys.argv[4]) if len(sys.argv)>4 else 148000
@@ -75,7 +86,12 @@ def main():
         except Exception:
             (Path(output).parent/'qa-error.log').write_text(traceback.format_exc(),encoding='utf-8');return 1
     from desktop.gui import Application
-    app=Application()
+    app=Application(suite='--converter-only' not in sys.argv)
+    if len(sys.argv)>1 and sys.argv[1]=='--suite-smoke-test':
+        from tools.suite_smoke import run
+        try:run(app,sys.argv[2])
+        finally:app.close()
+        return 0
     if len(sys.argv)>1 and sys.argv[1]=='--smoke-test':
         from desktop.core import dump,blender_path
         import subprocess

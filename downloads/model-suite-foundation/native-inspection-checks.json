@@ -1,0 +1,103 @@
+[
+  {
+    "label": "KurtCase",
+    "source_sha256": "bf935a51fe30bfd2df929f8eb9e50be5d793426ea05125ca9411ce21b19ead80",
+    "bytes": 180224,
+    "models": 1,
+    "textures": 17,
+    "view_counts": [
+      5
+    ],
+    "native_audits": [
+      null
+    ],
+    "exact_pac_copy": true,
+    "converter_export_profile": {
+      "passed": false,
+      "error": "PSP PAC size/alignment check failed."
+    },
+    "findings": [
+      "Converter export-profile check: PSP PAC size/alignment check failed."
+    ]
+  },
+  {
+    "label": "BenoitBlood",
+    "source_sha256": "6f34fdc205d8ad6dc57611ec0291ebcc88c838b468699403947d754c73a83672",
+    "bytes": 135168,
+    "models": 1,
+    "textures": 20,
+    "view_counts": [
+      5
+    ],
+    "native_audits": [
+      null
+    ],
+    "exact_pac_copy": true,
+    "converter_export_profile": {
+      "passed": true,
+      "error": null
+    },
+    "findings": []
+  },
+  {
+    "label": "Lance",
+    "source_sha256": "6addbbd98d460068fd6b8af56055c28ab1626d4463d30631393f0b8d8d601196",
+    "bytes": 145408,
+    "models": 1,
+    "textures": 22,
+    "view_counts": [
+      5
+    ],
+    "native_audits": [
+      null
+    ],
+    "exact_pac_copy": true,
+    "converter_export_profile": {
+      "passed": true,
+      "error": null
+    },
+    "findings": []
+  },
+  {
+    "label": "Jericho",
+    "source_sha256": "5ec3c990c741bf2c5387d34bb7abaff0208f1d02539f164e2be65321c2061982",
+    "bytes": 143360,
+    "models": 1,
+    "textures": 23,
+    "view_counts": [
+      5
+    ],
+    "native_audits": [
+      null
+    ],
+    "exact_pac_copy": true,
+    "converter_export_profile": {
+      "passed": true,
+      "error": null
+    },
+    "findings": []
+  },
+  {
+    "label": "Rock",
+    "source_sha256": "93bd5a99e058725cae4a9eefc562c40a59b2c1c72acb580cbfa06bf0749f7d1b",
+    "bytes": 147456,
+    "models": 3,
+    "textures": 22,
+    "view_counts": [
+      5,
+      5,
+      5
+    ],
+    "native_audits": [
+      null,
+      null,
+      null
+    ],
+    "exact_pac_copy": true,
+    "converter_export_profile": {
+      "passed": true,
+      "error": null
+    },
+    "findings": []
+  }
+]

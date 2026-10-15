@@ -1,0 +1,66 @@
+{
+  "desktop/core.py": {
+    "unchanged": true,
+    "sha256": "14cee6b2b5fd2a95b74abe1fbb69843ced0723cf038c3fab216bfb00d5b1ae99"
+  },
+  "desktop/geometry_worker.py": {
+    "unchanged": true,
+    "sha256": "6d09d2dcffc840767f5dcd76e611fc0f95a39118e5b77535b1ebeb1b2d12c802"
+  },
+  "desktop/native.py": {
+    "unchanged": true,
+    "sha256": "a06209f7354f66fbc836a8e3a6ed7c1a5f7068b49109c61bbdee35ddcd9e05fa"
+  },
+  "desktop/default_textures.py": {
+    "unchanged": true,
+    "sha256": "0482b995d4111c75a9fb3341947e128c6900604006f63b29452c6e1416c95a05"
+  },
+  "desktop/accessories.py": {
+    "unchanged": true,
+    "sha256": "8abfa847372fa7635b7736482c2275e12cc7242ccfdebbe2e72efe1c93373bbf"
+  },
+  "desktop/skinning.py": {
+    "unchanged": true,
+    "sha256": "c2c97cfd1d0fcf8bdaa29b280bfd4e484f708d62949f40b57fff4ac82682b136"
+  },
+  "tools/jericho_hybrid_trial.py": {
+    "unchanged": true,
+    "sha256": "5f7e6a61cc1f43c66a96274f79898344795002f7e8b464e4c297a5a05ab3421a"
+  },
+  "tools/blender_reduce.py": {
+    "unchanged": true,
+    "sha256": "854b5d20c39eb84c90ca5b0ff8fc196418ee6c8d7de79617725723355110503f"
+  },
+  "tools/pac_repack.py": {
+    "unchanged": true,
+    "sha256": "c03b7b6b1057195113d48d4dee113234c1a039fca3e2bdc93d0709cab14be27b"
+  },
+  "desktop/texture_optimizer/__init__.py": {
+    "unchanged": true,
+    "sha256": "618bffd5cb35c782a108382f710041f0859047b3c9e252866d02b248c8b9d7b4"
+  },
+  "desktop/texture_optimizer/__main__.py": {
+    "unchanged": true,
+    "sha256": "cc59d1f9fa9ba6676da1ab4b0e705c15163ca65234a9e7c7e9c3c090f9e38cde"
+  },
+  "desktop/texture_optimizer/allocator.py": {
+    "unchanged": true,
+    "sha256": "906c56fea217fa8440c8d4f076e1f7cf96ed2b4ed2666c336b031586a32fb4b6"
+  },
+  "desktop/texture_optimizer/analysis.py": {
+    "unchanged": true,
+    "sha256": "24ee0917fc3b837866a80cd451e09ec79e7ddf8280ea71856dc7907745b2af1e"
+  },
+  "desktop/texture_optimizer/candidates.py": {
+    "unchanged": true,
+    "sha256": "c7407da887545cce976189e6789305f4ed1cabde60438c84e8316d8074d0d2a3"
+  },
+  "desktop/texture_optimizer/pac.py": {
+    "unchanged": true,
+    "sha256": "83e7806b304e91086b2635d69637496a50bf0e541984fdbc5a77b4edf5b83cf9"
+  },
+  "desktop/texture_optimizer/priorities.py": {
+    "unchanged": true,
+    "sha256": "2a98f746466c6fa6f2b4aa306d7277f412f43ea1255dd3f0eb28c07ee99afa46"
+  }
+}
