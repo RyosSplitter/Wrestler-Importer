@@ -1,0 +1,20 @@
+{
+  "schema": "creator-facial-verification/1",
+  "full_repository_suite": {
+    "tests": 444,
+    "passed": true,
+    "seconds": 89.779,
+    "note": "Run before final opaque-strip metadata regression test was added"
+  },
+  "final_facial_suite": {
+    "tests": 19,
+    "passed": true,
+    "seconds": 4.925
+  },
+  "current_distinct_tests_covered": 445,
+  "original_donors_unchanged": true,
+  "production_files_changed": false,
+  "ppsspp_tested": false,
+  "windows_gui_modified": false,
+  "source_readback_matches_preview": true
+}

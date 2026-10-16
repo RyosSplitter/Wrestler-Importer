@@ -1,0 +1,1725 @@
+{
+  "schema": "creator-facial-research/1",
+  "sources": [
+    {
+      "file": "Batista.PAC",
+      "sha256": "d73e8d53df28b88d51d13ce608bf6d96fc837e8eb3b977fe6d11dbfc43e23288",
+      "native_counts": {
+        "meshes": 26,
+        "vertices": 1514,
+        "triangles": 1497
+      }
+    },
+    {
+      "file": "Chris-Masters.PAC",
+      "sha256": "cc6111731cdebb0c51c0df9e37b3f779ada2d09a263238c787d81ce3ee8b7c4b",
+      "native_counts": {
+        "meshes": 25,
+        "vertices": 1352,
+        "triangles": 1499
+      }
+    }
+  ],
+  "partitions": [
+    {
+      "classification": "INFERRED material-name hints plus head/eye landmark depth seed; topology-checked boundary",
+      "face_triangles": 309,
+      "attachment_triangles": 169,
+      "candidate_skin_triangles": 383,
+      "face_meshes": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "face_textures": [
+        "bti_face"
+      ],
+      "contour_vertices": 21,
+      "interior_openings": [
+        6,
+        6
+      ],
+      "projected_outer_area": 3.3203300073499986,
+      "depth_seed": -1.0,
+      "existing_triangle_edges_only": true,
+      "shell_boundary_edges_verified": 21,
+      "topology_correspondence_assumed": false,
+      "position_clustering_tolerance": 1e-05,
+      "native_attribute_records_welded": false,
+      "outer_ear_triangles_retained_in_shell": [],
+      "outer_ear_policy": "Topology-only boundary regularization; source triangles retained unchanged in shell"
+    },
+    {
+      "classification": "INFERRED material-name hints plus head/eye landmark depth seed; topology-checked boundary",
+      "face_triangles": 356,
+      "attachment_triangles": 123,
+      "candidate_skin_triangles": 404,
+      "face_meshes": [
+        3,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "face_textures": [
+        "cm_face"
+      ],
+      "contour_vertices": 16,
+      "interior_openings": [
+        4,
+        4
+      ],
+      "projected_outer_area": 3.3723680023999973,
+      "depth_seed": -0.9,
+      "existing_triangle_edges_only": true,
+      "shell_boundary_edges_verified": 16,
+      "topology_correspondence_assumed": false,
+      "position_clustering_tolerance": 1e-05,
+      "native_attribute_records_welded": false,
+      "outer_ear_triangles_retained_in_shell": [
+        [
+          3,
+          2,
+          70
+        ],
+        [
+          3,
+          2,
+          83
+        ]
+      ],
+      "outer_ear_policy": "Topology-only boundary regularization; source triangles retained unchanged in shell"
+    }
+  ],
+  "inventories": [
+    [
+      {
+        "mesh": 0,
+        "material": 1,
+        "texture": "bti_face",
+        "vertices": 110,
+        "triangles": 137,
+        "uv_bounds": [
+          [
+            0.03502831235527992,
+            0.03167068958282471
+          ],
+          [
+            0.981151819229126,
+            0.9914265275001526
+          ]
+        ],
+        "stride": 68,
+        "palette": [
+          "d_kuchi",
+          "atama",
+          "l_mabuta",
+          "u_kuchi",
+          "l_meziri",
+          "l_mayu_02",
+          "kubi",
+          "mune"
+        ],
+        "nonzero_influence_records": {
+          "d_kuchi": 26,
+          "atama": 102,
+          "l_mabuta": 5,
+          "u_kuchi": 1,
+          "l_meziri": 6,
+          "l_mayu_02": 5,
+          "mune": 2
+        }
+      },
+      {
+        "mesh": 1,
+        "material": 0,
+        "texture": "bti_face",
+        "vertices": 33,
+        "triangles": 36,
+        "uv_bounds": [
+          [
+            0.05004330351948738,
+            0.17040061950683594
+          ],
+          [
+            0.5765703916549683,
+            0.46428579092025757
+          ]
+        ],
+        "stride": 68,
+        "palette": [
+          "l_mayu_02",
+          "atama",
+          "r_mabuta",
+          "r_mayu_01",
+          "r_mayu_00",
+          "l_mayu_01",
+          "l_mayu_00",
+          "l_mabuta"
+        ],
+        "nonzero_influence_records": {
+          "l_mayu_02": 4,
+          "atama": 30,
+          "r_mabuta": 6,
+          "r_mayu_01": 4,
+          "r_mayu_00": 2,
+          "l_mayu_01": 3,
+          "l_mayu_00": 2,
+          "l_mabuta": 5
+        }
+      },
+      {
+        "mesh": 2,
+        "material": 0,
+        "texture": "bti_face",
+        "vertices": 45,
+        "triangles": 56,
+        "uv_bounds": [
+          [
+            0.1221265122294426,
+            0.39219528436660767
+          ],
+          [
+            0.9643064737319946,
+            0.9925941228866577
+          ]
+        ],
+        "stride": 68,
+        "palette": [
+          "hana",
+          "atama",
+          "r_meziri",
+          "r_mabuta",
+          "r_mayu_00",
+          "u_kuchi_00",
+          "u_kuchi",
+          "l_mayu_00"
+        ],
+        "nonzero_influence_records": {
+          "hana": 14,
+          "atama": 45,
+          "r_meziri": 6,
+          "r_mabuta": 2,
+          "r_mayu_00": 1,
+          "u_kuchi_00": 10,
+          "u_kuchi": 2,
+          "l_mayu_00": 2
+        }
+      },
+      {
+        "mesh": 3,
+        "material": 0,
+        "texture": "bti_face",
+        "vertices": 32,
+        "triangles": 32,
+        "uv_bounds": [
+          [
+            0.05004330351948738,
+            0.15505701303482056
+          ],
+          [
+            0.652935266494751,
+            0.6538072824478149
+          ]
+        ],
+        "stride": 68,
+        "palette": [
+          "atama",
+          "hana",
+          "r_mayu_00",
+          "r_mayu_01",
+          "r_mabuta",
+          "r_hoho",
+          "r_meziri",
+          "r_mayu_02"
+        ],
+        "nonzero_influence_records": {
+          "atama": 31,
+          "hana": 2,
+          "r_mayu_00": 1,
+          "r_mayu_01": 3,
+          "r_mabuta": 3,
+          "r_hoho": 6,
+          "r_meziri": 3,
+          "r_mayu_02": 7
+        }
+      },
+      {
+        "mesh": 4,
+        "material": 0,
+        "texture": "bti_face",
+        "vertices": 34,
+        "triangles": 35,
+        "uv_bounds": [
+          [
+            0.33289211988449097,
+            0.44152313470840454
+          ],
+          [
+            0.9643064737319946,
+            0.9925941228866577
+          ]
+        ],
+        "stride": 68,
+        "palette": [
+          "d_kuchi",
+          "atama",
+          "u_kuchi_00",
+          "l_u_kuchi",
+          "u_kuchi",
+          "hana",
+          "l_meziri",
+          "l_hoho"
+        ],
+        "nonzero_influence_records": {
+          "d_kuchi": 3,
+          "atama": 33,
+          "u_kuchi_00": 5,
+          "l_u_kuchi": 11,
+          "u_kuchi": 2,
+          "hana": 2,
+          "l_meziri": 2,
+          "l_hoho": 5
+        }
+      },
+      {
+        "mesh": 5,
+        "material": 0,
+        "texture": "bti_face",
+        "vertices": 3,
+        "triangles": 1,
+        "uv_bounds": [
+          [
+            0.32693982124328613,
+            0.39219528436660767
+          ],
+          [
+            0.3719063699245453,
+            0.47098004817962646
+          ]
+        ],
+        "stride": 64,
+        "palette": [
+          "u_kuchi",
+          "atama",
+          "r_ashi",
+          "r_sune",
+          "r_tsumasaki",
+          "l_mabuta",
+          "l_mayu_00"
+        ],
+        "nonzero_influence_records": {
+          "u_kuchi": 1,
+          "atama": 3,
+          "l_mabuta": 1,
+          "l_mayu_00": 1
+        }
+      },
+      {
+        "mesh": 6,
+        "material": 0,
+        "texture": "bti_face",
+        "vertices": 61,
+        "triangles": 67,
+        "uv_bounds": [
+          [
+            0.08713580667972565,
+            0.7223020792007446
+          ],
+          [
+            0.958930253982544,
+            0.9912126064300537
+          ]
+        ],
+        "stride": 68,
+        "palette": [
+          "d_kuchi",
+          "r_u_kuchi",
+          "r_kuchi",
+          "atama",
+          "d_kuchi_01",
+          "l_u_kuchi",
+          "l_kuchi",
+          "d_kuchi_00"
+        ],
+        "nonzero_influence_records": {
+          "d_kuchi": 16,
+          "r_u_kuchi": 10,
+          "r_kuchi": 12,
+          "atama": 38,
+          "d_kuchi_01": 14,
+          "l_u_kuchi": 8,
+          "l_kuchi": 11,
+          "d_kuchi_00": 4
+        }
+      },
+      {
+        "mesh": 7,
+        "material": 0,
+        "texture": "bti_face",
+        "vertices": 24,
+        "triangles": 19,
+        "uv_bounds": [
+          [
+            0.05071042478084564,
+            0.6337636709213257
+          ],
+          [
+            0.9094910621643066,
+            0.9900639057159424
+          ]
+        ],
+        "stride": 64,
+        "palette": [
+          "r_hoho",
+          "atama",
+          "r_u_kuchi",
+          "u_kuchi_00",
+          "u_kuchi",
+          "hana",
+          "d_kuchi"
+        ],
+        "nonzero_influence_records": {
+          "r_hoho": 3,
+          "atama": 21,
+          "r_u_kuchi": 11,
+          "u_kuchi_00": 7,
+          "u_kuchi": 1,
+          "hana": 1,
+          "d_kuchi": 2
+        }
+      }
+    ],
+    [
+      {
+        "mesh": 3,
+        "material": 2,
+        "texture": "cm_face",
+        "vertices": 79,
+        "triangles": 95,
+        "uv_bounds": [
+          [
+            0.006654717028141022,
+            0.0318416953086853
+          ],
+          [
+            0.9798831343650818,
+            0.9755202531814575
+          ]
+        ],
+        "stride": 68,
+        "palette": [
+          "kubi",
+          "mune",
+          "l_mayu_00",
+          "atama",
+          "hana",
+          "l_ninoude",
+          "r_sakotsu",
+          "l_sakotsu"
+        ],
+        "nonzero_influence_records": {
+          "l_mayu_00": 4,
+          "atama": 79,
+          "hana": 6
+        }
+      },
+      {
+        "mesh": 8,
+        "material": 0,
+        "texture": "cm_face",
+        "vertices": 92,
+        "triangles": 108,
+        "uv_bounds": [
+          [
+            0.04785540699958801,
+            0.2299633026123047
+          ],
+          [
+            0.9798545837402344,
+            0.9881364107131958
+          ]
+        ],
+        "stride": 68,
+        "palette": [
+          "d_kuchi",
+          "atama",
+          "l_mayu_00",
+          "l_mayu_01",
+          "l_mayu_02",
+          "l_meziri",
+          "l_hoho",
+          "d_kuchi_01"
+        ],
+        "nonzero_influence_records": {
+          "d_kuchi": 44,
+          "atama": 61,
+          "l_mayu_00": 3,
+          "l_mayu_01": 8,
+          "l_mayu_02": 6,
+          "l_meziri": 9,
+          "l_hoho": 2,
+          "d_kuchi_01": 22
+        }
+      },
+      {
+        "mesh": 9,
+        "material": 0,
+        "texture": "cm_face",
+        "vertices": 52,
+        "triangles": 65,
+        "uv_bounds": [
+          [
+            0.21102161705493927,
+            0.5749832391738892
+          ],
+          [
+            0.9798831343650818,
+            0.9755200743675232
+          ]
+        ],
+        "stride": 68,
+        "palette": [
+          "l_u_kuchi",
+          "atama",
+          "d_kuchi_01",
+          "d_kuchi",
+          "l_kuchi",
+          "u_kuchi_00",
+          "l_hoho",
+          "hana"
+        ],
+        "nonzero_influence_records": {
+          "l_u_kuchi": 4,
+          "atama": 40,
+          "d_kuchi_01": 6,
+          "d_kuchi": 13,
+          "l_kuchi": 5,
+          "u_kuchi_00": 25,
+          "l_hoho": 1,
+          "hana": 3
+        }
+      },
+      {
+        "mesh": 10,
+        "material": 0,
+        "texture": "cm_face",
+        "vertices": 46,
+        "triangles": 58,
+        "uv_bounds": [
+          [
+            0.005843110382556915,
+            0.23050731420516968
+          ],
+          [
+            0.7607228755950928,
+            0.7725816369056702
+          ]
+        ],
+        "stride": 68,
+        "palette": [
+          "atama",
+          "r_mayu_01",
+          "r_mabuta",
+          "d_kuchi",
+          "r_hoho",
+          "r_mayu_02",
+          "l_mayu_00",
+          "r_mayu_00"
+        ],
+        "nonzero_influence_records": {
+          "atama": 40,
+          "r_mayu_01": 14,
+          "r_mabuta": 6,
+          "d_kuchi": 2,
+          "r_hoho": 3,
+          "r_mayu_02": 7,
+          "l_mayu_00": 2,
+          "r_mayu_00": 4
+        }
+      },
+      {
+        "mesh": 11,
+        "material": 0,
+        "texture": "cm_face",
+        "vertices": 15,
+        "triangles": 19,
+        "uv_bounds": [
+          [
+            0.37530115246772766,
+            0.39544177055358887
+          ],
+          [
+            0.5082436800003052,
+            0.4482545852661133
+          ]
+        ],
+        "stride": 60,
+        "palette": [
+          "atama",
+          "l_yubi21",
+          "l_yubi20",
+          "l_yubi22",
+          "l_mayu_01",
+          "l_mabuta"
+        ],
+        "nonzero_influence_records": {
+          "atama": 9,
+          "l_mayu_01": 13,
+          "l_mabuta": 6
+        }
+      },
+      {
+        "mesh": 12,
+        "material": 0,
+        "texture": "cm_face",
+        "vertices": 5,
+        "triangles": 3,
+        "uv_bounds": [
+          [
+            0.3353614807128906,
+            0.48202675580978394
+          ],
+          [
+            0.4577024579048157,
+            0.5766565799713135
+          ]
+        ],
+        "stride": 68,
+        "palette": [
+          "l_meziri",
+          "atama",
+          "l_yubi10",
+          "l_te",
+          "l_yubi11",
+          "l_yubi12",
+          "l_hoho",
+          "hana"
+        ],
+        "nonzero_influence_records": {
+          "l_meziri": 2,
+          "atama": 5,
+          "l_hoho": 1,
+          "hana": 1
+        }
+      },
+      {
+        "mesh": 13,
+        "material": 0,
+        "texture": "cm_face",
+        "vertices": 31,
+        "triangles": 36,
+        "uv_bounds": [
+          [
+            0.017747700214385986,
+            0.4482523798942566
+          ],
+          [
+            0.9083167910575867,
+            0.9755135178565979
+          ]
+        ],
+        "stride": 68,
+        "palette": [
+          "u_kuchi_00",
+          "atama",
+          "r_mayu_01",
+          "r_mayu_02",
+          "r_meziri",
+          "r_hoho",
+          "hana",
+          "r_u_kuchi"
+        ],
+        "nonzero_influence_records": {
+          "u_kuchi_00": 5,
+          "atama": 31,
+          "r_mayu_01": 2,
+          "r_mayu_02": 1,
+          "r_meziri": 9,
+          "r_hoho": 2,
+          "hana": 2,
+          "r_u_kuchi": 4
+        }
+      },
+      {
+        "mesh": 14,
+        "material": 0,
+        "texture": "cm_face",
+        "vertices": 21,
+        "triangles": 20,
+        "uv_bounds": [
+          [
+            0.04785540699958801,
+            0.5765312910079956
+          ],
+          [
+            0.9074354767799377,
+            0.9755202531814575
+          ]
+        ],
+        "stride": 60,
+        "palette": [
+          "d_kuchi_01",
+          "d_kuchi",
+          "r_hoho",
+          "atama",
+          "r_u_kuchi",
+          "r_kuchi"
+        ],
+        "nonzero_influence_records": {
+          "d_kuchi_01": 6,
+          "d_kuchi": 14,
+          "r_hoho": 1,
+          "atama": 8,
+          "r_u_kuchi": 4,
+          "r_kuchi": 5
+        }
+      }
+    ]
+  ],
+  "face_textures": [
+    [
+      {
+        "name": "bti_face",
+        "width": 128,
+        "height": 128,
+        "declared_palette_entries": 16,
+        "used_palette_entries": 16,
+        "encoded_gim_bytes": 8464,
+        "source_sha256": "bb6c3c5801f4919b34c5c4888edca28a8db140612cd9db65d78ee58f53b925bd"
+      }
+    ],
+    [
+      {
+        "name": "cm_face",
+        "width": 128,
+        "height": 128,
+        "declared_palette_entries": 16,
+        "used_palette_entries": 16,
+        "encoded_gim_bytes": 8464,
+        "source_sha256": "b1be4d54c268d2d2db0d4aecd6ce8c92be5b7f16ff083f15a614162f5f7841ed"
+      }
+    ]
+  ],
+  "production_code_changed": false,
+  "blender_dependency": false,
+  "implementation_sha256": {
+    "tools/creator_facial_trial.py": "b9dca24bd42d8cf6fbc29cb26ecb0c335429e413d46c793835e32bd6af772df0",
+    "model_creator/experiments/facial.py": "9e135ca09e4d066812d21495d382e21aa30fceb405c489cc2e44f0a237a1b4cd"
+  },
+  "reconstruction": {
+    "oriented_attribute_triangles_materials_and_textures_exact": true,
+    "skeleton_records_byte_exact": true,
+    "qa": {
+      "poses": {
+        "model": {
+          "rest": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 0.0,
+            "seam_gap": 0.0,
+            "passed": true,
+            "finite": true
+          },
+          "standing": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 0.0,
+            "seam_gap": 0.0,
+            "passed": true,
+            "finite": true
+          },
+          "walk": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 0.0,
+            "seam_gap": 0.0,
+            "passed": true,
+            "finite": true
+          },
+          "bend": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 0.0,
+            "seam_gap": 0.0,
+            "passed": true,
+            "finite": true
+          },
+          "crouch": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 0.0,
+            "seam_gap": 0.0,
+            "passed": true,
+            "finite": true
+          },
+          "shoulders": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 0.0,
+            "seam_gap": 0.0,
+            "passed": true,
+            "finite": true
+          },
+          "neck": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 0.0,
+            "seam_gap": 0.0,
+            "passed": true,
+            "finite": true
+          },
+          "jaw": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 0.0,
+            "seam_gap": 0.0,
+            "passed": true,
+            "finite": true
+          },
+          "eyes": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 0.0,
+            "seam_gap": 0.0,
+            "passed": true,
+            "finite": true
+          },
+          "eyelids": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 0.0,
+            "seam_gap": 0.0,
+            "passed": true,
+            "finite": true
+          },
+          "head_turn": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 0.0,
+            "seam_gap": 0.0,
+            "passed": true,
+            "finite": true
+          },
+          "jaw_wide": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 0.0,
+            "seam_gap": 0.0,
+            "passed": true,
+            "finite": true
+          },
+          "blink": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 0.0,
+            "seam_gap": 0.0,
+            "passed": true,
+            "finite": true
+          },
+          "eye_up": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 0.0,
+            "seam_gap": 0.0,
+            "passed": true,
+            "finite": true
+          },
+          "mouth_corners": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 0.0,
+            "seam_gap": 0.0,
+            "passed": true,
+            "finite": true
+          }
+        },
+        "local": {
+          "rest": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 0.0,
+            "seam_gap": 0.0,
+            "passed": true,
+            "finite": true
+          },
+          "standing": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 0.0,
+            "seam_gap": 0.0,
+            "passed": true,
+            "finite": true
+          },
+          "walk": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 0.0,
+            "seam_gap": 0.0,
+            "passed": true,
+            "finite": true
+          },
+          "bend": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 0.0,
+            "seam_gap": 0.0,
+            "passed": true,
+            "finite": true
+          },
+          "crouch": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 0.0,
+            "seam_gap": 0.0,
+            "passed": true,
+            "finite": true
+          },
+          "shoulders": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 0.0,
+            "seam_gap": 0.0,
+            "passed": true,
+            "finite": true
+          },
+          "neck": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 0.0,
+            "seam_gap": 0.0,
+            "passed": true,
+            "finite": true
+          },
+          "jaw": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 0.0,
+            "seam_gap": 0.0,
+            "passed": true,
+            "finite": true
+          },
+          "eyes": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 0.0,
+            "seam_gap": 0.0,
+            "passed": true,
+            "finite": true
+          },
+          "eyelids": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 0.0,
+            "seam_gap": 0.0,
+            "passed": true,
+            "finite": true
+          },
+          "head_turn": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 0.0,
+            "seam_gap": 0.0,
+            "passed": true,
+            "finite": true
+          },
+          "jaw_wide": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 0.0,
+            "seam_gap": 0.0,
+            "passed": true,
+            "finite": true
+          },
+          "blink": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 0.0,
+            "seam_gap": 0.0,
+            "passed": true,
+            "finite": true
+          },
+          "eye_up": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 0.0,
+            "seam_gap": 0.0,
+            "passed": true,
+            "finite": true
+          },
+          "mouth_corners": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 0.0,
+            "seam_gap": 0.0,
+            "passed": true,
+            "finite": true
+          }
+        }
+      },
+      "passed": true,
+      "records_verified": 1514,
+      "maximum_static_source_error": 0.0,
+      "source_pose_tolerance": 0.03,
+      "seam_gap_tolerance": 0.0003,
+      "reference": "Donor intrinsic expressions rigidly attached in shell head frame; retained shell compared to its own native rig",
+      "actual_game_clips_tested": false
+    },
+    "serialization": {
+      "oriented_attribute_triangles_identical": true,
+      "slot_compatibility": {
+        "changed_meshes": [],
+        "added_vertex_buffer_bytes": 0
+      }
+    },
+    "native_counts": {
+      "meshes": 52,
+      "vertices": 1514,
+      "triangles": 1497
+    },
+    "packaging": {
+      "bytes": 114688,
+      "sha256": "dfd1ce6722568d6570126a9b696f82d43abed2a008a27de368d1e8e58e6ebb33",
+      "within_budget": true,
+      "unrelated_stored_sections_identical": [
+        8
+      ],
+      "preview_yobj_identical": true,
+      "texture_bytes_identical": true,
+      "sections_16_aligned": true,
+      "file_2048_aligned": true,
+      "native_structural_checks": true,
+      "in_game_tested": false
+    }
+  },
+  "transplant": {
+    "alignment": {
+      "method": "Eye midpoint rigid translation ONLY",
+      "translation": [
+        0.000107073270157243,
+        -0.25001169107884635,
+        -0.06134583253447756
+      ],
+      "scale": 1.0,
+      "rotation": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    "seam": {
+      "method": "Existing edge contour union; rigid donor interior, localized boundary fit",
+      "angular_samples": 37,
+      "edge_records_added": 37,
+      "donor_ring_records_fitted": 70,
+      "maximum_boundary_displacement": 0.3910365843066729,
+      "no_nonuniform_scaling": true,
+      "interior_geometry_preserved": true,
+      "seam_texture_blending": false,
+      "seam_points": [
+        [
+          0.7596359515040442,
+          -8.752303633313296,
+          -1.07933775330469
+        ],
+        [
+          0.704012393951416,
+          -8.484037399291992,
+          -1.105306625366211
+        ],
+        [
+          0.5783160079504244,
+          -8.109320213678478,
+          -1.1171165918807269
+        ],
+        [
+          0.5050559639933764,
+          -7.890922546387626,
+          -1.1239998340606405
+        ],
+        [
+          0.3766848146915436,
+          -7.781343460083008,
+          -1.1422566175460815
+        ],
+        [
+          0.2235138429016048,
+          -7.723022393716509,
+          -1.3016264114352873
+        ],
+        [
+          0.14439138770103455,
+          -7.692895889282227,
+          -1.38395094871521
+        ],
+        [
+          0.0014743320254806736,
+          -7.665268306623368,
+          -1.4195815911211462
+        ],
+        [
+          2.3218825619473114e-06,
+          -7.664983749390461,
+          -1.4199485778798107
+        ],
+        [
+          -0.1442546546459198,
+          -7.676809310913086,
+          -1.3934167623519897
+        ],
+        [
+          -0.22253087699669566,
+          -7.71238002515712,
+          -1.3088588170274822
+        ],
+        [
+          -0.37675637006759644,
+          -7.782464027404785,
+          -1.1422566175460815
+        ],
+        [
+          -0.5092142224311829,
+          -7.890921592712402,
+          -1.123999834060669
+        ],
+        [
+          -0.5798799574139332,
+          -8.095152981114232,
+          -1.1175630913799866
+        ],
+        [
+          -0.7144374847412109,
+          -8.484038352966309,
+          -1.105306625366211
+        ],
+        [
+          -0.7415544531366514,
+          -8.755753734608007,
+          -1.0790035878574629
+        ],
+        [
+          -0.7697656154632568,
+          -9.038433074951172,
+          -1.051639199256897
+        ],
+        [
+          -0.7845213234699395,
+          -9.112342886342946,
+          -1.049361762288376
+        ],
+        [
+          -0.797000825404409,
+          -9.174851417537939,
+          -1.0474356412888672
+        ],
+        [
+          -0.8461516746387068,
+          -9.54887405858712,
+          -0.8218032296593979
+        ],
+        [
+          -0.8650766611097657,
+          -9.692887306212171,
+          -0.734925985337032
+        ],
+        [
+          -0.5998705486642169,
+          -9.832800485458689,
+          -1.039531374994744
+        ],
+        [
+          -0.5784378051784106,
+          -9.844107627867265,
+          -1.064148187634309
+        ],
+        [
+          -0.5102906227111816,
+          -10.033940315246582,
+          -1.1324093341827393
+        ],
+        [
+          -0.32522131483501365,
+          -10.12786217008925,
+          -1.1854176188596974
+        ],
+        [
+          -0.21198809146881104,
+          -10.185327529907227,
+          -1.2178503274917603
+        ],
+        [
+          0.0014743318457191429,
+          -10.185303619419788,
+          -1.2178851770272014
+        ],
+        [
+          0.21371136605739594,
+          -10.185279846191406,
+          -1.2179198265075684
+        ],
+        [
+          0.32803557310059234,
+          -10.12736722745077,
+          -1.1852901242193734
+        ],
+        [
+          0.5127050876600128,
+          -10.03382015228359,
+          -1.132582902908819
+        ],
+        [
+          0.5787926316249485,
+          -9.844107627872042,
+          -1.060956001283018
+        ],
+        [
+          0.6022604851701538,
+          -9.831957109118806,
+          -1.0348569394577432
+        ],
+        [
+          0.8680253624916077,
+          -9.694356918334961,
+          -0.7392945885658264
+        ],
+        [
+          0.8493359615150462,
+          -9.549047412173694,
+          -0.8254837471683965
+        ],
+        [
+          0.8012075424198457,
+          -9.17485046387039,
+          -1.047435641286857
+        ],
+        [
+          0.8092630500850029,
+          -9.112960212615164,
+          -1.049342940442037
+        ],
+        [
+          0.8189633488652581,
+          -9.0384330749531,
+          -1.0516396760939957
+        ]
+      ]
+    },
+    "rig": {
+      "controllers": [
+        {
+          "bone": "r_mayu_02",
+          "shared": false,
+          "insert_nonzero": true,
+          "world_translation": [
+            -0.5308936559989249,
+            -9.15094726714454,
+            -1.2348460344903711
+          ]
+        },
+        {
+          "bone": "r_mayu_01",
+          "shared": false,
+          "insert_nonzero": true,
+          "world_translation": [
+            -0.35989296995489245,
+            -9.18843161781073,
+            -1.3443895747824377
+          ]
+        },
+        {
+          "bone": "r_mayu_00",
+          "shared": false,
+          "insert_nonzero": true,
+          "world_translation": [
+            -0.17989261396081757,
+            -9.169175247314234,
+            -1.4016701540018477
+          ]
+        },
+        {
+          "bone": "l_mayu_02",
+          "shared": false,
+          "insert_nonzero": true,
+          "world_translation": [
+            0.5306202907574511,
+            -9.150948241875936,
+            -1.234845907788154
+          ]
+        },
+        {
+          "bone": "l_mayu_01",
+          "shared": false,
+          "insert_nonzero": true,
+          "world_translation": [
+            0.36010847138247903,
+            -9.188432264670116,
+            -1.3443895484477704
+          ]
+        },
+        {
+          "bone": "l_mayu_00",
+          "shared": false,
+          "insert_nonzero": true,
+          "world_translation": [
+            0.18010810670785748,
+            -9.169175570743924,
+            -1.4016700514275469
+          ]
+        },
+        {
+          "bone": "r_meziri",
+          "shared": false,
+          "insert_nonzero": true,
+          "world_translation": [
+            -0.3497974040308018,
+            -8.913223030808378,
+            -1.24383046721828
+          ]
+        },
+        {
+          "bone": "r_hoho",
+          "shared": false,
+          "insert_nonzero": true,
+          "world_translation": [
+            -0.40989336228807877,
+            -8.702221424312865,
+            -1.2634454162517361
+          ]
+        },
+        {
+          "bone": "hana",
+          "shared": false,
+          "insert_nonzero": true,
+          "world_translation": [
+            0.00010709780285434549,
+            -8.488256291488339,
+            -1.4260624617149302
+          ]
+        },
+        {
+          "bone": "l_meziri",
+          "shared": false,
+          "insert_nonzero": true,
+          "world_translation": [
+            0.3502040245789424,
+            -8.913223639818957,
+            -1.2438268669921264
+          ]
+        },
+        {
+          "bone": "l_hoho",
+          "shared": false,
+          "insert_nonzero": true,
+          "world_translation": [
+            0.4101081724604696,
+            -8.702222200797628,
+            -1.263440251981614
+          ]
+        },
+        {
+          "bone": "r_mabuta",
+          "shared": false,
+          "insert_nonzero": true,
+          "world_translation": [
+            -0.3377829816462971,
+            -9.038223119224106,
+            -1.2478986574932556
+          ]
+        },
+        {
+          "bone": "l_mabuta",
+          "shared": false,
+          "insert_nonzero": true,
+          "world_translation": [
+            0.3382183363499526,
+            -9.038223742463359,
+            -1.2478953581549759
+          ]
+        },
+        {
+          "bone": "r_eye",
+          "shared": false,
+          "insert_nonzero": true,
+          "world_translation": [
+            -0.33589345734501747,
+            -9.013036572270988,
+            -1.2746252616040201
+          ]
+        },
+        {
+          "bone": "l_eye",
+          "shared": false,
+          "insert_nonzero": true,
+          "world_translation": [
+            0.33610913364546235,
+            -9.013037187372815,
+            -1.2746253006031356
+          ]
+        },
+        {
+          "bone": "d_kuchi",
+          "shared": true,
+          "insert_nonzero": true,
+          "world_translation": [
+            5.8267994751351054e-08,
+            -8.259717657613448,
+            -0.701533176530001
+          ]
+        },
+        {
+          "bone": "d_kuchi_00",
+          "shared": false,
+          "insert_nonzero": false,
+          "world_translation": [
+            0.00010670732319793176,
+            -8.089571402921191,
+            -1.1468126126051759
+          ]
+        },
+        {
+          "bone": "d_kuchi_01",
+          "shared": false,
+          "insert_nonzero": true,
+          "world_translation": [
+            9.536450464710155e-05,
+            -7.934871892711016,
+            -1.5648584765826474
+          ]
+        },
+        {
+          "bone": "l_kuchi",
+          "shared": false,
+          "insert_nonzero": true,
+          "world_translation": [
+            0.04010724280358074,
+            -8.137403832972481,
+            -1.3714656590103012
+          ]
+        },
+        {
+          "bone": "r_kuchi",
+          "shared": false,
+          "insert_nonzero": true,
+          "world_translation": [
+            -0.03989296402503861,
+            -8.13740421634274,
+            -1.3714657958842285
+          ]
+        },
+        {
+          "bone": "u_kuchi",
+          "shared": false,
+          "insert_nonzero": false,
+          "world_translation": [
+            0.00042997124726730295,
+            -8.262057964474803,
+            -1.1476593657637115
+          ]
+        },
+        {
+          "bone": "u_kuchi_00",
+          "shared": false,
+          "insert_nonzero": true,
+          "world_translation": [
+            0.0004051499048391648,
+            -8.40731255661854,
+            -1.6002293586891876
+          ]
+        },
+        {
+          "bone": "l_u_kuchi",
+          "shared": false,
+          "insert_nonzero": true,
+          "world_translation": [
+            0.04010731907807675,
+            -8.209340280459038,
+            -1.3712215437574806
+          ]
+        },
+        {
+          "bone": "r_u_kuchi",
+          "shared": false,
+          "insert_nonzero": true,
+          "world_translation": [
+            -0.03989297393975331,
+            -8.209340207403153,
+            -1.3712214937016642
+          ]
+        }
+      ],
+      "shared_native_pivot_fraction": 0.0,
+      "head_neck_body_bind_unchanged": true,
+      "nonuniform_scale": false,
+      "note": "Controller-name semantics remain inferred; analytical tests do not replace game clips."
+    },
+    "qa": {
+      "poses": {
+        "model": {
+          "rest": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 2.589885858118318e-07,
+            "seam_gap": 4.320099873655474e-12,
+            "passed": true,
+            "finite": true
+          },
+          "standing": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 2.589885858118318e-07,
+            "seam_gap": 4.320099873655474e-12,
+            "passed": true,
+            "finite": true
+          },
+          "walk": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 2.589885858118318e-07,
+            "seam_gap": 4.320099873655474e-12,
+            "passed": true,
+            "finite": true
+          },
+          "bend": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 2.8098486121720585e-07,
+            "seam_gap": 4.320099873655474e-12,
+            "passed": true,
+            "finite": true
+          },
+          "crouch": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 2.589885858118318e-07,
+            "seam_gap": 4.320099873655474e-12,
+            "passed": true,
+            "finite": true
+          },
+          "shoulders": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 2.589885858118318e-07,
+            "seam_gap": 4.320099873655474e-12,
+            "passed": true,
+            "finite": true
+          },
+          "neck": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 2.589886609775701e-07,
+            "seam_gap": 4.319937736449228e-12,
+            "passed": true,
+            "finite": true
+          },
+          "jaw": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 0.013534607927122239,
+            "seam_gap": 4.320099873655474e-12,
+            "passed": true,
+            "finite": true
+          },
+          "eyes": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 2.589885858118318e-07,
+            "seam_gap": 4.320099873655474e-12,
+            "passed": true,
+            "finite": true
+          },
+          "eyelids": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 2.589885858118318e-07,
+            "seam_gap": 4.320099873655474e-12,
+            "passed": true,
+            "finite": true
+          },
+          "head_turn": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 2.588015247572702e-07,
+            "seam_gap": 4.320031568089476e-12,
+            "passed": true,
+            "finite": true
+          },
+          "jaw_wide": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 0.01872621853767852,
+            "seam_gap": 4.320099873655474e-12,
+            "passed": true,
+            "finite": true
+          },
+          "blink": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 2.589885858118318e-07,
+            "seam_gap": 4.320099873655474e-12,
+            "passed": true,
+            "finite": true
+          },
+          "eye_up": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 2.589885858118318e-07,
+            "seam_gap": 4.320099873655474e-12,
+            "passed": true,
+            "finite": true
+          },
+          "mouth_corners": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 2.589885858118318e-07,
+            "seam_gap": 4.320099873655474e-12,
+            "passed": true,
+            "finite": true
+          }
+        },
+        "local": {
+          "rest": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 2.5898858404044123e-07,
+            "seam_gap": 4.320099873655474e-12,
+            "passed": true,
+            "finite": true
+          },
+          "standing": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 2.5898858404044123e-07,
+            "seam_gap": 4.320099873655474e-12,
+            "passed": true,
+            "finite": true
+          },
+          "walk": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 2.5898858404044123e-07,
+            "seam_gap": 4.320099873655474e-12,
+            "passed": true,
+            "finite": true
+          },
+          "bend": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 2.589881705974573e-07,
+            "seam_gap": 4.3201772690144184e-12,
+            "passed": true,
+            "finite": true
+          },
+          "crouch": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 2.5898858404044123e-07,
+            "seam_gap": 4.320099873655474e-12,
+            "passed": true,
+            "finite": true
+          },
+          "shoulders": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 2.5898858404044123e-07,
+            "seam_gap": 4.320099873655474e-12,
+            "passed": true,
+            "finite": true
+          },
+          "neck": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 2.8022609269656297e-07,
+            "seam_gap": 4.320099924722644e-12,
+            "passed": true,
+            "finite": true
+          },
+          "jaw": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 0.010949343039731618,
+            "seam_gap": 4.314411234787621e-12,
+            "passed": true,
+            "finite": true
+          },
+          "eyes": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 2.5898858404044123e-07,
+            "seam_gap": 4.320099873655474e-12,
+            "passed": true,
+            "finite": true
+          },
+          "eyelids": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 2.5898858404044123e-07,
+            "seam_gap": 4.320099873655474e-12,
+            "passed": true,
+            "finite": true
+          },
+          "head_turn": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 2.835883314693984e-07,
+            "seam_gap": 4.3200998434074825e-12,
+            "passed": true,
+            "finite": true
+          },
+          "jaw_wide": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 0.015149292622967315,
+            "seam_gap": 4.309308916746366e-12,
+            "passed": true,
+            "finite": true
+          },
+          "blink": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 2.5898858404044123e-07,
+            "seam_gap": 4.320099873655474e-12,
+            "passed": true,
+            "finite": true
+          },
+          "eye_up": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 2.5898858404044123e-07,
+            "seam_gap": 4.320099873655474e-12,
+            "passed": true,
+            "finite": true
+          },
+          "mouth_corners": {
+            "retained_shell_max_error": 0.0,
+            "donor_core_max_error": 2.5898858404044123e-07,
+            "seam_gap": 4.320099873655474e-12,
+            "passed": true,
+            "finite": true
+          }
+        }
+      },
+      "passed": true,
+      "records_verified": 1457,
+      "maximum_static_source_error": 2.5173905077145733e-07,
+      "source_pose_tolerance": 0.03,
+      "seam_gap_tolerance": 0.0003,
+      "reference": "Donor intrinsic expressions rigidly attached in shell head frame; retained shell compared to its own native rig",
+      "actual_game_clips_tested": false
+    },
+    "topology": {
+      "passed": true,
+      "attachment_edges": 37,
+      "paired_opposite_attachment_edges": 37,
+      "failed_attachment_edges": [],
+      "degenerate_ordinary_triangles": [],
+      "duplicate_geometric_faces": 0,
+      "global_self_intersections_tested": false,
+      "limitation": "Only the new attachment is required to be manifold. Native eye/mouth openings and distinct attribute seams remain."
+    },
+    "winding": {
+      "passed": true,
+      "checked_triangles": 1535,
+      "minimum_original_normal_dot": 0.39108288645147404,
+      "opposed_source_faces": [],
+      "caveat": "Relative orientation test, not a proof that no global self-intersections exist."
+    },
+    "serialization": {
+      "oriented_attribute_triangles_identical": true,
+      "slot_compatibility": {
+        "changed_meshes": [],
+        "added_vertex_buffer_bytes": 0
+      }
+    },
+    "geometric_change_from_shell": {
+      "samples": 278,
+      "mean": 0.03354465904196101,
+      "p95": 0.10518032874540625,
+      "maximum": 0.17367162199435016,
+      "method": "Exact nearest triangle on original shell facial skin; no cross-donor vertex-index correspondence",
+      "caveat": "Proves nonzero geometry change, not identity recognition or a likeness score."
+    },
+    "native_counts": {
+      "meshes": 52,
+      "vertices": 1515,
+      "triangles": 1535
+    },
+    "textures_preserved": true,
+    "geometry_decimation": false,
+    "recognizable_likeness_status": "Human visual review required; exact interior donor geometry verified, not a recognition score.",
+    "packaging": {
+      "bytes": 118784,
+      "sha256": "ce48613f6708cfb9491c5f62d9a6c108d86de4ff826ed53a5d02a458a9e457c9",
+      "within_budget": true,
+      "unrelated_stored_sections_identical": [
+        8
+      ],
+      "preview_yobj_identical": true,
+      "texture_bytes_identical": true,
+      "sections_16_aligned": true,
+      "file_2048_aligned": true,
+      "native_structural_checks": true,
+      "in_game_tested": false
+    }
+  }
+}
