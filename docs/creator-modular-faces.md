@@ -24,6 +24,10 @@ to the application. This study is not an in-game acceptance result.
 
 See [the raw library inventory](creator-facial-poc-library.json) and
 [the complete successful trial report](creator-facial-poc-result.json).
+The [research bundle](creator-facial-poc/PSP-Modular-Face-POC-01.zip) contains
+both PACs, native/OBJ/texture exports, comparison renders, instructions and
+verification logs. Its [SHA-256 file](creator-facial-poc/PSP-Modular-Face-POC-01.zip.sha256)
+and internal per-file manifest permit independent download verification.
 The approximate white-outline image mentioned in the request was not included
 with the text attachment. This prototype's contour is a topology demonstration,
 not a claim to match that missing drawing precisely.
