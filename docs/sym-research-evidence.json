@@ -1,0 +1,100 @@
+{
+  "schema": "sym-initial-research-evidence/1",
+  "native_sym_samples": 0,
+  "control_results": [
+    {
+      "label": "HCTP Benoit model",
+      "evidence_type": "known non-SYM control",
+      "archive": "downloads/Benoit-five-weight-methods-review.zip",
+      "member": "Benoit-weight-trials-review/inputs/source/original-native.yobj",
+      "bytes": 240676,
+      "sha256": "c1e2929b97fff8ca7e9d96d3abaabf23c12b2ff698f5267983785ff6e6ea56b3",
+      "counts": {
+        "mesh_count": 11,
+        "bone_count": 71,
+        "texture_count": 15
+      },
+      "hctp_contract_passed": true,
+      "psp_contract_passed": false,
+      "source_vertices": 1722,
+      "triangles": 2836,
+      "weight_packet_count": 38,
+      "game_identified_by_tool": "UNKNOWN",
+      "conversion_supported": false
+    },
+    {
+      "label": "HCTP Slaughter ring model",
+      "evidence_type": "known non-SYM control",
+      "archive": "downloads/Slaughter-PS2-PSP-reference-review.zip",
+      "member": "Slaughter-reference-review/hctp-ring/native-model.yobj",
+      "bytes": 255428,
+      "sha256": "1a9f60ab8f14e2a94722ac553ca6abddae050339fb7c9beb2ce473f75d9e4120",
+      "counts": {
+        "mesh_count": 13,
+        "bone_count": 68,
+        "texture_count": 19
+      },
+      "hctp_contract_passed": true,
+      "psp_contract_passed": false,
+      "source_vertices": 2020,
+      "triangles": 2996,
+      "weight_packet_count": 46,
+      "game_identified_by_tool": "UNKNOWN",
+      "conversion_supported": false
+    },
+    {
+      "label": "Native PSP Batista PAC",
+      "evidence_type": "known non-SYM control",
+      "file": "creator_library/pacs/Batista.PAC",
+      "bytes": 112640,
+      "sha256": "d73e8d53df28b88d51d13ce608bf6d96fc837e8eb3b977fe6d11dbfc43e23288",
+      "counts": {
+        "mesh_count": 26,
+        "bone_count": 79,
+        "texture_count": 19
+      },
+      "hctp_contract_passed": false,
+      "psp_contract_passed": true,
+      "bpe_sections": 3,
+      "game_identified_by_tool": "UNKNOWN",
+      "conversion_supported": false
+    }
+  ],
+  "supplied_noesis_plugin": {
+    "name": "fmt_wwe_ps2_yobj (1).py",
+    "bytes": 38613,
+    "sha256": "905ce6e44c3dce5ee0e99e5e22a55eb475ff0c98097cb0e9f718aa4d3f74e3d8",
+    "executed": false,
+    "claim_status": "Plugin author claims SYM alpha behavior; no independent SYM sample available"
+  },
+  "upstream_importer": {
+    "repository": "lynchreborn/Rumble-Roses-YOBJ-Import",
+    "commit": "3c165db1874d3da75277455a54f8f03e762d4654",
+    "file": "__init__.py",
+    "sha256": "ca185d5ec54e4768875169af15199d8550d93130e5de6bfc91f359f155f52ddf",
+    "executed": false,
+    "license": "GPL-3.0-or-later",
+    "sym_support_claim": "README says may work, not full technical support"
+  },
+  "production_sym_enabled": false,
+  "implementation_sha256": "1fbe1d44e98c4e2ffb43ca8204e01e778d1dd925017dd7f04a356563dbf53cdc",
+  "validation": {
+    "new_research_tests": 19,
+    "combined_suite_tests": 52,
+    "combined_suite_passed": true,
+    "command": "python -m unittest tests.test_sym_research tests.test_hctp_read tests.test_hctp_weights tests.test_ps2_textures tests.test_pac_inspect tests.test_portable_desktop -v",
+    "cli_read_only_control_passed": true,
+    "restored_regression_asset": {
+      "path": "assets/Kurt-Angle-Ring.PAC",
+      "sha256": "bf935a51fe30bfd2df929f8eb9e50be5d793426ea05125ca9411ce21b19ead80",
+      "from_matching_historical_beta_archives": true
+    },
+    "dependencies": {
+      "numpy": "2.3.5",
+      "Pillow": "12.3.0",
+      "scipy": "1.17.1",
+      "trimesh": "4.11.4",
+      "rtree": "1.4.1"
+    }
+  }
+}
