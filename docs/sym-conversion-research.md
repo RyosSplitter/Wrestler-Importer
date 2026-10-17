@@ -1,9 +1,12 @@
 # SmackDown! Shut Your Mouth → PSP: initial source-format research
 
-**Update:** an original SYM `ch.pac` has since been supplied and studied.
-See [checkpoint 2](sym-ch-pac-study.md) for the 140-entry directory, decoded
-source previews, TIM2 atlas evidence and remaining skeleton/packet limitations.
-Statements about missing SYM samples below describe checkpoint 1 only.
+**Provenance correction, 2026-10-17:** The subsequently supplied `ch.pac` was
+initially described as SYM, but its owner has corrected it to **JBI**. See
+[checkpoint 2](sym-ch-pac-study.md) for that specific archive's 140-entry
+directory, decoded source previews, TIM2 evidence and remaining limitations.
+Those observations do not validate original SYM assets. This initial external
+SYM research remains historical research; a confirmed SYM sample is still
+needed before title-specific support can be claimed.
 
 Research checkpoint 1; base `55dfbf82d5c25c302238fdec2651dde52e34b543`
 (the current Creator/converter development branch). Work is isolated on

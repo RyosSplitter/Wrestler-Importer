@@ -1,0 +1,18 @@
+{
+  "control": {
+    "name": "Hierarchy-only finger correction, no bind conversion",
+    "status": "REJECTED",
+    "reason": "Thumb-web stress exceeds source/native review envelope",
+    "maximum_thumb_area_ratio": 8.266183286945267,
+    "provisional_limit": 3.418812126091214
+  },
+  "query_only_control": {
+    "status": "REJECTED",
+    "maximum_thumb_area_ratio": 8.266183286945276
+  },
+  "wrist_translation_only_control": {
+    "status": "REJECTED",
+    "maximum_thumb_area_ratio": 5.153887235312902
+  },
+  "scope": "Synthetic local controls; failed PACs not distributed"
+}

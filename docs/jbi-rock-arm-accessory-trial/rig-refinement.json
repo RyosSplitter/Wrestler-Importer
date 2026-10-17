@@ -1,0 +1,537 @@
+{
+  "status": "EXPERIMENTAL; PPSSPP review required",
+  "hand_transfer": [
+    {
+      "side": "l",
+      "region": "palm",
+      "records": 25,
+      "allowed_target_support": [
+        "l_te",
+        "l_kote_x",
+        "l_yubi00",
+        "l_yubi01",
+        "l_yubi02",
+        "l_yubi10",
+        "l_yubi11",
+        "l_yubi12",
+        "l_yubi20",
+        "l_yubi21",
+        "l_yubi22",
+        "l_yubi30",
+        "l_yubi31",
+        "l_yubi32",
+        "l_yubi40",
+        "l_yubi41",
+        "l_yubi42"
+      ],
+      "query_frame": "Actual converted PSP bind coordinates",
+      "maximum_query_distance": 0.2612868129639341,
+      "output_geometry_changed": true
+    },
+    {
+      "side": "l",
+      "region": "digit-0",
+      "records": 13,
+      "allowed_target_support": [
+        "l_te",
+        "l_kote_x",
+        "l_yubi00",
+        "l_yubi01",
+        "l_yubi02"
+      ],
+      "query_frame": "Actual converted PSP bind coordinates",
+      "maximum_query_distance": 0.17251555664844231,
+      "output_geometry_changed": true
+    },
+    {
+      "side": "l",
+      "region": "digit-1",
+      "records": 10,
+      "allowed_target_support": [
+        "l_te",
+        "l_kote_x",
+        "l_yubi10",
+        "l_yubi11",
+        "l_yubi12"
+      ],
+      "query_frame": "Actual converted PSP bind coordinates",
+      "maximum_query_distance": 0.06935325947617185,
+      "output_geometry_changed": true
+    },
+    {
+      "side": "l",
+      "region": "digit-2",
+      "records": 10,
+      "allowed_target_support": [
+        "l_te",
+        "l_kote_x",
+        "l_yubi20",
+        "l_yubi21",
+        "l_yubi22"
+      ],
+      "query_frame": "Actual converted PSP bind coordinates",
+      "maximum_query_distance": 0.035521051903741004,
+      "output_geometry_changed": true
+    },
+    {
+      "side": "l",
+      "region": "digit-3",
+      "records": 10,
+      "allowed_target_support": [
+        "l_te",
+        "l_kote_x",
+        "l_yubi30",
+        "l_yubi31",
+        "l_yubi32"
+      ],
+      "query_frame": "Actual converted PSP bind coordinates",
+      "maximum_query_distance": 0.015316322779078278,
+      "output_geometry_changed": true
+    },
+    {
+      "side": "l",
+      "region": "digit-4",
+      "records": 10,
+      "allowed_target_support": [
+        "l_te",
+        "l_kote_x",
+        "l_yubi40",
+        "l_yubi41",
+        "l_yubi42"
+      ],
+      "query_frame": "Actual converted PSP bind coordinates",
+      "maximum_query_distance": 0.0681583529704047,
+      "output_geometry_changed": true
+    },
+    {
+      "side": "r",
+      "region": "palm",
+      "records": 24,
+      "allowed_target_support": [
+        "r_te",
+        "r_kote_x",
+        "r_yubi00",
+        "r_yubi01",
+        "r_yubi02",
+        "r_yubi10",
+        "r_yubi11",
+        "r_yubi12",
+        "r_yubi20",
+        "r_yubi21",
+        "r_yubi22",
+        "r_yubi30",
+        "r_yubi31",
+        "r_yubi32",
+        "r_yubi40",
+        "r_yubi41",
+        "r_yubi42"
+      ],
+      "query_frame": "Actual converted PSP bind coordinates",
+      "maximum_query_distance": 0.2612770809056084,
+      "output_geometry_changed": true
+    },
+    {
+      "side": "r",
+      "region": "digit-0",
+      "records": 11,
+      "allowed_target_support": [
+        "r_te",
+        "r_kote_x",
+        "r_yubi00",
+        "r_yubi01",
+        "r_yubi02"
+      ],
+      "query_frame": "Actual converted PSP bind coordinates",
+      "maximum_query_distance": 0.1725959040882795,
+      "output_geometry_changed": true
+    },
+    {
+      "side": "r",
+      "region": "digit-1",
+      "records": 10,
+      "allowed_target_support": [
+        "r_te",
+        "r_kote_x",
+        "r_yubi10",
+        "r_yubi11",
+        "r_yubi12"
+      ],
+      "query_frame": "Actual converted PSP bind coordinates",
+      "maximum_query_distance": 0.06934758704042422,
+      "output_geometry_changed": true
+    },
+    {
+      "side": "r",
+      "region": "digit-2",
+      "records": 10,
+      "allowed_target_support": [
+        "r_te",
+        "r_kote_x",
+        "r_yubi20",
+        "r_yubi21",
+        "r_yubi22"
+      ],
+      "query_frame": "Actual converted PSP bind coordinates",
+      "maximum_query_distance": 0.035553376450313916,
+      "output_geometry_changed": true
+    },
+    {
+      "side": "r",
+      "region": "digit-3",
+      "records": 10,
+      "allowed_target_support": [
+        "r_te",
+        "r_kote_x",
+        "r_yubi30",
+        "r_yubi31",
+        "r_yubi32"
+      ],
+      "query_frame": "Actual converted PSP bind coordinates",
+      "maximum_query_distance": 0.015317412254097556,
+      "output_geometry_changed": true
+    },
+    {
+      "side": "r",
+      "region": "digit-4",
+      "records": 10,
+      "allowed_target_support": [
+        "r_te",
+        "r_kote_x",
+        "r_yubi40",
+        "r_yubi41",
+        "r_yubi42"
+      ],
+      "query_frame": "Actual converted PSP bind coordinates",
+      "maximum_query_distance": 0.06815774790254303,
+      "output_geometry_changed": true
+    }
+  ],
+  "digit_review_after": [
+    {
+      "side": "l",
+      "digit": 0,
+      "records": 13,
+      "wrong_digit_records": 0,
+      "wrong_digit_weight_mass": 0.0,
+      "maximum_wrong_digit_mass": 0.0
+    },
+    {
+      "side": "l",
+      "digit": 1,
+      "records": 10,
+      "wrong_digit_records": 0,
+      "wrong_digit_weight_mass": 0.0,
+      "maximum_wrong_digit_mass": 0.0
+    },
+    {
+      "side": "l",
+      "digit": 2,
+      "records": 10,
+      "wrong_digit_records": 0,
+      "wrong_digit_weight_mass": 0.0,
+      "maximum_wrong_digit_mass": 0.0
+    },
+    {
+      "side": "l",
+      "digit": 3,
+      "records": 10,
+      "wrong_digit_records": 0,
+      "wrong_digit_weight_mass": 0.0,
+      "maximum_wrong_digit_mass": 0.0
+    },
+    {
+      "side": "l",
+      "digit": 4,
+      "records": 10,
+      "wrong_digit_records": 0,
+      "wrong_digit_weight_mass": 0.0,
+      "maximum_wrong_digit_mass": 0.0
+    },
+    {
+      "side": "r",
+      "digit": 0,
+      "records": 11,
+      "wrong_digit_records": 0,
+      "wrong_digit_weight_mass": 0.0,
+      "maximum_wrong_digit_mass": 0.0
+    },
+    {
+      "side": "r",
+      "digit": 1,
+      "records": 10,
+      "wrong_digit_records": 0,
+      "wrong_digit_weight_mass": 0.0,
+      "maximum_wrong_digit_mass": 0.0
+    },
+    {
+      "side": "r",
+      "digit": 2,
+      "records": 10,
+      "wrong_digit_records": 0,
+      "wrong_digit_weight_mass": 0.0,
+      "maximum_wrong_digit_mass": 0.0
+    },
+    {
+      "side": "r",
+      "digit": 3,
+      "records": 10,
+      "wrong_digit_records": 0,
+      "wrong_digit_weight_mass": 0.0,
+      "maximum_wrong_digit_mass": 0.0
+    },
+    {
+      "side": "r",
+      "digit": 4,
+      "records": 10,
+      "wrong_digit_records": 0,
+      "wrong_digit_weight_mass": 0.0,
+      "maximum_wrong_digit_mass": 0.0
+    }
+  ],
+  "digit_review_before": [
+    {
+      "side": "l",
+      "digit": 0,
+      "records": 13,
+      "wrong_digit_records": 13,
+      "wrong_digit_weight_mass": 13.0,
+      "maximum_wrong_digit_mass": 1.0
+    },
+    {
+      "side": "l",
+      "digit": 1,
+      "records": 10,
+      "wrong_digit_records": 7,
+      "wrong_digit_weight_mass": 7.0,
+      "maximum_wrong_digit_mass": 1.0
+    },
+    {
+      "side": "l",
+      "digit": 2,
+      "records": 10,
+      "wrong_digit_records": 0,
+      "wrong_digit_weight_mass": 0.0,
+      "maximum_wrong_digit_mass": 0.0
+    },
+    {
+      "side": "l",
+      "digit": 3,
+      "records": 10,
+      "wrong_digit_records": 10,
+      "wrong_digit_weight_mass": 10.0,
+      "maximum_wrong_digit_mass": 1.0
+    },
+    {
+      "side": "l",
+      "digit": 4,
+      "records": 10,
+      "wrong_digit_records": 10,
+      "wrong_digit_weight_mass": 10.0,
+      "maximum_wrong_digit_mass": 1.0
+    },
+    {
+      "side": "r",
+      "digit": 0,
+      "records": 11,
+      "wrong_digit_records": 11,
+      "wrong_digit_weight_mass": 11.0,
+      "maximum_wrong_digit_mass": 1.0
+    },
+    {
+      "side": "r",
+      "digit": 1,
+      "records": 10,
+      "wrong_digit_records": 7,
+      "wrong_digit_weight_mass": 7.0,
+      "maximum_wrong_digit_mass": 1.0
+    },
+    {
+      "side": "r",
+      "digit": 2,
+      "records": 10,
+      "wrong_digit_records": 0,
+      "wrong_digit_weight_mass": 0.0,
+      "maximum_wrong_digit_mass": 0.0
+    },
+    {
+      "side": "r",
+      "digit": 3,
+      "records": 10,
+      "wrong_digit_records": 10,
+      "wrong_digit_weight_mass": 10.0,
+      "maximum_wrong_digit_mass": 1.0
+    },
+    {
+      "side": "r",
+      "digit": 4,
+      "records": 10,
+      "wrong_digit_records": 10,
+      "wrong_digit_weight_mass": 10.0,
+      "maximum_wrong_digit_mass": 1.0
+    }
+  ],
+  "positions_exact": false,
+  "bind_reference_conversion": {
+    "policy": "Local anatomical bind conversion: pinned shoulder surface, actual PSP elbow/wrist, matched phalanx rest frames",
+    "regions": [
+      {
+        "side": "l",
+        "source_shoulder": [
+          2.6734604547504306,
+          -5.820954838099313,
+          -0.07624659002088033
+        ],
+        "pinned_shoulder": [
+          2.6734604547504306,
+          -5.820954838099313,
+          -0.07624659002088033
+        ],
+        "source_elbow": [
+          5.382564960815998,
+          -5.820970204935641,
+          -0.07624657585551761
+        ],
+        "target_elbow": [
+          4.814908999483831,
+          -5.864268108667278,
+          -1.9840830479832125e-08
+        ],
+        "source_wrist": [
+          8.204548663917718,
+          -5.820986212055923,
+          -0.07624656109993225
+        ],
+        "target_wrist": [
+          7.6299179377969,
+          -5.864268144628317,
+          7.031233728504265e-07
+        ],
+        "wrist_origin_mismatch": 0.5812808636028525,
+        "records": 191,
+        "shoulder_surface_anchor_pinned": true,
+        "radial_arm_scaling": false
+      },
+      {
+        "side": "r",
+        "source_shoulder": [
+          -2.6734563086855507,
+          -5.820924275102597,
+          -0.07624661623138626
+        ],
+        "pinned_shoulder": [
+          -2.6734563086855507,
+          -5.820924275102597,
+          -0.07624661623138626
+        ],
+        "source_elbow": [
+          -5.3825608147497634,
+          -5.8209086714354425,
+          -0.076246628626003
+        ],
+        "target_elbow": [
+          -4.814885375559647,
+          -5.864267812346719,
+          -1.7926173940514125e-07
+        ],
+        "source_wrist": [
+          -8.204544517850074,
+          -5.820892417616395,
+          -0.07624664153706137
+        ],
+        "target_wrist": [
+          -7.63000195986064,
+          -5.864269208856357,
+          -5.01293221754393e-07
+        ],
+        "wrist_origin_mismatch": 0.5812006287517254,
+        "records": 205,
+        "shoulder_surface_anchor_pinned": true,
+        "radial_arm_scaling": false
+      }
+    ],
+    "maximum_rest_seam_gap": 0.0,
+    "unaffected_positions_exact": true,
+    "changed_records": 396,
+    "maximum_position_change": 0.9604267747522172,
+    "arbitrary_displacement": false,
+    "topology_uv_colors_materials_preserved": true
+  },
+  "helper_mapping": [
+    {
+      "side": "l",
+      "source_helpers": [
+        "l_ninoude_w00",
+        "l_ninoude_w01",
+        "l_ninoude_w02",
+        "l_ninoude_w03"
+      ],
+      "allowed_target_support": [
+        "l_sakotsu",
+        "l_ninoude",
+        "l_ninoude_x",
+        "l_kote"
+      ],
+      "records": 51,
+      "maximum_query_distance": 0.27412955988355364,
+      "query_frame": "Actual PSP bind geometry"
+    },
+    {
+      "side": "l",
+      "source_helpers": [
+        "l_kote_w00",
+        "l_kote_w01",
+        "l_kote_w02"
+      ],
+      "allowed_target_support": [
+        "l_ninoude_x",
+        "l_kote",
+        "l_kote_x",
+        "l_te"
+      ],
+      "records": 50,
+      "maximum_query_distance": 0.336936382076372,
+      "query_frame": "Actual PSP bind geometry"
+    },
+    {
+      "side": "r",
+      "source_helpers": [
+        "r_ninoude_w00",
+        "r_ninoude_w01",
+        "r_ninoude_w02",
+        "r_ninoude_w03"
+      ],
+      "allowed_target_support": [
+        "r_sakotsu",
+        "r_ninoude",
+        "r_ninoude_x",
+        "r_kote"
+      ],
+      "records": 57,
+      "maximum_query_distance": 0.2741141702620226,
+      "query_frame": "Actual PSP bind geometry"
+    },
+    {
+      "side": "r",
+      "source_helpers": [
+        "r_kote_w00",
+        "r_kote_w01",
+        "r_kote_w02"
+      ],
+      "allowed_target_support": [
+        "r_ninoude_x",
+        "r_kote",
+        "r_kote_x",
+        "r_te"
+      ],
+      "records": 61,
+      "maximum_query_distance": 0.3369371121149867,
+      "query_frame": "Actual PSP bind geometry"
+    }
+  ],
+  "changed_records": 372,
+  "maximum_influences": 4,
+  "maximum_weight_sum_error": 2.220446049250313e-16,
+  "hand_policy": "Local bind conversion followed by anatomical digit-constrained donor transfer; thumb metacarpal represented through palm transfer",
+  "failed_control": "refine_arms_chain_control: two-to-three chain mapping alone stretches the thumb web",
+  "limitation": "Real animation semantics, grips, twists and pad states require PPSSPP; localized anatomical bind conversion is experimental"
+}

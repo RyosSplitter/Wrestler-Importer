@@ -1,5 +1,11 @@
 # SYM → PSP: first isolated main-model trial
 
+> **Provenance correction, 2026-10-17:** This upload is **JBI**, per the owner's
+> correction. The historical SYM command names and download remain unchanged as
+> a reproducible control. Read all sample-specific title claims below as JBI;
+> no original SYM sample or SYM conversion is validated by this trial.
+> [JBI elbow-pad and arm/hand investigation](jbi-rock-arm-accessory-trial.md).
+
 This work is isolated on `experiment/sym-adapter-trials`, based on research
 commit `33418860c43e448d18208719bf6cab309102c0c9`. No converter, GUI, HCTP
 profile, PSP writer, packaging implementation or accepted PAC was modified.

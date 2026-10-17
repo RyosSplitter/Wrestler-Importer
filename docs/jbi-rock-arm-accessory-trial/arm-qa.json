@@ -1,0 +1,540 @@
+{
+  "source_digit_support_before": [
+    {
+      "side": "l",
+      "digit": 0,
+      "records": 13,
+      "wrong_digit_records": 13,
+      "wrong_digit_weight_mass": 13.0,
+      "maximum_wrong_digit_mass": 1.0
+    },
+    {
+      "side": "l",
+      "digit": 1,
+      "records": 10,
+      "wrong_digit_records": 7,
+      "wrong_digit_weight_mass": 7.0,
+      "maximum_wrong_digit_mass": 1.0
+    },
+    {
+      "side": "l",
+      "digit": 2,
+      "records": 10,
+      "wrong_digit_records": 0,
+      "wrong_digit_weight_mass": 0.0,
+      "maximum_wrong_digit_mass": 0.0
+    },
+    {
+      "side": "l",
+      "digit": 3,
+      "records": 10,
+      "wrong_digit_records": 10,
+      "wrong_digit_weight_mass": 10.0,
+      "maximum_wrong_digit_mass": 1.0
+    },
+    {
+      "side": "l",
+      "digit": 4,
+      "records": 10,
+      "wrong_digit_records": 10,
+      "wrong_digit_weight_mass": 10.0,
+      "maximum_wrong_digit_mass": 1.0
+    },
+    {
+      "side": "r",
+      "digit": 0,
+      "records": 11,
+      "wrong_digit_records": 11,
+      "wrong_digit_weight_mass": 11.0,
+      "maximum_wrong_digit_mass": 1.0
+    },
+    {
+      "side": "r",
+      "digit": 1,
+      "records": 10,
+      "wrong_digit_records": 7,
+      "wrong_digit_weight_mass": 7.0,
+      "maximum_wrong_digit_mass": 1.0
+    },
+    {
+      "side": "r",
+      "digit": 2,
+      "records": 10,
+      "wrong_digit_records": 0,
+      "wrong_digit_weight_mass": 0.0,
+      "maximum_wrong_digit_mass": 0.0
+    },
+    {
+      "side": "r",
+      "digit": 3,
+      "records": 10,
+      "wrong_digit_records": 10,
+      "wrong_digit_weight_mass": 10.0,
+      "maximum_wrong_digit_mass": 1.0
+    },
+    {
+      "side": "r",
+      "digit": 4,
+      "records": 10,
+      "wrong_digit_records": 10,
+      "wrong_digit_weight_mass": 10.0,
+      "maximum_wrong_digit_mass": 1.0
+    }
+  ],
+  "source_digit_support_after": [
+    {
+      "side": "l",
+      "digit": 0,
+      "records": 13,
+      "wrong_digit_records": 0,
+      "wrong_digit_weight_mass": 0.0,
+      "maximum_wrong_digit_mass": 0.0
+    },
+    {
+      "side": "l",
+      "digit": 1,
+      "records": 10,
+      "wrong_digit_records": 0,
+      "wrong_digit_weight_mass": 0.0,
+      "maximum_wrong_digit_mass": 0.0
+    },
+    {
+      "side": "l",
+      "digit": 2,
+      "records": 10,
+      "wrong_digit_records": 0,
+      "wrong_digit_weight_mass": 0.0,
+      "maximum_wrong_digit_mass": 0.0
+    },
+    {
+      "side": "l",
+      "digit": 3,
+      "records": 10,
+      "wrong_digit_records": 0,
+      "wrong_digit_weight_mass": 0.0,
+      "maximum_wrong_digit_mass": 0.0
+    },
+    {
+      "side": "l",
+      "digit": 4,
+      "records": 10,
+      "wrong_digit_records": 0,
+      "wrong_digit_weight_mass": 0.0,
+      "maximum_wrong_digit_mass": 0.0
+    },
+    {
+      "side": "r",
+      "digit": 0,
+      "records": 11,
+      "wrong_digit_records": 0,
+      "wrong_digit_weight_mass": 0.0,
+      "maximum_wrong_digit_mass": 0.0
+    },
+    {
+      "side": "r",
+      "digit": 1,
+      "records": 10,
+      "wrong_digit_records": 0,
+      "wrong_digit_weight_mass": 0.0,
+      "maximum_wrong_digit_mass": 0.0
+    },
+    {
+      "side": "r",
+      "digit": 2,
+      "records": 10,
+      "wrong_digit_records": 0,
+      "wrong_digit_weight_mass": 0.0,
+      "maximum_wrong_digit_mass": 0.0
+    },
+    {
+      "side": "r",
+      "digit": 3,
+      "records": 10,
+      "wrong_digit_records": 0,
+      "wrong_digit_weight_mass": 0.0,
+      "maximum_wrong_digit_mass": 0.0
+    },
+    {
+      "side": "r",
+      "digit": 4,
+      "records": 10,
+      "wrong_digit_records": 0,
+      "wrong_digit_weight_mass": 0.0,
+      "maximum_wrong_digit_mass": 0.0
+    }
+  ],
+  "independent_digit_probes": {
+    "l-digit-0": {
+      "probe": {
+        "l_yubi00": [
+          "z",
+          35
+        ]
+      },
+      "before_foreign_digit_motion_max": 9.296750665059115e-15,
+      "after_foreign_digit_motion_max": 1.1254398211123894e-14,
+      "own_digit_motion_max": 0.7566873398755242
+    },
+    "l-digit-1": {
+      "probe": {
+        "l_yubi10": [
+          "z",
+          35
+        ]
+      },
+      "before_foreign_digit_motion_max": 0.5760820834162557,
+      "after_foreign_digit_motion_max": 7.119291619286993e-15,
+      "own_digit_motion_max": 0.4761921764306449
+    },
+    "l-digit-2": {
+      "probe": {
+        "l_yubi20": [
+          "z",
+          35
+        ]
+      },
+      "before_foreign_digit_motion_max": 0.9186706247360216,
+      "after_foreign_digit_motion_max": 1.1254398211123894e-14,
+      "own_digit_motion_max": 0.5414925390505206
+    },
+    "l-digit-3": {
+      "probe": {
+        "l_yubi30": [
+          "z",
+          35
+        ]
+      },
+      "before_foreign_digit_motion_max": 0.8713523976675848,
+      "after_foreign_digit_motion_max": 1.1254398211123894e-14,
+      "own_digit_motion_max": 0.5516172798621004
+    },
+    "l-digit-4": {
+      "probe": {
+        "l_yubi40": [
+          "z",
+          35
+        ]
+      },
+      "before_foreign_digit_motion_max": 1.1254398211123894e-14,
+      "after_foreign_digit_motion_max": 1.1254398211123894e-14,
+      "own_digit_motion_max": 0.41250472547465206
+    },
+    "r-digit-0": {
+      "probe": {
+        "r_yubi00": [
+          "z",
+          35
+        ]
+      },
+      "before_foreign_digit_motion_max": 1.0379249364440784e-14,
+      "after_foreign_digit_motion_max": 1.0357860575575056e-14,
+      "own_digit_motion_max": 0.756687368180275
+    },
+    "r-digit-1": {
+      "probe": {
+        "r_yubi10": [
+          "z",
+          35
+        ]
+      },
+      "before_foreign_digit_motion_max": 0.5760538089708612,
+      "after_foreign_digit_motion_max": 1.0357860575575056e-14,
+      "own_digit_motion_max": 0.476192206807424
+    },
+    "r-digit-2": {
+      "probe": {
+        "r_yubi20": [
+          "z",
+          35
+        ]
+      },
+      "before_foreign_digit_motion_max": 0.9186191971222216,
+      "after_foreign_digit_motion_max": 8.899114524108741e-15,
+      "own_digit_motion_max": 0.5414918233528595
+    },
+    "r-digit-3": {
+      "probe": {
+        "r_yubi30": [
+          "z",
+          35
+        ]
+      },
+      "before_foreign_digit_motion_max": 0.8712963189101077,
+      "after_foreign_digit_motion_max": 1.0357860575575056e-14,
+      "own_digit_motion_max": 0.5516167610742752
+    },
+    "r-digit-4": {
+      "probe": {
+        "r_yubi40": [
+          "z",
+          35
+        ]
+      },
+      "before_foreign_digit_motion_max": 1.0379249364440784e-14,
+      "after_foreign_digit_motion_max": 1.0357860575575056e-14,
+      "own_digit_motion_max": 0.41266845970177735
+    }
+  },
+  "arm_pose_probes": {
+    "arms-lowered": {
+      "probe": {
+        "l_ninoude": [
+          "z",
+          65
+        ],
+        "r_ninoude": [
+          "z",
+          -65
+        ]
+      },
+      "unaffected_position_error": 0.0,
+      "before": {
+        "new_collapsed_triangles": 0,
+        "minimum_area_ratio": 0.5919332235450133,
+        "maximum_area_ratio": 1.8981101485615834
+      },
+      "after": {
+        "new_collapsed_triangles": 0,
+        "minimum_area_ratio": 0.5633619559110709,
+        "maximum_area_ratio": 1.7473043963237733
+      }
+    },
+    "elbows-bent": {
+      "probe": {
+        "l_kote": [
+          "z",
+          -80
+        ],
+        "r_kote": [
+          "z",
+          80
+        ]
+      },
+      "unaffected_position_error": 0.0,
+      "before": {
+        "new_collapsed_triangles": 0,
+        "minimum_area_ratio": 0.16863766382737508,
+        "maximum_area_ratio": 2.109344561270678
+      },
+      "after": {
+        "new_collapsed_triangles": 0,
+        "minimum_area_ratio": 0.03329547466169229,
+        "maximum_area_ratio": 1.8241975650553255
+      }
+    },
+    "forearm-twist": {
+      "probe": {
+        "l_kote_x": [
+          "x",
+          60
+        ],
+        "r_kote_x": [
+          "x",
+          -60
+        ]
+      },
+      "unaffected_position_error": 0.0,
+      "before": {
+        "new_collapsed_triangles": 0,
+        "minimum_area_ratio": 0.4377855032621423,
+        "maximum_area_ratio": 2.213928053002816
+      },
+      "after": {
+        "new_collapsed_triangles": 0,
+        "minimum_area_ratio": 0.3490012118223961,
+        "maximum_area_ratio": 2.106511468043081
+      }
+    },
+    "wrist-flex": {
+      "probe": {
+        "l_te": [
+          "z",
+          35
+        ],
+        "r_te": [
+          "z",
+          -35
+        ]
+      },
+      "unaffected_position_error": 0.0,
+      "before": {
+        "new_collapsed_triangles": 0,
+        "minimum_area_ratio": 0.6106057316237918,
+        "maximum_area_ratio": 1.5485407180783148
+      },
+      "after": {
+        "new_collapsed_triangles": 0,
+        "minimum_area_ratio": 0.8653043396583658,
+        "maximum_area_ratio": 1.1217487237722934
+      }
+    },
+    "grip": {
+      "probe": {
+        "r_yubi10": [
+          "z",
+          35
+        ],
+        "r_yubi11": [
+          "z",
+          35
+        ],
+        "r_yubi12": [
+          "z",
+          35
+        ],
+        "r_yubi20": [
+          "z",
+          35
+        ],
+        "r_yubi21": [
+          "z",
+          35
+        ],
+        "r_yubi22": [
+          "z",
+          35
+        ],
+        "r_yubi30": [
+          "z",
+          35
+        ],
+        "r_yubi31": [
+          "z",
+          35
+        ],
+        "r_yubi32": [
+          "z",
+          35
+        ],
+        "r_yubi40": [
+          "z",
+          35
+        ],
+        "r_yubi41": [
+          "z",
+          35
+        ],
+        "r_yubi42": [
+          "z",
+          35
+        ],
+        "r_yubi00": [
+          "z",
+          35
+        ],
+        "r_yubi01": [
+          "z",
+          35
+        ],
+        "r_yubi02": [
+          "z",
+          35
+        ],
+        "l_yubi30": [
+          "z",
+          -35
+        ],
+        "l_yubi31": [
+          "z",
+          -35
+        ],
+        "l_yubi32": [
+          "z",
+          -35
+        ],
+        "l_yubi10": [
+          "z",
+          -35
+        ],
+        "l_yubi11": [
+          "z",
+          -35
+        ],
+        "l_yubi12": [
+          "z",
+          -35
+        ],
+        "l_yubi40": [
+          "z",
+          -35
+        ],
+        "l_yubi41": [
+          "z",
+          -35
+        ],
+        "l_yubi42": [
+          "z",
+          -35
+        ],
+        "l_yubi20": [
+          "z",
+          -35
+        ],
+        "l_yubi21": [
+          "z",
+          -35
+        ],
+        "l_yubi22": [
+          "z",
+          -35
+        ],
+        "l_yubi00": [
+          "z",
+          -35
+        ],
+        "l_yubi01": [
+          "z",
+          -35
+        ],
+        "l_yubi02": [
+          "z",
+          -35
+        ]
+      },
+      "unaffected_position_error": 0.0,
+      "before": {
+        "new_collapsed_triangles": 0,
+        "minimum_area_ratio": 0.49546540618239715,
+        "maximum_area_ratio": 2.993191820242794
+      },
+      "after": {
+        "new_collapsed_triangles": 0,
+        "minimum_area_ratio": 0.29972697180084495,
+        "maximum_area_ratio": 1.5391256857889426
+      }
+    },
+    "thumb-only": {
+      "probe": {
+        "l_yubi00": [
+          "z",
+          40
+        ],
+        "r_yubi00": [
+          "z",
+          -40
+        ]
+      },
+      "unaffected_position_error": 0.0,
+      "before": {
+        "new_collapsed_triangles": 0,
+        "minimum_area_ratio": 0.9874916263313649,
+        "maximum_area_ratio": 1.111554635349782
+      },
+      "after": {
+        "new_collapsed_triangles": 0,
+        "minimum_area_ratio": 0.9999999999999015,
+        "maximum_area_ratio": 1.9884704962189554
+      }
+    }
+  },
+  "thumb_web_reference_stress": {
+    "source_thumb_area_ratio_max": 2.1125414173941426,
+    "native_donor_thumb_area_ratio_max": 1.7429116625845802,
+    "candidate_thumb_area_ratio_max": 1.9884704962189554,
+    "provisional_maximum": 3.418812126091214,
+    "rule": "1.5 * max(original source, native donor) + 0.25; trial review threshold, not a format limit"
+  },
+  "uv_material_color_topology_exact": true,
+  "geometry_change": "Localized source-to-PSP arm/hand bind conversion; see rig-refinement.json",
+  "limitation": "Controlled synthetic poses, not captured JBI/PSP animation clips"
+}

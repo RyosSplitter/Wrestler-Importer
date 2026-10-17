@@ -1,0 +1,68 @@
+{
+  "before": {
+    "filename": "SYM-0000-main-only-EXPERIMENTAL.pac",
+    "sha256": "91788bb8b926443934d50424bd54f6164c929ccdca60926802fa64298ad80173",
+    "bytes": 118784,
+    "models": 1,
+    "meshes": 50,
+    "vertices": 1505,
+    "triangles": 1490,
+    "textures": 22
+  },
+  "after": {
+    "filename": "JBI-Rock-arms-and-elbow-pads-EXPERIMENTAL.pac",
+    "sha256": "5d7bf5a090b0c7270baf84da6191e5d78844c3bedb1e6035ec206694c5b38359",
+    "bytes": 133120,
+    "models": 3,
+    "meshes": 56,
+    "vertices": 1600,
+    "triangles": 1626,
+    "textures": 23
+  },
+  "protected_regions": {
+    "records": 951,
+    "positions_exact": true,
+    "weights_exact": true,
+    "normals_exact": true,
+    "pose_errors": {
+      "rest": 0.0,
+      "standing": 0.0,
+      "walk-left": 0.0,
+      "walk-right": 0.0,
+      "bend": 0.0,
+      "crouch": 0.0,
+      "shoulders-up": 0.0,
+      "neck-turn": 0.0,
+      "head-tilt": 0.0,
+      "jaw-06": 0.0,
+      "jaw-12": 0.0,
+      "jaw-18": 0.0,
+      "jaw-25": 0.0,
+      "elbow-flex-left": 0.0,
+      "elbow-flex-right": 0.0
+    }
+  },
+  "unchanged_main_texture_gims": 22,
+  "added_pad_texture": {
+    "name": "chart_22",
+    "width": 64,
+    "height": 16,
+    "bits": 4,
+    "gim_bytes": 784,
+    "pixel_palette_bytes": 576
+  },
+  "qa": {
+    "source_thumb_area_ratio_max": 2.1125414173941426,
+    "native_donor_thumb_area_ratio_max": 1.7429116625845802,
+    "candidate_thumb_area_ratio_max": 1.9884704962189554,
+    "provisional_maximum": 3.418812126091214,
+    "rule": "1.5 * max(original source, native donor) + 0.25; trial review threshold, not a format limit"
+  },
+  "known_control_rejected": true,
+  "repeat_build": {
+    "first": "trial-06",
+    "second": "release-candidate",
+    "byte_identical": true
+  },
+  "accepted_pac_and_bundle_hashes_unchanged": true
+}

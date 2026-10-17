@@ -1,0 +1,20 @@
+{
+  "date": "2026-10-17",
+  "source_file": "ch.pac",
+  "source_bytes": 21286912,
+  "source_sha256": "8e64f391179c38632a31a452845fc51c8efa53112b71cdba806136d89097955d",
+  "previous_owner_label": "SmackDown! Shut Your Mouth (SYM)",
+  "corrected_owner_label": "SmackDown! Just Bring It (JBI)",
+  "evidence": "CONFIRMED owner correction; binary title identification UNKNOWN",
+  "applies_to": [
+    "docs/sym-ch-pac-study.md",
+    "docs/sym-ch-pac-inventory.json",
+    "docs/sym-first-psp-trial.md",
+    "docs/sym-first-psp-trial/corpus-survey.json",
+    "downloads/SYM-Rock-first-PSP-trial.zip"
+  ],
+  "historical_names_retained": true,
+  "interpretation": "Sample-specific SYM labels in these historical reports mean the exact JBI archive identified above. This evidence does not establish SYM support.",
+  "production_jbi_adapter_enabled": false,
+  "production_sym_adapter_enabled": false
+}
