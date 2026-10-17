@@ -1,5 +1,8 @@
 # SYM CH.PAC: original-source research checkpoint 2
 
+**Next checkpoint:** [first isolated PSP Rock trial](sym-first-psp-trial.md),
+including UV-island adaptation, bone-bound evidence and an eye-transfer QA fix.
+
 This study uses the user's original `ch.pac`, identified by the user as
 SmackDown! Shut Your Mouth (PS2). SHA-256:
 `8e64f391179c38632a31a452845fc51c8efa53112b71cdba806136d89097955d`.

@@ -1,0 +1,489 @@
+{
+  "before": {
+    "body": {
+      "rest": {
+        "maximum_position_error": 2.9073342844299077e-07,
+        "finite": true,
+        "maximum_motion": 3.3555259071211006e-07,
+        "minimum_area_ratio": 0.9999925226504003,
+        "newly_collapsed_triangles": 0
+      },
+      "standing": {
+        "maximum_position_error": 2.9073342844299077e-07,
+        "finite": true,
+        "maximum_motion": 9.550279150865345,
+        "minimum_area_ratio": 0.564691122007318,
+        "newly_collapsed_triangles": 0
+      },
+      "walk-left": {
+        "maximum_position_error": 2.9073342844299077e-07,
+        "finite": true,
+        "maximum_motion": 3.721553428049123,
+        "minimum_area_ratio": 0.5072993884140613,
+        "newly_collapsed_triangles": 0
+      },
+      "walk-right": {
+        "maximum_position_error": 2.9073342844299077e-07,
+        "finite": true,
+        "maximum_motion": 3.7215579553069627,
+        "minimum_area_ratio": 0.35135715108872595,
+        "newly_collapsed_triangles": 0
+      },
+      "bend": {
+        "maximum_position_error": 2.866200077278336e-07,
+        "finite": true,
+        "maximum_motion": 6.51977240409612,
+        "minimum_area_ratio": 0.40544773985764293,
+        "newly_collapsed_triangles": 0
+      },
+      "crouch": {
+        "maximum_position_error": 2.866200077278336e-07,
+        "finite": true,
+        "maximum_motion": 4.121611715676079,
+        "minimum_area_ratio": 0.13719099348810443,
+        "newly_collapsed_triangles": 0
+      },
+      "shoulders-up": {
+        "maximum_position_error": 3.60521971387584e-07,
+        "finite": true,
+        "maximum_motion": 7.6883007641907035,
+        "minimum_area_ratio": 0.5824685782384883,
+        "newly_collapsed_triangles": 0
+      },
+      "neck-turn": {
+        "maximum_position_error": 2.9073342844299077e-07,
+        "finite": true,
+        "maximum_motion": 0.6963881659021051,
+        "minimum_area_ratio": 0.26262155576874247,
+        "newly_collapsed_triangles": 0
+      },
+      "head-tilt": {
+        "maximum_position_error": 2.8999408030472296e-07,
+        "finite": true,
+        "maximum_motion": 0.40821741212653906,
+        "minimum_area_ratio": 0.572263700244343,
+        "newly_collapsed_triangles": 0
+      },
+      "jaw-06": {
+        "maximum_position_error": 2.9073342844299077e-07,
+        "finite": true,
+        "maximum_motion": 0.09147108885329701,
+        "minimum_area_ratio": 0.6043125743118826,
+        "newly_collapsed_triangles": 0
+      },
+      "jaw-12": {
+        "maximum_position_error": 2.9073342844299077e-07,
+        "finite": true,
+        "maximum_motion": 0.18269161294546868,
+        "minimum_area_ratio": 0.21652258846521544,
+        "newly_collapsed_triangles": 0
+      },
+      "jaw-18": {
+        "maximum_position_error": 2.9073342844299077e-07,
+        "finite": true,
+        "maximum_motion": 0.27341139202533765,
+        "minimum_area_ratio": 0.20481578542543,
+        "newly_collapsed_triangles": 0
+      },
+      "jaw-25": {
+        "maximum_position_error": 2.9073342844299077e-07,
+        "finite": true,
+        "maximum_motion": 0.37828662211759995,
+        "minimum_area_ratio": 0.07610938208380921,
+        "newly_collapsed_triangles": 0
+      },
+      "elbow-flex-left": {
+        "maximum_position_error": 2.9073342844299077e-07,
+        "finite": true,
+        "maximum_motion": 9.645925677693448,
+        "minimum_area_ratio": 0.21175450027192985,
+        "newly_collapsed_triangles": 0
+      },
+      "elbow-flex-right": {
+        "maximum_position_error": 2.9073342844299077e-07,
+        "finite": true,
+        "maximum_motion": 9.646006357813024,
+        "minimum_area_ratio": 0.21173028553033466,
+        "newly_collapsed_triangles": 0
+      }
+    },
+    "ocular": {
+      "rest": {
+        "maximum_position_error": 1.7763568394002505e-15,
+        "maximum_motion": 1.0841599276764049e-14,
+        "native_donor_maximum_motion": 1.0862044427137904e-14,
+        "exceeds_provisional_donor_envelope": false
+      },
+      "eyes-world-x--25": {
+        "maximum_position_error": 1.7763568394002505e-15,
+        "maximum_motion": 0.15416531711605225,
+        "native_donor_maximum_motion": 0.07224543775897546,
+        "exceeds_provisional_donor_envelope": true
+      },
+      "eyes-world-x-25": {
+        "maximum_position_error": 1.7763568394002505e-15,
+        "maximum_motion": 0.15416531711605092,
+        "native_donor_maximum_motion": 0.07224543775897535,
+        "exceeds_provisional_donor_envelope": true
+      },
+      "eyes-world-y--25": {
+        "maximum_position_error": 1.7763568394002505e-15,
+        "maximum_motion": 0.10574369366735292,
+        "native_donor_maximum_motion": 0.07971415067722912,
+        "exceeds_provisional_donor_envelope": false
+      },
+      "eyes-world-y-25": {
+        "maximum_position_error": 1.7763568394002505e-15,
+        "maximum_motion": 0.10574369366735305,
+        "native_donor_maximum_motion": 0.07971415067722908,
+        "exceeds_provisional_donor_envelope": false
+      },
+      "eyes-world-z--25": {
+        "maximum_position_error": 1.7763568394002505e-15,
+        "maximum_motion": 0.15810569529654458,
+        "native_donor_maximum_motion": 0.0738871201544245,
+        "exceeds_provisional_donor_envelope": true
+      },
+      "eyes-world-z-25": {
+        "maximum_position_error": 1.7763568394002505e-15,
+        "maximum_motion": 0.15810569529654533,
+        "native_donor_maximum_motion": 0.07388712015442488,
+        "exceeds_provisional_donor_envelope": true
+      },
+      "l-eye-local-turn": {
+        "maximum_position_error": 1.7763568394002505e-15,
+        "maximum_motion": 0.10574381184634093,
+        "native_donor_maximum_motion": 0.07971415164545503,
+        "exceeds_provisional_donor_envelope": false
+      },
+      "l-lid-local-close": {
+        "maximum_position_error": 3.3497826734674163e-10,
+        "maximum_motion": 0.07885590441006081,
+        "native_donor_maximum_motion": 0.049673135347252095,
+        "exceeds_provisional_donor_envelope": false
+      },
+      "r-eye-local-turn": {
+        "maximum_position_error": 1.7763568394002505e-15,
+        "maximum_motion": 0.1057313847410792,
+        "native_donor_maximum_motion": 0.07971347564346115,
+        "exceeds_provisional_donor_envelope": false
+      },
+      "r-lid-local-close": {
+        "maximum_position_error": 1.2452261444195756e-12,
+        "maximum_motion": 4.060873311974955e-05,
+        "native_donor_maximum_motion": 0.049771876212588294,
+        "exceeds_provisional_donor_envelope": false
+      },
+      "ocular-local-translate-x": {
+        "maximum_position_error": 1.0612193346304366e-09,
+        "maximum_motion": 0.09999999999999991,
+        "native_donor_maximum_motion": 0.09999999999999991,
+        "exceeds_provisional_donor_envelope": false
+      },
+      "ocular-local-translate-y": {
+        "maximum_position_error": 1.0612168921397824e-09,
+        "maximum_motion": 0.1000000000000026,
+        "native_donor_maximum_motion": 0.1000000000000026,
+        "exceeds_provisional_donor_envelope": false
+      },
+      "ocular-local-translate-z": {
+        "maximum_position_error": 1.0612193346304366e-09,
+        "maximum_motion": 0.10000000000000013,
+        "native_donor_maximum_motion": 0.10000000000000019,
+        "exceeds_provisional_donor_envelope": false
+      },
+      "eye-lid-neck-jaw": {
+        "maximum_position_error": 3.6519036683557715e-09,
+        "maximum_motion": 0.9582111403500438,
+        "native_donor_maximum_motion": 1.0015152447455666,
+        "exceeds_provisional_donor_envelope": false
+      },
+      "psp-brow-local": {
+        "maximum_position_error": 2.3329149723139153e-10,
+        "maximum_motion": 0.007111874979335418,
+        "native_donor_maximum_motion": 0.021834282158649784,
+        "exceeds_provisional_donor_envelope": false
+      }
+    },
+    "maximum_equivalent_seam_gap": 0.0,
+    "review_findings": [
+      {
+        "kind": "ocular-envelope-review",
+        "probe": "eyes-world-x--25"
+      },
+      {
+        "kind": "ocular-envelope-review",
+        "probe": "eyes-world-x-25"
+      },
+      {
+        "kind": "ocular-envelope-review",
+        "probe": "eyes-world-z--25"
+      },
+      {
+        "kind": "ocular-envelope-review",
+        "probe": "eyes-world-z-25"
+      },
+      {
+        "mesh": 31,
+        "weight_slots": 2,
+        "stride": 44,
+        "bone_names": [
+          "l_momo",
+          "l_sune"
+        ],
+        "severity": "review",
+        "kind": "unvalidated-small-skinned-palette",
+        "evidence": "The 84 successfully audited uppercase .PAC native references contained skinned palettes of 3\u20138 slots; their three 1-slot meshes were rigid 0x11ff.",
+        "interpretation": "Observed convention only. Generic PSP GE support does not establish SVR loader compatibility. This is not a proven cause or a mandatory minimum."
+      }
+    ],
+    "exact_record_correspondence": true,
+    "limitation": "Serialization/LBS consistency only; not original SYM or actual PSP clip equivalence"
+  },
+  "after": {
+    "body": {
+      "rest": {
+        "maximum_position_error": 2.9073342844299077e-07,
+        "finite": true,
+        "maximum_motion": 3.3555259071211006e-07,
+        "minimum_area_ratio": 0.9999939743295374,
+        "newly_collapsed_triangles": 0
+      },
+      "standing": {
+        "maximum_position_error": 2.9073342844299077e-07,
+        "finite": true,
+        "maximum_motion": 9.550279150865345,
+        "minimum_area_ratio": 0.564691122007318,
+        "newly_collapsed_triangles": 0
+      },
+      "walk-left": {
+        "maximum_position_error": 2.9073342844299077e-07,
+        "finite": true,
+        "maximum_motion": 3.721553428049123,
+        "minimum_area_ratio": 0.5072993884140613,
+        "newly_collapsed_triangles": 0
+      },
+      "walk-right": {
+        "maximum_position_error": 2.9073342844299077e-07,
+        "finite": true,
+        "maximum_motion": 3.7215579553069627,
+        "minimum_area_ratio": 0.35135715108872595,
+        "newly_collapsed_triangles": 0
+      },
+      "bend": {
+        "maximum_position_error": 2.866200077278336e-07,
+        "finite": true,
+        "maximum_motion": 6.51977240409612,
+        "minimum_area_ratio": 0.40544773985764293,
+        "newly_collapsed_triangles": 0
+      },
+      "crouch": {
+        "maximum_position_error": 2.866200077278336e-07,
+        "finite": true,
+        "maximum_motion": 4.121611715676079,
+        "minimum_area_ratio": 0.13719099348810443,
+        "newly_collapsed_triangles": 0
+      },
+      "shoulders-up": {
+        "maximum_position_error": 3.60521971387584e-07,
+        "finite": true,
+        "maximum_motion": 7.6883007641907035,
+        "minimum_area_ratio": 0.5824685782384883,
+        "newly_collapsed_triangles": 0
+      },
+      "neck-turn": {
+        "maximum_position_error": 2.9073342844299077e-07,
+        "finite": true,
+        "maximum_motion": 0.6963881659021051,
+        "minimum_area_ratio": 0.26262155576874247,
+        "newly_collapsed_triangles": 0
+      },
+      "head-tilt": {
+        "maximum_position_error": 2.8999408030472296e-07,
+        "finite": true,
+        "maximum_motion": 0.40821741212653906,
+        "minimum_area_ratio": 0.572263700244343,
+        "newly_collapsed_triangles": 0
+      },
+      "jaw-06": {
+        "maximum_position_error": 2.9073342844299077e-07,
+        "finite": true,
+        "maximum_motion": 0.09147108885329701,
+        "minimum_area_ratio": 0.6043125743118826,
+        "newly_collapsed_triangles": 0
+      },
+      "jaw-12": {
+        "maximum_position_error": 2.9073342844299077e-07,
+        "finite": true,
+        "maximum_motion": 0.18269161294546868,
+        "minimum_area_ratio": 0.21652258846521544,
+        "newly_collapsed_triangles": 0
+      },
+      "jaw-18": {
+        "maximum_position_error": 2.9073342844299077e-07,
+        "finite": true,
+        "maximum_motion": 0.27341139202533765,
+        "minimum_area_ratio": 0.20481578542543,
+        "newly_collapsed_triangles": 0
+      },
+      "jaw-25": {
+        "maximum_position_error": 2.9073342844299077e-07,
+        "finite": true,
+        "maximum_motion": 0.37828662211759995,
+        "minimum_area_ratio": 0.07610938208380921,
+        "newly_collapsed_triangles": 0
+      },
+      "elbow-flex-left": {
+        "maximum_position_error": 2.9073342844299077e-07,
+        "finite": true,
+        "maximum_motion": 9.645925677693448,
+        "minimum_area_ratio": 0.21175450027192985,
+        "newly_collapsed_triangles": 0
+      },
+      "elbow-flex-right": {
+        "maximum_position_error": 2.9073342844299077e-07,
+        "finite": true,
+        "maximum_motion": 9.646006357813024,
+        "minimum_area_ratio": 0.21173028553033466,
+        "newly_collapsed_triangles": 0
+      }
+    },
+    "ocular": {
+      "rest": {
+        "maximum_position_error": 1.7763568394002505e-15,
+        "maximum_motion": 1.0841599276764049e-14,
+        "native_donor_maximum_motion": 1.0862044427137904e-14,
+        "exceeds_provisional_donor_envelope": false
+      },
+      "eyes-world-x--25": {
+        "maximum_position_error": 1.7763568394002505e-15,
+        "maximum_motion": 0.11740725188752327,
+        "native_donor_maximum_motion": 0.07224543775897546,
+        "exceeds_provisional_donor_envelope": false
+      },
+      "eyes-world-x-25": {
+        "maximum_position_error": 1.7763568394002505e-15,
+        "maximum_motion": 0.11740725188752316,
+        "native_donor_maximum_motion": 0.07224543775897535,
+        "exceeds_provisional_donor_envelope": false
+      },
+      "eyes-world-y--25": {
+        "maximum_position_error": 1.7763568394002505e-15,
+        "maximum_motion": 0.0770848920159867,
+        "native_donor_maximum_motion": 0.07971415067722912,
+        "exceeds_provisional_donor_envelope": false
+      },
+      "eyes-world-y-25": {
+        "maximum_position_error": 1.7763568394002505e-15,
+        "maximum_motion": 0.07708489201598688,
+        "native_donor_maximum_motion": 0.07971415067722908,
+        "exceeds_provisional_donor_envelope": false
+      },
+      "eyes-world-z--25": {
+        "maximum_position_error": 1.7763568394002505e-15,
+        "maximum_motion": 0.1082155725560452,
+        "native_donor_maximum_motion": 0.0738871201544245,
+        "exceeds_provisional_donor_envelope": false
+      },
+      "eyes-world-z-25": {
+        "maximum_position_error": 1.7763568394002505e-15,
+        "maximum_motion": 0.10821557255604611,
+        "native_donor_maximum_motion": 0.07388712015442488,
+        "exceeds_provisional_donor_envelope": false
+      },
+      "l-eye-local-turn": {
+        "maximum_position_error": 1.7763568394002505e-15,
+        "maximum_motion": 0.07668808174708387,
+        "native_donor_maximum_motion": 0.07971415164545503,
+        "exceeds_provisional_donor_envelope": false
+      },
+      "l-lid-local-close": {
+        "maximum_position_error": 3.3497826734674163e-10,
+        "maximum_motion": 0.07885590441006081,
+        "native_donor_maximum_motion": 0.049673135347252095,
+        "exceeds_provisional_donor_envelope": false
+      },
+      "r-eye-local-turn": {
+        "maximum_position_error": 1.7763568394002505e-15,
+        "maximum_motion": 0.07708494730881217,
+        "native_donor_maximum_motion": 0.07971347564346115,
+        "exceeds_provisional_donor_envelope": false
+      },
+      "r-lid-local-close": {
+        "maximum_position_error": 1.2452261444195756e-12,
+        "maximum_motion": 4.060873311974955e-05,
+        "native_donor_maximum_motion": 0.049771876212588294,
+        "exceeds_provisional_donor_envelope": false
+      },
+      "ocular-local-translate-x": {
+        "maximum_position_error": 1.0612193346304366e-09,
+        "maximum_motion": 0.09999999999999991,
+        "native_donor_maximum_motion": 0.09999999999999991,
+        "exceeds_provisional_donor_envelope": false
+      },
+      "ocular-local-translate-y": {
+        "maximum_position_error": 1.0612168921397824e-09,
+        "maximum_motion": 0.1000000000000026,
+        "native_donor_maximum_motion": 0.1000000000000026,
+        "exceeds_provisional_donor_envelope": false
+      },
+      "ocular-local-translate-z": {
+        "maximum_position_error": 1.0612193346304366e-09,
+        "maximum_motion": 0.10000000000000019,
+        "native_donor_maximum_motion": 0.10000000000000019,
+        "exceeds_provisional_donor_envelope": false
+      },
+      "eye-lid-neck-jaw": {
+        "maximum_position_error": 3.6519036683557715e-09,
+        "maximum_motion": 0.9582111403500438,
+        "native_donor_maximum_motion": 1.0015152447455666,
+        "exceeds_provisional_donor_envelope": false
+      },
+      "psp-brow-local": {
+        "maximum_position_error": 2.3329149723139153e-10,
+        "maximum_motion": 0.007111874979335418,
+        "native_donor_maximum_motion": 0.021834282158649784,
+        "exceeds_provisional_donor_envelope": false
+      }
+    },
+    "maximum_equivalent_seam_gap": 0.0,
+    "review_findings": [
+      {
+        "mesh": 31,
+        "weight_slots": 2,
+        "stride": 44,
+        "bone_names": [
+          "l_momo",
+          "l_sune"
+        ],
+        "severity": "review",
+        "kind": "unvalidated-small-skinned-palette",
+        "evidence": "The 84 successfully audited uppercase .PAC native references contained skinned palettes of 3\u20138 slots; their three 1-slot meshes were rigid 0x11ff.",
+        "interpretation": "Observed convention only. Generic PSP GE support does not establish SVR loader compatibility. This is not a proven cause or a mandatory minimum."
+      }
+    ],
+    "exact_record_correspondence": true,
+    "limitation": "Serialization/LBS consistency only; not original SYM or actual PSP clip equivalence"
+  },
+  "before_control_yobj_sha256": "27ecce9b4f461ad456ec4034a57ab071412c2a48a914b631644930b9f68c1143",
+  "jaw_coefficient_delta": 0.0,
+  "body_pose_position_delta": 2.6645352591003757e-15,
+  "source_support_guard": {
+    "policy": "Rigid source eyeball support uses corresponding native role; donor eye spill attaches to atama; donor lids/brows/jaw retained",
+    "source_eye_records": 8,
+    "donor_spill": [
+      {
+        "controller": "l_eye",
+        "donor_spill_records": 13
+      },
+      {
+        "controller": "r_eye",
+        "donor_spill_records": 12
+      }
+    ],
+    "changed_records": 29,
+    "jaw_coefficients_exact": true,
+    "source_geometry_changed": false,
+    "limitation": "Rigid eye role/motion hypothesis; source/PSP animation semantics still require PPSSPP"
+  }
+}

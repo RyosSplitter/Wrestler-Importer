@@ -1,0 +1,115 @@
+{
+  "method": "conservative-hybrid",
+  "alignment": {
+    "method": "Named rest-bone landmarks; one uniform similarity transform",
+    "scale": 0.9901697535358123,
+    "rotation": [
+      [
+        0.999999999982906,
+        5.846941588324252e-06,
+        -4.7638294578896886e-08
+      ],
+      [
+        -5.847134337937215e-06,
+        0.9999720495931392,
+        -0.007476630143870707
+      ],
+      [
+        3.921543340464683e-09,
+        0.0074766301440214455,
+        0.9999720496102334
+      ]
+    ],
+    "translation": [
+      3.589433792667675e-05,
+      0.06842488836348726,
+      -0.032212772624335126
+    ],
+    "landmarks": [
+      "koshi",
+      "atama",
+      "l_te",
+      "r_te",
+      "l_ashi",
+      "r_ashi",
+      "l_kote",
+      "r_kote",
+      "l_sune",
+      "r_sune",
+      "l_sakotsu",
+      "r_sakotsu"
+    ],
+    "landmark_errors": [
+      0.1392022061488103,
+      0.9550252848107056,
+      0.5812808636028525,
+      0.5812006287517254,
+      0.39219927377298375,
+      0.39219577214828716,
+      0.5743879666284816,
+      0.574411821257983,
+      0.23576277637664297,
+      0.23575250394976008,
+      0.08769778738926083,
+      0.08769780454217763
+    ],
+    "nonuniform_scaling": false,
+    "pose": "decoded bind/rest pose",
+    "geometry_correspondence": "Not assumed; surfaces are queried independently"
+  },
+  "direct_body_name_hypothesis": [
+    "koshi",
+    "kubi",
+    "l_ashi",
+    "l_kote",
+    "l_momo",
+    "l_ninoude",
+    "l_sakotsu",
+    "l_sune",
+    "l_te",
+    "l_tsumasaki",
+    "mune",
+    "r_ashi",
+    "r_kote",
+    "r_momo",
+    "r_ninoude",
+    "r_sakotsu",
+    "r_sune",
+    "r_te",
+    "r_tsumasaki",
+    "root"
+  ],
+  "donor_transfer": {
+    "method": "Nearest ordinary PSP body triangle, barycentric weight interpolation",
+    "max_influences": 4,
+    "distance_p95": 0.3821272844590385,
+    "distance_max": 0.5565732596493189
+  },
+  "donor_affected_records": 908,
+  "unrepresented_source_mass_mean": 0.7246608140462889,
+  "ancestor_redirects": {},
+  "maximum_four_influence_pruned_mass": 0.0,
+  "ocular_support_guard": {
+    "policy": "Rigid source eyeball support uses corresponding native role; donor eye spill attaches to atama; donor lids/brows/jaw retained",
+    "source_eye_records": 8,
+    "donor_spill": [
+      {
+        "controller": "l_eye",
+        "donor_spill_records": 13
+      },
+      {
+        "controller": "r_eye",
+        "donor_spill_records": 12
+      }
+    ],
+    "changed_records": 29,
+    "jaw_coefficients_exact": true,
+    "source_geometry_changed": false,
+    "limitation": "Rigid eye role/motion hypothesis; source/PSP animation semantics still require PPSSPP"
+  },
+  "source_weight_sum_roundoff_max": 0.0,
+  "weight_sum_error": 2.220446049250313e-16,
+  "original_source_records_retained": true,
+  "source_vertices_repositioned": false,
+  "animation_semantics": "UNKNOWN; analytic probes and PPSSPP required; not a production policy"
+}
