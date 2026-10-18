@@ -89,8 +89,16 @@ def main():
     if len(sys.argv)>1 and sys.argv[1]=='--inspect':
         from desktop.adapters import adapter
         from desktop.core import dump
-        try:dump(sys.argv[3],dict(ok=True,info=adapter('hctp').inspect(sys.argv[2],Path(sys.argv[3]).parent/'textures')))
-        except Exception as exc:dump(sys.argv[3],dict(ok=False,error=str(exc)))
+        catalogue=None
+        try:
+            key=sys.argv[4] if len(sys.argv)>4 else 'hctp';reader=adapter(key)
+            options={}
+            if key=='jbi':
+                catalogue=reader.catalogue(sys.argv[2])
+                options['entry_id']=sys.argv[5] if len(sys.argv)>5 else ''
+            info=reader.inspect(sys.argv[2],Path(sys.argv[3]).parent/'textures',**options)
+            dump(sys.argv[3],dict(ok=True,info=info,catalogue=catalogue))
+        except Exception as exc:dump(sys.argv[3],dict(ok=False,error=str(exc),catalogue=catalogue))
         return 0
     if len(sys.argv)>1 and sys.argv[1]=='--qa':
         from model_qa.pipeline import run
@@ -114,6 +122,15 @@ def main():
             (Path(output).parent/'qa-error.log').write_text(traceback.format_exc(),encoding='utf-8');return 1
     from desktop.gui import Application
     app=Application(suite='--converter-only' not in sys.argv)
+    if len(sys.argv)>1 and sys.argv[1]=='--jbi-smoke-test':
+        from tools.jbi_smoke import run
+        try:run(app,sys.argv[2],sys.argv[3])
+        except Exception:
+            Path(sys.argv[2]).parent.mkdir(parents=True,exist_ok=True)
+            Path(sys.argv[2]).with_suffix('.error.log').write_text(traceback.format_exc(),encoding='utf-8')
+            return 1
+        finally:app.close()
+        return 0
     if len(sys.argv)>1 and sys.argv[1]=='--suite-smoke-test':
         from tools.suite_smoke import run
         try:run(app,sys.argv[2])
@@ -125,7 +142,10 @@ def main():
         version=subprocess.run([str(blender_path()),'--version'],capture_output=True,text=True,timeout=45,check=True).stdout
         app.root.update()
         states=[app.source_menu.entrycget(i,'state') for i in range(4)]
-        if states!=['disabled','disabled','normal','disabled']:raise ValueError('Source selector states are incorrect.')
+        if states!=['normal','disabled','normal','disabled']:raise ValueError('Source selector states are incorrect.')
+        app.choose_source_format('jbi');app.root.update()
+        if app.source_format.get()!='jbi' or 'Legacy' in app.texture_dropdown.cget('values'):raise ValueError('JBI selector or texture options are incorrect.')
+        app.choose_source_format('hctp');app.root.update()
         if not app.root.tk.call('info','commands','::tkdnd::drop_target'):raise ValueError('Drag/drop runtime command missing.')
         from desktop.texture_modes import MODES
         if app.texture_mode.get()!='Default':raise ValueError('Textures must default to Default.')

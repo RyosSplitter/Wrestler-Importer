@@ -178,8 +178,8 @@ class SuiteShell:
             ttk.Label(group, text=text, wraplength=800).pack(anchor='w', pady=5)
         formats = ttk.LabelFrame(page, text='Converter roadmap', padding=12)
         formats.pack(fill='x', padx=16, pady=12)
-        ttk.Label(formats, text='Available: HCTP → SVR 2011 PSP\n'
-                  'Planned: SYM, JBI, PS2 SVR, PS3/X360 SVR and WK adapters; PS1 texture styling.\n'
+        ttk.Label(formats, text='Available: HCTP and observed JBI variants → SVR 2011 PSP\n'
+                  'Planned: SYM, PS2 SVR, PS3/X360 SVR and WK adapters; PS1 texture styling.\n'
                   'Each source format needs its own sample analysis and compatibility tests.',
                   wraplength=800, justify='left').pack(anchor='w')
 

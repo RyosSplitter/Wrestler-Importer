@@ -1,7 +1,7 @@
 name: Build PSP Model Suite preview
 on:
   push:
-    branches: [feature/psp-model-suite]
+    branches: [feature/psp-model-suite, feature/jbi-app-integration]
   workflow_dispatch:
 permissions:
   contents: write
@@ -48,16 +48,32 @@ jobs:
           if ($p.ExitCode -ne 0) { throw 'Frozen suite functional smoke failed' }
           Copy-Item $output dist/suite-smoke.json
           Copy-Item "$env:RUNNER_TEMP/suite-smoke/*.png" dist/
+      - name: Frozen JBI archive selection, all texture modes, accessories, Save As and cancellation
+        timeout-minutes: 15
+        shell: pwsh
+        run: |
+          $env:PS2PSP_DATA = "$env:RUNNER_TEMP\jbi-app-smoke"
+          $env:PATH = "$env:SystemRoot\System32;$env:SystemRoot"
+          $output = "$env:RUNNER_TEMP\jbi-smoke\report.json"
+          $base = (Resolve-Path assets/Kurt-Angle-Ring.PAC).Path
+          $p = Start-Process dist/PSP-Model-Suite/PSP-Model-Suite.exe -ArgumentList @('--jbi-smoke-test',$output,$base) -PassThru -Wait
+          if ($p.ExitCode -ne 0) {
+            Get-Content "$env:RUNNER_TEMP/jbi-smoke/report.error.log" -ErrorAction SilentlyContinue
+            Get-ChildItem "$env:RUNNER_TEMP/jbi-app-smoke/jobs/*/error.log" | ForEach-Object { Get-Content $_ }
+            throw 'Frozen JBI functional smoke failed'
+          }
+          Copy-Item $output dist/jbi-smoke.json
+          Copy-Item "$env:RUNNER_TEMP/jbi-smoke/*.png" dist/
       - name: Package suite portable ZIP
         shell: python
         run: |
           import hashlib,shutil
           from pathlib import Path
-          path=Path(shutil.make_archive('dist/PSP-Model-Suite-Foundation-Windows-x64','zip','dist','PSP-Model-Suite'))
+          path=Path(shutil.make_archive('dist/PSP-Model-Suite-v0.26.0-Windows-x64','zip','dist','PSP-Model-Suite'))
           Path(str(path)+'.sha256').write_text(hashlib.file_digest(path.open('rb'),'sha256').hexdigest()+'  '+path.name+'\n')
       - uses: actions/upload-artifact@v4
         with:
-          name: PSP-Model-Suite-Foundation-Windows-x64
+          name: PSP-Model-Suite-v0.26.0-Windows-x64
           path: |
             dist/*.zip
             dist/*.sha256
@@ -69,7 +85,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           @'
-          PSP Model Suite editable-folder update: choose a PAC library, Export folder, edit named texture PNGs in Photoshop/GIMP and Pack folder into a new PAC. Unedited folders round-trip byte exactly; edited PNGs retain native dimensions, palette capacity and exact alpha. Palette quantization is reported; oversized or unsupported edits are withheld. Native model/rigging/UV/material/auxiliary payloads stay exact. Geometry reimport, creator assembly and new game adapters remain planned. Includes the unchanged v0.25.6 HCTP converter, library browser, preview/QA tools, existing Blender/runtime, source and notices; no game assets. Windows 10/11 x64. PAC validation now offers Textures, Model and Full modes against your own working PSP base, with recoverable GIM/header/material/skinning compatibility repairs. Full validation verifies the actual app previews; shape and rigging stay preserved. Unsupported repairs are withheld; originals stay preserved. Edited and repaired PACs still require PPSSPP testing.
+          PSP Model Suite v0.26.0 adds the observed JBI PAC/TIM2 conversion family alongside the existing HCTP converter. Select a costume from CH.PAC or load an extracted JBI PAC. Includes the user-accepted local arm/hand bind correction, digit-constrained weights, supported independent elbow pads, measured texture allocation, all five applicable texture modes, actual final-PAC previews and source/native analytical QA. SYM stays disabled; unknown props, packet/rig layouts and ambiguous repairs are withheld. Existing editor/library, folder export/packing and scoped validator remain available. Windows 10/11 x64; includes the existing Blender runtime, source and notices, with no game assets. Requires your own compatible PSP base. Hosted frozen Windows tests cover JBI selection, texture options, accessories, export and cancellation; each new model still needs PPSSPP testing, especially grips, twists and pad events. Accepted PACs and main remain preserved.
           '@ | Set-Content "$env:RUNNER_TEMP/suite-release-notes.txt" -Encoding utf8NoBOM
-          $tag = "suite-foundation-${{ github.run_number }}-${{ github.sha }}"
-          gh release create $tag dist/*.zip dist/*.sha256 dist/*.png --target '${{ github.sha }}' --prerelease --title 'PSP Model Suite — Texture, Model and Full validation' --notes-file "$env:RUNNER_TEMP/suite-release-notes.txt"
+          $tag = "suite-jbi-${{ github.run_number }}-${{ github.sha }}"
+          gh release create $tag dist/*.zip dist/*.sha256 dist/*.png dist/*smoke.json --target '${{ github.sha }}' --prerelease --title 'PSP Model Suite v0.26.0 — JBI conversion' --notes-file "$env:RUNNER_TEMP/suite-release-notes.txt"

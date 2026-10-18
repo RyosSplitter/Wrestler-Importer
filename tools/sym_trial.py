@@ -188,11 +188,12 @@ def head_preview(model):
     return result
 
 
-def optimize(base, native_bytes, model, sources, folder, max_bytes):
+def optimize(base, native_bytes, model, sources, folder, max_bytes, *, cancel=lambda:None, progress=None):
     names = model['texture_names']
     usage = model_usage({2: model}, dict(zip(names, sources)))
     choices, reports, importance = [], [], []
     for name, rgba in zip(names, sources):
+        cancel()
         u = usage[name]
         features = analyze(rgba, u['uv_mask'], u['surface_fraction'])
         # Minimal donor-support cranial floor; do not infer face identity from
@@ -234,17 +235,22 @@ def optimize(base, native_bytes, model, sources, folder, max_bytes):
     measured = 0
     def build(selected):
         nonlocal measured
+        cancel()
         rows = [rs[i] for rs, i in zip(choices, selected)]
         table = texture_table(names, [r['raw'] for r in rows], gim_reader=read_gim)
         stored = compress(table)
         pac = replace_sections(base, {2: encoded_model, 9: stored})
         measured += 1
         if measured % 50 == 0:
-            print('Measured actual texture/PAC combinations:', measured, flush=True)
+            message='Measured actual texture/PAC combinations: '+str(measured)
+            if progress is not None:progress(message)
+            else:
+                import sys
+                if sys.stdout is not None:print(message,flush=True)
         return pac, dict(pac_bytes=len(pac), stored_model_bytes=len(encoded_model),
             stored_texture_bytes=len(stored), texture_gim_bytes=sum(len(r['raw']) for r in rows),
             pixel_palette_bytes=retained_pixels+sum(r['entry']['pixel_palette_bytes'] for r in rows))
-    pac, selected, report = allocate(choices, importance, build, max_bytes, base_pixels)
+    pac, selected, report = allocate(choices, importance, build, max_bytes, base_pixels,cancel=cancel)
     rows = [rs[i] for rs, i in zip(choices, selected)]
     gims = {n: r['raw'] for n, r in zip(names, rows)}
     for item, row in zip(reports, rows):

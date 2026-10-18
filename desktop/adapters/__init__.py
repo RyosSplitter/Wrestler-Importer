@@ -8,7 +8,7 @@ class SourceFormat:
     supported: bool
 
 FORMATS = (
-    SourceFormat('jbi','SmackDown! Just Bring It (PS2)',False),
+    SourceFormat('jbi','SmackDown! Just Bring It (PS2)',True),
     SourceFormat('sym','SmackDown! Shut Your Mouth (PS2)',False),
     SourceFormat('hctp','SmackDown! Here Comes the Pain (PS2)',True),
     SourceFormat('svr','SmackDown! vs. Raw (PS2)',False),
@@ -17,6 +17,9 @@ FORMATS = (
 def adapter(key):
     selected = next((f for f in FORMATS if f.key==key),None)
     if selected is None or not selected.supported:
-        raise ValueError('This source format is not supported yet. Select Here Comes the Pain.')
+        raise ValueError('This source format is not supported yet. Select Here Comes the Pain or Just Bring It.')
+    if key=='jbi':
+        from .jbi import JbiAdapter
+        return JbiAdapter()
     from .hctp import HctpAdapter
     return HctpAdapter()

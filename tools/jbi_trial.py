@@ -21,6 +21,7 @@ from desktop.texture_optimizer.analysis import model_usage
 from desktop.texture_optimizer.candidates import read_gim
 from tools.hctp_weights import read_hctp_with_weights
 from tools.jbi_rig import arrays, digit_review, finger_chains, refine_arms
+from tools.jbi_source import read as read_source_bundle
 from tools.jericho_hybrid_trial import pack
 from tools.pac_repack import texture_table
 from tools.psp_mesh_audit import audit_yobj
@@ -162,36 +163,27 @@ def crop_region(model, side='l', hand=False):
     return result
 
 
-def run(source, base_path, output):
+def run(source, base_path, output, *, entry_id='', progress=lambda p,m:None,
+        cancel=lambda:False, render_controls=True, skin_palette_compatibility=True):
+    from desktop.core import Cancelled
+    def check():
+        if cancel():raise Cancelled('JBI conversion cancelled.')
+    def step(p,message):check();progress(p,message)
+    source,base_path,output=map(Path,(source,base_path,output))
+    step(5,'Reading selected JBI costume and PSP base')
     original=source.read_bytes(); base,target=base_model(base_path)
-    directory=read_ch_directory(original); entry=next(e for e in directory['entries'] if e['id_hex']=='0000')
-    costume=original[entry['offset']:entry['offset']+entry['stored_bytes']]
-    decoded={s['id']:r for s,r in sections(costume)}
-    originals={sid:read_hctp_with_weights(decoded[sid]) for sid in (2,6,7)}
-    combined=copy.deepcopy(originals[2]);combined['meshes']=[]
-    source_roles=[]
-    for sid,model in originals.items():
-        if model['textures'] != originals[2]['textures']:
-            raise ValueError('JBI accessory atlas differs')
-        for a,b in zip(model['bones'], originals[2]['bones']):
-            if any(a[k]!=b[k] for k in ('name','parent','local_position','rotation')):
-                raise ValueError('Source accessory local rig differs')
-        p,w=arrays(model)
-        support=[b['name'] for b in model['bones'] if np.any(w[:,b['index']]>1e-7)]
-        if sid in (6,7):
-            side='l' if sid==6 else 'r'
-            if any(not n.startswith(side+'_') or not any(t in n for t in ('kote','ninoude')) for n in support):
-                raise ValueError('Source extra does not have verified unilateral elbow support')
-        source_roles.append(dict(section=sid,vertices=len(p),triangles=model['triangle_count'],
-            support=support,bounds=[p.min(0).tolist(),p.max(0).tolist()],sha256=sha(decoded[sid])))
-        for mesh in copy.deepcopy(model['meshes']):
-            mesh['source_section']=sid;mesh['index']=len(combined['meshes']);combined['meshes'].append(mesh)
-    combined['mesh_count']=len(combined['meshes'])
-    combined['triangle_count']=sum(m['triangle_count'] for m in originals.values())
-    pix,pal,_=read_atlas(decoded[1])
-    charted,images,atlas=partition(combined,pal[pix])
+    bundle=read_source_bundle(original,entry_id)
+    originals,charted,images,atlas,source_roles=[bundle[k] for k in ('originals','charted','images','atlas','source_roles')]
+    selection=bundle['selection']
+    base_roles={s['id'] for s,raw in sections(base) if raw.startswith(b'YOBJ') and s['id']!=2}
+    expected_roles={sid+20 for sid in originals if sid!=2}
+    if not base_roles<=expected_roles:
+        raise ValueError('The PSP base contains unmatched accessory models. Choose a base without them or a matching JBI costume.')
+    step(15,'Adapting JBI atlas islands and checking independent model roles')
     old,rig=prepare_trial(charted,target)
+    step(25,'Converting arm/hand bind frames and preserving digit identity')
     prepared,refinement=refine_arms(charted,target,old,rig['alignment'])
+    step(35,'Checking anatomical support, finger motion and thumb-web stress')
     qa,probes=arm_qa(charted,old,prepared,target)
     output.mkdir(parents=True,exist_ok=False)
     dump(output/'atlas.json',atlas);dump(output/'rig-refinement.json',refinement);dump(output/'arm-qa.json',qa)
@@ -201,6 +193,8 @@ def run(source, base_path, output):
     contracts=[dict(bits=8 if usage[n]['head_fraction']>.5 or np.any(im[:,:,3]<255) else 4,
                     cutout=bool(np.any(im[:,:,3]<255))) for n,im in zip(prepared['textures'],images)]
     for source_sid,target_sid,name in ((2,2,target['model_name']),(6,26,'L_elb'),(7,27,'R_elb')):
+        if source_sid not in originals:continue
+        step(45,'Building and auditing native PSP model section '+str(target_sid))
         obj=subset(prepared,source_sid); packed=pack(obj,target); donor=copy.deepcopy(target)
         # A two-segment source digit may form a two-slot draw. Use its native
         # third phalanx as an explicitly zero-weight slot to match the observed
@@ -227,7 +221,9 @@ def run(source, base_path, output):
             donor['bone_raw']=bytes(raw)
         raw=serialize(packed,donor,contracts)
         if target_sid==2:
-            raw,compat=adapt_yobj(raw);dump(output/'compatibility.json',compat)
+            if skin_palette_compatibility:raw,compat=adapt_yobj(raw)
+            else:compat=dict(enabled=False,changed_meshes=0,added_vertex_buffer_bytes=0)
+            dump(output/'compatibility.json',compat)
         native=audit_yobj(raw)
         pose_reports[str(target_sid)]=pose_qa(obj,native,target if target_sid==2 else None)
         blocking=[r for r in pose_reports[str(target_sid)]['review_findings']
@@ -243,36 +239,44 @@ def run(source, base_path, output):
     old_table=next(r for s,r in sections(base) if s['id']==9)
     provisional=package_models(base,native_bytes[2],old_table,{i:r for i,r in native_bytes.items() if i!=2})
     texture_usage_model=combined_preview(audit_yobj(native_bytes[2]),
-        [audit_yobj(native_bytes[sid]) for sid in (26,27)])
-    pac,gims,texture_report=optimize(provisional,native_bytes[2],texture_usage_model,images,output/'textures',148000)
+        [audit_yobj(raw) for sid,raw in native_bytes.items() if sid!=2])
+    step(55,'Allocating JBI texture quality against actual PAC and native-base memory budgets')
+    pac,gims,texture_report=optimize(provisional,native_bytes[2],texture_usage_model,images,output/'textures',148000,
+        cancel=check,progress=lambda m:step(65,m))
     table=texture_table(prepared['textures'],[gims[n] for n in prepared['textures']],gim_reader=read_gim)
     if pac!=package_models(base,native_bytes[2],table,{i:r for i,r in native_bytes.items() if i!=2}):
         raise ValueError('Canonical model-set packaging differs')
+    step(80,'Validating actual PAC alignment, pointers, indices, palettes and model set')
     native,gims=validate_pac(pac,base,148000,accessory_models=expected,gim_reader=read_gim)
     final_models={s['id']:audit_yobj(r) for s,r in sections(pac) if r.startswith(b'YOBJ')}
     for sid,raw in native_bytes.items():
         if next(r for s,r in sections(pac) if s['id']==sid)!=raw:
             raise ValueError('Final PAC differs from validated YOBJ')
-    visual=combined_preview(native,[final_models[26],final_models[27]])
-    preview=output/'preview';preview.mkdir();write_preview(visual,preview/'JBI-Rock-with-pads.obj')
+    visual=combined_preview(native,[model for sid,model in final_models.items() if sid!=2])
+    preview=output/'preview';preview.mkdir();write_preview(visual,preview/'output.obj')
+    (preview/'output.yobj').write_bytes(native_bytes[2])
+    for sid,raw in native_bytes.items():
+        if sid!=2:(preview/('section-%d.yobj'%sid)).write_bytes(raw)
     lines=[]
     for i,n in enumerate(visual['texture_names']):
         p,c=read_gim(gims[n]);Image.fromarray(c[p]).save(preview/(n+'.png'))
         lines += [f'newmtl texture_{i}','Kd 1 1 1',f'map_Kd {n}.png']
     (preview/'preview.mtl').write_text('\n'.join(lines)+'\n')
-    filename='JBI-Rock-arms-and-elbow-pads-EXPERIMENTAL.pac'
+    filename='JBI-'+(selection['selected_entry'] or 'costume')+'-PSP-experimental.pac'
     (output/filename).write_bytes(pac)
     (output/(filename+'.sha256')).write_text(sha(pac)+'  '+filename+'\n')
     views=output/'renders';views.mkdir()
     before_visual=dict(old,texture_names=old['textures'])
-    for view in ('front','back','left','right','front-left'):
+    for view in (('front','back','left','right','front-left') if render_controls else ()):
+        check()
         points=arrays(dict(visual,bone_count=len(visual['bones'])))[0]
         bounds=[points.min(0).tolist(),points.max(0).tolist()]
         render_native(visual,gims,view,views/(view+'.png'),label='JBI trial | final PAC re-extracted | CPU render',fingerprint=sha(pac),camera_bounds=bounds)
     # Identical textures and camera isolate weights from texture allocation.
-    for crop,hand in [('arm',False),('hand',True)]:
+    for crop,hand in ([('arm',False),('hand',True)] if render_controls else []):
         a=crop_region(before_visual,hand=hand);b=crop_region(visual,hand=hand)
         for name,pose in [('rest',{}),*probes.items()]:
+            check()
             points=[]
             for m in (a,b):
                 p,w=arrays(dict(m,bone_count=len(m['bones'])));points.append(deform(dict(m,bone_count=len(m['bones'])),p,w,pose))
@@ -287,12 +291,12 @@ def run(source, base_path, output):
     if source.read_bytes()!=original or base_path.read_bytes()!=base:
         raise ValueError('Input changed')
     report=dict(status='EXPERIMENTAL; PPSSPP review required',source_game='JBI per owner correction; historical SYM title was erroneous',
-        archive_sha256=sha(original),costume_id='0000',source_roles=source_roles,
+        archive_sha256=sha(original),costume_id=selection['selected_entry'],selection=selection,source_roles=source_roles,
         pac=dict(filename=filename,bytes=len(pac),sha256=sha(pac),budget=148000),
         models={sid:dict(sha256=sha(native_bytes[sid]),**m['report']) for sid,m in final_models.items()},
         total_triangles=sum(m['report']['triangles'] for m in final_models.values()),
         texture_count=len(gims),texture_pixel_palette_bytes=texture_report['pixel_palette_bytes'],
-        source_geometry_changed=True,geometry_change='Localized arm/hand bind-reference conversion; shoulder surface anchors pinned; torso/head/legs unchanged',decimation=False,unrelated_production_code_changed=False,
+        source_geometry_changed=True,geometry_change='Localized arm/hand bind-reference conversion; shoulder surface anchors pinned; torso/head/legs unchanged',decimation=False,
         native_skeleton_main_exact=True,accessory_local_bind_exact=True,
         packaging='Unchanged desktop.accessories.package_models; byte-exact callback comparison',
         limitations=['JBI helper animation semantics inferred, not captured from the game',
@@ -300,14 +304,16 @@ def run(source, base_path, output):
             'Pad draw/removal/throw semantics need in-game review; no unknown source event data copied',
             'CPU comparison renders and analytical QA are not PPSSPP or Noesis screenshots'])
     dump(output/'report.json',report)
-    print(json.dumps(dict(pac=report['pac'],triangles=report['total_triangles'],textures=report['texture_count']),indent=2),flush=True)
+    step(85,'JBI native model set and analytical QA complete')
     return report
 
 
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('source',type=Path)
     p.add_argument('--base',type=Path,required=True);p.add_argument('--out',type=Path,required=True)
-    args=p.parse_args();run(args.source,args.base,args.out)
+    p.add_argument('--entry',default='')
+    args=p.parse_args();report=run(args.source,args.base,args.out,entry_id=args.entry)
+    print(json.dumps(dict(pac=report['pac'],triangles=report['total_triangles'],textures=report['texture_count']),indent=2),flush=True)
 
 
 if __name__=='__main__':main()

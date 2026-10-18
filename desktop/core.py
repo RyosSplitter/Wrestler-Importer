@@ -53,6 +53,8 @@ class Request:
     texture_review_sha256:str=''
     texture_mode:str=''
     downgrade_steps:int=0
+    source_entry:str=''
+    texture_review_entry:str=''
 
     @property
     def use_adaptive(self):
@@ -83,6 +85,12 @@ class Request:
         if not isinstance(self.adaptive_textures,bool):raise ValueError('Adaptive texture option must be a boolean.')
         if not isinstance(self.skin_palette_compatibility,bool):raise ValueError('Skin palette compatibility option must be a boolean.')
         adapter(self.source_format)
+        if not isinstance(self.source_entry,str) or not isinstance(self.texture_review_entry,str):raise ValueError('Source entry must be a string.')
+        if self.source_format=='jbi':
+            if self.source_entry and not re.fullmatch('[0-9a-f]{4}',self.source_entry):raise ValueError('Choose a four-digit JBI archive entry.')
+            if self.texture_mode=='Legacy':raise ValueError('Legacy textures are HCTP-only. Select Default for the validated JBI texture path.')
+            if selected and self.texture_review_entry!=self.source_entry:raise ValueError('JBI costume changed since texture review; review its textures again.')
+        elif self.source_entry or self.texture_review_entry:raise ValueError('Only JBI archives have a costume selector.')
         for raw in (self.source,self.base):
             p=Path(raw)
             if not p.is_file() or p.suffix.lower()!='.pac':raise ValueError('Choose an existing .pac file.')
@@ -269,6 +277,9 @@ def blender_path():
     return path
 
 def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_samples=None,qa_resolution=None):
+    if request.source_format=='jbi':
+        from desktop.jbi_job import run_job as run_jbi
+        return run_jbi(request,work,progress,cancel)
     request.validate();work=Path(work);work.mkdir(parents=True,exist_ok=True)
     profile=json.loads(PROFILE.read_text());source=Path(request.source);base=Path(request.base)
     hashes={str(p.resolve()):digest(p) for p in (source,base)}

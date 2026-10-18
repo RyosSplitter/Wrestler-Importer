@@ -1,6 +1,7 @@
-"""Read-only research readers for the supplied SYM CH.PAC variant.
+"""Read-only primitives for the uploaded CH.PAC variant, corrected to JBI.
 
-These are not registered source adapters. Unknown layouts fail explicitly;
+Historical module/schema names are retained. The JBI adapter uses these bounded
+primitives; they do not establish SYM support. Unknown layouts fail explicitly;
 original records, inter-entry trailers and fourth channels are never repaired.
 """
 from __future__ import annotations
@@ -25,7 +26,7 @@ def read_ch_directory(data):
     Report them without treating them as offsets, checksums or disposable zeros.
     """
     if not 0x4000 <= len(data) <= 64 * 1024 * 1024 or data[:4] != b'DPAC':
-        raise FormatError('Not the bounded SYM single-group DPAC variant')
+        raise FormatError('Not the bounded single-group DPAC variant')
     table_bytes, payload_bytes, unknown = struct.unpack_from('<3I', data, 4)
     if any(data[16:0x800]) or data[0x800:0x804] != b'EMD ':
         raise FormatError('Unsupported DPAC header/directory variant')
@@ -75,7 +76,7 @@ def read_atlas(data):
 
     Low nibble first for indexed4; indexed8 CLUT bits 3/4 are exchanged.
     PS2 alpha 0..128 is mapped to 0..255 for preview. Raw palette is retained.
-    This does not establish runtime blending semantics for every SYM material.
+    This does not establish runtime blending semantics for every JBI material.
     """
     header = tim2_headers(data)
     if header['version'] != 4 or header['picture_count'] != 1 or header['trailing_bytes']:
@@ -84,7 +85,7 @@ def read_atlas(data):
     bits = {4: 4, 5: 8}.get(p['image_type'])
     if (bits is None or p['clut_type'] != 3 or p['picture_format'] != 0
             or p['mipmap_count'] != 1 or p['header_bytes'] != 48):
-        raise FormatError('Unsupported SYM TIM2 pixel/CLUT/header/mipmap variant')
+        raise FormatError('Unsupported TIM2 pixel/CLUT/header/mipmap variant')
     width, height = p['width'], p['height']
     tex0 = int.from_bytes(bytes.fromhex(p['gs_tex0_hex']), 'little')
     registers = dict(psm=(tex0 >> 20) & 63, tw=(tex0 >> 26) & 15,

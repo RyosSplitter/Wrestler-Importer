@@ -1,3 +1,12 @@
+# PSP Model Suite v0.26.0
+
+The converter now offers the observed JBI PAC/TIM2 family, including archive
+costume selection and supported independent elbow pads. See
+[JBI usage and integration](jbi-app-integration.md). HCTP conversion stays on its
+established path. SYM remains unavailable pending confirmed source evidence.
+
+## Foundation history
+
 # PSP Model Suite — foundation preview
 
 This is the first suite milestone on `feature/psp-model-suite`. It extends the
