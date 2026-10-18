@@ -1,0 +1,9 @@
+{
+  "prepare": true,
+  "textures": true,
+  "base_model": true,
+  "validate_pac": true,
+  "ocular_checks": true,
+  "blender_path": true,
+  "hctp_run_job_after_jbi_dispatch": true
+}

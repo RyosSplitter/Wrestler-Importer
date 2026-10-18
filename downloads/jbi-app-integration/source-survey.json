@@ -1,0 +1,39 @@
+{
+  "0000": {
+    "status": "analytical-pass",
+    "models": 3,
+    "source_triangles": 1626,
+    "textures": 23,
+    "wrong_digit_records": 0
+  },
+  "0001": {
+    "status": "analytical-pass",
+    "models": 1,
+    "source_triangles": 1556,
+    "textures": 21,
+    "wrong_digit_records": 0
+  },
+  "0100": {
+    "status": "analytical-pass",
+    "models": 3,
+    "source_triangles": 1638,
+    "textures": 26,
+    "wrong_digit_records": 0
+  },
+  "0010": {
+    "status": "withheld",
+    "reason": "Source eyeball support overlaps transferred jaw controllers; review required"
+  },
+  "0020": {
+    "status": "withheld",
+    "reason": "JBI entry 0020: Unsupported JBI accessory YOBJ section(s): 5. These objects cannot yet be converted; no model was silently omitted."
+  },
+  "0040": {
+    "status": "withheld",
+    "reason": "Source eyeball support overlaps transferred jaw controllers; review required"
+  },
+  "0069": {
+    "status": "withheld",
+    "reason": "JBI entry 0069: Unsupported HCTP position/normal packet count"
+  }
+}

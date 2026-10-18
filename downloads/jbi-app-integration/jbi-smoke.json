@@ -1,0 +1,65 @@
+{
+  "status": "pass",
+  "fixture": "Procedural meshes/TIM2 on the selected development-only PSP rig; not original JBI assets",
+  "archive_selection": true,
+  "entry_switch_clears_priorities": true,
+  "source_formats": [
+    "jbi",
+    "hctp"
+  ],
+  "outputs": {
+    "Default": {
+      "bytes": 24576,
+      "sha256": "3696088b633eb170db07f280f3aa94599b9eb3fb76f73da488b61789a23ba432",
+      "models": 3,
+      "source_entry": "0000",
+      "native_validation": "passed",
+      "review_flags": 3,
+      "non_texture_payloads_exact": true,
+      "save_as_verified": true
+    },
+    "ATO": {
+      "bytes": 20480,
+      "sha256": "6834ac728d36775d07a7b0d79122636de176f1873a2d8ff6bca86b126a5e3e06",
+      "models": 3,
+      "source_entry": "0000",
+      "native_validation": "passed",
+      "review_flags": 3,
+      "non_texture_payloads_exact": true,
+      "save_as_verified": true
+    },
+    "Priority Selection": {
+      "bytes": 20480,
+      "sha256": "6834ac728d36775d07a7b0d79122636de176f1873a2d8ff6bca86b126a5e3e06",
+      "models": 3,
+      "source_entry": "0000",
+      "native_validation": "passed",
+      "review_flags": 3,
+      "non_texture_payloads_exact": true,
+      "save_as_verified": true
+    },
+    "Downgrade": {
+      "bytes": 24576,
+      "sha256": "668bd2d7ec88ae6d0bf083324e2be90ec1a844af458dd329d5a1e5e004d4b79a",
+      "models": 3,
+      "source_entry": "0000",
+      "native_validation": "passed",
+      "review_flags": 3,
+      "non_texture_payloads_exact": true,
+      "save_as_verified": true
+    },
+    "Maximum Downgrade": {
+      "bytes": 24576,
+      "sha256": "3696088b633eb170db07f280f3aa94599b9eb3fb76f73da488b61789a23ba432",
+      "models": 3,
+      "source_entry": "0000",
+      "native_validation": "passed",
+      "review_flags": 3,
+      "non_texture_payloads_exact": true,
+      "save_as_verified": true
+    }
+  },
+  "cancellation_clean": true,
+  "input_hashes_unchanged": true,
+  "limitation": "Frozen hosted Windows GUI/runtime validation; not a clean user PC or PPSSPP test"
+}

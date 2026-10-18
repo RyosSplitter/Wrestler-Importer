@@ -1,0 +1,15 @@
+{
+  "bytes": 133120,
+  "sha256": "5d7bf5a090b0c7270baf84da6191e5d78844c3bedb1e6035ec206694c5b38359",
+  "source_format": "jbi",
+  "source_entry": "0000",
+  "model_count": 3,
+  "total_meshes": 56,
+  "total_vertices": 1600,
+  "total_triangles": 1626,
+  "native_validation": "passed",
+  "ocular_validation": "passed",
+  "review_flags": 1,
+  "byte_identical_to_accepted_pac": true,
+  "validation_scope": "Actual original uploaded JBI archive, pinned desktop dependencies, local isolated app worker; Windows frozen tests use procedural source fixtures"
+}

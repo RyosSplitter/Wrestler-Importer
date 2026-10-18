@@ -1,0 +1,17 @@
+# JBI app v0.26.0 release evidence
+
+[Download Windows x64](https://github.com/RyosSplitter/Wrestler-Importer/releases/download/suite-jbi-7-35371bd8cf8c7f2639fd9ae709839fb334c28a83/PSP-Model-Suite-v0.26.0-Windows-x64.zip).
+
+**CONFIRMED:** Build commit `35371bd8cf8c7f2639fd9ae709839fb334c28a83`, hosted Windows run [39083912039](https://github.com/RyosSplitter/Wrestler-Importer/actions/runs/39083912039), all workflow steps successful. Downloaded ZIP: 554,868,448 bytes; SHA-256 `5408acc0a58aa225c8a6fefed2e11953cab4cdbae9a5d36d40e16eed3b810eac`. All 7,215 manifest hashes, exact file set and archive paths verified. Nine critical source files match the build commit after line-ending normalization; no game assets bundled. See `verified-release.json`.
+
+**CONFIRMED:** `jbi-smoke.json` records real frozen Windows GUI/worker archive selection, entry switching and priority reset, Default/ATO/Priority/Downgrade/Maximum modes, independent accessories, non-texture preservation, Save As and clean cancellation. `converter-smoke.json` and `suite-smoke.json` cover the prior controls, bundled Blender, library/editor/folder/validator operations. Windows screenshots show **procedural test geometry**, not an original wrestler.
+
+**CONFIRMED:** `accepted-rock-app-regression.json` is a separate local app-worker run on the owner's actual original archive with pinned desktop dependencies. Default is byte-identical to the accepted 133,120-byte PAC, SHA-256 `5d7bf5a090b0c7270baf84da6191e5d78844c3bedb1e6035ec206694c5b38359`. `accepted-rock-app-output-front.png` is its actual final-PAC CPU render. This is not a Noesis/PPSSPP screenshot. Two additional local actual-source checks: entry 0001 produces a one-model 118,784-byte PAC / 1,556 triangles; entry 0100 passes arm/digit analytical QA with three source models. Analytical passes do not certify game compatibility.
+
+**CONFIRMED:** `hctp-preservation.json` compares Python ASTs with the accepted experiment's parent: HCTP prepare, texture creation, base parsing, native validation, ocular checks and Blender lookup match exactly. The HCTP run-job body after the new JBI dispatch also matches exactly. This is code-preservation evidence, separate from the passing existing test suite.
+
+**CONFIRMED:** `rock-texture-modes.json` applies each optional texture stage to the actual accepted-source Default result: ATO 129,024 bytes; Priority (chart_00) 129,024; one-step Downgrade 131,072; Maximum 133,120. All preserve every decoded non-texture section, including all three YOBJs. The selected texture appearance still needs human review; structural preservation alone is not a perceptual-quality claim.
+
+**CONFIRMED:** `source-survey.json` distinguishes supported analytical cases from withheld ones. Entries 0010/0040 trigger the existing eye/jaw overlap guard; 0020 contains unsupported prop section 5; 0069 has an unsupported position/normal packet. These are reported, not forced into the supported contract or silently omitted. This preview does not claim title-wide JBI coverage.
+
+**INFERRED:** General source/target anatomical/controller correspondence is supported by bind and synthetic-pose evidence, with one user-accepted original-source Rock conversion. **UNKNOWN:** All game animation semantics, other costumes, pad events, actual heap limits, extended-match stability and behavior on a clean user Windows PC. Each new model still requires SVR 2011 PSP testing. Accepted PACs are preserved; no feature branch was merged into main.

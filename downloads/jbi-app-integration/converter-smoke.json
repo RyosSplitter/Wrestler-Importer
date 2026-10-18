@@ -1,0 +1,37 @@
+{
+  "gui": true,
+  "drag_drop_command_verified": true,
+  "source_menu_states": [
+    "normal",
+    "disabled",
+    "normal",
+    "disabled"
+  ],
+  "bundled_blender": "Blender 4.3.2",
+  "preview_views": [
+    "front-left",
+    "front",
+    "back",
+    "left",
+    "right"
+  ],
+  "base_required": true,
+  "texture_mode_default": "Default",
+  "texture_modes": [
+    "Default",
+    "Legacy",
+    "ATO",
+    "Priority Selection",
+    "Downgrade",
+    "Maximum Downgrade"
+  ],
+  "downgrade_controls_verified": true,
+  "scrollable_sidebar_verified": true,
+  "skin_palette_compatibility_default": true,
+  "skin_checkbox_verified": true,
+  "three_selection_limit_verified": true,
+  "texture_dialog_cancel_verified": true,
+  "ui_theme": "vista",
+  "convert_above_preview": true,
+  "initial_button_states_verified": true
+}

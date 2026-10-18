@@ -1,5 +1,13 @@
 # PSP Model Suite v0.26.0: JBI conversion
 
+[Windows x64 download](https://github.com/RyosSplitter/Wrestler-Importer/releases/download/suite-jbi-7-35371bd8cf8c7f2639fd9ae709839fb334c28a83/PSP-Model-Suite-v0.26.0-Windows-x64.zip)
+ · [Verified release and test evidence](../downloads/jbi-app-integration/README.md).
+
+Implementation, byte/file and executed-test observations below are
+**CONFIRMED** for build `35371bd8cf8c7f2639fd9ae709839fb334c28a83`.
+General anatomical/controller equivalence is **INFERRED**; untested game
+semantics and true runtime limits remain **UNKNOWN**, as described below.
+
 The JBI path integrates the arm/hand and independent elbow-pad experiment
 accepted by the user. The HCTP preparation, reduction and texture defaults stay
 on their previous path. SYM remains disabled: the original uploaded archive
@@ -143,3 +151,10 @@ regression controls. The app's Default is compared against that accepted PAC;
 platform floating-point differences must be distinguished from changed geometry
 or rigging. Previously accepted HCTP/JBI PACs are preserved, and experiments are
 not silently merged into main by publishing this preview build.
+
+The pinned local app worker reproduced the accepted Rock PAC byte-for-byte at
+133,120 bytes. The downloaded Windows ZIP passed all 7,215 manifest hash checks,
+and the hosted frozen GUI/worker checks passed all five applicable texture modes,
+archive switching, accessory retention, Save As and cancellation. The existing
+converter/runtime and suite functional checks also passed. These results remain
+distinct from original-game testing and clean-user-PC validation.

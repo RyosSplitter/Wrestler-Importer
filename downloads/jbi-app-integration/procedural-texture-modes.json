@@ -1,0 +1,22 @@
+{
+  "ATO": {
+    "bytes": 20480,
+    "models": 3,
+    "non_texture_payloads_exact": true
+  },
+  "Priority Selection": {
+    "bytes": 20480,
+    "models": 3,
+    "non_texture_payloads_exact": true
+  },
+  "Downgrade": {
+    "bytes": 24576,
+    "models": 3,
+    "non_texture_payloads_exact": true
+  },
+  "Maximum Downgrade": {
+    "bytes": 24576,
+    "models": 3,
+    "non_texture_payloads_exact": true
+  }
+}

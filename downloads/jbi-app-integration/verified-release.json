@@ -1,0 +1,165 @@
+{
+  "version": "0.26.0",
+  "build_commit": "35371bd8cf8c7f2639fd9ae709839fb334c28a83",
+  "run": 39083912039,
+  "release": "suite-jbi-7-35371bd8cf8c7f2639fd9ae709839fb334c28a83",
+  "zip_bytes": 554868448,
+  "zip_sha256": "5408acc0a58aa225c8a6fefed2e11953cab4cdbae9a5d36d40e16eed3b810eac",
+  "manifest_files_verified": 7215,
+  "source_files_match_after_line_ending_normalization": [
+    "desktop/gui.py",
+    "desktop/core.py",
+    "desktop/jbi_job.py",
+    "desktop/adapters/jbi.py",
+    "tools/jbi_trial.py",
+    "tools/jbi_rig.py",
+    "tools/jbi_source.py",
+    "tools/sym_trial.py",
+    "ps2psp_converter.py"
+  ],
+  "no_bundled_game_assets": true,
+  "windows_jbi": {
+    "status": "pass",
+    "fixture": "Procedural meshes/TIM2 on the selected development-only PSP rig; not original JBI assets",
+    "archive_selection": true,
+    "entry_switch_clears_priorities": true,
+    "source_formats": [
+      "jbi",
+      "hctp"
+    ],
+    "outputs": {
+      "Default": {
+        "bytes": 24576,
+        "sha256": "3696088b633eb170db07f280f3aa94599b9eb3fb76f73da488b61789a23ba432",
+        "models": 3,
+        "source_entry": "0000",
+        "native_validation": "passed",
+        "review_flags": 3,
+        "non_texture_payloads_exact": true,
+        "save_as_verified": true
+      },
+      "ATO": {
+        "bytes": 20480,
+        "sha256": "6834ac728d36775d07a7b0d79122636de176f1873a2d8ff6bca86b126a5e3e06",
+        "models": 3,
+        "source_entry": "0000",
+        "native_validation": "passed",
+        "review_flags": 3,
+        "non_texture_payloads_exact": true,
+        "save_as_verified": true
+      },
+      "Priority Selection": {
+        "bytes": 20480,
+        "sha256": "6834ac728d36775d07a7b0d79122636de176f1873a2d8ff6bca86b126a5e3e06",
+        "models": 3,
+        "source_entry": "0000",
+        "native_validation": "passed",
+        "review_flags": 3,
+        "non_texture_payloads_exact": true,
+        "save_as_verified": true
+      },
+      "Downgrade": {
+        "bytes": 24576,
+        "sha256": "668bd2d7ec88ae6d0bf083324e2be90ec1a844af458dd329d5a1e5e004d4b79a",
+        "models": 3,
+        "source_entry": "0000",
+        "native_validation": "passed",
+        "review_flags": 3,
+        "non_texture_payloads_exact": true,
+        "save_as_verified": true
+      },
+      "Maximum Downgrade": {
+        "bytes": 24576,
+        "sha256": "3696088b633eb170db07f280f3aa94599b9eb3fb76f73da488b61789a23ba432",
+        "models": 3,
+        "source_entry": "0000",
+        "native_validation": "passed",
+        "review_flags": 3,
+        "non_texture_payloads_exact": true,
+        "save_as_verified": true
+      }
+    },
+    "cancellation_clean": true,
+    "input_hashes_unchanged": true,
+    "limitation": "Frozen hosted Windows GUI/runtime validation; not a clean user PC or PPSSPP test"
+  },
+  "windows_converter": {
+    "gui": true,
+    "drag_drop_command_verified": true,
+    "source_menu_states": [
+      "normal",
+      "disabled",
+      "normal",
+      "disabled"
+    ],
+    "bundled_blender": "Blender 4.3.2",
+    "preview_views": [
+      "front-left",
+      "front",
+      "back",
+      "left",
+      "right"
+    ],
+    "base_required": true,
+    "texture_mode_default": "Default",
+    "texture_modes": [
+      "Default",
+      "Legacy",
+      "ATO",
+      "Priority Selection",
+      "Downgrade",
+      "Maximum Downgrade"
+    ],
+    "downgrade_controls_verified": true,
+    "scrollable_sidebar_verified": true,
+    "skin_palette_compatibility_default": true,
+    "skin_checkbox_verified": true,
+    "three_selection_limit_verified": true,
+    "texture_dialog_cancel_verified": true,
+    "ui_theme": "vista",
+    "convert_above_preview": true,
+    "initial_button_states_verified": true
+  },
+  "windows_suite": {
+    "suite_tabs": [
+      "Converter",
+      "PSP Model Editor",
+      "Textures",
+      "Quality Assurance",
+      "Model Creator"
+    ],
+    "actual_gui_exercised": true,
+    "isolated_worker_verified": true,
+    "converter_state_preserved": true,
+    "models": 2,
+    "textures": 1,
+    "all_model_views_verified": true,
+    "exact_pac_copy": true,
+    "input_unchanged": true,
+    "preview_export_verified": true,
+    "minimum_size_verified": true,
+    "pac_folder_browser_verified": true,
+    "folder_filter_verified": true,
+    "folder_preference_verified": true,
+    "latest_selection_wins_verified": true,
+    "folder_refresh_preserves_selection": true,
+    "single_click_debounce_verified": true,
+    "failed_file_preserves_workspace": true,
+    "editable_folder_export_verified": true,
+    "unedited_folder_exact_round_trip": true,
+    "edited_png_packed_and_previewed": true,
+    "native_models_preserved_on_pack": true,
+    "standalone_pac_validator_worker_verified": true,
+    "standalone_verified_repair_worker_verified": true,
+    "texture_model_full_validation_workers_verified": true,
+    "validation_dialog_modes_and_base_verified": true,
+    "creator_status": "planned",
+    "game_assets_used": false
+  },
+  "local_accepted_rock": {
+    "bytes": 133120,
+    "sha256": "5d7bf5a090b0c7270baf84da6191e5d78844c3bedb1e6035ec206694c5b38359",
+    "byte_identical": true
+  },
+  "limitation": "Hosted Windows validation; not a clean user Windows installation or gameplay test"
+}
