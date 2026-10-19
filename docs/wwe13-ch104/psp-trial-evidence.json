@@ -1,0 +1,943 @@
+{
+  "pac": "WWE13-Jericho-PSP-EXPERIMENTAL.pac",
+  "pac_bytes": 145408,
+  "sha256": "68fe2e27be4ad20ca26fe64e6b43b6539e527295362c96314018586d0d1f8837",
+  "source_sha256": "2808111b6c9619cebe015bf8e05ee8cff195bee8f6d4f78bd2269fe00625ba65",
+  "base_sha256": "bf935a51fe30bfd2df929f8eb9e50be5d793426ea05125ca9411ce21b19ead80",
+  "structural_checks_passed": true,
+  "native_pose_gate_passed": true,
+  "qa_review_findings": 574,
+  "status": "EXPERIMENTAL compatibility candidate; NOT QA-approved or game-tested",
+  "app_or_accepted_outputs_changed": false,
+  "source_stored_vertices": 12478,
+  "source_strip_triangles": 18440,
+  "final_meshes": 59,
+  "final_stored_vertices": 2921,
+  "final_triangles": 2472,
+  "final_textures": 11,
+  "final_bones": 79,
+  "expanded_yobj_bytes": 240800,
+  "final_yobj_sha256": "726702606cdcbdcfba4aa56832c4328c479f4d22fc22645bcabd56be38dfd23b",
+  "geometric_p95_height": 0.005258088528839155,
+  "qa_caveat": "Provisional source-fidelity review findings remain; not QA-approved or game-tested",
+  "preview_provenance": "CPU renders of exact final decoded PAC; not Noesis or PPSSPP screenshots",
+  "source_chart_vertex_records": 12677,
+  "source_meshes": 38,
+  "source_model_count": 3,
+  "final_model_count": 1,
+  "source_embedded_dds_assets": 18,
+  "final_material_draw_records": 106,
+  "pixel_palette_bytes": 52864,
+  "native_base_pixel_palette_envelope": 54016,
+  "body_pose_comparisons": 14,
+  "cranial_controller_comparisons": 37,
+  "unresolved_high_review_regions": [
+    "buttocks",
+    "chin",
+    "face",
+    "jaw",
+    "left-hands",
+    "right-hands",
+    "shoulders"
+  ],
+  "analytical_hand_reference_envelope": {
+    "grip": {
+      "source_maximum_area_ratio": 2.0669803692680158,
+      "native_base_maximum_area_ratio": 1.4983775252157943,
+      "candidate_maximum_area_ratio": 1.589246409814927,
+      "provisional_limit": 3.3504705539020234,
+      "passes": true
+    },
+    "finger-extension": {
+      "source_maximum_area_ratio": 2.843503980855893,
+      "native_base_maximum_area_ratio": 1.7153455191235971,
+      "candidate_maximum_area_ratio": 3.1674468544902235,
+      "provisional_limit": 4.51525597128384,
+      "passes": true
+    },
+    "wrist-flex": {
+      "source_maximum_area_ratio": 1.4378659566682281,
+      "native_base_maximum_area_ratio": 1.2079766001757875,
+      "candidate_maximum_area_ratio": 1.4312012299449968,
+      "provisional_limit": 2.4067989350023424,
+      "passes": true
+    },
+    "forearm-twist": {
+      "source_maximum_area_ratio": 1.1912932603190332,
+      "native_base_maximum_area_ratio": 1.0374232146655744,
+      "candidate_maximum_area_ratio": 1.1112326732277837,
+      "provisional_limit": 2.03693989047855,
+      "passes": true
+    }
+  },
+  "zip_bytes": 11684552,
+  "zip_sha256": "5f26d29c428cb8f4960cb87c50071f22ba87f0c79ccc78dcce2b4270f32eb833",
+  "manifest_file_count": 111,
+  "focused_tests_passed": 83,
+  "review_flag_counts": [
+    {
+      "region": "material:w13_00",
+      "kind": "material-boundary-drift",
+      "severity": "review",
+      "count": 1
+    },
+    {
+      "region": "material:w13_01",
+      "kind": "material-boundary-drift",
+      "severity": "review",
+      "count": 1
+    },
+    {
+      "region": "material:w13_02",
+      "kind": "material-boundary-drift",
+      "severity": "review",
+      "count": 1
+    },
+    {
+      "region": "material:w13_03",
+      "kind": "material-boundary-drift",
+      "severity": "review",
+      "count": 1
+    },
+    {
+      "region": "material:w13_04",
+      "kind": "material-boundary-drift",
+      "severity": "review",
+      "count": 1
+    },
+    {
+      "region": "material:w13_05",
+      "kind": "material-boundary-drift",
+      "severity": "review",
+      "count": 1
+    },
+    {
+      "region": "material:w13_06",
+      "kind": "material-boundary-drift",
+      "severity": "review",
+      "count": 1
+    },
+    {
+      "region": "material:w13_07",
+      "kind": "material-boundary-drift",
+      "severity": "review",
+      "count": 1
+    },
+    {
+      "region": "material:w13_08",
+      "kind": "material-boundary-drift",
+      "severity": "review",
+      "count": 1
+    },
+    {
+      "region": "material:w13_09",
+      "kind": "material-boundary-drift",
+      "severity": "review",
+      "count": 1
+    },
+    {
+      "region": "material:w13_10",
+      "kind": "material-boundary-drift",
+      "severity": "review",
+      "count": 1
+    },
+    {
+      "region": "head",
+      "kind": "surface-shape",
+      "severity": "review",
+      "count": 1
+    },
+    {
+      "region": "face",
+      "kind": "surface-shape",
+      "severity": "high-review",
+      "count": 1
+    },
+    {
+      "region": "jaw",
+      "kind": "surface-shape",
+      "severity": "high-review",
+      "count": 1
+    },
+    {
+      "region": "chin",
+      "kind": "surface-shape",
+      "severity": "high-review",
+      "count": 1
+    },
+    {
+      "region": "nose",
+      "kind": "surface-shape",
+      "severity": "review",
+      "count": 1
+    },
+    {
+      "region": "neck",
+      "kind": "surface-shape",
+      "severity": "review",
+      "count": 1
+    },
+    {
+      "region": "torso",
+      "kind": "surface-shape",
+      "severity": "review",
+      "count": 1
+    },
+    {
+      "region": "waist",
+      "kind": "surface-shape",
+      "severity": "review",
+      "count": 1
+    },
+    {
+      "region": "pelvis",
+      "kind": "surface-shape",
+      "severity": "review",
+      "count": 1
+    },
+    {
+      "region": "buttocks",
+      "kind": "surface-shape",
+      "severity": "high-review",
+      "count": 1
+    },
+    {
+      "region": "shoulders",
+      "kind": "surface-shape",
+      "severity": "high-review",
+      "count": 1
+    },
+    {
+      "region": "left-hands",
+      "kind": "surface-shape",
+      "severity": "high-review",
+      "count": 1
+    },
+    {
+      "region": "left-feet",
+      "kind": "surface-shape",
+      "severity": "review",
+      "count": 1
+    },
+    {
+      "region": "right-hands",
+      "kind": "surface-shape",
+      "severity": "high-review",
+      "count": 1
+    },
+    {
+      "region": "right-feet",
+      "kind": "surface-shape",
+      "severity": "review",
+      "count": 1
+    },
+    {
+      "region": "head",
+      "kind": "head-vertex-outlier",
+      "severity": "review",
+      "count": 38
+    },
+    {
+      "region": "head",
+      "kind": "opposed-nearby-head-face-winding",
+      "severity": "review",
+      "count": 38
+    },
+    {
+      "region": "head",
+      "kind": "culled-head-coverage-loss",
+      "severity": "review",
+      "count": 456
+    },
+    {
+      "region": "material:w13_02",
+      "kind": "material-boundary-pose-or-seam-drift",
+      "severity": "review",
+      "count": 3
+    },
+    {
+      "region": "shoulders",
+      "kind": "pose-dependent-deformation",
+      "severity": "review",
+      "count": 3
+    },
+    {
+      "region": "material:w13_04",
+      "kind": "material-boundary-pose-or-seam-drift",
+      "severity": "review",
+      "count": 2
+    },
+    {
+      "region": "waist",
+      "kind": "pose-dependent-deformation",
+      "severity": "review",
+      "count": 1
+    },
+    {
+      "region": "pelvis",
+      "kind": "pose-dependent-deformation",
+      "severity": "review",
+      "count": 1
+    },
+    {
+      "region": "material:w13_00",
+      "kind": "material-boundary-pose-or-seam-drift",
+      "severity": "review",
+      "count": 4
+    },
+    {
+      "region": "left-hands",
+      "kind": "pose-dependent-deformation",
+      "severity": "review",
+      "count": 1
+    },
+    {
+      "region": "material:w13_05",
+      "kind": "material-boundary-pose-or-seam-drift",
+      "severity": "review",
+      "count": 1
+    }
+  ],
+  "qa_rest_regions": {
+    "head": {
+      "distance": {
+        "samples": 6588,
+        "mean": 0.022929699837731816,
+        "rms": 0.03562277465805427,
+        "p50": 0.014044469588700488,
+        "p95": 0.07475858354505378,
+        "p99": 0.1396842073697546,
+        "maximum": 0.27113028205015466,
+        "p95_height": 0.0037161606460785574,
+        "p99_height": 0.006943536510336982,
+        "p95_reference_region_width_fraction": 0.023401454448264067
+      },
+      "source_to_candidate": {
+        "samples": 3380,
+        "mean": 0.02377008042815822,
+        "rms": 0.03593515033980626,
+        "p50": 0.014755242512860796,
+        "p95": 0.07714683268743792,
+        "p99": 0.13615100575804007,
+        "maximum": 0.19721825467287268,
+        "p95_height": 0.003834877682371924,
+        "p99_height": 0.006767905242842434
+      },
+      "candidate_to_source": {
+        "samples": 3208,
+        "mean": 0.022044261435100503,
+        "rms": 0.03529065943782671,
+        "p50": 0.013226671227877351,
+        "p95": 0.0715747745885917,
+        "p99": 0.1410318282432154,
+        "maximum": 0.27113028205015466,
+        "p95_height": 0.003557897273665857,
+        "p99_height": 0.007010525147872777
+      }
+    },
+    "face": {
+      "distance": {
+        "samples": 1093,
+        "mean": 0.02242680420122067,
+        "rms": 0.04224296700573197,
+        "p50": 0.007206953036686695,
+        "p95": 0.10039875667483987,
+        "p99": 0.1709364668523285,
+        "maximum": 0.27113028205015466,
+        "p95_height": 0.004990703284866369,
+        "p99_height": 0.008497049314925969,
+        "p95_reference_region_width_fraction": 0.052797759453043346
+      },
+      "source_to_candidate": {
+        "samples": 579,
+        "mean": 0.023718626737640896,
+        "rms": 0.043103973069810765,
+        "p50": 0.007849898762822178,
+        "p95": 0.10694195173759863,
+        "p99": 0.16936670909003804,
+        "maximum": 0.19721825467287268,
+        "p95_height": 0.005315957761861451,
+        "p99_height": 0.008419018515739082
+      },
+      "candidate_to_source": {
+        "samples": 514,
+        "mean": 0.02097161889268504,
+        "rms": 0.04125156088315898,
+        "p50": 0.006675857413644426,
+        "p95": 0.09567274733353257,
+        "p99": 0.1721685862651317,
+        "maximum": 0.27113028205015466,
+        "p95_height": 0.0047557789578614095,
+        "p99_height": 0.008558296511649128
+      }
+    },
+    "jaw": {
+      "distance": {
+        "samples": 449,
+        "mean": 0.020867692300384846,
+        "rms": 0.038965886244439515,
+        "p50": 0.0065551493444209,
+        "p95": 0.09886190931590899,
+        "p99": 0.15738944047480258,
+        "maximum": 0.1758247180421933,
+        "p95_height": 0.00491430842285234,
+        "p99_height": 0.007823642678412979,
+        "p95_reference_region_width_fraction": 0.04345475634040629
+      },
+      "source_to_candidate": {
+        "samples": 248,
+        "mean": 0.02528495715171473,
+        "rms": 0.04664934255674337,
+        "p50": 0.006429359988550655,
+        "p95": 0.11473122247333967,
+        "p99": 0.16158418689884213,
+        "maximum": 0.1758247180421933,
+        "p95_height": 0.0057031531847437965,
+        "p99_height": 0.008032158555013292
+      },
+      "candidate_to_source": {
+        "samples": 201,
+        "mean": 0.015417534672873342,
+        "rms": 0.026583841148655914,
+        "p50": 0.006622229176541349,
+        "p95": 0.05867986927728711,
+        "p99": 0.10052090567243192,
+        "maximum": 0.11168867441653535,
+        "p95_height": 0.0029169068030010345,
+        "p99_height": 0.004996775166866862
+      }
+    },
+    "chin": {
+      "distance": {
+        "samples": 190,
+        "mean": 0.02760585074406707,
+        "rms": 0.049246023978202755,
+        "p50": 0.00732945262155682,
+        "p95": 0.11898699337824477,
+        "p99": 0.16351074382646935,
+        "maximum": 0.1758247180421933,
+        "p95_height": 0.00591470251601227,
+        "p99_height": 0.008127925418126255,
+        "p95_reference_region_width_fraction": 0.09521277200658967
+      },
+      "source_to_candidate": {
+        "samples": 109,
+        "mean": 0.03345579315627547,
+        "rms": 0.05769767970329278,
+        "p50": 0.008075437801744561,
+        "p95": 0.13934457439191855,
+        "p99": 0.1736484055689005,
+        "maximum": 0.1758247180421933,
+        "p95_height": 0.006926653757260418,
+        "p99_height": 0.008631856576583462
+      },
+      "candidate_to_source": {
+        "samples": 81,
+        "mean": 0.019733706016527377,
+        "rms": 0.034768909457337745,
+        "p50": 0.006204132844451828,
+        "p95": 0.09558857907594208,
+        "p99": 0.10375534693702793,
+        "maximum": 0.11168867441653535,
+        "p95_height": 0.004751595053463083,
+        "p99_height": 0.00515755541134943
+      }
+    },
+    "nose": {
+      "distance": {
+        "samples": 179,
+        "mean": 0.009922458012460156,
+        "rms": 0.024505423753499376,
+        "p50": 0.004335372764739276,
+        "p95": 0.03712985066053024,
+        "p99": 0.11972764251213805,
+        "maximum": 0.15470429881629336,
+        "p95_height": 0.0018456809007929037,
+        "p99_height": 0.005951519307254277,
+        "p95_reference_region_width_fraction": 0.03797951119378472
+      },
+      "source_to_candidate": {
+        "samples": 93,
+        "mean": 0.014378755098313581,
+        "rms": 0.0334362831693962,
+        "p50": 0.004562044825891608,
+        "p95": 0.08866874697056601,
+        "p99": 0.1513890166410819,
+        "maximum": 0.15470429881629336,
+        "p95_height": 0.004407618395157726,
+        "p99_height": 0.00752536871637053
+      },
+      "candidate_to_source": {
+        "samples": 86,
+        "mean": 0.005103439070781451,
+        "rms": 0.006397418642291799,
+        "p50": 0.004147781128730654,
+        "p95": 0.011477209177543139,
+        "p99": 0.014262068123683918,
+        "maximum": 0.016357318436672368,
+        "p95_height": 0.0005705184749346334,
+        "p99_height": 0.0007089505148393392
+      }
+    },
+    "eyes": {
+      "distance": {
+        "samples": 227,
+        "mean": 0.006656191675678618,
+        "rms": 0.011393923374036856,
+        "p50": 0.004149119903063127,
+        "p95": 0.026331049833082786,
+        "p99": 0.04830095384078442,
+        "maximum": 0.06295292201818671,
+        "p95_height": 0.001308885301453918,
+        "p99_height": 0.0024009832091455643,
+        "p95_reference_region_width_fraction": 0.014179020588442866
+      },
+      "source_to_candidate": {
+        "samples": 104,
+        "mean": 0.0071499070897470774,
+        "rms": 0.012325168959202538,
+        "p50": 0.004102697876788806,
+        "p95": 0.030011892381993477,
+        "p99": 0.049875599045199906,
+        "maximum": 0.050931053065810465,
+        "p95_height": 0.0014918556250747485,
+        "p99_height": 0.002479256957291938
+      },
+      "candidate_to_source": {
+        "samples": 123,
+        "mean": 0.006238741244271139,
+        "rms": 0.010542542561360719,
+        "p50": 0.004157463105808124,
+        "p95": 0.017650756395158698,
+        "p99": 0.04194060368544073,
+        "maximum": 0.06295292201818671,
+        "p95_height": 0.0008773981953480709,
+        "p99_height": 0.002084817735941763
+      }
+    },
+    "neck": {
+      "distance": {
+        "samples": 2447,
+        "mean": 0.023068175000235055,
+        "rms": 0.03428768393872151,
+        "p50": 0.01551185760149668,
+        "p95": 0.07080853871848229,
+        "p99": 0.1267173893677843,
+        "maximum": 0.1843012913470734,
+        "p95_height": 0.003519808596070751,
+        "p99_height": 0.0062989713449905175,
+        "p95_reference_region_width_fraction": 0.02325708273740398
+      },
+      "source_to_candidate": {
+        "samples": 1230,
+        "mean": 0.026305216877498386,
+        "rms": 0.03889207183007198,
+        "p50": 0.017407431274974534,
+        "p95": 0.08732033131808709,
+        "p99": 0.13773600565203528,
+        "maximum": 0.1758247180421933,
+        "p95_height": 0.004340590250098254,
+        "p99_height": 0.0068466937103440146
+      },
+      "candidate_to_source": {
+        "samples": 1217,
+        "mean": 0.019796555025679667,
+        "rms": 0.028898062366356277,
+        "p50": 0.014076432916074343,
+        "p95": 0.056625577851920114,
+        "p99": 0.10239172646328484,
+        "maximum": 0.1843012913470734,
+        "p95_height": 0.002814790409290542,
+        "p99_height": 0.005089771452633076
+      }
+    },
+    "torso": {
+      "distance": {
+        "samples": 4798,
+        "mean": 0.024409210930826476,
+        "rms": 0.03735767160895587,
+        "p50": 0.016535142214771294,
+        "p95": 0.07666315247021704,
+        "p99": 0.13886909605528847,
+        "maximum": 0.28948336608688924,
+        "p95_height": 0.0038108345116310053,
+        "p99_height": 0.006903018292289593,
+        "p95_reference_region_width_fraction": 0.01681423333181976
+      },
+      "source_to_candidate": {
+        "samples": 2301,
+        "mean": 0.024892869142401484,
+        "rms": 0.035408956494636296,
+        "p50": 0.017581756870689705,
+        "p95": 0.08092888985708399,
+        "p99": 0.1154995438919619,
+        "maximum": 0.1736953339741012,
+        "p95_height": 0.004022879264913784,
+        "p99_height": 0.005741345532485411
+      },
+      "candidate_to_source": {
+        "samples": 2497,
+        "mean": 0.02396351708027217,
+        "rms": 0.039067460467558636,
+        "p50": 0.01600180576669051,
+        "p95": 0.07121976655288319,
+        "p99": 0.17794917689505055,
+        "maximum": 0.28948336608688924,
+        "p95_height": 0.0035402502446722356,
+        "p99_height": 0.0088456428254948
+      }
+    },
+    "waist": {
+      "distance": {
+        "samples": 1104,
+        "mean": 0.019768387293661555,
+        "rms": 0.024436000484316274,
+        "p50": 0.016559150091891385,
+        "p95": 0.04778502080857909,
+        "p99": 0.05513968860810138,
+        "maximum": 0.07303637189350919,
+        "p95_height": 0.002375336789171088,
+        "p99_height": 0.002740928614825391,
+        "p95_reference_region_width_fraction": 0.012139007478560598
+      },
+      "source_to_candidate": {
+        "samples": 541,
+        "mean": 0.019277648102038802,
+        "rms": 0.02397825859973016,
+        "p50": 0.016338123472956604,
+        "p95": 0.04585961272446113,
+        "p99": 0.0541407411010482,
+        "maximum": 0.07303637189350919,
+        "p95_height": 0.002279627033708311,
+        "p99_height": 0.002691272117374872
+      },
+      "candidate_to_source": {
+        "samples": 563,
+        "mean": 0.02023995017584257,
+        "rms": 0.024867918552448416,
+        "p50": 0.016944037391971832,
+        "p95": 0.04842387687937128,
+        "p99": 0.055246344010231645,
+        "maximum": 0.06891002739654985,
+        "p95_height": 0.0024070935678071567,
+        "p99_height": 0.0027462303285456526
+      }
+    },
+    "pelvis": {
+      "distance": {
+        "samples": 2460,
+        "mean": 0.023412315443333928,
+        "rms": 0.03408296564737371,
+        "p50": 0.01701555663003844,
+        "p95": 0.06477689608155773,
+        "p99": 0.12631107927639976,
+        "maximum": 0.20886419902238537,
+        "p95_height": 0.0032199827842957027,
+        "p99_height": 0.0062787741515699415,
+        "p95_reference_region_width_fraction": 0.015095010627915833
+      },
+      "source_to_candidate": {
+        "samples": 1184,
+        "mean": 0.021869623425338304,
+        "rms": 0.031947468922964226,
+        "p50": 0.016023038758490746,
+        "p95": 0.06193472182916953,
+        "p99": 0.1250246123272149,
+        "maximum": 0.187702596347013,
+        "p95_height": 0.0030787016684000602,
+        "p99_height": 0.00621482540318093
+      },
+      "candidate_to_source": {
+        "samples": 1276,
+        "mean": 0.024843778883229552,
+        "rms": 0.03595121165066063,
+        "p50": 0.018097749022153192,
+        "p95": 0.06593325404772393,
+        "p99": 0.13168987136501129,
+        "maximum": 0.20886419902238537,
+        "p95_height": 0.0032774639692362455,
+        "p99_height": 0.006546147535806022
+      }
+    },
+    "buttocks": {
+      "distance": {
+        "samples": 1077,
+        "mean": 0.027932114052668874,
+        "rms": 0.0422246127253936,
+        "p50": 0.01881815838345468,
+        "p95": 0.1012827532753224,
+        "p99": 0.15869206725783527,
+        "maximum": 0.20886419902238537,
+        "p95_height": 0.005034645708895854,
+        "p99_height": 0.007888394713003318,
+        "p95_reference_region_width_fraction": 0.024561112619332113
+      },
+      "source_to_candidate": {
+        "samples": 485,
+        "mean": 0.027202074702761866,
+        "rms": 0.04061520084246944,
+        "p50": 0.018496513059098173,
+        "p95": 0.10127201398527855,
+        "p99": 0.13943337264875466,
+        "maximum": 0.187702596347013,
+        "p95_height": 0.005034111871507084,
+        "p99_height": 0.0069310678134376046
+      },
+      "candidate_to_source": {
+        "samples": 592,
+        "mean": 0.028530203722778494,
+        "rms": 0.04349878159193485,
+        "p50": 0.019302803433899975,
+        "p95": 0.10006047965406713,
+        "p99": 0.17900481150815245,
+        "maximum": 0.20886419902238537,
+        "p95_height": 0.004973887934809466,
+        "p99_height": 0.008898117171848399
+      }
+    },
+    "shoulders": {
+      "distance": {
+        "samples": 4386,
+        "mean": 0.04090361189744747,
+        "rms": 0.06542901527232714,
+        "p50": 0.022734507852288158,
+        "p95": 0.1431571844222188,
+        "p99": 0.26473404588315613,
+        "maximum": 0.35625980772382465,
+        "p95_height": 0.007116174086319456,
+        "p99_height": 0.013159615877356071,
+        "p95_reference_region_width_fraction": 0.017497024142200227
+      },
+      "source_to_candidate": {
+        "samples": 2166,
+        "mean": 0.04235876310162833,
+        "rms": 0.06601992564313895,
+        "p50": 0.025001882320305917,
+        "p95": 0.13724685221982397,
+        "p99": 0.286344825691501,
+        "maximum": 0.35625980772382465,
+        "p95_height": 0.006822378472568242,
+        "p99_height": 0.014233862146434208
+      },
+      "candidate_to_source": {
+        "samples": 2220,
+        "mean": 0.03948385626309804,
+        "rms": 0.06484728890130093,
+        "p50": 0.020759700286907695,
+        "p95": 0.14963865321053146,
+        "p99": 0.25653186254571736,
+        "maximum": 0.34579115632489005,
+        "p95_height": 0.0074383602233186715,
+        "p99_height": 0.012751895058085305
+      }
+    },
+    "left-hands": {
+      "distance": {
+        "samples": 758,
+        "mean": 0.03094808916311929,
+        "rms": 0.050513826501672784,
+        "p50": 0.01592759137163101,
+        "p95": 0.11959632048244118,
+        "p99": 0.18445016334493855,
+        "maximum": 0.2153490731973385,
+        "p95_height": 0.005944991444692133,
+        "p99_height": 0.00916879916233476,
+        "p95_reference_region_width_fraction": 0.027889875013221082
+      },
+      "source_to_candidate": {
+        "samples": 375,
+        "mean": 0.031142954243505102,
+        "rms": 0.050776266334599564,
+        "p50": 0.016116450447392575,
+        "p95": 0.11475441434678565,
+        "p99": 0.1870946963703588,
+        "maximum": 0.2153490731973385,
+        "p95_height": 0.0057043060253049995,
+        "p99_height": 0.009300255766918489
+      },
+      "candidate_to_source": {
+        "samples": 383,
+        "mean": 0.03075729437161882,
+        "rms": 0.050255540609881716,
+        "p50": 0.01591944651230575,
+        "p95": 0.12111129008593405,
+        "p99": 0.18400506726178634,
+        "maximum": 0.2058109659315153,
+        "p95_height": 0.006020298789394733,
+        "p99_height": 0.00914667396320044
+      }
+    },
+    "left-feet": {
+      "distance": {
+        "samples": 583,
+        "mean": 0.03182868813813484,
+        "rms": 0.04095166292432292,
+        "p50": 0.024466096109790825,
+        "p95": 0.08222037832724376,
+        "p99": 0.09891437275255993,
+        "maximum": 0.11989020096498487,
+        "p95_height": 0.004087077627163111,
+        "p99_height": 0.004916916318152052,
+        "p95_reference_region_width_fraction": 0.06952060895097573
+      },
+      "source_to_candidate": {
+        "samples": 290,
+        "mean": 0.03133215287784451,
+        "rms": 0.040426193198284346,
+        "p50": 0.023611926919015588,
+        "p95": 0.07909093239989638,
+        "p99": 0.10326477792334315,
+        "maximum": 0.11194081073006072,
+        "p95_height": 0.003931516576541672,
+        "p99_height": 0.005133169806695186
+      },
+      "candidate_to_source": {
+        "samples": 293,
+        "mean": 0.03232013941965086,
+        "rms": 0.04146519581468582,
+        "p50": 0.024972868065565822,
+        "p95": 0.08695003077805755,
+        "p99": 0.09717932151678635,
+        "maximum": 0.11989020096498487,
+        "p95_height": 0.004322183048826843,
+        "p99_height": 0.0048306689761672215
+      }
+    },
+    "right-hands": {
+      "distance": {
+        "samples": 720,
+        "mean": 0.05566529330929581,
+        "rms": 0.09076231505629992,
+        "p50": 0.025366318799407483,
+        "p95": 0.2229913560050528,
+        "p99": 0.3047628706564772,
+        "maximum": 0.33662325760371636,
+        "p95_height": 0.011084636202373549,
+        "p99_height": 0.015149401347833089,
+        "p95_reference_region_width_fraction": 0.05227134490750274
+      },
+      "source_to_candidate": {
+        "samples": 357,
+        "mean": 0.05471601737009301,
+        "rms": 0.09068644349879781,
+        "p50": 0.02402969986481539,
+        "p95": 0.21969397309929878,
+        "p99": 0.3008132189496686,
+        "maximum": 0.33662325760371636,
+        "p95_height": 0.01092072720345531,
+        "p99_height": 0.014953068839343095
+      },
+      "candidate_to_source": {
+        "samples": 363,
+        "mean": 0.05659887873710682,
+        "rms": 0.09083687072926702,
+        "p50": 0.0281272218781017,
+        "p95": 0.22267374959301717,
+        "p99": 0.303280020259848,
+        "maximum": 0.33095284029089567,
+        "p95_height": 0.011068848363795285,
+        "p99_height": 0.015075690610862603
+      }
+    },
+    "right-feet": {
+      "distance": {
+        "samples": 562,
+        "mean": 0.02928821352524213,
+        "rms": 0.03830136375409798,
+        "p50": 0.0224908596776386,
+        "p95": 0.08096057965991944,
+        "p99": 0.0979966889691031,
+        "maximum": 0.11918737157548263,
+        "p95_height": 0.004024454527480231,
+        "p99_height": 0.0048712993441550586,
+        "p95_reference_region_width_fraction": 0.0703031337177066
+      },
+      "source_to_candidate": {
+        "samples": 257,
+        "mean": 0.029012671748736556,
+        "rms": 0.037436660358055936,
+        "p50": 0.024678770379847396,
+        "p95": 0.07958017237433285,
+        "p99": 0.09511961554130882,
+        "maximum": 0.09843617944380138,
+        "p95_height": 0.0039558361162289595,
+        "p99_height": 0.004728283431583574
+      },
+      "candidate_to_source": {
+        "samples": 305,
+        "mean": 0.029520391350035362,
+        "rms": 0.039015107628933954,
+        "p50": 0.02130943050440693,
+        "p95": 0.08504248395628376,
+        "p99": 0.10246437551219316,
+        "maximum": 0.11918737157548263,
+        "p95_height": 0.004227361155560823,
+        "p99_height": 0.005093382750810835
+      }
+    }
+  },
+  "hand_isolation": {
+    "Arms": {
+      "non_normal_vertex_attributes_exact": true,
+      "triangles_materials_exact": true,
+      "changed_normal_records": 23
+    },
+    "Eyes": {
+      "non_normal_vertex_attributes_exact": true,
+      "triangles_materials_exact": true,
+      "changed_normal_records": 0
+    },
+    "Hair": {
+      "non_normal_vertex_attributes_exact": true,
+      "triangles_materials_exact": true,
+      "changed_normal_records": 0
+    },
+    "Head": {
+      "non_normal_vertex_attributes_exact": true,
+      "triangles_materials_exact": true,
+      "changed_normal_records": 0
+    },
+    "Legs": {
+      "non_normal_vertex_attributes_exact": true,
+      "triangles_materials_exact": true,
+      "changed_normal_records": 0
+    },
+    "Mouth": {
+      "non_normal_vertex_attributes_exact": true,
+      "triangles_materials_exact": true,
+      "changed_normal_records": 0
+    },
+    "Preserved": {
+      "non_normal_vertex_attributes_exact": true,
+      "triangles_materials_exact": true,
+      "changed_normal_records": 14
+    },
+    "Torso": {
+      "non_normal_vertex_attributes_exact": true,
+      "triangles_materials_exact": true,
+      "changed_normal_records": 0
+    }
+  },
+  "hand_landmarks": {
+    "l": {
+      "five_finger_base_errors": [
+        0.00015118394817484915,
+        5.6346541917795386e-05,
+        1.639631485865475e-05,
+        2.591151307792818e-05,
+        5.5691879261239236e-05
+      ],
+      "maximum": 0.00015118394817484915
+    },
+    "r": {
+      "five_finger_base_errors": [
+        0.00013984197312122965,
+        5.6554212227762756e-05,
+        1.8232275851835085e-05,
+        2.2413852642940797e-05,
+        5.477766608801823e-05
+      ],
+      "maximum": 0.00013984197312122965
+    }
+  }
+}
