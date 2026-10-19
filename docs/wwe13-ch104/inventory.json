@@ -1,0 +1,4397 @@
+{
+  "input_bytes": 9289728,
+  "sha256": "2808111b6c9619cebe015bf8e05ee8cff195bee8f6d4f78bd2269fe00625ba65",
+  "container": "EPAC",
+  "directory_status": "UNKNOWN: aligned signature discovery; no general EPAC directory parser",
+  "expanded_section_bytes": 29131206,
+  "bundles": [
+    {
+      "offset": 16384,
+      "payload_origin": 16572,
+      "end": 3456000,
+      "sections": [
+        {
+          "id": 0,
+          "offset": 16572,
+          "stored_bytes": 403708,
+          "compressed_bytes": 403689,
+          "expanded_bytes": 734612,
+          "sha256": "4db4293178c5f0ec94d15acc33623bfa67b0b8da37f204a97af4ee967af3ca40",
+          "model": {
+            "geometry_decoded": true,
+            "mesh_count": 21,
+            "bone_count": 109,
+            "texture_count": 21,
+            "model_label": "tooth",
+            "declared_bytes": 733208,
+            "trailing_bytes": 1404,
+            "texture_names": [
+              "color",
+              "normal",
+              "mask",
+              "mf12",
+              "\"\"",
+              "cubemap_eyes",
+              "wrinkles_n",
+              "sweat_bump",
+              "noise2",
+              "hair_shift",
+              "hair_noise",
+              "mf01",
+              "mf02",
+              "mf03",
+              "mf04",
+              "mf05",
+              "mf06",
+              "mf07",
+              "mf08",
+              "mf09",
+              "mf10"
+            ],
+            "vertex_count": 8452,
+            "provisional_strip_triangle_count": 13514,
+            "index_count": 22255,
+            "bounds": {
+              "min": [
+                -92.46759796142578,
+                -197.90850830078125,
+                -23.331815719604492
+              ],
+              "max": [
+                92.46410369873047,
+                -2.6265101432800293,
+                14.214981079101562
+              ]
+            },
+            "unused_weight_records": 11738,
+            "unused_weight_max_abs": 6.332993507385254e-08,
+            "scope": "Observed sample only; palette numbering/strip winding/renderer semantics need independent verification"
+          },
+          "mesh_inventory": [
+            {
+              "index": 0,
+              "stored_bone_palette": [
+                25,
+                50
+              ],
+              "influence_slots": 1,
+              "shader": "yCh_skin",
+              "index_count": 1099,
+              "vertex_stride": 28,
+              "weight_stride": 8,
+              "offsets": {
+                "vertex": 5296,
+                "weights": 15908,
+                "uv": 18940,
+                "tangent": 21972
+              },
+              "weight_sum_max_error": 0.0,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 379,
+              "triangle_count": 624,
+              "material_id_raw": 0
+            },
+            {
+              "index": 1,
+              "stored_bone_palette": [
+                47,
+                46
+              ],
+              "influence_slots": 1,
+              "shader": "yCh_Reflect",
+              "index_count": 1516,
+              "vertex_stride": 28,
+              "weight_stride": 8,
+              "offsets": {
+                "vertex": 29468,
+                "weights": 45652,
+                "uv": 50276,
+                "tangent": 54900
+              },
+              "weight_sum_max_error": 0.0,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 578,
+              "triangle_count": 1104,
+              "material_id_raw": 1
+            },
+            {
+              "index": 2,
+              "stored_bone_palette": [
+                13,
+                12,
+                5,
+                3,
+                7,
+                14,
+                17,
+                18,
+                6,
+                8,
+                9,
+                10,
+                11,
+                15,
+                16,
+                25,
+                93,
+                92,
+                91,
+                90
+              ],
+              "influence_slots": 4,
+              "shader": "yCh_gear",
+              "index_count": 5862,
+              "vertex_stride": 28,
+              "weight_stride": 32,
+              "offsets": {
+                "vertex": 66216,
+                "weights": 132352,
+                "uv": 207936,
+                "tangent": 226832
+              },
+              "weight_sum_max_error": 5.960464477539063e-08,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 2362,
+              "triangle_count": 3570,
+              "material_id_raw": 4
+            },
+            {
+              "index": 3,
+              "stored_bone_palette": [
+                67,
+                66,
+                65,
+                64
+              ],
+              "influence_slots": 3,
+              "shader": "yCh_gear",
+              "index_count": 92,
+              "vertex_stride": 28,
+              "weight_stride": 24,
+              "offsets": {
+                "vertex": 268248,
+                "weights": 269480,
+                "uv": 270536,
+                "tangent": 270888
+              },
+              "weight_sum_max_error": 0.0,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 44,
+              "triangle_count": 56,
+              "material_id_raw": 4
+            },
+            {
+              "index": 4,
+              "stored_bone_palette": [
+                50,
+                25,
+                24,
+                23,
+                53,
+                49,
+                54,
+                57,
+                18,
+                29,
+                36,
+                31,
+                55,
+                56,
+                33
+              ],
+              "influence_slots": 4,
+              "shader": "yCh_skin",
+              "index_count": 2065,
+              "vertex_stride": 28,
+              "weight_stride": 32,
+              "offsets": {
+                "vertex": 273628,
+                "weights": 295132,
+                "uv": 319708,
+                "tangent": 325852
+              },
+              "weight_sum_max_error": 5.960464477539063e-08,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 768,
+              "triangle_count": 1212,
+              "material_id_raw": 2
+            },
+            {
+              "index": 5,
+              "stored_bone_palette": [
+                57,
+                54,
+                53,
+                50,
+                25,
+                49,
+                32,
+                35,
+                36,
+                44,
+                38,
+                39,
+                43,
+                37,
+                26,
+                31,
+                29,
+                27,
+                42,
+                41
+              ],
+              "influence_slots": 4,
+              "shader": "yCh_skin",
+              "index_count": 2055,
+              "vertex_stride": 28,
+              "weight_stride": 32,
+              "offsets": {
+                "vertex": 341228,
+                "weights": 360688,
+                "uv": 382928,
+                "tangent": 388488
+              },
+              "weight_sum_max_error": 1.1920928955078125e-07,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 695,
+              "triangle_count": 1261,
+              "material_id_raw": 10
+            },
+            {
+              "index": 6,
+              "stored_bone_palette": [
+                56,
+                55,
+                53,
+                50,
+                25,
+                49,
+                34,
+                35,
+                30,
+                45,
+                40,
+                33,
+                28,
+                27,
+                41,
+                42,
+                23
+              ],
+              "influence_slots": 4,
+              "shader": "yCh_skin",
+              "index_count": 833,
+              "vertex_stride": 28,
+              "weight_stride": 32,
+              "offsets": {
+                "vertex": 402968,
+                "weights": 411620,
+                "uv": 421508,
+                "tangent": 423980
+              },
+              "weight_sum_max_error": 1.1920928955078125e-07,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 309,
+              "triangle_count": 521,
+              "material_id_raw": 10
+            },
+            {
+              "index": 7,
+              "stored_bone_palette": [
+                60,
+                58,
+                18,
+                59,
+                23,
+                91,
+                90,
+                92,
+                65,
+                64,
+                66,
+                17,
+                3,
+                84,
+                85,
+                109
+              ],
+              "influence_slots": 4,
+              "shader": "yCh_skin",
+              "index_count": 423,
+              "vertex_stride": 28,
+              "weight_stride": 32,
+              "offsets": {
+                "vertex": 431076,
+                "weights": 436732,
+                "uv": 443196,
+                "tangent": 444812
+              },
+              "weight_sum_max_error": 5.960464477539063e-08,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 202,
+              "triangle_count": 224,
+              "material_id_raw": 3
+            },
+            {
+              "index": 8,
+              "stored_bone_palette": [
+                74,
+                67,
+                66,
+                68,
+                65,
+                80,
+                81,
+                71,
+                77,
+                69,
+                70,
+                72,
+                73,
+                75,
+                76,
+                78,
+                79,
+                82
+              ],
+              "influence_slots": 3,
+              "shader": "yCh_skin",
+              "index_count": 2072,
+              "vertex_stride": 28,
+              "weight_stride": 24,
+              "offsets": {
+                "vertex": 449804,
+                "weights": 471224,
+                "uv": 489584,
+                "tangent": 495704
+              },
+              "weight_sum_max_error": 0.0,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 765,
+              "triangle_count": 1242,
+              "material_id_raw": 3
+            },
+            {
+              "index": 9,
+              "stored_bone_palette": [
+                100,
+                93,
+                92,
+                94,
+                91,
+                106,
+                107,
+                97,
+                103,
+                95,
+                96,
+                98,
+                99,
+                101,
+                102,
+                104,
+                105,
+                108
+              ],
+              "influence_slots": 3,
+              "shader": "yCh_skin",
+              "index_count": 2087,
+              "vertex_stride": 28,
+              "weight_stride": 24,
+              "offsets": {
+                "vertex": 510748,
+                "weights": 532168,
+                "uv": 550528,
+                "tangent": 556648
+              },
+              "weight_sum_max_error": 0.0,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 765,
+              "triangle_count": 1242,
+              "material_id_raw": 3
+            },
+            {
+              "index": 10,
+              "stored_bone_palette": [
+                24,
+                23,
+                18,
+                25,
+                58,
+                60,
+                22,
+                50,
+                84,
+                85,
+                20,
+                59,
+                109,
+                86,
+                17,
+                3,
+                61
+              ],
+              "influence_slots": 4,
+              "shader": "yCh_skin_flex",
+              "index_count": 683,
+              "vertex_stride": 28,
+              "weight_stride": 32,
+              "offsets": {
+                "vertex": 571724,
+                "weights": 580012,
+                "uv": 589484,
+                "tangent": 591852
+              },
+              "weight_sum_max_error": 5.960464477539063e-08,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 296,
+              "triangle_count": 341,
+              "material_id_raw": 11
+            },
+            {
+              "index": 11,
+              "stored_bone_palette": [
+                64,
+                63,
+                61,
+                60,
+                90,
+                89,
+                86,
+                85
+              ],
+              "influence_slots": 4,
+              "shader": "yCh_skin_flex",
+              "index_count": 31,
+              "vertex_stride": 28,
+              "weight_stride": 32,
+              "offsets": {
+                "vertex": 598492,
+                "weights": 599052,
+                "uv": 599692,
+                "tangent": 599852
+              },
+              "weight_sum_max_error": 0.0,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 20,
+              "triangle_count": 12,
+              "material_id_raw": 11
+            },
+            {
+              "index": 12,
+              "stored_bone_palette": [
+                58,
+                22,
+                18,
+                17,
+                60
+              ],
+              "influence_slots": 4,
+              "shader": "yCh_skin_flex",
+              "index_count": 145,
+              "vertex_stride": 28,
+              "weight_stride": 32,
+              "offsets": {
+                "vertex": 601876,
+                "weights": 603500,
+                "uv": 605356,
+                "tangent": 605820
+              },
+              "weight_sum_max_error": 5.960464477539063e-08,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 58,
+              "triangle_count": 88,
+              "material_id_raw": 12
+            },
+            {
+              "index": 13,
+              "stored_bone_palette": [
+                84,
+                20,
+                18,
+                17,
+                85
+              ],
+              "influence_slots": 4,
+              "shader": "yCh_skin_flex",
+              "index_count": 152,
+              "vertex_stride": 28,
+              "weight_stride": 32,
+              "offsets": {
+                "vertex": 608528,
+                "weights": 610236,
+                "uv": 612188,
+                "tangent": 612676
+              },
+              "weight_sum_max_error": 5.960464477539063e-08,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 61,
+              "triangle_count": 92,
+              "material_id_raw": 13
+            },
+            {
+              "index": 14,
+              "stored_bone_palette": [
+                18,
+                17,
+                3,
+                58,
+                84
+              ],
+              "influence_slots": 4,
+              "shader": "yCh_skin_flex",
+              "index_count": 491,
+              "vertex_stride": 28,
+              "weight_stride": 32,
+              "offsets": {
+                "vertex": 615432,
+                "weights": 620304,
+                "uv": 625872,
+                "tangent": 627264
+              },
+              "weight_sum_max_error": 5.960464477539063e-08,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 174,
+              "triangle_count": 308,
+              "material_id_raw": 14
+            },
+            {
+              "index": 15,
+              "stored_bone_palette": [
+                25,
+                24,
+                23,
+                18,
+                58,
+                60,
+                59,
+                61,
+                17,
+                3
+              ],
+              "influence_slots": 4,
+              "shader": "yCh_skin_flex",
+              "index_count": 428,
+              "vertex_stride": 28,
+              "weight_stride": 32,
+              "offsets": {
+                "vertex": 632056,
+                "weights": 636452,
+                "uv": 641476,
+                "tangent": 642732
+              },
+              "weight_sum_max_error": 5.960464477539063e-08,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 157,
+              "triangle_count": 256,
+              "material_id_raw": 15
+            },
+            {
+              "index": 16,
+              "stored_bone_palette": [
+                25,
+                24,
+                23,
+                18,
+                84,
+                85,
+                109,
+                86,
+                17,
+                3
+              ],
+              "influence_slots": 4,
+              "shader": "yCh_skin_flex",
+              "index_count": 430,
+              "vertex_stride": 28,
+              "weight_stride": 32,
+              "offsets": {
+                "vertex": 647192,
+                "weights": 651504,
+                "uv": 656432,
+                "tangent": 657664
+              },
+              "weight_sum_max_error": 5.960464477539063e-08,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 154,
+              "triangle_count": 250,
+              "material_id_raw": 16
+            },
+            {
+              "index": 17,
+              "stored_bone_palette": [
+                60,
+                59,
+                58,
+                18,
+                61,
+                62,
+                64,
+                63,
+                83
+              ],
+              "influence_slots": 4,
+              "shader": "yCh_skin_flex",
+              "index_count": 524,
+              "vertex_stride": 28,
+              "weight_stride": 32,
+              "offsets": {
+                "vertex": 662092,
+                "weights": 667524,
+                "uv": 673732,
+                "tangent": 675284
+              },
+              "weight_sum_max_error": 5.960464477539063e-08,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 194,
+              "triangle_count": 328,
+              "material_id_raw": 17
+            },
+            {
+              "index": 18,
+              "stored_bone_palette": [
+                109,
+                85,
+                84,
+                18,
+                86,
+                87,
+                90,
+                89,
+                88
+              ],
+              "influence_slots": 4,
+              "shader": "yCh_skin_flex",
+              "index_count": 522,
+              "vertex_stride": 28,
+              "weight_stride": 32,
+              "offsets": {
+                "vertex": 680380,
+                "weights": 685784,
+                "uv": 691960,
+                "tangent": 693504
+              },
+              "weight_sum_max_error": 5.960464477539063e-08,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 193,
+              "triangle_count": 327,
+              "material_id_raw": 18
+            },
+            {
+              "index": 19,
+              "stored_bone_palette": [
+                65,
+                64,
+                66,
+                61,
+                83,
+                63,
+                60,
+                62
+              ],
+              "influence_slots": 4,
+              "shader": "yCh_skin_flex",
+              "index_count": 368,
+              "vertex_stride": 28,
+              "weight_stride": 32,
+              "offsets": {
+                "vertex": 698584,
+                "weights": 702476,
+                "uv": 706924,
+                "tangent": 708036
+              },
+              "weight_sum_max_error": 5.960464477539063e-08,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 139,
+              "triangle_count": 228,
+              "material_id_raw": 19
+            },
+            {
+              "index": 20,
+              "stored_bone_palette": [
+                91,
+                90,
+                92,
+                86,
+                88,
+                89,
+                85,
+                87
+              ],
+              "influence_slots": 4,
+              "shader": "yCh_skin_flex",
+              "index_count": 377,
+              "vertex_stride": 28,
+              "weight_stride": 32,
+              "offsets": {
+                "vertex": 712160,
+                "weights": 716052,
+                "uv": 720500,
+                "tangent": 721612
+              },
+              "weight_sum_max_error": 5.960464477539063e-08,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 139,
+              "triangle_count": 228,
+              "material_id_raw": 20
+            }
+          ]
+        },
+        {
+          "id": 10,
+          "offset": 420280,
+          "stored_bytes": 2035724,
+          "compressed_bytes": 2035708,
+          "expanded_bytes": 3749376,
+          "sha256": "8e1ccff8352743ba6f79fbd55d6adce82c115a8e92d9f86d2f24040be9ece025",
+          "textures": [
+            {
+              "index": 0,
+              "name": "normal",
+              "extension": "dds",
+              "offset": 496,
+              "size": 2785408,
+              "signature": "DDS |",
+              "sha256": "30861657dadba8a82089be7060789cbc7986f1880e611637112658962b0ca64b",
+              "width": 2048,
+              "height": 1024,
+              "mip_count": 4,
+              "fourcc": "DXT5",
+              "pixel_bits": 0,
+              "pixel_flags": 4,
+              "pillow_decode": {
+                "size": [
+                  2048,
+                  1024
+                ],
+                "mode": "RGBA"
+              }
+            },
+            {
+              "index": 1,
+              "name": "MF01",
+              "extension": "dds",
+              "offset": 2785904,
+              "size": 43856,
+              "signature": "DDS |",
+              "sha256": "430fc5bf6f1c13a8ff15df66087e0b8a4ce41d1d60124c737b7cd4a0943e4ddf",
+              "width": 256,
+              "height": 128,
+              "mip_count": 9,
+              "fourcc": "DXT5",
+              "pixel_bits": 0,
+              "pixel_flags": 4,
+              "pillow_decode": {
+                "size": [
+                  256,
+                  128
+                ],
+                "mode": "RGBA"
+              }
+            },
+            {
+              "index": 2,
+              "name": "MF02",
+              "extension": "dds",
+              "offset": 2829760,
+              "size": 43856,
+              "signature": "DDS |",
+              "sha256": "908d0440e2f4eea2de637d1e9acb4411a167c0abfa0d2600a39f0710de2dfa34",
+              "width": 128,
+              "height": 256,
+              "mip_count": 9,
+              "fourcc": "DXT5",
+              "pixel_bits": 0,
+              "pixel_flags": 4,
+              "pillow_decode": {
+                "size": [
+                  128,
+                  256
+                ],
+                "mode": "RGBA"
+              }
+            },
+            {
+              "index": 3,
+              "name": "MF03",
+              "extension": "dds",
+              "offset": 2873616,
+              "size": 43856,
+              "signature": "DDS |",
+              "sha256": "1093b52fa4f8d2005a9ff5e5c919c6988c11286e4ed73b7baa3e639d908137e1",
+              "width": 128,
+              "height": 256,
+              "mip_count": 9,
+              "fourcc": "DXT5",
+              "pixel_bits": 0,
+              "pixel_flags": 4,
+              "pillow_decode": {
+                "size": [
+                  128,
+                  256
+                ],
+                "mode": "RGBA"
+              }
+            },
+            {
+              "index": 4,
+              "name": "MF04",
+              "extension": "dds",
+              "offset": 2917472,
+              "size": 43856,
+              "signature": "DDS |",
+              "sha256": "2feb91d10ba481a2adf655214eea15d5f3cf29c6b44f77f538fe12a4fa7cf0f4",
+              "width": 128,
+              "height": 256,
+              "mip_count": 9,
+              "fourcc": "DXT5",
+              "pixel_bits": 0,
+              "pixel_flags": 4,
+              "pillow_decode": {
+                "size": [
+                  128,
+                  256
+                ],
+                "mode": "RGBA"
+              }
+            },
+            {
+              "index": 5,
+              "name": "MF05",
+              "extension": "dds",
+              "offset": 2961328,
+              "size": 87568,
+              "signature": "DDS |",
+              "sha256": "ef8cae36f7d5cc17953ae27fbc27706a77025a3c3ad468263873858daf922ee5",
+              "width": 128,
+              "height": 512,
+              "mip_count": 10,
+              "fourcc": "DXT5",
+              "pixel_bits": 0,
+              "pixel_flags": 4,
+              "pillow_decode": {
+                "size": [
+                  128,
+                  512
+                ],
+                "mode": "RGBA"
+              }
+            },
+            {
+              "index": 6,
+              "name": "MF06",
+              "extension": "dds",
+              "offset": 3048896,
+              "size": 87568,
+              "signature": "DDS |",
+              "sha256": "22b56063080b4eb0c871b845c0cd3a2d2c4d85d8ab8ef3b02c79b46d8d2f84a7",
+              "width": 128,
+              "height": 512,
+              "mip_count": 10,
+              "fourcc": "DXT5",
+              "pixel_bits": 0,
+              "pixel_flags": 4,
+              "pillow_decode": {
+                "size": [
+                  128,
+                  512
+                ],
+                "mode": "RGBA"
+              }
+            },
+            {
+              "index": 7,
+              "name": "MF07",
+              "extension": "dds",
+              "offset": 3136464,
+              "size": 87536,
+              "signature": "DDS |",
+              "sha256": "73b9b1f0b111461afaca7c4de94557dde0a8b4789db8789fa1785919a3d84cee",
+              "width": 256,
+              "height": 256,
+              "mip_count": 9,
+              "fourcc": "DXT5",
+              "pixel_bits": 0,
+              "pixel_flags": 4,
+              "pillow_decode": {
+                "size": [
+                  256,
+                  256
+                ],
+                "mode": "RGBA"
+              }
+            },
+            {
+              "index": 8,
+              "name": "MF08",
+              "extension": "dds",
+              "offset": 3224000,
+              "size": 87536,
+              "signature": "DDS |",
+              "sha256": "192bc872ef0469fdb61487a7cf8e9689a183b3c6daa9f2f4ae93237ddb0fa54c",
+              "width": 256,
+              "height": 256,
+              "mip_count": 9,
+              "fourcc": "DXT5",
+              "pixel_bits": 0,
+              "pixel_flags": 4,
+              "pillow_decode": {
+                "size": [
+                  256,
+                  256
+                ],
+                "mode": "RGBA"
+              }
+            },
+            {
+              "index": 9,
+              "name": "MF09",
+              "extension": "dds",
+              "offset": 3311536,
+              "size": 43856,
+              "signature": "DDS |",
+              "sha256": "717718b5393bcd7a8e1daf7fe907f4ab35584c80709e2598f7018150138351be",
+              "width": 256,
+              "height": 128,
+              "mip_count": 9,
+              "fourcc": "DXT5",
+              "pixel_bits": 0,
+              "pixel_flags": 4,
+              "pillow_decode": {
+                "size": [
+                  256,
+                  128
+                ],
+                "mode": "RGBA"
+              }
+            },
+            {
+              "index": 10,
+              "name": "MF10",
+              "extension": "dds",
+              "offset": 3355392,
+              "size": 43856,
+              "signature": "DDS |",
+              "sha256": "e49987801e0b5d21bac97b1ccc77a5bc1bc2a59bc2ca091c328f4d6916962e2a",
+              "width": 256,
+              "height": 128,
+              "mip_count": 9,
+              "fourcc": "DXT5",
+              "pixel_bits": 0,
+              "pixel_flags": 4,
+              "pillow_decode": {
+                "size": [
+                  256,
+                  128
+                ],
+                "mode": "RGBA"
+              }
+            },
+            {
+              "index": 11,
+              "name": "wrinkles_n",
+              "extension": "dds",
+              "offset": 3399248,
+              "size": 87536,
+              "signature": "DDS |",
+              "sha256": "05f381d849b1485b30545b949d99adde070011e5831f14e38b98405b4d322fda",
+              "width": 256,
+              "height": 256,
+              "mip_count": 9,
+              "fourcc": "DXT5",
+              "pixel_bits": 0,
+              "pixel_flags": 4,
+              "pillow_decode": {
+                "size": [
+                  256,
+                  256
+                ],
+                "mode": "RGBA"
+              }
+            },
+            {
+              "index": 12,
+              "name": "Mask",
+              "extension": "dds",
+              "offset": 3486784,
+              "size": 174904,
+              "signature": "DDS |",
+              "sha256": "cf5b51b93855b9a9ebb7c5e4e96127a08df728c6ac21a4681afc8a24341a5d14",
+              "width": 512,
+              "height": 512,
+              "mip_count": 10,
+              "fourcc": "DXT1",
+              "pixel_bits": 0,
+              "pixel_flags": 4,
+              "pillow_decode": {
+                "size": [
+                  512,
+                  512
+                ],
+                "mode": "RGBA"
+              }
+            },
+            {
+              "index": 13,
+              "name": "hair_shift",
+              "extension": "dds",
+              "offset": 3661696,
+              "size": 43832,
+              "signature": "DDS |",
+              "sha256": "d3148960199260c9d388e367916ecc605b834283b40f70ec94cee773c062b5fa",
+              "width": 256,
+              "height": 256,
+              "mip_count": 9,
+              "fourcc": "DXT1",
+              "pixel_bits": 0,
+              "pixel_flags": 4,
+              "pillow_decode": {
+                "size": [
+                  256,
+                  256
+                ],
+                "mode": "RGBA"
+              }
+            },
+            {
+              "index": 14,
+              "name": "hair_noise",
+              "extension": "dds",
+              "offset": 3705536,
+              "size": 43832,
+              "signature": "DDS |",
+              "sha256": "da732a8e032ca71d603ac9a27d17c93ed9c3a25a0c5659d5a56ce1aacc35416f",
+              "width": 256,
+              "height": 256,
+              "mip_count": 9,
+              "fourcc": "DXT1",
+              "pixel_bits": 0,
+              "pixel_flags": 4,
+              "pillow_decode": {
+                "size": [
+                  256,
+                  256
+                ],
+                "mode": "RGBA"
+              }
+            }
+          ]
+        },
+        {
+          "id": 12,
+          "offset": 2456004,
+          "stored_bytes": 767012,
+          "compressed_bytes": 766994,
+          "expanded_bytes": 1392816,
+          "sha256": "77eb748d6806eed327684130d46b20402da80bb07a76d9c9b0d29bae672e7ef7",
+          "textures": [
+            {
+              "index": 0,
+              "name": "color",
+              "extension": "dds",
+              "offset": 48,
+              "size": 1392768,
+              "signature": "DDS |",
+              "sha256": "62d5651f1614cf6401ec132c759b19e6ab44bac43b8e81c99988fc84ce1b9490",
+              "width": 2048,
+              "height": 1024,
+              "mip_count": 4,
+              "fourcc": "DXT1",
+              "pixel_bits": 0,
+              "pixel_flags": 4,
+              "pillow_decode": {
+                "size": [
+                  2048,
+                  1024
+                ],
+                "mode": "RGBA"
+              }
+            }
+          ]
+        },
+        {
+          "id": 13,
+          "offset": 3223016,
+          "stored_bytes": 34344,
+          "compressed_bytes": 34327,
+          "expanded_bytes": 4194480,
+          "sha256": "1c67c067435239ac621e503140f2381a4f90ea49fcae7502ec70b8aae80590d8",
+          "textures": [
+            {
+              "index": 0,
+              "name": "Mask1",
+              "extension": "dds",
+              "offset": 48,
+              "size": 4194432,
+              "signature": "DDS |",
+              "sha256": "1c75760fc8b41208fe0ccf49708ef09437dc3a826874461acde5d38ecd8259f4",
+              "width": 2048,
+              "height": 1024,
+              "mip_count": 0,
+              "fourcc": "\u0000\u0000\u0000\u0000",
+              "pixel_bits": 16,
+              "pixel_flags": 65,
+              "pillow_decode": {
+                "size": [
+                  2048,
+                  1024
+                ],
+                "mode": "RGBA"
+              }
+            }
+          ]
+        },
+        {
+          "id": 14,
+          "offset": 3257360,
+          "stored_bytes": 11988,
+          "compressed_bytes": 11969,
+          "expanded_bytes": 4194480,
+          "sha256": "36c96bc9caf8139c744ba5860dfafd1536601b54fb23e7183ad9881ae73baf7b",
+          "textures": [
+            {
+              "index": 0,
+              "name": "Mask2",
+              "extension": "dds",
+              "offset": 48,
+              "size": 4194432,
+              "signature": "DDS |",
+              "sha256": "6f1f97e0af26f11604611e66e7b371d055e6545b5692fb0c48fb17e29307d4aa",
+              "width": 2048,
+              "height": 1024,
+              "mip_count": 0,
+              "fourcc": "\u0000\u0000\u0000\u0000",
+              "pixel_bits": 16,
+              "pixel_flags": 65,
+              "pillow_decode": {
+                "size": [
+                  2048,
+                  1024
+                ],
+                "mode": "RGBA"
+              }
+            }
+          ]
+        },
+        {
+          "id": 40,
+          "offset": 3269348,
+          "stored_bytes": 64,
+          "compressed_bytes": 45,
+          "expanded_bytes": 182,
+          "sha256": "f55c01fff75ca46d7ed0325aef8faf5c982f1b649878f32ec79de10a81e29707"
+        },
+        {
+          "id": 50,
+          "offset": 3269412,
+          "stored_bytes": 280,
+          "compressed_bytes": 262,
+          "expanded_bytes": 531,
+          "sha256": "17e888960ef2459a92ec09ce8f83a02ca33ac58bf9540f83f639c7cabff1bf18"
+        },
+        {
+          "id": 60,
+          "offset": 3269692,
+          "stored_bytes": 344,
+          "compressed_bytes": 327,
+          "expanded_bytes": 2616,
+          "sha256": "d64cbf2edf52878720fa760962c8cf6aca9e1cca3784c4019b177509841b800f"
+        },
+        {
+          "id": 61,
+          "offset": 3270036,
+          "stored_bytes": 220,
+          "compressed_bytes": 203,
+          "expanded_bytes": 422,
+          "sha256": "840df4144e1e9843c45c293ab530474d2af542db360244378ce7c19ba03bf88c"
+        },
+        {
+          "id": 80,
+          "offset": 3270256,
+          "stored_bytes": 2328,
+          "compressed_bytes": 2310,
+          "expanded_bytes": 2816,
+          "sha256": "50d138f8bbfc297860ad5e1d43c197161b1ebf8f586ce965dc5e0bbe4d8196dd"
+        },
+        {
+          "id": 110,
+          "offset": 3272584,
+          "stored_bytes": 4216,
+          "compressed_bytes": 4198,
+          "expanded_bytes": 27800,
+          "sha256": "5f0f1f4b5dfe90b036f0011d9bf9f185dd8f0b8e0f183c5773a15b89fe1a0534"
+        },
+        {
+          "id": 10000,
+          "offset": 3276800,
+          "stored_bytes": 161980,
+          "compressed_bytes": 161964,
+          "expanded_bytes": 318388,
+          "sha256": "5b34f2dc00727d1e25e1afc8c2f40e0f78146cfd3ffb08f3d82d8fa895c29c26",
+          "model": {
+            "geometry_decoded": true,
+            "mesh_count": 16,
+            "bone_count": 103,
+            "texture_count": 21,
+            "model_label": "transA_Beard",
+            "declared_bytes": 317768,
+            "trailing_bytes": 620,
+            "texture_names": [
+              "color",
+              "normal",
+              "mask",
+              "mf12",
+              "\"\"",
+              "cubemap_eyes",
+              "wrinkles_n",
+              "sweat_bump",
+              "noise2",
+              "hair_shift",
+              "hair_noise",
+              "mf01",
+              "mf02",
+              "mf03",
+              "mf04",
+              "mf05",
+              "mf06",
+              "mf07",
+              "mf08",
+              "mf09",
+              "mf10"
+            ],
+            "vertex_count": 3790,
+            "provisional_strip_triangle_count": 4654,
+            "index_count": 7659,
+            "bounds": {
+              "min": [
+                -28.886049270629883,
+                -201.6282958984375,
+                -16.455886840820312
+              ],
+              "max": [
+                28.886077880859375,
+                -145.46791076660156,
+                16.682327270507812
+              ]
+            },
+            "unused_weight_records": 5032,
+            "unused_weight_max_abs": 4.470348358154297e-08,
+            "scope": "Observed sample only; palette numbering/strip winding/renderer semantics need independent verification"
+          },
+          "mesh_inventory": [
+            {
+              "index": 0,
+              "stored_bone_palette": [
+                8
+              ],
+              "influence_slots": 1,
+              "shader": "yCh_Aniso_trans",
+              "index_count": 348,
+              "vertex_stride": 28,
+              "weight_stride": 8,
+              "offsets": {
+                "vertex": 3848,
+                "weights": 8384,
+                "uv": 9680,
+                "tangent": 10976
+              },
+              "weight_sum_max_error": 0.0,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 162,
+              "triangle_count": 156,
+              "material_id_raw": 6
+            },
+            {
+              "index": 1,
+              "stored_bone_palette": [
+                7,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                99,
+                98,
+                100,
+                101,
+                102,
+                103,
+                92,
+                91,
+                93,
+                94,
+                95,
+                96,
+                46
+              ],
+              "influence_slots": 4,
+              "shader": "yCh_Aniso_trans",
+              "index_count": 1221,
+              "vertex_stride": 28,
+              "weight_stride": 32,
+              "offsets": {
+                "vertex": 14460,
+                "weights": 30616,
+                "uv": 49080,
+                "tangent": 53696
+              },
+              "weight_sum_max_error": 0.0,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 577,
+              "triangle_count": 720,
+              "material_id_raw": 9
+            },
+            {
+              "index": 2,
+              "stored_bone_palette": [
+                99,
+                98,
+                7,
+                100,
+                101,
+                102,
+                103,
+                84,
+                85,
+                86,
+                87,
+                88,
+                89,
+                77,
+                78,
+                79,
+                80,
+                81,
+                82,
+                46
+              ],
+              "influence_slots": 4,
+              "shader": "yCh_Aniso_trans",
+              "index_count": 298,
+              "vertex_stride": 28,
+              "weight_stride": 32,
+              "offsets": {
+                "vertex": 63908,
+                "weights": 68332,
+                "uv": 73388,
+                "tangent": 74652
+              },
+              "weight_sum_max_error": 0.0,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 158,
+              "triangle_count": 191,
+              "material_id_raw": 8
+            },
+            {
+              "index": 3,
+              "stored_bone_palette": [
+                101,
+                100,
+                99,
+                98,
+                102,
+                7,
+                103,
+                84,
+                85,
+                86,
+                87,
+                88,
+                89,
+                91,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ],
+              "influence_slots": 3,
+              "shader": "yCh_Aniso_trans",
+              "index_count": 732,
+              "vertex_stride": 28,
+              "weight_stride": 24,
+              "offsets": {
+                "vertex": 77988,
+                "weights": 88740,
+                "uv": 97956,
+                "tangent": 101028
+              },
+              "weight_sum_max_error": 0.0,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 384,
+              "triangle_count": 463,
+              "material_id_raw": 7
+            },
+            {
+              "index": 4,
+              "stored_bone_palette": [
+                7,
+                98,
+                99,
+                100,
+                101,
+                84,
+                85,
+                86,
+                87,
+                58,
+                59,
+                60,
+                61,
+                46,
+                47,
+                48,
+                49,
+                50,
+                32,
+                33
+              ],
+              "influence_slots": 3,
+              "shader": "yCh_Aniso_trans",
+              "index_count": 1305,
+              "vertex_stride": 28,
+              "weight_stride": 24,
+              "offsets": {
+                "vertex": 107944,
+                "weights": 124744,
+                "uv": 139144,
+                "tangent": 143944
+              },
+              "weight_sum_max_error": 0.0,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 600,
+              "triangle_count": 770,
+              "material_id_raw": 6
+            },
+            {
+              "index": 5,
+              "stored_bone_palette": [
+                33,
+                32,
+                34,
+                35,
+                36,
+                37,
+                23,
+                22,
+                21,
+                7,
+                70,
+                71,
+                72,
+                73,
+                91,
+                92,
+                93,
+                94,
+                77,
+                78
+              ],
+              "influence_slots": 3,
+              "shader": "yCh_Aniso_trans",
+              "index_count": 389,
+              "vertex_stride": 28,
+              "weight_stride": 24,
+              "offsets": {
+                "vertex": 154600,
+                "weights": 159416,
+                "uv": 163544,
+                "tangent": 164920
+              },
+              "weight_sum_max_error": 0.0,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 172,
+              "triangle_count": 225,
+              "material_id_raw": 6
+            },
+            {
+              "index": 6,
+              "stored_bone_palette": [
+                79,
+                78,
+                77,
+                80,
+                26,
+                25,
+                7,
+                27,
+                28,
+                29,
+                30,
+                53,
+                54,
+                55,
+                56,
+                39,
+                40,
+                41,
+                42,
+                43
+              ],
+              "influence_slots": 3,
+              "shader": "yCh_Aniso_trans",
+              "index_count": 270,
+              "vertex_stride": 28,
+              "weight_stride": 24,
+              "offsets": {
+                "vertex": 168608,
+                "weights": 172472,
+                "uv": 175784,
+                "tangent": 176888
+              },
+              "weight_sum_max_error": 0.0,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 138,
+              "triangle_count": 168,
+              "material_id_raw": 6
+            },
+            {
+              "index": 7,
+              "stored_bone_palette": [
+                11,
+                10,
+                7,
+                12,
+                13,
+                63,
+                64,
+                65,
+                66,
+                67,
+                19,
+                18,
+                17
+              ],
+              "influence_slots": 3,
+              "shader": "yCh_Aniso_trans",
+              "index_count": 255,
+              "vertex_stride": 28,
+              "weight_stride": 24,
+              "offsets": {
+                "vertex": 179928,
+                "weights": 183400,
+                "uv": 186376,
+                "tangent": 187368
+              },
+              "weight_sum_max_error": 0.0,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 124,
+              "triangle_count": 169,
+              "material_id_raw": 6
+            },
+            {
+              "index": 8,
+              "stored_bone_palette": [
+                46,
+                7,
+                47,
+                48,
+                49,
+                50,
+                51,
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                70,
+                71,
+                72,
+                73,
+                74,
+                75,
+                77
+              ],
+              "influence_slots": 3,
+              "shader": "yCh_Aniso_trans",
+              "index_count": 665,
+              "vertex_stride": 28,
+              "weight_stride": 24,
+              "offsets": {
+                "vertex": 190212,
+                "weights": 199816,
+                "uv": 208048,
+                "tangent": 210792
+              },
+              "weight_sum_max_error": 0.0,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 343,
+              "triangle_count": 421,
+              "material_id_raw": 7
+            },
+            {
+              "index": 9,
+              "stored_bone_palette": [
+                94,
+                93,
+                92,
+                91,
+                95,
+                7,
+                96,
+                26,
+                25,
+                27,
+                28,
+                29,
+                30,
+                39,
+                40,
+                41,
+                42,
+                43,
+                44,
+                63
+              ],
+              "influence_slots": 3,
+              "shader": "yCh_Aniso_trans",
+              "index_count": 643,
+              "vertex_stride": 28,
+              "weight_stride": 24,
+              "offsets": {
+                "vertex": 217084,
+                "weights": 225988,
+                "uv": 233620,
+                "tangent": 236164
+              },
+              "weight_sum_max_error": 0.0,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 318,
+              "triangle_count": 384,
+              "material_id_raw": 7
+            },
+            {
+              "index": 10,
+              "stored_bone_palette": [
+                81,
+                80,
+                79,
+                78,
+                77,
+                7,
+                82,
+                67,
+                66,
+                65,
+                68,
+                64,
+                63
+              ],
+              "influence_slots": 3,
+              "shader": "yCh_Aniso_trans",
+              "index_count": 285,
+              "vertex_stride": 28,
+              "weight_stride": 24,
+              "offsets": {
+                "vertex": 242112,
+                "weights": 246228,
+                "uv": 249756,
+                "tangent": 250932
+              },
+              "weight_sum_max_error": 0.0,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 147,
+              "triangle_count": 180,
+              "material_id_raw": 7
+            },
+            {
+              "index": 11,
+              "stored_bone_palette": [
+                46,
+                7,
+                47,
+                48,
+                49,
+                50,
+                51,
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                70,
+                71,
+                72,
+                73,
+                74,
+                25,
+                26
+              ],
+              "influence_slots": 3,
+              "shader": "yCh_Aniso_trans",
+              "index_count": 279,
+              "vertex_stride": 28,
+              "weight_stride": 24,
+              "offsets": {
+                "vertex": 254112,
+                "weights": 258396,
+                "uv": 262068,
+                "tangent": 263292
+              },
+              "weight_sum_max_error": 0.0,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 153,
+              "triangle_count": 188,
+              "material_id_raw": 8
+            },
+            {
+              "index": 12,
+              "stored_bone_palette": [
+                92,
+                91,
+                7,
+                93,
+                94,
+                95,
+                96,
+                63,
+                64,
+                65,
+                66,
+                67,
+                40,
+                39,
+                41,
+                42,
+                43,
+                44,
+                28,
+                27
+              ],
+              "influence_slots": 4,
+              "shader": "yCh_Aniso_trans",
+              "index_count": 251,
+              "vertex_stride": 28,
+              "weight_stride": 32,
+              "offsets": {
+                "vertex": 266532,
+                "weights": 270368,
+                "uv": 274752,
+                "tangent": 275848
+              },
+              "weight_sum_max_error": 0.0,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 137,
+              "triangle_count": 163,
+              "material_id_raw": 8
+            },
+            {
+              "index": 13,
+              "stored_bone_palette": [
+                26,
+                27,
+                28,
+                29,
+                30
+              ],
+              "influence_slots": 3,
+              "shader": "yCh_Aniso_trans",
+              "index_count": 57,
+              "vertex_stride": 28,
+              "weight_stride": 24,
+              "offsets": {
+                "vertex": 278840,
+                "weights": 279680,
+                "uv": 280400,
+                "tangent": 280640
+              },
+              "weight_sum_max_error": 0.0,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 30,
+              "triangle_count": 32,
+              "material_id_raw": 8
+            },
+            {
+              "index": 14,
+              "stored_bone_palette": [
+                47,
+                46,
+                7,
+                48,
+                49,
+                50,
+                51,
+                32,
+                33,
+                34,
+                70,
+                71,
+                72,
+                73,
+                74,
+                75,
+                25,
+                26,
+                27,
+                63
+              ],
+              "influence_slots": 3,
+              "shader": "yCh_Aniso_trans",
+              "index_count": 425,
+              "vertex_stride": 28,
+              "weight_stride": 24,
+              "offsets": {
+                "vertex": 281960,
+                "weights": 288064,
+                "uv": 293296,
+                "tangent": 295040
+              },
+              "weight_sum_max_error": 0.0,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 218,
+              "triangle_count": 264,
+              "material_id_raw": 9
+            },
+            {
+              "index": 15,
+              "stored_bone_palette": [
+                40,
+                39,
+                7,
+                41,
+                42,
+                43,
+                44,
+                67,
+                66,
+                68,
+                65,
+                64,
+                63
+              ],
+              "influence_slots": 3,
+              "shader": "yCh_Aniso_trans",
+              "index_count": 236,
+              "vertex_stride": 28,
+              "weight_stride": 24,
+              "offsets": {
+                "vertex": 299352,
+                "weights": 302964,
+                "uv": 306060,
+                "tangent": 307092
+              },
+              "weight_sum_max_error": 0.0,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 129,
+              "triangle_count": 160,
+              "material_id_raw": 9
+            }
+          ]
+        },
+        {
+          "id": 20002,
+          "offset": 3438780,
+          "stored_bytes": 10164,
+          "compressed_bytes": 10145,
+          "expanded_bytes": 20440,
+          "sha256": "e44e51e1400bf7e6aaac51aa2f2c29dc04e242a98b3e8c38f6717902e0e3ee3d",
+          "model": {
+            "geometry_decoded": true,
+            "mesh_count": 1,
+            "bone_count": 13,
+            "texture_count": 21,
+            "model_label": "transB_eye",
+            "declared_bytes": 20392,
+            "trailing_bytes": 48,
+            "texture_names": [
+              "color",
+              "normal",
+              "mask",
+              "mf12",
+              "\"\"",
+              "cubemap_eyes",
+              "wrinkles_n",
+              "sweat_bump",
+              "noise2",
+              "hair_shift",
+              "hair_noise",
+              "mf01",
+              "mf02",
+              "mf03",
+              "mf04",
+              "mf05",
+              "mf06",
+              "mf07",
+              "mf08",
+              "mf09",
+              "mf10"
+            ],
+            "vertex_count": 236,
+            "provisional_strip_triangle_count": 272,
+            "index_count": 507,
+            "bounds": {
+              "min": [
+                -5.583584308624268,
+                -183.9669952392578,
+                -13.269797325134277
+              ],
+              "max": [
+                5.559118270874023,
+                -182.3520050048828,
+                -11.50649642944336
+              ]
+            },
+            "unused_weight_records": 171,
+            "unused_weight_max_abs": 2.9802322387695312e-08,
+            "scope": "Observed sample only; palette numbering/strip winding/renderer semantics need independent verification"
+          },
+          "mesh_inventory": [
+            {
+              "index": 0,
+              "stored_bone_palette": [
+                13,
+                7,
+                11,
+                8,
+                12,
+                10,
+                9
+              ],
+              "influence_slots": 3,
+              "shader": "yCh_trans",
+              "index_count": 507,
+              "vertex_stride": 28,
+              "weight_stride": 24,
+              "offsets": {
+                "vertex": 964,
+                "weights": 7572,
+                "uv": 13236,
+                "tangent": 15124
+              },
+              "weight_sum_max_error": 0.0,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 236,
+              "triangle_count": 272,
+              "material_id_raw": 5
+            }
+          ]
+        },
+        {
+          "id": 40000,
+          "offset": 3448944,
+          "stored_bytes": 1264,
+          "compressed_bytes": 1246,
+          "expanded_bytes": 2038,
+          "sha256": "53a79ed044f86885e5a5eddcecb48080dbf9c3d957cda42811908dd9d6d75a60"
+        },
+        {
+          "id": 40010,
+          "offset": 3450208,
+          "stored_bytes": 5792,
+          "compressed_bytes": 5775,
+          "expanded_bytes": 11600,
+          "sha256": "e892c429b542ec3e0dbc429e156c60b70c6d9f934530640f77ef9bd8997457bc"
+        }
+      ]
+    },
+    {
+      "offset": 4659200,
+      "payload_origin": 4659376,
+      "end": 8185916,
+      "sections": [
+        {
+          "id": 0,
+          "offset": 4659376,
+          "stored_bytes": 406456,
+          "compressed_bytes": 406439,
+          "expanded_bytes": 728492,
+          "sha256": "75de35c7ebcbd5ab45b5568957ca6dc0c390f47c05d42c53f000422f379d5a85",
+          "model": {
+            "geometry_decoded": true,
+            "mesh_count": 22,
+            "bone_count": 109,
+            "texture_count": 19,
+            "model_label": "body",
+            "declared_bytes": 727032,
+            "trailing_bytes": 1460,
+            "texture_names": [
+              "color",
+              "normal",
+              "mask",
+              "wrinkles_n",
+              "mf12",
+              "\"\"",
+              "sweat_bump",
+              "noise2",
+              "cubemap_eyes",
+              "hair_shift",
+              "hair_noise",
+              "mf01",
+              "mf02",
+              "mf03",
+              "mf04",
+              "mf07",
+              "mf08",
+              "mf09",
+              "mf10"
+            ],
+            "vertex_count": 8515,
+            "provisional_strip_triangle_count": 13601,
+            "index_count": 22396,
+            "bounds": {
+              "min": [
+                -92.46758270263672,
+                -197.90850830078125,
+                -23.33181381225586
+              ],
+              "max": [
+                92.46417236328125,
+                -2.6265103816986084,
+                16.474729537963867
+              ]
+            },
+            "unused_weight_records": 10007,
+            "unused_weight_max_abs": 6.332993507385254e-08,
+            "scope": "Observed sample only; palette numbering/strip winding/renderer semantics need independent verification"
+          },
+          "mesh_inventory": [
+            {
+              "index": 0,
+              "stored_bone_palette": [
+                85,
+                84,
+                18,
+                109,
+                86,
+                17,
+                87,
+                23,
+                20,
+                3,
+                58,
+                22,
+                60,
+                59,
+                61,
+                62,
+                6,
+                12,
+                7,
+                5
+              ],
+              "influence_slots": 4,
+              "shader": "yCh_gear",
+              "index_count": 2589,
+              "vertex_stride": 28,
+              "weight_stride": 32,
+              "offsets": {
+                "vertex": 5456,
+                "weights": 33400,
+                "uv": 65336,
+                "tangent": 73320
+              },
+              "weight_sum_max_error": 5.960464477539063e-08,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 998,
+              "triangle_count": 1585,
+              "material_id_raw": 2
+            },
+            {
+              "index": 1,
+              "stored_bone_palette": [
+                25,
+                24,
+                23,
+                18,
+                84,
+                58
+              ],
+              "influence_slots": 4,
+              "shader": "yCh_gear",
+              "index_count": 9,
+              "vertex_stride": 28,
+              "weight_stride": 32,
+              "offsets": {
+                "vertex": 91824,
+                "weights": 91992,
+                "uv": 92184,
+                "tangent": 92232
+              },
+              "weight_sum_max_error": 0.0,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 6,
+              "triangle_count": 4,
+              "material_id_raw": 2
+            },
+            {
+              "index": 2,
+              "stored_bone_palette": [
+                13,
+                12,
+                6,
+                3,
+                7,
+                14,
+                17,
+                18,
+                5,
+                8,
+                9,
+                25
+              ],
+              "influence_slots": 4,
+              "shader": "yCh_gear",
+              "index_count": 1855,
+              "vertex_stride": 28,
+              "weight_stride": 32,
+              "offsets": {
+                "vertex": 93672,
+                "weights": 112348,
+                "uv": 133692,
+                "tangent": 139028
+              },
+              "weight_sum_max_error": 5.960464477539063e-08,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 667,
+              "triangle_count": 1123,
+              "material_id_raw": 3
+            },
+            {
+              "index": 3,
+              "stored_bone_palette": [
+                67,
+                66,
+                65,
+                64,
+                14,
+                13,
+                12,
+                15,
+                16,
+                9,
+                8,
+                7,
+                10,
+                11,
+                93,
+                92,
+                91,
+                90
+              ],
+              "influence_slots": 3,
+              "shader": "yCh_gear",
+              "index_count": 3860,
+              "vertex_stride": 28,
+              "weight_stride": 24,
+              "offsets": {
+                "vertex": 152092,
+                "weights": 198572,
+                "uv": 238412,
+                "tangent": 251692
+              },
+              "weight_sum_max_error": 0.0,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 1660,
+              "triangle_count": 2316,
+              "material_id_raw": 4
+            },
+            {
+              "index": 4,
+              "stored_bone_palette": [
+                25,
+                27,
+                26,
+                30,
+                31,
+                45,
+                47,
+                28,
+                29,
+                34,
+                39,
+                43,
+                42,
+                52,
+                41,
+                50,
+                49,
+                56,
+                55,
+                33
+              ],
+              "influence_slots": 4,
+              "shader": "yCh_skin",
+              "index_count": 1854,
+              "vertex_stride": 28,
+              "weight_stride": 32,
+              "offsets": {
+                "vertex": 281360,
+                "weights": 299308,
+                "uv": 319820,
+                "tangent": 324948
+              },
+              "weight_sum_max_error": 1.1920928955078125e-07,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 641,
+              "triangle_count": 1134,
+              "material_id_raw": 15
+            },
+            {
+              "index": 5,
+              "stored_bone_palette": [
+                52,
+                25,
+                23,
+                44,
+                51,
+                46,
+                45,
+                40,
+                57,
+                55,
+                49,
+                47,
+                36,
+                31,
+                32,
+                33,
+                34,
+                30
+              ],
+              "influence_slots": 4,
+              "shader": "yCh_skin",
+              "index_count": 868,
+              "vertex_stride": 28,
+              "weight_stride": 32,
+              "offsets": {
+                "vertex": 338376,
+                "weights": 347112,
+                "uv": 357096,
+                "tangent": 359592
+              },
+              "weight_sum_max_error": 1.1920928955078125e-07,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 312,
+              "triangle_count": 519,
+              "material_id_raw": 15
+            },
+            {
+              "index": 6,
+              "stored_bone_palette": [
+                35,
+                28,
+                25,
+                29,
+                27,
+                39
+              ],
+              "influence_slots": 4,
+              "shader": "yCh_skin",
+              "index_count": 205,
+              "vertex_stride": 28,
+              "weight_stride": 32,
+              "offsets": {
+                "vertex": 367100,
+                "weights": 369284,
+                "uv": 371780,
+                "tangent": 372404
+              },
+              "weight_sum_max_error": 5.960464477539063e-08,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 78,
+              "triangle_count": 126,
+              "material_id_raw": 15
+            },
+            {
+              "index": 7,
+              "stored_bone_palette": [
+                25,
+                24,
+                23,
+                18,
+                52,
+                39,
+                42,
+                45,
+                55,
+                49,
+                56,
+                50,
+                41,
+                57,
+                51
+              ],
+              "influence_slots": 4,
+              "shader": "yCh_skin",
+              "index_count": 1992,
+              "vertex_stride": 28,
+              "weight_stride": 32,
+              "offsets": {
+                "vertex": 375780,
+                "weights": 396388,
+                "uv": 419940,
+                "tangent": 425828
+              },
+              "weight_sum_max_error": 5.960464477539063e-08,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 736,
+              "triangle_count": 1186,
+              "material_id_raw": 0
+            },
+            {
+              "index": 8,
+              "stored_bone_palette": [
+                25,
+                24,
+                23,
+                18,
+                58,
+                84,
+                91,
+                90,
+                92,
+                65,
+                64,
+                66
+              ],
+              "influence_slots": 4,
+              "shader": "yCh_skin",
+              "index_count": 219,
+              "vertex_stride": 28,
+              "weight_stride": 32,
+              "offsets": {
+                "vertex": 440364,
+                "weights": 443332,
+                "uv": 446724,
+                "tangent": 447572
+              },
+              "weight_sum_max_error": 5.960464477539063e-08,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 106,
+              "triangle_count": 120,
+              "material_id_raw": 1
+            },
+            {
+              "index": 9,
+              "stored_bone_palette": [
+                74,
+                67,
+                66,
+                68,
+                65,
+                80,
+                81,
+                71,
+                77,
+                69,
+                70,
+                72,
+                73,
+                75,
+                76,
+                78,
+                79,
+                82
+              ],
+              "influence_slots": 3,
+              "shader": "yCh_skin",
+              "index_count": 2072,
+              "vertex_stride": 28,
+              "weight_stride": 24,
+              "offsets": {
+                "vertex": 451004,
+                "weights": 472424,
+                "uv": 490784,
+                "tangent": 496904
+              },
+              "weight_sum_max_error": 0.0,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 765,
+              "triangle_count": 1242,
+              "material_id_raw": 1
+            },
+            {
+              "index": 10,
+              "stored_bone_palette": [
+                100,
+                93,
+                92,
+                94,
+                91,
+                106,
+                107,
+                97,
+                103,
+                95,
+                96,
+                98,
+                99,
+                101,
+                102,
+                104,
+                105,
+                108
+              ],
+              "influence_slots": 3,
+              "shader": "yCh_skin",
+              "index_count": 2087,
+              "vertex_stride": 28,
+              "weight_stride": 24,
+              "offsets": {
+                "vertex": 511948,
+                "weights": 533368,
+                "uv": 551728,
+                "tangent": 557848
+              },
+              "weight_sum_max_error": 0.0,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 765,
+              "triangle_count": 1242,
+              "material_id_raw": 1
+            },
+            {
+              "index": 11,
+              "stored_bone_palette": [
+                58,
+                23,
+                18,
+                24,
+                25,
+                52,
+                84,
+                90,
+                88,
+                86,
+                85,
+                89,
+                64,
+                61,
+                60,
+                83,
+                63
+              ],
+              "influence_slots": 4,
+              "shader": "yCh_skin_flex",
+              "index_count": 363,
+              "vertex_stride": 28,
+              "weight_stride": 32,
+              "offsets": {
+                "vertex": 572924,
+                "weights": 576732,
+                "uv": 581084,
+                "tangent": 582172
+              },
+              "weight_sum_max_error": 5.960464477539063e-08,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 136,
+              "triangle_count": 192,
+              "material_id_raw": 16
+            },
+            {
+              "index": 12,
+              "stored_bone_palette": [
+                58,
+                18,
+                17,
+                22,
+                84
+              ],
+              "influence_slots": 4,
+              "shader": "yCh_skin_flex",
+              "index_count": 11,
+              "vertex_stride": 28,
+              "weight_stride": 32,
+              "offsets": {
+                "vertex": 586252,
+                "weights": 586476,
+                "uv": 586732,
+                "tangent": 586796
+              },
+              "weight_sum_max_error": 0.0,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 8,
+              "triangle_count": 4,
+              "material_id_raw": 16
+            },
+            {
+              "index": 13,
+              "stored_bone_palette": [
+                58,
+                22,
+                18,
+                17,
+                23
+              ],
+              "influence_slots": 4,
+              "shader": "yCh_skin_flex",
+              "index_count": 90,
+              "vertex_stride": 28,
+              "weight_stride": 32,
+              "offsets": {
+                "vertex": 588636,
+                "weights": 589756,
+                "uv": 591036,
+                "tangent": 591356
+              },
+              "weight_sum_max_error": 5.960464477539063e-08,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 40,
+              "triangle_count": 58,
+              "material_id_raw": 17
+            },
+            {
+              "index": 14,
+              "stored_bone_palette": [
+                84,
+                20,
+                18,
+                17,
+                23
+              ],
+              "influence_slots": 4,
+              "shader": "yCh_skin_flex",
+              "index_count": 101,
+              "vertex_stride": 28,
+              "weight_stride": 32,
+              "offsets": {
+                "vertex": 593736,
+                "weights": 594884,
+                "uv": 596196,
+                "tangent": 596524
+              },
+              "weight_sum_max_error": 5.960464477539063e-08,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 41,
+              "triangle_count": 59,
+              "material_id_raw": 18
+            },
+            {
+              "index": 15,
+              "stored_bone_palette": [
+                18,
+                17,
+                3,
+                58,
+                5,
+                84
+              ],
+              "influence_slots": 4,
+              "shader": "yCh_skin_flex",
+              "index_count": 484,
+              "vertex_stride": 28,
+              "weight_stride": 32,
+              "offsets": {
+                "vertex": 598940,
+                "weights": 603504,
+                "uv": 608720,
+                "tangent": 610024
+              },
+              "weight_sum_max_error": 5.960464477539063e-08,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 163,
+              "triangle_count": 287,
+              "material_id_raw": 19
+            },
+            {
+              "index": 16,
+              "stored_bone_palette": [
+                61,
+                60,
+                64,
+                63,
+                62,
+                83
+              ],
+              "influence_slots": 4,
+              "shader": "yCh_skin_flex",
+              "index_count": 187,
+              "vertex_stride": 28,
+              "weight_stride": 32,
+              "offsets": {
+                "vertex": 614668,
+                "weights": 616908,
+                "uv": 619468,
+                "tangent": 620108
+              },
+              "weight_sum_max_error": 5.960464477539063e-08,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 80,
+              "triangle_count": 111,
+              "material_id_raw": 20
+            },
+            {
+              "index": 17,
+              "stored_bone_palette": [
+                86,
+                85,
+                90,
+                89,
+                87,
+                88
+              ],
+              "influence_slots": 4,
+              "shader": "yCh_skin_flex",
+              "index_count": 191,
+              "vertex_stride": 28,
+              "weight_stride": 32,
+              "offsets": {
+                "vertex": 623164,
+                "weights": 625348,
+                "uv": 627844,
+                "tangent": 628468
+              },
+              "weight_sum_max_error": 5.960464477539063e-08,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 78,
+              "triangle_count": 111,
+              "material_id_raw": 21
+            },
+            {
+              "index": 18,
+              "stored_bone_palette": [
+                65,
+                64,
+                66,
+                61,
+                83,
+                63,
+                60,
+                62
+              ],
+              "influence_slots": 4,
+              "shader": "yCh_skin_flex",
+              "index_count": 368,
+              "vertex_stride": 28,
+              "weight_stride": 32,
+              "offsets": {
+                "vertex": 631508,
+                "weights": 635400,
+                "uv": 639848,
+                "tangent": 640960
+              },
+              "weight_sum_max_error": 5.960464477539063e-08,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 139,
+              "triangle_count": 227,
+              "material_id_raw": 22
+            },
+            {
+              "index": 19,
+              "stored_bone_palette": [
+                91,
+                90,
+                92,
+                86,
+                88,
+                89,
+                85,
+                87
+              ],
+              "influence_slots": 4,
+              "shader": "yCh_skin_flex",
+              "index_count": 376,
+              "vertex_stride": 28,
+              "weight_stride": 32,
+              "offsets": {
+                "vertex": 645084,
+                "weights": 648976,
+                "uv": 653424,
+                "tangent": 654536
+              },
+              "weight_sum_max_error": 5.960464477539063e-08,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 139,
+              "triangle_count": 227,
+              "material_id_raw": 23
+            },
+            {
+              "index": 20,
+              "stored_bone_palette": [
+                25,
+                52
+              ],
+              "influence_slots": 1,
+              "shader": "yCh_skin",
+              "index_count": 1099,
+              "vertex_stride": 28,
+              "weight_stride": 8,
+              "offsets": {
+                "vertex": 658328,
+                "weights": 668940,
+                "uv": 671972,
+                "tangent": 675004
+              },
+              "weight_sum_max_error": 0.0,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 379,
+              "triangle_count": 624,
+              "material_id_raw": 5
+            },
+            {
+              "index": 21,
+              "stored_bone_palette": [
+                38,
+                37
+              ],
+              "influence_slots": 1,
+              "shader": "yCh_Reflect",
+              "index_count": 1516,
+              "vertex_stride": 28,
+              "weight_stride": 8,
+              "offsets": {
+                "vertex": 682500,
+                "weights": 698684,
+                "uv": 703308,
+                "tangent": 707932
+              },
+              "weight_sum_max_error": 0.0,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 578,
+              "triangle_count": 1104,
+              "material_id_raw": 6
+            }
+          ]
+        },
+        {
+          "id": 10,
+          "offset": 5065832,
+          "stored_bytes": 2028300,
+          "compressed_bytes": 2028281,
+          "expanded_bytes": 3574176,
+          "sha256": "0a1a64ecb8e0014d7f84a785c786adabe1ebffe1977944296c2eac6110cc14f1",
+          "textures": [
+            {
+              "index": 0,
+              "name": "normal",
+              "extension": "dds",
+              "offset": 432,
+              "size": 2785408,
+              "signature": "DDS |",
+              "sha256": "8af9d18334ed577ff35d1a17af69c06eff8e68fe85538555d4e72f9aa97681ba",
+              "width": 2048,
+              "height": 1024,
+              "mip_count": 4,
+              "fourcc": "DXT5",
+              "pixel_bits": 0,
+              "pixel_flags": 4,
+              "pillow_decode": {
+                "size": [
+                  2048,
+                  1024
+                ],
+                "mode": "RGBA"
+              }
+            },
+            {
+              "index": 1,
+              "name": "MF01",
+              "extension": "dds",
+              "offset": 2785840,
+              "size": 43856,
+              "signature": "DDS |",
+              "sha256": "4d46cbf2ac8abbc16cfab85dfe197cc4b517f4652c45e46b1de9f5d0527f1312",
+              "width": 256,
+              "height": 128,
+              "mip_count": 9,
+              "fourcc": "DXT5",
+              "pixel_bits": 0,
+              "pixel_flags": 4,
+              "pillow_decode": {
+                "size": [
+                  256,
+                  128
+                ],
+                "mode": "RGBA"
+              }
+            },
+            {
+              "index": 2,
+              "name": "MF02",
+              "extension": "dds",
+              "offset": 2829696,
+              "size": 43856,
+              "signature": "DDS |",
+              "sha256": "cdc3c0709f37eca6746e46d90108fa0aeac5ffbe12ee806ca45771bd37e58839",
+              "width": 128,
+              "height": 256,
+              "mip_count": 9,
+              "fourcc": "DXT5",
+              "pixel_bits": 0,
+              "pixel_flags": 4,
+              "pillow_decode": {
+                "size": [
+                  128,
+                  256
+                ],
+                "mode": "RGBA"
+              }
+            },
+            {
+              "index": 3,
+              "name": "MF03",
+              "extension": "dds",
+              "offset": 2873552,
+              "size": 43856,
+              "signature": "DDS |",
+              "sha256": "5c58b91fd43269c11575d83189d9a5bd11d1e0e2647a31553463e07f8c649723",
+              "width": 128,
+              "height": 256,
+              "mip_count": 9,
+              "fourcc": "DXT5",
+              "pixel_bits": 0,
+              "pixel_flags": 4,
+              "pillow_decode": {
+                "size": [
+                  128,
+                  256
+                ],
+                "mode": "RGBA"
+              }
+            },
+            {
+              "index": 4,
+              "name": "MF04",
+              "extension": "dds",
+              "offset": 2917408,
+              "size": 43856,
+              "signature": "DDS |",
+              "sha256": "3493b3b1b6bb7694471c95f86547d7e64c251a02e84ecb51c2ecc647156a1bf9",
+              "width": 128,
+              "height": 256,
+              "mip_count": 9,
+              "fourcc": "DXT5",
+              "pixel_bits": 0,
+              "pixel_flags": 4,
+              "pillow_decode": {
+                "size": [
+                  128,
+                  256
+                ],
+                "mode": "RGBA"
+              }
+            },
+            {
+              "index": 5,
+              "name": "MF07",
+              "extension": "dds",
+              "offset": 2961264,
+              "size": 87536,
+              "signature": "DDS |",
+              "sha256": "20e53a1639daae1d5f8eceeb452a4163b5fba3cf0969b77101458415dd42ad7f",
+              "width": 256,
+              "height": 256,
+              "mip_count": 9,
+              "fourcc": "DXT5",
+              "pixel_bits": 0,
+              "pixel_flags": 4,
+              "pillow_decode": {
+                "size": [
+                  256,
+                  256
+                ],
+                "mode": "RGBA"
+              }
+            },
+            {
+              "index": 6,
+              "name": "MF08",
+              "extension": "dds",
+              "offset": 3048800,
+              "size": 87536,
+              "signature": "DDS |",
+              "sha256": "6e53d6a517864d453e2b8ed3e44edb071470740d58d4cf55c058dd97ae7c43c3",
+              "width": 256,
+              "height": 256,
+              "mip_count": 9,
+              "fourcc": "DXT5",
+              "pixel_bits": 0,
+              "pixel_flags": 4,
+              "pillow_decode": {
+                "size": [
+                  256,
+                  256
+                ],
+                "mode": "RGBA"
+              }
+            },
+            {
+              "index": 7,
+              "name": "MF09",
+              "extension": "dds",
+              "offset": 3136336,
+              "size": 43856,
+              "signature": "DDS |",
+              "sha256": "1efe1aa4d1c20b6b93c84e8239069e420815e8cc01323d79e095b1f00e3a0fdb",
+              "width": 256,
+              "height": 128,
+              "mip_count": 9,
+              "fourcc": "DXT5",
+              "pixel_bits": 0,
+              "pixel_flags": 4,
+              "pillow_decode": {
+                "size": [
+                  256,
+                  128
+                ],
+                "mode": "RGBA"
+              }
+            },
+            {
+              "index": 8,
+              "name": "MF10",
+              "extension": "dds",
+              "offset": 3180192,
+              "size": 43856,
+              "signature": "DDS |",
+              "sha256": "87f758ceecaa3d1699d66d80ba14f6d4c3a79341d861bdb4c9b00fc4b91c0daa",
+              "width": 256,
+              "height": 128,
+              "mip_count": 9,
+              "fourcc": "DXT5",
+              "pixel_bits": 0,
+              "pixel_flags": 4,
+              "pillow_decode": {
+                "size": [
+                  256,
+                  128
+                ],
+                "mode": "RGBA"
+              }
+            },
+            {
+              "index": 9,
+              "name": "wrinkles_n",
+              "extension": "dds",
+              "offset": 3224048,
+              "size": 87536,
+              "signature": "DDS |",
+              "sha256": "a4e3e6e45cdd4261ac279bcfc701fadc9dd0b01125bbbbba903999d36f06b821",
+              "width": 256,
+              "height": 256,
+              "mip_count": 9,
+              "fourcc": "DXT5",
+              "pixel_bits": 0,
+              "pixel_flags": 4,
+              "pillow_decode": {
+                "size": [
+                  256,
+                  256
+                ],
+                "mode": "RGBA"
+              }
+            },
+            {
+              "index": 10,
+              "name": "Mask",
+              "extension": "dds",
+              "offset": 3311584,
+              "size": 174904,
+              "signature": "DDS |",
+              "sha256": "ac0e1ae4864549e3e305fb5930fad74dacc5388b52807c38d1d7312b6f8f68aa",
+              "width": 512,
+              "height": 512,
+              "mip_count": 10,
+              "fourcc": "DXT1",
+              "pixel_bits": 0,
+              "pixel_flags": 4,
+              "pillow_decode": {
+                "size": [
+                  512,
+                  512
+                ],
+                "mode": "RGBA"
+              }
+            },
+            {
+              "index": 11,
+              "name": "hair_shift",
+              "extension": "dds",
+              "offset": 3486496,
+              "size": 43832,
+              "signature": "DDS |",
+              "sha256": "d3148960199260c9d388e367916ecc605b834283b40f70ec94cee773c062b5fa",
+              "width": 256,
+              "height": 256,
+              "mip_count": 9,
+              "fourcc": "DXT1",
+              "pixel_bits": 0,
+              "pixel_flags": 4,
+              "pillow_decode": {
+                "size": [
+                  256,
+                  256
+                ],
+                "mode": "RGBA"
+              }
+            },
+            {
+              "index": 12,
+              "name": "hair_noise",
+              "extension": "dds",
+              "offset": 3530336,
+              "size": 43832,
+              "signature": "DDS |",
+              "sha256": "da732a8e032ca71d603ac9a27d17c93ed9c3a25a0c5659d5a56ce1aacc35416f",
+              "width": 256,
+              "height": 256,
+              "mip_count": 9,
+              "fourcc": "DXT1",
+              "pixel_bits": 0,
+              "pixel_flags": 4,
+              "pillow_decode": {
+                "size": [
+                  256,
+                  256
+                ],
+                "mode": "RGBA"
+              }
+            }
+          ]
+        },
+        {
+          "id": 12,
+          "offset": 7094132,
+          "stored_bytes": 857384,
+          "compressed_bytes": 857366,
+          "expanded_bytes": 1392816,
+          "sha256": "dfc8ea14a2e6b47209a2e8dbb9dcb24d1799a76a4b4a26b2743534b284568104",
+          "textures": [
+            {
+              "index": 0,
+              "name": "color",
+              "extension": "dds",
+              "offset": 48,
+              "size": 1392768,
+              "signature": "DDS |",
+              "sha256": "833c77acfcae35d4b33be1b2ab36dbb4b646982707442ecf9b48d77b144408f0",
+              "width": 2048,
+              "height": 1024,
+              "mip_count": 4,
+              "fourcc": "DXT1",
+              "pixel_bits": 0,
+              "pixel_flags": 4,
+              "pillow_decode": {
+                "size": [
+                  2048,
+                  1024
+                ],
+                "mode": "RGBA"
+              }
+            }
+          ]
+        },
+        {
+          "id": 13,
+          "offset": 7951516,
+          "stored_bytes": 34344,
+          "compressed_bytes": 34327,
+          "expanded_bytes": 4194480,
+          "sha256": "1c67c067435239ac621e503140f2381a4f90ea49fcae7502ec70b8aae80590d8",
+          "textures": [
+            {
+              "index": 0,
+              "name": "Mask1",
+              "extension": "dds",
+              "offset": 48,
+              "size": 4194432,
+              "signature": "DDS |",
+              "sha256": "1c75760fc8b41208fe0ccf49708ef09437dc3a826874461acde5d38ecd8259f4",
+              "width": 2048,
+              "height": 1024,
+              "mip_count": 0,
+              "fourcc": "\u0000\u0000\u0000\u0000",
+              "pixel_bits": 16,
+              "pixel_flags": 65,
+              "pillow_decode": {
+                "size": [
+                  2048,
+                  1024
+                ],
+                "mode": "RGBA"
+              }
+            }
+          ]
+        },
+        {
+          "id": 14,
+          "offset": 7985860,
+          "stored_bytes": 11988,
+          "compressed_bytes": 11969,
+          "expanded_bytes": 4194480,
+          "sha256": "36c96bc9caf8139c744ba5860dfafd1536601b54fb23e7183ad9881ae73baf7b",
+          "textures": [
+            {
+              "index": 0,
+              "name": "Mask2",
+              "extension": "dds",
+              "offset": 48,
+              "size": 4194432,
+              "signature": "DDS |",
+              "sha256": "6f1f97e0af26f11604611e66e7b371d055e6545b5692fb0c48fb17e29307d4aa",
+              "width": 2048,
+              "height": 1024,
+              "mip_count": 0,
+              "fourcc": "\u0000\u0000\u0000\u0000",
+              "pixel_bits": 16,
+              "pixel_flags": 65,
+              "pillow_decode": {
+                "size": [
+                  2048,
+                  1024
+                ],
+                "mode": "RGBA"
+              }
+            }
+          ]
+        },
+        {
+          "id": 40,
+          "offset": 7997848,
+          "stored_bytes": 68,
+          "compressed_bytes": 49,
+          "expanded_bytes": 182,
+          "sha256": "9579c3e4c6073cfd0b2b6aa0987282a93ca328035670692aefa407c980a61bc5"
+        },
+        {
+          "id": 50,
+          "offset": 7997916,
+          "stored_bytes": 280,
+          "compressed_bytes": 262,
+          "expanded_bytes": 531,
+          "sha256": "17e888960ef2459a92ec09ce8f83a02ca33ac58bf9540f83f639c7cabff1bf18"
+        },
+        {
+          "id": 60,
+          "offset": 7998196,
+          "stored_bytes": 352,
+          "compressed_bytes": 335,
+          "expanded_bytes": 2606,
+          "sha256": "4ca1a210adf9db2dd59f6315075e696d9d5a89e40eb96796a138e4746666033a"
+        },
+        {
+          "id": 61,
+          "offset": 7998548,
+          "stored_bytes": 220,
+          "compressed_bytes": 203,
+          "expanded_bytes": 422,
+          "sha256": "840df4144e1e9843c45c293ab530474d2af542db360244378ce7c19ba03bf88c"
+        },
+        {
+          "id": 80,
+          "offset": 7998768,
+          "stored_bytes": 2356,
+          "compressed_bytes": 2339,
+          "expanded_bytes": 2816,
+          "sha256": "34c72325d3dda387ceca95c4680e06829319a18dcaf4713edad1100b0babc91b"
+        },
+        {
+          "id": 110,
+          "offset": 8001124,
+          "stored_bytes": 4216,
+          "compressed_bytes": 4198,
+          "expanded_bytes": 27800,
+          "sha256": "5f0f1f4b5dfe90b036f0011d9bf9f185dd8f0b8e0f183c5773a15b89fe1a0534"
+        },
+        {
+          "id": 10000,
+          "offset": 8005340,
+          "stored_bytes": 164624,
+          "compressed_bytes": 164608,
+          "expanded_bytes": 327800,
+          "sha256": "178473f6303eafae3a7921a5e12917214e52ad324a8697beb4509ef230962aa4",
+          "model": {
+            "geometry_decoded": true,
+            "mesh_count": 23,
+            "bone_count": 109,
+            "texture_count": 19,
+            "model_label": "transA_Beard",
+            "declared_bytes": 326920,
+            "trailing_bytes": 880,
+            "texture_names": [
+              "color",
+              "normal",
+              "mask",
+              "wrinkles_n",
+              "mf12",
+              "\"\"",
+              "sweat_bump",
+              "noise2",
+              "cubemap_eyes",
+              "hair_shift",
+              "hair_noise",
+              "mf01",
+              "mf02",
+              "mf03",
+              "mf04",
+              "mf07",
+              "mf08",
+              "mf09",
+              "mf10"
+            ],
+            "vertex_count": 3804,
+            "provisional_strip_triangle_count": 4664,
+            "index_count": 7688,
+            "bounds": {
+              "min": [
+                -28.886035919189453,
+                -201.6282958984375,
+                -17.18899917602539
+              ],
+              "max": [
+                28.88610076904297,
+                -109.17919921875,
+                16.68227767944336
+              ]
+            },
+            "unused_weight_records": 5072,
+            "unused_weight_max_abs": 4.190951585769653e-08,
+            "scope": "Observed sample only; palette numbering/strip winding/renderer semantics need independent verification"
+          },
+          "mesh_inventory": [
+            {
+              "index": 0,
+              "stored_bone_palette": [
+                13
+              ],
+              "influence_slots": 1,
+              "shader": "yCh_Aniso_trans",
+              "index_count": 348,
+              "vertex_stride": 28,
+              "weight_stride": 8,
+              "offsets": {
+                "vertex": 5136,
+                "weights": 9672,
+                "uv": 10968,
+                "tangent": 12264
+              },
+              "weight_sum_max_error": 0.0,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 162,
+              "triangle_count": 156,
+              "material_id_raw": 8
+            },
+            {
+              "index": 1,
+              "stored_bone_palette": [
+                109,
+                7,
+                6,
+                2,
+                9,
+                4,
+                5
+              ],
+              "influence_slots": 4,
+              "shader": "yCh_trans",
+              "index_count": 29,
+              "vertex_stride": 28,
+              "weight_stride": 32,
+              "offsets": {
+                "vertex": 15624,
+                "weights": 16184,
+                "uv": 16824,
+                "tangent": 16984
+              },
+              "weight_sum_max_error": 0.0,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 20,
+              "triangle_count": 10,
+              "material_id_raw": 14
+            },
+            {
+              "index": 2,
+              "stored_bone_palette": [
+                12,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                104,
+                103,
+                105,
+                106,
+                107,
+                108,
+                97,
+                96,
+                98,
+                99,
+                100,
+                101,
+                75
+              ],
+              "influence_slots": 4,
+              "shader": "yCh_Aniso_trans",
+              "index_count": 986,
+              "vertex_stride": 28,
+              "weight_stride": 32,
+              "offsets": {
+                "vertex": 18128,
+                "weights": 30896,
+                "uv": 45488,
+                "tangent": 49136
+              },
+              "weight_sum_max_error": 5.960464477539063e-08,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 456,
+              "triangle_count": 564,
+              "material_id_raw": 13
+            },
+            {
+              "index": 3,
+              "stored_bone_palette": [
+                106,
+                105,
+                104,
+                12,
+                103,
+                107,
+                108,
+                97,
+                96,
+                98,
+                99,
+                100,
+                101,
+                51,
+                52,
+                53,
+                54,
+                55,
+                56,
+                37
+              ],
+              "influence_slots": 4,
+              "shader": "yCh_Aniso_trans",
+              "index_count": 331,
+              "vertex_stride": 28,
+              "weight_stride": 32,
+              "offsets": {
+                "vertex": 57424,
+                "weights": 62072,
+                "uv": 67384,
+                "tangent": 68712
+              },
+              "weight_sum_max_error": 5.960464477539063e-08,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 166,
+              "triangle_count": 206,
+              "material_id_raw": 12
+            },
+            {
+              "index": 4,
+              "stored_bone_palette": [
+                104,
+                103,
+                12,
+                105,
+                106,
+                107,
+                108,
+                89,
+                90,
+                91,
+                92,
+                93,
+                94,
+                82,
+                83,
+                84,
+                85,
+                86,
+                87,
+                51
+              ],
+              "influence_slots": 4,
+              "shader": "yCh_Aniso_trans",
+              "index_count": 298,
+              "vertex_stride": 28,
+              "weight_stride": 32,
+              "offsets": {
+                "vertex": 72212,
+                "weights": 76636,
+                "uv": 81692,
+                "tangent": 82956
+              },
+              "weight_sum_max_error": 5.960464477539063e-08,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 158,
+              "triangle_count": 191,
+              "material_id_raw": 11
+            },
+            {
+              "index": 5,
+              "stored_bone_palette": [
+                12,
+                103,
+                104,
+                105,
+                106,
+                107,
+                108,
+                89,
+                90,
+                91,
+                92,
+                93,
+                94,
+                96,
+                97,
+                98,
+                99,
+                100,
+                101,
+                82
+              ],
+              "influence_slots": 3,
+              "shader": "yCh_Aniso_trans",
+              "index_count": 347,
+              "vertex_stride": 28,
+              "weight_stride": 24,
+              "offsets": {
+                "vertex": 86292,
+                "weights": 91276,
+                "uv": 95548,
+                "tangent": 96972
+              },
+              "weight_sum_max_error": 0.0,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 178,
+              "triangle_count": 208,
+              "material_id_raw": 10
+            },
+            {
+              "index": 6,
+              "stored_bone_palette": [
+                51,
+                12,
+                52,
+                53,
+                54,
+                55,
+                56,
+                37,
+                38,
+                39,
+                40,
+                41,
+                42,
+                75,
+                76,
+                77,
+                78,
+                79,
+                80,
+                44
+              ],
+              "influence_slots": 3,
+              "shader": "yCh_Aniso_trans",
+              "index_count": 378,
+              "vertex_stride": 28,
+              "weight_stride": 24,
+              "offsets": {
+                "vertex": 100648,
+                "weights": 106024,
+                "uv": 110632,
+                "tangent": 112168
+              },
+              "weight_sum_max_error": 0.0,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 192,
+              "triangle_count": 236,
+              "material_id_raw": 10
+            },
+            {
+              "index": 7,
+              "stored_bone_palette": [
+                86,
+                85,
+                84,
+                83,
+                82,
+                12,
+                87,
+                30,
+                31,
+                32,
+                33,
+                34,
+                35,
+                68,
+                69,
+                70,
+                71,
+                72,
+                73
+              ],
+              "influence_slots": 3,
+              "shader": "yCh_Aniso_trans",
+              "index_count": 260,
+              "vertex_stride": 28,
+              "weight_stride": 24,
+              "offsets": {
+                "vertex": 116072,
+                "weights": 119936,
+                "uv": 123248,
+                "tangent": 124352
+              },
+              "weight_sum_max_error": 0.0,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 138,
+              "triangle_count": 172,
+              "material_id_raw": 10
+            },
+            {
+              "index": 8,
+              "stored_bone_palette": [
+                45,
+                44,
+                12,
+                46,
+                47,
+                48,
+                49
+              ],
+              "influence_slots": 3,
+              "shader": "yCh_Aniso_trans",
+              "index_count": 164,
+              "vertex_stride": 28,
+              "weight_stride": 24,
+              "offsets": {
+                "vertex": 127372,
+                "weights": 129724,
+                "uv": 131740,
+                "tangent": 132412
+              },
+              "weight_sum_max_error": 0.0,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 84,
+              "triangle_count": 104,
+              "material_id_raw": 10
+            },
+            {
+              "index": 9,
+              "stored_bone_palette": [
+                51,
+                12,
+                52,
+                53,
+                54,
+                55,
+                56,
+                37,
+                38,
+                39,
+                40,
+                41,
+                42,
+                75,
+                76,
+                77,
+                78,
+                79,
+                30,
+                31
+              ],
+              "influence_slots": 3,
+              "shader": "yCh_Aniso_trans",
+              "index_count": 279,
+              "vertex_stride": 28,
+              "weight_stride": 24,
+              "offsets": {
+                "vertex": 134592,
+                "weights": 138876,
+                "uv": 142548,
+                "tangent": 143772
+              },
+              "weight_sum_max_error": 0.0,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 153,
+              "triangle_count": 188,
+              "material_id_raw": 11
+            },
+            {
+              "index": 10,
+              "stored_bone_palette": [
+                97,
+                96,
+                12,
+                98,
+                99,
+                100,
+                101,
+                68,
+                69,
+                70,
+                71,
+                72,
+                45,
+                44,
+                46,
+                47,
+                48,
+                49,
+                33,
+                32
+              ],
+              "influence_slots": 4,
+              "shader": "yCh_Aniso_trans",
+              "index_count": 251,
+              "vertex_stride": 28,
+              "weight_stride": 32,
+              "offsets": {
+                "vertex": 147012,
+                "weights": 150848,
+                "uv": 155232,
+                "tangent": 156328
+              },
+              "weight_sum_max_error": 0.0,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 137,
+              "triangle_count": 163,
+              "material_id_raw": 11
+            },
+            {
+              "index": 11,
+              "stored_bone_palette": [
+                31,
+                32,
+                33,
+                34,
+                35
+              ],
+              "influence_slots": 3,
+              "shader": "yCh_Aniso_trans",
+              "index_count": 57,
+              "vertex_stride": 28,
+              "weight_stride": 24,
+              "offsets": {
+                "vertex": 159320,
+                "weights": 160160,
+                "uv": 160880,
+                "tangent": 161120
+              },
+              "weight_sum_max_error": 0.0,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 30,
+              "triangle_count": 32,
+              "material_id_raw": 11
+            },
+            {
+              "index": 12,
+              "stored_bone_palette": [
+                38,
+                37,
+                12,
+                39,
+                75,
+                76,
+                77,
+                78,
+                79,
+                80,
+                30,
+                31,
+                32,
+                68,
+                69,
+                70,
+                71,
+                72,
+                73
+              ],
+              "influence_slots": 3,
+              "shader": "yCh_Aniso_trans",
+              "index_count": 285,
+              "vertex_stride": 28,
+              "weight_stride": 24,
+              "offsets": {
+                "vertex": 162440,
+                "weights": 166584,
+                "uv": 170136,
+                "tangent": 171320
+              },
+              "weight_sum_max_error": 0.0,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 148,
+              "triangle_count": 182,
+              "material_id_raw": 12
+            },
+            {
+              "index": 13,
+              "stored_bone_palette": [
+                45,
+                44,
+                12,
+                46,
+                47,
+                48,
+                49
+              ],
+              "influence_slots": 3,
+              "shader": "yCh_Aniso_trans",
+              "index_count": 72,
+              "vertex_stride": 28,
+              "weight_stride": 24,
+              "offsets": {
+                "vertex": 174512,
+                "weights": 175772,
+                "uv": 176852,
+                "tangent": 177212
+              },
+              "weight_sum_max_error": 0.0,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 45,
+              "triangle_count": 56,
+              "material_id_raw": 12
+            },
+            {
+              "index": 14,
+              "stored_bone_palette": [
+                77,
+                76,
+                78,
+                79,
+                80,
+                12,
+                75,
+                68,
+                69,
+                70,
+                71,
+                72,
+                73
+              ],
+              "influence_slots": 3,
+              "shader": "yCh_Aniso_trans",
+              "index_count": 167,
+              "vertex_stride": 28,
+              "weight_stride": 24,
+              "offsets": {
+                "vertex": 178740,
+                "weights": 181344,
+                "uv": 183576,
+                "tangent": 184320
+              },
+              "weight_sum_max_error": 0.0,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 93,
+              "triangle_count": 116,
+              "material_id_raw": 13
+            },
+            {
+              "index": 15,
+              "stored_bone_palette": [
+                106,
+                105,
+                104,
+                103,
+                107,
+                12,
+                89,
+                90,
+                91,
+                92,
+                96,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                75,
+                76,
+                77
+              ],
+              "influence_slots": 3,
+              "shader": "yCh_Aniso_trans",
+              "index_count": 557,
+              "vertex_stride": 28,
+              "weight_stride": 24,
+              "offsets": {
+                "vertex": 186616,
+                "weights": 194484,
+                "uv": 201228,
+                "tangent": 203476
+              },
+              "weight_sum_max_error": 0.0,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 281,
+              "triangle_count": 351,
+              "material_id_raw": 9
+            },
+            {
+              "index": 16,
+              "stored_bone_palette": [
+                104,
+                103,
+                12,
+                105,
+                106,
+                89,
+                90,
+                91,
+                92,
+                63,
+                64,
+                65,
+                66,
+                51,
+                52,
+                53,
+                54,
+                55,
+                37,
+                38
+              ],
+              "influence_slots": 3,
+              "shader": "yCh_Aniso_trans",
+              "index_count": 1339,
+              "vertex_stride": 28,
+              "weight_stride": 24,
+              "offsets": {
+                "vertex": 208808,
+                "weights": 225972,
+                "uv": 240684,
+                "tangent": 245588
+              },
+              "weight_sum_max_error": 0.0,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 613,
+              "triangle_count": 790,
+              "material_id_raw": 8
+            },
+            {
+              "index": 17,
+              "stored_bone_palette": [
+                38,
+                37,
+                39,
+                40,
+                41,
+                42,
+                28,
+                27,
+                26,
+                12,
+                75,
+                76,
+                77,
+                78,
+                96,
+                97,
+                98,
+                99,
+                82,
+                83
+              ],
+              "influence_slots": 3,
+              "shader": "yCh_Aniso_trans",
+              "index_count": 389,
+              "vertex_stride": 28,
+              "weight_stride": 24,
+              "offsets": {
+                "vertex": 256468,
+                "weights": 261284,
+                "uv": 265412,
+                "tangent": 266788
+              },
+              "weight_sum_max_error": 0.0,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 172,
+              "triangle_count": 225,
+              "material_id_raw": 8
+            },
+            {
+              "index": 18,
+              "stored_bone_palette": [
+                84,
+                83,
+                82,
+                85,
+                31,
+                30,
+                12,
+                32,
+                33,
+                34,
+                35,
+                58,
+                59,
+                60,
+                61,
+                44,
+                45,
+                46,
+                47,
+                48
+              ],
+              "influence_slots": 3,
+              "shader": "yCh_Aniso_trans",
+              "index_count": 270,
+              "vertex_stride": 28,
+              "weight_stride": 24,
+              "offsets": {
+                "vertex": 270476,
+                "weights": 274340,
+                "uv": 277652,
+                "tangent": 278756
+              },
+              "weight_sum_max_error": 0.0,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 138,
+              "triangle_count": 168,
+              "material_id_raw": 8
+            },
+            {
+              "index": 19,
+              "stored_bone_palette": [
+                16,
+                15,
+                12,
+                17,
+                18,
+                68,
+                69,
+                70,
+                71,
+                72,
+                24,
+                23,
+                22
+              ],
+              "influence_slots": 3,
+              "shader": "yCh_Aniso_trans",
+              "index_count": 255,
+              "vertex_stride": 28,
+              "weight_stride": 24,
+              "offsets": {
+                "vertex": 281796,
+                "weights": 285268,
+                "uv": 288244,
+                "tangent": 289236
+              },
+              "weight_sum_max_error": 0.0,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 124,
+              "triangle_count": 169,
+              "material_id_raw": 8
+            },
+            {
+              "index": 20,
+              "stored_bone_palette": [
+                51,
+                12,
+                52,
+                53,
+                54,
+                55,
+                56,
+                37,
+                38,
+                39,
+                40,
+                41,
+                42,
+                82,
+                83,
+                84,
+                85,
+                44,
+                45,
+                46
+              ],
+              "influence_slots": 3,
+              "shader": "yCh_Aniso_trans",
+              "index_count": 297,
+              "vertex_stride": 28,
+              "weight_stride": 24,
+              "offsets": {
+                "vertex": 292080,
+                "weights": 296112,
+                "uv": 299568,
+                "tangent": 300720
+              },
+              "weight_sum_max_error": 0.0,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 144,
+              "triangle_count": 176,
+              "material_id_raw": 9
+            },
+            {
+              "index": 21,
+              "stored_bone_palette": [
+                78,
+                77,
+                76,
+                79,
+                80,
+                31,
+                30,
+                32,
+                33,
+                34,
+                35,
+                12,
+                68,
+                69,
+                70,
+                71,
+                72,
+                73,
+                98,
+                97
+              ],
+              "influence_slots": 3,
+              "shader": "yCh_Aniso_trans",
+              "index_count": 230,
+              "vertex_stride": 28,
+              "weight_stride": 24,
+              "offsets": {
+                "vertex": 303888,
+                "weights": 307444,
+                "uv": 310492,
+                "tangent": 311508
+              },
+              "weight_sum_max_error": 0.0,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 127,
+              "triangle_count": 153,
+              "material_id_raw": 9
+            },
+            {
+              "index": 22,
+              "stored_bone_palette": [
+                99,
+                98,
+                97,
+                100,
+                96,
+                12,
+                48,
+                47,
+                46,
+                49,
+                45
+              ],
+              "influence_slots": 3,
+              "shader": "yCh_Aniso_trans",
+              "index_count": 99,
+              "vertex_stride": 28,
+              "weight_stride": 24,
+              "offsets": {
+                "vertex": 314336,
+                "weights": 315596,
+                "uv": 316676,
+                "tangent": 317036
+              },
+              "weight_sum_max_error": 0.0,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 45,
+              "triangle_count": 48,
+              "material_id_raw": 9
+            }
+          ]
+        },
+        {
+          "id": 20002,
+          "offset": 8169964,
+          "stored_bytes": 10160,
+          "compressed_bytes": 10141,
+          "expanded_bytes": 20408,
+          "sha256": "e19ce42eef4279b8abfec510ba74d158db07648cec1774a077e1d45b63df3c23",
+          "model": {
+            "geometry_decoded": true,
+            "mesh_count": 1,
+            "bone_count": 13,
+            "texture_count": 19,
+            "model_label": "transB_eye",
+            "declared_bytes": 20360,
+            "trailing_bytes": 48,
+            "texture_names": [
+              "color",
+              "normal",
+              "mask",
+              "wrinkles_n",
+              "mf12",
+              "\"\"",
+              "sweat_bump",
+              "noise2",
+              "cubemap_eyes",
+              "hair_shift",
+              "hair_noise",
+              "mf01",
+              "mf02",
+              "mf03",
+              "mf04",
+              "mf07",
+              "mf08",
+              "mf09",
+              "mf10"
+            ],
+            "vertex_count": 236,
+            "provisional_strip_triangle_count": 272,
+            "index_count": 507,
+            "bounds": {
+              "min": [
+                -5.583584308624268,
+                -183.9669952392578,
+                -13.269797325134277
+              ],
+              "max": [
+                5.559118270874023,
+                -182.3520050048828,
+                -11.50649642944336
+              ]
+            },
+            "unused_weight_records": 171,
+            "unused_weight_max_abs": 2.9802322387695312e-08,
+            "scope": "Observed sample only; palette numbering/strip winding/renderer semantics need independent verification"
+          },
+          "mesh_inventory": [
+            {
+              "index": 0,
+              "stored_bone_palette": [
+                11,
+                7,
+                9,
+                13,
+                10,
+                8,
+                12
+              ],
+              "influence_slots": 3,
+              "shader": "yCh_trans",
+              "index_count": 507,
+              "vertex_stride": 28,
+              "weight_stride": 24,
+              "offsets": {
+                "vertex": 964,
+                "weights": 7572,
+                "uv": 13236,
+                "tangent": 15124
+              },
+              "weight_sum_max_error": 0.0,
+              "normal_length_max_error": 5.960464477539063e-08,
+              "vertex_count": 236,
+              "triangle_count": 272,
+              "material_id_raw": 7
+            }
+          ]
+        },
+        {
+          "id": 40010,
+          "offset": 8180124,
+          "stored_bytes": 5792,
+          "compressed_bytes": 5775,
+          "expanded_bytes": 11600,
+          "sha256": "e892c429b542ec3e0dbc429e156c60b70c6d9f934530640f77ef9bd8997457bc"
+        }
+      ]
+    }
+  ],
+  "source_vs_psp_bones": {
+    "reference_only": [
+      "Bip",
+      "Bip Head",
+      "Bip L Calf",
+      "Bip L Clavicle",
+      "Bip L Finger0",
+      "Bip L Finger01",
+      "Bip L Finger02",
+      "Bip L Finger1",
+      "Bip L Finger11",
+      "Bip L Finger12",
+      "Bip L Finger2",
+      "Bip L Finger21",
+      "Bip L Finger22",
+      "Bip L Finger3",
+      "Bip L Finger31",
+      "Bip L Finger32",
+      "Bip L Finger4",
+      "Bip L Finger41",
+      "Bip L Finger42",
+      "Bip L Foot",
+      "Bip L Forearm",
+      "Bip L Hand",
+      "Bip L Thigh",
+      "Bip L Toe0",
+      "Bip L UpperArm",
+      "Bip Neck",
+      "Bip Pelvis",
+      "Bip R Calf",
+      "Bip R Clavicle",
+      "Bip R Finger0",
+      "Bip R Finger01",
+      "Bip R Finger02",
+      "Bip R Finger1",
+      "Bip R Finger11",
+      "Bip R Finger12",
+      "Bip R Finger2",
+      "Bip R Finger21",
+      "Bip R Finger22",
+      "Bip R Finger3",
+      "Bip R Finger31",
+      "Bip R Finger32",
+      "Bip R Finger4",
+      "Bip R Finger41",
+      "Bip R Finger42",
+      "Bip R Foot",
+      "Bip R Forearm",
+      "Bip R Hand",
+      "Bip R Thigh",
+      "Bip R Toe0",
+      "Bip R UpperArm",
+      "Bip Spine",
+      "Bip Spine1",
+      "L_Chest_Dummy",
+      "L_Clavicle_m",
+      "L_Elbow_m",
+      "L_Shoulder_m",
+      "L_Thigh_u",
+      "L_Thigh_x",
+      "L_UpperArm_m",
+      "L_UpperArm_x",
+      "L_Wrist_x",
+      "L_Wrist_x2",
+      "Neck_x",
+      "R_Chest_Dummy",
+      "R_Clavicle_m",
+      "R_Elbow_m",
+      "R_Shoulder_m",
+      "R_Thigh_u",
+      "R_Thigh_x",
+      "R_UpperArm_m",
+      "R_UpperArm_x",
+      "R_Wrist_x",
+      "R_Wrist_x2",
+      "d_kuchi_t",
+      "l_Elbow_j",
+      "l_hoho01",
+      "l_hoho02",
+      "l_mayu_03",
+      "miken",
+      "null",
+      "r_Elbow_j",
+      "r_hoho01",
+      "r_hoho02",
+      "r_mayu_03",
+      "vector"
+    ],
+    "target_only": [
+      "atama",
+      "koshi",
+      "kubi",
+      "l_ashi",
+      "l_kote",
+      "l_kote_x",
+      "l_momo",
+      "l_ninoude",
+      "l_ninoude_x",
+      "l_sakotsu",
+      "l_sune",
+      "l_te",
+      "l_tsumasaki",
+      "l_yubi00",
+      "l_yubi01",
+      "l_yubi02",
+      "l_yubi10",
+      "l_yubi11",
+      "l_yubi12",
+      "l_yubi20",
+      "l_yubi21",
+      "l_yubi22",
+      "l_yubi30",
+      "l_yubi31",
+      "l_yubi32",
+      "l_yubi40",
+      "l_yubi41",
+      "l_yubi42",
+      "mune",
+      "r_ashi",
+      "r_kote",
+      "r_kote_x",
+      "r_momo",
+      "r_ninoude",
+      "r_ninoude_x",
+      "r_sakotsu",
+      "r_sune",
+      "r_te",
+      "r_tsumasaki",
+      "r_yubi00",
+      "r_yubi01",
+      "r_yubi02",
+      "r_yubi10",
+      "r_yubi11",
+      "r_yubi12",
+      "r_yubi20",
+      "r_yubi21",
+      "r_yubi22",
+      "r_yubi30",
+      "r_yubi31",
+      "r_yubi32",
+      "r_yubi40",
+      "r_yubi41",
+      "r_yubi42",
+      "root"
+    ],
+    "shared_count": 24,
+    "different_indices": [
+      "d_kuchi",
+      "d_kuchi_00",
+      "d_kuchi_01",
+      "hana",
+      "l_eye",
+      "l_hoho",
+      "l_kuchi",
+      "l_mabuta",
+      "l_mayu_00",
+      "l_mayu_01",
+      "l_mayu_02",
+      "l_meziri",
+      "l_u_kuchi",
+      "r_eye",
+      "r_hoho",
+      "r_kuchi",
+      "r_mabuta",
+      "r_mayu_00",
+      "r_mayu_01",
+      "r_mayu_02",
+      "r_meziri",
+      "r_u_kuchi",
+      "u_kuchi",
+      "u_kuchi_00"
+    ],
+    "different_parents": [
+      "d_kuchi",
+      "d_kuchi_00",
+      "hana",
+      "l_eye",
+      "l_hoho",
+      "l_mabuta",
+      "l_mayu_00",
+      "l_mayu_01",
+      "l_mayu_02",
+      "l_meziri",
+      "l_u_kuchi",
+      "r_eye",
+      "r_hoho",
+      "r_mabuta",
+      "r_mayu_00",
+      "r_mayu_01",
+      "r_mayu_02",
+      "r_meziri",
+      "r_u_kuchi",
+      "u_kuchi"
+    ],
+    "note": "Name/parent comparison only; transform and animation compatibility are not established"
+  },
+  "psp_base_bone_count": 79,
+  "psp_base_sha256": "bf935a51fe30bfd2df929f8eb9e50be5d793426ea05125ca9411ce21b19ead80",
+  "validation": {
+    "all_29_zlib_streams_checksum_and_size_verified": true,
+    "all_source_indices_in_local_buffers": true,
+    "all_nonsentinel_weight_indices_in_palettes": true,
+    "weights_not_modified": true,
+    "source_sha256_unchanged": true,
+    "psp_pac_built": false,
+    "runtime_tested": false,
+    "independent_source_renderer_verified": false
+  }
+}
