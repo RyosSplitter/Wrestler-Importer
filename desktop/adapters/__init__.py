@@ -12,12 +12,16 @@ FORMATS = (
     SourceFormat('sym','SmackDown! Shut Your Mouth (PS2)',False),
     SourceFormat('hctp','SmackDown! Here Comes the Pain (PS2)',True),
     SourceFormat('svr','SmackDown! vs. Raw (PS2)',False),
+    SourceFormat('wwe13-wii',"WWE '13 (Wii) — Experimental",True),
 )
 
 def adapter(key):
     selected = next((f for f in FORMATS if f.key==key),None)
     if selected is None or not selected.supported:
-        raise ValueError('This source format is not supported yet. Select Here Comes the Pain or Just Bring It.')
+        raise ValueError('This source format is not supported yet. Select a supported source platform.')
+    if key=='wwe13-wii':
+        from .wwe13_wii import WiiAdapter
+        return WiiAdapter()
     if key=='jbi':
         from .jbi import JbiAdapter
         return JbiAdapter()

@@ -1,5 +1,11 @@
 # Wrestler Importer
 
+The current v0.27.0 preview branch adds [experimental WWE ’13 Wii support](docs/wwe13-wii-app-preview.md)
+alongside HCTP/JBI, including explicit costume roles, tested reduction profiles,
+nearest-source-alpha hair textures, measured T4/T8 allocation and full QA reports.
+Known Wii appearance issues remain experimental. The accepted PACs and main are
+preserved; the new UV/layout investigation is not enabled in the app.
+
 Current source-code output policy: **152,064 bytes (148.5 KiB) for in-ring PACs
 across all formats**, with **180,000 bytes for explicit WWE ’13 entrance
 trials**. See [size policy and alignment](docs/pac-size-policy.md). Existing
@@ -32,10 +38,11 @@ runs on Windows; exports will be tested in PPSSPP.
 The separate [WWE '13 Wii nine-model study](docs/wwe13-wii-nine-models.md)
 documents bounded multi-packet decoding, geometry/pose gates, texture and facial
 color QA, reproducible experimental builds, and remaining size/runtime failures.
-It is not registered as an app source adapter or merged into accepted defaults.
+The bounded decoder now has an explicitly experimental app adapter on the
+v0.27.0 preview branch; it does not replace HCTP/JBI accepted defaults.
 The [geometry/opacity follow-up](docs/wwe13-wii-geometry-opacity-03.md) records
 rejected global reduction changes, an isolated wristband trial and Edge hair
-opacity A/B evidence. The app release remains held pending geometry validation.
+opacity A/B evidence. Unresolved geometry fixes remain isolated from the preview.
 [Edge texture refinement](docs/wwe13-edge-texture-refinement-04.md) preserves
 approved A hair, adds palette-specific QA and tests lossless effect storage to
 fund face/body upgrades without changing geometry or UVs.

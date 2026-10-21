@@ -19,7 +19,7 @@ from tools.generate_conformance_fixtures import vectors
 
 class PortableTests(unittest.TestCase):
     def test_disabled_formats_are_not_aliases(self):
-        self.assertEqual([f.key for f in FORMATS if f.supported],['jbi','hctp'])
+        self.assertEqual([f.key for f in FORMATS if f.supported],['jbi','hctp','wwe13-wii'])
         self.assertNotEqual(type(adapter('jbi')),type(adapter('hctp')))
         for key in ('sym','svr','unknown'):
             with self.assertRaises(ValueError):adapter(key)

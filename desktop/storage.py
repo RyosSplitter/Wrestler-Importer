@@ -30,7 +30,11 @@ def save_as(result,destination):
     if destination.resolve() in {Path(result[k]).resolve() for k in ('source','base','pac')}:raise ValueError('Save As cannot overwrite the source, PSP base or review candidate.')
     if destination.exists() and any(os.path.samefile(destination,result[k]) for k in ('source','base','pac')):raise ValueError('Save As points to a protected input through a hard link.')
     if digest(candidate)!=result['sha256']:raise ValueError('Review candidate changed; export withheld.')
-    if result.get('source_format')=='jbi' or any(result.get(k) for k in ('default_textures','adaptive_textures','texture_priorities','texture_downgrade','maximum_downgrade')):
+    if result.get('source_format')=='wwe13-wii':
+        from desktop.texture_optimizer.candidates import read_gim
+        from tools.wwe13_budget import budget
+        validate_pac(candidate.read_bytes(),max_bytes=budget(result.get('costume_role','ring'))['max_pac_bytes'],gim_reader=read_gim)
+    elif result.get('source_format')=='jbi' or any(result.get(k) for k in ('default_textures','adaptive_textures','texture_priorities','texture_downgrade','maximum_downgrade')):
         from desktop.texture_optimizer.candidates import read_gim
         validate_pac(candidate.read_bytes(),gim_reader=read_gim)
     else:validate_pac(candidate.read_bytes())

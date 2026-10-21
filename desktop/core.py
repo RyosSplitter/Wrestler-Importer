@@ -56,6 +56,8 @@ class Request:
     downgrade_steps:int=0
     source_entry:str=''
     texture_review_entry:str=''
+    costume_role:str='ring'
+    wii_geometry:str='Standard'
 
     @property
     def use_adaptive(self):
@@ -86,16 +88,26 @@ class Request:
         if not isinstance(self.adaptive_textures,bool):raise ValueError('Adaptive texture option must be a boolean.')
         if not isinstance(self.skin_palette_compatibility,bool):raise ValueError('Skin palette compatibility option must be a boolean.')
         adapter(self.source_format)
+        if self.costume_role not in ('ring','entrance'):raise ValueError('Choose ring or entrance output.')
+        if self.source_format!='wwe13-wii' and self.costume_role!='ring':raise ValueError('Entrance budget is available only for WWE 13 Wii.')
+        if self.wii_geometry not in ('Standard','Preserve Hands','Preserve Arms'):raise ValueError('Unknown Wii geometry profile.')
+        if self.source_format!='wwe13-wii' and self.wii_geometry!='Standard':raise ValueError('Wii geometry profiles require a Wii source.')
         if not isinstance(self.source_entry,str) or not isinstance(self.texture_review_entry,str):raise ValueError('Source entry must be a string.')
         if self.source_format=='jbi':
             if self.source_entry and not re.fullmatch('[0-9a-f]{4}',self.source_entry):raise ValueError('Choose a four-digit JBI archive entry.')
             if self.texture_mode=='Legacy':raise ValueError('Legacy textures are HCTP-only. Select Default for the validated JBI texture path.')
             if selected and self.texture_review_entry!=self.source_entry:raise ValueError('JBI costume changed since texture review; review its textures again.')
-        elif self.source_entry or self.texture_review_entry:raise ValueError('Only JBI archives have a costume selector.')
+        elif self.source_format=='wwe13-wii':
+            if self.source_entry and not re.fullmatch('[0-9]{2}',self.source_entry):raise ValueError('Choose a two-digit Wii costume index.')
+            if self.texture_mode not in ('','Default') or selected or self.use_adaptive or self.downgrade_steps:
+                raise ValueError('This experimental Wii preview supports Default textures only; HCTP/JBI texture modes are unchanged.')
+            if self.texture_review_entry:raise ValueError('Wii texture priority review is not available in this preview.')
+        elif self.source_entry or self.texture_review_entry:raise ValueError('Only JBI archives or Wii containers have a costume selector.')
         for raw in (self.source,self.base):
             p=Path(raw)
             if not p.is_file() or p.suffix.lower()!='.pac':raise ValueError('Choose an existing .pac file.')
-            if p.stat().st_size>32*1024*1024:raise ValueError('The supported input budget is 32 MiB.')
+            limit=64*1024*1024 if self.source_format=='wwe13-wii' and raw==self.source else 32*1024*1024
+            if p.stat().st_size>limit:raise ValueError('The supported input budget is %d MiB.'%(limit//1024//1024))
         if Path(self.source).resolve()==Path(self.base).resolve():raise ValueError('Source and PSP base must be different files.')
         if selected and digest(self.source)!=self.texture_review_sha256:
             raise ValueError('Source PAC changed since texture review; select the source and review textures again.')
@@ -278,6 +290,9 @@ def blender_path():
     return path
 
 def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_samples=None,qa_resolution=None):
+    if request.source_format=='wwe13-wii':
+        from desktop.wii_job import run_job as run_wii
+        return run_wii(request,work,progress,cancel,qa_samples=qa_samples,qa_resolution=qa_resolution)
     if request.source_format=='jbi':
         from desktop.jbi_job import run_job as run_jbi
         return run_jbi(request,work,progress,cancel)

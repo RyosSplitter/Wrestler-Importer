@@ -1,0 +1,61 @@
+"""Frozen Windows Wii GUI/worker smoke using procedural GCTC/TPL panels."""
+import json
+from pathlib import Path
+import time
+from PIL import ImageGrab
+from desktop.storage import save_as
+from tools.wii_fixture import create
+from tools.sym_source import sha
+from tools.wwe13_wii_trial import validate_trial
+
+
+def run(app,output,base):
+    output=Path(output);output.parent.mkdir(parents=True,exist_ok=True)
+    source=create(base,output.parent/'fixtures');original=source.read_bytes();original_base=Path(base).read_bytes()
+    from tkinter import messagebox
+    errors=[];old_error=messagebox.showerror
+    messagebox.showerror=lambda title,message,**kw:errors.append((title,message))
+    def wait(predicate,timeout=480):
+        start=time.monotonic()
+        while not predicate():
+            app.root.update()
+            if errors:raise ValueError(str(errors[-1]))
+            if time.monotonic()-start>timeout:raise TimeoutError('Frozen Wii job timed out: '+app.status.get())
+            time.sleep(.03)
+        app.root.update()
+        if errors:raise ValueError(str(errors[-1]))
+    try:
+        app.choose_source_format('wwe13-wii');app.select_source(source);wait(lambda:app.inspector is None)
+        assert app.source_format.get()=='wwe13-wii'
+        assert tuple(app.source_entry_dropdown.cget('values'))==('00','01')
+        assert tuple(app.texture_dropdown.cget('values'))==('Default',)
+        assert app.costume_role.get()=='ring'
+        app.source_entry.set('01');app.change_source_entry();wait(lambda:app.inspector is None)
+        assert app.source_inspection['selected_entry']=='01'
+        app.base.set(str(Path(base).resolve()));app.costume_role.set('entrance');app.start();wait(lambda:not app.busy())
+        assert app.result is not None,app.status.get()
+        result=app.result;raw=Path(result['pac']).read_bytes();work=Path(result['pac']).parent
+        checks=json.loads((work/'wii/native-checks.json').read_text());ocular=json.loads((work/'wii/ocular.json').read_text())
+        validate_trial(raw,(work/'storage-reference.pac').read_bytes(),checks['radius_changes'],ocular['source_controller_pivot_fit'],costume_role='entrance')
+        assert result['source_entry']=='01' and result['costume_role']=='entrance'
+        assert result['budget']['max_pac_bytes']==180000 and len(raw)<=180000
+        assert app.preview.cget('image') and Path(result['report']).is_file()
+        assert (work/'qa/opacity-support.json').is_file() and (work/'qa/palette-quality.json').is_file()
+        save_as(result,output.parent/'procedural-wii-export.pac')
+        assert (output.parent/'procedural-wii-export.pac').read_bytes()==raw
+        app.root.update();x,y=app.root.winfo_rootx(),app.root.winfo_rooty()
+        ImageGrab.grab().crop((x,y,x+app.root.winfo_width(),y+app.root.winfo_height())).save(output.parent/'wii-converted-preview.png')
+        app.start();app.cancel_job();wait(lambda:not app.busy())
+        failure=json.loads((app.job/'failure.json').read_text())
+        assert failure['cancelled'] and not (app.job/'work').exists()
+        app.choose_source_format('hctp');app.root.update()
+        assert 'ATO' in app.texture_dropdown.cget('values') and not app.costume_role_row.winfo_ismapped()
+        assert source.read_bytes()==original and Path(base).read_bytes()==original_base
+        report=dict(status='pass',fixture='Procedural fixed-point GCTC panels/TPL images on caller-supplied development rig; no wrestler geometry or texture',
+            platform_selection=True,costume_selection=True,explicit_entrance_budget=True,source_bone_decode=True,
+            bundled_blender_conversion=True,full_static_analytical_head_hand_qa=True,final_pac_preview=True,
+            palette_and_alpha_reports=True,save_as_verified=True,cancellation_clean=True,hctp_options_restored=True,
+            pac_bytes=len(raw),pac_sha256=sha(raw),inputs_unchanged=True,
+            limitations='Hosted Windows frozen test; not a clean user Windows installation, real wrestler render or PPSSPP test.')
+        output.write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8');return report
+    finally:messagebox.showerror=old_error

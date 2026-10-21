@@ -94,7 +94,7 @@ def main():
         try:
             key=sys.argv[4] if len(sys.argv)>4 else 'hctp';reader=adapter(key)
             options={}
-            if key=='jbi':
+            if key in ('jbi','wwe13-wii'):
                 catalogue=reader.catalogue(sys.argv[2])
                 options['entry_id']=sys.argv[5] if len(sys.argv)>5 else ''
             info=reader.inspect(sys.argv[2],Path(sys.argv[3]).parent/'textures',**options)
@@ -123,6 +123,15 @@ def main():
             (Path(output).parent/'qa-error.log').write_text(traceback.format_exc(),encoding='utf-8');return 1
     from desktop.gui import Application
     app=Application(suite='--converter-only' not in sys.argv)
+    if len(sys.argv)>1 and sys.argv[1]=='--wii-smoke-test':
+        from tools.wii_smoke import run
+        try:run(app,sys.argv[2],sys.argv[3])
+        except Exception:
+            Path(sys.argv[2]).parent.mkdir(parents=True,exist_ok=True)
+            Path(sys.argv[2]).with_suffix('.error.log').write_text(traceback.format_exc(),encoding='utf-8')
+            return 1
+        finally:app.close()
+        return 0
     if len(sys.argv)>1 and sys.argv[1]=='--jbi-smoke-test':
         from tools.jbi_smoke import run
         try:run(app,sys.argv[2],sys.argv[3])
@@ -142,8 +151,11 @@ def main():
         import subprocess
         version=subprocess.run([str(blender_path()),'--version'],capture_output=True,text=True,timeout=45,check=True).stdout
         app.root.update()
-        states=[app.source_menu.entrycget(i,'state') for i in range(4)]
-        if states!=['normal','disabled','normal','disabled']:raise ValueError('Source selector states are incorrect.')
+        states=[app.source_menu.entrycget(i,'state') for i in range(5)]
+        if states!=['normal','disabled','normal','disabled','normal']:raise ValueError('Source selector states are incorrect.')
+        app.choose_source_format('wwe13-wii');app.root.update()
+        if tuple(app.texture_dropdown.cget('values'))!=('Default',) or not app.costume_role_row.winfo_ismapped():raise ValueError('Wii role/texture controls missing.')
+        if app.costume_role.get()!='ring':raise ValueError('Wii must default to the in-ring budget.')
         app.choose_source_format('jbi');app.root.update()
         if app.source_format.get()!='jbi' or 'Legacy' in app.texture_dropdown.cget('values'):raise ValueError('JBI selector or texture options are incorrect.')
         app.choose_source_format('hctp');app.root.update()

@@ -1,4 +1,14 @@
-# PSP Model Suite v0.26.0
+# PSP Model Suite v0.27.0
+
+Adds [experimental WWE ’13 Wii conversion](wwe13-wii-app-preview.md): explicit
+costume and ring/entrance selection, tested geometry profiles, source-nearest
+hair alpha, guarded measured T4/T8 textures, full comparison reports and final
+PAC previews. Wii exposes Default textures only in this preview. Existing
+HCTP/JBI modes and the editor/validator remain available. Known Wii appearance
+issues are documented rather than presented as solved; test every model in
+PPSSPP. Main and accepted PAC baselines remain unchanged.
+
+## Previous v0.26.0 milestone
 
 The converter now offers the observed JBI PAC/TIM2 family, including archive
 costume selection and supported independent elbow pads. See
@@ -24,7 +34,7 @@ Accepted PAC baselines and main remain preserved.
 | Quality Assurance | Textures / Model / Full PSP-base compatibility validation, verified repair copies, conversion reports |
 | Model Creator | Explicit development roadmap; assembly/export and asset libraries are not implemented |
 
-SYM/JBI/PS2 SVR/PS3-X360 SVR/WK conversion, PS1 texture styling,
+SYM/PS2 SVR/PS3-X360 SVR/WK conversion, PS1 texture styling,
 UV editing, OBJ reimport and creator assembly remain planned. Unsupported formats
 are not passed to the HCTP parser as if they were supported.
 

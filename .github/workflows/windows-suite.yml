@@ -1,7 +1,7 @@
 name: Build PSP Model Suite preview
 on:
   push:
-    branches: [feature/psp-model-suite, feature/jbi-app-integration]
+    branches: [feature/wwe13-wii-app-preview]
   workflow_dispatch:
 permissions:
   contents: write
@@ -64,28 +64,44 @@ jobs:
           }
           Copy-Item $output dist/jbi-smoke.json
           Copy-Item "$env:RUNNER_TEMP/jbi-smoke/*.png" dist/
+      - name: Frozen Wii selection, decoding, Blender, QA, preview, entrance Save As and cancellation
+        timeout-minutes: 15
+        shell: pwsh
+        run: |
+          $env:PS2PSP_DATA = "$env:RUNNER_TEMP\wii-app-smoke"
+          $env:PATH = "$env:SystemRoot\System32;$env:SystemRoot"
+          $output = "$env:RUNNER_TEMP\wii-smoke\report.json"
+          $base = (Resolve-Path assets/Kurt-Angle-Ring.PAC).Path
+          $p = Start-Process dist/PSP-Model-Suite/PSP-Model-Suite.exe -ArgumentList @('--wii-smoke-test',$output,$base) -PassThru -Wait
+          if ($p.ExitCode -ne 0) {
+            Get-Content "$env:RUNNER_TEMP/wii-smoke/report.error.log" -ErrorAction SilentlyContinue
+            Get-ChildItem "$env:RUNNER_TEMP/wii-app-smoke/jobs/*/error.log" | ForEach-Object { Get-Content $_ }
+            throw 'Frozen Wii functional smoke failed'
+          }
+          Copy-Item $output dist/wii-smoke.json
+          Copy-Item "$env:RUNNER_TEMP/wii-smoke/*.png" dist/
       - name: Package suite portable ZIP
         shell: python
         run: |
           import hashlib,shutil
           from pathlib import Path
-          path=Path(shutil.make_archive('dist/PSP-Model-Suite-v0.26.0-Windows-x64','zip','dist','PSP-Model-Suite'))
+          path=Path(shutil.make_archive('dist/PSP-Model-Suite-v0.27.0-Windows-x64','zip','dist','PSP-Model-Suite'))
           Path(str(path)+'.sha256').write_text(hashlib.file_digest(path.open('rb'),'sha256').hexdigest()+'  '+path.name+'\n')
       - uses: actions/upload-artifact@v4
         with:
-          name: PSP-Model-Suite-v0.26.0-Windows-x64
+          name: PSP-Model-Suite-v0.27.0-Windows-x64
           path: |
             dist/*.zip
             dist/*.sha256
             dist/*.png
             dist/*smoke.json
-      - name: Publish isolated suite foundation preview
+      - name: Publish isolated Wii suite preview
         shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           @'
-          PSP Model Suite v0.26.0 adds the observed JBI PAC/TIM2 conversion family alongside the existing HCTP converter. Select a costume from CH.PAC or load an extracted JBI PAC. Includes the user-accepted local arm/hand bind correction, digit-constrained weights, supported independent elbow pads, measured texture allocation, all five applicable texture modes, actual final-PAC previews and source/native analytical QA. SYM stays disabled; unknown props, packet/rig layouts and ambiguous repairs are withheld. Existing editor/library, folder export/packing and scoped validator remain available. Windows 10/11 x64; includes the existing Blender runtime, source and notices, with no game assets. Requires your own compatible PSP base. Hosted frozen Windows tests cover JBI selection, texture options, accessories, export and cancellation; each new model still needs PPSSPP testing, especially grips, twists and pad events. Accepted PACs and main remain preserved.
+          PSP Model Suite v0.27.0 adds experimental WWE 13 Wii conversion alongside the established HCTP and JBI paths. Select the Wii platform explicitly, choose a costume and ring/entrance use, then a tested Standard / Preserve Hands / Preserve Arms geometry profile. Includes nearest-source-alpha hair sampling, guarded measured texture allocation, native T4/T8 contracts, lossless effect-table BPE storage, source/posed/UV/opacity/palette reports, final-PAC previews and Save As. Wii currently exposes Default textures only; existing HCTP/JBI texture modes are preserved. In-ring limit 152,064 bytes; explicit Wii entrance limit 180,000 bytes, both checked after serialization and sector alignment with an independent donor texture envelope. Several Wii models still have known appearance issues: this is not a claim that every wrestler is fixed or safe in-game. Rejected global geometry changes and the newly authorized UV-layout experiment are not enabled. Windows 10/11 x64, Windows 7-style controls, full bundled Blender/source/licenses, no game assets, own compatible PSP base required. Hosted frozen tests cover suite, existing converter, JBI and procedural Wii end-to-end conversion/export/cancellation. Every model still requires PPSSPP testing. Main and accepted PACs remain unchanged. See sources/converter/docs/wwe13-wii-app-preview.md.
           '@ | Set-Content "$env:RUNNER_TEMP/suite-release-notes.txt" -Encoding utf8NoBOM
-          $tag = "suite-jbi-${{ github.run_number }}-${{ github.sha }}"
-          gh release create $tag dist/*.zip dist/*.sha256 dist/*.png dist/*smoke.json --target '${{ github.sha }}' --prerelease --title 'PSP Model Suite v0.26.0 — JBI conversion' --notes-file "$env:RUNNER_TEMP/suite-release-notes.txt"
+          $tag = "suite-wii-${{ github.run_number }}-${{ github.sha }}"
+          gh release create $tag dist/*.zip dist/*.sha256 dist/*.png dist/*smoke.json --target '${{ github.sha }}' --prerelease --title 'PSP Model Suite v0.27.0 — Experimental WWE 13 Wii' --notes-file "$env:RUNNER_TEMP/suite-release-notes.txt"

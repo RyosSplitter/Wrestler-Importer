@@ -31,6 +31,8 @@ class Application:
         self.settings=load_settings();self.source=None;self.process=None;self.result=None;self.saved=None;self.closing=False
         self.inspector=None;self.inspect_root=None;self.view='front-left';self.zoom='full';self.photo=None
         self.source_format=tk.StringVar(value='hctp');self.source_entry=tk.StringVar(value='')
+        self.costume_role=tk.StringVar(value='ring')
+        self.wii_geometry=tk.StringVar(value='Standard')
         self.base=tk.StringVar(value=self.settings.get('base',''));self.status=tk.StringVar(value='Choose your PSP base once, then drop an HCTP PAC.')
         # Session-only and deliberately OFF, even when an earlier job enabled it.
         self.texture_mode=tk.StringVar(value='Default')
@@ -117,6 +119,15 @@ class Application:
         self.source_entry_dropdown=ttk.Combobox(self.source_entry_row,textvariable=self.source_entry,width=9,state='readonly')
         self.source_entry_dropdown.pack(side='left');self.source_entry_dropdown.bind('<<ComboboxSelected>>',lambda e:self.change_source_entry())
         self.source_entry_count=ttk.Label(self.source_entry_row,style='Muted.TLabel');self.source_entry_count.pack(side='left',padx=8)
+        self.costume_role_row=ttk.Frame(source_group)
+        ttk.Label(self.costume_role_row,text='Output use:').pack(side='left',padx=(0,8))
+        self.costume_role_dropdown=ttk.Combobox(self.costume_role_row,textvariable=self.costume_role,values=('ring','entrance'),state='readonly',width=10)
+        self.costume_role_dropdown.pack(side='left')
+        ttk.Label(self.costume_role_row,text='Choose explicitly',style='Muted.TLabel').pack(side='left',padx=6)
+        self.wii_geometry_row=ttk.Frame(source_group)
+        ttk.Label(self.wii_geometry_row,text='Geometry:').pack(side='left',padx=(0,8))
+        self.wii_geometry_dropdown=ttk.Combobox(self.wii_geometry_row,textvariable=self.wii_geometry,values=('Standard','Preserve Hands','Preserve Arms'),state='readonly',width=17)
+        self.wii_geometry_dropdown.pack(side='left')
         ttk.Label(source_group,textvariable=self.info,style='Muted.TLabel',wraplength=310,justify='left').pack(fill='x',pady=(8,0))
         base_group=ttk.LabelFrame(left,text='PSP base PAC',padding=10);base_group.pack(fill='x',pady=(10,0))
         ttk.Label(base_group,textvariable=self.base,wraplength=310,justify='left').pack(fill='x',pady=(0,8))
@@ -138,7 +149,7 @@ class Application:
             variable=self.skin_palette_compatibility,bg=BG,fg=FG,selectcolor='#ffffff',activebackground=BG,
             activeforeground=FG,anchor='w',justify='left',wraplength=280)
         self.skin_checkbox.pack(fill='x')
-        ttk.Label(left,text='Target: SVR 2011 PSP\nHCTP and observed JBI PAC variants supported.',
+        ttk.Label(left,text="Target: SVR 2011 PSP\nHCTP / JBI supported; WWE ’13 Wii experimental.",
             style='Muted.TLabel',wraplength=330,justify='left').pack(fill='x',pady=12)
 
         preview_group=ttk.LabelFrame(right,text='PSP preview',padding=8);preview_group.pack(fill='both',expand=True)
@@ -176,22 +187,28 @@ class Application:
         if selected is None:return
         self.source_format.set(key);self.source_button.configure(text=selected.label)
         self.source_entry.set('');self.source_entry_row.pack_forget();self.source_entry_dropdown.configure(values=())
+        self.costume_role.set('ring')
+        self.wii_geometry.set('Standard')
+        if key=='wwe13-wii':
+            self.costume_role_row.pack(fill='x',pady=(8,0));self.wii_geometry_row.pack(fill='x',pady=(8,0))
+        else:self.costume_role_row.pack_forget();self.wii_geometry_row.pack_forget()
+        self.skin_checkbox.configure(state='disabled' if key=='wwe13-wii' else 'normal')
         self.clean_inspection();self.source=None;self.source_inspection=None;self.priority_textures=();self.result=None
         self.save.configure(state='disabled');self.info.set('No source selected')
-        self.drop.configure(text='Drop a '+('JBI' if key=='jbi' else 'HCTP')+' .pac here\nor click to browse')
+        self.drop.configure(text='Drop a '+({'jbi':'JBI','wwe13-wii':"WWE ’13 Wii"}.get(key,'HCTP'))+' .pac here\nor click to browse')
         self.preview.configure(image='',text='Convert a model to preview the PSP output')
         self.output.set('Your converted PSP output will appear here.')
-        values=tuple(m for m in MODES if key!='jbi' or m!='Legacy')
+        values=('Default',) if key=='wwe13-wii' else tuple(m for m in MODES if key!='jbi' or m!='Legacy')
         self.texture_dropdown.configure(values=values)
         if self.texture_mode.get() not in values:self.texture_mode.set('Default')
-        self.update_texture_mode();self.status.set('Choose a '+('JBI archive or extracted costume PAC.' if key=='jbi' else 'supported HCTP source PAC.'))
+        self.update_texture_mode();self.status.set('Choose a '+({'jbi':'JBI archive or extracted costume PAC.','wwe13-wii':"WWE ’13 Wii PAC. Experimental; review each costume and choose ring/entrance explicitly."}.get(key,'supported HCTP source PAC.')))
     def change_source_entry(self):
         if self.busy() or self.inspector is not None:return
         path=self.source or getattr(self,'pending_source',None)
         if path:self.select_source(path,entry_id=self.source_entry.get())
     def browse_source(self):
         if self.busy():return
-        selected=filedialog.askopenfilename(title='Select '+('JBI archive/costume' if self.source_format.get()=='jbi' else 'HCTP')+' source PAC',filetypes=[('PAC files','*.pac *.PAC')])
+        selected=filedialog.askopenfilename(title='Select '+self.source_button.cget('text')+' source PAC',filetypes=[('PAC files','*.pac *.PAC')])
         if selected:self.select_source(selected)
     def dropped(self,event):
         if self.busy():return
@@ -205,7 +222,9 @@ class Application:
         if not path.is_file() or path.suffix.lower()!='.pac':messagebox.showerror(NAME,'Select an existing .pac file.');return
         with path.open('rb') as stream:magic=stream.read(4)
         if magic==b'DPAC' and self.source_format.get()!='jbi':self.choose_source_format('jbi')
-        self.source_entry.set(entry_id if self.source_format.get()=='jbi' else '')
+        # EPK8 is shared with unimplemented platforms; do not auto-detect Wii
+        # from that magic alone or feed Xbox 360 through the Wii decoder.
+        self.source_entry.set(entry_id if self.source_format.get() in ('jbi','wwe13-wii') else '')
         self.clean_inspection()
         self.priority_textures=();self.source_inspection=None
         self.source=None;self.result=None;self.save.configure(state='disabled');self.convert.configure(state='disabled')
@@ -219,6 +238,8 @@ class Application:
         if chosen:self.base.set(chosen);self.settings['base']=chosen;save_settings(self.settings)
     def update_texture_mode(self):
         mode=self.texture_mode.get();self.texture_help.set(HELP[mode])
+        if self.source_format.get()=='wwe13-wii':
+            self.texture_help.set('Experimental Wii atlas allocation: nearest source alpha, measured T4/T8 storage and palette safeguards. Default only in this preview; other modes remain available for HCTP/JBI.')
         if self.source_format.get()=='jbi' and mode in ('Default','ATO','Priority Selection'):
             self.texture_help.set({'Default':'Validated JBI atlas allocation. Preserves detail within actual PAC and native-base texture budgets.',
                 'ATO':'Alternate content-aware texture pass over JBI Default. Geometry, rigging and materials stay unchanged.',
@@ -238,7 +259,7 @@ class Application:
         if not Path(self.base.get()).is_file():self.choose_base()
         if not Path(self.base.get()).is_file():return
         from desktop.core import Request
-        try:Request(self.source,self.base.get(),source_format=self.source_format.get(),source_entry=self.source_entry.get()).validate()
+        try:Request(self.source,self.base.get(),source_format=self.source_format.get(),source_entry=self.source_entry.get(),costume_role=self.costume_role.get()).validate()
         except Exception as e:messagebox.showerror(NAME,str(e));return
         priorities=()
         mode=self.texture_mode.get()
@@ -250,6 +271,7 @@ class Application:
             if selection is None:return
             self.priority_textures=selection;priorities=selection
         options=dict(source=self.source,base=self.base.get(),source_format=self.source_format.get(),source_entry=self.source_entry.get(),
+            costume_role=self.costume_role.get(),wii_geometry=self.wii_geometry.get(),
             texture_mode=mode,adaptive_textures=mode=='ATO',skin_palette_compatibility=self.skin_palette_compatibility.get(),
             downgrade_steps=int(self.downgrade_steps.get()[0]) if mode=='Downgrade' else 0,
             priority_textures=list(priorities),texture_review_sha256=self.source_inspection['source_sha256'] if priorities else '',
@@ -262,6 +284,8 @@ class Application:
         self.texture_dropdown.configure(state='disabled');self.downgrade_dropdown.configure(state='disabled')
         self.skin_checkbox.configure(state='disabled')
         self.source_button.configure(state='disabled');self.source_entry_dropdown.configure(state='disabled')
+        self.costume_role_dropdown.configure(state='disabled')
+        self.wii_geometry_dropdown.configure(state='disabled')
         self.output.set('Building an experimental PSP candidate…');self.preview.configure(image='',text='Converting…');self.progress['value']=0
         self.process=self.spawn(['--worker',str(self.job/'request.json')]);self.status.set('Starting isolated conversion job…')
     def cancel_job(self):
@@ -297,7 +321,9 @@ class Application:
             if self.process.poll() is not None:
                 self.process=None;self.cancel.configure(state='disabled');self.convert.configure(state='normal');self.base_button.configure(state='normal')
                 self.texture_dropdown.configure(state='readonly');self.downgrade_dropdown.configure(state='readonly')
-                self.skin_checkbox.configure(state='normal')
+                self.skin_checkbox.configure(state='disabled' if self.source_format.get()=='wwe13-wii' else 'normal')
+                self.costume_role_dropdown.configure(state='readonly')
+                self.wii_geometry_dropdown.configure(state='readonly')
                 self.source_button.configure(state='normal');self.source_entry_dropdown.configure(state='readonly')
                 try:
                     if not (self.job/'success.json').exists():

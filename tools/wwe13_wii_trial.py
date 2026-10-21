@@ -77,7 +77,7 @@ def separate_eye_atlas(model,images):
         mesh['materials']=new
     if not selected:raise ValueError('No verified source eye surface')
     out['textures']=out['textures']+['wii_eyes'];out['texture_count']=len(out['textures'])
-    out['ocular_atlas_policy']=dict(selected_triangles=selected,selection='Average original source eye-bone mass > .98',
+    out['ocular_atlas_policy']=dict(selected_triangles=selected,source_texture_id=eye_tid,selection='Average original source eye-bone mass > .98',
         source_image='Exact duplicate binding to original color atlas, locally cropped later without resampling')
     return out,list(images)+[images[0].copy()]
 
@@ -160,7 +160,7 @@ def base_model_bytes(base):
     return base,audit_yobj(next(r for s,r in sections(base)if s['id']==2))
 
 
-def run(source,base_path,out,index,ratio=1.,head_floor=.6,hand_floor=.5,mouth_ratio=.6,material_only=False,texture_candidates=None,source_reader=None,atlas_options=None,export_face_floor=False,arm_floor=None,opposed_normals=False,source_normals=False,costume_role='ring',preserve_uv_seams=False,preserve_hand_transitions=False):
+def run(source,base_path,out,index,ratio=1.,head_floor=.6,hand_floor=.5,mouth_ratio=.6,material_only=False,texture_candidates=None,source_reader=None,atlas_options=None,export_face_floor=False,arm_floor=None,opposed_normals=False,source_normals=False,costume_role='ring',preserve_uv_seams=False,preserve_hand_transitions=False,command_runner=None,texture_allocator=None,progress=print):
     limits=budget(costume_role)
     if any(not 0<v<=1 for v in (ratio,head_floor,hand_floor,mouth_ratio)):raise ValueError('Reduction ratios must be in (0,1]')
     if arm_floor is not None and not 0<arm_floor<=1:raise ValueError('Arm floor must be in (0,1]')
@@ -174,6 +174,9 @@ def run(source,base_path,out,index,ratio=1.,head_floor=.6,hand_floor=.5,mouth_ra
     prepared,ocular=ocular_transfer(original,prepared,target)
     ocular['source_controller_pivot_fit']=eye_binds
     charted,images,atlas=chart_atlas(prepared,images,cell=256,**(atlas_options or {}))
+    # Keep source ocular ownership even after donor amplitudes are small: the
+    # magnitude of transferred PSP eye weights is not an eye-page classifier.
+    charted['texture_region_hints']={c['name']:'ocular' for c in atlas['charts'] if c['source_texture']==original['ocular_atlas_policy']['source_texture_id']}
     charted=split_uv_islands(charted)
     profile=dict(Head=max(head_floor,ratio),Torso=ratio,Arms=max(arm_floor or ratio,ratio),Legs=ratio,Hands=max(hand_floor,ratio),Eyes=1.,Mouth=mouth_ratio if ratio<1 else 1.,Hair=1.)
     for name,value in [('source',original),('prepared',prepared),('charted',charted),('source-materials',decode),('rig',rig),('ocular',ocular),('atlas',atlas),('profile',profile)]:dump(out/(name+'.json'),value)
@@ -181,7 +184,11 @@ def run(source,base_path,out,index,ratio=1.,head_floor=.6,hand_floor=.5,mouth_ra
     for n,im in zip(charted['textures'],images):Image.fromarray(im).save(out/'source-images'/(n+'.png'))
     if ratio<1:
         env=os.environ.copy();env['BLENDER_USER_CONFIG']=str((out/'blender-config').resolve())
-        with (out/'blender.log').open('w')as log:subprocess.run(['/usr/bin/blender','-b','-t','2','--python-exit-code','1','--python',str(Path('tools/wwe13_reduce_trial.py').resolve()),'--',str((out/'charted.json').resolve()),str((out/'reduced.json').resolve()),str((out/'profile.json').resolve()),'--hand-weighted','--material-boundaries' if material_only else '--uv-islands']+(['--export-face-floor']if export_face_floor else [])+(['--opposed-normals']if opposed_normals else [])+(['--source-normals']if source_normals else [])+(['--preserve-uv-seams']if preserve_uv_seams else [])+(['--preserve-hand-transitions']if preserve_hand_transitions else []),check=True,env=env,stdout=log,stderr=subprocess.STDOUT)
+        from desktop.core import blender_path
+        args=[str(blender_path()),'-b','-t','2','--python-exit-code','1','--python',str(Path(__file__).resolve().with_name('wwe13_reduce_trial.py')),'--',str((out/'charted.json').resolve()),str((out/'reduced.json').resolve()),str((out/'profile.json').resolve()),'--hand-weighted','--material-boundaries' if material_only else '--uv-islands']+(['--export-face-floor']if export_face_floor else [])+(['--opposed-normals']if opposed_normals else [])+(['--source-normals']if source_normals else [])+(['--preserve-uv-seams']if preserve_uv_seams else [])+(['--preserve-hand-transitions']if preserve_hand_transitions else [])
+        if command_runner is not None:command_runner(args,out/'blender.log',env)
+        else:
+            with (out/'blender.log').open('w')as log:subprocess.run(args,check=True,env=env,stdout=log,stderr=subprocess.STDOUT)
         reduced=json.loads((out/'reduced.json').read_text())
     else:reduced=charted
     fitted,radii=enclose_influences(fitted_target,reduced)
@@ -200,7 +207,15 @@ def run(source,base_path,out,index,ratio=1.,head_floor=.6,hand_floor=.5,mouth_ra
         raise ValueError('Native analytical pose gate failed; candidate retained for diagnosis only')
     (out/'candidate.yobj').write_bytes(raw)
     print('Native model expanded',len(raw),'compressed',len(compress(raw)),flush=True)
-    pac,gims,tex=allocate(base,raw,packed,images,contracts,out/'textures',target=limits['max_pac_bytes'],candidate_factory=texture_candidates or candidates)
+    pac,gims,tex=(texture_allocator or allocate)(base,raw,packed,images,contracts,out/'textures',target=limits['max_pac_bytes'],candidate_factory=texture_candidates or candidates,progress=progress)
+    # A format-aware allocator may alter only audited material depth controls.
+    final_raw=next(r for s,r in sections(pac)if s['id']==2)
+    if final_raw!=raw:
+        from tools.wwe13_texture_format_trial import patch_regular_depths
+        expected,manifest=patch_regular_depths(raw,{n:4 if len(read_gim(gims[n])[1])==16 else 8 for n in packed['textures']})
+        if final_raw!=expected:raise ValueError('Texture allocation changed unrelated native model bytes')
+        dump(out/'texture-format-controls.json',manifest)
+        (out/'candidate.yobj').write_bytes(final_raw)
     final,gims,structural=validate_trial(pac,base,radii,eye_binds,costume_role=costume_role);dump(out/'structural.json',structural)
     filename=('HBK-WWE13-Wii-Ring'if index==0 else'HBK-WWE13-Wii-Entrance')+'-PSP-EXPERIMENTAL.pac'
     (out/filename).write_bytes(pac)

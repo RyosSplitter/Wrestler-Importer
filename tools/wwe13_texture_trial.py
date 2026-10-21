@@ -120,10 +120,21 @@ def candidates(model, images, contracts, progress=print):
     return all_choices, importance, diagnostics
 
 
-def allocate(base, raw_model, model, images, contracts, output, target=IN_RING_MAX_PAC_BYTES, progress=print, candidate_factory=None):
+def allocate(base, raw_model, model, images, contracts, output, target=IN_RING_MAX_PAC_BYTES, progress=print, candidate_factory=None,*,format_aware=False):
     output = Path(output); output.mkdir(parents=True, exist_ok=False)
     choices, importance, diagnostics = (candidate_factory or candidates)(model, images, contracts, progress)
     encoded_model = compress(raw_model)
+    model_cache={}
+    def model_bytes(rows):
+        if not format_aware:return raw_model,encoded_model
+        depths=tuple(r['entry']['bits'] for r in rows)
+        if depths not in model_cache:
+            from tools.wwe13_texture_format_trial import patch_regular_depths
+            revised,_=patch_regular_depths(raw_model,dict(zip(model['textures'],depths)))
+            stored=compress(revised)
+            if decompress(stored)!=revised:raise ValueError('Format-aware model failed round trip')
+            model_cache[depths]=(revised,stored)
+        return model_cache[depths]
     if decompress(encoded_model) != raw_model:
         raise ValueError('Cached model compression failed round trip')
     retained_memory = base_memory = 0
@@ -138,13 +149,14 @@ def allocate(base, raw_model, model, images, contracts, output, target=IN_RING_M
                 retained_memory += memory
     def build(selection):
         rows = [choices[j][i] for j, i in enumerate(selection)]
+        _,selected_model=model_bytes(rows)
         table = texture_table(model['textures'], [r['raw'] for r in rows], gim_reader=read_gim)
         # Reuse exact encoded model while measuring many texture tables. Both
         # BPE and PAC rewriting are the existing unmodified implementations.
         encoded_table = compress(table)
         if decompress(encoded_table) != table:
             raise ValueError('Texture table compression failed round trip')
-        pac = rewrite_sections(base, {2: encoded_model, 9: encoded_table})
+        pac = rewrite_sections(base, {2: selected_model, 9: encoded_table})
         memory = retained_memory + sum(r['entry']['pixel_palette_bytes'] for r in rows)
         return pac, memory
     selected = [0] * len(choices)
@@ -197,7 +209,10 @@ def allocate(base, raw_model, model, images, contracts, output, target=IN_RING_M
         algorithm='Individual BPE marginal ranking; each accepted upgrade measured through unchanged complete PAC packer',
         memory_scope='Conservative observed base texture envelope; total runtime heap behavior UNKNOWN', textures=diagnostics)
     (output / 'report.json').write_text(json.dumps(report, indent=2))
-    canonical = package_models(base, raw_model, texture_table(model['textures'], list(gims.values()), gim_reader=read_gim), {})
+    final_model,_=model_bytes([choices[j][i] for j,i in enumerate(selected)])
+    report['format_aware_material_depths']=format_aware
+    (output / 'report.json').write_text(json.dumps(report, indent=2))
+    canonical = package_models(base, final_model, texture_table(model['textures'], list(gims.values()), gim_reader=read_gim), {})
     if canonical != pac:
         raise ValueError('Texture search differs from unchanged canonical packaging')
     return pac, gims, report

@@ -16,7 +16,7 @@ from tools.yukes_bpe import compress
 from tools.wwe13_budget import budget,result_role
 
 
-def candidates(model,images,contracts,progress=print):
+def candidates(model,images,contracts,progress=print,*,keep_all=False):
     usage=model_usage({2:dict(model,texture_names=model['textures'])},dict(zip(model['textures'],images)))
     eyes={b['index']for b in model['bones']if b['name']in ('l_eye','r_eye')}
     eye_area={n:[0.,0.]for n in model['textures']}
@@ -31,11 +31,12 @@ def candidates(model,images,contracts,progress=print):
     for name,source,contract in zip(model['textures'],images,contracts):
         progress('Independent resolution/color candidates: '+name,flush=True)
         use=usage[name];mask=occupied(source,use['uv_mask']);features=analyze(source,use['uv_mask'],use['surface_fraction'])
-        ocular=eye_area[name][0]/max(eye_area[name][1],1e-12)>.9
+        ocular=model.get('texture_region_hints',{}).get(name)=='ocular' or eye_area[name][0]/max(eye_area[name][1],1e-12)>.9
         rows=[]
         for size in dimensions(source.shape[1],source.shape[0]):
             if size not in OBSERVED_T8_DIMENSIONS or min(size)<32:continue
-            if ocular and size!=(source.shape[1],source.shape[0]):continue
+            ocular_size=(1<<(source.shape[1].bit_length()-1),1<<(source.shape[0].bit_length()-1))
+            if ocular and size!=ocular_size:continue
             if contract['cutout']:
                 canonical=np.array(Image.fromarray(source).resize(size,Image.Resampling.LANCZOS));canonical[:,:,3]=np.array(Image.fromarray(source[:,:,3]).resize(size,Image.Resampling.NEAREST));canonical[canonical[:,:,3]==0]=0
                 ceiling=max(1,len(np.unique(source[source[:,:,3]>0],axis=0)))+int(np.any(source[:,:,3]==0))
@@ -54,7 +55,7 @@ def candidates(model,images,contracts,progress=print):
         for r in rows:
             if r['entry']['metrics']['perceptual_loss']<loss-1e-10:frontier.append(r);loss=r['entry']['metrics']['perceptual_loss']
         multiplier=1.5 if ocular else .65 if use['head_fraction']>.15 and not contract['cutout'] else 1.25
-        choices.append(frontier);importance.append(features['importance_score']*multiplier)
+        choices.append(rows if keep_all else frontier);importance.append(features['importance_score']*multiplier)
         diagnostics.append(dict(name=name,analysis=features,model_usage={k:v for k,v in use.items()if k!='uv_mask'},
             ocular_surface=ocular,priority_multiplier=multiplier,candidates=[r['entry']for r in rows],frontier=[r['entry']for r in frontier],rejected=[]))
     return choices,importance,diagnostics
