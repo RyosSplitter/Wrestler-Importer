@@ -11,6 +11,7 @@ from tools.psp_mesh_merge_trial import sections,write_preview
 from tools.sym_trial import render_native
 from tools.tna_obj_export import posed_model
 from tools.wwe13_wii_trial import validate_trial,dump
+from tools.wwe13_budget import result_role
 
 
 def crop(model,kind):
@@ -71,7 +72,7 @@ def export(work,base,output,*,unlit=False):
     data=(work/result['pac']).read_bytes();fingerprint=hashlib.sha256(data).hexdigest()
     if fingerprint!=result['sha256']:raise ValueError('PAC changed after build')
     checks=json.loads((work/'native-checks.json').read_text());ocular=json.loads((work/'ocular.json').read_text())
-    native,gims,structural=validate_trial(data,base.read_bytes(),checks['radius_changes'],ocular['source_controller_pivot_fit'])
+    native,gims,structural=validate_trial(data,base.read_bytes(),checks['radius_changes'],ocular['source_controller_pivot_fit'],costume_role=result_role(result))
     if checks['poses']['review_findings']or not all(r['passes']for r in checks['hand_reference_envelope'].values()):raise ValueError('Analytical gate failed')
     raw=next(r for s,r in sections(data)if s['id']==2)
     if raw!=(work/'candidate.yobj').read_bytes():raise ValueError('PAC differs from checked YOBJ')

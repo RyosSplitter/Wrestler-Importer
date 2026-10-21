@@ -13,6 +13,7 @@ from tools.psp_mesh_merge_trial import sections
 from tools.wwe13_texture_trial import encode_occupied,allocate
 from tools.wwe13_wii_trial import validate_trial,dump
 from tools.yukes_bpe import compress
+from tools.wwe13_budget import budget,result_role
 
 
 def candidates(model,images,contracts,progress=print):
@@ -59,17 +60,20 @@ def candidates(model,images,contracts,progress=print):
     return choices,importance,diagnostics
 
 
-def run(work,base_path,out,*,candidate_factory=None,filename='HBK-WWE13-Wii-Ring-Texture-Rebalance.pac'):
-    work,base_path,out=map(Path,(work,base_path,out));out.mkdir(parents=True,exist_ok=False)
-    accepted=json.loads((work/'result.json').read_text());before=(work/accepted['pac']).read_bytes()
+def run(work,base_path,out,*,candidate_factory=None,filename='HBK-WWE13-Wii-Ring-Texture-Rebalance.pac',costume_role=None):
+    work,base_path,out=map(Path,(work,base_path,out))
+    accepted=json.loads((work/'result.json').read_text())
+    costume_role=result_role(accepted)if costume_role is None else costume_role;limits=budget(costume_role)
+    out.mkdir(parents=True,exist_ok=False)
+    before=(work/accepted['pac']).read_bytes()
     if hashlib.sha256(before).hexdigest()!=accepted['sha256']:raise ValueError('Baseline PAC hash differs')
     raw=next(r for s,r in sections(before)if s['id']==2)
     if raw!=(work/'candidate.yobj').read_bytes():raise ValueError('Baseline YOBJ differs')
     packed=json.loads((work/'packed.json').read_text());contracts=json.loads((work/'contracts.json').read_text())
     images=[np.array(Image.open(work/'source-images'/(n+'.png')))for n in packed['textures']]
-    pac,gims,report=allocate(base_path.read_bytes(),raw,packed,images,contracts,out/'textures',candidate_factory=candidate_factory or candidates)
+    pac,gims,report=allocate(base_path.read_bytes(),raw,packed,images,contracts,out/'textures',target=limits['max_pac_bytes'],candidate_factory=candidate_factory or candidates)
     checks=json.loads((work/'native-checks.json').read_text());ocular=json.loads((work/'ocular.json').read_text())
-    native,gims,structural=validate_trial(pac,base_path.read_bytes(),checks['radius_changes'],ocular['source_controller_pivot_fit'])
+    native,gims,structural=validate_trial(pac,base_path.read_bytes(),checks['radius_changes'],ocular['source_controller_pivot_fit'],costume_role=costume_role)
     if next(r for s,r in sections(pac)if s['id']==2)!=raw:raise ValueError('Accepted geometry changed')
     old=list(sections(before));new=list(sections(pac));unchanged=[]
     for(s,a),(t,b)in zip(old,new):
@@ -79,7 +83,7 @@ def run(work,base_path,out,*,candidate_factory=None,filename='HBK-WWE13-Wii-Ring
             unchanged.append(s['id'])
     if Path(filename).name!=filename or Path(filename).suffix.lower()!='.pac':raise ValueError('Unsafe output PAC name')
     (out/filename).write_bytes(pac)
-    result=dict(pac=filename,pac_bytes=len(pac),sha256=hashlib.sha256(pac).hexdigest(),baseline_sha256=accepted['sha256'],
+    result=dict(pac=filename,pac_bytes=len(pac),budget=limits,sha256=hashlib.sha256(pac).hexdigest(),baseline_sha256=accepted['sha256'],
         geometry_yobj_sha256=hashlib.sha256(raw).hexdigest(),geometry_yobj_byte_identical=True,unchanged_stored_sections=unchanged,
         source_work=str(work),structural=structural,
         limitations='Reuses accepted geometry. Wii facial/controller and source-shape review findings remain; texture quality needs visual/in-game review.')
@@ -88,4 +92,4 @@ def run(work,base_path,out,*,candidate_factory=None,filename='HBK-WWE13-Wii-Ring
 
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('work');p.add_argument('--base',required=True);p.add_argument('--out',required=True);a=p.parse_args();run(a.work,a.base,a.out)
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('work');p.add_argument('--base',required=True);p.add_argument('--out',required=True);p.add_argument('--costume-role',choices=('ring','entrance'));a=p.parse_args();run(a.work,a.base,a.out,costume_role=a.costume_role)

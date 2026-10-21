@@ -1,0 +1,173 @@
+{
+  "date": "2026-10-21",
+  "scope": "Nine-source WWE13 Wii trial pack",
+  "feedback": [
+    {
+      "source": "Billy Gunn - ch313.pac",
+      "variant": 0,
+      "pac": "Billy-Gunn---ch313-variant-00-PSP-EXPERIMENTAL.pac",
+      "sha256": "4102d7cc782cc9be51c7b90d0593f97807a02b6ccca0e2d155efed124f0edc3d",
+      "user_verdict": "failed",
+      "user_observation": "Distorted shape and textures, confirmed by user clarification.",
+      "evidence": "User PPSSPP review; not an automated visual pass",
+      "diagnosed_root_cause": "UNKNOWN; do not infer from observation alone",
+      "preserve_tested_baseline": true
+    },
+    {
+      "source": "Booker T - ch338.pac",
+      "variant": 0,
+      "pac": "Booker-T---ch338-variant-00-PSP-EXPERIMENTAL.pac",
+      "sha256": "d52f7c6600eae72d45ff3f9f46d582806dce03b409f8617a00b43462af3b5f25",
+      "user_verdict": "partial",
+      "user_observation": "Overall good; elbow pad region seems wrong.",
+      "evidence": "User PPSSPP review; not an automated visual pass",
+      "diagnosed_root_cause": "UNKNOWN; do not infer from observation alone",
+      "preserve_tested_baseline": true
+    },
+    {
+      "source": "Bradshaw - ch124.pac",
+      "variant": 0,
+      "pac": "Bradshaw---ch124-variant-00-PSP-EXPERIMENTAL.pac",
+      "sha256": "71f98b715815dc96bdf5e411e060c42000b7b5c8d75f665686f4810738798911",
+      "user_verdict": "partial",
+      "user_observation": "Acolyte close to correct; wristbands ride too high.",
+      "evidence": "User PPSSPP review; not an automated visual pass",
+      "diagnosed_root_cause": "UNKNOWN; do not infer from observation alone",
+      "preserve_tested_baseline": true
+    },
+    {
+      "source": "Bradshaw - ch124.pac",
+      "variant": 1,
+      "pac": "Bradshaw---ch124-variant-01-PSP-EXPERIMENTAL.pac",
+      "sha256": "94adb7e3c4f48ce4b129b4e15f3ddacb3b2a3fe10eea5b8f4922940c1bcc5231",
+      "user_verdict": "accepted",
+      "user_observation": "APA attire perfect; preserve exact tested PAC.",
+      "evidence": "User PPSSPP review; not an automated visual pass",
+      "diagnosed_root_cause": "UNKNOWN; do not infer from observation alone",
+      "preserve_tested_baseline": true
+    },
+    {
+      "source": "Bret Hart - ch177.pac",
+      "variant": 0,
+      "pac": "Bret-Hart---ch177-variant-00-PSP-EXPERIMENTAL.pac",
+      "sha256": "4003df8bbe7de2d957d8455ab57da22871a4d14cad8860756f92044c315639f4",
+      "user_verdict": "failed",
+      "user_observation": "Distorted shape and textures, confirmed by user clarification.",
+      "evidence": "User PPSSPP review; not an automated visual pass",
+      "diagnosed_root_cause": "UNKNOWN; do not infer from observation alone",
+      "preserve_tested_baseline": true
+    },
+    {
+      "source": "Bret Hart - ch177.pac",
+      "variant": 1,
+      "pac": "Bret-Hart---ch177-variant-01-PSP-EXPERIMENTAL.pac",
+      "sha256": "eccd9651777db0f2e316907fdf3b8573187a4f53d024117c7464ec3bc67ce92f",
+      "user_verdict": "failed-textures",
+      "user_observation": "Entrance textures look barebones.",
+      "evidence": "User PPSSPP review; not an automated visual pass",
+      "diagnosed_root_cause": "UNKNOWN; do not infer from observation alone",
+      "preserve_tested_baseline": true
+    },
+    {
+      "source": "CM Punk - ch131.pac",
+      "variant": 0,
+      "pac": "CM-Punk---ch131-variant-00-PSP-EXPERIMENTAL.pac",
+      "sha256": "e212b070a824312112cd8b7766f217cdb4ed44b0078311d2320d0a45f6ed93ea",
+      "user_verdict": "partial",
+      "user_observation": "Rear trunks region needs work; overall textures could improve.",
+      "evidence": "User PPSSPP review; not an automated visual pass",
+      "diagnosed_root_cause": "UNKNOWN; do not infer from observation alone",
+      "preserve_tested_baseline": true
+    },
+    {
+      "source": "CM Punk - ch131.pac",
+      "variant": 1,
+      "pac": "CM-Punk---ch131-variant-01-PSP-EXPERIMENTAL.pac",
+      "sha256": "ff1bc4ed3dfeafed46ba195c5f667bcb523f1dd599c5b950c4b6b58604dfbe21",
+      "user_verdict": "failed-textures",
+      "user_observation": "Entrance needs more texture work; exact tested entrance variant not specified.",
+      "evidence": "User PPSSPP review; not an automated visual pass",
+      "diagnosed_root_cause": "UNKNOWN; do not infer from observation alone",
+      "preserve_tested_baseline": true
+    },
+    {
+      "source": "CM Punk - ch131.pac",
+      "variant": 2,
+      "pac": "CM-Punk---ch131-variant-02-PSP-EXPERIMENTAL.pac",
+      "sha256": "896dcaa576178118f005daf21c4f0c23a68e0d8591e67d0d9b95cb695b664de2",
+      "user_verdict": "review",
+      "user_observation": "Second entrance variant exists; apply texture review to both until tested identity is known.",
+      "evidence": "User PPSSPP review; not an automated visual pass",
+      "diagnosed_root_cause": "UNKNOWN; do not infer from observation alone",
+      "preserve_tested_baseline": true
+    },
+    {
+      "source": "Chris Jericho 1999 - ch347.pac",
+      "variant": 0,
+      "pac": "Chris-Jericho-1999---ch347-variant-00-PSP-EXPERIMENTAL.pac",
+      "sha256": "6de4c3e8069ad64c9d796d9ec218dec34fb4d3150d60ef6f6c656f50e32e7c4f",
+      "user_verdict": "failed-textures",
+      "user_observation": "Ring needs substantial texture improvement.",
+      "evidence": "User PPSSPP review; not an automated visual pass",
+      "diagnosed_root_cause": "UNKNOWN; do not infer from observation alone",
+      "preserve_tested_baseline": true
+    },
+    {
+      "source": "Chris Jericho 1999 - ch347.pac",
+      "variant": 1,
+      "pac": "Chris-Jericho-1999---ch347-variant-01-PSP-EXPERIMENTAL.pac",
+      "sha256": "1ac72a1928a84a7a13af90d004a35c5d713a2cd5a1e459d060bb9b5448ebc807",
+      "user_verdict": "failed",
+      "user_observation": "Entrance needs geometry and texture improvement.",
+      "evidence": "User PPSSPP review; not an automated visual pass",
+      "diagnosed_root_cause": "UNKNOWN; do not infer from observation alone",
+      "preserve_tested_baseline": true
+    },
+    {
+      "source": "Edge - ch110.pac",
+      "variant": 0,
+      "pac": "Edge---ch110-variant-00-PSP-EXPERIMENTAL.pac",
+      "sha256": "c82155f01cbd7eccde30e9219585216589ac98afd054c4000859bfc67371fcb0",
+      "user_verdict": "partial",
+      "user_observation": "Textures good; hair geometry needs work.",
+      "evidence": "User PPSSPP review; not an automated visual pass",
+      "diagnosed_root_cause": "UNKNOWN; do not infer from observation alone",
+      "preserve_tested_baseline": true
+    },
+    {
+      "source": "Randy Orton - ch161.pac",
+      "variant": 0,
+      "pac": "Randy-Orton---ch161-variant-00-PSP-EXPERIMENTAL.pac",
+      "sha256": "3bcf134be21603fce32de0abcef4171e71cb8c30c2b7b1fe1fb4779ece17deba",
+      "user_verdict": "partial",
+      "user_observation": "Overall model good; anatomical left wristband needs work.",
+      "evidence": "User PPSSPP review; not an automated visual pass",
+      "diagnosed_root_cause": "UNKNOWN; do not infer from observation alone",
+      "preserve_tested_baseline": true
+    },
+    {
+      "source": "Wade Barrett - ch325.pac",
+      "variant": 0,
+      "pac": "Wade-Barrett---ch325-variant-00-PSP-EXPERIMENTAL.pac",
+      "sha256": "7108f55b7cd9dd0ad8c93efd33d69e43f4fc4ce00a671ec305eb75472e88aa2f",
+      "user_verdict": "accepted",
+      "user_observation": "Looks good; preserve exact tested PAC.",
+      "evidence": "User PPSSPP review; not an automated visual pass",
+      "diagnosed_root_cause": "UNKNOWN; do not infer from observation alone",
+      "preserve_tested_baseline": true
+    }
+  ],
+  "budget_change": {
+    "mode": "WWE13",
+    "entrance_bytes": 180000,
+    "ring_bytes": 152064,
+    "hard_runtime_limit_confirmed": false,
+    "previous_ring_bytes": 148000,
+    "scope": "Subsequent user correction applies 152064-byte ring cap to all source formats"
+  },
+  "qa_gaps": [
+    "Low whole-model distance does not certify clothing boundaries, hair layers or skinning semantics.",
+    "Full QA currently compares adapted Wii geometry to PSP output; source-to-retarget transformation needs independent appearance review.",
+    "Unresolved review flags require human review; do not promote structurally valid candidates as appearance-approved."
+  ]
+}

@@ -89,7 +89,7 @@ def split_uv_regions(model, components=True):
     return out
 
 
-def run(source, output, profile, hand_weighted=False, uv_islands=False, material_only=False, export_face_floor=False, opposed_normals=False, source_normals=False):
+def run(source, output, profile, hand_weighted=False, uv_islands=False, material_only=False, export_face_floor=False, opposed_normals=False, source_normals=False, preserve_uv_seams=False):
     source, output, profile = map(Path, (source, output, profile))
     if output.exists():
         raise FileExistsError(output)
@@ -100,7 +100,8 @@ def run(source, output, profile, hand_weighted=False, uv_islands=False, material
     regions = classify(model, hand_weighted=hand_weighted)
     if uv_islands or material_only:regions=split_uv_regions(regions,components=not material_only)
     region_mesh.RATIOS.update(ratios); blender_reduce.RATIOS.update(ratios)
-    result = blender_reduce.reduce(regions, 1., regional=True, preserved_regions=('Preserved',),export_face_floor=export_face_floor,source_normals=source_normals)
+    result = blender_reduce.reduce(regions, 1., regional=True, preserved_regions=('Preserved',),export_face_floor=export_face_floor,source_normals=source_normals,preserve_uv_seams=preserve_uv_seams)
+    result['reduction_report']['source_uv_seam_locks']=preserve_uv_seams
     result['reduction_report']['export_face_floor']=export_face_floor
     if opposed_normals:result['reduction_report']['opposed_normal_protection']=model['opposed_normal_protection']
     result['reduction_report']['trial_policy'] = 'HD source experimental regional floors; not HCTP production settings'
@@ -112,4 +113,4 @@ def run(source, output, profile, hand_weighted=False, uv_islands=False, material
 
 if __name__ == '__main__':
     args=sys.argv[sys.argv.index('--') + 1:]
-    run(*args[:3],hand_weighted='--hand-weighted' in args[3:],uv_islands='--uv-islands' in args[3:],material_only='--material-boundaries' in args[3:],export_face_floor='--export-face-floor' in args[3:],opposed_normals='--opposed-normals' in args[3:],source_normals='--source-normals' in args[3:])
+    run(*args[:3],hand_weighted='--hand-weighted' in args[3:],uv_islands='--uv-islands' in args[3:],material_only='--material-boundaries' in args[3:],export_face_floor='--export-face-floor' in args[3:],opposed_normals='--opposed-normals' in args[3:],source_normals='--source-normals' in args[3:],preserve_uv_seams='--preserve-uv-seams' in args[3:])

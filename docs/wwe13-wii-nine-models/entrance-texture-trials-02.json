@@ -1,0 +1,1637 @@
+[
+  {
+    "source": "Bret Hart - ch177.pac",
+    "variant": 1,
+    "file": "Bret-Hart-Entrance-Texture-180K-EXPERIMENTAL.pac",
+    "bytes": 169984,
+    "sha256": "0b096d22f5cf57880d1fa540eae1c564f00ca052fe4cf3e4db71d5dc29861abe",
+    "baseline_sha256": "eccd9651777db0f2e316907fdf3b8573187a4f53d024117c7464ec3bc67ce92f",
+    "model_yobj_byte_identical": true,
+    "model_yobj_sha256": "183eb94719cb00ad6a678f0f05020e67e9cda244079068a650fbf87fa2c94d5d",
+    "non_texture_sections_unchanged": [
+      2,
+      8
+    ],
+    "texture_memory": 51392,
+    "memory_envelope": 54016,
+    "textures": [
+      {
+        "name": "w13_00",
+        "before": {
+          "width": 32,
+          "height": 32,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 16,
+          "used_palette_colors": 16,
+          "serialized_bytes": 2256,
+          "individual_bpe_bytes": 632,
+          "metrics": {
+            "rgb_rmse_255": 23.55598707224687,
+            "luminance_ssim": 0.6847253826220137,
+            "oriented_edge_error": 0.956141545728394,
+            "fine_feature_loss": 0.5765414084501173,
+            "high_frequency_error": 0.9468039458660784,
+            "perceptual_loss": 0.4075475810474803,
+            "quality_score": 0.609020041921156,
+            "alpha_mae": 0.0,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+            "occupied_cell_color_rmse_255": 5.280929821252792,
+            "perceptual_loss_before_color_guard": 0.39097995807884406
+          }
+        },
+        "after": {
+          "width": 64,
+          "height": 64,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 64,
+          "used_palette_colors": 63,
+          "serialized_bytes": 5328,
+          "individual_bpe_bytes": 2875,
+          "metrics": {
+            "rgb_rmse_255": 17.74070938487572,
+            "luminance_ssim": 0.8072384639026273,
+            "oriented_edge_error": 0.8037010317368717,
+            "fine_feature_loss": 0.34123107945127296,
+            "high_frequency_error": 0.9000783385043878,
+            "perceptual_loss": 0.2977614094006997,
+            "quality_score": 0.7117378395683114,
+            "alpha_mae": 0.0,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+            "occupied_cell_color_rmse_255": 3.027885608872278,
+            "perceptual_loss_before_color_guard": 0.2882621604316886
+          }
+        },
+        "gim_identical": false
+      },
+      {
+        "name": "w13_01",
+        "before": {
+          "width": 32,
+          "height": 32,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 16,
+          "used_palette_colors": 16,
+          "serialized_bytes": 2256,
+          "individual_bpe_bytes": 716,
+          "metrics": {
+            "rgb_rmse_255": 10.908724230654588,
+            "luminance_ssim": 0.7493276105180716,
+            "oriented_edge_error": 1.0017846445671652,
+            "fine_feature_loss": 0.6953913051025614,
+            "high_frequency_error": 0.5519924803700477,
+            "perceptual_loss": 0.39708864790045684,
+            "quality_score": 0.6151803723446856,
+            "alpha_mae": 0.0,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+            "occupied_cell_color_rmse_255": 3.9107502031391483,
+            "perceptual_loss_before_color_guard": 0.3848196276553144
+          }
+        },
+        "after": {
+          "width": 64,
+          "height": 64,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 128,
+          "used_palette_colors": 128,
+          "serialized_bytes": 5328,
+          "individual_bpe_bytes": 3171,
+          "metrics": {
+            "rgb_rmse_255": 7.332635973447523,
+            "luminance_ssim": 0.8564406300238326,
+            "oriented_edge_error": 0.8329984285922153,
+            "fine_feature_loss": 0.5161747822196614,
+            "high_frequency_error": 0.5304368991039589,
+            "perceptual_loss": 0.30231355415667094,
+            "quality_score": 0.7019480896072247,
+            "alpha_mae": 0.0,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+            "occupied_cell_color_rmse_255": 1.358398949741729,
+            "perceptual_loss_before_color_guard": 0.29805191039277534
+          }
+        },
+        "gim_identical": false
+      },
+      {
+        "name": "w13_02",
+        "before": {
+          "width": 64,
+          "height": 64,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 16,
+          "used_palette_colors": 16,
+          "serialized_bytes": 5328,
+          "individual_bpe_bytes": 1344,
+          "metrics": {
+            "rgb_rmse_255": 20.02463341103791,
+            "luminance_ssim": 0.7425895452304739,
+            "oriented_edge_error": 0.8393342108690238,
+            "fine_feature_loss": 0.43464439975650093,
+            "high_frequency_error": 0.929221808689239,
+            "perceptual_loss": 0.3392937952434112,
+            "quality_score": 0.671782843460355,
+            "alpha_mae": 0.0,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+            "occupied_cell_color_rmse_255": 3.5306785868254917,
+            "perceptual_loss_before_color_guard": 0.32821715653964495
+          }
+        },
+        "after": {
+          "width": 128,
+          "height": 128,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 256,
+          "used_palette_colors": 256,
+          "serialized_bytes": 17616,
+          "individual_bpe_bytes": 13671,
+          "metrics": {
+            "rgb_rmse_255": 13.112812938118386,
+            "luminance_ssim": 0.9048729843047588,
+            "oriented_edge_error": 0.5032380186733754,
+            "fine_feature_loss": 0.13157199989212842,
+            "high_frequency_error": 0.8102629446735873,
+            "perceptual_loss": 0.17404655556453993,
+            "quality_score": 0.8281575225519717,
+            "alpha_mae": 0.0,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+            "occupied_cell_color_rmse_255": 0.7025498996381125,
+            "perceptual_loss_before_color_guard": 0.17184247744802822
+          }
+        },
+        "gim_identical": false
+      },
+      {
+        "name": "w13_03",
+        "before": {
+          "width": 64,
+          "height": 64,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 16,
+          "used_palette_colors": 16,
+          "serialized_bytes": 5328,
+          "individual_bpe_bytes": 2157,
+          "metrics": {
+            "rgb_rmse_255": 34.5251903921563,
+            "luminance_ssim": 0.7112877316128837,
+            "oriented_edge_error": 0.9409740739772522,
+            "fine_feature_loss": 0.5156635976065916,
+            "high_frequency_error": 0.9471410780600945,
+            "perceptual_loss": 0.3974787688370087,
+            "quality_score": 0.6198009285231205,
+            "alpha_mae": 0.0,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+            "occupied_cell_color_rmse_255": 5.507903533541205,
+            "perceptual_loss_before_color_guard": 0.3801990714768795
+          }
+        },
+        "after": {
+          "width": 64,
+          "height": 64,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 256,
+          "used_palette_colors": 256,
+          "serialized_bytes": 5328,
+          "individual_bpe_bytes": 3595,
+          "metrics": {
+            "rgb_rmse_255": 32.6710731924487,
+            "luminance_ssim": 0.7196922904590736,
+            "oriented_edge_error": 0.928142196048397,
+            "fine_feature_loss": 0.5188622317370434,
+            "high_frequency_error": 0.9511105713062747,
+            "perceptual_loss": 0.38292186328676486,
+            "quality_score": 0.6236518640523022,
+            "alpha_mae": 0.0,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+            "occupied_cell_color_rmse_255": 2.0953755893276256,
+            "perceptual_loss_before_color_guard": 0.3763481359476978
+          }
+        },
+        "gim_identical": false
+      },
+      {
+        "name": "w13_04",
+        "before": {
+          "width": 32,
+          "height": 64,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 16,
+          "used_palette_colors": 16,
+          "serialized_bytes": 3280,
+          "individual_bpe_bytes": 1321,
+          "metrics": {
+            "rgb_rmse_255": 6.474806604631206,
+            "luminance_ssim": 0.9800994439585832,
+            "oriented_edge_error": 0.12172507715196733,
+            "fine_feature_loss": 0.004129892390685002,
+            "high_frequency_error": 0.4325691939704846,
+            "perceptual_loss": 0.05637560821947559,
+            "quality_score": 0.9505917124137131,
+            "alpha_mae": 0.0,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+            "occupied_cell_color_rmse_255": 2.2208334518288897,
+            "perceptual_loss_before_color_guard": 0.04940828758628692
+          }
+        },
+        "after": {
+          "width": 32,
+          "height": 64,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 223,
+          "used_palette_colors": 223,
+          "serialized_bytes": 3280,
+          "individual_bpe_bytes": 2872,
+          "metrics": {
+            "rgb_rmse_255": 4.2644830405146275,
+            "luminance_ssim": 0.9896261693064536,
+            "oriented_edge_error": 0.060882041372613556,
+            "fine_feature_loss": 0.0012068971040663996,
+            "high_frequency_error": 0.3566845430638011,
+            "perceptual_loss": 0.03577619991564114,
+            "quality_score": 0.9675206438640753,
+            "alpha_mae": 0.0,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+            "occupied_cell_color_rmse_255": 1.0508689547846233,
+            "perceptual_loss_before_color_guard": 0.032479356135924675
+          }
+        },
+        "gim_identical": false
+      },
+      {
+        "name": "w13_05",
+        "before": {
+          "width": 32,
+          "height": 64,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 37,
+          "used_palette_colors": 37,
+          "serialized_bytes": 3280,
+          "individual_bpe_bytes": 1197,
+          "metrics": {
+            "rgb_rmse_255": 3.5103295365152296,
+            "luminance_ssim": 0.8950586855826168,
+            "oriented_edge_error": 0.4108036742121234,
+            "fine_feature_loss": 0.7240099799806522,
+            "high_frequency_error": 0.39986661087821784,
+            "perceptual_loss": 0.2669058938340177,
+            "quality_score": 0.7330941061659824,
+            "alpha_mae": 23.759755463059314,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception"
+          }
+        },
+        "after": {
+          "width": 64,
+          "height": 128,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 37,
+          "used_palette_colors": 37,
+          "serialized_bytes": 9424,
+          "individual_bpe_bytes": 3519,
+          "metrics": {
+            "rgb_rmse_255": 2.695784967210524,
+            "luminance_ssim": 0.9407861191069998,
+            "oriented_edge_error": 0.2711425245836177,
+            "fine_feature_loss": 0.4094332594530595,
+            "high_frequency_error": 0.33744755953476024,
+            "perceptual_loss": 0.16292126373826307,
+            "quality_score": 0.8370787362617369,
+            "alpha_mae": 12.37243106139438,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception"
+          }
+        },
+        "gim_identical": false
+      }
+    ],
+    "unresolved": "Existing source-shape findings retained; not game-tested; texture-only entrance trial."
+  },
+  {
+    "source": "CM Punk - ch131.pac",
+    "variant": 1,
+    "file": "CM-Punk-Entrance-Variant1-Texture-180K-EXPERIMENTAL.pac",
+    "bytes": 167936,
+    "sha256": "a61ca9b082aff99cb0149762797f5caefef6025ebaa3b41c0540b3535b4c1de1",
+    "baseline_sha256": "ff1bc4ed3dfeafed46ba195c5f667bcb523f1dd599c5b950c4b6b58604dfbe21",
+    "model_yobj_byte_identical": true,
+    "model_yobj_sha256": "14a670d1073e193e397fb64e7dbc70047eef457b643b8b8908277e2f849dcb62",
+    "non_texture_sections_unchanged": [
+      2,
+      8
+    ],
+    "texture_memory": 51392,
+    "memory_envelope": 54016,
+    "textures": [
+      {
+        "name": "w13_00",
+        "before": {
+          "width": 32,
+          "height": 32,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 16,
+          "used_palette_colors": 16,
+          "serialized_bytes": 2256,
+          "individual_bpe_bytes": 823,
+          "metrics": {
+            "rgb_rmse_255": 22.21192912578158,
+            "luminance_ssim": 0.5336441495938592,
+            "oriented_edge_error": 0.9410182226659074,
+            "fine_feature_loss": 0.5477655055288916,
+            "high_frequency_error": 0.9398862534273092,
+            "perceptual_loss": 0.4195137872183845,
+            "quality_score": 0.5967502771249197,
+            "alpha_mae": 0.0,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+            "occupied_cell_color_rmse_255": 5.18417050942821,
+            "perceptual_loss_before_color_guard": 0.4032497228750803
+          }
+        },
+        "after": {
+          "width": 64,
+          "height": 64,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 256,
+          "used_palette_colors": 256,
+          "serialized_bytes": 5328,
+          "individual_bpe_bytes": 4558,
+          "metrics": {
+            "rgb_rmse_255": 16.98914766808493,
+            "luminance_ssim": 0.697227638002475,
+            "oriented_edge_error": 0.806300421856291,
+            "fine_feature_loss": 0.39139668899375646,
+            "high_frequency_error": 0.9013361664426041,
+            "perceptual_loss": 0.32585988114190406,
+            "quality_score": 0.6838937317607288,
+            "alpha_mae": 0.0,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+            "occupied_cell_color_rmse_255": 3.1089641127142196,
+            "perceptual_loss_before_color_guard": 0.31610626823927124
+          }
+        },
+        "gim_identical": false
+      },
+      {
+        "name": "w13_01",
+        "before": {
+          "width": 64,
+          "height": 64,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 16,
+          "used_palette_colors": 16,
+          "serialized_bytes": 5328,
+          "individual_bpe_bytes": 2245,
+          "metrics": {
+            "rgb_rmse_255": 20.758064051822313,
+            "luminance_ssim": 0.7246065696926022,
+            "oriented_edge_error": 0.8428006500255681,
+            "fine_feature_loss": 0.3187245445718334,
+            "high_frequency_error": 0.8901220268576839,
+            "perceptual_loss": 0.31160541881889847,
+            "quality_score": 0.6965492233501556,
+            "alpha_mae": 0.0,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+            "occupied_cell_color_rmse_255": 2.599292191385965,
+            "perceptual_loss_before_color_guard": 0.3034507766498445
+          }
+        },
+        "after": {
+          "width": 64,
+          "height": 64,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 256,
+          "used_palette_colors": 256,
+          "serialized_bytes": 5328,
+          "individual_bpe_bytes": 4142,
+          "metrics": {
+            "rgb_rmse_255": 19.914979587252358,
+            "luminance_ssim": 0.7353516384563134,
+            "oriented_edge_error": 0.8309539495551967,
+            "fine_feature_loss": 0.3254264152601696,
+            "high_frequency_error": 0.8984391798658726,
+            "perceptual_loss": 0.30578096796193455,
+            "quality_score": 0.6987080678155818,
+            "alpha_mae": 0.0,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+            "occupied_cell_color_rmse_255": 1.4308801540833407,
+            "perceptual_loss_before_color_guard": 0.3012919321844182
+          }
+        },
+        "gim_identical": false
+      },
+      {
+        "name": "w13_02",
+        "before": {
+          "width": 64,
+          "height": 64,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 16,
+          "used_palette_colors": 16,
+          "serialized_bytes": 5328,
+          "individual_bpe_bytes": 2080,
+          "metrics": {
+            "rgb_rmse_255": 15.62950013403491,
+            "luminance_ssim": 0.6823692110398752,
+            "oriented_edge_error": 0.9097831315182986,
+            "fine_feature_loss": 0.4516320647598417,
+            "high_frequency_error": 0.8989063875205644,
+            "perceptual_loss": 0.3562236734147275,
+            "quality_score": 0.6535829430320028,
+            "alpha_mae": 0.0,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+            "occupied_cell_color_rmse_255": 3.1258589923952904,
+            "perceptual_loss_before_color_guard": 0.3464170569679972
+          }
+        },
+        "after": {
+          "width": 64,
+          "height": 64,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 256,
+          "used_palette_colors": 256,
+          "serialized_bytes": 5328,
+          "individual_bpe_bytes": 4329,
+          "metrics": {
+            "rgb_rmse_255": 14.225771438549968,
+            "luminance_ssim": 0.6979445518377914,
+            "oriented_edge_error": 0.890533755355435,
+            "fine_feature_loss": 0.4467175627183495,
+            "high_frequency_error": 0.9038434327527451,
+            "perceptual_loss": 0.3423963868971485,
+            "quality_score": 0.6609011938350605,
+            "alpha_mae": 0.0,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+            "occupied_cell_color_rmse_255": 1.0511038583916354,
+            "perceptual_loss_before_color_guard": 0.3390988061649395
+          }
+        },
+        "gim_identical": false
+      },
+      {
+        "name": "w13_03",
+        "before": {
+          "width": 128,
+          "height": 128,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 16,
+          "used_palette_colors": 16,
+          "serialized_bytes": 17616,
+          "individual_bpe_bytes": 4096,
+          "metrics": {
+            "rgb_rmse_255": 14.896373678036547,
+            "luminance_ssim": 0.7995376567272008,
+            "oriented_edge_error": 0.5097150489289012,
+            "fine_feature_loss": 0.11078430927539129,
+            "high_frequency_error": 0.7900588382673668,
+            "perceptual_loss": 0.1976570851972949,
+            "quality_score": 0.8156382847537502,
+            "alpha_mae": 0.0,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+            "occupied_cell_color_rmse_255": 4.237899171895619,
+            "perceptual_loss_before_color_guard": 0.18436171524624984
+          }
+        },
+        "after": {
+          "width": 128,
+          "height": 128,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 256,
+          "used_palette_colors": 256,
+          "serialized_bytes": 17616,
+          "individual_bpe_bytes": 12610,
+          "metrics": {
+            "rgb_rmse_255": 11.586309681272368,
+            "luminance_ssim": 0.8849731367540825,
+            "oriented_edge_error": 0.4112879088242759,
+            "fine_feature_loss": 0.09165995717612693,
+            "high_frequency_error": 0.753500721609066,
+            "perceptual_loss": 0.15086916237985057,
+            "quality_score": 0.8522999260766264,
+            "alpha_mae": 0.0,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+            "occupied_cell_color_rmse_255": 1.0101469455020557,
+            "perceptual_loss_before_color_guard": 0.14770007392337353
+          }
+        },
+        "gim_identical": false
+      },
+      {
+        "name": "w13_04",
+        "before": {
+          "width": 32,
+          "height": 64,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 64,
+          "used_palette_colors": 60,
+          "serialized_bytes": 3280,
+          "individual_bpe_bytes": 1781,
+          "metrics": {
+            "rgb_rmse_255": 4.034280391274046,
+            "luminance_ssim": 0.987301740271264,
+            "oriented_edge_error": 0.0795982290619508,
+            "fine_feature_loss": 0.0013909681892010316,
+            "high_frequency_error": 0.36586165759770783,
+            "perceptual_loss": 0.039854847718628746,
+            "quality_score": 0.964061965486308,
+            "alpha_mae": 0.0,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+            "occupied_cell_color_rmse_255": 1.2484842090735708,
+            "perceptual_loss_before_color_guard": 0.035938034513692055
+          }
+        },
+        "after": {
+          "width": 32,
+          "height": 64,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 232,
+          "used_palette_colors": 232,
+          "serialized_bytes": 3280,
+          "individual_bpe_bytes": 2838,
+          "metrics": {
+            "rgb_rmse_255": 3.5576878526850635,
+            "luminance_ssim": 0.990823054283715,
+            "oriented_edge_error": 0.06002248203329221,
+            "fine_feature_loss": 0.0008993535671523129,
+            "high_frequency_error": 0.3489174716953689,
+            "perceptual_loss": 0.03374369796365131,
+            "quality_score": 0.9688979831770922,
+            "alpha_mae": 0.0,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+            "occupied_cell_color_rmse_255": 0.8420358636120029,
+            "perceptual_loss_before_color_guard": 0.031102016822907766
+          }
+        },
+        "gim_identical": false
+      },
+      {
+        "name": "w13_05",
+        "before": {
+          "width": 32,
+          "height": 64,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 64,
+          "used_palette_colors": 64,
+          "serialized_bytes": 3280,
+          "individual_bpe_bytes": 1358,
+          "metrics": {
+            "rgb_rmse_255": 7.008747088887136,
+            "luminance_ssim": 0.7075277855588339,
+            "oriented_edge_error": 0.9634196795592578,
+            "fine_feature_loss": 0.6927796939042778,
+            "high_frequency_error": 0.9064669731692454,
+            "perceptual_loss": 0.3990932245508438,
+            "quality_score": 0.6009067754491562,
+            "alpha_mae": 21.429408,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception"
+          }
+        },
+        "after": {
+          "width": 64,
+          "height": 128,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 64,
+          "used_palette_colors": 64,
+          "serialized_bytes": 9424,
+          "individual_bpe_bytes": 4276,
+          "metrics": {
+            "rgb_rmse_255": 5.013162742146996,
+            "luminance_ssim": 0.8055274561029454,
+            "oriented_edge_error": 0.684872713040299,
+            "fine_feature_loss": 0.2684986592702473,
+            "high_frequency_error": 0.7683301835115652,
+            "perceptual_loss": 0.23639807092979834,
+            "quality_score": 0.7636019290702016,
+            "alpha_mae": 13.113216,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception"
+          }
+        },
+        "gim_identical": false
+      }
+    ],
+    "unresolved": "Existing source-shape findings retained; not game-tested; texture-only entrance trial."
+  },
+  {
+    "source": "CM Punk - ch131.pac",
+    "variant": 2,
+    "file": "CM-Punk-Entrance-Variant2-Texture-180K-EXPERIMENTAL.pac",
+    "bytes": 167936,
+    "sha256": "71e3907d4427043b79904f172cf20d476774e0ddb42e634954aa4e84b614b736",
+    "baseline_sha256": "896dcaa576178118f005daf21c4f0c23a68e0d8591e67d0d9b95cb695b664de2",
+    "model_yobj_byte_identical": true,
+    "model_yobj_sha256": "bcca2661a181f1e2d4daadd349ba5f1aaeee688f21b5ec9c8fc3ada7cc31e3a8",
+    "non_texture_sections_unchanged": [
+      2,
+      8
+    ],
+    "texture_memory": 51392,
+    "memory_envelope": 54016,
+    "textures": [
+      {
+        "name": "w13_00",
+        "before": {
+          "width": 32,
+          "height": 32,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 16,
+          "used_palette_colors": 16,
+          "serialized_bytes": 2256,
+          "individual_bpe_bytes": 823,
+          "metrics": {
+            "rgb_rmse_255": 22.21192912578158,
+            "luminance_ssim": 0.5336441495938592,
+            "oriented_edge_error": 0.9410182226659074,
+            "fine_feature_loss": 0.5477655055288916,
+            "high_frequency_error": 0.9398862534273092,
+            "perceptual_loss": 0.4195137872183845,
+            "quality_score": 0.5967502771249197,
+            "alpha_mae": 0.0,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+            "occupied_cell_color_rmse_255": 5.18417050942821,
+            "perceptual_loss_before_color_guard": 0.4032497228750803
+          }
+        },
+        "after": {
+          "width": 64,
+          "height": 64,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 256,
+          "used_palette_colors": 256,
+          "serialized_bytes": 5328,
+          "individual_bpe_bytes": 4558,
+          "metrics": {
+            "rgb_rmse_255": 16.98914766808493,
+            "luminance_ssim": 0.697227638002475,
+            "oriented_edge_error": 0.806300421856291,
+            "fine_feature_loss": 0.39139668899375646,
+            "high_frequency_error": 0.9013361664426041,
+            "perceptual_loss": 0.32585988114190406,
+            "quality_score": 0.6838937317607288,
+            "alpha_mae": 0.0,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+            "occupied_cell_color_rmse_255": 3.1089641127142196,
+            "perceptual_loss_before_color_guard": 0.31610626823927124
+          }
+        },
+        "gim_identical": false
+      },
+      {
+        "name": "w13_01",
+        "before": {
+          "width": 64,
+          "height": 64,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 16,
+          "used_palette_colors": 16,
+          "serialized_bytes": 5328,
+          "individual_bpe_bytes": 2245,
+          "metrics": {
+            "rgb_rmse_255": 20.758064051822313,
+            "luminance_ssim": 0.7246065696926022,
+            "oriented_edge_error": 0.8428006500255681,
+            "fine_feature_loss": 0.3187245445718334,
+            "high_frequency_error": 0.8901220268576839,
+            "perceptual_loss": 0.31160541881889847,
+            "quality_score": 0.6965492233501556,
+            "alpha_mae": 0.0,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+            "occupied_cell_color_rmse_255": 2.599292191385965,
+            "perceptual_loss_before_color_guard": 0.3034507766498445
+          }
+        },
+        "after": {
+          "width": 64,
+          "height": 64,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 256,
+          "used_palette_colors": 256,
+          "serialized_bytes": 5328,
+          "individual_bpe_bytes": 4142,
+          "metrics": {
+            "rgb_rmse_255": 19.914979587252358,
+            "luminance_ssim": 0.7353516384563134,
+            "oriented_edge_error": 0.8309539495551967,
+            "fine_feature_loss": 0.3254264152601696,
+            "high_frequency_error": 0.8984391798658726,
+            "perceptual_loss": 0.30578096796193455,
+            "quality_score": 0.6987080678155818,
+            "alpha_mae": 0.0,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+            "occupied_cell_color_rmse_255": 1.4308801540833407,
+            "perceptual_loss_before_color_guard": 0.3012919321844182
+          }
+        },
+        "gim_identical": false
+      },
+      {
+        "name": "w13_02",
+        "before": {
+          "width": 64,
+          "height": 64,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 16,
+          "used_palette_colors": 16,
+          "serialized_bytes": 5328,
+          "individual_bpe_bytes": 2080,
+          "metrics": {
+            "rgb_rmse_255": 15.62950013403491,
+            "luminance_ssim": 0.6823692110398752,
+            "oriented_edge_error": 0.9097831315182986,
+            "fine_feature_loss": 0.4516320647598417,
+            "high_frequency_error": 0.8989063875205644,
+            "perceptual_loss": 0.3562236734147275,
+            "quality_score": 0.6535829430320028,
+            "alpha_mae": 0.0,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+            "occupied_cell_color_rmse_255": 3.1258589923952904,
+            "perceptual_loss_before_color_guard": 0.3464170569679972
+          }
+        },
+        "after": {
+          "width": 64,
+          "height": 64,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 256,
+          "used_palette_colors": 256,
+          "serialized_bytes": 5328,
+          "individual_bpe_bytes": 4329,
+          "metrics": {
+            "rgb_rmse_255": 14.225771438549968,
+            "luminance_ssim": 0.6979445518377914,
+            "oriented_edge_error": 0.890533755355435,
+            "fine_feature_loss": 0.4467175627183495,
+            "high_frequency_error": 0.9038434327527451,
+            "perceptual_loss": 0.3423963868971485,
+            "quality_score": 0.6609011938350605,
+            "alpha_mae": 0.0,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+            "occupied_cell_color_rmse_255": 1.0511038583916354,
+            "perceptual_loss_before_color_guard": 0.3390988061649395
+          }
+        },
+        "gim_identical": false
+      },
+      {
+        "name": "w13_03",
+        "before": {
+          "width": 128,
+          "height": 128,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 16,
+          "used_palette_colors": 16,
+          "serialized_bytes": 17616,
+          "individual_bpe_bytes": 4096,
+          "metrics": {
+            "rgb_rmse_255": 14.896373678036547,
+            "luminance_ssim": 0.7995376567272008,
+            "oriented_edge_error": 0.5097150489289012,
+            "fine_feature_loss": 0.11078430927539129,
+            "high_frequency_error": 0.7900588382673668,
+            "perceptual_loss": 0.1976570851972949,
+            "quality_score": 0.8156382847537502,
+            "alpha_mae": 0.0,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+            "occupied_cell_color_rmse_255": 4.237899171895619,
+            "perceptual_loss_before_color_guard": 0.18436171524624984
+          }
+        },
+        "after": {
+          "width": 128,
+          "height": 128,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 256,
+          "used_palette_colors": 256,
+          "serialized_bytes": 17616,
+          "individual_bpe_bytes": 12610,
+          "metrics": {
+            "rgb_rmse_255": 11.586309681272368,
+            "luminance_ssim": 0.8849731367540825,
+            "oriented_edge_error": 0.4112879088242759,
+            "fine_feature_loss": 0.09165995717612693,
+            "high_frequency_error": 0.753500721609066,
+            "perceptual_loss": 0.15086916237985057,
+            "quality_score": 0.8522999260766264,
+            "alpha_mae": 0.0,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+            "occupied_cell_color_rmse_255": 1.0101469455020557,
+            "perceptual_loss_before_color_guard": 0.14770007392337353
+          }
+        },
+        "gim_identical": false
+      },
+      {
+        "name": "w13_04",
+        "before": {
+          "width": 32,
+          "height": 64,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 64,
+          "used_palette_colors": 60,
+          "serialized_bytes": 3280,
+          "individual_bpe_bytes": 1781,
+          "metrics": {
+            "rgb_rmse_255": 4.034280391274046,
+            "luminance_ssim": 0.987301740271264,
+            "oriented_edge_error": 0.0795982290619508,
+            "fine_feature_loss": 0.0013909681892010316,
+            "high_frequency_error": 0.36586165759770783,
+            "perceptual_loss": 0.039854847718628746,
+            "quality_score": 0.964061965486308,
+            "alpha_mae": 0.0,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+            "occupied_cell_color_rmse_255": 1.2484842090735708,
+            "perceptual_loss_before_color_guard": 0.035938034513692055
+          }
+        },
+        "after": {
+          "width": 32,
+          "height": 64,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 232,
+          "used_palette_colors": 232,
+          "serialized_bytes": 3280,
+          "individual_bpe_bytes": 2838,
+          "metrics": {
+            "rgb_rmse_255": 3.5576878526850635,
+            "luminance_ssim": 0.990823054283715,
+            "oriented_edge_error": 0.06002248203329221,
+            "fine_feature_loss": 0.0008993535671523129,
+            "high_frequency_error": 0.3489174716953689,
+            "perceptual_loss": 0.03374369796365131,
+            "quality_score": 0.9688979831770922,
+            "alpha_mae": 0.0,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+            "occupied_cell_color_rmse_255": 0.8420358636120029,
+            "perceptual_loss_before_color_guard": 0.031102016822907766
+          }
+        },
+        "gim_identical": false
+      },
+      {
+        "name": "w13_05",
+        "before": {
+          "width": 32,
+          "height": 64,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 64,
+          "used_palette_colors": 64,
+          "serialized_bytes": 3280,
+          "individual_bpe_bytes": 1358,
+          "metrics": {
+            "rgb_rmse_255": 7.008747088887136,
+            "luminance_ssim": 0.7075277855588339,
+            "oriented_edge_error": 0.9634196795592578,
+            "fine_feature_loss": 0.6927796939042778,
+            "high_frequency_error": 0.9064669731692454,
+            "perceptual_loss": 0.3990932245508438,
+            "quality_score": 0.6009067754491562,
+            "alpha_mae": 21.429408,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception"
+          }
+        },
+        "after": {
+          "width": 64,
+          "height": 128,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 64,
+          "used_palette_colors": 64,
+          "serialized_bytes": 9424,
+          "individual_bpe_bytes": 4276,
+          "metrics": {
+            "rgb_rmse_255": 5.013162742146996,
+            "luminance_ssim": 0.8055274561029454,
+            "oriented_edge_error": 0.684872713040299,
+            "fine_feature_loss": 0.2684986592702473,
+            "high_frequency_error": 0.7683301835115652,
+            "perceptual_loss": 0.23639807092979834,
+            "quality_score": 0.7636019290702016,
+            "alpha_mae": 13.113216,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception"
+          }
+        },
+        "gim_identical": false
+      }
+    ],
+    "unresolved": "Existing source-shape findings retained; not game-tested; texture-only entrance trial."
+  },
+  {
+    "source": "Chris Jericho 1999 - ch347.pac",
+    "variant": 1,
+    "file": "Chris-Jericho-1999-Entrance-Texture-180K-EXPERIMENTAL.pac",
+    "bytes": 161792,
+    "sha256": "bf9c34163a4faa5f9d3318009e8d374fc7a866f23e202490e4b5c6c670d6d5c3",
+    "baseline_sha256": "1ac72a1928a84a7a13af90d004a35c5d713a2cd5a1e459d060bb9b5448ebc807",
+    "model_yobj_byte_identical": true,
+    "model_yobj_sha256": "b051aeddc6418fca6c271b7fa21232b23f2c7275c8f4c832d934c1ed4e7be43b",
+    "non_texture_sections_unchanged": [
+      2,
+      8
+    ],
+    "texture_memory": 51392,
+    "memory_envelope": 54016,
+    "textures": [
+      {
+        "name": "w13_00",
+        "before": {
+          "width": 64,
+          "height": 64,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 32,
+          "used_palette_colors": 32,
+          "serialized_bytes": 5328,
+          "individual_bpe_bytes": 2172,
+          "metrics": {
+            "rgb_rmse_255": 10.536229962202597,
+            "luminance_ssim": 0.6975883549377694,
+            "oriented_edge_error": 0.8911964312472351,
+            "fine_feature_loss": 0.37931177250857445,
+            "high_frequency_error": 0.8683998569874037,
+            "perceptual_loss": 0.32947865105553226,
+            "quality_score": 0.6812070072755336,
+            "alpha_mae": 0.0,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+            "occupied_cell_color_rmse_255": 3.406053593027227,
+            "perceptual_loss_before_color_guard": 0.31879299272446643
+          }
+        },
+        "after": {
+          "width": 64,
+          "height": 64,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 256,
+          "used_palette_colors": 256,
+          "serialized_bytes": 5328,
+          "individual_bpe_bytes": 4451,
+          "metrics": {
+            "rgb_rmse_255": 8.655894673157603,
+            "luminance_ssim": 0.7412862389942138,
+            "oriented_edge_error": 0.8314049463295443,
+            "fine_feature_loss": 0.4351204871152478,
+            "high_frequency_error": 0.881262681257949,
+            "perceptual_loss": 0.3217887169936446,
+            "quality_score": 0.6848735171018854,
+            "alpha_mae": 0.0,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+            "occupied_cell_color_rmse_255": 2.123587117950189,
+            "perceptual_loss_before_color_guard": 0.31512648289811457
+          }
+        },
+        "gim_identical": false
+      },
+      {
+        "name": "w13_01",
+        "before": {
+          "width": 64,
+          "height": 64,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 32,
+          "used_palette_colors": 32,
+          "serialized_bytes": 5328,
+          "individual_bpe_bytes": 2304,
+          "metrics": {
+            "rgb_rmse_255": 16.121176496243205,
+            "luminance_ssim": 0.6257123015731406,
+            "oriented_edge_error": 0.899076617580035,
+            "fine_feature_loss": 0.4023689204894943,
+            "high_frequency_error": 0.8879012306282937,
+            "perceptual_loss": 0.3527414113607447,
+            "quality_score": 0.6581469733582086,
+            "alpha_mae": 0.0,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+            "occupied_cell_color_rmse_255": 3.470672629166368,
+            "perceptual_loss_before_color_guard": 0.3418530266417914
+          }
+        },
+        "after": {
+          "width": 64,
+          "height": 64,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 128,
+          "used_palette_colors": 128,
+          "serialized_bytes": 5328,
+          "individual_bpe_bytes": 3514,
+          "metrics": {
+            "rgb_rmse_255": 14.530776034690069,
+            "luminance_ssim": 0.6649191664095557,
+            "oriented_edge_error": 0.8715018179728515,
+            "fine_feature_loss": 0.4269135758040027,
+            "high_frequency_error": 0.8875559698706615,
+            "perceptual_loss": 0.34329783987590884,
+            "quality_score": 0.6639083255424174,
+            "alpha_mae": 0.0,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+            "occupied_cell_color_rmse_255": 2.296965227091491,
+            "perceptual_loss_before_color_guard": 0.3360916744575826
+          }
+        },
+        "gim_identical": false
+      },
+      {
+        "name": "w13_02",
+        "before": {
+          "width": 64,
+          "height": 64,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 16,
+          "used_palette_colors": 16,
+          "serialized_bytes": 5328,
+          "individual_bpe_bytes": 1265,
+          "metrics": {
+            "rgb_rmse_255": 10.629019046618641,
+            "luminance_ssim": 0.7107999254223383,
+            "oriented_edge_error": 0.9944908914864046,
+            "fine_feature_loss": 0.520746999261987,
+            "high_frequency_error": 0.737587699875523,
+            "perceptual_loss": 0.3710202786369959,
+            "quality_score": 0.6416250261869212,
+            "alpha_mae": 0.0,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+            "occupied_cell_color_rmse_255": 4.030690912623583,
+            "perceptual_loss_before_color_guard": 0.35837497381307876
+          }
+        },
+        "after": {
+          "width": 64,
+          "height": 64,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 256,
+          "used_palette_colors": 256,
+          "serialized_bytes": 5328,
+          "individual_bpe_bytes": 4293,
+          "metrics": {
+            "rgb_rmse_255": 8.495800162443082,
+            "luminance_ssim": 0.7690584867544169,
+            "oriented_edge_error": 0.918515655997685,
+            "fine_feature_loss": 0.5272550804059881,
+            "high_frequency_error": 0.7307629146993623,
+            "perceptual_loss": 0.34089638391241023,
+            "quality_score": 0.6624449004410959,
+            "alpha_mae": 0.0,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+            "occupied_cell_color_rmse_255": 1.0650343876800683,
+            "perceptual_loss_before_color_guard": 0.3375550995589041
+          }
+        },
+        "gim_identical": false
+      },
+      {
+        "name": "w13_03",
+        "before": {
+          "width": 128,
+          "height": 128,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 16,
+          "used_palette_colors": 16,
+          "serialized_bytes": 17616,
+          "individual_bpe_bytes": 4597,
+          "metrics": {
+            "rgb_rmse_255": 11.979905342856357,
+            "luminance_ssim": 0.8447794355616894,
+            "oriented_edge_error": 0.5904501675805399,
+            "fine_feature_loss": 0.1430898443704876,
+            "high_frequency_error": 0.7995741088162233,
+            "perceptual_loss": 0.20627216632170328,
+            "quality_score": 0.804924415941626,
+            "alpha_mae": 0.0,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+            "occupied_cell_color_rmse_255": 3.5689105964362033,
+            "perceptual_loss_before_color_guard": 0.19507558405837402
+          }
+        },
+        "after": {
+          "width": 128,
+          "height": 128,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 256,
+          "used_palette_colors": 256,
+          "serialized_bytes": 17616,
+          "individual_bpe_bytes": 10240,
+          "metrics": {
+            "rgb_rmse_255": 10.55187998040987,
+            "luminance_ssim": 0.8779397107361021,
+            "oriented_edge_error": 0.5328772749529775,
+            "fine_feature_loss": 0.10872159428332998,
+            "high_frequency_error": 0.794240690197512,
+            "perceptual_loss": 0.17473963092976666,
+            "quality_score": 0.8279377814442305,
+            "alpha_mae": 0.0,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+            "occupied_cell_color_rmse_255": 0.853425194211573,
+            "perceptual_loss_before_color_guard": 0.17206221855576956
+          }
+        },
+        "gim_identical": false
+      },
+      {
+        "name": "w13_04",
+        "before": {
+          "width": 32,
+          "height": 64,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 64,
+          "used_palette_colors": 64,
+          "serialized_bytes": 3280,
+          "individual_bpe_bytes": 1649,
+          "metrics": {
+            "rgb_rmse_255": 2.6774747064467777,
+            "luminance_ssim": 0.9964422252027554,
+            "oriented_edge_error": 0.05416783612723158,
+            "fine_feature_loss": 0.0018576981829486385,
+            "high_frequency_error": 0.13947558898986442,
+            "perceptual_loss": 0.021868756256169613,
+            "quality_score": 0.9816301301516462,
+            "alpha_mae": 0.0,
+            "alpha_exact": true,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+            "occupied_cell_color_rmse_255": 1.1152700424912956,
+            "perceptual_loss_before_color_guard": 0.018369869848353784
+          }
+        },
+        "after": {
+          "width": 32,
+          "height": 64,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 208,
+          "used_palette_colors": 208,
+          "serialized_bytes": 3280,
+          "individual_bpe_bytes": 2457,
+          "metrics": {
+            "rgb_rmse_255": 0.0,
+            "luminance_ssim": 0.9997706228667562,
+            "oriented_edge_error": 0.0008142975533715809,
+            "fine_feature_loss": 0.0,
+            "high_frequency_error": 0.0019766001007470715,
+            "perceptual_loss": 0.0002553812080296577,
+            "quality_score": 0.9997446187919703,
+            "alpha_mae": 0.0,
+            "alpha_exact": true,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+            "occupied_cell_color_rmse_255": 0.0,
+            "perceptual_loss_before_color_guard": 0.0002553812080296577
+          }
+        },
+        "gim_identical": false
+      },
+      {
+        "name": "w13_05",
+        "before": {
+          "width": 64,
+          "height": 128,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 121,
+          "used_palette_colors": 121,
+          "serialized_bytes": 9424,
+          "individual_bpe_bytes": 5177,
+          "metrics": {
+            "rgb_rmse_255": 7.935269706251511,
+            "luminance_ssim": 0.7050324130317718,
+            "oriented_edge_error": 0.8076189731890275,
+            "fine_feature_loss": 0.09650556451306878,
+            "high_frequency_error": 0.9136572820782729,
+            "perceptual_loss": 0.24011324300619538,
+            "quality_score": 0.7598867569938046,
+            "alpha_mae": 15.249786376953125,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception"
+          }
+        },
+        "after": {
+          "width": 64,
+          "height": 128,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 121,
+          "used_palette_colors": 121,
+          "serialized_bytes": 9424,
+          "individual_bpe_bytes": 5177,
+          "metrics": {
+            "rgb_rmse_255": 7.935269706251511,
+            "luminance_ssim": 0.7050324130317718,
+            "oriented_edge_error": 0.8076189731890275,
+            "fine_feature_loss": 0.09650556451306878,
+            "high_frequency_error": 0.9136572820782729,
+            "perceptual_loss": 0.24011324300619538,
+            "quality_score": 0.7598867569938046,
+            "alpha_mae": 15.249786376953125,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception"
+          }
+        },
+        "gim_identical": true
+      }
+    ],
+    "unresolved": "Existing source-shape findings retained; not game-tested; texture-only entrance trial."
+  },
+  {
+    "source": "HBK",
+    "variant": 1,
+    "file": "HBK-Entrance-Texture-180K-EXPERIMENTAL.pac",
+    "bytes": 176128,
+    "sha256": "7652ba0667ad83f422e8e57b825799d6b1643dd1029c2d2bfb1b14442ffb49ae",
+    "baseline_sha256": "268d58468ec1f3593b7160b07a72959d57793219b5c0b7609a321508bfe70bf0",
+    "model_yobj_byte_identical": true,
+    "model_yobj_sha256": "503687950984889149d3a2c596ad11cda00b888518552419fbe5bcfd36406110",
+    "non_texture_sections_unchanged": [
+      2,
+      8
+    ],
+    "texture_memory": 51392,
+    "memory_envelope": 54016,
+    "textures": [
+      {
+        "name": "w13_00",
+        "before": {
+          "width": 32,
+          "height": 32,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 32,
+          "used_palette_colors": 32,
+          "serialized_bytes": 2256,
+          "individual_bpe_bytes": 1028,
+          "metrics": {
+            "rgb_rmse_255": 13.16433385010213,
+            "luminance_ssim": 0.6199215439270532,
+            "oriented_edge_error": 0.942139858226791,
+            "fine_feature_loss": 0.6691998417501216,
+            "high_frequency_error": 0.9447735676449375,
+            "perceptual_loss": 0.4233749436366864,
+            "quality_score": 0.5891551463721372,
+            "alpha_mae": 0.0,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+            "occupied_cell_color_rmse_255": 3.993966190312509,
+            "perceptual_loss_before_color_guard": 0.4108448536278628
+          }
+        },
+        "after": {
+          "width": 64,
+          "height": 64,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 256,
+          "used_palette_colors": 256,
+          "serialized_bytes": 5328,
+          "individual_bpe_bytes": 4875,
+          "metrics": {
+            "rgb_rmse_255": 10.180157340315496,
+            "luminance_ssim": 0.7195999576906494,
+            "oriented_edge_error": 0.8290219496791522,
+            "fine_feature_loss": 0.4861961079772836,
+            "high_frequency_error": 0.9018172665990605,
+            "perceptual_loss": 0.3377807828743606,
+            "quality_score": 0.6678878521943712,
+            "alpha_mae": 0.0,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+            "occupied_cell_color_rmse_255": 1.8068774281582518,
+            "perceptual_loss_before_color_guard": 0.3321121478056288
+          }
+        },
+        "gim_identical": false
+      },
+      {
+        "name": "w13_01",
+        "before": {
+          "width": 64,
+          "height": 64,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 32,
+          "used_palette_colors": 32,
+          "serialized_bytes": 5328,
+          "individual_bpe_bytes": 2299,
+          "metrics": {
+            "rgb_rmse_255": 17.20397500880121,
+            "luminance_ssim": 0.670647667431057,
+            "oriented_edge_error": 0.910123290004915,
+            "fine_feature_loss": 0.5220341309648919,
+            "high_frequency_error": 0.9235673434632724,
+            "perceptual_loss": 0.3753636445932248,
+            "quality_score": 0.6329897942132001,
+            "alpha_mae": 0.0,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+            "occupied_cell_color_rmse_255": 2.6626586195479485,
+            "perceptual_loss_before_color_guard": 0.3670102057867999
+          }
+        },
+        "after": {
+          "width": 64,
+          "height": 64,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 256,
+          "used_palette_colors": 256,
+          "serialized_bytes": 5328,
+          "individual_bpe_bytes": 4509,
+          "metrics": {
+            "rgb_rmse_255": 16.0099591315759,
+            "luminance_ssim": 0.7030123708670201,
+            "oriented_edge_error": 0.8882913362876264,
+            "fine_feature_loss": 0.5852603555339758,
+            "high_frequency_error": 0.9293656520735909,
+            "perceptual_loss": 0.37491019949709264,
+            "quality_score": 0.6273174770498398,
+            "alpha_mae": 0.0,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+            "occupied_cell_color_rmse_255": 0.7100718993347007,
+            "perceptual_loss_before_color_guard": 0.37268252295016024
+          }
+        },
+        "gim_identical": false
+      },
+      {
+        "name": "w13_02",
+        "before": {
+          "width": 32,
+          "height": 32,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 16,
+          "used_palette_colors": 16,
+          "serialized_bytes": 2256,
+          "individual_bpe_bytes": 807,
+          "metrics": {
+            "rgb_rmse_255": 25.411180149148333,
+            "luminance_ssim": 0.48750024055022595,
+            "oriented_edge_error": 0.9839409692169861,
+            "fine_feature_loss": 0.7806224916940793,
+            "high_frequency_error": 0.9751168094688795,
+            "perceptual_loss": 0.4931574942710715,
+            "quality_score": 0.5253115060278346,
+            "alpha_mae": 0.0,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+            "occupied_cell_color_rmse_255": 5.886993845276306,
+            "perceptual_loss_before_color_guard": 0.4746884939721654
+          }
+        },
+        "after": {
+          "width": 64,
+          "height": 64,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 256,
+          "used_palette_colors": 256,
+          "serialized_bytes": 5328,
+          "individual_bpe_bytes": 4783,
+          "metrics": {
+            "rgb_rmse_255": 21.884415946021747,
+            "luminance_ssim": 0.5810158768253404,
+            "oriented_edge_error": 0.9291462694060316,
+            "fine_feature_loss": 0.6773128532588637,
+            "high_frequency_error": 0.9542095317208019,
+            "perceptual_loss": 0.4292684102299683,
+            "quality_score": 0.575407335696436,
+            "alpha_mae": 0.0,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+            "occupied_cell_color_rmse_255": 1.4903940140413785,
+            "perceptual_loss_before_color_guard": 0.42459266430356396
+          }
+        },
+        "gim_identical": false
+      },
+      {
+        "name": "w13_03",
+        "before": {
+          "width": 64,
+          "height": 64,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 16,
+          "used_palette_colors": 16,
+          "serialized_bytes": 5328,
+          "individual_bpe_bytes": 1926,
+          "metrics": {
+            "rgb_rmse_255": 24.77388133745661,
+            "luminance_ssim": 0.6376670788214346,
+            "oriented_edge_error": 0.8877949875458893,
+            "fine_feature_loss": 0.47088806328891336,
+            "high_frequency_error": 0.9320294045639165,
+            "perceptual_loss": 0.37142823660969193,
+            "quality_score": 0.6362015442233899,
+            "alpha_mae": 0.0,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+            "occupied_cell_color_rmse_255": 2.4319926405448666,
+            "perceptual_loss_before_color_guard": 0.36379845577661
+          }
+        },
+        "after": {
+          "width": 128,
+          "height": 128,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 256,
+          "used_palette_colors": 256,
+          "serialized_bytes": 17616,
+          "individual_bpe_bytes": 15756,
+          "metrics": {
+            "rgb_rmse_255": 17.290405191832406,
+            "luminance_ssim": 0.833972032148226,
+            "oriented_edge_error": 0.5527005048014607,
+            "fine_feature_loss": 0.15934415370929308,
+            "high_frequency_error": 0.8174123810868128,
+            "perceptual_loss": 0.20243553324936073,
+            "quality_score": 0.7997537423721716,
+            "alpha_mae": 0.0,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+            "occupied_cell_color_rmse_255": 0.697831604363416,
+            "perceptual_loss_before_color_guard": 0.20024625762782844
+          }
+        },
+        "gim_identical": false
+      },
+      {
+        "name": "w13_04",
+        "before": {
+          "width": 32,
+          "height": 64,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 32,
+          "used_palette_colors": 32,
+          "serialized_bytes": 3280,
+          "individual_bpe_bytes": 1387,
+          "metrics": {
+            "rgb_rmse_255": 3.945969739628245,
+            "luminance_ssim": 0.9914211360620129,
+            "oriented_edge_error": 0.08273668178605245,
+            "fine_feature_loss": 0.001718190228321206,
+            "high_frequency_error": 0.18935252988217238,
+            "perceptual_loss": 0.032262450157591,
+            "quality_score": 0.9730354918448962,
+            "alpha_mae": 0.0,
+            "alpha_exact": true,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+            "occupied_cell_color_rmse_255": 1.688719013292801,
+            "perceptual_loss_before_color_guard": 0.026964508155103782
+          }
+        },
+        "after": {
+          "width": 32,
+          "height": 64,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 211,
+          "used_palette_colors": 211,
+          "serialized_bytes": 3280,
+          "individual_bpe_bytes": 2568,
+          "metrics": {
+            "rgb_rmse_255": 0.0,
+            "luminance_ssim": 0.9997839960552094,
+            "oriented_edge_error": 0.0004875672120688908,
+            "fine_feature_loss": 0.0,
+            "high_frequency_error": 0.0010982656265263518,
+            "perceptual_loss": 0.0001604489548552411,
+            "quality_score": 0.9998395510451448,
+            "alpha_mae": 0.0,
+            "alpha_exact": true,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+            "occupied_cell_color_rmse_255": 0.0,
+            "perceptual_loss_before_color_guard": 0.0001604489548552411
+          }
+        },
+        "gim_identical": false
+      },
+      {
+        "name": "w13_05",
+        "before": {
+          "width": 32,
+          "height": 64,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 152,
+          "used_palette_colors": 152,
+          "serialized_bytes": 3280,
+          "individual_bpe_bytes": 1888,
+          "metrics": {
+            "rgb_rmse_255": 24.732232990087248,
+            "luminance_ssim": 0.3943324425735775,
+            "oriented_edge_error": 0.9645998484292968,
+            "fine_feature_loss": 0.45919971871460596,
+            "high_frequency_error": 0.9249633040587956,
+            "perceptual_loss": 0.4087418241614186,
+            "quality_score": 0.5912581758385814,
+            "alpha_mae": 22.8939594356261,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception"
+          }
+        },
+        "after": {
+          "width": 64,
+          "height": 128,
+          "bits": 8,
+          "palette_entries": 256,
+          "requested_useful_colors": 152,
+          "used_palette_colors": 152,
+          "serialized_bytes": 9424,
+          "individual_bpe_bytes": 5257,
+          "metrics": {
+            "rgb_rmse_255": 19.54546809744183,
+            "luminance_ssim": 0.5847959130504674,
+            "oriented_edge_error": 0.7374026740939587,
+            "fine_feature_loss": 0.1613554857417958,
+            "high_frequency_error": 0.8214729350229236,
+            "perceptual_loss": 0.2679391794182327,
+            "quality_score": 0.7320608205817674,
+            "alpha_mae": 12.815917107583774,
+            "alpha_exact": false,
+            "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception"
+          }
+        },
+        "gim_identical": false
+      }
+    ],
+    "unresolved": "Existing source-shape findings retained; not game-tested; texture-only entrance trial."
+  }
+]

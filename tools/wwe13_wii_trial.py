@@ -21,6 +21,7 @@ from tools.wwe13_pose_trial import hand_probes
 from tools.wwe13_texture_trial import encode_occupied,allocate
 from tools.wwe13_wii_model import source_bundle
 from tools.yukes_bpe import compress
+from tools.wwe13_budget import budget
 
 
 def dump(p,v):Path(p).write_text(json.dumps(v,indent=2,allow_nan=False)+'\n')
@@ -135,8 +136,9 @@ def check_bone_metadata(original,candidate,radius_changes,ocular_changes=()):
         struct.pack_into('<f',allowed,80*i+76,row['after'])
     if candidate['bone_raw']!=bytes(allowed):raise ValueError('Unreported native skeleton metadata change')
 
-def validate_trial(data,base,radius_changes,ocular_changes=()):
-    native,gims=validate_pac(data,None,148000,accessory_models={},gim_reader=read_gim)
+def validate_trial(data,base,radius_changes,ocular_changes=(),*,costume_role='ring'):
+    limits=budget(costume_role)
+    native,gims=validate_pac(data,None,limits['max_pac_bytes'],accessory_models={},gim_reader=read_gim)
     _,original=base_model_bytes(base)
     check_bone_metadata(original,native,radius_changes,ocular_changes)
     old=list(sections(base));new=list(sections(data))
@@ -149,7 +151,7 @@ def validate_trial(data,base,radius_changes,ocular_changes=()):
     raw=next(r for s,r in new if s['id']==2)
     bounds=bounds_probe(raw,dict(native,bone_count=len(native['bones'])))
     if bounds['enclosing_active_bones']!=bounds['active_bones']:raise ValueError('Influence enclosure failure')
-    return native,gims,dict(pac_bytes=len(data),sector_aligned=len(data)%2048==0,unchanged_stored_sections=preserved,
+    return native,gims,dict(pac_bytes=len(data),budget=limits,sector_aligned=len(data)%2048==0,unchanged_stored_sections=preserved,
         skeleton_policy='Names/parents/rotation axes/body binds/sphere centers byte-exact; four reported ocular pivot positions fit to decoded source, plus nonshrinking influence radii',ocular_changes=ocular_changes,radius_changes=radius_changes,bounds=bounds)
 
 
@@ -158,7 +160,8 @@ def base_model_bytes(base):
     return base,audit_yobj(next(r for s,r in sections(base)if s['id']==2))
 
 
-def run(source,base_path,out,index,ratio=1.,head_floor=.6,hand_floor=.5,mouth_ratio=.6,material_only=False,texture_candidates=None,source_reader=None,atlas_options=None,export_face_floor=False,arm_floor=None,opposed_normals=False,source_normals=False):
+def run(source,base_path,out,index,ratio=1.,head_floor=.6,hand_floor=.5,mouth_ratio=.6,material_only=False,texture_candidates=None,source_reader=None,atlas_options=None,export_face_floor=False,arm_floor=None,opposed_normals=False,source_normals=False,costume_role='ring',preserve_uv_seams=False):
+    limits=budget(costume_role)
     if any(not 0<v<=1 for v in (ratio,head_floor,hand_floor,mouth_ratio)):raise ValueError('Reduction ratios must be in (0,1]')
     if arm_floor is not None and not 0<arm_floor<=1:raise ValueError('Arm floor must be in (0,1]')
     source,base_path,out=map(Path,(source,base_path,out));out.mkdir(parents=True,exist_ok=False)
@@ -178,7 +181,7 @@ def run(source,base_path,out,index,ratio=1.,head_floor=.6,hand_floor=.5,mouth_ra
     for n,im in zip(charted['textures'],images):Image.fromarray(im).save(out/'source-images'/(n+'.png'))
     if ratio<1:
         env=os.environ.copy();env['BLENDER_USER_CONFIG']=str((out/'blender-config').resolve())
-        with (out/'blender.log').open('w')as log:subprocess.run(['/usr/bin/blender','-b','-t','2','--python-exit-code','1','--python',str(Path('tools/wwe13_reduce_trial.py').resolve()),'--',str((out/'charted.json').resolve()),str((out/'reduced.json').resolve()),str((out/'profile.json').resolve()),'--hand-weighted','--material-boundaries' if material_only else '--uv-islands']+(['--export-face-floor']if export_face_floor else [])+(['--opposed-normals']if opposed_normals else [])+(['--source-normals']if source_normals else []),check=True,env=env,stdout=log,stderr=subprocess.STDOUT)
+        with (out/'blender.log').open('w')as log:subprocess.run(['/usr/bin/blender','-b','-t','2','--python-exit-code','1','--python',str(Path('tools/wwe13_reduce_trial.py').resolve()),'--',str((out/'charted.json').resolve()),str((out/'reduced.json').resolve()),str((out/'profile.json').resolve()),'--hand-weighted','--material-boundaries' if material_only else '--uv-islands']+(['--export-face-floor']if export_face_floor else [])+(['--opposed-normals']if opposed_normals else [])+(['--source-normals']if source_normals else [])+(['--preserve-uv-seams']if preserve_uv_seams else []),check=True,env=env,stdout=log,stderr=subprocess.STDOUT)
         reduced=json.loads((out/'reduced.json').read_text())
     else:reduced=charted
     fitted,radii=enclose_influences(fitted_target,reduced)
@@ -197,11 +200,11 @@ def run(source,base_path,out,index,ratio=1.,head_floor=.6,hand_floor=.5,mouth_ra
         raise ValueError('Native analytical pose gate failed; candidate retained for diagnosis only')
     (out/'candidate.yobj').write_bytes(raw)
     print('Native model expanded',len(raw),'compressed',len(compress(raw)),flush=True)
-    pac,gims,tex=allocate(base,raw,packed,images,contracts,out/'textures',candidate_factory=texture_candidates or candidates)
-    final,gims,structural=validate_trial(pac,base,radii,eye_binds);dump(out/'structural.json',structural)
+    pac,gims,tex=allocate(base,raw,packed,images,contracts,out/'textures',target=limits['max_pac_bytes'],candidate_factory=texture_candidates or candidates)
+    final,gims,structural=validate_trial(pac,base,radii,eye_binds,costume_role=costume_role);dump(out/'structural.json',structural)
     filename=('HBK-WWE13-Wii-Ring'if index==0 else'HBK-WWE13-Wii-Entrance')+'-PSP-EXPERIMENTAL.pac'
     (out/filename).write_bytes(pac)
-    result=dict(pac=filename,pac_bytes=len(pac),sha256=hashlib.sha256(pac).hexdigest(),source_sha256=hashlib.sha256(data).hexdigest(),variant=index,
+    result=dict(pac=filename,pac_bytes=len(pac),budget=limits,sha256=hashlib.sha256(pac).hexdigest(),source_sha256=hashlib.sha256(data).hexdigest(),variant=index,
         source_triangles=original['triangle_count'],final_triangles=sum(len(a['triangles'])for m in final['meshes']for a in m['materials']),final_vertices=sum(len(m['vertices'])for m in final['meshes']),final_meshes=len(final['meshes']),textures=len(gims),structural_checks_passed=True,
         status='EXPERIMENTAL; analytical QA pending; not game-tested',source_blood_draws_excluded=decode['excluded_effects'])
     dump(out/'result.json',result);print(json.dumps(result,indent=2),flush=True)
@@ -210,4 +213,5 @@ def run(source,base_path,out,index,ratio=1.,head_floor=.6,hand_floor=.5,mouth_ra
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('source');p.add_argument('--base',required=True);p.add_argument('--out',required=True);p.add_argument('--variant',type=int,choices=(0,1),required=True);p.add_argument('--ratio',type=float,default=1.);p.add_argument('--head-floor',type=float,default=.6);p.add_argument('--hand-floor',type=float,default=.5);p.add_argument('--mouth-ratio',type=float,default=.6);p.add_argument('--material-only',action='store_true')
-    a=p.parse_args();run(a.source,a.base,a.out,a.variant,a.ratio,a.head_floor,a.hand_floor,a.mouth_ratio,a.material_only)
+    p.add_argument('--costume-role',choices=('ring','entrance'),default='ring')
+    a=p.parse_args();run(a.source,a.base,a.out,a.variant,a.ratio,a.head_floor,a.hand_floor,a.mouth_ratio,a.material_only,costume_role=a.costume_role)
