@@ -66,14 +66,14 @@ def build(name=NAME):
                      'rvd-texture-budget-experiment.md','source-skinning-identity.md','texture-quality-v025-native-summary.json',
                      'jbi-app-integration.md','jbi-rock-arm-accessory-trial.md','jbi-provenance-correction.json'):
         shutil.copy2(ROOT/'docs'/filename,sources/'converter/docs'/filename)
-    for filename in ('wwe13-wii-app-preview.md','wwe13-edge-texture-refinement-04.md','wwe13-wii-geometry-opacity-03.md','pac-size-policy.md'):
+    for filename in ('wwe13-wii-app-preview.md','wwe13-wii-packet-scale-hotfix.md','wwe13-edge-texture-refinement-04.md','wwe13-wii-geometry-opacity-03.md','pac-size-policy.md'):
         shutil.copy2(ROOT/'docs'/filename,sources/'converter/docs'/filename)
     focused_tests=sources/'converter/tests';focused_tests.mkdir()
     (focused_tests/'__init__.py').write_text('')
     for filename in ('test_default_textures.py','test_texture_budget_trial.py','test_suite_workspace.py','test_pac_browser.py','test_edit_folder.py','test_pac_validator.py','test_portable_skinning.py','test_compatibility_validator.py',
                      'test_jbi_rig.py','test_jbi_adapter.py','test_sym_source.py','test_pac_inspect.py'):
         shutil.copy2(ROOT/'tests'/filename,focused_tests/filename)
-    for filename in ('test_wii_app.py','test_wwe13_wii_model.py','test_wwe13_wii_corpus.py','test_wwe13_wii_inspect.py','test_wwe13_texture_format_trial.py','test_psp_effect_storage_trial.py','test_palette_quality_qa.py','test_alpha_coverage.py'):
+    for filename in ('test_wii_app.py','test_wii_source_encoding.py','test_wwe13_wii_model.py','test_wwe13_wii_corpus.py','test_wwe13_wii_inspect.py','test_wwe13_texture_format_trial.py','test_psp_effect_storage_trial.py','test_palette_quality_qa.py','test_alpha_coverage.py'):
         shutil.copy2(ROOT/'tests'/filename,focused_tests/filename)
     # Procedural binary conformance vectors, not game-derived assets. Store
     # them in an archive so extracted runtime asset checks remain strict.

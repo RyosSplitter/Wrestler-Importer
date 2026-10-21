@@ -32,6 +32,9 @@ def run(app,output,base):
         assert app.costume_role.get()=='ring'
         app.source_entry.set('01');app.change_source_entry();wait(lambda:app.inspector is None)
         assert app.source_inspection['selected_entry']=='01'
+        scales=app.source_inspection['source_encoding_audit']
+        assert scales['status']=='pass'
+        assert {r['position_divisor']for r in scales['packets']}=={128,256}
         app.base.set(str(Path(base).resolve()));app.costume_role.set('entrance');app.start();wait(lambda:not app.busy())
         assert app.result is not None,app.status.get()
         result=app.result;raw=Path(result['pac']).read_bytes();work=Path(result['pac']).parent
@@ -54,6 +57,7 @@ def run(app,output,base):
         report=dict(status='pass',fixture='Procedural fixed-point GCTC panels/TPL images on caller-supplied development rig; no wrestler geometry or texture',
             platform_selection=True,costume_selection=True,explicit_entrance_budget=True,source_bone_decode=True,
             bundled_blender_conversion=True,full_static_analytical_head_hand_qa=True,final_pac_preview=True,
+            mixed_q7_body_q8_auxiliary_decode_verified=True,
             palette_and_alpha_reports=True,save_as_verified=True,cancellation_clean=True,hctp_options_restored=True,
             pac_bytes=len(raw),pac_sha256=sha(raw),inputs_unchanged=True,
             limitations='Hosted Windows frozen test; not a clean user Windows installation, real wrestler render or PPSSPP test.')

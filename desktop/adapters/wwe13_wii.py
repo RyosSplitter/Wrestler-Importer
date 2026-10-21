@@ -1,7 +1,7 @@
 """Bounded Wii reader contract, separate from PS2 and Xbox 360 layouts."""
 from pathlib import Path
 import hashlib
-from tools.wwe13_wii_corpus import bundles,source_bundle
+from tools.wwe13_wii_corpus import bundles,verified_source_bundle as source_bundle
 
 
 def selected_index(entry_id,count):
@@ -28,6 +28,7 @@ class WiiAdapter:
             meshes=model['mesh_count'],vertices=model['vertex_count'],triangles=model['triangle_count'],
             bones=model['bone_count'],textures=len(images),model_count=len(decode['models']),
             selected_entry=f'{index:02d}',source_sha256=hashlib.sha256(raw).hexdigest(),
+            source_encoding_audit=decode['source_encoding_audit'],
             excluded_effects=decode['excluded_effects'],limitations='Unknown packet/rig layouts rejected; source blood animation is not converted.')
         if preview_folder is not None:
             from desktop.texture_review import source_previews

@@ -21,12 +21,13 @@ def source_bones(target):
     return [dict(b,name=names.get(b['name'],b['name']),local_position=(np.array(b['local_position'])*10).tolist()) for b in target['bones']]
 
 
-def yobj(target):
+def yobj(target,*,decoration=False):
     bones=source_bones(target);positions=bone_matrices(dict(bones=bones))[:,:3,3]
     byname={b['name']:b['index'] for b in bones}
     panels=[]
     panel_names=['Bip Pelvis','Bip Spine','Bip Spine1','Bip Head','Bip L UpperArm','Bip R UpperArm','Bip L Forearm','Bip R Forearm','Bip L Hand','Bip R Hand','Bip L Thigh','Bip R Thigh','Bip L Calf','Bip R Calf','Bip L Foot','Bip R Foot','l_eye','r_eye']
     panel_names += [f'Bip {side} Finger{digit}' for side in ('L','R') for digit in range(5)]
+    if decoration:panel_names=['Bip L Thigh','Bip R Thigh']
     for name in panel_names:
         center=positions[byname[name]]+np.array([0,0,-1.])
         radius=.15 if name.endswith('_eye') else 3. if 'Finger' in name else .7
@@ -34,15 +35,16 @@ def yobj(target):
     raw=bytearray(128)
     def alloc(value,align=4):
         raw.extend(bytes((-len(raw))%align));p=len(raw);raw.extend(value);return p
-    packed=[]
+    packed=[];position_fraction=8 if decoration else 7
     for bone,points in panels:
-        packed.extend(struct.pack('>6h',*np.rint(np.array(point)*128).astype(int),-4096,0,0) for point in points)
+        packed.extend(struct.pack('>6h',*np.rint(np.array(point)*(2**position_fraction)).astype(int),-4096,0,0) for point in points)
     pp=alloc(b''.join(packed));groups=alloc(bytes(20*len(panels)))
     for i,(bone,points) in enumerate(panels):struct.pack_into('>4H2I',raw,groups+20*i,bone,65535,65535,1,4,0)
-    draw=alloc(bytes(16));split=len(panels)-10
-    for mid,indices in [(0,range(split)),(1,range(split,len(panels)))]:
+    draw=alloc(bytes(8 if decoration else 16));split=len(panels)-10
+    draw_groups=[(1,range(len(panels)))] if decoration else [(0,range(split)),(1,range(split,len(panels)))]
+    for draw_index,(mid,indices) in enumerate(draw_groups):
         strips=alloc(b''.join(struct.pack('>I',4)+b''.join(struct.pack('>3H',i*4+j,0,j) for j in range(4)) for i in indices))
-        struct.pack_into('>BBHI',raw,draw+8*mid,mid,0,len(indices),strips-8)
+        struct.pack_into('>BBHI',raw,draw+8*draw_index,mid,0,len(indices),strips-8)
     color=alloc(bytes([255]*4));uv=alloc(struct.pack('>8h',128,128,384,128,128,384,384,384))
     materials=alloc(bytes(40))
     for mid in range(2):
@@ -56,9 +58,11 @@ def yobj(target):
     raw[:4]=b'YOBJ';struct.pack_into('>3I',raw,4,len(raw)-8,0x70001,64)
     struct.pack_into('>6I',raw,16,len(bones),bp-8,2,materials-8,2,tp-8)
     struct.pack_into('>I',raw,48,footer-8);struct.pack_into('>I',raw,60,label-8)
-    struct.pack_into('>H',raw,0x48,4*len(panels));raw[0x4c:0x52]=bytes([2,7,len(panels),2,10,0])
+    struct.pack_into('>I',raw,56,1)
+    struct.pack_into('>H',raw,0x48,4*len(panels));raw[0x4c:0x52]=bytes([2,7,len(panels),len(draw_groups),10,0])
     for offset,pointer in [(0x54,pp),(0x5c,groups),(0x60,draw),(0x68,color),(0x6c,uv)]:struct.pack_into('>I',raw,offset,pointer-8)
     struct.pack_into('>2H',raw,0x70,1,4)
+    raw[0x74]=position_fraction
     return b'DUMY\0\0\0\x10'+bytes(16)+bytes(raw)
 
 
@@ -74,7 +78,7 @@ def create(base_path,output):
     image=tpl();table=bytearray(struct.pack('<4I',2,0x100,0,16))
     for i,name in enumerate(('color','trans')):table+=name.encode().ljust(16,b'\0')+b'tpl\0'+struct.pack('<3I',len(image),80+i*len(image),0)
     table=bytes(table)+image+image
-    payloads=[(2,compress(yobj(target))),(9,compress(table))]
+    payloads=[(2,compress(yobj(target))),(9,compress(table)),(10000,compress(yobj(target,decoration=True)))]
     head=bytearray(b'PACH'+struct.pack('<I',len(payloads)));body=bytearray()
     for sid,data in payloads:
         body.extend(bytes((-len(body))%4));head+=struct.pack('<3I',sid,len(body),len(data));body+=data

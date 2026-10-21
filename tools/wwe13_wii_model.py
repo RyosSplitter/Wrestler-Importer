@@ -32,6 +32,13 @@ def read_model(payload):
     pcap=unpack(raw,'>H',0x48)[0];group_count,draw_count=raw[0x4e:0x50]
     if (raw[0x4c],raw[0x4d],raw[0x50],raw[0x51])!=(2,7,10,0):
         raise ValueError('Unobserved fixed-point attribute convention')
+    # 0x4d is an attribute tag, not the position binary-point setting.
+    # Each GCTC packet carries its position fraction bits at h+0x34 (0x74
+    # in this single-packet view). Auxiliary cutouts can use Q8 with Q7 body.
+    position_fraction_bits=checked(raw,0x74,1)[0]
+    if position_fraction_bits not in (7,8):
+        raise ValueError('Unobserved Wii position fractional-bit setting')
+    position_divisor=1<<position_fraction_bits
     if not 0<draw_count<=header['material_count']:raise ValueError('Invalid material/draw table counts')
     color_count,uv_count=unpack(raw,'>2H',0x70)
     pp,gp,dp,cp,tp=[u(a)+8 for a in (0x54,0x5c,0x60,0x68,0x6c)]
@@ -89,7 +96,7 @@ def read_model(payload):
                     normal=-packed[position,[4,5,3]]/4096;length=np.linalg.norm(normal)
                     if not .998<length<1.002:raise ValueError('Invalid referenced packed normal')
                     normal_lengths.append(float(length));lookup[key]=len(vertices)
-                    vertices.append(dict(position=(packed[position,:3]/128).tolist(),normal=(normal/length).tolist(),
+                    vertices.append(dict(position=(packed[position,:3]/position_divisor).tolist(),normal=(normal/length).tolist(),
                         uv=uv[ti].tolist(),color=colors[ci].tolist(),weights=weights[position],
                         source_position_index=position,source_skin_group=group_ids[position],raw_blend_coefficients=raw_codes[position]))
                 indices.append(lookup[key])
@@ -104,7 +111,7 @@ def read_model(payload):
             normal_winding_agreement=float((dots[valid]>0).mean()),degenerate_geometric_triangles=int((~valid).sum())))
         # Attribute-indexed strips are the source topology, not inferred meshes.
         result['meshes'].append(dict(index=len(result['meshes']),bone_palette=list(range(header['bone_count'])),vertices=vertices,
-            role='Hair'if mat['texture']=='trans'else'Blood'if mat['texture'].startswith('blood')else'Body',
+            role='Cutout'if mat['texture']=='trans'else'Blood'if mat['texture'].startswith('blood')else'Body',
             source_material=mat['source_material'],source_state_hex=mat['source_state_hex'],
             materials=[dict(texture_id=texture_ids[mat['texture']],triangles=triangles)]))
     result.update(mesh_count=len(result['meshes']),vertex_count=sum(len(m['vertices'])for m in result['meshes']),
@@ -112,7 +119,10 @@ def read_model(payload):
         source_skinning_decoded=True,source_decode_report=dict(position_capacity=pcap,referenced_positions=len(actual),
         zero_unreferenced_padding=sorted(zero),skin_groups=groups,winding=agreements,
         unused_material_records=[dict(index=i,header_hex=checked(raw,u(28)+8+i*20,20).hex()) for i in range(header['material_count']) if i not in used_materials],
-        normal_length_range=[min(normal_lengths),max(normal_lengths)],positions_divisor=128,normal_divisor=4096,normal_axes="[-stored4,-stored5,-stored3]; all tested source triangle windings agree",uv_divisor=1024,
+        normal_length_range=[min(normal_lengths),max(normal_lengths)],position_fraction_bits=position_fraction_bits,
+        position_fraction_field_offset=0x74,positions_divisor=position_divisor,
+        material_role_policy='trans indicates a cutout; anatomical hair ownership is not inferred from opacity',
+        normal_divisor=4096,normal_axes="[-stored4,-stored5,-stored3]; all tested source triangle windings agree",uv_divisor=1024,
         weight_interpretation='Successive matrix lerps: 2 bones [1-a,a]; 3 bones [(1-a)(1-b),a(1-b),b]; a,b=u16/4096',
         classification='Strongly supported by cross-variant shared-position/palette-order evidence; source runtime not independently emulated'))
     return result

@@ -75,6 +75,7 @@ class WiiAppTests(unittest.TestCase):
             catalogue=reader.catalogue(path);self.assertEqual([r['id'] for r in catalogue['entries']],['00','01'])
             info=reader.inspect(path,Path(tmp)/'images',entry_id='01')
             self.assertEqual(info['selected_entry'],'01');self.assertGreater(info['triangles'],0)
+            self.assertEqual({r['position_divisor']for r in info['source_encoding_audit']['packets']},{128,256})
             self.assertTrue(all(Path(p['png']).is_file() for p in info['texture_previews']))
             self.assertEqual(path.read_bytes(),before)
             with self.assertRaises(ValueError):reader.inspect(path,entry_id='02')

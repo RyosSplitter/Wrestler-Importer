@@ -10,6 +10,7 @@ def fixture():
     struct.pack_into('>H',raw,0x48,4);raw[0x4c:0x52]=bytes([2,7,1,1,10,0])
     for off,ptr in [(0x54,0x100),(0x5c,0x140),(0x60,0x160),(0x68,0x280),(0x6c,0x290),(28,0x200)]:struct.pack_into('>I',raw,off,ptr-8)
     struct.pack_into('>2H',raw,0x70,1,3)
+    raw[0x74]=7
     for i,p in [(0,(0,0,0)),(2,(0,0,128)),(3,(128,0,0))]:struct.pack_into('>6h',raw,0x100+i*12,*p,0,0,-4096)
     struct.pack_into('>4H2I',raw,0x140,0,1,2,3,3,0x2c0-8)
     struct.pack_into('>BBHI',raw,0x160,0,1,1,0x168-8)
@@ -70,6 +71,23 @@ class ReaderTests(unittest.TestCase):
         with self.assertRaises(ValueError):self.read(raw,h)
     def test_sample_guard(self):
         with self.assertRaises(ValueError):source_bundle(bytes(1024))
+    def test_q8_positions_are_half_q7_without_changing_other_attributes(self):
+        raw,h=fixture();before=bytes(raw);a=self.read(raw,h)
+        raw[0x74]=8;b=self.read(raw,h)
+        for x,y in zip(a['meshes'][0]['vertices'],b['meshes'][0]['vertices']):
+            np.testing.assert_array_equal(np.array(x['position'])/2,y['position'])
+            for field in ('normal','uv','color','weights','source_position_index','source_skin_group','raw_blend_coefficients'):self.assertEqual(x[field],y[field])
+        self.assertEqual(a['meshes'][0]['materials'],b['meshes'][0]['materials'])
+        self.assertEqual(a['source_decode_report']['positions_divisor'],128)
+        self.assertEqual(b['source_decode_report']['positions_divisor'],256)
+        self.assertEqual(raw[:0x74],before[:0x74]);self.assertEqual(raw[0x75:],before[0x75:])
+    def test_unknown_position_scale_is_not_silently_assumed_q7(self):
+        for fraction in (0,6,9,255):
+            raw,h=fixture();raw[0x74]=fraction
+            with self.subTest(fraction=fraction),self.assertRaisesRegex(ValueError,'fractional-bit'):self.read(raw,h)
+    def test_transparent_material_is_not_assumed_to_be_anatomical_hair(self):
+        raw,h=fixture();h['texture_slots']=['trans'];m=self.read(raw,h)
+        self.assertEqual(m['meshes'][0]['role'],'Cutout')
 
 
 
