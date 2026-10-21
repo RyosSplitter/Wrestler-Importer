@@ -29,7 +29,8 @@ def build(previous,new_folder,output,expected_previous_sha256):
     changed=[];unchanged=[]
     with zipfile.ZipFile(previous) as old:
         before=json.loads(old.read(root+'MANIFEST.json'))
-        if set(before['files'])-set(current['files']):raise ValueError('Overlay updates cannot remove old files')
+        removed=sorted(set(before['files'])-set(current['files']))
+        if removed:raise ValueError('Overlay updates cannot remove old files: '+', '.join(removed[:15]))
         for name,expected in current['files'].items():
             safe_name(name);path=new_folder/name
             if path.is_symlink() or digest(path)!=expected:raise ValueError('New build manifest mismatch: '+name)

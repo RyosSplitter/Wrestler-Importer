@@ -87,16 +87,28 @@ jobs:
           from pathlib import Path
           path=Path(shutil.make_archive('dist/PSP-Model-Suite-v0.27.1-Windows-x64','zip','dist','PSP-Model-Suite'))
           Path(str(path)+'.sha256').write_text(hashlib.file_digest(path.open('rb'),'sha256').hexdigest()+'  '+path.name+'\n')
-      - name: Build verified overlay update from the published v0.27.0 app
+      - name: Build optional verified overlay update from the published v0.27.0 app
         shell: python
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
+          import json,subprocess,traceback
           from pathlib import Path
-          from tools.build_portable import download
           from tools.build_suite_update import build
-          previous=Path('build/previous-v0.27.0.zip')
-          download('https://github.com/RyosSplitter/Wrestler-Importer/releases/download/suite-wii-8-128b3c716e53a0c8224b01258894f5d53eddd455/PSP-Model-Suite-v0.27.0-Windows-x64.zip',previous)
-          report=build(previous,'dist/PSP-Model-Suite','dist/PSP-Model-Suite-v0.27.0-to-v0.27.1-Update.zip','f7a14651f9385a85a1c4add4a7b35404407ad2336304174376ce33e9e6268163')
-          print('Verified overlay bytes:',report['zip_bytes'],'changed files:',len(report['changed_files']))
+          folder=Path('build/previous-release');folder.mkdir(parents=True,exist_ok=True)
+          previous=folder/'PSP-Model-Suite-v0.27.0-Windows-x64.zip'
+          output=Path('dist/PSP-Model-Suite-v0.27.0-to-v0.27.1-Update.zip')
+          try:
+              subprocess.run(['gh','release','download','suite-wii-8-128b3c716e53a0c8224b01258894f5d53eddd455','--repo','RyosSplitter/Wrestler-Importer','--pattern',previous.name,'--dir',str(folder)],check=True)
+              report=build(previous,'dist/PSP-Model-Suite',output,'f7a14651f9385a85a1c4add4a7b35404407ad2336304174376ce33e9e6268163')
+              print('Verified overlay bytes:',report['zip_bytes'],'changed files:',len(report['changed_files']))
+              report['status']='pass'
+          except Exception as exc:
+              output.unlink(missing_ok=True);Path(str(output)+'.sha256').unlink(missing_ok=True)
+              report=dict(status='withheld',reason=str(exc),full_app='All frozen app checks passed; use the complete portable ZIP instead.')
+              detail=traceback.format_exc().replace('%','%25').replace('\r','%0D').replace('\n','%0A')
+              print('::warning title=Optional small update withheld::'+detail)
+          Path('dist/update-smoke.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
       - uses: actions/upload-artifact@v4
         with:
           name: PSP-Model-Suite-v0.27.1-Windows-x64
@@ -111,7 +123,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           @'
-          PSP Model Suite v0.27.1 fixes per-packet Q7/Q8 position decoding: Undertaker's transparent thigh decorations no longer expand above his shoulders. Adds independent source-buffer/IR scale QA and mixed-Q7/Q8 frozen regression tests. Includes a manifest-verified v0.27.0-to-v0.27.1 overlay update so existing users can retain unchanged runtimes. Experimental WWE 13 Wii conversion remains alongside the established HCTP and JBI paths. Select the Wii platform explicitly, choose a costume and ring/entrance use, then a tested Standard / Preserve Hands / Preserve Arms geometry profile. Includes nearest-source-alpha hair sampling, guarded measured texture allocation, native T4/T8 contracts, lossless effect-table BPE storage, source/posed/UV/opacity/palette reports, final-PAC previews and Save As. Wii currently exposes Default textures only; existing HCTP/JBI texture modes are preserved. In-ring limit 152,064 bytes; explicit Wii entrance limit 180,000 bytes, both checked after serialization and sector alignment with an independent donor texture envelope. Several Wii models still have known appearance issues: this is not a claim that every wrestler is fixed or safe in-game. Rejected global geometry changes and the newly authorized UV-layout experiment are not enabled. Windows 10/11 x64, Windows 7-style controls, full bundled Blender/source/licenses, no game assets, own compatible PSP base required. Hosted frozen tests cover suite, existing converter, JBI and procedural Wii end-to-end conversion/export/cancellation. Every model still requires PPSSPP testing. Main and accepted PACs remain unchanged. See sources/converter/docs/wwe13-wii-app-preview.md.
+          PSP Model Suite v0.27.1 fixes per-packet Q7/Q8 position decoding: Undertaker's transparent thigh decorations no longer expand above his shoulders. Adds independent source-buffer/IR scale QA and mixed-Q7/Q8 frozen regression tests. A smaller v0.27.0-to-v0.27.1 overlay is supplied only if every manifest check passes; otherwise use the verified full app ZIP. Experimental WWE 13 Wii conversion remains alongside the established HCTP and JBI paths. Select the Wii platform explicitly, choose a costume and ring/entrance use, then a tested Standard / Preserve Hands / Preserve Arms geometry profile. Includes nearest-source-alpha hair sampling, guarded measured texture allocation, native T4/T8 contracts, lossless effect-table BPE storage, source/posed/UV/opacity/palette reports, final-PAC previews and Save As. Wii currently exposes Default textures only; existing HCTP/JBI texture modes are preserved. In-ring limit 152,064 bytes; explicit Wii entrance limit 180,000 bytes, both checked after serialization and sector alignment with an independent donor texture envelope. Several Wii models still have known appearance issues: this is not a claim that every wrestler is fixed or safe in-game. Rejected global geometry changes and the newly authorized UV-layout experiment are not enabled. Windows 10/11 x64, Windows 7-style controls, full bundled Blender/source/licenses, no game assets, own compatible PSP base required. Hosted frozen tests cover suite, existing converter, JBI and procedural Wii end-to-end conversion/export/cancellation. Every model still requires PPSSPP testing. Main and accepted PACs remain unchanged. See sources/converter/docs/wwe13-wii-app-preview.md.
           '@ | Set-Content "$env:RUNNER_TEMP/suite-release-notes.txt" -Encoding utf8NoBOM
           $tag = "suite-wii-${{ github.run_number }}-${{ github.sha }}"
           gh release create $tag dist/*.zip dist/*.sha256 dist/*.png dist/*smoke.json --target '${{ github.sha }}' --prerelease --title 'PSP Model Suite v0.27.1 — Wii position-scale hotfix' --notes-file "$env:RUNNER_TEMP/suite-release-notes.txt"
