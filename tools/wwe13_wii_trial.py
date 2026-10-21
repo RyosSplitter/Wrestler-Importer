@@ -160,7 +160,7 @@ def base_model_bytes(base):
     return base,audit_yobj(next(r for s,r in sections(base)if s['id']==2))
 
 
-def run(source,base_path,out,index,ratio=1.,head_floor=.6,hand_floor=.5,mouth_ratio=.6,material_only=False,texture_candidates=None,source_reader=None,atlas_options=None,export_face_floor=False,arm_floor=None,opposed_normals=False,source_normals=False,costume_role='ring',preserve_uv_seams=False):
+def run(source,base_path,out,index,ratio=1.,head_floor=.6,hand_floor=.5,mouth_ratio=.6,material_only=False,texture_candidates=None,source_reader=None,atlas_options=None,export_face_floor=False,arm_floor=None,opposed_normals=False,source_normals=False,costume_role='ring',preserve_uv_seams=False,preserve_hand_transitions=False):
     limits=budget(costume_role)
     if any(not 0<v<=1 for v in (ratio,head_floor,hand_floor,mouth_ratio)):raise ValueError('Reduction ratios must be in (0,1]')
     if arm_floor is not None and not 0<arm_floor<=1:raise ValueError('Arm floor must be in (0,1]')
@@ -181,7 +181,7 @@ def run(source,base_path,out,index,ratio=1.,head_floor=.6,hand_floor=.5,mouth_ra
     for n,im in zip(charted['textures'],images):Image.fromarray(im).save(out/'source-images'/(n+'.png'))
     if ratio<1:
         env=os.environ.copy();env['BLENDER_USER_CONFIG']=str((out/'blender-config').resolve())
-        with (out/'blender.log').open('w')as log:subprocess.run(['/usr/bin/blender','-b','-t','2','--python-exit-code','1','--python',str(Path('tools/wwe13_reduce_trial.py').resolve()),'--',str((out/'charted.json').resolve()),str((out/'reduced.json').resolve()),str((out/'profile.json').resolve()),'--hand-weighted','--material-boundaries' if material_only else '--uv-islands']+(['--export-face-floor']if export_face_floor else [])+(['--opposed-normals']if opposed_normals else [])+(['--source-normals']if source_normals else [])+(['--preserve-uv-seams']if preserve_uv_seams else []),check=True,env=env,stdout=log,stderr=subprocess.STDOUT)
+        with (out/'blender.log').open('w')as log:subprocess.run(['/usr/bin/blender','-b','-t','2','--python-exit-code','1','--python',str(Path('tools/wwe13_reduce_trial.py').resolve()),'--',str((out/'charted.json').resolve()),str((out/'reduced.json').resolve()),str((out/'profile.json').resolve()),'--hand-weighted','--material-boundaries' if material_only else '--uv-islands']+(['--export-face-floor']if export_face_floor else [])+(['--opposed-normals']if opposed_normals else [])+(['--source-normals']if source_normals else [])+(['--preserve-uv-seams']if preserve_uv_seams else [])+(['--preserve-hand-transitions']if preserve_hand_transitions else []),check=True,env=env,stdout=log,stderr=subprocess.STDOUT)
         reduced=json.loads((out/'reduced.json').read_text())
     else:reduced=charted
     fitted,radii=enclose_influences(fitted_target,reduced)

@@ -17,7 +17,7 @@ import region_mesh
 from vertex_identity import annotate
 
 
-def classify(model, hand_weighted=False):
+def classify(model, hand_weighted=False, preserve_hand_transitions=False):
     model = annotate(copy.deepcopy(model))
     regions = region_mesh.bone_regions(model['bones'])
     names = {b['name']: b['index'] for b in model['bones']}
@@ -37,7 +37,7 @@ def classify(model, hand_weighted=False):
                     label = 'Eyes'
                 elif sum(weights[j] for j in mouth) > .98:
                     label = 'Mouth'
-                elif sum(weights[j] for j in hands) > .8:
+                elif sum(weights[j] for j in hands) > (1e-7 if preserve_hand_transitions else .8):
                     label = 'Hands'
                 else:
                     scores = {r: sum(w for j, w in enumerate(weights) if regions[j] == r) for r in ('Head', 'Torso', 'Arms', 'Legs')}
@@ -89,7 +89,7 @@ def split_uv_regions(model, components=True):
     return out
 
 
-def run(source, output, profile, hand_weighted=False, uv_islands=False, material_only=False, export_face_floor=False, opposed_normals=False, source_normals=False, preserve_uv_seams=False):
+def run(source, output, profile, hand_weighted=False, uv_islands=False, material_only=False, export_face_floor=False, opposed_normals=False, source_normals=False, preserve_uv_seams=False, preserve_hand_transitions=False):
     source, output, profile = map(Path, (source, output, profile))
     if output.exists():
         raise FileExistsError(output)
@@ -97,11 +97,13 @@ def run(source, output, profile, hand_weighted=False, uv_islands=False, material
     if opposed_normals:
         from tools.wwe13_normal_seams import mark_opposed
         model=mark_opposed(model)
-    regions = classify(model, hand_weighted=hand_weighted)
+    regions = classify(model, hand_weighted=hand_weighted, preserve_hand_transitions=preserve_hand_transitions)
     if uv_islands or material_only:regions=split_uv_regions(regions,components=not material_only)
     region_mesh.RATIOS.update(ratios); blender_reduce.RATIOS.update(ratios)
     result = blender_reduce.reduce(regions, 1., regional=True, preserved_regions=('Preserved',),export_face_floor=export_face_floor,source_normals=source_normals,preserve_uv_seams=preserve_uv_seams)
     result['reduction_report']['source_uv_seam_locks']=preserve_uv_seams
+    result['reduction_report']['source_hand_transition_support']=dict(enabled=preserve_hand_transitions,
+        policy='Any active source PSP hand/finger support belongs to the hand retention region; no influence values or positions are edited by classification')
     result['reduction_report']['export_face_floor']=export_face_floor
     if opposed_normals:result['reduction_report']['opposed_normal_protection']=model['opposed_normal_protection']
     result['reduction_report']['trial_policy'] = 'HD source experimental regional floors; not HCTP production settings'
@@ -113,4 +115,4 @@ def run(source, output, profile, hand_weighted=False, uv_islands=False, material
 
 if __name__ == '__main__':
     args=sys.argv[sys.argv.index('--') + 1:]
-    run(*args[:3],hand_weighted='--hand-weighted' in args[3:],uv_islands='--uv-islands' in args[3:],material_only='--material-boundaries' in args[3:],export_face_floor='--export-face-floor' in args[3:],opposed_normals='--opposed-normals' in args[3:],source_normals='--source-normals' in args[3:],preserve_uv_seams='--preserve-uv-seams' in args[3:])
+    run(*args[:3],hand_weighted='--hand-weighted' in args[3:],uv_islands='--uv-islands' in args[3:],material_only='--material-boundaries' in args[3:],export_face_floor='--export-face-floor' in args[3:],opposed_normals='--opposed-normals' in args[3:],source_normals='--source-normals' in args[3:],preserve_uv_seams='--preserve-uv-seams' in args[3:],preserve_hand_transitions='--preserve-hand-transitions' in args[3:])
