@@ -1,5 +1,5 @@
 """Export private, exact-PAC Wii trial evidence; never publish game assets."""
-import argparse,hashlib,json,shutil,zipfile
+import argparse,hashlib,html,json,shutil,zipfile
 from pathlib import Path
 import numpy as np
 from PIL import Image
@@ -61,8 +61,13 @@ def preview(model,images,path):
     (path/'preview.mtl').write_text('\n'.join(mtl)+'\n')
 
 
-def export(work,base,output):
+def export(work,base,output,*,unlit=False):
     work,base,output=map(Path,(work,base,output));result=json.loads((work/'result.json').read_text())
+    title=result.get('source_filename','HBK Wii')+' / variant '+str(result.get('variant',0))+' PSP experiment'
+    renderer=render_native
+    if unlit:
+        from tools.wwe13_wii_preview import render_unlit
+        renderer=render_unlit
     data=(work/result['pac']).read_bytes();fingerprint=hashlib.sha256(data).hexdigest()
     if fingerprint!=result['sha256']:raise ValueError('PAC changed after build')
     checks=json.loads((work/'native-checks.json').read_text());ocular=json.loads((work/'ocular.json').read_text())
@@ -81,8 +86,9 @@ def export(work,base,output):
     def pair(a,b,label,view='front'):
         ps=np.array([v['position']for m in a['meshes']for v in m['vertices']]);frame=[ps.min(0),ps.max(0)]
         left=views/('source-'+label+'.png');right=views/('psp-'+label+'.png')
-        render_native(a,images,view,left,label='WII SOURCE | ADAPTED PSP REFERENCE POSE',camera_bounds=frame)
-        render_native(b,gims,view,right,label='EXACT DECODED EXPERIMENTAL PSP PAC',fingerprint=fingerprint,camera_bounds=frame)
+        suffix=' | UNLIT DIFFUSE'if unlit else ''
+        renderer(a,images,view,left,label='WII SOURCE | ADAPTED PSP REFERENCE POSE'+suffix,camera_bounds=frame)
+        renderer(b,gims,view,right,label='EXACT DECODED EXPERIMENTAL PSP PAC'+suffix,fingerprint=fingerprint,camera_bounds=frame)
         sheet=Image.new('RGB',(1280,640));sheet.paste(Image.open(left),(0,0));sheet.paste(Image.open(right),(640,0));sheet.save(views/('comparison-'+label+'.png'))
     for view in ('front','back','left','right','front-left'):pair(reference,native,view,view)
     for kind in ('head','pelvis'):
@@ -104,10 +110,11 @@ def export(work,base,output):
         p95_surface_error_height=qa['rest']['overall']['p95_height'],review_findings=len(qa['flags']),
         texture_pixel_palette_bytes=tex['pixel_palette_bytes'],observed_native_texture_envelope=tex['native_base_memory_envelope'],
         preview_provenance='CPU renders of exact decoded final PAC, not Noesis or PPSSPP screenshots',
+        preview_lighting='Unlit diffuse, display-only normals; native model normals unchanged'if unlit else 'Existing neutral CPU preview lighting',
         qa_source_label_note='Shared QA text mentions HCTP generically. Actual reference is decoded Wii geometry in adapted PSP rest pose, shown by input paths/hashes. No HCTP model was used.')
     dump(output/'summary.json',summary)
-    (output/'README.txt').write_text('WWE 13 Wii HBK -> SVR 2011 PSP: EXPERIMENTAL TEST\n\n'
-        'Use '+result['pac']+'. Both source costume variants are separate trials.\n'
+    (output/'README.txt').write_text(title+'\nWWE 13 Wii -> SVR 2011 PSP: EXPERIMENTAL TEST\n\n'
+        'Use '+result['pac']+'. Source variant indices are not proof of ring/entrance slot semantics.\n'
         'Back up your ISO/CH.PAC and accepted wrestler PAC. Inject this file using\n'
         'your established PAC Editor workflow, rebuild/update its containing\n'
         'archive/ARC and save the ISO. Use the appropriate ring/entrance slot.\n'
@@ -130,18 +137,19 @@ def export(work,base,output):
         'by binary/shared-vertex evidence, not independent Wii runtime emulation.\n'
         'Source spring-bone hair motion is collapsed to the PSP head ancestor.\n'
         'Source shaders/normal/specular/muscle effects are not ported.\n'
-        'The ring source has a 254-triangle dynamic blood overlay; it is excluded\n'
-        'from ordinary rendering rather than made permanently visible.\n'
+        'Source dynamic blood overlays ('+str(sum(e['triangles']for e in result.get('source_blood_draws_excluded',[])))+' triangles) are excluded\n'
+        'from ordinary static rendering rather than made permanently visible.\n'
         'Hair source alpha levels are retained at nearest-resampled positions,\n'
         'with RGB quantized separately; source RGBA/color ceilings are enforced.\n'
         'Total game runtime heap and real facial animation remain unverified.\n'
         'Production converter and accepted HCTP/JBI outputs are unchanged.\n\n'
+        'Preview lighting: '+summary['preview_lighting']+'\n'
         'PAC bytes: '+str(len(data))+'\nSHA-256: '+fingerprint+'\n')
     labels=('front','back','left','head-front','head-left','pelvis-back','pose-standing','pose-crouch','pose-jaw-18','eye-turn','blink')
-    (output/'START-HERE.html').write_text('<!doctype html><meta charset="utf-8"><title>Wii HBK PSP experiment</title><h1>Wii HBK PSP experiment</h1><p>Experimental, not game-tested or QA-approved. '+str(len(data))+' bytes. '+str(len(qa['flags']))+' source-fidelity review findings retained.</p><p><a href="README.txt">Instructions</a> | <a href="qa/report.html">QA report</a></p><p>Full-detail source in adapted pose (left), exact final PAC (right). CPU previews.</p>'+''.join('<p><img style="max-width:100%" src="comparisons/comparison-'+n+'.png"></p>'for n in labels))
+    (output/'START-HERE.html').write_text('<!doctype html><meta charset="utf-8"><title>'+html.escape(title)+'</title><h1>'+html.escape(title)+'</h1><p>Experimental, not game-tested or QA-approved. '+str(len(data))+' bytes. '+str(len(qa['flags']))+' source-fidelity review findings retained.</p><p><a href="README.txt">Instructions</a> | <a href="qa/report.html">QA report</a></p><p>Full-detail source in adapted pose (left), exact final PAC (right). CPU previews. '+html.escape(summary['preview_lighting'])+'</p>'+''.join('<p><img style="max-width:100%" src="comparisons/comparison-'+n+'.png"></p>'for n in labels))
     dump(output/'SHA256-MANIFEST.json',[dict(path=f.relative_to(output).as_posix(),bytes=f.stat().st_size,sha256=hashlib.sha256(f.read_bytes()).hexdigest())for f in sorted(output.rglob('*'))if f.is_file()])
     return summary
 
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('work');p.add_argument('--base',required=True);p.add_argument('--out',required=True);a=p.parse_args();print(json.dumps(export(a.work,a.base,a.out),indent=2))
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('work');p.add_argument('--base',required=True);p.add_argument('--out',required=True);p.add_argument('--unlit',action='store_true');a=p.parse_args();print(json.dumps(export(a.work,a.base,a.out,unlit=a.unlit),indent=2))

@@ -102,12 +102,12 @@ def smooth_normals(model):
                 normal = (u[1]*v[2]-u[2]*v[1], u[2]*v[0]-u[0]*v[2], u[0]*v[1]-u[1]*v[0])
                 for index in tri:
                     vertex = mesh['vertices'][index]
-                    key = (tuple(vertex['position']), vertex.get('smoothing_group', 0))
+                    key = (tuple(vertex['position']), vertex.get('smoothing_group', 0),vertex.get('normal_seam',0))
                     for axis in range(3):
                         accum[key][axis] += normal[axis]
     for mesh in model['meshes']:
         for vertex in mesh['vertices']:
-            n = accum[(tuple(vertex['position']), vertex.get('smoothing_group', 0))]
+            n = accum[(tuple(vertex['position']), vertex.get('smoothing_group', 0),vertex.get('normal_seam',0))]
             length = math.sqrt(sum(x*x for x in n))
             if length < 1e-10:
                 raise ValueError('Degenerate smoothing normal')

@@ -59,7 +59,7 @@ def candidates(model,images,contracts,progress=print):
     return choices,importance,diagnostics
 
 
-def run(work,base_path,out):
+def run(work,base_path,out,*,candidate_factory=None,filename='HBK-WWE13-Wii-Ring-Texture-Rebalance.pac'):
     work,base_path,out=map(Path,(work,base_path,out));out.mkdir(parents=True,exist_ok=False)
     accepted=json.loads((work/'result.json').read_text());before=(work/accepted['pac']).read_bytes()
     if hashlib.sha256(before).hexdigest()!=accepted['sha256']:raise ValueError('Baseline PAC hash differs')
@@ -67,7 +67,7 @@ def run(work,base_path,out):
     if raw!=(work/'candidate.yobj').read_bytes():raise ValueError('Baseline YOBJ differs')
     packed=json.loads((work/'packed.json').read_text());contracts=json.loads((work/'contracts.json').read_text())
     images=[np.array(Image.open(work/'source-images'/(n+'.png')))for n in packed['textures']]
-    pac,gims,report=allocate(base_path.read_bytes(),raw,packed,images,contracts,out/'textures',candidate_factory=candidates)
+    pac,gims,report=allocate(base_path.read_bytes(),raw,packed,images,contracts,out/'textures',candidate_factory=candidate_factory or candidates)
     checks=json.loads((work/'native-checks.json').read_text());ocular=json.loads((work/'ocular.json').read_text())
     native,gims,structural=validate_trial(pac,base_path.read_bytes(),checks['radius_changes'],ocular['source_controller_pivot_fit'])
     if next(r for s,r in sections(pac)if s['id']==2)!=raw:raise ValueError('Accepted geometry changed')
@@ -77,7 +77,8 @@ def run(work,base_path,out):
         if s['id']!=9:
             if before[s['offset']:s['offset']+s['size']]!=pac[t['offset']:t['offset']+t['size']]:raise ValueError('Non-texture stored section changed')
             unchanged.append(s['id'])
-    filename='HBK-WWE13-Wii-Ring-Texture-Rebalance.pac';(out/filename).write_bytes(pac)
+    if Path(filename).name!=filename or Path(filename).suffix.lower()!='.pac':raise ValueError('Unsafe output PAC name')
+    (out/filename).write_bytes(pac)
     result=dict(pac=filename,pac_bytes=len(pac),sha256=hashlib.sha256(pac).hexdigest(),baseline_sha256=accepted['sha256'],
         geometry_yobj_sha256=hashlib.sha256(raw).hexdigest(),geometry_yobj_byte_identical=True,unchanged_stored_sections=unchanged,
         source_work=str(work),structural=structural,

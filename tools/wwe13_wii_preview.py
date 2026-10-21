@@ -23,5 +23,5 @@ def unlit_copy(model,view):
     return display
 
 
-def render_unlit(model,textures,view,path,*,label='UNLIT DIFFUSE | DISPLAY ONLY'):
-    render_native(unlit_copy(model,view),textures,view,Path(path),label=label)
+def render_unlit(model,textures,view,path,*,label='UNLIT DIFFUSE | DISPLAY ONLY',**kwargs):
+    render_native(unlit_copy(model,view),textures,view,Path(path),label=label,**kwargs)

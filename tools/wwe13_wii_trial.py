@@ -61,7 +61,7 @@ def candidates(model,images,contracts,progress=print):
 
 def separate_eye_atlas(model,images):
     """Preserve the tiny original iris UV patches without upscaling the atlas."""
-    out=copy.deepcopy(model);eyes={b['index']for b in model['bones']if b['name']in ('l_eye','r_eye')};selected=0
+    out=copy.deepcopy(model);eyes={b['index']for b in model['bones']if b['name']in ('l_eye','r_eye')};selected=0;eye_tid=len(out['textures'])
     for mesh in out['meshes']:
         new=[]
         for mat in mesh['materials']:
@@ -72,10 +72,10 @@ def separate_eye_atlas(model,images):
             if keep:new.append(dict(mat,triangles=keep))
             if eye:
                 if mat['texture_id']!=0:raise ValueError('Unreviewed eye texture binding')
-                new.append(dict(mat,texture_id=2,triangles=eye));selected+=len(eye)
+                new.append(dict(mat,texture_id=eye_tid,triangles=eye));selected+=len(eye)
         mesh['materials']=new
     if not selected:raise ValueError('No verified source eye surface')
-    out['textures']=out['textures']+['wii_eyes'];out['texture_count']=3
+    out['textures']=out['textures']+['wii_eyes'];out['texture_count']=len(out['textures'])
     out['ocular_atlas_policy']=dict(selected_triangles=selected,selection='Average original source eye-bone mass > .98',
         source_image='Exact duplicate binding to original color atlas, locally cropped later without resampling')
     return out,list(images)+[images[0].copy()]
@@ -158,26 +158,27 @@ def base_model_bytes(base):
     return base,audit_yobj(next(r for s,r in sections(base)if s['id']==2))
 
 
-def run(source,base_path,out,index,ratio=1.,head_floor=.6,hand_floor=.5,mouth_ratio=.6,material_only=False,texture_candidates=None):
+def run(source,base_path,out,index,ratio=1.,head_floor=.6,hand_floor=.5,mouth_ratio=.6,material_only=False,texture_candidates=None,source_reader=None,atlas_options=None,export_face_floor=False,arm_floor=None,opposed_normals=False,source_normals=False):
     if any(not 0<v<=1 for v in (ratio,head_floor,hand_floor,mouth_ratio)):raise ValueError('Reduction ratios must be in (0,1]')
+    if arm_floor is not None and not 0<arm_floor<=1:raise ValueError('Arm floor must be in (0,1]')
     source,base_path,out=map(Path,(source,base_path,out));out.mkdir(parents=True,exist_ok=False)
     data=source.read_bytes();base,target=base_model(base_path)
-    original,images,decode=source_bundle(data,index)
+    original,images,decode=(source_reader or source_bundle)(data,index)
     original,images=separate_eye_atlas(original,images)
     prepared,rig=adapt_rig(original,target)
     fitted_target,eye_binds=fit_ocular(original,target,rig)
     prepared['bones']=copy.deepcopy(fitted_target['bones'])
     prepared,ocular=ocular_transfer(original,prepared,target)
     ocular['source_controller_pivot_fit']=eye_binds
-    charted,images,atlas=chart_atlas(prepared,images,cell=256)
+    charted,images,atlas=chart_atlas(prepared,images,cell=256,**(atlas_options or {}))
     charted=split_uv_islands(charted)
-    profile=dict(Head=max(head_floor,ratio),Torso=ratio,Arms=ratio,Legs=ratio,Hands=max(hand_floor,ratio),Eyes=1.,Mouth=mouth_ratio if ratio<1 else 1.,Hair=1.)
+    profile=dict(Head=max(head_floor,ratio),Torso=ratio,Arms=max(arm_floor or ratio,ratio),Legs=ratio,Hands=max(hand_floor,ratio),Eyes=1.,Mouth=mouth_ratio if ratio<1 else 1.,Hair=1.)
     for name,value in [('source',original),('prepared',prepared),('charted',charted),('source-materials',decode),('rig',rig),('ocular',ocular),('atlas',atlas),('profile',profile)]:dump(out/(name+'.json'),value)
     (out/'source-images').mkdir()
     for n,im in zip(charted['textures'],images):Image.fromarray(im).save(out/'source-images'/(n+'.png'))
     if ratio<1:
         env=os.environ.copy();env['BLENDER_USER_CONFIG']=str((out/'blender-config').resolve())
-        with (out/'blender.log').open('w')as log:subprocess.run(['/usr/bin/blender','-b','-t','2','--python-exit-code','1','--python',str(Path('tools/wwe13_reduce_trial.py').resolve()),'--',str((out/'charted.json').resolve()),str((out/'reduced.json').resolve()),str((out/'profile.json').resolve()),'--hand-weighted','--material-boundaries' if material_only else '--uv-islands'],check=True,env=env,stdout=log,stderr=subprocess.STDOUT)
+        with (out/'blender.log').open('w')as log:subprocess.run(['/usr/bin/blender','-b','-t','2','--python-exit-code','1','--python',str(Path('tools/wwe13_reduce_trial.py').resolve()),'--',str((out/'charted.json').resolve()),str((out/'reduced.json').resolve()),str((out/'profile.json').resolve()),'--hand-weighted','--material-boundaries' if material_only else '--uv-islands']+(['--export-face-floor']if export_face_floor else [])+(['--opposed-normals']if opposed_normals else [])+(['--source-normals']if source_normals else []),check=True,env=env,stdout=log,stderr=subprocess.STDOUT)
         reduced=json.loads((out/'reduced.json').read_text())
     else:reduced=charted
     fitted,radii=enclose_influences(fitted_target,reduced)

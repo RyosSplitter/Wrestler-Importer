@@ -32,17 +32,18 @@ def read_model(payload):
     pcap=unpack(raw,'>H',0x48)[0];group_count,draw_count=raw[0x4e:0x50]
     if (raw[0x4c],raw[0x4d],raw[0x50],raw[0x51])!=(2,7,10,0):
         raise ValueError('Unobserved fixed-point attribute convention')
-    if draw_count!=header['material_count']:raise ValueError('Material/draw table counts disagree')
+    if not 0<draw_count<=header['material_count']:raise ValueError('Invalid material/draw table counts')
     color_count,uv_count=unpack(raw,'>2H',0x70)
     pp,gp,dp,cp,tp=[u(a)+8 for a in (0x54,0x5c,0x60,0x68,0x6c)]
     packed=np.frombuffer(checked(raw,pp,pcap*12),dtype='>i2').reshape(-1,6)
     uv=np.frombuffer(checked(raw,tp,uv_count*4),dtype='>i2').reshape(-1,2)/1024
     colors=np.frombuffer(checked(raw,cp,color_count*4),dtype=np.uint8).reshape(-1,4)
     checked(raw,gp,group_count*20);checked(raw,dp,draw_count*8)
-    groups=[];skin=[];materials=[];used=set();index_max=[0,0,0];expected=dp+draw_count*8
+    groups=[];skin=[];materials=[];used=set();used_materials=set();index_max=[0,0,0];expected=dp+draw_count*8
     for i in range(draw_count):
         a=dp+i*8;mid=raw[a];count=unpack(raw,'>H',a+2)[0];ptr=u(a+4)+8
-        if mid!=i or ptr!=expected:raise ValueError('Unreviewed/overlapping draw layout')
+        if mid>=header['material_count'] or mid in used_materials or ptr!=expected:raise ValueError('Unreviewed/overlapping draw layout')
+        used_materials.add(mid)
         strips=[]
         for j in range(count):
             n=u(ptr);ptr+=4
@@ -52,10 +53,10 @@ def read_model(payload):
                 raise ValueError('Source corner outside its position/color/UV buffer')
             index_max=np.maximum(index_max,corners.max(0)).tolist();used.update(corners[:,0].tolist());strips.append(corners.tolist())
         expected=ptr
-        a=u(28)+8+i*20;state=u(a+16)+8;state_raw=checked(raw,state,72)
+        a=u(28)+8+mid*20;state=u(a+16)+8;state_raw=checked(raw,state,72)
         tid=unpack(raw,'>H',state+70)[0]
         if tid>=header['texture_slot_count']:raise ValueError('Material texture slot outside table')
-        materials.append(dict(source_material=i,source_state_hex=state_raw.hex(),
+        materials.append(dict(source_material=mid,source_state_hex=state_raw.hex(),
             source_header_hex=checked(raw,a,20).hex(),texture=header['texture_slots'][tid],
             texture_slot=tid,source_strips=strips))
     # Unused all-zero records are padding, not vertices to be assigned weights.
@@ -110,6 +111,7 @@ def read_model(payload):
         triangle_count=sum(len(a['triangles'])for m in result['meshes']for a in m['materials']),texture_count=len(texture_ids),
         source_skinning_decoded=True,source_decode_report=dict(position_capacity=pcap,referenced_positions=len(actual),
         zero_unreferenced_padding=sorted(zero),skin_groups=groups,winding=agreements,
+        unused_material_records=[dict(index=i,header_hex=checked(raw,u(28)+8+i*20,20).hex()) for i in range(header['material_count']) if i not in used_materials],
         normal_length_range=[min(normal_lengths),max(normal_lengths)],positions_divisor=128,normal_divisor=4096,normal_axes="[-stored4,-stored5,-stored3]; all tested source triangle windings agree",uv_divisor=1024,
         weight_interpretation='Successive matrix lerps: 2 bones [1-a,a]; 3 bones [(1-a)(1-b),a(1-b),b]; a,b=u16/4096',
         classification='Strongly supported by cross-variant shared-position/palette-order evidence; source runtime not independently emulated'))

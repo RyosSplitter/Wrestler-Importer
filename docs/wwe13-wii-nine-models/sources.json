@@ -1,0 +1,89 @@
+[
+  {
+    "name": "CM Punk - ch131",
+    "bytes": 841728,
+    "sha256": "6cb7fa8e5f4c689ad5d7124ad0d48ec6efa3de5ba04f4c0ef8d49b34df1388c8",
+    "variants": 3,
+    "bundle_offsets": [
+      16384,
+      296960,
+      563200
+    ]
+  },
+  {
+    "name": "Billy Gunn - ch313",
+    "bytes": 299008,
+    "sha256": "d5eaeb44a9d22758d28ec2d178ef85f7e3b7c1910e597926ba63dbbd2c54ff54",
+    "variants": 1,
+    "bundle_offsets": [
+      16384
+    ]
+  },
+  {
+    "name": "Chris Jericho 1999 - ch347",
+    "bytes": 573440,
+    "sha256": "0ade084697f53f58f7f79ec7afca8e692a0967283f07addb52422b2d00898092",
+    "variants": 2,
+    "bundle_offsets": [
+      16384,
+      292864
+    ]
+  },
+  {
+    "name": "Bradshaw - ch124",
+    "bytes": 577536,
+    "sha256": "f4711b15709371eb1e9abcf01a7ea4335cd29405f19c08e92b8410b3054671b8",
+    "variants": 2,
+    "bundle_offsets": [
+      16384,
+      288768
+    ]
+  },
+  {
+    "name": "Wade Barrett - ch325",
+    "bytes": 284672,
+    "sha256": "9c31f72df27d75f38eb4e45001a3f752ab2dfe5ded781f8791c3acf37eb00c32",
+    "variants": 1,
+    "bundle_offsets": [
+      16384
+    ]
+  },
+  {
+    "name": "Booker T - ch338",
+    "bytes": 288768,
+    "sha256": "1a9e3dca6e208eff501443cef4e0cb534c37f3270e46acfb25cd101ad8c777c8",
+    "variants": 1,
+    "bundle_offsets": [
+      16384
+    ]
+  },
+  {
+    "name": "Randy Orton - ch161",
+    "bytes": 262144,
+    "sha256": "268196d412dc9127a3b4b04cee5faf5050ac26be2177242f455a4926c7d50958",
+    "variants": 1,
+    "bundle_offsets": [
+      16384
+    ]
+  },
+  {
+    "name": "Bret Hart - ch177",
+    "bytes": 534528,
+    "sha256": "4060261b0a82b86ee06bfb7a074626cb01951f91806988da099ee7be284b8177",
+    "variants": 2,
+    "bundle_offsets": [
+      16384,
+      276480
+    ]
+  },
+  {
+    "name": "Edge - ch110",
+    "bytes": 598016,
+    "sha256": "39c2f734e903484ac2d372eae83e20dbfe9e32d37518a6db6945b6febe097476",
+    "variants": 2,
+    "bundle_offsets": [
+      16384,
+      303104
+    ]
+  }
+]

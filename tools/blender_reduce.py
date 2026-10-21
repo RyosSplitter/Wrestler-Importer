@@ -11,7 +11,7 @@ from region_mesh import DETAIL_TEXTURES, RATIOS, make_regions, smooth_normals
 from vertex_identity import annotate, point_key, position_key, validate_locked
 
 
-def reduce(source, ratio, detail_profile=False, regional=False, preserved_regions=(), retention_reserve=None):
+def reduce(source, ratio, detail_profile=False, regional=False, preserved_regions=(), retention_reserve=None, export_face_floor=False, source_normals=False):
     if not 0 < ratio <= 1:
         raise ValueError('Reduction ratio must be between zero and one')
     bpy.ops.wm.read_factory_settings(use_empty=True)
@@ -48,6 +48,7 @@ def reduce(source, ratio, detail_profile=False, regional=False, preserved_region
         remap, points, source_indices, provenance = {}, [], [], []
         for v in original_vertices:
             key = point_key(v, entry['bone_palette'], entry['index']) if regional else tuple(v['position'])
+            if 'normal_seam'in v:key=(key,v['normal_seam'])
             if key not in remap:
                 remap[key] = len(points)
                 points.append(tuple(v['position']))
@@ -71,6 +72,9 @@ def reduce(source, ratio, detail_profile=False, regional=False, preserved_region
         obj.select_set(True)
         mesh.uv_layers.new(name='UVMap')
         mesh.color_attributes.new(name='RGBA', type='FLOAT_COLOR', domain='CORNER')
+        if source_normals:
+            mesh.attributes.new(name='SourceNormal',type='FLOAT_VECTOR',domain='CORNER')
+            for i,vertex in enumerate(corner_vertices):mesh.attributes['SourceNormal'].data[i].vector=vertex['normal']
         # Adding another corner attribute can invalidate an earlier RNA layer
         # reference. Resolve both layers only after all layers have been created.
         uv = mesh.uv_layers['UVMap']
@@ -123,6 +127,15 @@ def reduce(source, ratio, detail_profile=False, regional=False, preserved_region
                 trial = evaluated.to_mesh()
                 trial.calc_loop_triangles()
                 count = len(trial.loop_triangles)
+                if export_face_floor:
+                    # Count the records the exporter will actually retain.
+                    # Duplicate position/UV/color loop keys can otherwise make
+                    # Blender's triangle count overstate the exported floor.
+                    layer=trial.uv_layers['UVMap'];rgba=trial.color_attributes['RGBA']
+                    count=sum(len({(trial.loops[li].vertex_index,
+                        tuple(round(c,6)for c in layer.data[li].uv),
+                        tuple(max(0,min(255,round(c*255)))for c in rgba.data[li].color))
+                        for li in tri.loops})==3 for tri in trial.loop_triangles)
                 evaluated.to_mesh_clear()
                 if count >= minimum:
                     break
@@ -154,11 +167,17 @@ def reduce(source, ratio, detail_profile=False, regional=False, preserved_region
                 loop = mesh.loops[li]
                 position = tuple(mesh.vertices[loop.vertex_index].co)
                 normal = normals[li]
+                if source_normals:
+                    normal=tuple(mesh.attributes['SourceNormal'].data[li].vector)
+                    length=sum(x*x for x in normal)**.5
+                    if length<1e-8:raise ValueError('Source corner normal interpolation became degenerate')
+                    normal=tuple(x/length for x in normal)
                 texcoord = tuple(round(c, 6) for c in uv.data[li].uv)
                 color = tuple(max(0, min(255, round(c * 255))) for c in colors.data[li].color)
                 tid = entry['materials'][face.material_index]['texture_id']
                 smoothing = tid + 1 if source['textures'][tid].lower() in detail_textures else 0
                 key = (loop.vertex_index, texcoord, color, smoothing)
+                if source_normals:key=key+(normal,)
                 if key not in vertex_map:
                     vertex_map[key] = len(output)
                     weights = []
@@ -180,7 +199,7 @@ def reduce(source, ratio, detail_profile=False, regional=False, preserved_region
                         pi=identity.data[loop.vertex_index].value
                         if pi<0 or pi>=len(provenance):raise ValueError('Invalid decimated source skinning provenance')
                         parent=provenance[pi]
-                        for k in ('skin_id','skin_domain','source_records','skin_locked','skin_expected','skin_bind_position'):
+                        for k in ('skin_id','skin_domain','source_records','skin_locked','skin_expected','skin_bind_position','normal_seam'):
                             if k in parent:output[-1][k]=copy.deepcopy(parent[k])
                         validate_locked(output[-1],entry['bone_palette'])
                 tri.append(vertex_map[key])
@@ -219,9 +238,10 @@ def reduce(source, ratio, detail_profile=False, regional=False, preserved_region
     if regional:
         result['reduction_report'].pop('requested_ratio')
         result['reduction_report']['region_ratios'] = RATIOS
-        smooth_normals(result)
+        if not source_normals:smooth_normals(result)
         result['regional'] = True
         result['reduction_report']['method'] = 'PSP bone-weight regions; weighted Blender collapse; area-weighted smooth normals'
+        if source_normals:result['reduction_report']['method']='PSP bone-weight regions; weighted Blender collapse; source CORNER normals interpolated and renormalized without position-only averaging'
     return result
 
 

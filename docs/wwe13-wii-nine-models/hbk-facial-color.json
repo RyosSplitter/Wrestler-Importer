@@ -1,0 +1,112 @@
+{
+  "before": {
+    "region": "Front-facing cranial skin; excludes pure eyeball surfaces and separate hair",
+    "textures": {
+      "w13_00": {
+        "occupied_texels": 11607,
+        "rgb_mean_bias": [
+          -0.7103472042732834,
+          1.3035237356767468,
+          1.0238649091065737
+        ],
+        "rgb_rmse_255": 12.254140230432784,
+        "delta_e76_mean": 6.978521661228636,
+        "delta_e76_p95": 14.716857268973785,
+        "maximum_local_tile_lab_bias": 9.162409559050847,
+        "lab_mean_bias": [
+          0.36048477434912773,
+          -1.1043042451043976,
+          -0.043938402252157095
+        ],
+        "review": true,
+        "thresholds": {
+          "delta_e76_p95": 12,
+          "maximum_local_tile_lab_bias": 8
+        },
+        "threshold_status": "PROVISIONAL review heuristics; not calibrated acceptance thresholds",
+        "scope": "Source-sized bilinear reconstruction in original UV coordinates; source-relative D65 Lab, no prescribed skin tone"
+      },
+      "w13_01": {
+        "occupied_texels": 474,
+        "rgb_mean_bias": [
+          4.59915611814346,
+          5.284810126582278,
+          1.3776371308016877
+        ],
+        "rgb_rmse_255": 12.101365128558163,
+        "delta_e76_mean": 5.9766052649539825,
+        "delta_e76_p95": 11.708789420748811,
+        "maximum_local_tile_lab_bias": 5.072026438049271,
+        "lab_mean_bias": [
+          2.144628743410104,
+          -0.9836636355636882,
+          1.9698082731211466
+        ],
+        "review": false,
+        "thresholds": {
+          "delta_e76_p95": 12,
+          "maximum_local_tile_lab_bias": 8
+        },
+        "threshold_status": "PROVISIONAL review heuristics; not calibrated acceptance thresholds",
+        "scope": "Source-sized bilinear reconstruction in original UV coordinates; source-relative D65 Lab, no prescribed skin tone"
+      }
+    },
+    "coverage_available": true,
+    "limitations": "Color representation only; does not validate lighting, material state or actual runtime animation"
+  },
+  "after": {
+    "region": "Front-facing cranial skin; excludes pure eyeball surfaces and separate hair",
+    "textures": {
+      "w13_00": {
+        "occupied_texels": 11607,
+        "rgb_mean_bias": [
+          0.7841819591625743,
+          -0.2321013181700698,
+          -1.554923752907728
+        ],
+        "rgb_rmse_255": 10.876437367441351,
+        "delta_e76_mean": 6.914207738071613,
+        "delta_e76_p95": 13.592050768535795,
+        "maximum_local_tile_lab_bias": 6.673157453411226,
+        "lab_mean_bias": [
+          0.05569078484154496,
+          0.38939078375116054,
+          1.163409880213557
+        ],
+        "review": true,
+        "thresholds": {
+          "delta_e76_p95": 12,
+          "maximum_local_tile_lab_bias": 8
+        },
+        "threshold_status": "PROVISIONAL review heuristics; not calibrated acceptance thresholds",
+        "scope": "Source-sized bilinear reconstruction in original UV coordinates; source-relative D65 Lab, no prescribed skin tone"
+      },
+      "w13_01": {
+        "occupied_texels": 474,
+        "rgb_mean_bias": [
+          4.59915611814346,
+          5.284810126582278,
+          1.3776371308016877
+        ],
+        "rgb_rmse_255": 12.101365128558163,
+        "delta_e76_mean": 5.9766052649539825,
+        "delta_e76_p95": 11.708789420748811,
+        "maximum_local_tile_lab_bias": 5.072026438049271,
+        "lab_mean_bias": [
+          2.144628743410104,
+          -0.9836636355636882,
+          1.9698082731211466
+        ],
+        "review": false,
+        "thresholds": {
+          "delta_e76_p95": 12,
+          "maximum_local_tile_lab_bias": 8
+        },
+        "threshold_status": "PROVISIONAL review heuristics; not calibrated acceptance thresholds",
+        "scope": "Source-sized bilinear reconstruction in original UV coordinates; source-relative D65 Lab, no prescribed skin tone"
+      }
+    },
+    "coverage_available": true,
+    "limitations": "Color representation only; does not validate lighting, material state or actual runtime animation"
+  }
+}

@@ -1,0 +1,582 @@
+[
+  {
+    "source": "Billy Gunn - ch313.pac",
+    "source_sha256": "d5eaeb44a9d22758d28ec2d178ef85f7e3b7c1910e597926ba63dbbd2c54ff54",
+    "variant": 0,
+    "pac": "Billy-Gunn---ch313-variant-00-PSP-EXPERIMENTAL.pac",
+    "pac_bytes": 147456,
+    "sha256": "4102d7cc782cc9be51c7b90d0593f97807a02b6ccca0e2d155efed124f0edc3d",
+    "source_triangles": 5452,
+    "final_triangles": 3328,
+    "final_vertices": 3216,
+    "final_buffers": 59,
+    "textures": 6,
+    "p95_surface_percent_height": 0.27368576838666503,
+    "qa_flags": 47,
+    "severity": {
+      "review": 45,
+      "high-review": 2
+    },
+    "facial_color_review_textures": [
+      "w13_01"
+    ],
+    "stored_sections": {
+      "2": 121628,
+      "8": 7072,
+      "9": 18426
+    },
+    "headers_padding_bytes": 330,
+    "pixel_palette_bytes": 48320,
+    "base_texture_memory_envelope": 54016,
+    "configuration": {
+      "ratio": 0.45,
+      "head_floor": 0.6,
+      "hand_floor": 0.75,
+      "mouth_ratio": 0.6,
+      "material_boundaries": true,
+      "repeat_safe_atlas": true,
+      "export_face_floor": true
+    },
+    "status": "Experimental; native structural/analytical gates pass; APPEARANCE REVIEW required; NOT game-tested",
+    "export_directory": "Billy-Gunn---ch313-v00"
+  },
+  {
+    "source": "Booker T - ch338.pac",
+    "source_sha256": "1a9e3dca6e208eff501443cef4e0cb534c37f3270e46acfb25cd101ad8c777c8",
+    "variant": 0,
+    "pac": "Booker-T---ch338-variant-00-PSP-EXPERIMENTAL.pac",
+    "pac_bytes": 147456,
+    "sha256": "d52f7c6600eae72d45ff3f9f46d582806dce03b409f8617a00b43462af3b5f25",
+    "source_triangles": 5743,
+    "final_triangles": 3516,
+    "final_vertices": 3574,
+    "final_buffers": 54,
+    "textures": 6,
+    "p95_surface_percent_height": 0.4618453813617628,
+    "qa_flags": 51,
+    "severity": {
+      "review": 49,
+      "high-review": 2
+    },
+    "facial_color_review_textures": [
+      "w13_00"
+    ],
+    "stored_sections": {
+      "2": 126345,
+      "8": 7072,
+      "9": 13946
+    },
+    "headers_padding_bytes": 93,
+    "pixel_palette_bytes": 45248,
+    "base_texture_memory_envelope": 54016,
+    "configuration": {
+      "ratio": 0.45,
+      "head_floor": 0.6,
+      "hand_floor": 0.75,
+      "mouth_ratio": 0.6,
+      "material_boundaries": true,
+      "repeat_safe_atlas": true,
+      "export_face_floor": true
+    },
+    "status": "Experimental; native structural/analytical gates pass; APPEARANCE REVIEW required; NOT game-tested",
+    "export_directory": "Booker-T---ch338-v00"
+  },
+  {
+    "source": "Bradshaw - ch124.pac",
+    "source_sha256": "f4711b15709371eb1e9abcf01a7ea4335cd29405f19c08e92b8410b3054671b8",
+    "variant": 0,
+    "pac": "Bradshaw---ch124-variant-00-PSP-EXPERIMENTAL.pac",
+    "pac_bytes": 147456,
+    "sha256": "71f98b715815dc96bdf5e411e060c42000b7b5c8d75f665686f4810738798911",
+    "source_triangles": 5816,
+    "final_triangles": 3283,
+    "final_vertices": 3339,
+    "final_buffers": 57,
+    "textures": 6,
+    "p95_surface_percent_height": 0.22217410000653715,
+    "qa_flags": 52,
+    "severity": {
+      "review": 52
+    },
+    "facial_color_review_textures": [
+      "w13_00"
+    ],
+    "stored_sections": {
+      "2": 125924,
+      "8": 7072,
+      "9": 14186
+    },
+    "headers_padding_bytes": 274,
+    "pixel_palette_bytes": 42176,
+    "base_texture_memory_envelope": 54016,
+    "configuration": {
+      "Head": 0.6,
+      "Torso": 0.45,
+      "Arms": 0.45,
+      "Legs": 0.45,
+      "Hands": 0.5,
+      "Eyes": 1.0,
+      "Mouth": 0.6,
+      "Hair": 1.0
+    },
+    "status": "Experimental; native structural/analytical gates pass; APPEARANCE REVIEW required; NOT game-tested",
+    "export_directory": "Bradshaw---ch124-v00"
+  },
+  {
+    "source": "Bradshaw - ch124.pac",
+    "source_sha256": "f4711b15709371eb1e9abcf01a7ea4335cd29405f19c08e92b8410b3054671b8",
+    "variant": 1,
+    "pac": "Bradshaw---ch124-variant-01-PSP-EXPERIMENTAL.pac",
+    "pac_bytes": 147456,
+    "sha256": "94adb7e3c4f48ce4b129b4e15f3ddacb3b2a3fe10eea5b8f4922940c1bcc5231",
+    "source_triangles": 5755,
+    "final_triangles": 3014,
+    "final_vertices": 3238,
+    "final_buffers": 54,
+    "textures": 6,
+    "p95_surface_percent_height": 0.5508874565629145,
+    "qa_flags": 125,
+    "severity": {
+      "review": 117,
+      "high-review": 8
+    },
+    "facial_color_review_textures": [
+      "w13_00"
+    ],
+    "stored_sections": {
+      "2": 121369,
+      "8": 7072,
+      "9": 18776
+    },
+    "headers_padding_bytes": 239,
+    "pixel_palette_bytes": 51392,
+    "base_texture_memory_envelope": 54016,
+    "configuration": {
+      "Head": 0.6,
+      "Torso": 0.35,
+      "Arms": 0.35,
+      "Legs": 0.35,
+      "Hands": 0.5,
+      "Eyes": 1.0,
+      "Mouth": 0.6,
+      "Hair": 1.0
+    },
+    "status": "Experimental; native structural/analytical gates pass; APPEARANCE REVIEW required; NOT game-tested",
+    "export_directory": "Bradshaw---ch124-v01"
+  },
+  {
+    "source": "Bret Hart - ch177.pac",
+    "source_sha256": "4060261b0a82b86ee06bfb7a074626cb01951f91806988da099ee7be284b8177",
+    "variant": 0,
+    "pac": "Bret-Hart---ch177-variant-00-PSP-EXPERIMENTAL.pac",
+    "pac_bytes": 147456,
+    "sha256": "4003df8bbe7de2d957d8455ab57da22871a4d14cad8860756f92044c315639f4",
+    "source_triangles": 5764,
+    "final_triangles": 3241,
+    "final_vertices": 3407,
+    "final_buffers": 52,
+    "textures": 6,
+    "p95_surface_percent_height": 0.33362530925523676,
+    "qa_flags": 90,
+    "severity": {
+      "review": 88,
+      "high-review": 2
+    },
+    "facial_color_review_textures": [
+      "w13_00",
+      "w13_01"
+    ],
+    "stored_sections": {
+      "2": 126006,
+      "8": 7072,
+      "9": 14285
+    },
+    "headers_padding_bytes": 93,
+    "pixel_palette_bytes": 45248,
+    "base_texture_memory_envelope": 54016,
+    "configuration": {
+      "ratio": 0.45,
+      "head_floor": 0.6,
+      "hand_floor": 0.5,
+      "mouth_ratio": 0.6,
+      "material_boundaries": true,
+      "repeat_safe_atlas": true,
+      "export_face_floor": true
+    },
+    "status": "Experimental; native structural/analytical gates pass; APPEARANCE REVIEW required; NOT game-tested",
+    "export_directory": "Bret-Hart---ch177-v00"
+  },
+  {
+    "source": "Bret Hart - ch177.pac",
+    "source_sha256": "4060261b0a82b86ee06bfb7a074626cb01951f91806988da099ee7be284b8177",
+    "variant": 1,
+    "pac": "Bret-Hart---ch177-variant-01-PSP-EXPERIMENTAL.pac",
+    "pac_bytes": 147456,
+    "sha256": "eccd9651777db0f2e316907fdf3b8573187a4f53d024117c7464ec3bc67ce92f",
+    "source_triangles": 5741,
+    "final_triangles": 3304,
+    "final_vertices": 3571,
+    "final_buffers": 57,
+    "textures": 6,
+    "p95_surface_percent_height": 0.8034871105991268,
+    "qa_flags": 93,
+    "severity": {
+      "review": 89,
+      "high-review": 4
+    },
+    "facial_color_review_textures": [
+      "w13_00",
+      "w13_01"
+    ],
+    "stored_sections": {
+      "2": 132807,
+      "8": 7072,
+      "9": 7438
+    },
+    "headers_padding_bytes": 139,
+    "pixel_palette_bytes": 26816,
+    "base_texture_memory_envelope": 54016,
+    "configuration": {
+      "ratio": 0.35,
+      "head_floor": 0.6,
+      "hand_floor": 0.5,
+      "mouth_ratio": 0.6,
+      "arm_floor": 0.65,
+      "material_boundaries": true,
+      "repeat_safe_atlas": true,
+      "export_face_floor": true,
+      "opposed_normals": false
+    },
+    "status": "Experimental; native structural/analytical gates pass; APPEARANCE REVIEW required; NOT game-tested",
+    "export_directory": "Bret-Hart---ch177-v01"
+  },
+  {
+    "source": "CM Punk - ch131.pac",
+    "source_sha256": "6cb7fa8e5f4c689ad5d7124ad0d48ec6efa3de5ba04f4c0ef8d49b34df1388c8",
+    "variant": 0,
+    "pac": "CM-Punk---ch131-variant-00-PSP-EXPERIMENTAL.pac",
+    "pac_bytes": 147456,
+    "sha256": "e212b070a824312112cd8b7766f217cdb4ed44b0078311d2320d0a45f6ed93ea",
+    "source_triangles": 5659,
+    "final_triangles": 3269,
+    "final_vertices": 3198,
+    "final_buffers": 51,
+    "textures": 6,
+    "p95_surface_percent_height": 0.35965292395897636,
+    "qa_flags": 56,
+    "severity": {
+      "review": 54,
+      "high-review": 2
+    },
+    "facial_color_review_textures": [
+      "w13_00"
+    ],
+    "stored_sections": {
+      "2": 118317,
+      "8": 7072,
+      "9": 21595
+    },
+    "headers_padding_bytes": 472,
+    "pixel_palette_bytes": 51392,
+    "base_texture_memory_envelope": 54016,
+    "configuration": {
+      "ratio": 0.45,
+      "head_floor": 0.6,
+      "hand_floor": 0.5,
+      "mouth_ratio": 0.6,
+      "material_boundaries": true,
+      "repeat_safe_atlas": true,
+      "export_face_floor": true
+    },
+    "status": "Experimental; native structural/analytical gates pass; APPEARANCE REVIEW required; NOT game-tested",
+    "export_directory": "CM-Punk---ch131-v00"
+  },
+  {
+    "source": "CM Punk - ch131.pac",
+    "source_sha256": "6cb7fa8e5f4c689ad5d7124ad0d48ec6efa3de5ba04f4c0ef8d49b34df1388c8",
+    "variant": 1,
+    "pac": "CM-Punk---ch131-variant-01-PSP-EXPERIMENTAL.pac",
+    "pac_bytes": 147456,
+    "sha256": "ff1bc4ed3dfeafed46ba195c5f667bcb523f1dd599c5b950c4b6b58604dfbe21",
+    "source_triangles": 5879,
+    "final_triangles": 3515,
+    "final_vertices": 3547,
+    "final_buffers": 53,
+    "textures": 6,
+    "p95_surface_percent_height": 0.8285396147802064,
+    "qa_flags": 58,
+    "severity": {
+      "review": 53,
+      "high-review": 5
+    },
+    "facial_color_review_textures": [
+      "w13_00",
+      "w13_03"
+    ],
+    "stored_sections": {
+      "2": 127562,
+      "8": 7072,
+      "9": 12615
+    },
+    "headers_padding_bytes": 207,
+    "pixel_palette_bytes": 42176,
+    "base_texture_memory_envelope": 54016,
+    "configuration": {
+      "ratio": 0.35,
+      "head_floor": 0.6,
+      "hand_floor": 0.75,
+      "mouth_ratio": 0.6,
+      "material_boundaries": true,
+      "repeat_safe_atlas": true,
+      "export_face_floor": true
+    },
+    "status": "Experimental; native structural/analytical gates pass; APPEARANCE REVIEW required; NOT game-tested",
+    "export_directory": "CM-Punk---ch131-v01"
+  },
+  {
+    "source": "CM Punk - ch131.pac",
+    "source_sha256": "6cb7fa8e5f4c689ad5d7124ad0d48ec6efa3de5ba04f4c0ef8d49b34df1388c8",
+    "variant": 2,
+    "pac": "CM-Punk---ch131-variant-02-PSP-EXPERIMENTAL.pac",
+    "pac_bytes": 147456,
+    "sha256": "896dcaa576178118f005daf21c4f0c23a68e0d8591e67d0d9b95cb695b664de2",
+    "source_triangles": 5879,
+    "final_triangles": 3515,
+    "final_vertices": 3547,
+    "final_buffers": 53,
+    "textures": 6,
+    "p95_surface_percent_height": 0.8285396147802064,
+    "qa_flags": 58,
+    "severity": {
+      "review": 53,
+      "high-review": 5
+    },
+    "facial_color_review_textures": [
+      "w13_00",
+      "w13_03"
+    ],
+    "stored_sections": {
+      "2": 127634,
+      "8": 7072,
+      "9": 12615
+    },
+    "headers_padding_bytes": 135,
+    "pixel_palette_bytes": 42176,
+    "base_texture_memory_envelope": 54016,
+    "configuration": {
+      "ratio": 0.35,
+      "head_floor": 0.6,
+      "hand_floor": 0.75,
+      "mouth_ratio": 0.6,
+      "material_boundaries": true,
+      "repeat_safe_atlas": true,
+      "export_face_floor": true
+    },
+    "status": "Experimental; native structural/analytical gates pass; APPEARANCE REVIEW required; NOT game-tested",
+    "export_directory": "CM-Punk---ch131-v02"
+  },
+  {
+    "source": "Chris Jericho 1999 - ch347.pac",
+    "source_sha256": "0ade084697f53f58f7f79ec7afca8e692a0967283f07addb52422b2d00898092",
+    "variant": 0,
+    "pac": "Chris-Jericho-1999---ch347-variant-00-PSP-EXPERIMENTAL.pac",
+    "pac_bytes": 147456,
+    "sha256": "6de4c3e8069ad64c9d796d9ec218dec34fb4d3150d60ef6f6c656f50e32e7c4f",
+    "source_triangles": 5741,
+    "final_triangles": 3522,
+    "final_vertices": 3413,
+    "final_buffers": 51,
+    "textures": 6,
+    "p95_surface_percent_height": 0.2600459028953761,
+    "qa_flags": 52,
+    "severity": {
+      "review": 49,
+      "high-review": 3
+    },
+    "facial_color_review_textures": [
+      "w13_00",
+      "w13_01"
+    ],
+    "stored_sections": {
+      "2": 121646,
+      "8": 7072,
+      "9": 18520
+    },
+    "headers_padding_bytes": 218,
+    "pixel_palette_bytes": 51392,
+    "base_texture_memory_envelope": 54016,
+    "configuration": {
+      "ratio": 0.45,
+      "head_floor": 0.6,
+      "hand_floor": 0.75,
+      "mouth_ratio": 0.6,
+      "material_boundaries": true,
+      "repeat_safe_atlas": true,
+      "export_face_floor": true
+    },
+    "status": "Experimental; native structural/analytical gates pass; APPEARANCE REVIEW required; NOT game-tested",
+    "export_directory": "Chris-Jericho-1999---ch347-v00"
+  },
+  {
+    "source": "Chris Jericho 1999 - ch347.pac",
+    "source_sha256": "0ade084697f53f58f7f79ec7afca8e692a0967283f07addb52422b2d00898092",
+    "variant": 1,
+    "pac": "Chris-Jericho-1999---ch347-variant-01-PSP-EXPERIMENTAL.pac",
+    "pac_bytes": 147456,
+    "sha256": "1ac72a1928a84a7a13af90d004a35c5d713a2cd5a1e459d060bb9b5448ebc807",
+    "source_triangles": 5971,
+    "final_triangles": 3430,
+    "final_vertices": 3445,
+    "final_buffers": 56,
+    "textures": 6,
+    "p95_surface_percent_height": 0.5518541661700218,
+    "qa_flags": 64,
+    "severity": {
+      "review": 50,
+      "high-review": 14
+    },
+    "facial_color_review_textures": [
+      "w13_00"
+    ],
+    "stored_sections": {
+      "2": 122842,
+      "8": 7072,
+      "9": 17328
+    },
+    "headers_padding_bytes": 214,
+    "pixel_palette_bytes": 51392,
+    "base_texture_memory_envelope": 54016,
+    "configuration": {
+      "ratio": 0.35,
+      "head_floor": 0.6,
+      "hand_floor": 0.75,
+      "mouth_ratio": 0.6,
+      "material_boundaries": true,
+      "repeat_safe_atlas": true,
+      "export_face_floor": true
+    },
+    "status": "Experimental; native structural/analytical gates pass; APPEARANCE REVIEW required; NOT game-tested",
+    "export_directory": "Chris-Jericho-1999---ch347-v01"
+  },
+  {
+    "source": "Edge - ch110.pac",
+    "source_sha256": "39c2f734e903484ac2d372eae83e20dbfe9e32d37518a6db6945b6febe097476",
+    "variant": 0,
+    "pac": "Edge---ch110-variant-00-PSP-EXPERIMENTAL.pac",
+    "pac_bytes": 147456,
+    "sha256": "c82155f01cbd7eccde30e9219585216589ac98afd054c4000859bfc67371fcb0",
+    "source_triangles": 5742,
+    "final_triangles": 3415,
+    "final_vertices": 3457,
+    "final_buffers": 55,
+    "textures": 6,
+    "p95_surface_percent_height": 0.1971138865206544,
+    "qa_flags": 47,
+    "severity": {
+      "review": 47
+    },
+    "facial_color_review_textures": [
+      "w13_00"
+    ],
+    "stored_sections": {
+      "2": 128003,
+      "8": 7072,
+      "9": 12161
+    },
+    "headers_padding_bytes": 220,
+    "pixel_palette_bytes": 42176,
+    "base_texture_memory_envelope": 54016,
+    "configuration": {
+      "ratio": 0.45,
+      "head_floor": 0.6,
+      "hand_floor": 0.5,
+      "mouth_ratio": 0.6,
+      "arm_floor": 0.75,
+      "material_boundaries": true,
+      "repeat_safe_atlas": true,
+      "export_face_floor": true
+    },
+    "status": "Experimental; native structural/analytical gates pass; APPEARANCE REVIEW required; NOT game-tested",
+    "export_directory": "Edge---ch110-v00"
+  },
+  {
+    "source": "Randy Orton - ch161.pac",
+    "source_sha256": "268196d412dc9127a3b4b04cee5faf5050ac26be2177242f455a4926c7d50958",
+    "variant": 0,
+    "pac": "Randy-Orton---ch161-variant-00-PSP-EXPERIMENTAL.pac",
+    "pac_bytes": 147456,
+    "sha256": "3bcf134be21603fce32de0abcef4171e71cb8c30c2b7b1fe1fb4779ece17deba",
+    "source_triangles": 5676,
+    "final_triangles": 2983,
+    "final_vertices": 2856,
+    "final_buffers": 55,
+    "textures": 5,
+    "p95_surface_percent_height": 0.1992893173883209,
+    "qa_flags": 50,
+    "severity": {
+      "review": 50
+    },
+    "facial_color_review_textures": [
+      "w13_01"
+    ],
+    "stored_sections": {
+      "2": 112309,
+      "8": 7072,
+      "9": 27038
+    },
+    "headers_padding_bytes": 1037,
+    "pixel_palette_bytes": 42176,
+    "base_texture_memory_envelope": 54016,
+    "configuration": {
+      "Head": 0.6,
+      "Torso": 0.45,
+      "Arms": 0.45,
+      "Legs": 0.45,
+      "Hands": 0.5,
+      "Eyes": 1.0,
+      "Mouth": 0.6,
+      "Hair": 1.0
+    },
+    "status": "Experimental; native structural/analytical gates pass; APPEARANCE REVIEW required; NOT game-tested",
+    "export_directory": "Randy-Orton---ch161-v00"
+  },
+  {
+    "source": "Wade Barrett - ch325.pac",
+    "source_sha256": "9c31f72df27d75f38eb4e45001a3f752ab2dfe5ded781f8791c3acf37eb00c32",
+    "variant": 0,
+    "pac": "Wade-Barrett---ch325-variant-00-PSP-EXPERIMENTAL.pac",
+    "pac_bytes": 147456,
+    "sha256": "7108f55b7cd9dd0ad8c93efd33d69e43f4fc4ce00a671ec305eb75472e88aa2f",
+    "source_triangles": 5734,
+    "final_triangles": 3552,
+    "final_vertices": 3479,
+    "final_buffers": 51,
+    "textures": 6,
+    "p95_surface_percent_height": 0.30044888410881126,
+    "qa_flags": 47,
+    "severity": {
+      "review": 45,
+      "high-review": 2
+    },
+    "facial_color_review_textures": [],
+    "stored_sections": {
+      "2": 124989,
+      "8": 7072,
+      "9": 14762
+    },
+    "headers_padding_bytes": 633,
+    "pixel_palette_bytes": 45248,
+    "base_texture_memory_envelope": 54016,
+    "configuration": {
+      "ratio": 0.45,
+      "head_floor": 0.6,
+      "hand_floor": 0.75,
+      "mouth_ratio": 0.6,
+      "material_boundaries": true,
+      "repeat_safe_atlas": true,
+      "export_face_floor": true
+    },
+    "status": "Experimental; native structural/analytical gates pass; APPEARANCE REVIEW required; NOT game-tested",
+    "export_directory": "Wade-Barrett---ch325-v00"
+  }
+]

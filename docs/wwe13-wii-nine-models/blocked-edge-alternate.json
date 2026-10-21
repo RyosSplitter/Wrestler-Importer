@@ -1,0 +1,44 @@
+{
+  "source": "Edge - ch110.pac",
+  "variant": 1,
+  "normal_mode": "Source CORNER interpolation + renormalization",
+  "native_pose_findings": [],
+  "hand_reference_envelope": {
+    "grip": {
+      "candidate": 1.651289890765264,
+      "source_reference": 1.6510333190310162,
+      "native_donor": 1.4983775252157943,
+      "limit": 2.726549978546524,
+      "passes": true
+    },
+    "finger-extension": {
+      "candidate": 2.0617526230953422,
+      "source_reference": 2.063316624993769,
+      "native_donor": 1.7153455191235971,
+      "limit": 3.3449749374906537,
+      "passes": true
+    },
+    "wrist-flex": {
+      "candidate": 1.2355788302114965,
+      "source_reference": 1.2565791830829698,
+      "native_donor": 1.2079766001757875,
+      "limit": 2.134868774624455,
+      "passes": true
+    },
+    "forearm-twist": {
+      "candidate": 1.1940654720926704,
+      "source_reference": 1.1075026223311057,
+      "native_donor": 1.0374232146655744,
+      "limit": 1.9112539334966585,
+      "passes": true
+    }
+  },
+  "minimum": {
+    "pac_bytes": 180224,
+    "pixel_palette_bytes": 20672
+  },
+  "target_bytes": 148000,
+  "native_texture_envelope": 54016,
+  "pac_withheld": true,
+  "reason": "Source normal transport gets past zero-normal failure and pose gates, but minimum stored size exceeds configured target"
+}

@@ -1,0 +1,335 @@
+[
+  {
+    "source": "Bret Hart - ch177",
+    "variant": 1,
+    "stage": "arm-refinement-status-05",
+    "exit_code": 1,
+    "hand_floor": null,
+    "failure_tail": "Native model expanded 288048 compressed 135424\nIndependent resolution/color candidates: w13_00\nIndependent resolution/color candidates: w13_01\nIndependent resolution/color candidates: w13_02\nIndependent resolution/color candidates: w13_03\nIndependent resolution/color candidates: w13_04\nIndependent resolution/color candidates: w13_05\nTraceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_corpus_trial.py\", line 49, in <module>\n    a=p.parse_args();print(json.dumps(trial(a.source,a.base,a.out,a.variant,a.ratio,samples=a.samples,hand_floor=a.hand_floor,arm_floor=a.arm_floor),indent=2),flush=True)\n                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_corpus_trial.py\", line 16, in trial\n    result=run(source,base,out,index,ratio=ratio,head_floor=.6,hand_floor=hand_floor,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_trial.py\", line 200, in run\n    pac,gims,tex=allocate(base,raw,packed,images,contracts,out/'textures',candidate_factory=texture_candidates or candidates)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/Wrestler-Importer/tools/wwe13_texture_trial.py\", line 155, in allocate\n    raise ValueError(f'Measured texture minimum does not fit: {len(pac)}/{target} bytes, {memory}/{base_memory} pixel/palette')\nValueError: Measured texture minimum does not fit: 149504/148000 bytes, 20672/54016 pixel/palette\n",
+    "pac_sha256": null
+  },
+  {
+    "source": "Edge - ch110",
+    "variant": 0,
+    "stage": "arm-refinement-status-05",
+    "exit_code": 0,
+    "hand_floor": null,
+    "failure_tail": null,
+    "pac_sha256": "c82155f01cbd7eccde30e9219585216589ac98afd054c4000859bfc67371fcb0"
+  },
+  {
+    "source": "Edge - ch110",
+    "variant": 1,
+    "stage": "batch-status",
+    "exit_code": null,
+    "hand_floor": null,
+    "failure_tail": null,
+    "pac_sha256": null
+  },
+  {
+    "source": "Billy Gunn - ch313",
+    "variant": 0,
+    "stage": "batch-status",
+    "exit_code": 1,
+    "hand_floor": null,
+    "failure_tail": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_corpus_trial.py\", line 41, in <module>\n    a=p.parse_args();print(json.dumps(trial(a.source,a.base,a.out,a.variant,a.ratio,samples=a.samples),indent=2),flush=True)\n                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_corpus_trial.py\", line 16, in trial\n    result=run(source,base,out,index,ratio=ratio,head_floor=.6,hand_floor=.5,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_trial.py\", line 172, in run\n    charted,images,atlas=chart_atlas(prepared,images,cell=256)\n                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/Wrestler-Importer/tools/wwe13_adapter_trial.py\", line 347, in chart_atlas\n    raise ValueError('Source chart cannot fit a supported aspect without upscaling')\nValueError: Source chart cannot fit a supported aspect without upscaling\n",
+    "pac_sha256": null
+  },
+  {
+    "source": "Booker T - ch338",
+    "variant": 0,
+    "stage": "batch-status",
+    "exit_code": 1,
+    "hand_floor": null,
+    "failure_tail": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_corpus_trial.py\", line 41, in <module>\n    a=p.parse_args();print(json.dumps(trial(a.source,a.base,a.out,a.variant,a.ratio,samples=a.samples),indent=2),flush=True)\n                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_corpus_trial.py\", line 16, in trial\n    result=run(source,base,out,index,ratio=ratio,head_floor=.6,hand_floor=.5,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_trial.py\", line 172, in run\n    charted,images,atlas=chart_atlas(prepared,images,cell=256)\n                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/Wrestler-Importer/tools/wwe13_adapter_trial.py\", line 347, in chart_atlas\n    raise ValueError('Source chart cannot fit a supported aspect without upscaling')\nValueError: Source chart cannot fit a supported aspect without upscaling\n",
+    "pac_sha256": null
+  },
+  {
+    "source": "Bret Hart - ch177",
+    "variant": 0,
+    "stage": "batch-status",
+    "exit_code": 1,
+    "hand_floor": null,
+    "failure_tail": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_corpus_trial.py\", line 41, in <module>\n    a=p.parse_args();print(json.dumps(trial(a.source,a.base,a.out,a.variant,a.ratio,samples=a.samples),indent=2),flush=True)\n                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_corpus_trial.py\", line 16, in trial\n    result=run(source,base,out,index,ratio=ratio,head_floor=.6,hand_floor=.5,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_trial.py\", line 172, in run\n    charted,images,atlas=chart_atlas(prepared,images,cell=256)\n                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/Wrestler-Importer/tools/wwe13_adapter_trial.py\", line 347, in chart_atlas\n    raise ValueError('Source chart cannot fit a supported aspect without upscaling')\nValueError: Source chart cannot fit a supported aspect without upscaling\n",
+    "pac_sha256": null
+  },
+  {
+    "source": "CM Punk - ch131",
+    "variant": 0,
+    "stage": "batch-status",
+    "exit_code": 1,
+    "hand_floor": null,
+    "failure_tail": "ource,base,out,index,ratio=ratio,head_floor=.6,hand_floor=.5,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_trial.py\", line 180, in run\n    with (out/'blender.log').open('w')as log:subprocess.run(['/usr/bin/blender','-b','-t','2','--python-exit-code','1','--python',str(Path('tools/wwe13_reduce_trial.py').resolve()),'--',str((out/'charted.json').resolve()),str((out/'reduced.json').resolve()),str((out/'profile.json').resolve()),'--hand-weighted','--material-boundaries' if material_only else '--uv-islands'],check=True,env=env,stdout=log,stderr=subprocess.STDOUT)\n                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/bin/blender', '-b', '-t', '2', '--python-exit-code', '1', '--python', '/workspace/Wrestler-Importer/tools/wwe13_reduce_trial.py', '--', '/workspace/Wrestler-Importer/local/wii-nine-study-01/trials/CM-Punk---ch131-v00/charted.json', '/workspace/Wrestler-Importer/local/wii-nine-study-01/trials/CM-Punk---ch131-v00/reduced.json', '/workspace/Wrestler-Importer/local/wii-nine-study-01/trials/CM-Punk---ch131-v00/profile.json', '--hand-weighted', '--material-boundaries']' returned non-zero exit status 1.\n",
+    "pac_sha256": null
+  },
+  {
+    "source": "Chris Jericho 1999 - ch347",
+    "variant": 0,
+    "stage": "batch-status",
+    "exit_code": 1,
+    "hand_floor": null,
+    "failure_tail": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_corpus_trial.py\", line 41, in <module>\n    a=p.parse_args();print(json.dumps(trial(a.source,a.base,a.out,a.variant,a.ratio,samples=a.samples),indent=2),flush=True)\n                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_corpus_trial.py\", line 16, in trial\n    result=run(source,base,out,index,ratio=ratio,head_floor=.6,hand_floor=.5,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_trial.py\", line 172, in run\n    charted,images,atlas=chart_atlas(prepared,images,cell=256)\n                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/Wrestler-Importer/tools/wwe13_adapter_trial.py\", line 347, in chart_atlas\n    raise ValueError('Source chart cannot fit a supported aspect without upscaling')\nValueError: Source chart cannot fit a supported aspect without upscaling\n",
+    "pac_sha256": null
+  },
+  {
+    "source": "Edge - ch110",
+    "variant": 0,
+    "stage": "batch-status",
+    "exit_code": 1,
+    "hand_floor": null,
+    "failure_tail": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_corpus_trial.py\", line 41, in <module>\n    a=p.parse_args();print(json.dumps(trial(a.source,a.base,a.out,a.variant,a.ratio,samples=a.samples),indent=2),flush=True)\n                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_corpus_trial.py\", line 16, in trial\n    result=run(source,base,out,index,ratio=ratio,head_floor=.6,hand_floor=.5,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_trial.py\", line 172, in run\n    charted,images,atlas=chart_atlas(prepared,images,cell=256)\n                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/Wrestler-Importer/tools/wwe13_adapter_trial.py\", line 347, in chart_atlas\n    raise ValueError('Source chart cannot fit a supported aspect without upscaling')\nValueError: Source chart cannot fit a supported aspect without upscaling\n",
+    "pac_sha256": null
+  },
+  {
+    "source": "Bradshaw - ch124",
+    "variant": 0,
+    "stage": "batch-status",
+    "exit_code": 0,
+    "hand_floor": null,
+    "failure_tail": null,
+    "pac_sha256": "71f98b715815dc96bdf5e411e060c42000b7b5c8d75f665686f4810738798911"
+  },
+  {
+    "source": "Randy Orton - ch161",
+    "variant": 0,
+    "stage": "batch-status",
+    "exit_code": 0,
+    "hand_floor": null,
+    "failure_tail": null,
+    "pac_sha256": "3bcf134be21603fce32de0abcef4171e71cb8c30c2b7b1fe1fb4779ece17deba"
+  },
+  {
+    "source": "Wade Barrett - ch325",
+    "variant": 0,
+    "stage": "batch-status",
+    "exit_code": 0,
+    "hand_floor": null,
+    "failure_tail": null,
+    "pac_sha256": "d9fec3cd214eb062e5cddd0442a5704d185fa2825cc2089227ccde351967f0db"
+  },
+  {
+    "source": "Bret Hart - ch177",
+    "variant": 1,
+    "stage": "batch-status",
+    "exit_code": 1,
+    "hand_floor": null,
+    "failure_tail": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_corpus_trial.py\", line 49, in <module>\n    a=p.parse_args();print(json.dumps(trial(a.source,a.base,a.out,a.variant,a.ratio,samples=a.samples),indent=2),flush=True)\n                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_corpus_trial.py\", line 16, in trial\n    result=run(source,base,out,index,ratio=ratio,head_floor=.6,hand_floor=.5,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_trial.py\", line 196, in run\n    raise ValueError('Native analytical pose gate failed; candidate retained for diagnosis only')\nValueError: Native analytical pose gate failed; candidate retained for diagnosis only\n",
+    "pac_sha256": null
+  },
+  {
+    "source": "CM Punk - ch131",
+    "variant": 1,
+    "stage": "batch-status",
+    "exit_code": 1,
+    "hand_floor": null,
+    "failure_tail": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_corpus_trial.py\", line 49, in <module>\n    a=p.parse_args();print(json.dumps(trial(a.source,a.base,a.out,a.variant,a.ratio,samples=a.samples),indent=2),flush=True)\n                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_corpus_trial.py\", line 16, in trial\n    result=run(source,base,out,index,ratio=ratio,head_floor=.6,hand_floor=.5,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_trial.py\", line 196, in run\n    raise ValueError('Native analytical pose gate failed; candidate retained for diagnosis only')\nValueError: Native analytical pose gate failed; candidate retained for diagnosis only\n",
+    "pac_sha256": null
+  },
+  {
+    "source": "Bradshaw - ch124",
+    "variant": 1,
+    "stage": "batch-status",
+    "exit_code": 0,
+    "hand_floor": null,
+    "failure_tail": null,
+    "pac_sha256": "94adb7e3c4f48ce4b129b4e15f3ddacb3b2a3fe10eea5b8f4922940c1bcc5231"
+  },
+  {
+    "source": "CM Punk - ch131",
+    "variant": 2,
+    "stage": "batch-status",
+    "exit_code": 1,
+    "hand_floor": null,
+    "failure_tail": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_corpus_trial.py\", line 49, in <module>\n    a=p.parse_args();print(json.dumps(trial(a.source,a.base,a.out,a.variant,a.ratio,samples=a.samples),indent=2),flush=True)\n                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_corpus_trial.py\", line 16, in trial\n    result=run(source,base,out,index,ratio=ratio,head_floor=.6,hand_floor=.5,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_trial.py\", line 196, in run\n    raise ValueError('Native analytical pose gate failed; candidate retained for diagnosis only')\nValueError: Native analytical pose gate failed; candidate retained for diagnosis only\n",
+    "pac_sha256": null
+  },
+  {
+    "source": "Chris Jericho 1999 - ch347",
+    "variant": 1,
+    "stage": "batch-status",
+    "exit_code": 1,
+    "hand_floor": null,
+    "failure_tail": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_corpus_trial.py\", line 49, in <module>\n    a=p.parse_args();print(json.dumps(trial(a.source,a.base,a.out,a.variant,a.ratio,samples=a.samples),indent=2),flush=True)\n                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_corpus_trial.py\", line 16, in trial\n    result=run(source,base,out,index,ratio=ratio,head_floor=.6,hand_floor=.5,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_trial.py\", line 196, in run\n    raise ValueError('Native analytical pose gate failed; candidate retained for diagnosis only')\nValueError: Native analytical pose gate failed; candidate retained for diagnosis only\n",
+    "pac_sha256": null
+  },
+  {
+    "source": "Booker T - ch338",
+    "variant": 0,
+    "stage": "hand-refinement-status-03",
+    "exit_code": 0,
+    "hand_floor": 0.75,
+    "failure_tail": null,
+    "pac_sha256": "d52f7c6600eae72d45ff3f9f46d582806dce03b409f8617a00b43462af3b5f25"
+  },
+  {
+    "source": "Billy Gunn - ch313",
+    "variant": 0,
+    "stage": "hand-refinement-status-03",
+    "exit_code": 0,
+    "hand_floor": 0.75,
+    "failure_tail": null,
+    "pac_sha256": "4102d7cc782cc9be51c7b90d0593f97807a02b6ccca0e2d155efed124f0edc3d"
+  },
+  {
+    "source": "Bret Hart - ch177",
+    "variant": 1,
+    "stage": "hand-refinement-status-03",
+    "exit_code": 1,
+    "hand_floor": 0.75,
+    "failure_tail": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_corpus_trial.py\", line 49, in <module>\n    a=p.parse_args();print(json.dumps(trial(a.source,a.base,a.out,a.variant,a.ratio,samples=a.samples,hand_floor=a.hand_floor),indent=2),flush=True)\n                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_corpus_trial.py\", line 16, in trial\n    result=run(source,base,out,index,ratio=ratio,head_floor=.6,hand_floor=hand_floor,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_trial.py\", line 196, in run\n    raise ValueError('Native analytical pose gate failed; candidate retained for diagnosis only')\nValueError: Native analytical pose gate failed; candidate retained for diagnosis only\n",
+    "pac_sha256": null
+  },
+  {
+    "source": "Bret Hart - ch177",
+    "variant": 1,
+    "stage": "hand-refinement-status-03",
+    "exit_code": 1,
+    "hand_floor": 1.0,
+    "failure_tail": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_corpus_trial.py\", line 49, in <module>\n    a=p.parse_args();print(json.dumps(trial(a.source,a.base,a.out,a.variant,a.ratio,samples=a.samples,hand_floor=a.hand_floor),indent=2),flush=True)\n                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_corpus_trial.py\", line 16, in trial\n    result=run(source,base,out,index,ratio=ratio,head_floor=.6,hand_floor=hand_floor,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_trial.py\", line 196, in run\n    raise ValueError('Native analytical pose gate failed; candidate retained for diagnosis only')\nValueError: Native analytical pose gate failed; candidate retained for diagnosis only\n",
+    "pac_sha256": null
+  },
+  {
+    "source": "Wade Barrett - ch325",
+    "variant": 0,
+    "stage": "hand-refinement-status-03",
+    "exit_code": 0,
+    "hand_floor": 0.75,
+    "failure_tail": null,
+    "pac_sha256": "7108f55b7cd9dd0ad8c93efd33d69e43f4fc4ce00a671ec305eb75472e88aa2f"
+  },
+  {
+    "source": "CM Punk - ch131",
+    "variant": 1,
+    "stage": "hand-refinement-status-03",
+    "exit_code": 0,
+    "hand_floor": 0.75,
+    "failure_tail": null,
+    "pac_sha256": "ff1bc4ed3dfeafed46ba195c5f667bcb523f1dd599c5b950c4b6b58604dfbe21"
+  },
+  {
+    "source": "Chris Jericho 1999 - ch347",
+    "variant": 1,
+    "stage": "hand-refinement-status-03",
+    "exit_code": 0,
+    "hand_floor": 0.75,
+    "failure_tail": null,
+    "pac_sha256": "1ac72a1928a84a7a13af90d004a35c5d713a2cd5a1e459d060bb9b5448ebc807"
+  },
+  {
+    "source": "CM Punk - ch131",
+    "variant": 2,
+    "stage": "hand-refinement-status-03",
+    "exit_code": 0,
+    "hand_floor": 0.75,
+    "failure_tail": null,
+    "pac_sha256": "896dcaa576178118f005daf21c4f0c23a68e0d8591e67d0d9b95cb695b664de2"
+  },
+  {
+    "source": "Edge - ch110",
+    "variant": 0,
+    "stage": "hand-refinement-status-04",
+    "exit_code": 1,
+    "hand_floor": 0.75,
+    "failure_tail": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_corpus_trial.py\", line 49, in <module>\n    a=p.parse_args();print(json.dumps(trial(a.source,a.base,a.out,a.variant,a.ratio,samples=a.samples,hand_floor=a.hand_floor),indent=2),flush=True)\n                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_corpus_trial.py\", line 16, in trial\n    result=run(source,base,out,index,ratio=ratio,head_floor=.6,hand_floor=hand_floor,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_trial.py\", line 196, in run\n    raise ValueError('Native analytical pose gate failed; candidate retained for diagnosis only')\nValueError: Native analytical pose gate failed; candidate retained for diagnosis only\n",
+    "pac_sha256": null
+  },
+  {
+    "source": "Edge - ch110",
+    "variant": 0,
+    "stage": "hand-refinement-status-04",
+    "exit_code": 1,
+    "hand_floor": 1.0,
+    "failure_tail": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_corpus_trial.py\", line 49, in <module>\n    a=p.parse_args();print(json.dumps(trial(a.source,a.base,a.out,a.variant,a.ratio,samples=a.samples,hand_floor=a.hand_floor),indent=2),flush=True)\n                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_corpus_trial.py\", line 16, in trial\n    result=run(source,base,out,index,ratio=ratio,head_floor=.6,hand_floor=hand_floor,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_trial.py\", line 196, in run\n    raise ValueError('Native analytical pose gate failed; candidate retained for diagnosis only')\nValueError: Native analytical pose gate failed; candidate retained for diagnosis only\n",
+    "pac_sha256": null
+  },
+  {
+    "source": "Chris Jericho 1999 - ch347",
+    "variant": 0,
+    "stage": "hand-refinement-status-04",
+    "exit_code": 0,
+    "hand_floor": 0.75,
+    "failure_tail": null,
+    "pac_sha256": "6de4c3e8069ad64c9d796d9ec218dec34fb4d3150d60ef6f6c656f50e32e7c4f"
+  },
+  {
+    "source": "Edge - ch110",
+    "variant": 1,
+    "stage": "refinement-status-06",
+    "exit_code": 1,
+    "hand_floor": null,
+    "failure_tail": " ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_trial.py\", line 181, in run\n    with (out/'blender.log').open('w')as log:subprocess.run(['/usr/bin/blender','-b','-t','2','--python-exit-code','1','--python',str(Path('tools/wwe13_reduce_trial.py').resolve()),'--',str((out/'charted.json').resolve()),str((out/'reduced.json').resolve()),str((out/'profile.json').resolve()),'--hand-weighted','--material-boundaries' if material_only else '--uv-islands']+(['--export-face-floor']if export_face_floor else [])+(['--opposed-normals']if opposed_normals else []),check=True,env=env,stdout=log,stderr=subprocess.STDOUT)\n                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/bin/blender', '-b', '-t', '2', '--python-exit-code', '1', '--python', '/workspace/Wrestler-Importer/tools/wwe13_reduce_trial.py', '--', '/workspace/Wrestler-Importer/local/wii-nine-study-01/refinement-06/Edge---ch110-v01/charted.json', '/workspace/Wrestler-Importer/local/wii-nine-study-01/refinement-06/Edge---ch110-v01/reduced.json', '/workspace/Wrestler-Importer/local/wii-nine-study-01/refinement-06/Edge---ch110-v01/profile.json', '--hand-weighted', '--material-boundaries', '--export-face-floor', '--opposed-normals']' returned non-zero exit status 1.\n",
+    "pac_sha256": null
+  },
+  {
+    "source": "Bret Hart - ch177",
+    "variant": 1,
+    "stage": "refinement-status-06",
+    "exit_code": 0,
+    "hand_floor": null,
+    "failure_tail": null,
+    "pac_sha256": "eccd9651777db0f2e316907fdf3b8573187a4f53d024117c7464ec3bc67ce92f"
+  },
+  {
+    "source": "Booker T - ch338",
+    "variant": 0,
+    "stage": "retry-status-02",
+    "exit_code": 1,
+    "hand_floor": null,
+    "failure_tail": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_corpus_trial.py\", line 49, in <module>\n    a=p.parse_args();print(json.dumps(trial(a.source,a.base,a.out,a.variant,a.ratio,samples=a.samples),indent=2),flush=True)\n                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_corpus_trial.py\", line 16, in trial\n    result=run(source,base,out,index,ratio=ratio,head_floor=.6,hand_floor=.5,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_trial.py\", line 196, in run\n    raise ValueError('Native analytical pose gate failed; candidate retained for diagnosis only')\nValueError: Native analytical pose gate failed; candidate retained for diagnosis only\n",
+    "pac_sha256": null
+  },
+  {
+    "source": "Billy Gunn - ch313",
+    "variant": 0,
+    "stage": "retry-status-02",
+    "exit_code": 1,
+    "hand_floor": null,
+    "failure_tail": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_corpus_trial.py\", line 49, in <module>\n    a=p.parse_args();print(json.dumps(trial(a.source,a.base,a.out,a.variant,a.ratio,samples=a.samples),indent=2),flush=True)\n                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_corpus_trial.py\", line 16, in trial\n    result=run(source,base,out,index,ratio=ratio,head_floor=.6,hand_floor=.5,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_trial.py\", line 196, in run\n    raise ValueError('Native analytical pose gate failed; candidate retained for diagnosis only')\nValueError: Native analytical pose gate failed; candidate retained for diagnosis only\n",
+    "pac_sha256": null
+  },
+  {
+    "source": "Bret Hart - ch177",
+    "variant": 0,
+    "stage": "retry-status-02",
+    "exit_code": 0,
+    "hand_floor": null,
+    "failure_tail": null,
+    "pac_sha256": "4003df8bbe7de2d957d8455ab57da22871a4d14cad8860756f92044c315639f4"
+  },
+  {
+    "source": "Chris Jericho 1999 - ch347",
+    "variant": 0,
+    "stage": "retry-status-02",
+    "exit_code": 1,
+    "hand_floor": null,
+    "failure_tail": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_corpus_trial.py\", line 49, in <module>\n    a=p.parse_args();print(json.dumps(trial(a.source,a.base,a.out,a.variant,a.ratio,samples=a.samples,hand_floor=a.hand_floor),indent=2),flush=True)\n                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_corpus_trial.py\", line 16, in trial\n    result=run(source,base,out,index,ratio=ratio,head_floor=.6,hand_floor=hand_floor,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_trial.py\", line 196, in run\n    raise ValueError('Native analytical pose gate failed; candidate retained for diagnosis only')\nValueError: Native analytical pose gate failed; candidate retained for diagnosis only\n",
+    "pac_sha256": null
+  },
+  {
+    "source": "Edge - ch110",
+    "variant": 0,
+    "stage": "retry-status-02",
+    "exit_code": 1,
+    "hand_floor": null,
+    "failure_tail": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_corpus_trial.py\", line 49, in <module>\n    a=p.parse_args();print(json.dumps(trial(a.source,a.base,a.out,a.variant,a.ratio,samples=a.samples,hand_floor=a.hand_floor),indent=2),flush=True)\n                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_corpus_trial.py\", line 16, in trial\n    result=run(source,base,out,index,ratio=ratio,head_floor=.6,hand_floor=hand_floor,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_trial.py\", line 196, in run\n    raise ValueError('Native analytical pose gate failed; candidate retained for diagnosis only')\nValueError: Native analytical pose gate failed; candidate retained for diagnosis only\n",
+    "pac_sha256": null
+  },
+  {
+    "source": "CM Punk - ch131",
+    "variant": 0,
+    "stage": "retry-status-02",
+    "exit_code": 0,
+    "hand_floor": null,
+    "failure_tail": null,
+    "pac_sha256": "e212b070a824312112cd8b7766f217cdb4ed44b0078311d2320d0a45f6ed93ea"
+  },
+  {
+    "source": "Edge - ch110",
+    "variant": 1,
+    "stage": "retry-status-02",
+    "exit_code": 1,
+    "hand_floor": null,
+    "failure_tail": "rpus_trial.py\", line 16, in trial\n    result=run(source,base,out,index,ratio=ratio,head_floor=.6,hand_floor=hand_floor,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/Wrestler-Importer/tools/wwe13_wii_trial.py\", line 180, in run\n    with (out/'blender.log').open('w')as log:subprocess.run(['/usr/bin/blender','-b','-t','2','--python-exit-code','1','--python',str(Path('tools/wwe13_reduce_trial.py').resolve()),'--',str((out/'charted.json').resolve()),str((out/'reduced.json').resolve()),str((out/'profile.json').resolve()),'--hand-weighted','--material-boundaries' if material_only else '--uv-islands']+(['--export-face-floor']if export_face_floor else []),check=True,env=env,stdout=log,stderr=subprocess.STDOUT)\n                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/bin/blender', '-b', '-t', '2', '--python-exit-code', '1', '--python', '/workspace/Wrestler-Importer/tools/wwe13_reduce_trial.py', '--', '/workspace/Wrestler-Importer/local/wii-nine-study-01/retries-02/Edge---ch110-v01/charted.json', '/workspace/Wrestler-Importer/local/wii-nine-study-01/retries-02/Edge---ch110-v01/reduced.json', '/workspace/Wrestler-Importer/local/wii-nine-study-01/retries-02/Edge---ch110-v01/profile.json', '--hand-weighted', '--material-boundaries', '--export-face-floor']' returned non-zero exit status 1.\n",
+    "pac_sha256": null
+  }
+]

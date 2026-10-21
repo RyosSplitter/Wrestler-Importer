@@ -1,0 +1,86 @@
+[
+  {
+    "name": "w13_00",
+    "before": {
+      "width": 32,
+      "height": 32,
+      "colors": 32
+    },
+    "after": {
+      "width": 64,
+      "height": 64,
+      "colors": 32
+    },
+    "gim_byte_identical": false
+  },
+  {
+    "name": "w13_01",
+    "before": {
+      "width": 64,
+      "height": 64,
+      "colors": 32
+    },
+    "after": {
+      "width": 64,
+      "height": 64,
+      "colors": 32
+    },
+    "gim_byte_identical": true
+  },
+  {
+    "name": "w13_02",
+    "before": {
+      "width": 32,
+      "height": 32,
+      "colors": 16
+    },
+    "after": {
+      "width": 32,
+      "height": 32,
+      "colors": 16
+    },
+    "gim_byte_identical": true
+  },
+  {
+    "name": "w13_03",
+    "before": {
+      "width": 64,
+      "height": 64,
+      "colors": 16
+    },
+    "after": {
+      "width": 32,
+      "height": 32,
+      "colors": 16
+    },
+    "gim_byte_identical": false
+  },
+  {
+    "name": "w13_04",
+    "before": {
+      "width": 32,
+      "height": 64,
+      "colors": 32
+    },
+    "after": {
+      "width": 32,
+      "height": 64,
+      "colors": 32
+    },
+    "gim_byte_identical": true
+  },
+  {
+    "name": "w13_05",
+    "before": {
+      "width": 32,
+      "height": 64,
+      "colors": 152
+    },
+    "after": {
+      "width": 32,
+      "height": 64,
+      "colors": 152
+    },
+    "gim_byte_identical": true
+  }
+]

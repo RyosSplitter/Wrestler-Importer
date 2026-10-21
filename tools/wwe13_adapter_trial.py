@@ -294,7 +294,7 @@ def ocular_transfer(source, prepared, target):
         method='Native donor amplitudes only for original source ocular roles; unsupported donor roles attach to head, never amplify eye coefficients; jaw/body mass untouched')
 
 
-def chart_atlas(model, images, cell=256, *, power2_context=False):
+def chart_atlas(model, images, cell=256, *, power2_context=False, repeat_safe=False):
     """Crop bounded groups of whole triangles, preserving sampled source RGBA.
 
     Splits oversized islands for atlas detail, without clipping source triangles.
@@ -344,8 +344,16 @@ def chart_atlas(model, images, cell=256, *, power2_context=False):
                     if rx*unit <= w and ry*unit <= h:
                         canvases.append((rx*unit, ry*unit))
                 if not canvases:
-                    raise ValueError('Source chart cannot fit a supported aspect without upscaling')
-                cw, ch = min(canvases, key=lambda s: (s[0]*s[1], max(s), s))
+                    # A bilinear guard around UVs touching a repeating atlas
+                    # edge may extend 1-2 pixels beyond the original canvas.
+                    # Reuse that entire canvas exactly; do not upscale or clip
+                    # triangles. Opt-in for the multi-model Wii experiment.
+                    if (repeat_safe and (w/h in (.25,.5,1.,2.,4.))
+                            and np.all(extent<=np.array([w,h])+4)
+                            and np.all(uv>=-.01) and np.all(uv<=1.01)):
+                        low=np.array([0,0]);cw,ch=w,h
+                    else:raise ValueError('Source chart cannot fit a supported aspect without upscaling')
+                else:cw, ch = min(canvases, key=lambda s: (s[0]*s[1], max(s), s))
             if cw > w or ch > h:
                 raise ValueError('Source chart would exceed atlas ceiling')
             key = source_tid, *low.tolist(), cw, ch
