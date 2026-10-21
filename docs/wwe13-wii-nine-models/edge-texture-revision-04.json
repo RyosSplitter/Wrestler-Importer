@@ -1,0 +1,609 @@
+{
+  "before_pac_sha256": "a793f19d73a76300560dd3a82e7faa3e6ab6295a9acac7747d35c9224fb480b4",
+  "after_pac_sha256": "2a15b830a03edf0a82a9d14778cc37a421bd49fbbd46a1e741e79e4b031e1076",
+  "pac_bytes_before": 151552,
+  "pac_bytes_after": 151552,
+  "configured_limit": 152064,
+  "counts_before": {
+    "mesh_buffers": 55,
+    "vertices": 3457,
+    "triangles": 3415,
+    "material_records": 81,
+    "textures": 6
+  },
+  "counts_after": {
+    "mesh_buffers": 55,
+    "vertices": 3457,
+    "triangles": 3415,
+    "material_records": 81,
+    "textures": 6
+  },
+  "stored_sections_before": {
+    "2": 128003,
+    "8": 7072,
+    "9": 16117
+  },
+  "stored_sections_after": {
+    "2": 128006,
+    "8": 4010,
+    "9": 19347
+  },
+  "textures": [
+    {
+      "name": "w13_00",
+      "policy": "source",
+      "before": {
+        "width": 32,
+        "height": 32,
+        "bits": 8,
+        "useful_colors": 32,
+        "serialized_bytes": 2256
+      },
+      "after": {
+        "width": 64,
+        "height": 64,
+        "bits": 8,
+        "useful_colors": 64,
+        "serialized_bytes": 5328
+      },
+      "gim_byte_identical": false,
+      "decoded_rgba_identical": false,
+      "gim_sha256": "48c96cfd97de1e666af0d1fcbc62230668e35274cbe0ff4afa24bce2a70913ab",
+      "palette_qa": {
+        "baseline": {
+          "dimensions": [
+            32,
+            32
+          ],
+          "used_native_texels": 772,
+          "used_rgb_colors": 32,
+          "quantization_rgb_rmse_255": 5.278717002753991,
+          "quantization_rgb_error_p95_255": 7.937253933193772,
+          "source_resolution_ceiling_exceeded": false,
+          "interpretation": "Palette/color error versus source resized to this grid; separate from loss caused by resolution reduction"
+        },
+        "candidate": {
+          "dimensions": [
+            64,
+            64
+          ],
+          "used_native_texels": 2719,
+          "used_rgb_colors": 64,
+          "quantization_rgb_rmse_255": 3.253613338245929,
+          "quantization_rgb_error_p95_255": 5.0990195135927845,
+          "source_resolution_ceiling_exceeded": false,
+          "interpretation": "Palette/color error versus source resized to this grid; separate from loss caused by resolution reduction"
+        },
+        "findings": [],
+        "review": false,
+        "tolerance_status": "PROVISIONAL: RMSE increase >10% plus 0.5 RGB units; source ceiling/resolution/color-count changes reported separately",
+        "limitations": "No semantic skin detector or runtime filtering simulation; more source detail at higher resolution can itself increase quantization demand. Findings require visual review."
+      }
+    },
+    {
+      "name": "w13_01",
+      "policy": "source",
+      "before": {
+        "width": 64,
+        "height": 64,
+        "bits": 8,
+        "useful_colors": 16,
+        "serialized_bytes": 5328
+      },
+      "after": {
+        "width": 64,
+        "height": 64,
+        "bits": 8,
+        "useful_colors": 32,
+        "serialized_bytes": 5328
+      },
+      "gim_byte_identical": false,
+      "decoded_rgba_identical": false,
+      "gim_sha256": "74e15ba4d0c146399fc7dbf905c0ccc2c95d7df8cd2af846ab03f531510f6072",
+      "palette_qa": {
+        "baseline": {
+          "dimensions": [
+            64,
+            64
+          ],
+          "used_native_texels": 2848,
+          "used_rgb_colors": 16,
+          "quantization_rgb_rmse_255": 6.246028700849461,
+          "quantization_rgb_error_p95_255": 10.733900120388302,
+          "source_resolution_ceiling_exceeded": false,
+          "interpretation": "Palette/color error versus source resized to this grid; separate from loss caused by resolution reduction"
+        },
+        "candidate": {
+          "dimensions": [
+            64,
+            64
+          ],
+          "used_native_texels": 2848,
+          "used_rgb_colors": 32,
+          "quantization_rgb_rmse_255": 3.796651146088304,
+          "quantization_rgb_error_p95_255": 8.483129852450242,
+          "source_resolution_ceiling_exceeded": false,
+          "interpretation": "Palette/color error versus source resized to this grid; separate from loss caused by resolution reduction"
+        },
+        "findings": [],
+        "review": false,
+        "tolerance_status": "PROVISIONAL: RMSE increase >10% plus 0.5 RGB units; source ceiling/resolution/color-count changes reported separately",
+        "limitations": "No semantic skin detector or runtime filtering simulation; more source detail at higher resolution can itself increase quantization demand. Findings require visual review."
+      }
+    },
+    {
+      "name": "w13_02",
+      "policy": "source",
+      "before": {
+        "width": 64,
+        "height": 64,
+        "bits": 8,
+        "useful_colors": 16,
+        "serialized_bytes": 5328
+      },
+      "after": {
+        "width": 64,
+        "height": 64,
+        "bits": 8,
+        "useful_colors": 32,
+        "serialized_bytes": 5328
+      },
+      "gim_byte_identical": false,
+      "decoded_rgba_identical": false,
+      "gim_sha256": "96d80f361d9373cb1311fc94e87a764304dbf28413403ac5e78e0113e389ede6",
+      "palette_qa": {
+        "baseline": {
+          "dimensions": [
+            64,
+            64
+          ],
+          "used_native_texels": 2582,
+          "used_rgb_colors": 16,
+          "quantization_rgb_rmse_255": 8.717931163986986,
+          "quantization_rgb_error_p95_255": 15.861374525143757,
+          "source_resolution_ceiling_exceeded": false,
+          "interpretation": "Palette/color error versus source resized to this grid; separate from loss caused by resolution reduction"
+        },
+        "candidate": {
+          "dimensions": [
+            64,
+            64
+          ],
+          "used_native_texels": 2582,
+          "used_rgb_colors": 32,
+          "quantization_rgb_rmse_255": 5.642195151220076,
+          "quantization_rgb_error_p95_255": 12.447888300388831,
+          "source_resolution_ceiling_exceeded": false,
+          "interpretation": "Palette/color error versus source resized to this grid; separate from loss caused by resolution reduction"
+        },
+        "findings": [],
+        "review": false,
+        "tolerance_status": "PROVISIONAL: RMSE increase >10% plus 0.5 RGB units; source ceiling/resolution/color-count changes reported separately",
+        "limitations": "No semantic skin detector or runtime filtering simulation; more source detail at higher resolution can itself increase quantization demand. Findings require visual review."
+      }
+    },
+    {
+      "name": "w13_03",
+      "policy": "lossless-indexed4",
+      "before": {
+        "width": 128,
+        "height": 128,
+        "bits": 8,
+        "useful_colors": 16,
+        "serialized_bytes": 17616
+      },
+      "after": {
+        "width": 128,
+        "height": 128,
+        "bits": 4,
+        "useful_colors": 16,
+        "serialized_bytes": 8464
+      },
+      "gim_byte_identical": false,
+      "decoded_rgba_identical": true,
+      "gim_sha256": "ff5055877fe6a728b6057ebd35e15a5a8a1ed3623743a0cd4ecaf10de7e117a7",
+      "palette_qa": {
+        "baseline": {
+          "dimensions": [
+            128,
+            128
+          ],
+          "used_native_texels": 11149,
+          "used_rgb_colors": 16,
+          "quantization_rgb_rmse_255": 7.6139807645205355,
+          "quantization_rgb_error_p95_255": 15.329709716755891,
+          "source_resolution_ceiling_exceeded": false,
+          "interpretation": "Palette/color error versus source resized to this grid; separate from loss caused by resolution reduction"
+        },
+        "candidate": {
+          "dimensions": [
+            128,
+            128
+          ],
+          "used_native_texels": 11149,
+          "used_rgb_colors": 16,
+          "quantization_rgb_rmse_255": 7.6139807645205355,
+          "quantization_rgb_error_p95_255": 15.329709716755891,
+          "source_resolution_ceiling_exceeded": false,
+          "interpretation": "Palette/color error versus source resized to this grid; separate from loss caused by resolution reduction"
+        },
+        "findings": [],
+        "review": false,
+        "tolerance_status": "PROVISIONAL: RMSE increase >10% plus 0.5 RGB units; source ceiling/resolution/color-count changes reported separately",
+        "limitations": "No semantic skin detector or runtime filtering simulation; more source detail at higher resolution can itself increase quantization demand. Findings require visual review."
+      }
+    },
+    {
+      "name": "w13_04",
+      "policy": "preserve",
+      "before": {
+        "width": 32,
+        "height": 64,
+        "bits": 8,
+        "useful_colors": 61,
+        "serialized_bytes": 3280
+      },
+      "after": {
+        "width": 32,
+        "height": 64,
+        "bits": 8,
+        "useful_colors": 61,
+        "serialized_bytes": 3280
+      },
+      "gim_byte_identical": true,
+      "decoded_rgba_identical": true,
+      "gim_sha256": "fb58283e332a8e3939022d0dfd1783afe91e63a5678c06e71bf5eacdcba4e482",
+      "palette_qa": {
+        "baseline": {
+          "dimensions": [
+            32,
+            64
+          ],
+          "used_native_texels": 1092,
+          "used_rgb_colors": 61,
+          "quantization_rgb_rmse_255": 2.460679795289313,
+          "quantization_rgb_error_p95_255": 3.872983346207417,
+          "source_resolution_ceiling_exceeded": false,
+          "interpretation": "Palette/color error versus source resized to this grid; separate from loss caused by resolution reduction"
+        },
+        "candidate": {
+          "dimensions": [
+            32,
+            64
+          ],
+          "used_native_texels": 1092,
+          "used_rgb_colors": 61,
+          "quantization_rgb_rmse_255": 2.460679795289313,
+          "quantization_rgb_error_p95_255": 3.872983346207417,
+          "source_resolution_ceiling_exceeded": false,
+          "interpretation": "Palette/color error versus source resized to this grid; separate from loss caused by resolution reduction"
+        },
+        "findings": [],
+        "review": false,
+        "tolerance_status": "PROVISIONAL: RMSE increase >10% plus 0.5 RGB units; source ceiling/resolution/color-count changes reported separately",
+        "limitations": "No semantic skin detector or runtime filtering simulation; more source detail at higher resolution can itself increase quantization demand. Findings require visual review."
+      }
+    },
+    {
+      "name": "w13_05",
+      "policy": "preserve",
+      "before": {
+        "width": 64,
+        "height": 128,
+        "bits": 8,
+        "useful_colors": 136,
+        "serialized_bytes": 9424
+      },
+      "after": {
+        "width": 64,
+        "height": 128,
+        "bits": 8,
+        "useful_colors": 136,
+        "serialized_bytes": 9424
+      },
+      "gim_byte_identical": true,
+      "decoded_rgba_identical": true,
+      "gim_sha256": "3b43cb8857cfced095a44fcccc1b5df082cc77d93793d03498c30c03403403b9"
+    }
+  ],
+  "effect_storage": {
+    "changed": true,
+    "section": 8,
+    "decoded_bytes": 7072,
+    "decoded_sha256": "2bb4174789207f6fb9bf8132ffc1f683037b4036cca2372c7c1efc956969b4ee",
+    "stored_bytes_before": 7072,
+    "stored_bytes_after": 4010,
+    "reclaimed_stored_bytes": 3062,
+    "all_decoded_sections_exact": true,
+    "other_stored_payloads_exact": [
+      2,
+      9
+    ],
+    "effect_gim_hashes": {
+      "blood1": "b22de0801895565b7e40746d4e7f69623c5dbb0a085030f829a50df21fa3a381",
+      "blood2": "33b8f30eb220fb7a0d5e31c6e929531509765f44e7063edab95e0fc0712fb56b",
+      "blood_b1": "3cb6bd6c419c14aeb59baea73dfa38b1064d6d0463a5d04be8f4d62556d01391"
+    },
+    "compressor": {
+      "existing_codec": true,
+      "block_size": 4000,
+      "max_distinct": 200
+    },
+    "policy": "BPE storage only; all effects, texture records and decoded bytes retained"
+  },
+  "material_format_manifest": {
+    "material_control_changes": [
+      {
+        "mesh": 29,
+        "material": 1,
+        "texture": "w13_03",
+        "offset": 161216,
+        "before": 7,
+        "after": 5,
+        "old_bits": 8,
+        "new_bits": 4
+      },
+      {
+        "mesh": 30,
+        "material": 0,
+        "texture": "w13_03",
+        "offset": 164784,
+        "before": 7,
+        "after": 5,
+        "old_bits": 8,
+        "new_bits": 4
+      },
+      {
+        "mesh": 32,
+        "material": 1,
+        "texture": "w13_03",
+        "offset": 178960,
+        "before": 7,
+        "after": 5,
+        "old_bits": 8,
+        "new_bits": 4
+      },
+      {
+        "mesh": 33,
+        "material": 0,
+        "texture": "w13_03",
+        "offset": 182464,
+        "before": 7,
+        "after": 5,
+        "old_bits": 8,
+        "new_bits": 4
+      },
+      {
+        "mesh": 34,
+        "material": 0,
+        "texture": "w13_03",
+        "offset": 187712,
+        "before": 7,
+        "after": 5,
+        "old_bits": 8,
+        "new_bits": 4
+      },
+      {
+        "mesh": 35,
+        "material": 0,
+        "texture": "w13_03",
+        "offset": 191616,
+        "before": 7,
+        "after": 5,
+        "old_bits": 8,
+        "new_bits": 4
+      },
+      {
+        "mesh": 36,
+        "material": 0,
+        "texture": "w13_03",
+        "offset": 193968,
+        "before": 7,
+        "after": 5,
+        "old_bits": 8,
+        "new_bits": 4
+      },
+      {
+        "mesh": 37,
+        "material": 0,
+        "texture": "w13_03",
+        "offset": 195728,
+        "before": 7,
+        "after": 5,
+        "old_bits": 8,
+        "new_bits": 4
+      },
+      {
+        "mesh": 38,
+        "material": 1,
+        "texture": "w13_03",
+        "offset": 202160,
+        "before": 7,
+        "after": 5,
+        "old_bits": 8,
+        "new_bits": 4
+      },
+      {
+        "mesh": 39,
+        "material": 0,
+        "texture": "w13_03",
+        "offset": 204768,
+        "before": 7,
+        "after": 5,
+        "old_bits": 8,
+        "new_bits": 4
+      },
+      {
+        "mesh": 40,
+        "material": 0,
+        "texture": "w13_03",
+        "offset": 206112,
+        "before": 7,
+        "after": 5,
+        "old_bits": 8,
+        "new_bits": 4
+      },
+      {
+        "mesh": 41,
+        "material": 0,
+        "texture": "w13_03",
+        "offset": 208080,
+        "before": 7,
+        "after": 5,
+        "old_bits": 8,
+        "new_bits": 4
+      },
+      {
+        "mesh": 42,
+        "material": 0,
+        "texture": "w13_03",
+        "offset": 211120,
+        "before": 7,
+        "after": 5,
+        "old_bits": 8,
+        "new_bits": 4
+      },
+      {
+        "mesh": 43,
+        "material": 0,
+        "texture": "w13_03",
+        "offset": 214288,
+        "before": 7,
+        "after": 5,
+        "old_bits": 8,
+        "new_bits": 4
+      },
+      {
+        "mesh": 44,
+        "material": 0,
+        "texture": "w13_03",
+        "offset": 216560,
+        "before": 7,
+        "after": 5,
+        "old_bits": 8,
+        "new_bits": 4
+      },
+      {
+        "mesh": 45,
+        "material": 0,
+        "texture": "w13_03",
+        "offset": 217552,
+        "before": 7,
+        "after": 5,
+        "old_bits": 8,
+        "new_bits": 4
+      },
+      {
+        "mesh": 46,
+        "material": 0,
+        "texture": "w13_03",
+        "offset": 221328,
+        "before": 7,
+        "after": 5,
+        "old_bits": 8,
+        "new_bits": 4
+      },
+      {
+        "mesh": 47,
+        "material": 0,
+        "texture": "w13_03",
+        "offset": 226416,
+        "before": 7,
+        "after": 5,
+        "old_bits": 8,
+        "new_bits": 4
+      },
+      {
+        "mesh": 48,
+        "material": 0,
+        "texture": "w13_03",
+        "offset": 228368,
+        "before": 7,
+        "after": 5,
+        "old_bits": 8,
+        "new_bits": 4
+      },
+      {
+        "mesh": 49,
+        "material": 0,
+        "texture": "w13_03",
+        "offset": 229904,
+        "before": 7,
+        "after": 5,
+        "old_bits": 8,
+        "new_bits": 4
+      },
+      {
+        "mesh": 51,
+        "material": 1,
+        "texture": "w13_03",
+        "offset": 242640,
+        "before": 7,
+        "after": 5,
+        "old_bits": 8,
+        "new_bits": 4
+      },
+      {
+        "mesh": 52,
+        "material": 1,
+        "texture": "w13_03",
+        "offset": 247808,
+        "before": 7,
+        "after": 5,
+        "old_bits": 8,
+        "new_bits": 4
+      },
+      {
+        "mesh": 53,
+        "material": 2,
+        "texture": "w13_03",
+        "offset": 258976,
+        "before": 7,
+        "after": 5,
+        "old_bits": 8,
+        "new_bits": 4
+      },
+      {
+        "mesh": 54,
+        "material": 1,
+        "texture": "w13_03",
+        "offset": 265168,
+        "before": 7,
+        "after": 5,
+        "old_bits": 8,
+        "new_bits": 4
+      }
+    ],
+    "all_other_native_bytes_exact": true,
+    "geometry_vertex_index_uv_normal_weight_and_rig_bytes_exact": true,
+    "policy": "Only observed regular indexed4/indexed8 material-control words may differ"
+  },
+  "pixel_palette_bytes_before": 48320,
+  "pixel_palette_bytes_after": 42240,
+  "native_memory_envelope": 54016,
+  "qa": {
+    "geometry_p95_before": 0.001971138865206544,
+    "geometry_p95_after": 0.001971138865206544,
+    "findings_before": 47,
+    "findings_after": 47,
+    "exact_finding_lists_identical": true,
+    "new_findings": 0,
+    "previous_findings_unresolved": true
+  },
+  "tests": {
+    "repository_suite_passed": 611
+  },
+  "status": "Native structural/analytical checks pass, no geometric regression; source/texture findings remain and actual PPSSPP testing pending",
+  "uvs_unchanged": true,
+  "hair_trial": "A \u2014 Nearest Alpha",
+  "rejected_candidates": [
+    {
+      "pac_sha256": "18689dbd5b9383074e0181e9f23ac46ec9f7a4f9c818a3168bd392cb8995a178",
+      "reason": "Higher-resolution 16-color face worsens palette error and looks posterized despite improved combined score"
+    },
+    {
+      "pac_sha256": "632793951517c6293f53235376aec657985c251f365dd1f39ce2d16e67800c0a",
+      "reason": "Improves skin but cuts clothing design page 128->64 and eye colors; rejected after visual review"
+    }
+  ]
+}

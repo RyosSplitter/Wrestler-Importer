@@ -1,0 +1,838 @@
+{
+  "status": "Isolated experiments only. App release and main merge held.",
+  "in_ring_cap": 152064,
+  "entrance_cap": 180000,
+  "geometry_trials": [
+    {
+      "experiment": "source-hands",
+      "source": "Randy Orton - ch161.pac",
+      "variant": 0,
+      "baseline_sha256": "3bcf134be21603fce32de0abcef4171e71cb8c30c2b7b1fe1fb4779ece17deba",
+      "candidate_sha256": "0581cb2772d069f3e3d5f9f8a93b40f2bbaa9b8dd80e175d52b8db5ebbb32286",
+      "pac_bytes": 151552,
+      "triangles_before": 2983,
+      "triangles_after": 3602,
+      "decision": "reject-global-uv-locks",
+      "p95_before": 0.001992893173883209,
+      "p95_after": 0.008983738098222262,
+      "new_findings": [
+        {
+          "region": "material:w13_03",
+          "pose": "crouch",
+          "kind": "material-boundary-pose-or-seam-drift"
+        },
+        {
+          "region": "right-hands",
+          "pose": "elbow-flex-right",
+          "kind": "pose-dependent-deformation"
+        }
+      ],
+      "resolved_findings": 2,
+      "complete_analytical_qa_report": true,
+      "preexisting_findings_remain": true
+    },
+    {
+      "experiment": "wrist-support",
+      "source": "Booker T - ch338.pac",
+      "variant": 0,
+      "baseline_sha256": "d52f7c6600eae72d45ff3f9f46d582806dce03b409f8617a00b43462af3b5f25",
+      "candidate_sha256": "df13dd7a2254a0942e676d9dd3c418a62df26bff2fc2e5992655ac1b50c5b107",
+      "pac_bytes": 151552,
+      "triangles_before": 3516,
+      "triangles_after": 3930,
+      "decision": "reject-global-uv-locks",
+      "p95_before": 0.004618453813617628,
+      "p95_after": 0.011109054085806213,
+      "new_findings": [
+        {
+          "region": "buttocks",
+          "pose": "crouch",
+          "kind": "pose-dependent-deformation"
+        },
+        {
+          "region": "material:w13_03",
+          "pose": "crouch",
+          "kind": "material-boundary-pose-or-seam-drift"
+        }
+      ],
+      "resolved_findings": 1,
+      "complete_analytical_qa_report": true,
+      "preexisting_findings_remain": true
+    },
+    {
+      "experiment": "hand-floor-065",
+      "source": "Bret Hart - ch177.pac",
+      "variant": 0,
+      "baseline_sha256": "4003df8bbe7de2d957d8455ab57da22871a4d14cad8860756f92044c315639f4",
+      "candidate_sha256": "2233772a8146fec0140b056d77ca494eaddb1869aad2a6a2bffafca428ede5ac",
+      "pac_bytes": 151552,
+      "triangles_before": 3241,
+      "triangles_after": 3660,
+      "decision": "reject-global-uv-locks",
+      "p95_before": 0.0033362530925523676,
+      "p95_after": 0.00731636777705334,
+      "new_findings": [
+        {
+          "region": "buttocks",
+          "pose": "crouch",
+          "kind": "pose-dependent-deformation"
+        },
+        {
+          "region": "chin",
+          "pose": "rest",
+          "kind": "surface-shape"
+        },
+        {
+          "region": "material:w13_01",
+          "pose": "walk-right",
+          "kind": "material-boundary-pose-or-seam-drift"
+        },
+        {
+          "region": "shoulders",
+          "pose": "elbow-flex-left",
+          "kind": "pose-dependent-deformation"
+        },
+        {
+          "region": "shoulders",
+          "pose": "elbow-flex-right",
+          "kind": "pose-dependent-deformation"
+        },
+        {
+          "region": "shoulders",
+          "pose": "standing",
+          "kind": "pose-dependent-deformation"
+        },
+        {
+          "region": "torso",
+          "pose": "elbow-flex-left",
+          "kind": "pose-dependent-deformation"
+        },
+        {
+          "region": "torso",
+          "pose": "elbow-flex-right",
+          "kind": "pose-dependent-deformation"
+        },
+        {
+          "region": "torso",
+          "pose": "standing",
+          "kind": "pose-dependent-deformation"
+        }
+      ],
+      "resolved_findings": 1,
+      "complete_analytical_qa_report": true,
+      "preexisting_findings_remain": true
+    },
+    {
+      "experiment": "uv-islands",
+      "source": "Booker T - ch338.pac",
+      "variant": 0,
+      "baseline_sha256": "d52f7c6600eae72d45ff3f9f46d582806dce03b409f8617a00b43462af3b5f25",
+      "candidate_sha256": "ad191db9ed8b22f5dc053503d963b6005214b23a5a40214e6b85d369a9b5cc4c",
+      "pac_bytes": 151552,
+      "triangles_before": 3516,
+      "triangles_after": 3776,
+      "decision": "reject-global-change",
+      "p95_before": 0.004618453813617628,
+      "p95_after": 0.003420546195442003,
+      "new_findings": [
+        {
+          "region": "face",
+          "pose": "rest",
+          "kind": "surface-shape"
+        },
+        {
+          "region": "jaw",
+          "pose": "rest",
+          "kind": "surface-shape"
+        },
+        {
+          "region": "left-hands",
+          "pose": "rest",
+          "kind": "surface-shape"
+        }
+      ],
+      "resolved_findings": 2,
+      "complete_analytical_qa_report": true,
+      "preexisting_findings_remain": true
+    },
+    {
+      "experiment": "uv-islands",
+      "source": "Bret Hart - ch177.pac",
+      "variant": 0,
+      "baseline_sha256": "4003df8bbe7de2d957d8455ab57da22871a4d14cad8860756f92044c315639f4",
+      "candidate_sha256": "03ef01e5c076b3ff4afe3ec12cd8040da3d1a60087a4356dad485b0e70d0f526",
+      "pac_bytes": 151552,
+      "triangles_before": 3241,
+      "triangles_after": 3621,
+      "decision": "reject-global-change",
+      "p95_before": 0.0033362530925523676,
+      "p95_after": 0.0030814984011701273,
+      "new_findings": [
+        {
+          "region": "material:w13_01",
+          "pose": "walk-right",
+          "kind": "material-boundary-pose-or-seam-drift"
+        },
+        {
+          "region": "material:w13_03",
+          "pose": "crouch",
+          "kind": "material-boundary-pose-or-seam-drift"
+        }
+      ],
+      "resolved_findings": 1,
+      "complete_analytical_qa_report": true,
+      "preexisting_findings_remain": true
+    },
+    {
+      "experiment": "uv-islands",
+      "source": "Randy Orton - ch161.pac",
+      "variant": 0,
+      "baseline_sha256": "3bcf134be21603fce32de0abcef4171e71cb8c30c2b7b1fe1fb4779ece17deba",
+      "candidate_sha256": "be0948030265f78cce9cdb179d918d1bbfb0e09fefacc458cb1ce9ce06fbaeae",
+      "pac_bytes": 151552,
+      "triangles_before": 2983,
+      "triangles_after": 3172,
+      "decision": "reject-global-change",
+      "p95_before": 0.001992893173883209,
+      "p95_after": 0.002262587380114808,
+      "new_findings": [
+        {
+          "region": "face",
+          "pose": "rest",
+          "kind": "surface-shape"
+        },
+        {
+          "region": "head",
+          "pose": "head-probe-eye-lid-neck-jaw",
+          "kind": "head-vertex-outlier"
+        },
+        {
+          "region": "head",
+          "pose": "head-probe-eyes-world-x--25",
+          "kind": "head-vertex-outlier"
+        },
+        {
+          "region": "head",
+          "pose": "head-probe-eyes-world-x-25",
+          "kind": "head-vertex-outlier"
+        },
+        {
+          "region": "head",
+          "pose": "head-probe-eyes-world-y--25",
+          "kind": "head-vertex-outlier"
+        },
+        {
+          "region": "head",
+          "pose": "head-probe-eyes-world-y-25",
+          "kind": "head-vertex-outlier"
+        },
+        {
+          "region": "head",
+          "pose": "head-probe-eyes-world-z--25",
+          "kind": "head-vertex-outlier"
+        },
+        {
+          "region": "head",
+          "pose": "head-probe-eyes-world-z-25",
+          "kind": "head-vertex-outlier"
+        },
+        {
+          "region": "head",
+          "pose": "head-probe-head-turn",
+          "kind": "head-vertex-outlier"
+        },
+        {
+          "region": "head",
+          "pose": "head-probe-jaw-open",
+          "kind": "head-vertex-outlier"
+        },
+        {
+          "region": "head",
+          "pose": "head-probe-l-eye-local-turn",
+          "kind": "head-vertex-outlier"
+        },
+        {
+          "region": "head",
+          "pose": "head-probe-l-lid-local-close",
+          "kind": "head-vertex-outlier"
+        },
+        {
+          "region": "head",
+          "pose": "head-probe-l_mayu_00-local-x",
+          "kind": "head-vertex-outlier"
+        },
+        {
+          "region": "head",
+          "pose": "head-probe-l_mayu_00-local-y",
+          "kind": "head-vertex-outlier"
+        },
+        {
+          "region": "head",
+          "pose": "head-probe-l_mayu_00-local-z",
+          "kind": "head-vertex-outlier"
+        },
+        {
+          "region": "head",
+          "pose": "head-probe-l_mayu_01-local-x",
+          "kind": "head-vertex-outlier"
+        },
+        {
+          "region": "head",
+          "pose": "head-probe-l_mayu_01-local-y",
+          "kind": "head-vertex-outlier"
+        },
+        {
+          "region": "head",
+          "pose": "head-probe-l_mayu_01-local-z",
+          "kind": "head-vertex-outlier"
+        },
+        {
+          "region": "head",
+          "pose": "head-probe-l_mayu_02-local-x",
+          "kind": "head-vertex-outlier"
+        },
+        {
+          "region": "head",
+          "pose": "head-probe-l_mayu_02-local-y",
+          "kind": "head-vertex-outlier"
+        },
+        {
+          "region": "head",
+          "pose": "head-probe-l_mayu_02-local-z",
+          "kind": "head-vertex-outlier"
+        },
+        {
+          "region": "head",
+          "pose": "head-probe-neck-turn",
+          "kind": "head-vertex-outlier"
+        },
+        {
+          "region": "head",
+          "pose": "head-probe-ocular-local-translate-x",
+          "kind": "head-vertex-outlier"
+        },
+        {
+          "region": "head",
+          "pose": "head-probe-ocular-local-translate-y",
+          "kind": "head-vertex-outlier"
+        },
+        {
+          "region": "head",
+          "pose": "head-probe-ocular-local-translate-z",
+          "kind": "head-vertex-outlier"
+        },
+        {
+          "region": "head",
+          "pose": "head-probe-psp-brow-local",
+          "kind": "head-vertex-outlier"
+        },
+        {
+          "region": "head",
+          "pose": "head-probe-r-eye-local-turn",
+          "kind": "head-vertex-outlier"
+        },
+        {
+          "region": "head",
+          "pose": "head-probe-r-lid-local-close",
+          "kind": "head-vertex-outlier"
+        },
+        {
+          "region": "head",
+          "pose": "head-probe-r_mayu_00-local-x",
+          "kind": "head-vertex-outlier"
+        },
+        {
+          "region": "head",
+          "pose": "head-probe-r_mayu_00-local-y",
+          "kind": "head-vertex-outlier"
+        },
+        {
+          "region": "head",
+          "pose": "head-probe-r_mayu_00-local-z",
+          "kind": "head-vertex-outlier"
+        },
+        {
+          "region": "head",
+          "pose": "head-probe-r_mayu_01-local-x",
+          "kind": "head-vertex-outlier"
+        },
+        {
+          "region": "head",
+          "pose": "head-probe-r_mayu_01-local-y",
+          "kind": "head-vertex-outlier"
+        },
+        {
+          "region": "head",
+          "pose": "head-probe-r_mayu_01-local-z",
+          "kind": "head-vertex-outlier"
+        },
+        {
+          "region": "head",
+          "pose": "head-probe-r_mayu_02-local-x",
+          "kind": "head-vertex-outlier"
+        },
+        {
+          "region": "head",
+          "pose": "head-probe-r_mayu_02-local-y",
+          "kind": "head-vertex-outlier"
+        },
+        {
+          "region": "head",
+          "pose": "head-probe-r_mayu_02-local-z",
+          "kind": "head-vertex-outlier"
+        },
+        {
+          "region": "head",
+          "pose": "head-probe-rest",
+          "kind": "head-vertex-outlier"
+        },
+        {
+          "region": "head",
+          "pose": "rest",
+          "kind": "head-vertex-outlier"
+        },
+        {
+          "region": "jaw",
+          "pose": "rest",
+          "kind": "surface-shape"
+        },
+        {
+          "region": "material:w13_00",
+          "pose": "rest",
+          "kind": "material-boundary-drift"
+        },
+        {
+          "region": "nose",
+          "pose": "rest",
+          "kind": "surface-shape"
+        }
+      ],
+      "resolved_findings": 3,
+      "complete_analytical_qa_report": true,
+      "preexisting_findings_remain": true
+    },
+    {
+      "experiment": "island-controls",
+      "source": "Billy Gunn - ch313.pac",
+      "variant": 0,
+      "baseline_sha256": "4102d7cc782cc9be51c7b90d0593f97807a02b6ccca0e2d155efed124f0edc3d",
+      "candidate_sha256": "2d37bd7245b4569ea8cbadcd88586cbaf882227966614ef339c809c87da11e77",
+      "pac_bytes": 151552,
+      "triangles_before": 3328,
+      "triangles_after": 3605,
+      "decision": "reject-global-change",
+      "p95_before": 0.00273685768386665,
+      "p95_after": 0.004354814248509356,
+      "new_findings": [
+        {
+          "region": "shoulders",
+          "pose": "elbow-flex-left",
+          "kind": "pose-dependent-deformation"
+        },
+        {
+          "region": "shoulders",
+          "pose": "elbow-flex-right",
+          "kind": "pose-dependent-deformation"
+        },
+        {
+          "region": "shoulders",
+          "pose": "standing",
+          "kind": "pose-dependent-deformation"
+        }
+      ],
+      "resolved_findings": 1,
+      "complete_analytical_qa_report": true,
+      "preexisting_findings_remain": true,
+      "original_texel_uv_p95_before": 19.169712364721303,
+      "original_texel_uv_p95_after": 7.37857452351032
+    },
+    {
+      "experiment": "island-controls",
+      "source": "Bradshaw - ch124.pac",
+      "variant": 0,
+      "baseline_sha256": "71f98b715815dc96bdf5e411e060c42000b7b5c8d75f665686f4810738798911",
+      "candidate_sha256": "d17a8c93ffb9ad43fda4272c62d6bfcc04a53c087374fb365486abdd08caea16",
+      "pac_bytes": 151552,
+      "triangles_before": 3283,
+      "triangles_after": 3497,
+      "decision": "reject-global-change",
+      "p95_before": 0.0022217410000653715,
+      "p95_after": 0.003976124828829657,
+      "new_findings": [
+        {
+          "region": "jaw",
+          "pose": "rest",
+          "kind": "surface-shape"
+        },
+        {
+          "region": "material:w13_02",
+          "pose": "rest",
+          "kind": "material-boundary-drift"
+        },
+        {
+          "region": "waist",
+          "pose": "crouch",
+          "kind": "pose-dependent-deformation"
+        }
+      ],
+      "resolved_findings": 5,
+      "complete_analytical_qa_report": true,
+      "preexisting_findings_remain": true,
+      "original_texel_uv_p95_before": 3.6883368146171938,
+      "original_texel_uv_p95_after": 5.208431256204272
+    },
+    {
+      "experiment": "island-controls",
+      "source": "Wade Barrett - ch325.pac",
+      "variant": 0,
+      "baseline_sha256": "7108f55b7cd9dd0ad8c93efd33d69e43f4fc4ce00a671ec305eb75472e88aa2f",
+      "candidate_sha256": "a0b5f8adfa13aa2cb83c80e087a6100bd0ce85e0f2a7dec649ca2e36ca4a9f79",
+      "pac_bytes": 151552,
+      "triangles_before": 3552,
+      "triangles_after": 3761,
+      "decision": "reject-global-change",
+      "p95_before": 0.003004488841088113,
+      "p95_after": 0.002210864930596766,
+      "new_findings": [
+        {
+          "region": "head",
+          "pose": "head-probe-neck-turn",
+          "kind": "culled-head-coverage-loss"
+        },
+        {
+          "region": "jaw",
+          "pose": "rest",
+          "kind": "surface-shape"
+        },
+        {
+          "region": "nose",
+          "pose": "rest",
+          "kind": "surface-shape"
+        }
+      ],
+      "resolved_findings": 0,
+      "complete_analytical_qa_report": true,
+      "preexisting_findings_remain": true,
+      "original_texel_uv_p95_before": 6.269967305908551,
+      "original_texel_uv_p95_after": 4.275608843862489
+    },
+    {
+      "experiment": "arm-composites",
+      "source": "Booker T - ch338.pac",
+      "variant": 0,
+      "baseline_sha256": "d52f7c6600eae72d45ff3f9f46d582806dce03b409f8617a00b43462af3b5f25",
+      "candidate_sha256": "1589ee2b33f9111c84fce6aea4d1a246a4ec6d663ecd5cab7273cf25ec9fc39e",
+      "pac_bytes": 149504,
+      "triangles_before": 3516,
+      "triangles_after": 3554,
+      "decision": "reject-hand-regression",
+      "p95_before": 0.004618453813617628,
+      "p95_after": 0.004576045275299985,
+      "new_findings": [
+        {
+          "region": "left-hands",
+          "pose": "rest",
+          "kind": "surface-shape"
+        }
+      ],
+      "resolved_findings": 0,
+      "complete_analytical_qa_report": true,
+      "preexisting_findings_remain": true,
+      "original_texel_uv_p95_before": 7.741421089044479,
+      "original_texel_uv_p95_after": 4.925383329135836
+    },
+    {
+      "experiment": "arm-composites",
+      "source": "Randy Orton - ch161.pac",
+      "variant": 0,
+      "baseline_sha256": "3bcf134be21603fce32de0abcef4171e71cb8c30c2b7b1fe1fb4779ece17deba",
+      "candidate_sha256": "7709424cf43e6be53c1f2e94d368e0ea7270b2ac6290c2b9250efc6345211130",
+      "pac_bytes": 147456,
+      "triangles_before": 2983,
+      "triangles_after": 3007,
+      "decision": "eligible-for-private-PPSSPP-trial",
+      "p95_before": 0.001992893173883209,
+      "p95_after": 0.0019723731964143257,
+      "new_findings": [],
+      "resolved_findings": 0,
+      "complete_analytical_qa_report": true,
+      "preexisting_findings_remain": true,
+      "original_texel_uv_p95_before": 3.5853703589362746,
+      "original_texel_uv_p95_after": 2.991230502980549
+    },
+    {
+      "experiment": "arm-only",
+      "source": "Booker T - ch338.pac",
+      "variant": 0,
+      "baseline_sha256": "d52f7c6600eae72d45ff3f9f46d582806dce03b409f8617a00b43462af3b5f25",
+      "candidate_sha256": "60e55ff2c749d698f5d7e214c780045459b8e856bedba2f66c466cee842a8c7b",
+      "pac_bytes": 149504,
+      "triangles_before": 3516,
+      "triangles_after": 3548,
+      "decision": "reject-hand-regression",
+      "p95_before": 0.004618453813617628,
+      "p95_after": 0.004566814119100628,
+      "new_findings": [
+        {
+          "region": "left-hands",
+          "pose": "rest",
+          "kind": "surface-shape"
+        }
+      ],
+      "resolved_findings": 2,
+      "complete_analytical_qa_report": true,
+      "preexisting_findings_remain": true,
+      "original_texel_uv_p95_before": 7.741421089044479,
+      "original_texel_uv_p95_after": 5.208893588282312
+    }
+  ],
+  "edge_trials": [
+    {
+      "experiment": "edge-hair-alpha",
+      "bytes": 151552,
+      "sha256": "a793f19d73a76300560dd3a82e7faa3e6ab6295a9acac7747d35c9224fb480b4",
+      "model_yobj_sha256": "789989ae5fec15b5188a2b6736f0ab59758e742526e243c37f49995808adbd63",
+      "geometry_yobj_byte_identical": true,
+      "all_other_gims_byte_identical": true,
+      "texture_pixel_clut_bytes": 48320,
+      "native_envelope": 54016,
+      "opacity": {
+        "source_dimensions": [
+          128,
+          256
+        ],
+        "candidate_dimensions": [
+          64,
+          128
+        ],
+        "source_quality_ceiling_exceeded": false,
+        "uv_used_source_texels": 25298,
+        "alpha_mae": 19.396197327852004,
+        "probes": {
+          "64": {
+            "source_visible_texels": 18381,
+            "candidate_visible_texels": 18302,
+            "support_recall": 0.9465752679397204,
+            "support_precision": 0.950661129931155,
+            "intersection_over_union": 0.9022505704210745,
+            "missing_source_texels": 982,
+            "newly_opaque_texels": 903,
+            "source_thin_edge_texels": 4010,
+            "thin_edge_support_recall": 0.7551122194513715,
+            "source_components_at_least_four_texels": 18,
+            "vanished_components": 0,
+            "vanished_component_source_texels": 0,
+            "review": true
+          },
+          "128": {
+            "source_visible_texels": 16561,
+            "candidate_visible_texels": 16515,
+            "support_recall": 0.9367187971740837,
+            "support_precision": 0.9393278837420527,
+            "intersection_over_union": 0.8832773444172408,
+            "missing_source_texels": 1048,
+            "newly_opaque_texels": 1002,
+            "source_thin_edge_texels": 4043,
+            "thin_edge_support_recall": 0.7407865446450655,
+            "source_components_at_least_four_texels": 23,
+            "vanished_components": 3,
+            "vanished_component_source_texels": 14,
+            "review": true
+          },
+          "192": {
+            "source_visible_texels": 14566,
+            "candidate_visible_texels": 14580,
+            "support_recall": 0.9314842784566799,
+            "support_precision": 0.9305898491083676,
+            "intersection_over_union": 0.8709718834253435,
+            "missing_source_texels": 998,
+            "newly_opaque_texels": 1012,
+            "source_thin_edge_texels": 3631,
+            "thin_edge_support_recall": 0.7251445882676949,
+            "source_components_at_least_four_texels": 29,
+            "vanished_components": 2,
+            "vanished_component_source_texels": 12,
+            "review": true
+          }
+        },
+        "review": true,
+        "threshold_status": "PROVISIONAL review only: support recall <95%, thin/edge recall <85%, or an entirely lost component of >=4 source texels",
+        "limitations": "Nearest/repeat-style texture support in original UV space; actual GPU alpha cutoff, filtering, culling, camera visibility and blending are not emulated."
+      },
+      "decision": "eligible-for-private-PPSSPP-AB-trial; opacity review remains"
+    },
+    {
+      "experiment": "edge-hair-components",
+      "bytes": 151552,
+      "sha256": "a30ae2cdde4d606aef8359cf96694b538ec317677eab17c218012d24bff7d258",
+      "model_yobj_sha256": "789989ae5fec15b5188a2b6736f0ab59758e742526e243c37f49995808adbd63",
+      "geometry_yobj_byte_identical": true,
+      "all_other_gims_byte_identical": true,
+      "texture_pixel_clut_bytes": 48320,
+      "native_envelope": 54016,
+      "opacity": {
+        "source_dimensions": [
+          128,
+          256
+        ],
+        "candidate_dimensions": [
+          64,
+          128
+        ],
+        "source_quality_ceiling_exceeded": false,
+        "uv_used_source_texels": 25298,
+        "alpha_mae": 19.40196853506206,
+        "probes": {
+          "64": {
+            "source_visible_texels": 18381,
+            "candidate_visible_texels": 18306,
+            "support_recall": 0.9466840759479898,
+            "support_precision": 0.9505626570523326,
+            "intersection_over_union": 0.9022607072487815,
+            "missing_source_texels": 980,
+            "newly_opaque_texels": 905,
+            "source_thin_edge_texels": 4010,
+            "thin_edge_support_recall": 0.7556109725685786,
+            "source_components_at_least_four_texels": 18,
+            "vanished_components": 0,
+            "vanished_component_source_texels": 0,
+            "review": true
+          },
+          "128": {
+            "source_visible_texels": 16561,
+            "candidate_visible_texels": 16535,
+            "support_recall": 0.9373226254453233,
+            "support_precision": 0.9387964922890838,
+            "intersection_over_union": 0.8833437660046662,
+            "missing_source_texels": 1038,
+            "newly_opaque_texels": 1012,
+            "source_thin_edge_texels": 4043,
+            "thin_edge_support_recall": 0.743259955478605,
+            "source_components_at_least_four_texels": 23,
+            "vanished_components": 0,
+            "vanished_component_source_texels": 0,
+            "review": true
+          },
+          "192": {
+            "source_visible_texels": 14566,
+            "candidate_visible_texels": 14592,
+            "support_recall": 0.9318275435946726,
+            "support_precision": 0.9301672149122807,
+            "intersection_over_union": 0.8709015078601219,
+            "missing_source_texels": 993,
+            "newly_opaque_texels": 1019,
+            "source_thin_edge_texels": 3631,
+            "thin_edge_support_recall": 0.7265216193885982,
+            "source_components_at_least_four_texels": 29,
+            "vanished_components": 0,
+            "vanished_component_source_texels": 0,
+            "review": true
+          }
+        },
+        "review": true,
+        "threshold_status": "PROVISIONAL review only: support recall <95%, thin/edge recall <85%, or an entirely lost component of >=4 source texels",
+        "limitations": "Nearest/repeat-style texture support in original UV space; actual GPU alpha cutoff, filtering, culling, camera visibility and blending are not emulated."
+      },
+      "decision": "eligible-for-private-PPSSPP-AB-trial; opacity review remains"
+    }
+  ],
+  "all_original_pacs_unchanged": [
+    {
+      "source": "Billy Gunn - ch313.pac",
+      "variant": 0,
+      "bytes": 147456,
+      "sha256": "4102d7cc782cc9be51c7b90d0593f97807a02b6ccca0e2d155efed124f0edc3d"
+    },
+    {
+      "source": "Booker T - ch338.pac",
+      "variant": 0,
+      "bytes": 147456,
+      "sha256": "d52f7c6600eae72d45ff3f9f46d582806dce03b409f8617a00b43462af3b5f25"
+    },
+    {
+      "source": "Bradshaw - ch124.pac",
+      "variant": 0,
+      "bytes": 147456,
+      "sha256": "71f98b715815dc96bdf5e411e060c42000b7b5c8d75f665686f4810738798911"
+    },
+    {
+      "source": "Bradshaw - ch124.pac",
+      "variant": 1,
+      "bytes": 147456,
+      "sha256": "94adb7e3c4f48ce4b129b4e15f3ddacb3b2a3fe10eea5b8f4922940c1bcc5231"
+    },
+    {
+      "source": "Bret Hart - ch177.pac",
+      "variant": 0,
+      "bytes": 147456,
+      "sha256": "4003df8bbe7de2d957d8455ab57da22871a4d14cad8860756f92044c315639f4"
+    },
+    {
+      "source": "Bret Hart - ch177.pac",
+      "variant": 1,
+      "bytes": 147456,
+      "sha256": "eccd9651777db0f2e316907fdf3b8573187a4f53d024117c7464ec3bc67ce92f"
+    },
+    {
+      "source": "CM Punk - ch131.pac",
+      "variant": 0,
+      "bytes": 147456,
+      "sha256": "e212b070a824312112cd8b7766f217cdb4ed44b0078311d2320d0a45f6ed93ea"
+    },
+    {
+      "source": "CM Punk - ch131.pac",
+      "variant": 1,
+      "bytes": 147456,
+      "sha256": "ff1bc4ed3dfeafed46ba195c5f667bcb523f1dd599c5b950c4b6b58604dfbe21"
+    },
+    {
+      "source": "CM Punk - ch131.pac",
+      "variant": 2,
+      "bytes": 147456,
+      "sha256": "896dcaa576178118f005daf21c4f0c23a68e0d8591e67d0d9b95cb695b664de2"
+    },
+    {
+      "source": "Chris Jericho 1999 - ch347.pac",
+      "variant": 0,
+      "bytes": 147456,
+      "sha256": "6de4c3e8069ad64c9d796d9ec218dec34fb4d3150d60ef6f6c656f50e32e7c4f"
+    },
+    {
+      "source": "Chris Jericho 1999 - ch347.pac",
+      "variant": 1,
+      "bytes": 147456,
+      "sha256": "1ac72a1928a84a7a13af90d004a35c5d713a2cd5a1e459d060bb9b5448ebc807"
+    },
+    {
+      "source": "Edge - ch110.pac",
+      "variant": 0,
+      "bytes": 147456,
+      "sha256": "c82155f01cbd7eccde30e9219585216589ac98afd054c4000859bfc67371fcb0"
+    },
+    {
+      "source": "Randy Orton - ch161.pac",
+      "variant": 0,
+      "bytes": 147456,
+      "sha256": "3bcf134be21603fce32de0abcef4171e71cb8c30c2b7b1fe1fb4779ece17deba"
+    },
+    {
+      "source": "Wade Barrett - ch325.pac",
+      "variant": 0,
+      "bytes": 147456,
+      "sha256": "7108f55b7cd9dd0ad8c93efd33d69e43f4fc4ce00a671ec305eb75472e88aa2f"
+    }
+  ],
+  "tests": {
+    "full_suite": 596,
+    "passed": true,
+    "focused_suite": 9,
+    "passed_again": true
+  },
+  "uncertainties": [
+    "Actual SVR2011 runtime behavior of new candidates",
+    "GPU alpha test/filter/cull semantics",
+    "Remaining Billy/Bret/entrance geometry and pad/band issues",
+    "Thresholds are provisional review limits, not a calibrated objective proof of visual quality"
+  ],
+  "wii_source_assets_committed_in_this_round": false
+}

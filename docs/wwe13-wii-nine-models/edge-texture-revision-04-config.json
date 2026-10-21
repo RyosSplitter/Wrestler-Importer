@@ -1,0 +1,8 @@
+[
+  {"name":"w13_00","policy":"source","width":64,"height":64,"bits":8,"colors":64},
+  {"name":"w13_01","policy":"source","width":64,"height":64,"bits":8,"colors":32},
+  {"name":"w13_02","policy":"source","width":64,"height":64,"bits":8,"colors":32},
+  {"name":"w13_03","policy":"lossless-indexed4"},
+  {"name":"w13_04","policy":"preserve"},
+  {"name":"w13_05","policy":"preserve"}
+]

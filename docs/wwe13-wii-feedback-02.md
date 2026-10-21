@@ -193,3 +193,10 @@ limit routing, unchanged handling of historical manifests, topology-independent
 UV comparisons, UV drift with identical positions, missing images, and seam
 lock identity without modifying distinct weights. No game-derived test fixture
 is committed. Private source PACs and all original test PACs remain hash-checked.
+
+## Follow-up evidence
+
+See [geometry and opacity round 3](wwe13-wii-geometry-opacity-03.md) for the
+rejected global seam/component policies, region-isolated wrist experiment,
+Edge opacity-support QA and controlled hair A/B candidates. None is a new
+production default; the app release remains held.

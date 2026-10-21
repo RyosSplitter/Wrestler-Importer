@@ -1,0 +1,29 @@
+{
+  "provenance": "Previously measured user-labelled SVR2011 native corpus; source retail provenance not independently authenticated",
+  "inventory_entry": "texture-quality-v025/native-census/inventory.json",
+  "inventory_sha256": "5aab85680a238ebd6448540f6e92a61b0fd4a17b1cce3105bbb70d98f1e3b8f6",
+  "filename": "Rock.PAC",
+  "pac_sha256": "30825f27cc19cbb5e4339e4244aaf650c34b1a30183a8b7567d326c7aaffd165",
+  "effect_section": {
+    "id": 8,
+    "offset": 66712,
+    "stored_bytes": 4008,
+    "decoded_bytes": 7072,
+    "kind": "textures",
+    "compressed": true
+  },
+  "gims": [
+    {
+      "name": "blood1",
+      "sha256": "b22de0801895565b7e40746d4e7f69623c5dbb0a085030f829a50df21fa3a381"
+    },
+    {
+      "name": "blood2",
+      "sha256": "33b8f30eb220fb7a0d5e31c6e929531509765f44e7063edab95e0fc0712fb56b"
+    },
+    {
+      "name": "blood_b1",
+      "sha256": "3cb6bd6c419c14aeb59baea73dfa38b1064d6d0463a5d04be8f4d62556d01391"
+    }
+  ]
+}
