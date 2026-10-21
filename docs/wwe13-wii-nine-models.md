@@ -57,6 +57,10 @@ not a lowered tolerance or permission to emit degenerate indices.
 
 ## Source layout supplement
 
+Position-scale erratum: [the Q7/Q8 packet hotfix](wwe13-wii-packet-scale-hotfix.md)
+documents h+0x34. The position `/128` examples below apply to Q7; do not apply
+that divisor to a Q8 auxiliary packet. `trans` indicates a cutout, not hair anatomy.
+
 **CONFIRMED in this corpus:** offsets below are relative to the inner `YOBJ`,
 after the 24-byte DUMY prefix. Wii fields shown are big-endian; pointers marked
 `+8` address the shared YOBJ origin, even in packet 1. PACH wrapper fields remain

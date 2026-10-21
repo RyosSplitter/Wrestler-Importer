@@ -12,7 +12,6 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
 sys.path.insert(0, str(ROOT / 'tools'))
-import blender_reduce
 import region_mesh
 from vertex_identity import annotate
 
@@ -31,7 +30,9 @@ def classify(model, hand_weighted=False, preserve_hand_transitions=False):
                 weights = [sum(mesh['vertices'][i]['weights'][j] for i in tri) / 3 for j in range(model['bone_count'])]
                 if any(mesh['vertices'][i].get('skin_locked') for i in tri):
                     label = 'Preserved'
-                elif mesh['role'] == 'Hair':
+                elif mesh['role'] in ('Hair','Cutout'):
+                    # Historical profile label: retain all cutout geometry,
+                    # including leg decals, rather than assuming it is hair.
                     label = 'Hair'
                 elif mesh['role'] in ('EyeShell', 'Eyeball') or sum(weights[j] for j in eyes) > .98:
                     label = 'Eyes'
@@ -90,6 +91,7 @@ def split_uv_regions(model, components=True):
 
 
 def run(source, output, profile, hand_weighted=False, uv_islands=False, material_only=False, export_face_floor=False, opposed_normals=False, source_normals=False, preserve_uv_seams=False, preserve_hand_transitions=False):
+    import blender_reduce
     source, output, profile = map(Path, (source, output, profile))
     if output.exists():
         raise FileExistsError(output)

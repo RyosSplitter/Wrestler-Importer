@@ -17,7 +17,7 @@ from desktop.adapters.wwe13_wii import selected_index
 from desktop.wii_textures import allocate
 from tools.psp_effect_storage_trial import compact_effect_storage
 from tools.psp_mesh_merge_trial import sections,write_preview
-from tools.wwe13_wii_corpus import bundles,source_bundle
+from tools.wwe13_wii_corpus import bundles,verified_source_bundle as source_bundle
 from tools.wwe13_wii_trial import run as build_wii,validate_trial
 from tools.wwe13_budget import budget
 from model_qa.pipeline import run as compare
@@ -110,6 +110,7 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
         '<p>Native structure and analytical pose gates passed. This is not in-game validation. Some Wii hair, hands, clothing, facial color and body shapes still require review; known bad global geometry rules remain disabled. Dynamic Wii blood/hair animation is not reproduced. Unknown layouts are rejected.</p>',
         '<p>Existing material-domain reduction and rig mapping; measured texture allocation with source-nearest alpha and a half-source cutout floor. Opaque 16-color candidates may use lossless T4 storage; only corresponding material depth words change. Section 8 may be BPE-compressed with every decoded effect byte preserved. No new UV/layout experiment is enabled.</p>',
         '<p><a href="report.html">Complete source/posed comparison and heatmaps</a> · <a href="report.json">Comparison metrics</a> · <a href="surface-attributes.json">UV/source sampling</a> · <a href="opacity-support.json">Thin strands and cutout support</a> · <a href="palette-quality.json">Native-grid palette loss</a> · <a href="native-final.json">Native offsets, palettes and constraints</a> · <a href="../wii/textures/report.json">Every texture and allocation decision</a> · <a href="../effect-storage.json">Lossless effect storage</a> · <a href="app-result.json">Export result</a></p>',
+        '<p><a href="../wii/source-materials.json">Original packet Q7/Q8 fields, exact source/IR encoding audit, draw bindings and excluded effects</a>. Transparency indicates a cutout, not anatomical hair; leg decals retain their original leg weights.</p>',
         *['<figure><figcaption>%s — actual final PAC, CPU preview</figcaption><img width="480" src="../preview/%s-full.png"></figure>'%(v,v) for v in ('front','back','left','right','front-left')],
         '</body></html>']),encoding='utf-8')
     result=dict(pac=str(final.resolve()),preview=str(preview.resolve()),report=str(report.resolve()),

@@ -124,3 +124,11 @@ def source_bundle(data,index=0):
         common_bind_maximum_difference=maximum,excluded_effects=excluded,source_textures=details,
         discovery='Aligned bounded PACH candidates; EPK8 directory semantics still unknown',
         vertex_alpha_policy='White native tint; source shader color bytes retained as provenance; source trans texture alpha retained')
+
+
+def verified_source_bundle(data,index=0):
+    """App boundary: audit the reference itself before any rig/geometry stage."""
+    from model_qa.wii_source_encoding import verify
+    model,images,report=source_bundle(data,index)
+    report['source_encoding_audit']=verify(data,index,model)
+    return model,images,report

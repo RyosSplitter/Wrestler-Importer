@@ -56,7 +56,7 @@ def head_masks(model,images):
             for tri in mat['triangles']:
                 vs=[mesh['vertices'][i]for i in tri]
                 mass=lambda ids:sum(sum(w for b,w in zip(mesh['bone_palette'],v['weights'])if b in ids)for v in vs)/3
-                if mesh.get('role')!='Hair' and mass(head)>.8 and mass(eyes)<.9 and np.mean([v['normal'][2]for v in vs])<-.1:selected.append(tri)
+                if mesh.get('role') not in ('Hair','Cutout') and mass(head)>.8 and mass(eyes)<.9 and np.mean([v['normal'][2]for v in vs])<-.1:selected.append(tri)
             mat['triangles']=selected
     usage=model_usage({2:out},images)
     return {name:row['uv_mask']for name,row in usage.items()if row['area']>0 and row['uv_reliable']and row['uv_mask']is not None}
