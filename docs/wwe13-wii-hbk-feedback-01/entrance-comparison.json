@@ -1,0 +1,261 @@
+{
+  "status": "Promising isolated experimental candidate; NOT accepted or game-tested",
+  "baseline_pac": {
+    "pac": "HBK-WWE13-Wii-Entrance-PSP-EXPERIMENTAL.pac",
+    "pac_bytes": 147456,
+    "sha256": "46539c2ea1affe1bd27662f33c6350b71230d3d319a0d65922608d9bd288eed2",
+    "source_sha256": "feeea42460893cf577b3aa2ffadb239462538be18e822e33d051e096445df542",
+    "variant": 1,
+    "source_triangles": 5936,
+    "final_triangles": 2987,
+    "final_vertices": 3328,
+    "final_meshes": 53,
+    "textures": 6,
+    "structural_checks_passed": true,
+    "status": "EXPERIMENTAL; analytical QA pending; not game-tested",
+    "source_blood_draws_excluded": [],
+    "texture_trial": "Original useful RGBA ceiling enforced; no binary-alpha bake",
+    "native_pose_gate_passed": true
+  },
+  "candidate": {
+    "pac": "HBK-WWE13-Wii-Entrance-Gentler-Decimation.pac",
+    "pac_bytes": 147456,
+    "sha256": "268d58468ec1f3593b7160b07a72959d57793219b5c0b7609a321508bfe70bf0",
+    "triangles": 3159,
+    "native_pose_gate_passed": true
+  },
+  "geometry_change": "Torso/Arms/Legs requested face retention .22 -> .35; Head .6, Hands .5, Mouth .6, Eyes/Hair 1 unchanged; shared atlas boundaries remain locked",
+  "texture_change": "Independent useful-color and resolution choices with original native T8 material contracts",
+  "overall_before": {
+    "samples": 12000,
+    "mean": 0.04958018041741129,
+    "rms": 0.09550474017228909,
+    "p50": 0.01817270729912889,
+    "p95": 0.1972599398844696,
+    "p99": 0.36991971374456034,
+    "maximum": 1.000232589110222,
+    "p95_height": 0.009982310034747947,
+    "p99_height": 0.018719732312227767
+  },
+  "overall_after": {
+    "samples": 12000,
+    "mean": 0.022678871657235228,
+    "rms": 0.04122308977050909,
+    "p50": 0.009260301146547118,
+    "p95": 0.08690460385037731,
+    "p99": 0.1550695738004206,
+    "maximum": 0.4778290179331583,
+    "p95_height": 0.004397794603351777,
+    "p99_height": 0.007847272809363242
+  },
+  "region_p95": {
+    "head": {
+      "before": 0.00025403164111037567,
+      "after": 0.00023877365942784578
+    },
+    "face": {
+      "before": 0.0002549032406415766,
+      "after": 0.00029758484855469135
+    },
+    "jaw": {
+      "before": 0.0010157389515551923,
+      "after": 0.0008788794111655276
+    },
+    "chin": {
+      "before": 0.0013450140934732845,
+      "after": 0.001385687820182832
+    },
+    "nose": {
+      "before": 0.00029091441878618057,
+      "after": 0.00031290889550309077
+    },
+    "eyes": {
+      "before": 0.000260803547191936,
+      "after": 0.0002656223141059061
+    },
+    "neck": {
+      "before": 0.003736049044934282,
+      "after": 0.003703309441252544
+    },
+    "torso": {
+      "before": 0.006371219657965068,
+      "after": 0.0034816571285108443
+    },
+    "waist": {
+      "before": 0.02637457246562185,
+      "after": 0.00426480987529826
+    },
+    "pelvis": {
+      "before": 0.022642134609320224,
+      "after": 0.004915753344446365
+    },
+    "buttocks": {
+      "before": 0.013825035612612393,
+      "after": 0.003945011877020245
+    },
+    "shoulders": {
+      "before": 0.009760117387173825,
+      "after": 0.005703185458519017
+    },
+    "left-hands": {
+      "before": 0.0064975519545642305,
+      "after": 0.00474399474015201
+    },
+    "left-feet": {
+      "before": 0.00831913884445663,
+      "after": 0.006648989168681384
+    },
+    "right-hands": {
+      "before": 0.00978343559176099,
+      "after": 0.00575243811182806
+    },
+    "right-feet": {
+      "before": 0.00722487453833644,
+      "after": 0.0050973851760332265
+    }
+  },
+  "previously_passing_p95_regions_now_failing": [],
+  "absolute_p95_increases_exceeding_noise_allowance": [],
+  "comparison_scope": "p95 across rest + 14 analytical poses; noise allowance max(5% relative, .00025 model height). Does not waive source-shape/animation flags.",
+  "before_flag_kinds": {
+    "material-boundary-drift": 2,
+    "surface-shape": 10,
+    "opposed-nearby-head-face-winding": 38,
+    "material-boundary-pose-or-seam-drift": 2,
+    "pose-dependent-deformation": 2
+  },
+  "after_flag_kinds": {
+    "material-boundary-drift": 2,
+    "coverage": 15,
+    "surface-shape": 10,
+    "opposed-nearby-head-face-winding": 38,
+    "pose-dependent-deformation": 5
+  },
+  "before_severities": {
+    "review": 45,
+    "high-review": 9
+  },
+  "after_severities": {
+    "review": 49,
+    "insufficient-evidence": 15,
+    "high-review": 6
+  },
+  "flag_count_caveat": "70 vs 54 includes 15 new insufficient-sampling coverage flags at chin. New pose-extra flags can coexist with LOWER absolute posed error because rest error also fell.",
+  "unresolved_high_review": [
+    {
+      "region": "pelvis",
+      "pose": "rest",
+      "kind": "surface-shape",
+      "severity": "high-review",
+      "evidence": [
+        {
+          "metric": "distance_p95_height",
+          "value": 0.004915753344446365,
+          "tolerance": 0.0015
+        },
+        {
+          "metric": "distance_p99_height",
+          "value": 0.008911536489338578,
+          "tolerance": 0.004
+        }
+      ],
+      "interpretation": "Suspicious relative to this profile; intentional rig/LOD changes and open surfaces require human review"
+    },
+    {
+      "region": "shoulders",
+      "pose": "rest",
+      "kind": "surface-shape",
+      "severity": "high-review",
+      "evidence": [
+        {
+          "metric": "distance_p95_height",
+          "value": 0.005703185458519017,
+          "tolerance": 0.0015
+        },
+        {
+          "metric": "distance_p99_height",
+          "value": 0.011167986598851206,
+          "tolerance": 0.004
+        }
+      ],
+      "interpretation": "Suspicious relative to this profile; intentional rig/LOD changes and open surfaces require human review"
+    },
+    {
+      "region": "left-hands",
+      "pose": "rest",
+      "kind": "surface-shape",
+      "severity": "high-review",
+      "evidence": [
+        {
+          "metric": "distance_p95_height",
+          "value": 0.00474399474015201,
+          "tolerance": 0.0015
+        },
+        {
+          "metric": "distance_p99_height",
+          "value": 0.0067261674891225766,
+          "tolerance": 0.004
+        }
+      ],
+      "interpretation": "Suspicious relative to this profile; intentional rig/LOD changes and open surfaces require human review"
+    },
+    {
+      "region": "left-feet",
+      "pose": "rest",
+      "kind": "surface-shape",
+      "severity": "high-review",
+      "evidence": [
+        {
+          "metric": "distance_p95_height",
+          "value": 0.006648989168681384,
+          "tolerance": 0.0015
+        },
+        {
+          "metric": "distance_p99_height",
+          "value": 0.01585443945423302,
+          "tolerance": 0.004
+        }
+      ],
+      "interpretation": "Suspicious relative to this profile; intentional rig/LOD changes and open surfaces require human review"
+    },
+    {
+      "region": "right-hands",
+      "pose": "rest",
+      "kind": "surface-shape",
+      "severity": "high-review",
+      "evidence": [
+        {
+          "metric": "distance_p95_height",
+          "value": 0.00575243811182806,
+          "tolerance": 0.0015
+        },
+        {
+          "metric": "distance_p99_height",
+          "value": 0.007141177930761393,
+          "tolerance": 0.004
+        }
+      ],
+      "interpretation": "Suspicious relative to this profile; intentional rig/LOD changes and open surfaces require human review"
+    },
+    {
+      "region": "right-feet",
+      "pose": "rest",
+      "kind": "surface-shape",
+      "severity": "high-review",
+      "evidence": [
+        {
+          "metric": "distance_p95_height",
+          "value": 0.0050973851760332265,
+          "tolerance": 0.0015
+        },
+        {
+          "metric": "distance_p99_height",
+          "value": 0.007998489680851508,
+          "tolerance": 0.004
+        }
+      ],
+      "interpretation": "Suspicious relative to this profile; intentional rig/LOD changes and open surfaces require human review"
+    }
+  ],
+  "root_cause_classification": "CONFIRMED static deviation introduced by decimation/LOD compared with full-detail adapted source. Source Wii weight interpretation and real game semantics remain INFERRED/UNKNOWN."
+}

@@ -1,0 +1,17 @@
+{
+  "pac": "HBK-WWE13-Wii-Ring-Texture-Rebalance.pac",
+  "pac_bytes": 147456,
+  "sha256": "a2d3b0a58b34c2841d65c473aa9343dbebc002954606762aa18baa1f20ae9b80",
+  "baseline_sha256": "d46e6164939767d4339841cdc638a85fb249f0cfc1d7b4e20dd759780b23283e",
+  "geometry_yobj_sha256": "8e2d8637bae783021f51d7ef6875938e878ba100bd554f74fec71de7f6920487",
+  "geometry_yobj_byte_identical": true,
+  "unchanged_stored_sections": [
+    2,
+    8
+  ],
+  "source_work": "local/wii-hbk-ring-final-09",
+  "limitations": "Reuses accepted geometry. Wii facial/controller and source-shape review findings remain; texture quality needs visual/in-game review.",
+  "baseline_geometry_user_accepted": true,
+  "baseline_acceptance_scope": "Ring geometry only, from user feedback; texture quality not accepted.",
+  "source_shape_qa_findings_retained": true
+}

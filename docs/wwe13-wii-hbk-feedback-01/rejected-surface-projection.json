@@ -1,0 +1,75 @@
+{
+  "accepted": false,
+  "reason": "Nearest-source vertex projection worsens most whole-surface/posed regions; do not replace the baseline.",
+  "source": "Existing full-detail adapted Wii geometry; same source UV topology domain and material",
+  "baseline_p95_height": 0.009982310034747947,
+  "candidate_p95_height": 0.01185641484241961,
+  "before_flags": 54,
+  "after_flags": 56,
+  "regional": {
+    "head": {
+      "before": 0.00025403164111037567,
+      "after": 0.0002499576146501116
+    },
+    "face": {
+      "before": 0.0002549032406415766,
+      "after": 0.0003828472714808513
+    },
+    "jaw": {
+      "before": 0.0010157389515551923,
+      "after": 0.0009517440286297739
+    },
+    "chin": {
+      "before": 0.0013450140934732845,
+      "after": 0.001039260879462945
+    },
+    "nose": {
+      "before": 0.00029091441878618057,
+      "after": 0.00027707165238756063
+    },
+    "eyes": {
+      "before": 0.000260803547191936,
+      "after": 0.0004038982459164463
+    },
+    "neck": {
+      "before": 0.003736049044934282,
+      "after": 0.005467724046584565
+    },
+    "torso": {
+      "before": 0.006371219657965068,
+      "after": 0.0073017672339629755
+    },
+    "waist": {
+      "before": 0.02637457246562185,
+      "after": 0.027923401698159277
+    },
+    "pelvis": {
+      "before": 0.022642134609320224,
+      "after": 0.025146434235019582
+    },
+    "buttocks": {
+      "before": 0.013825035612612393,
+      "after": 0.018215837090307253
+    },
+    "shoulders": {
+      "before": 0.009760117387173825,
+      "after": 0.01067351819764482
+    },
+    "left-hands": {
+      "before": 0.0064975519545642305,
+      "after": 0.0071299391685843
+    },
+    "left-feet": {
+      "before": 0.00831913884445663,
+      "after": 0.008495270029993939
+    },
+    "right-hands": {
+      "before": 0.00978343559176099,
+      "after": 0.00977098276699142
+    },
+    "right-feet": {
+      "before": 0.00722487453833644,
+      "after": 0.009973192239704526
+    }
+  }
+}

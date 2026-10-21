@@ -158,7 +158,7 @@ def base_model_bytes(base):
     return base,audit_yobj(next(r for s,r in sections(base)if s['id']==2))
 
 
-def run(source,base_path,out,index,ratio=1.,head_floor=.6,hand_floor=.5,mouth_ratio=.6,material_only=False):
+def run(source,base_path,out,index,ratio=1.,head_floor=.6,hand_floor=.5,mouth_ratio=.6,material_only=False,texture_candidates=None):
     if any(not 0<v<=1 for v in (ratio,head_floor,hand_floor,mouth_ratio)):raise ValueError('Reduction ratios must be in (0,1]')
     source,base_path,out=map(Path,(source,base_path,out));out.mkdir(parents=True,exist_ok=False)
     data=source.read_bytes();base,target=base_model(base_path)
@@ -196,7 +196,7 @@ def run(source,base_path,out,index,ratio=1.,head_floor=.6,hand_floor=.5,mouth_ra
         raise ValueError('Native analytical pose gate failed; candidate retained for diagnosis only')
     (out/'candidate.yobj').write_bytes(raw)
     print('Native model expanded',len(raw),'compressed',len(compress(raw)),flush=True)
-    pac,gims,tex=allocate(base,raw,packed,images,contracts,out/'textures',candidate_factory=candidates)
+    pac,gims,tex=allocate(base,raw,packed,images,contracts,out/'textures',candidate_factory=texture_candidates or candidates)
     final,gims,structural=validate_trial(pac,base,radii,eye_binds);dump(out/'structural.json',structural)
     filename=('HBK-WWE13-Wii-Ring'if index==0 else'HBK-WWE13-Wii-Entrance')+'-PSP-EXPERIMENTAL.pac'
     (out/filename).write_bytes(pac)
