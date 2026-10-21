@@ -4,6 +4,7 @@ The reference allocation is conservative native evidence, not a game heap limit.
 Automatic attention uses actual lost fine detail, occupied coverage and surface
 importance, never character/texture names. Legacy generation remains separate.
 """
+from desktop.limits import IN_RING_MAX_PAC_BYTES
 import json
 from pathlib import Path
 
@@ -56,7 +57,7 @@ def choose_priorities(features):
     return [f['name'] for f in eligible[:3] if f['attention_score'] >= threshold]
 
 
-def upgrade(baseline, decoded, output, *, target=148000, priority_textures=(),
+def upgrade(baseline, decoded, output, *, target=IN_RING_MAX_PAC_BYTES, priority_textures=(),
             cancel=lambda: None, progress=lambda message: None):
     output = Path(output)
     models, sources, gims, existing_pixels = inspect_baseline(baseline, decoded)

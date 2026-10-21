@@ -14,7 +14,7 @@ import uuid
 
 from PIL import ImageTk
 
-from .core import PARTS, POSES, VERSION, assemble, build, create_project, dump, load_source, preview, read_project
+from .core import MAX_BYTES, PARTS, POSES, VERSION, assemble, build, create_project, dump, load_source, preview, read_project
 from tools.psp_mesh_audit import audit_yobj
 
 
@@ -51,7 +51,7 @@ class App:
         donor_tools=ttk.Frame(left);donor_tools.pack(fill='x',pady=4)
         ttk.Button(donor_tools,text='Whole donor',command=self.whole_donor).pack(side='left',expand=True,fill='x')
         ttk.Button(donor_tools,text='Details',command=self.selection_details).pack(side='left',expand=True,fill='x',padx=(4,0))
-        ttk.Label(left,text='148,000-byte size target.\nOversized exports warn.\nTest exports in PPSSPP.',justify='left').pack(anchor='w',pady=8)
+        ttk.Label(left,text=f'{MAX_BYTES:,}-byte size target.\nOversized exports warn.\nTest exports in PPSSPP.',justify='left').pack(anchor='w',pady=8)
         right=ttk.Frame(work);right.pack(fill='both',expand=True)
         top=ttk.Frame(right);top.pack(fill='x',pady=(0,6))
         ttk.Label(top,text='Pose:').pack(side='left');self.pose=tk.StringVar(value='rest')
@@ -122,7 +122,7 @@ class App:
             self.labels=[f'{i+1}. {e["label"]}' for i,e in enumerate(self.library.entries)]
             for part,box in zip(PARTS,self.controls):box['values']=self.labels;self.choices[part].set(self.labels[choices[part]])
             self.result=None;self.model=None;self.textures=None
-            self.project_label.set(f'{len(self.labels)} native donors. No PAC import needed. Rig, seam and structural checks stay mandatory; exceeding the 148,000-byte size target gives a warning.')
+            self.project_label.set(f'{len(self.labels)} native donors. No PAC import needed. Rig, seam and structural checks stay mandatory; exceeding the {MAX_BYTES:,}-byte size target gives a warning.')
             self.dirty()
         except Exception as exc:messagebox.showerror('Prepared library',str(exc),parent=self.root)
 
@@ -159,7 +159,7 @@ class App:
         for part in PARTS:
             s=sources[choices[part]];r=s['model']['report']
             lines.append(f'{part}: {s["label"]}\n{len(s["data"]):,} native PAC bytes; {r["vertices"]:,} vertices / {r["triangles"]:,} triangles; {r["meshes"]} meshes / {len(s["model"]["bones"])} bones.\nSHA-256: {s["sha256"]}\n')
-        messagebox.showinfo('Native donor details','\n'.join(lines)+'\nOriginal PAC size is not the size of a mixed assembly. The size target is 148,000 bytes; oversized exports give a warning.',parent=self.root)
+        messagebox.showinfo('Native donor details','\n'.join(lines)+f'\nOriginal PAC size is not the size of a mixed assembly. The size target is {MAX_BYTES:,} bytes; oversized exports give a warning.',parent=self.root)
 
     def current_sources(self):
         if self.library_project and self.library is not None:return self.library.selection(self.selected())
@@ -277,7 +277,7 @@ class App:
             return output,report,source
         def done(result):
             self.result,self.last_report,source=result;self.model=source['model'];self.textures={n:source['textures'][n.casefold()] for n in self.model['texture_names']}
-            self.status.set(f'Experimental build: {self.last_report["pac_bytes"]:,} / 148,000 bytes. Native checks passed; review seams and test in PPSSPP.')
+            self.status.set(f'Experimental build: {self.last_report["pac_bytes"]:,} / {MAX_BYTES:,} bytes. Native checks passed; review seams and test in PPSSPP.')
             if self.last_report.get('budget_warning'):
                 warning=self.last_report['budget_warning']
                 self.status.set(f'OVER BUDGET: {warning["pac_bytes"]:,} bytes; {warning["over_by_bytes"]:,} above {warning["target_bytes"]:,}. Export is available; in-game stability is unverified.')

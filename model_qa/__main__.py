@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 from .metrics import calibrate
 from .pipeline import dump,run
+from desktop.limits import IN_RING_MAX_PAC_BYTES
 
 
 def main():
@@ -12,6 +13,7 @@ def main():
     p=sub.add_parser('compare');p.add_argument('--source',required=True,type=Path);p.add_argument('--converted',required=True,type=Path)
     p.add_argument('--output',required=True,type=Path);p.add_argument('--profile',type=Path);p.add_argument('--stage',action='append',default=[],metavar='LABEL=TARGET_SPACE_FILE')
     p.add_argument('--samples',type=int,default=16000);p.add_argument('--resolution',type=int,default=320)
+    p.add_argument('--max-pac-bytes',type=int,default=IN_RING_MAX_PAC_BYTES)
     p.add_argument('--no-animation',action='store_true');p.add_argument('--no-renders',action='store_true');p.add_argument('--fail-on-review',action='store_true')
     p.add_argument('--save-depth',action='store_true',help='Also save float32 per-view depth arrays; larger reports')
     p=sub.add_parser('calibrate');p.add_argument('--controls',required=True,type=Path);p.add_argument('--output',required=True,type=Path)
@@ -29,7 +31,7 @@ def main():
         stages.append(dict(label=label,path=path,space='target'))
     profile=json.loads(args.profile.read_text()) if args.profile else None
     r=run(args.source,args.converted,args.output,profile=profile,stages=stages,samples=args.samples,resolution=args.resolution,
-          animations=not args.no_animation,renders=not args.no_renders,save_depth=args.save_depth,progress=lambda s:print(s,flush=True))
+          animations=not args.no_animation,renders=not args.no_renders,save_depth=args.save_depth,progress=lambda s:print(s,flush=True),max_pac_bytes=args.max_pac_bytes)
     print(json.dumps(dict(output=str(args.output),review_flags=len(r['unresolved_review']),inputs_unchanged=r['inputs_unchanged'],corrections_attempted=[])))
     return 2 if args.fail_on_review and r['unresolved_review'] else 0
 

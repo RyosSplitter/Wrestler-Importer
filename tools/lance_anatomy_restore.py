@@ -6,6 +6,7 @@ weight records stay intact except for four copies of a relocated boundary
 anchor, which recover that source point's weights. Four lost shared boundary points are restored on
 adjacent materials, and one collapsed upper-back anchor returns to its source.
 """
+from desktop.limits import IN_RING_MAX_PAC_BYTES
 import argparse
 import copy
 from collections import Counter, defaultdict
@@ -394,7 +395,7 @@ def run(source_path,base_path,output):
     packed=compress(fixed)
     if decompress(packed)!=fixed:raise ValueError('Model compression round trip failed')
     pac=replace_sections(base,{2:packed})
-    if len(pac)>148000 or len(pac)%2048:raise ValueError('PSP budget/alignment exceeded: '+str(len(pac)))
+    if len(pac)>IN_RING_MAX_PAC_BYTES or len(pac)%2048:raise ValueError('PSP budget/alignment exceeded: '+str(len(pac)))
     old=inspect_pac(base)['sections'];new=inspect_pac(pac)['sections']
     if len(old)!=len(new):raise ValueError('PAC section count changed')
     for a,b in zip(old,new):

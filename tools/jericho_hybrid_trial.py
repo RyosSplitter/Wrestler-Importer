@@ -3,6 +3,7 @@
 Preserves complete torso/hip surfaces before reduction, and keeps ponytail
 attachment source-derived. This is an asset trial; it does not update the beta.
 """
+from desktop.limits import IN_RING_MAX_PAC_BYTES
 import argparse
 from collections import Counter,defaultdict
 import copy
@@ -299,7 +300,7 @@ def build(source_path,base_path,editor_path,output,blender='blender',reduced=Tru
     table=texture_table(s['textures'],gims);packed_model=compress(native);packed_tex=compress(table)
     if decompress(packed_model)!=native or decompress(packed_tex)!=table:raise ValueError('BPE round trip changed')
     pac=replace_sections(base,{2:packed_model,9:packed_tex})
-    if len(pac)>148000:raise ValueError('Candidate exceeds the 148,000-byte PAC budget')
+    if len(pac)>IN_RING_MAX_PAC_BYTES:raise ValueError(f'Candidate exceeds the {IN_RING_MAX_PAC_BYTES:,}-byte PAC budget')
     (output/'0600-PSP-hybrid-Jericho.pac').write_bytes(pac)
     old=inspect_pac(base)['sections'];new=inspect_pac(pac)['sections'];unchanged=[]
     for sec in new:
@@ -332,7 +333,7 @@ def build(source_path,base_path,editor_path,output,blender='blender',reduced=Tru
     report=dict(status='Experimental candidate; PPSSPP validation pending',source_sha256=digest(source),base_sha256=digest(base),pac_sha256=digest(pac),base_filename=base_path.name,
         source=dict(pac_bytes=len(source),vertices=s['vertex_count'],triangles=s['triangle_count'],meshes=s['mesh_count'],textures=s['texture_count'],bones=s['bone_count']),
         output=dict(pac_bytes=len(pac),model_expanded_bytes=len(native),model_stored_bytes=len(packed_model),texture_stored_bytes=len(packed_tex),**{k:audited['report'][k] for k in ('meshes','vertices','triangles','indices','strips','textures','material_records','bones')}),
-        budget_bytes=148000,within_budget=len(pac)<=148000,preparation=prepared['preparation_report'],reduction=model.get('reduction_report'),
+        budget_bytes=IN_RING_MAX_PAC_BYTES,within_budget=len(pac)<=IN_RING_MAX_PAC_BYTES,preparation=prepared['preparation_report'],reduction=model.get('reduction_report'),
         protected_source_surfaces=protected,textures=tex_info,serialized_verification=ver,unchanged_base_sections=unchanged,preview_yobj_equals_final_pac=True,
         pose_definitions=pose_definitions,pose_validation=pose_validation,limitations=['Synthetic pose checks are not game animation playback','Kurt PSP lacks original ponytail bones; the source chain maps to its head ancestor and has no independent hair physics'])
     write_json(output/'report.json',report)

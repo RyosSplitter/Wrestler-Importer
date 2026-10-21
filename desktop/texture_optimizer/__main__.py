@@ -1,4 +1,5 @@
 """Reproduce texture-only A/B trials on an existing converted PSP PAC."""
+from desktop.limits import IN_RING_MAX_PAC_BYTES
 import argparse
 from pathlib import Path
 import shutil
@@ -32,7 +33,7 @@ def previews(data,folder):
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--source',type=Path,required=True);p.add_argument('--baseline',type=Path,required=True)
-    p.add_argument('--output',type=Path,required=True);p.add_argument('--target',type=int,default=148000)
+    p.add_argument('--output',type=Path,required=True);p.add_argument('--target',type=int,default=IN_RING_MAX_PAC_BYTES)
     a=p.parse_args();a.output.mkdir(parents=True,exist_ok=False)
     original=a.baseline.read_bytes();names=audit_yobj(next(r for s,r in sections(original) if s['id']==2))['texture_names']
     decoded=read_source(a.source,texture_names=names)

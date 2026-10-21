@@ -1,4 +1,5 @@
 """Frozen Windows GUI/worker smoke using procedural JBI contract fixtures."""
+from desktop.limits import IN_RING_MAX_PAC_BYTES
 import json
 from pathlib import Path
 import time
@@ -57,7 +58,7 @@ def run(app,output,base):
             result=app.result;raw=Path(result['pac']).read_bytes()
             assert result['source_format']=='jbi' and result['source_entry']=='0000'
             assert result['model_count']==3 and result['accessory_sections']==[26,27]
-            assert result['bytes']==len(raw)<=148000
+            assert result['bytes']==len(raw)<=IN_RING_MAX_PAC_BYTES
             validate_pac(raw,gim_reader=read_gim)
             assert Path(result['report']).is_file()
             assert app.preview.cget('image')

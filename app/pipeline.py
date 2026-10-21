@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from datetime import datetime
 import contextlib
 import hashlib
+from desktop.limits import IN_RING_MAX_PAC_BYTES
 import json
 import os
 from pathlib import Path
@@ -64,7 +65,7 @@ def run_job(job, progress=lambda percent, message: None):
     if sys.version_info[:2] != (3, 13):
         raise ValueError('This beta needs Python 3.13 to use the supplied PSP editor.')
     job.validate()
-    profile = verify_backend()
+    profile = dict(verify_backend(), beta_pac_limit_bytes=IN_RING_MAX_PAC_BYTES)
     from stable_pipeline.editor_bridge import EDITOR_SHA256, export
     from stable_pipeline.convert_hctp import verify_serialized
     from stable_pipeline.hctp_read import load_hctp

@@ -1,5 +1,10 @@
 # Wrestler Importer
 
+Current source-code output policy: **152,064 bytes (148.5 KiB) for in-ring PACs
+across all formats**, with **180,000 bytes for explicit WWE ’13 entrance
+trials**. See [size policy and alignment](docs/pac-size-policy.md). Existing
+downloaded releases and historical reports retain their original settings.
+
 The [PSP Model Suite foundation](docs/portable-model-suite.md) adds a classic
 tabbed shell around the existing HCTP converter, native PSP PAC/model/texture
 inspection, [editable texture folders and PAC rebuilding](docs/portable-edit-folders.md),
@@ -131,7 +136,10 @@ protected simplification plus 64-pixel/4-bit texture budgets:
 py -3.13 tools/convert_hctp.py "C:\models\0900.pac" "C:\models\Kurt-Angle-Ring.PAC" "C:\models\Full Body.yobj" --editor "C:\tools\yobj_mesh_editor_PSP_GUI.exe" --compact --blender "C:\tools\Blender 4.3\blender.exe" --output "local\rvd-compact"
 ```
 
-The compact profile refuses to write a PAC above 148 KiB. Size is a test budget,
+The current compact profile refuses to write a PAC above 152,064 bytes
+(148.5 KiB). Sector-padded outputs can reach 151,552 bytes. See the
+[shared size policy](docs/pac-size-policy.md); historical build sizes below
+retain their original budgets. Size is a test budget,
 not a confirmed engine limit or explanation of the crash. See the
 [compact candidate and archive checks](docs/compact-candidate.md).
 The previous compact build was also reported not working. The

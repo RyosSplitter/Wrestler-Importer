@@ -1,4 +1,5 @@
 """Portable desktop entry point and isolated frozen-worker dispatch."""
+from desktop.limits import IN_RING_MAX_PAC_BYTES
 import json
 from pathlib import Path
 import shutil
@@ -64,7 +65,7 @@ def main():
             return 1
     if len(sys.argv)>1 and sys.argv[1]=='--maximum-downgrade':
         from desktop.maximum_downgrade import fit_pac
-        source,output=map(Path,sys.argv[2:4]);target=int(sys.argv[4]) if len(sys.argv)>4 else 148000
+        source,output=map(Path,sys.argv[2:4]);target=int(sys.argv[4]) if len(sys.argv)>4 else IN_RING_MAX_PAC_BYTES
         if output.exists():raise FileExistsError('Refusing to overwrite '+str(output))
         original=source.read_bytes()
         candidate,report=fit_pac(original,output,target=target)

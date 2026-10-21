@@ -629,5 +629,5 @@
     }
   ],
   "assets": "User-supplied native PSP PAC snapshots. Rights remain with their owners.",
-  "constraints": "Original preview is independent of the 148000-byte mixed export budget. Mixed builds require compatible body binds and passing native/pose/seam checks."
+  "constraints": "Original preview is independent of the 152064-byte mixed export budget. Mixed builds require compatible body binds and passing native/pose/seam checks."
 }

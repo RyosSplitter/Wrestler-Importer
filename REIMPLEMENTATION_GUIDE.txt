@@ -1,6 +1,16 @@
 HCTP -> PSP REIMPLEMENTATION GUIDE
 ================================
 
+CONFIRMED — 2026-10-21 current size-policy correction:
+Use desktop/limits.py and docs/pac-size-policy.md. All in-ring conversion
+outputs now target exactly 152064 bytes (148.5 KiB), across all source formats.
+The largest 2048-byte-sector-padded output is 151552 bytes; 153600 is over budget.
+WWE13 entrance trials use an explicit separate 180000-byte cap. Keep format,
+alignment and runtime texture-memory checks independent of the stored size cap.
+Historical reports and frozen backend fixtures below retain their old budgets;
+they are evidence of past trials, not the current policy. Do not propagate their
+148000-byte defaults into a new implementation. QA reports the configured cap.
+
 CONFIRMED — 2026-10-15 scoped PSP-base compatibility validation:
 Read docs/portable-pac-validator.md. Standalone validation now requires a working
 PSP base and has Textures / Model / Full scopes. The base supplies format and

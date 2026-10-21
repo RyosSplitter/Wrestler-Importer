@@ -3,6 +3,7 @@
 Not app integration or QA approval. Reports retain all review findings. No
 accepted output is overwritten; the user supplies their own source and PSP base.
 """
+from desktop.limits import IN_RING_MAX_PAC_BYTES
 import argparse
 import copy
 import hashlib
@@ -123,7 +124,7 @@ def run(source, base_path, out, blender='/usr/bin/blender', *, samples=12000, re
     dump(out/'packed.json', packed); dump(out/'native-checks.json', native_report); dump(out/'contracts.json', contracts)
     (out/'candidate.yobj').write_bytes(raw)
     pac, gims, textures = allocate(base, raw, packed, images, contracts, out/'textures')
-    native, decoded = validate_pac(pac, base, 148000, accessory_models={}, gim_reader=read_gim)
+    native, decoded = validate_pac(pac, base, IN_RING_MAX_PAC_BYTES, accessory_models={}, gim_reader=read_gim)
     if original != source.read_bytes() or base != base_path.read_bytes():
         raise ValueError('An input changed during experiment')
     path = out/'WWE13-Jericho-PSP-EXPERIMENTAL.pac'; path.write_bytes(pac)

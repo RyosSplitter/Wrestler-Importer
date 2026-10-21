@@ -3,6 +3,7 @@
 Library PACs are immutable snapshots, not converter templates. No resampling,
 retargeting, decimation or texture optimization is performed by this module.
 """
+from desktop.limits import IN_RING_MAX_PAC_BYTES
 import copy
 from contextlib import contextmanager
 import json
@@ -36,6 +37,11 @@ class Library:
         self.catalog=json.loads((self.root/'catalog.json').read_text(encoding='utf-8'))
         if self.catalog.get('schema')!='psp-model-creator.library/1':raise ValueError('Unsupported prepared library')
         self.entries=self.catalog['models'];self.cache={}
+        # Prepared catalogs may predate the current budget. Refresh derived UI
+        # status in memory; never rewrite donor assets or their attestations.
+        for entry in self.entries:
+            if 'pac_bytes'in entry:
+                entry['preview_only_over_budget']=entry['pac_bytes']>IN_RING_MAX_PAC_BYTES
         if not self.entries:raise ValueError('The prepared library is empty')
         for entry in self.entries:
             path=self.root/entry['file']
@@ -119,7 +125,7 @@ def add_donors(paths, root=None, *, progress=lambda _:None):
                             if target.is_symlink() or target.read_bytes()!=data:raise ValueError('Existing library object differs: '+name)
                         else:publish_new(target,data);created.append(target)
                     entry=dict(label=path.stem,file=relative,sha256=sha,pac_bytes=len(source['data']),
-                        preview_only_over_budget=len(source['data'])>148000,previews=previews,origin='user-added',
+                        preview_only_over_budget=len(source['data'])>IN_RING_MAX_PAC_BYTES,previews=previews,origin='user-added',
                         **{k:stats[k] for k in ('meshes','bones','vertices','triangles','textures','descriptor_count','descriptor_mesh_counts')})
                     catalog['models'].append(entry);known[sha]=entry;new_files.extend(created)
                     report['added'].append(dict(file=str(path),label=entry['label'],sha256=sha,pac_bytes=entry['pac_bytes']))
@@ -263,9 +269,9 @@ def prepare(folder,output):
         for view in ('front','back'):
             name=f'previews/{len(entries):03d}-{view}.png';preview(m,textures,view,256).save(output/name);views[view]=name
         entries.append(dict(label=s['label'],file=filename,sha256=s['sha256'],pac_bytes=len(s['data']),
-            preview_only_over_budget=len(s['data'])>148000,previews=views,
+            preview_only_over_budget=len(s['data'])>IN_RING_MAX_PAC_BYTES,previews=views,
             **{k:r[k] for k in ('meshes','bones','vertices','triangles','textures','descriptor_count','descriptor_mesh_counts')}))
     dump(output/'catalog.json',dict(schema='psp-model-creator.library/1',models=entries,
         assets='User-supplied native PSP PAC snapshots. Rights remain with their owners.',
-        constraints='Original preview is independent of the 148000-byte mixed export budget. Mixed builds require compatible body binds and passing native/pose/seam checks.'))
+        constraints=f'Original preview is independent of the {IN_RING_MAX_PAC_BYTES}-byte mixed export budget. Mixed builds require compatible body binds and passing native/pose/seam checks.'))
     return entries

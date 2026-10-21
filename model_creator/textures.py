@@ -1,4 +1,5 @@
 """Creator adapter for the established texture-only Maximum Downgrade search."""
+from desktop.limits import IN_RING_MAX_PAC_BYTES
 import hashlib
 import html
 import json
@@ -33,7 +34,7 @@ def validate_native(data, *, max_bytes, gim_reader=read_gim):
     return info
 
 
-def fit_textures(pac, output, *, target=148000, progress=lambda _:None):
+def fit_textures(pac, output, *, target=IN_RING_MAX_PAC_BYTES, progress=lambda _:None):
     """Retain best texture rescue with warning if fixed geometry cannot fit.
 
     The fitter proves non-texture stored payload identity, fixed bit depths,

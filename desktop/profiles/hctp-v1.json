@@ -5,7 +5,7 @@
   "protect_torso_and_pelvis": true,
   "protect_material_boundaries": true,
   "protect_ocular_surfaces": true,
-  "max_pac_bytes": 148000,
+  "max_pac_bytes": 152064,
   "qa_samples": 24000,
   "qa_resolution": 320
 }

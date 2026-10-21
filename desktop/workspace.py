@@ -3,6 +3,7 @@
 Inspection never runs conversion, rewrites a YOBJ or normalizes a PAC. Unknown
 layouts remain explicit findings. Generated filenames never use embedded names.
 """
+from desktop.limits import IN_RING_MAX_PAC_BYTES
 import hashlib
 import json
 from pathlib import Path
@@ -45,8 +46,8 @@ def inspect_workspace(source, output, *, resolution=512, native_descriptor_array
     (output/'textures').mkdir()
     manifest = dict(schema=SCHEMA, source=str(source), source_sha256=digest(data),
                     bytes=len(data), snapshot='original.pac', models=[], textures=[],
-                    sections=[], findings=[], conversion_budget_bytes=148000,
-                    within_conversion_budget=len(data)<=148000,
+                    sections=[], findings=[], conversion_budget_bytes=IN_RING_MAX_PAC_BYTES,
+                    within_conversion_budget=len(data)<=IN_RING_MAX_PAC_BYTES,
                     game_compatibility='Not established by structural inspection.',
                     geometry_or_skinning_modified=False)
     if native_descriptor_arrays:manifest['native_descriptor_arrays']=True
@@ -143,7 +144,7 @@ def inspect_workspace(source, output, *, resolution=512, native_descriptor_array
         raise ValueError('No YOBJ model found. This editor currently opens native PSP wrestler PACs.')
     try:
         from desktop.core import validate_pac
-        validate_pac(data, max_bytes=max(len(data), 148000), gim_reader=read_gim)
+        validate_pac(data, max_bytes=max(len(data), IN_RING_MAX_PAC_BYTES), gim_reader=read_gim)
         manifest['converter_export_profile'] = dict(passed=True, error=None)
     except (ValueError, KeyError, IndexError, struct.error) as exc:
         manifest['converter_export_profile'] = dict(passed=False, error=str(exc))

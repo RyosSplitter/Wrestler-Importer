@@ -513,7 +513,8 @@ class SuiteShell:
         source=tk.StringVar(value=self.manifest['source'] if self.manifest else '')
         base=tk.StringVar(value=self.app.settings.get('validator_base_pac') or self.app.base.get())
         mode=tk.StringVar(value='Full')
-        budget=tk.StringVar(value='148000')
+        from desktop.limits import IN_RING_MAX_PAC_BYTES
+        budget=tk.StringVar(value=str(IN_RING_MAX_PAC_BYTES))
         repair=tk.BooleanVar(value=True)
         for row,(label,var) in enumerate((('PAC to validate',source),('Compatible PSP base PAC',base))):
             ttk.Label(frame,text=label).grid(row=row,column=0,sticky='w',pady=5)

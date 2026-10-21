@@ -114,7 +114,8 @@ class EditFolderTests(unittest.TestCase):
             root=Path(temp);_,folder=self.project(root);self.change(folder)
             metadata=json.loads((folder/'project.json').read_text());metadata['max_pac_bytes']=9999999
             (folder/'project.json').write_text(json.dumps(metadata))
-            def oversized(source,replacements):return replace_sections(source,replacements)+bytes(148000)
+            from desktop.limits import IN_RING_MAX_PAC_BYTES
+            def oversized(source,replacements):return replace_sections(source,replacements)+bytes(IN_RING_MAX_PAC_BYTES)
             with patch('desktop.edit_folder.replace_sections',side_effect=oversized):
                 with self.assertRaisesRegex(ValueError,'budget'):pack_folder(folder,root/'Too-big.pac')
             self.assertFalse((root/'Too-big.pac').exists());self.assertFalse((root/'Too-big.pac.report.json').exists())

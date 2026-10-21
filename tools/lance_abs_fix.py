@@ -4,6 +4,7 @@ Reference attributes come from the original HCTP surface in the already used
 PSP alignment. No geometry, topology, weights or texture payloads are changed.
 This is a controlled asset repair, not an automatic conversion pipeline rule.
 """
+from desktop.limits import IN_RING_MAX_PAC_BYTES
 import argparse
 import copy
 from collections import defaultdict
@@ -147,7 +148,7 @@ def run(source_path,base_path,output):
     fixed,patch_report=repair(original,reference);packed=compress(fixed)
     if decompress(packed)!=fixed:raise ValueError('BPE round trip failed')
     pac=replace_sections(base,{2:packed})
-    if len(pac)>148*1024 or len(pac)%2048:raise ValueError('PAC budget / alignment invalid')
+    if len(pac)>IN_RING_MAX_PAC_BYTES or len(pac)%2048:raise ValueError('PAC budget / alignment invalid')
     for a,b in zip(inspect_pac(base)['sections'],inspect_pac(pac)['sections']):
         if a['id']!=b['id'] or b['offset']%16:raise ValueError('PAC section order/alignment changed')
         if a['id']!=2 and base[a['offset']:a['offset']+a['size']]!=pac[b['offset']:b['offset']+b['size']]:raise ValueError('Unrelated PAC data changed')

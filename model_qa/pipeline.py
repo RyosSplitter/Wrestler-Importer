@@ -5,6 +5,7 @@ import hashlib
 import html
 import json
 from pathlib import Path
+from desktop.limits import IN_RING_MAX_PAC_BYTES
 
 import numpy as np
 
@@ -107,7 +108,9 @@ def stage_diagnosis(flags,trace):
 
 
 def run(source_path,candidate_path,output,*,profile=None,stages=(),samples=16000,resolution=320,
-        animations=True,renders=True,poses=None,save_depth=False,progress=lambda message:None):
+        animations=True,renders=True,poses=None,save_depth=False,progress=lambda message:None,
+        max_pac_bytes=IN_RING_MAX_PAC_BYTES):
+    if type(max_pac_bytes)is not int or max_pac_bytes<=0:raise ValueError('Invalid configured PAC byte budget')
     source_path,candidate_path,output=map(Path,(source_path,candidate_path,output))
     if output.exists():raise FileExistsError('QA refuses to overwrite an existing result: '+str(output))
     if samples<2000 or resolution<96:raise ValueError('At least 2,000 samples and 96-pixel renders are required')
@@ -212,7 +215,8 @@ def run(source_path,candidate_path,output,*,profile=None,stages=(),samples=16000
         bridge=dict(description='Analytical control only: original geometry and source ancestor-mapped weights on final PSP rig; no model is written',rest=bridge_rest,poses=bridge_poses)
     first,diagnosis=stage_diagnosis(flags,trace)
     native=isinstance(target.get('report'),dict) and 'allocations' in target['report']
-    fmt=dict(native_psp_audit_passed=native,within_148000_byte_budget=candidate_path.stat().st_size<=148000 if candidate_path.suffix.lower()=='.pac' else None,
+    fmt=dict(native_psp_audit_passed=native,configured_max_pac_bytes=max_pac_bytes,
+             within_configured_pac_budget=candidate_path.stat().st_size<=max_pac_bytes if candidate_path.suffix.lower()=='.pac' else None,
              pac_bytes=candidate_path.stat().st_size if candidate_path.suffix.lower()=='.pac' else None)
     if native:fmt.update(bone_table_sha256=hashlib.sha256(target['bone_raw']).hexdigest(),mesh_count=target['report']['meshes'],
                           textures=target['texture_names'],material_controls=sorted({a['control'] for m in target['meshes'] for a in m['materials']}),

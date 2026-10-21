@@ -3,6 +3,7 @@
 Pinned controlled repair: two seam vertex records, two additional triangles,
 and one existing left lower-abdomen point mirrored from its right counterpart.
 """
+from desktop.limits import IN_RING_MAX_PAC_BYTES
 import argparse
 import copy
 from collections import defaultdict
@@ -191,7 +192,7 @@ def run(source_path,base_path,output):
     fixed,patch=repair(original,reference,alignment);packed=compress(fixed)
     if decompress(packed)!=fixed:raise ValueError('Compression round trip failed')
     pac=replace_sections(base,{2:packed})
-    if len(pac)>148000 or len(pac)%2048:raise ValueError('PAC budget/alignment failed')
+    if len(pac)>IN_RING_MAX_PAC_BYTES or len(pac)%2048:raise ValueError('PAC budget/alignment failed')
     for a,b in zip(inspect_pac(base)['sections'],inspect_pac(pac)['sections']):
         if a['id']!=b['id'] or b['offset']%16:raise ValueError('PAC section alignment/order changed')
         if a['id']!=2 and base[a['offset']:a['offset']+a['size']]!=pac[b['offset']:b['offset']+b['size']]:raise ValueError('Unrelated PAC section changed')

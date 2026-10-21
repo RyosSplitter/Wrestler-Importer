@@ -3,6 +3,7 @@
 This is independent of HCTP anatomical comparison (source_reference_qa) and of
 conversion. Donor shape, rigging, textures and opaque PAC sections are never copied.
 """
+from desktop.limits import IN_RING_MAX_PAC_BYTES
 from collections import defaultdict
 import html
 import json
@@ -137,7 +138,7 @@ def preservation(before,after,original,final,mode):
                 metadata_recovered_models='Only individually reported redundant metadata bytes may differ before the first successful strict audit.')
 
 
-def validate_pac(source,output,*,base,mode='full',repair=True,max_bytes=148000,
+def validate_pac(source,output,*,base,mode='full',repair=True,max_bytes=IN_RING_MAX_PAC_BYTES,
                  resolution=256,samples=4000,progress=lambda message:None):
     """Repair selected compatibility domains, compare with a usable PSP base.
 

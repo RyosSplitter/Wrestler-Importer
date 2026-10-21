@@ -1,4 +1,5 @@
 """Package actual decoded-PAC evidence and a static Noesis preview for its owner."""
+from desktop.limits import IN_RING_MAX_PAC_BYTES
 import argparse
 import copy
 import hashlib
@@ -40,7 +41,7 @@ def export(work, base, output):
     data = (work/result['pac']).read_bytes(); fingerprint = hashlib.sha256(data).hexdigest()
     if fingerprint != result['sha256']:
         raise ValueError('PAC no longer matches completed run')
-    native, gims = validate_pac(data, base.read_bytes(), 148000, accessory_models={}, gim_reader=read_gim)
+    native, gims = validate_pac(data, base.read_bytes(), IN_RING_MAX_PAC_BYTES, accessory_models={}, gim_reader=read_gim)
     native['bone_count'] = len(native['bones'])
     raw = next(r for s,r in sections(data) if s['id'] == 2)
     if raw != (work/'candidate.yobj').read_bytes():

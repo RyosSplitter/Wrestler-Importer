@@ -3,6 +3,7 @@
 python -m tools.jbi_trial ch.pac --base OWN_PSP_BASE.pac --out NEW_DIRECTORY
 Research only: preserves the accepted historical PAC, never enables an adapter.
 """
+from desktop.limits import IN_RING_MAX_PAC_BYTES
 import argparse
 from collections import Counter
 import copy
@@ -241,13 +242,13 @@ def run(source, base_path, output, *, entry_id='', progress=lambda p,m:None,
     texture_usage_model=combined_preview(audit_yobj(native_bytes[2]),
         [audit_yobj(raw) for sid,raw in native_bytes.items() if sid!=2])
     step(55,'Allocating JBI texture quality against actual PAC and native-base memory budgets')
-    pac,gims,texture_report=optimize(provisional,native_bytes[2],texture_usage_model,images,output/'textures',148000,
+    pac,gims,texture_report=optimize(provisional,native_bytes[2],texture_usage_model,images,output/'textures',IN_RING_MAX_PAC_BYTES,
         cancel=check,progress=lambda m:step(65,m))
     table=texture_table(prepared['textures'],[gims[n] for n in prepared['textures']],gim_reader=read_gim)
     if pac!=package_models(base,native_bytes[2],table,{i:r for i,r in native_bytes.items() if i!=2}):
         raise ValueError('Canonical model-set packaging differs')
     step(80,'Validating actual PAC alignment, pointers, indices, palettes and model set')
-    native,gims=validate_pac(pac,base,148000,accessory_models=expected,gim_reader=read_gim)
+    native,gims=validate_pac(pac,base,IN_RING_MAX_PAC_BYTES,accessory_models=expected,gim_reader=read_gim)
     final_models={s['id']:audit_yobj(r) for s,r in sections(pac) if r.startswith(b'YOBJ')}
     for sid,raw in native_bytes.items():
         if next(r for s,r in sections(pac) if s['id']==sid)!=raw:
@@ -292,7 +293,7 @@ def run(source, base_path, output, *, entry_id='', progress=lambda p,m:None,
         raise ValueError('Input changed')
     report=dict(status='EXPERIMENTAL; PPSSPP review required',source_game='JBI per owner correction; historical SYM title was erroneous',
         archive_sha256=sha(original),costume_id=selection['selected_entry'],selection=selection,source_roles=source_roles,
-        pac=dict(filename=filename,bytes=len(pac),sha256=sha(pac),budget=148000),
+        pac=dict(filename=filename,bytes=len(pac),sha256=sha(pac),budget=IN_RING_MAX_PAC_BYTES),
         models={sid:dict(sha256=sha(native_bytes[sid]),**m['report']) for sid,m in final_models.items()},
         total_triangles=sum(m['report']['triangles'] for m in final_models.values()),
         texture_count=len(gims),texture_pixel_palette_bytes=texture_report['pixel_palette_bytes'],

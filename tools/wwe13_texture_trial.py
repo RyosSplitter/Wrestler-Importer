@@ -1,4 +1,5 @@
 """Measured, sample-trial atlas allocation; no production texture-path changes."""
+from desktop.limits import IN_RING_MAX_PAC_BYTES
 import json
 from pathlib import Path
 
@@ -119,7 +120,7 @@ def candidates(model, images, contracts, progress=print):
     return all_choices, importance, diagnostics
 
 
-def allocate(base, raw_model, model, images, contracts, output, target=148000, progress=print, candidate_factory=None):
+def allocate(base, raw_model, model, images, contracts, output, target=IN_RING_MAX_PAC_BYTES, progress=print, candidate_factory=None):
     output = Path(output); output.mkdir(parents=True, exist_ok=False)
     choices, importance, diagnostics = (candidate_factory or candidates)(model, images, contracts, progress)
     encoded_model = compress(raw_model)

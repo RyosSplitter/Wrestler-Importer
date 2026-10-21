@@ -3,6 +3,7 @@
 Repairs are allowlisted layout transformations with exact preservation checks.
 Unknown anatomy/controller semantics require reference review, not guessed edits.
 """
+from desktop.limits import IN_RING_MAX_PAC_BYTES
 import html
 import copy
 import json
@@ -103,7 +104,7 @@ def inspect(source, output, max_bytes, resolution):
                 converter_profile=m['converter_export_profile'])
 
 
-def validate_pac(source, output, *, reference=None, repair=True, max_bytes=148000,
+def validate_pac(source, output, *, reference=None, repair=True, max_bytes=IN_RING_MAX_PAC_BYTES,
                  resolution=256, samples=4000, progress=lambda message:None):
     """Return QA report; emit repaired.pac ONLY after all supported checks pass.
 

@@ -4,6 +4,7 @@ No new GIM bit-depth/material contracts. Native-observed dimensions may go below
 64; fixed CLUT capacities remain overhead even when fewer colors are useful.
 This is a deterministic greedy search, not a global optimum or game certificate.
 """
+from desktop.limits import IN_RING_MAX_PAC_BYTES
 import hashlib
 import html
 import json
@@ -86,7 +87,7 @@ def candidates(raw, cancel=lambda:None):
     return rows
 
 
-def fit_pac(baseline, output, *, target=148000, cancel=lambda:None, progress=lambda message:None):
+def fit_pac(baseline, output, *, target=IN_RING_MAX_PAC_BYTES, cancel=lambda:None, progress=lambda message:None):
     """Fit by actual stored table costs; never edit anything outside section 9."""
     cancel()
     output=Path(output);output.mkdir(parents=True,exist_ok=True)

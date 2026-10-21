@@ -4,6 +4,7 @@ python -m tools.psp_mesh_merge_trial --input BEFORE.pac --provenance parts.json
     --output NEW_DIRECTORY [--reference label=PATH.pac ...]
 The provenance file pins the audited input YOBJ hash and original target parts.
 """
+from desktop.limits import IN_RING_MAX_PAC_BYTES
 import argparse
 import csv
 import itertools
@@ -115,7 +116,7 @@ def run(input_path, provenance_path, output, references=()):
     packed=compress(after)
     if decompress(packed)!=after:raise ValueError('BPE round trip failed')
     rebuilt=replace_sections(pac,{2:packed});final_pac=inspect_pac(rebuilt)
-    if len(rebuilt)>148*1024:raise ValueError('PAC exceeds 148 KiB')
+    if len(rebuilt)>IN_RING_MAX_PAC_BYTES:raise ValueError(f'PAC exceeds {IN_RING_MAX_PAC_BYTES:,} bytes')
     unchanged=[]
     for a,b in zip(original_pac['sections'],final_pac['sections']):
         if a['id']!=b['id'] or b['offset']%16:raise ValueError('PAC order/alignment changed')

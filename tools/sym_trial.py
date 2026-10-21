@@ -3,6 +3,7 @@
 python -m tools.sym_trial ch.pac --base OWN_PSP_BASE.pac --entry 0000 --out NEW_DIR
 No decimation; extra SYM objects are reported, not guessed into PSP slots.
 """
+from desktop.limits import IN_RING_MAX_PAC_BYTES
 import argparse
 from collections import Counter, defaultdict
 import copy
@@ -275,7 +276,7 @@ def optimize(base, native_bytes, model, sources, folder, max_bytes, *, cancel=la
     return pac, gims, report
 
 
-def run(source, base_path, entry_id, output, max_bytes=148000):
+def run(source, base_path, entry_id, output, max_bytes=IN_RING_MAX_PAC_BYTES):
     original = source.read_bytes()
     directory = read_ch_directory(original)
     entry = next((e for e in directory['entries'] if e['id_hex'] == entry_id), None)

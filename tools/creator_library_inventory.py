@@ -4,6 +4,7 @@ python -m tools.creator_library_inventory --folder USER_FOLDER --reference Kenny
 Multi-descriptor previews are explicitly diagnostic; the production auditor and
 creator importer retain their existing policies. No repaired model is exported.
 """
+from desktop.limits import IN_RING_MAX_PAC_BYTES
 import argparse
 from collections import Counter
 import csv
@@ -106,7 +107,7 @@ def scan(folder,output,reference=None,previews=False):
     for number,path in enumerate(paths):
         if path.is_symlink():raise ValueError('Library scan does not follow file symlinks.')
         data=path.read_bytes();row=dict(index=number,file=path.relative_to(folder).as_posix(),sha256=sha(data),pac_bytes=len(data),
-            under_current_export_target=len(data)<=148000,models=[],texture_tables=[],nested_pacs=[],errors=[],creator_import_passed=False)
+            under_current_export_target=len(data)<=IN_RING_MAX_PAC_BYTES,models=[],texture_tables=[],nested_pacs=[],errors=[],creator_import_passed=False)
         try:
             entries=list(sections(data));row['sections']=[dict(id=s['id'],stored_bytes=s['size'],decoded_bytes=len(raw)) for s,raw in entries]
             decoded={s['id']:raw for s,raw in entries};model=None

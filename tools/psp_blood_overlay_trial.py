@@ -4,6 +4,7 @@ python -m tools.psp_blood_overlay_trial --input converted.pac --donor base.pac
     --output new-directory [--coincident]
 No production converter changes, body edits, texture reductions or rig transfer.
 """
+from desktop.limits import IN_RING_MAX_PAC_BYTES
 import argparse
 import copy
 import hashlib
@@ -240,7 +241,7 @@ def validate_layers(before, after, records):
                 limitation='Synthetic analytical LBS; game activation, depth testing and runtime memory remain untested')
 
 
-def run(input_path, donor_path, output, *, coincident=False, max_bytes=148000):
+def run(input_path, donor_path, output, *, coincident=False, max_bytes=IN_RING_MAX_PAC_BYTES):
     output = Path(output)
     if output.exists():
         raise FileExistsError(output)

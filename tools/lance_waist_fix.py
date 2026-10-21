@@ -4,6 +4,7 @@ Positions/UVs at four collapsed material junctions and their one-ring normals
 are patched in place. Indices, skin weights, palettes and allocations stay fixed.
 This is a pinned controlled experiment, not a general automatic model repair.
 """
+from desktop.limits import IN_RING_MAX_PAC_BYTES
 import argparse
 from collections import defaultdict
 import json
@@ -167,7 +168,7 @@ def run(source_path,base_path,output):
     fixed,patch_report=repair(original,reference);packed=compress(fixed)
     if decompress(packed)!=fixed:raise ValueError('BPE round trip failed')
     pac=replace_sections(base,{2:packed})
-    if len(pac)>148*1024:raise ValueError('PAC exceeds budget')
+    if len(pac)>IN_RING_MAX_PAC_BYTES:raise ValueError('PAC exceeds budget')
     for a,b in zip(inspect_pac(base)['sections'],inspect_pac(pac)['sections']):
         if a['id']!=b['id'] or b['offset']%16:raise ValueError('PAC section order/alignment changed')
         if a['id']!=2 and base[a['offset']:a['offset']+a['size']]!=pac[b['offset']:b['offset']+b['size']]:raise ValueError('Unrelated PAC data changed')

@@ -1,4 +1,5 @@
 """Private-project native PSP assembly, strict readback, pose QA and export."""
+from desktop.limits import IN_RING_MAX_PAC_BYTES
 import copy
 import hashlib
 import json
@@ -23,7 +24,7 @@ from model_creator.parts import PARTS, JOINTS, extract, stitch, triangles
 
 VERSION = '0.3.0'
 SCHEMA = 'psp-model-creator/1'
-MAX_BYTES = 148000
+MAX_BYTES = IN_RING_MAX_PAC_BYTES
 POSES = {'rest': {}, 'standing': {'l_ninoude': ('z',70), 'r_ninoude': ('z',-70)},
          'walk': {'l_momo': ('x',22),'r_momo': ('x',-22),'r_sune': ('x',30)},
          'bend': {'koshi': ('x',35),'mune': ('x',20)},

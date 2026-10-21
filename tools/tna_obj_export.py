@@ -107,7 +107,7 @@ def export(work, base_path, texture, output):
     dump(output/'summary.json',summary)
     (output/'README.txt').write_text('AJ Styles TNA OBJ -> SVR 2011 PSP EXPERIMENT\n\n'
         'Use AJ-Styles-TNA-PSP-EXPERIMENTAL.pac for the game test.\n'
-        'The file is '+str(len(data))+' bytes, below the 148,000-byte configured limit.\n'
+        'The file is '+str(len(data))+' bytes, below the 152,064-byte configured limit.\n'
         'All 3,565 source triangles are retained. No decimation.\n'
         'A uniform scale/orientation change aligns the OBJ to the PSP donor.\n'
         'Bounded position/normal/UV precision changes are documented in native-checks.json.\n'

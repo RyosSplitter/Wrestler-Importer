@@ -4,6 +4,7 @@ No geometry/material edits and no automatic reduction beyond the selected
 steps. Native observed layouts and the established texture allocation envelope
 are policy guards, not claims about universal hardware or loader limits.
 """
+from desktop.limits import IN_RING_MAX_PAC_BYTES
 import hashlib
 import html
 import json
@@ -64,7 +65,7 @@ def downgrade_texture(source,baseline,steps):
         encoded_bytes=len(raw),pixel_palette_bytes=len(raw)-208,sampling=sampling)
 
 
-def downgrade_pac(baseline,decoded,output,*,steps,target=148000,cancel=lambda:None):
+def downgrade_pac(baseline,decoded,output,*,steps,target=IN_RING_MAX_PAC_BYTES,cancel=lambda:None):
     output=Path(output);output.mkdir(parents=True,exist_ok=True)
     before={s['id']:(s,raw) for s,raw in sections(baseline)}
     table=before[9][1];records=parse_textures(table);names=[r['name'] for r in records]

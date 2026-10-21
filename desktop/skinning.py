@@ -3,6 +3,7 @@
 Only one-slot float32 skinned buffers are padded. Added bone weights are zero;
 this is an SVR compatibility policy, not a generic PSP hardware restriction.
 """
+from desktop.limits import IN_RING_MAX_PAC_BYTES
 import copy
 import hashlib
 
@@ -94,7 +95,7 @@ def adapt_yobj(raw):
         unselected_mesh_layouts_exact=True)
 
 
-def apply_single_slot_compatibility(data,*,max_bytes=148000,cancel=lambda:None):
+def apply_single_slot_compatibility(data,*,max_bytes=IN_RING_MAX_PAC_BYTES,cancel=lambda:None):
     """Adapt an already fitted PAC without texture/geometry budget fallbacks.
 
     Existing packaging/compression code is reused. If layout overhead cannot fit,

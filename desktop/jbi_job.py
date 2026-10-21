@@ -1,4 +1,5 @@
 """App orchestration around the accepted JBI engine; HCTP stays independent."""
+from desktop.limits import IN_RING_MAX_PAC_BYTES
 import html
 import json
 from pathlib import Path
@@ -25,7 +26,7 @@ def texture_stage(request,baseline,bundle,folder,envelope,check,progress):
     if mode in ('ATO','Priority Selection'):
         from desktop.texture_optimizer.pac import optimize_pac
         label='texture-priorities' if mode=='Priority Selection' else 'adaptive-textures'
-        payload,report=optimize_pac(baseline,decoded,folder/label,target=148000,
+        payload,report=optimize_pac(baseline,decoded,folder/label,target=IN_RING_MAX_PAC_BYTES,
             cancel=check,progress=progress,max_pixel_bytes=envelope,
             priority_textures=request.priority_textures,rebalance_priorities=bool(request.priority_textures),
             strict_source_ceilings=True)
@@ -73,7 +74,7 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False):
     # The engine checked these against intended source-derived records. All
     # optional texture stages above must retain the exact validated YOBJ bytes.
     lossless={r['section'] for r in (texture_report or {}).get('lossless_retained_texture_storage',[])}
-    native,gims=validate_pac(payload,base.read_bytes(),148000,
+    native,gims=validate_pac(payload,base.read_bytes(),IN_RING_MAX_PAC_BYTES,
         accessory_models={sid:m for sid,m in baseline_models.items() if sid!=2},gim_reader=read_gim,
         lossless_texture_sections=lossless)
     final_models={s['id']:audit_yobj(raw) for s,raw in sections(payload) if raw.startswith(b'YOBJ')}
@@ -101,8 +102,8 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False):
     page=work/'qa';page.mkdir()
     document=['<!doctype html><html><meta charset="utf-8"><title>JBI conversion QA</title><body>',
         '<h1>JBI → SVR 2011 PSP</h1>',
-        '<p>Entry %s. %d / 148,000 bytes. %d independent models. Texture mode: %s.</p>'%
-        (html.escape(entry or 'standalone costume'),len(payload),len(final_models),html.escape(request.texture_mode or 'Default')),
+        '<p>Entry %s. %d / %s bytes. %d independent models. Texture mode: %s.</p>'%
+        (html.escape(entry or 'standalone costume'),len(payload),f'{IN_RING_MAX_PAC_BYTES:,}',len(final_models),html.escape(request.texture_mode or 'Default')),
         '<p>Source-derived local arm/hand bind conversion and digit-constrained transfer. No decimation. '
         'Native skeleton, palettes, indices, offsets, alignment, texture contracts and analytical poses checked. '
         'Source helper/controller semantics, all animations and accessory events still require model-specific PPSSPP testing.</p>',

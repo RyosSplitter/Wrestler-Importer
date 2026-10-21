@@ -4,6 +4,7 @@ The OBJ has no rig. All transferred weights and facial binds are newly inferred
 PSP binding, not recovered TNA data. Input roles below are sample-scoped and
 must not silently be applied to another OBJ.
 """
+from desktop.limits import IN_RING_MAX_PAC_BYTES
 import argparse
 from collections import defaultdict
 import copy
@@ -309,7 +310,7 @@ def check_bone_changes(original, candidate, report):
 
 
 def validate_trial_pac(pac, base, facial):
-    native,gims = validate_pac(pac,None,148000,accessory_models={},gim_reader=read_gim)
+    native,gims = validate_pac(pac,None,IN_RING_MAX_PAC_BYTES,accessory_models={},gim_reader=read_gim)
     before,after = inspect_pac(base),inspect_pac(pac)
     if [s['id'] for s in before['sections']] != [s['id'] for s in after['sections']]:
         raise ValueError('Base PAC section order/set changed')

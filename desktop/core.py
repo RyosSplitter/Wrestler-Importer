@@ -3,6 +3,7 @@
 No character hashes or file names select conversion behavior. User files are
 read-only; every candidate is built in its own disposable job directory.
 """
+from desktop.limits import IN_RING_MAX_PAC_BYTES
 from dataclasses import dataclass
 from collections import Counter
 import copy
@@ -200,7 +201,7 @@ def textures(decoded,prepared,folder,cap):
     dump(folder/'textures.json',dict(textures=entries))
     return entries,gims
 
-def validate_pac(data,base=None,max_bytes=148000,*,accessory_models=None,gim_reader=read_gim,lossless_texture_sections=()):
+def validate_pac(data,base=None,max_bytes=IN_RING_MAX_PAC_BYTES,*,accessory_models=None,gim_reader=read_gim,lossless_texture_sections=()):
     report=inspect_pac(data)
     if len(data)>max_bytes or len(data)%2048 or any(s['offset']%16 for s in report['sections']):raise ValueError('PSP PAC size/alignment check failed.')
     if len({s['id'] for s in report['sections']})!=len(report['sections']):raise ValueError('Duplicate final PAC section IDs.')

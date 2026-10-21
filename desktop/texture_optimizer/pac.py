@@ -1,4 +1,5 @@
 """Opt-in texture stage over frozen model/material/non-texture PAC payloads."""
+from desktop.limits import IN_RING_MAX_PAC_BYTES
 import hashlib
 import html
 import json
@@ -21,7 +22,7 @@ from .allocator import allocate
 def sha(data):return hashlib.sha256(data).hexdigest()
 
 
-def optimize_pac(baseline,decoded,output,*,target=148000,cancel=lambda:None,
+def optimize_pac(baseline,decoded,output,*,target=IN_RING_MAX_PAC_BYTES,cancel=lambda:None,
                  progress=lambda message:None,max_pixel_bytes=None,
                  priority_textures=(),freeze_unselected=False,rebalance_priorities=False,
                  strict_source_ceilings=False):

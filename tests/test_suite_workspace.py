@@ -103,7 +103,8 @@ class WorkspaceTests(unittest.TestCase):
             self.assertEqual((path.parent/result['models'][0]['yobj']).read_bytes(),self.files['hctp-quad.yobj'])
 
     def test_native_inspection_does_not_claim_conversion_size_limit_is_universal(self):
-        data=self.files['psp-quad.pac']+bytes(150000)
+        from desktop.limits import IN_RING_MAX_PAC_BYTES
+        data=self.files['psp-quad.pac']+bytes(IN_RING_MAX_PAC_BYTES)
         with tempfile.TemporaryDirectory() as directory:
             root=Path(directory)
             _,_,result=self.inspect(root,data)

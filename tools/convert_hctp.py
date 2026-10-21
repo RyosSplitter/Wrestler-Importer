@@ -12,6 +12,10 @@ import struct
 import subprocess
 import sys
 
+if __package__ in (None, ''):
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from desktop.limits import IN_RING_MAX_PAC_BYTES
+
 try:
     from .hctp_read import load_hctp
     from .pac_inspect import FormatError, inspect_pac
@@ -150,7 +154,7 @@ def convert(source, target, reference, editor, output, editor_python, *, compact
     pac = output / ('RVD-HCTP-to-PSP-region-small-test.pac' if regional else
                     'RVD-HCTP-to-SVR2007-PSP-compact-test.pac' if compact else 'RVD-HCTP-to-SVR2007-PSP-test.pac')
     packing = repack(target, output / 'native' / 'prepared.yobj', output / 'textures', pac,
-                     max_bytes=(144 if regional else 148) * 1024 if compact else None)
+                     max_bytes=IN_RING_MAX_PAC_BYTES if compact else None)
     report = {'preparation': preparation, 'textures': texture_manifest, 'native_serialization': verification,
               'preview_texture_files': preview_files,
               'float_preview_serialization': float_verification,
@@ -169,10 +173,10 @@ def main():
     parser.add_argument('--editor', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--editor-python', default=sys.executable)
-    parser.add_argument('--compact', action='store_true', help='Blender reduction, 4-bit/64px textures, maximum 148 KiB PAC')
+    parser.add_argument('--compact', action='store_true', help='Blender reduction, 4-bit/64px textures, maximum 152,064-byte PAC')
     parser.add_argument('--blender', default='blender', help='Blender 4.3 executable for compact conversion')
     parser.add_argument('--detail', action='store_true', help='Preserve eyes/teeth/mouth and allocate more detail to the face')
-    parser.add_argument('--regions', action='store_true', help='PSP-weight region reduction: head 80%, torso 50%, limbs 35%, 144 KiB maximum')
+    parser.add_argument('--regions', action='store_true', help='PSP-weight region reduction: head 80%%, torso 50%%, limbs 35%%, 152,064-byte maximum')
     args = parser.parse_args()
     try:
         report = convert(args.source, args.target, args.reference, args.editor, args.output, args.editor_python,

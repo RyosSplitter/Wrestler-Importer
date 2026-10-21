@@ -1,4 +1,5 @@
 """Portable, texture-editable PAC projects; native model records stay authoritative."""
+from desktop.limits import IN_RING_MAX_PAC_BYTES
 import csv
 import io
 import json
@@ -77,8 +78,8 @@ def export_folder(manifest_path, destination):
     dump(destination/'manifest.json', manifest)
     project = dict(schema=SCHEMA, source=manifest['source'], source_name=Path(manifest['source']).name, source_sha256=digest(original),
                    source_bytes=len(original), texture_editing_only=True,
-                   max_pac_bytes=max(148000, len(original)),
-                   budget_policy='148000-byte conversion envelope, or the larger existing native PAC size; no runtime texture allocation increase')
+                   max_pac_bytes=max(IN_RING_MAX_PAC_BYTES, len(original)),
+                   budget_policy=f'{IN_RING_MAX_PAC_BYTES}-byte conversion envelope, or the larger existing native PAC size; no runtime texture allocation increase')
     if manifest.get('native_descriptor_arrays'):project['native_descriptor_arrays']=True
     dump(destination/'project.json', project)
     with (destination/'textures.csv').open('w', newline='', encoding='utf-8-sig') as stream:
@@ -297,7 +298,7 @@ def pack_folder(project_folder, destination):
         else:
             candidate = original
         final = inspect_pac(candidate)
-        budget = max(148000,len(original))
+        budget = max(IN_RING_MAX_PAC_BYTES,len(original))
         if len(candidate)>budget:
             raise ValueError(f'Edited PAC is {len(candidate):,} bytes, over its {budget:,}-byte budget. No PAC written; simplify texture colors in the editor.')
         decoded_final = {s['id']:(s,raw) for s,raw in sections(candidate)}
