@@ -119,9 +119,9 @@ def candidates(model, images, contracts, progress=print):
     return all_choices, importance, diagnostics
 
 
-def allocate(base, raw_model, model, images, contracts, output, target=148000, progress=print):
+def allocate(base, raw_model, model, images, contracts, output, target=148000, progress=print, candidate_factory=None):
     output = Path(output); output.mkdir(parents=True, exist_ok=False)
-    choices, importance, diagnostics = candidates(model, images, contracts, progress)
+    choices, importance, diagnostics = (candidate_factory or candidates)(model, images, contracts, progress)
     encoded_model = compress(raw_model)
     if decompress(encoded_model) != raw_model:
         raise ValueError('Cached model compression failed round trip')

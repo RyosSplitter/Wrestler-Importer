@@ -1,0 +1,312 @@
+{
+  "pac": "HBK-WWE13-Wii-Ring-PSP-EXPERIMENTAL.pac",
+  "pac_bytes": 145408,
+  "sha256": "d46e6164939767d4339841cdc638a85fb249f0cfc1d7b4e20dd759780b23283e",
+  "source_sha256": "feeea42460893cf577b3aa2ffadb239462538be18e822e33d051e096445df542",
+  "variant": 0,
+  "source_triangles": 5679,
+  "final_triangles": 3242,
+  "final_vertices": 3296,
+  "final_meshes": 60,
+  "textures": 6,
+  "structural_checks_passed": true,
+  "status": "EXPERIMENTAL; structural/native analytical gates passed; visual QA review findings retained; NOT PPSSPP-tested",
+  "source_blood_draws_excluded": [
+    {
+      "section": 2,
+      "material": 5,
+      "triangles": 254,
+      "reason": "Dynamic source blood draw; ordinary PSP serialization would make it always visible. Not approximated as body geometry."
+    }
+  ],
+  "texture_trial": "Original useful RGBA ceiling enforced; no binary-alpha bake",
+  "native_pose_gate_passed": true,
+  "maximum_pruned_weight_mass": 0.009467942446195754,
+  "expanded_yobj_bytes": 259808,
+  "native_review_findings": [],
+  "hands": {
+    "grip": {
+      "candidate": 1.6285167808707381,
+      "source_reference": 1.7491621769957937,
+      "native_donor": 1.4983775252157943,
+      "limit": 2.8737432654936903,
+      "passes": true
+    },
+    "finger-extension": {
+      "candidate": 2.3321362216369845,
+      "source_reference": 2.6897242505143746,
+      "native_donor": 1.7153455191235971,
+      "limit": 4.284586375771562,
+      "passes": true
+    },
+    "wrist-flex": {
+      "candidate": 1.3651157870933244,
+      "source_reference": 1.3655155236775418,
+      "native_donor": 1.2079766001757875,
+      "limit": 2.298273285516313,
+      "passes": true
+    },
+    "forearm-twist": {
+      "candidate": 1.244148668478065,
+      "source_reference": 1.1119190076901226,
+      "native_donor": 1.0374232146655744,
+      "limit": 1.917878511535184,
+      "passes": true
+    }
+  },
+  "texture_allocation": 23744,
+  "texture_envelope": 54016,
+  "selected_textures": [
+    {
+      "name": "w13_00",
+      "selected": {
+        "width": 64,
+        "height": 64,
+        "bits": 8,
+        "palette_entries": 256,
+        "requested_useful_colors": 256,
+        "used_palette_colors": 256,
+        "quantizer": "UV-occupied training; method 1",
+        "serialized_bytes": 5328,
+        "pixel_palette_bytes": 5120,
+        "metrics": {
+          "rgb_rmse_255": 10.366311921263447,
+          "luminance_ssim": 0.7449838777820083,
+          "oriented_edge_error": 0.7866399923582643,
+          "fine_feature_loss": 0.45283822137795504,
+          "high_frequency_error": 0.8883948996911052,
+          "perceptual_loss": 0.3206682717957926,
+          "quality_score": 0.6862355621172611,
+          "alpha_mae": 0.0,
+          "alpha_exact": false,
+          "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+          "occupied_cell_color_rmse_255": 2.2005970597858813,
+          "perceptual_loss_before_color_guard": 0.31376443788273883
+        },
+        "source_quality_ceiling": {
+          "width": 265,
+          "height": 265,
+          "useful_colors": 3209
+        },
+        "fully_preserved": false,
+        "individual_bpe_bytes": 4665
+      }
+    },
+    {
+      "name": "w13_01",
+      "selected": {
+        "width": 32,
+        "height": 32,
+        "bits": 8,
+        "palette_entries": 256,
+        "requested_useful_colors": 256,
+        "used_palette_colors": 256,
+        "quantizer": "UV-occupied training; method 1",
+        "serialized_bytes": 2256,
+        "pixel_palette_bytes": 2048,
+        "metrics": {
+          "rgb_rmse_255": 23.98084416629226,
+          "luminance_ssim": 0.7247409660845979,
+          "oriented_edge_error": 0.9757694388247744,
+          "fine_feature_loss": 0.6855717682826846,
+          "high_frequency_error": 0.9409372084881923,
+          "perceptual_loss": 0.4175070106729681,
+          "quality_score": 0.5869280062082355,
+          "alpha_mae": 0.0,
+          "alpha_exact": false,
+          "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+          "occupied_cell_color_rmse_255": 1.4136616308836392,
+          "perceptual_loss_before_color_guard": 0.4130719937917645
+        },
+        "source_quality_ceiling": {
+          "width": 269,
+          "height": 269,
+          "useful_colors": 1701
+        },
+        "fully_preserved": false,
+        "individual_bpe_bytes": 2130
+      }
+    },
+    {
+      "name": "w13_02",
+      "selected": {
+        "width": 32,
+        "height": 32,
+        "bits": 8,
+        "palette_entries": 256,
+        "requested_useful_colors": 256,
+        "used_palette_colors": 256,
+        "quantizer": "UV-occupied training; method 1",
+        "serialized_bytes": 2256,
+        "pixel_palette_bytes": 2048,
+        "metrics": {
+          "rgb_rmse_255": 25.934217124602934,
+          "luminance_ssim": 0.6286167975572229,
+          "oriented_edge_error": 0.9691996695880853,
+          "fine_feature_loss": 0.6936800501713715,
+          "high_frequency_error": 0.9441670555114527,
+          "perceptual_loss": 0.44013769090026533,
+          "quality_score": 0.5697831861846466,
+          "alpha_mae": 0.0,
+          "alpha_exact": false,
+          "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+          "occupied_cell_color_rmse_255": 3.162279570815685,
+          "perceptual_loss_before_color_guard": 0.43021681381535337
+        },
+        "source_quality_ceiling": {
+          "width": 263,
+          "height": 263,
+          "useful_colors": 2073
+        },
+        "fully_preserved": false,
+        "individual_bpe_bytes": 2105
+      }
+    },
+    {
+      "name": "w13_03",
+      "selected": {
+        "width": 32,
+        "height": 32,
+        "bits": 8,
+        "palette_entries": 256,
+        "requested_useful_colors": 256,
+        "used_palette_colors": 256,
+        "quantizer": "UV-occupied training; method 1",
+        "serialized_bytes": 2256,
+        "pixel_palette_bytes": 2048,
+        "metrics": {
+          "rgb_rmse_255": 49.47016754150361,
+          "luminance_ssim": 0.4231986579020703,
+          "oriented_edge_error": 0.9820362268673111,
+          "fine_feature_loss": 0.7205179644382593,
+          "high_frequency_error": 0.9720343148322135,
+          "perceptual_loss": 0.49691763309814935,
+          "quality_score": 0.5091733725471926,
+          "alpha_mae": 0.0,
+          "alpha_exact": false,
+          "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+          "occupied_cell_color_rmse_255": 1.9415080494527504,
+          "perceptual_loss_before_color_guard": 0.49082662745280736
+        },
+        "source_quality_ceiling": {
+          "width": 266,
+          "height": 266,
+          "useful_colors": 2085
+        },
+        "fully_preserved": false,
+        "individual_bpe_bytes": 2049
+      }
+    },
+    {
+      "name": "w13_04",
+      "selected": {
+        "width": 32,
+        "height": 64,
+        "bits": 8,
+        "palette_entries": 256,
+        "requested_useful_colors": 214,
+        "used_palette_colors": 214,
+        "quantizer": "UV-occupied training; method 1",
+        "serialized_bytes": 3280,
+        "pixel_palette_bytes": 3072,
+        "metrics": {
+          "rgb_rmse_255": 0.0,
+          "luminance_ssim": 0.99977894146802,
+          "oriented_edge_error": 0.00026810183789447296,
+          "fine_feature_loss": 4.9366826856612864e-05,
+          "high_frequency_error": 0.0006822042973239798,
+          "perceptual_loss": 0.00011883864052438434,
+          "quality_score": 0.9998811613594756,
+          "alpha_mae": 0.0,
+          "alpha_exact": true,
+          "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception",
+          "occupied_cell_color_rmse_255": 0.0,
+          "perceptual_loss_before_color_guard": 0.00011883864052438434
+        },
+        "source_quality_ceiling": {
+          "width": 32,
+          "height": 64,
+          "useful_colors": 214
+        },
+        "fully_preserved": false,
+        "individual_bpe_bytes": 2544
+      }
+    },
+    {
+      "name": "w13_05",
+      "selected": {
+        "width": 32,
+        "height": 64,
+        "bits": 8,
+        "palette_entries": 256,
+        "requested_useful_colors": 125,
+        "used_palette_colors": 125,
+        "quantizer": "RGB quantized per alpha level, method 0",
+        "serialized_bytes": 3280,
+        "pixel_palette_bytes": 3072,
+        "metrics": {
+          "rgb_rmse_255": 14.525255831828671,
+          "luminance_ssim": 0.4719685711815652,
+          "oriented_edge_error": 0.9375514432879397,
+          "fine_feature_loss": 0.43859426861787765,
+          "high_frequency_error": 0.9231368828770614,
+          "perceptual_loss": 0.3794025500085968,
+          "quality_score": 0.6205974499914032,
+          "alpha_mae": 21.375488,
+          "alpha_exact": false,
+          "metric_scope": "Source-sized Lanczos reconstruction, occupied-area weighted; heuristic perception"
+        },
+        "source_quality_ceiling": {
+          "width": 125,
+          "height": 250,
+          "useful_colors": 125
+        },
+        "fully_preserved": false,
+        "alpha_policy": "Source alpha levels preserved at every retained nearest-alpha sample; RGB Lanczos/per-alpha palette. No binary opacity bake.",
+        "individual_bpe_bytes": 1909
+      }
+    }
+  ],
+  "source_shape_reference": "Full-detail decoded Wii model in adapted PSP rest pose; source runtime not emulated",
+  "qa_review_findings": 47,
+  "qa_finding_kinds": {
+    "material-boundary-drift": 1,
+    "surface-shape": 8,
+    "opposed-nearby-head-face-winding": 38
+  },
+  "qa_severities": {
+    "review": 46,
+    "high-review": 1
+  },
+  "qa_rest_overall": {
+    "samples": 12000,
+    "mean": 0.021706176594898628,
+    "rms": 0.04579841941080909,
+    "p50": 0.00681893293548704,
+    "p95": 0.09421938909563349,
+    "p99": 0.20071683692217612,
+    "maximum": 0.45471335612015185,
+    "p95_height": 0.004767958227037925,
+    "p99_height": 0.010157245797218516
+  },
+  "qa_region_p95_height": {
+    "head": 0.0001851563951456555,
+    "face": 0.0003185771820685881,
+    "jaw": 0.0005954563518926237,
+    "chin": 0.001451281595248689,
+    "nose": 0.0003655791836104614,
+    "eyes": 0.0002728355206439919,
+    "neck": 0.0012295722351644588,
+    "torso": 0.0021335271981743117,
+    "waist": 0.0029484893198760587,
+    "pelvis": 0.005344541420819759,
+    "buttocks": 0.004136893886964701,
+    "shoulders": 0.0020233168603255775,
+    "left-hands": 0.0012460394114735356,
+    "left-feet": 0.003557233527319453,
+    "right-hands": 0.0016777218434233996,
+    "right-feet": 0.0034738291189231065
+  },
+  "qa_pose_count": 14,
+  "automated_tests": 105
+}

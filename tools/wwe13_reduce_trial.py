@@ -64,12 +64,37 @@ def classify(model, hand_weighted=False):
     return out
 
 
-def run(source, output, profile, hand_weighted=False):
+def split_uv_regions(model, components=True):
+    """Keep material/UV-index-connected regions separate during collapse.
+
+    The reducer's existing shared-position guard then locks their boundaries.
+    This is opt-in for the Wii experiment; legacy trial behavior is unchanged.
+    """
+    out=copy.deepcopy(model);out['meshes']=[]
+    for mesh in model['meshes']:
+        for mat in mesh['materials']:
+            parent=list(range(len(mesh['vertices'])))
+            def root(i):
+                while parent[i]!=i:parent[i]=parent[parent[i]];i=parent[i]
+                return i
+            for tri in mat['triangles']:
+                for i in tri[1:]:a,b=root(tri[0]),root(i);parent[max(a,b)]=min(a,b)
+            groups=defaultdict(list)
+            for tri in mat['triangles']:groups[root(tri[0]) if components else 0].append(tri)
+            for faces in groups.values():
+                used=sorted({i for t in faces for i in t});lookup={old:i for i,old in enumerate(used)}
+                out['meshes'].append(dict(mesh,index=len(out['meshes']),vertices=[copy.deepcopy(mesh['vertices'][i])for i in used],
+                    materials=[dict(mat,triangles=[[lookup[i]for i in t]for t in faces])]))
+    return out
+
+
+def run(source, output, profile, hand_weighted=False, uv_islands=False, material_only=False):
     source, output, profile = map(Path, (source, output, profile))
     if output.exists():
         raise FileExistsError(output)
     model = json.loads(source.read_text()); ratios = json.loads(profile.read_text())
     regions = classify(model, hand_weighted=hand_weighted)
+    if uv_islands or material_only:regions=split_uv_regions(regions,components=not material_only)
     region_mesh.RATIOS.update(ratios); blender_reduce.RATIOS.update(ratios)
     result = blender_reduce.reduce(regions, 1., regional=True, preserved_regions=('Preserved',))
     result['reduction_report']['trial_policy'] = 'HD source experimental regional floors; not HCTP production settings'
@@ -81,4 +106,4 @@ def run(source, output, profile, hand_weighted=False):
 
 if __name__ == '__main__':
     args=sys.argv[sys.argv.index('--') + 1:]
-    run(*args[:3],hand_weighted='--hand-weighted' in args[3:])
+    run(*args[:3],hand_weighted='--hand-weighted' in args[3:],uv_islands='--uv-islands' in args[3:],material_only='--material-boundaries' in args[3:])

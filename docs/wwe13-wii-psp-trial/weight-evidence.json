@@ -1,0 +1,160 @@
+{
+  "source_sha256": "feeea42460893cf577b3aa2ffadb239462538be18e822e33d051e096445df542",
+  "different_palette_or_code_pairs": 171,
+  "pair_widths": {
+    "(2, 3)": 28,
+    "(3, 3)": 128,
+    "(3, 2)": 9,
+    "(1, 3)": 4,
+    "(3, 1)": 2
+  },
+  "best_hypotheses": [
+    {
+      "agreements_below_001": 48,
+      "mean_maximum_coefficient_delta": 0.07374153987706056,
+      "reverse_two_bone": true,
+      "form": "a_rest_b",
+      "swap_coefficients": true,
+      "permutation": [
+        2,
+        1,
+        0
+      ]
+    },
+    {
+      "agreements_below_001": 48,
+      "mean_maximum_coefficient_delta": 0.07374153987706056,
+      "reverse_two_bone": true,
+      "form": "a_b_rest",
+      "swap_coefficients": false,
+      "permutation": [
+        1,
+        0,
+        2
+      ]
+    },
+    {
+      "agreements_below_001": 31,
+      "mean_maximum_coefficient_delta": 0.1477699753833793,
+      "reverse_two_bone": true,
+      "form": "a_rest_b",
+      "swap_coefficients": false,
+      "permutation": [
+        2,
+        0,
+        1
+      ]
+    },
+    {
+      "agreements_below_001": 31,
+      "mean_maximum_coefficient_delta": 0.1477699753833793,
+      "reverse_two_bone": true,
+      "form": "a_b_rest",
+      "swap_coefficients": true,
+      "permutation": [
+        1,
+        2,
+        0
+      ]
+    },
+    {
+      "agreements_below_001": 25,
+      "mean_maximum_coefficient_delta": 0.20897925388046176,
+      "reverse_two_bone": false,
+      "form": "a_rest_b",
+      "swap_coefficients": true,
+      "permutation": [
+        2,
+        1,
+        0
+      ]
+    },
+    {
+      "agreements_below_001": 25,
+      "mean_maximum_coefficient_delta": 0.20897925388046176,
+      "reverse_two_bone": false,
+      "form": "a_b_rest",
+      "swap_coefficients": false,
+      "permutation": [
+        1,
+        0,
+        2
+      ]
+    },
+    {
+      "agreements_below_001": 21,
+      "mean_maximum_coefficient_delta": 0.24063574291809262,
+      "reverse_two_bone": false,
+      "form": "a_rest_b",
+      "swap_coefficients": true,
+      "permutation": [
+        1,
+        2,
+        0
+      ]
+    },
+    {
+      "agreements_below_001": 21,
+      "mean_maximum_coefficient_delta": 0.24063574291809262,
+      "reverse_two_bone": false,
+      "form": "a_b_rest",
+      "swap_coefficients": false,
+      "permutation": [
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "agreements_below_001": 21,
+      "mean_maximum_coefficient_delta": 0.2858240566058466,
+      "reverse_two_bone": false,
+      "form": "a_rest_b",
+      "swap_coefficients": false,
+      "permutation": [
+        0,
+        2,
+        1
+      ]
+    },
+    {
+      "agreements_below_001": 21,
+      "mean_maximum_coefficient_delta": 0.2858240566058466,
+      "reverse_two_bone": false,
+      "form": "a_b_rest",
+      "swap_coefficients": true,
+      "permutation": [
+        2,
+        1,
+        0
+      ]
+    },
+    {
+      "agreements_below_001": 17,
+      "mean_maximum_coefficient_delta": 0.2494236119309364,
+      "reverse_two_bone": true,
+      "form": "a_rest_b",
+      "swap_coefficients": true,
+      "permutation": [
+        2,
+        0,
+        1
+      ]
+    },
+    {
+      "agreements_below_001": 17,
+      "mean_maximum_coefficient_delta": 0.2494236119309364,
+      "reverse_two_bone": true,
+      "form": "a_b_rest",
+      "swap_coefficients": false,
+      "permutation": [
+        1,
+        2,
+        0
+      ]
+    }
+  ],
+  "source_weight_interpretation": "INFERRED, not source-runtime validated",
+  "do_not_weld": true,
+  "flat_three_bone_negative_remainders": 1243
+}
