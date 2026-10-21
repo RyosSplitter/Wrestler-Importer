@@ -1,4 +1,8 @@
-# PSP Model Suite v0.27.0 — experimental WWE ’13 Wii support
+# PSP Model Suite v0.27.1 — experimental WWE ’13 Wii support
+
+The [Q7/Q8 hotfix](wwe13-wii-packet-scale-hotfix.md) reads source position scale
+per geometry packet and audits the source IR against original bytes. Transparent
+draws are cutouts, not necessarily hair. Existing Q7 geometry behavior is preserved.
 
 This preview integrates the bounded Wii research engine alongside HCTP and JBI.
 It does not merge the rejected global UV-lock, UV-island or hand-transition

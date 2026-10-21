@@ -1,4 +1,9 @@
-# PSP Model Suite v0.27.0
+# PSP Model Suite v0.27.1
+
+Hotfix: [per-packet Q7/Q8 decoding](wwe13-wii-packet-scale-hotfix.md) corrects
+Undertaker's oversized floating thigh decorations and adds an independent
+source-encoding QA gate. A small overlay update is available for v0.27.0 users;
+close the app and extract it over the existing folder as its instructions describe.
 
 Adds [experimental WWE ’13 Wii conversion](wwe13-wii-app-preview.md): explicit
 costume and ring/entrance selection, tested geometry profiles, source-nearest

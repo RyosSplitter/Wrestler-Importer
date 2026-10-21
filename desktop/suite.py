@@ -10,6 +10,7 @@ import webbrowser
 from PIL import Image, ImageTk
 
 from desktop.storage import data_dir, save_settings
+from desktop import VERSION
 
 TABS = ('Converter', 'PSP Model Editor', 'Textures', 'Quality Assurance', 'Model Creator')
 
@@ -37,7 +38,7 @@ class SuiteShell:
         header.pack(fill='x')
         ttk.Label(header, text='PSP Model Suite', font=('Segoe UI', 12)).pack(side='left')
         ttk.Label(header, text='by RyosPrime', style='Muted.TLabel').pack(side='left', padx=10)
-        ttk.Label(header, text='Foundation preview', style='Muted.TLabel').pack(side='right')
+        ttk.Label(header, text='v'+VERSION+' preview', style='Muted.TLabel').pack(side='right')
         self.tabs = ttk.Notebook(self.root)
         self.tabs.pack(fill='both', expand=True, padx=6, pady=(0, 6))
         self.pages = {}

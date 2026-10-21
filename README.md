@@ -1,6 +1,7 @@
 # Wrestler Importer
 
-The current v0.27.0 preview branch adds [experimental WWE ’13 Wii support](docs/wwe13-wii-app-preview.md)
+The current v0.27.1 preview adds the [Wii packet-scale hotfix](docs/wwe13-wii-packet-scale-hotfix.md)
+and [experimental WWE ’13 Wii support](docs/wwe13-wii-app-preview.md)
 alongside HCTP/JBI, including explicit costume roles, tested reduction profiles,
 nearest-source-alpha hair textures, measured T4/T8 allocation and full QA reports.
 Known Wii appearance issues remain experimental. The accepted PACs and main are
