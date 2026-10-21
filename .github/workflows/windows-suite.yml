@@ -92,13 +92,16 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          import json,subprocess,traceback
+          import json,subprocess,traceback,sys
           from pathlib import Path
-          from tools.build_suite_update import build
+          # GitHub's `shell: python` executes a script in RUNNER_TEMP, not
+          # `python -m` from the checkout. Make this import path explicit.
+          sys.path.insert(0,str(Path.cwd()))
           folder=Path('build/previous-release');folder.mkdir(parents=True,exist_ok=True)
           previous=folder/'PSP-Model-Suite-v0.27.0-Windows-x64.zip'
           output=Path('dist/PSP-Model-Suite-v0.27.0-to-v0.27.1-Update.zip')
           try:
+              from tools.build_suite_update import build
               subprocess.run(['gh','release','download','suite-wii-8-128b3c716e53a0c8224b01258894f5d53eddd455','--repo','RyosSplitter/Wrestler-Importer','--pattern',previous.name,'--dir',str(folder)],check=True)
               report=build(previous,'dist/PSP-Model-Suite',output,'f7a14651f9385a85a1c4add4a7b35404407ad2336304174376ce33e9e6268163')
               print('Verified overlay bytes:',report['zip_bytes'],'changed files:',len(report['changed_files']))
