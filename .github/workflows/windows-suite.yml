@@ -116,7 +116,7 @@ jobs:
           try:
               from tools.build_suite_update import build
               subprocess.run(['gh','release','download','suite-wii-11-97c2a47e33f0f28687ce2c233aa02327cf29a402','--repo','RyosSplitter/Wrestler-Importer','--pattern',previous.name,'--dir',str(folder)],check=True)
-              report=build(previous,'dist/PSP-Model-Suite',output,'e84597bf550e4b478ca4b38a03476634478e05d2282561d7b70baf09f23103c1')
+              report=build(previous,'dist/PSP-Model-Suite',output,'e84597bf550e4b478ca4b38a03476634478e05d2282561d7b70baf09f23103c1',from_version='0.27.1',to_version='0.28.0')
               print('Verified overlay bytes:',report['zip_bytes'],'changed files:',len(report['changed_files']))
               report['status']='pass'
           except Exception as exc:

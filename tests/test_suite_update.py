@@ -35,6 +35,17 @@ class SuiteUpdateTests(unittest.TestCase):
             r=json.loads((new/'MANIFEST.json').read_text());r['files']['runtime/same.dll']=digest(new/'runtime/same.dll');(new/'MANIFEST.json').write_text(json.dumps(r))
             result=build(old,new,out,digest(old));self.assertIn('runtime/same.dll',result['changed_files'])
 
+    def test_installation_labels_use_the_requested_versions(self):
+        with tempfile.TemporaryDirectory()as tmp:
+            old,new,out=self.fixture(tmp)
+            result=build(old,new,out,digest(old),from_version='0.27.1',to_version='0.28.0')
+            self.assertEqual((result['from_version'],result['to_version']),('0.27.1','0.28.0'))
+            with zipfile.ZipFile(out)as z:
+                info=json.loads(z.read('UPDATE-INFO.json'));text=z.read('INSTALL-UPDATE.txt').decode()
+            self.assertEqual(info['to_version'],'0.28.0')
+            self.assertIn('0.27.1 -> 0.28.0',text);self.assertIn('full v0.28.0 ZIP',text)
+            self.assertNotIn('0.27.0',text)
+
     def test_wrong_old_zip_or_modified_new_file_are_rejected(self):
         with tempfile.TemporaryDirectory() as tmp:
             old,new,out=self.fixture(tmp)

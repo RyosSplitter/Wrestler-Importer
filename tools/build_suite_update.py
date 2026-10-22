@@ -20,7 +20,7 @@ def safe_name(value):
     return value
 
 
-def build(previous,new_folder,output,expected_previous_sha256):
+def build(previous,new_folder,output,expected_previous_sha256,*,from_version='0.27.0',to_version='0.27.1'):
     previous,new_folder,output=map(Path,(previous,new_folder,output))
     if output.exists():raise FileExistsError(output)
     if digest(previous)!=expected_previous_sha256:raise ValueError('Previous release checksum mismatch')
@@ -37,7 +37,7 @@ def build(previous,new_folder,output,expected_previous_sha256):
             if before['files'].get(name)==expected:
                 old.getinfo(root+name);unchanged.append(name)
             else:changed.append(name)
-    report=dict(from_version='0.27.0',to_version='0.27.1',previous_zip_sha256=expected_previous_sha256,
+    report=dict(from_version=from_version,to_version=to_version,previous_zip_sha256=expected_previous_sha256,
         new_manifest_sha256=digest(new_folder/'MANIFEST.json'),changed_files=changed,
         unchanged_file_count=len(unchanged),unchanged_files_have_identical_manifest_hashes=True,
         changed_uncompressed_bytes=sum((new_folder/n).stat().st_size for n in changed))
@@ -45,8 +45,8 @@ def build(previous,new_folder,output,expected_previous_sha256):
         for name in changed+['MANIFEST.json']:out.write(new_folder/name,root+name)
         out.writestr('UPDATE-INFO.json',json.dumps(report,indent=2)+'\n')
         out.writestr('INSTALL-UPDATE.txt',
-            'PSP Model Suite 0.27.0 -> 0.27.1 update\n\n'
-            'For the complete v0.27.0 Windows x64 portable app only.\n'
+            f'PSP Model Suite {from_version} -> {to_version} update\n\n'
+            f'For the complete v{from_version} Windows x64 portable app only.\n'
             'Close the app. Keep a backup of your old app folder.\n'
             'Extract this ZIP into the parent folder of PSP-Model-Suite and allow\n'
             'the existing PSP-Model-Suite folder/files to be updated. If you\n'
@@ -55,7 +55,7 @@ def build(previous,new_folder,output,expected_previous_sha256):
             'Do not create a second nested PSP-Model-Suite folder.\n'
             'Keep your existing runtime, _internal, sources and licenses folders.\n'
             'Launch PSP-Model-Suite.exe normally. Preferences and PACs are not\n'
-            'included in this update. New installs must use the full v0.27.1 ZIP.\n')
+            f'included in this update. New installs must use the full v{to_version} ZIP.\n')
     report.update(zip_bytes=output.stat().st_size,sha256=digest(output))
     Path(str(output)+'.sha256').write_text(report['sha256']+'  '+output.name+'\n',encoding='ascii')
     return report
