@@ -9,7 +9,7 @@ from tools.texture_convert import read_gim
 VIEWS=('front-left','front','back','left','right')
 
 def render(model,textures,view='front-left',resolution=768,zoom=1.,*,gim_reader=read_gim,
-           rgba_textures=None,highlight_texture=None,yaw=None):
+           rgba_textures=None,highlight_texture=None,yaw=None,capture=None):
     points=np.array([v['position'] for m in model['meshes'] for v in m['vertices']])@AXES
     cam=camera(points,view,resolution)
     if yaw is not None:
@@ -21,6 +21,11 @@ def render(model,textures,view='front-left',resolution=768,zoom=1.,*,gim_reader=
     cam.span/=zoom
     rgba=rgba_textures if rgba_textures is not None else {name:colors[indices] for name,raw in textures.items() for indices,colors in [gim_reader(raw)]}
     pixels=np.full((resolution,resolution,3),72,dtype=np.uint8)
+    if capture is not None:
+        capture.update(texture=np.full((resolution,resolution),-1,np.int16),
+                       address=np.zeros((resolution,resolution),np.int32),
+                       vertex_color=np.zeros((resolution,resolution,3)),
+                       shade=np.zeros((resolution,resolution)))
     depth=np.full((resolution,resolution),-np.inf)
     light=cam.direction+.45*cam.right+.7*cam.up;light/=np.linalg.norm(light)
     for mesh in model['meshes']:
@@ -50,6 +55,13 @@ def render(model,textures,view='front-left',resolution=768,zoom=1.,*,gim_reader=
                 if not take.any():continue
                 normal=bary@ns[face];normal/=np.maximum(np.linalg.norm(normal,axis=-1,keepdims=True),1e-12)
                 shade=.4+.6*np.abs(normal@light)
+                if capture is not None:
+                    sl=np.s_[lo[1]:hi[1]+1,lo[0]:hi[0]+1]
+                    capture['texture'][sl][take]=mat['texture_id']
+                    address=(np.floor(tc[:,:,1]*h).astype(int)%h)*w+np.floor(tc[:,:,0]*w).astype(int)%w
+                    capture['address'][sl][take]=address[take]
+                    capture['vertex_color'][sl][take]=vc[:,:,:3][take]
+                    capture['shade'][sl][take]=shade[take]
                 color=np.clip(sample[:,:,:3]*vc[:,:,:3]*shade[:,:,None],0,255).astype(np.uint8)
                 if highlight_texture is not None and model['texture_names'][mat['texture_id']]!=highlight_texture:
                     gray=color.mean(axis=-1,keepdims=True)*.35

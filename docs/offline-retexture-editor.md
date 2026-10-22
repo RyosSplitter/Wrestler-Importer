@@ -62,10 +62,19 @@ convert HCTP/JBI/Wii input through the existing converter first.
 debouncing them until the end of a stroke. A single background rendering worker
 uses immutable texture snapshots and the original audited model. New edits
 coalesce into the next request instead of building an unbounded job queue.
-An active drag requests a 320-pixel render; idle renders use 480 pixels. The
-last completed frame from the same document can be shown while a newer revision
+Rendering uses a 480-pixel surface cache. The last completed frame from the same document can be shown while a newer revision
 is rendering; results belonging to a replaced document are discarded. Tk widgets
 and PhotoImages are updated only on the UI thread.
+
+`desktop/retexture_preview.py` caches visible texture addresses, interpolated
+vertex colors and lighting for each model/camera. Color-only edits then resample
+the edited textures without rerasterizing triangles. This is valid because
+dimensions, UVs, geometry and alpha are immutable. New views/orbit angles rebuild
+the cache. The cache rejects altered alpha/dimensions. Tests compare cached output
+pixel-for-pixel with the full renderer, including actual hair-cutout views in
+private acceptance checks. A local 3,242-triangle Shawn test improved from four
+to thirteen completed encoded-preview frames during a three-second active stroke;
+this is one machine's observation, not a promised rate on every computer.
 
 This is interactive CPU feedback, not a claim of 60 FPS or PSP shader emulation.
 Update rate depends on model complexity and the user's computer. The renderer
@@ -73,8 +82,8 @@ uses the existing neutral light and decoded GIM palette. Export-size checks run
 separately from the live render because full PAC compression need not happen on
 every mouse movement.
 
-`desktop/preview.py` accepts optional RGBA textures, selected-texture highlighting
-and a fixed-framing yaw angle. Existing callers pass none of these: their render
+`desktop/preview.py` accepts optional RGBA textures, selected-texture highlighting,
+a fixed-framing yaw angle and an optional surface-capture buffer. Existing callers pass none of these: their render
 path, camera and default shading are unchanged. The renderer does not serialize
 the display model or modify positions/normals/UVs/weights.
 

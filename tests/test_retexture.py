@@ -150,5 +150,18 @@ class RetextureTests(unittest.TestCase):
         with self.assertRaises(ValueError):Document(b'not a PAC')
         with self.assertRaises(ValueError):encode_edit(self.document().textures[0].raw,Image.new('RGBA',(8,8)))
 
+    def test_cached_live_preview_matches_full_raster_and_rejects_alpha_change(self):
+        from desktop.retexture_preview import TexturePreview
+        doc=self.document();model=doc.models[0][1];images=doc.images_for(model)
+        for angle in (0,35,180):
+            cache=TexturePreview(model,images,yaw=angle,resolution=96)
+            for color in (None,[40,90,220]):
+                changed={n:a.copy()for n,a in images.items()}
+                if color:changed['skin'][:,:,:3]=color
+                direct=render(model,{},rgba_textures=changed,yaw=angle,resolution=96)
+                self.assertTrue(np.array_equal(direct,cache.image(changed)))
+            changed['skin'][0,0,3]^=1
+            with self.assertRaises(ValueError):cache.image(changed)
+
 
 if __name__=='__main__':unittest.main()

@@ -430,8 +430,14 @@ class RetexturePanel:
         angle=self.yaw.get();zoom=self.model_zoom.get();selected=None
         if self.highlight.get():
             selected=next((n for n in model['texture_names']if doc.texture_for(model,n).index==self.texture_index),None)
-        token=(self.epoch,self.token);resolution=320 if self.active_stroke else 480
-        def work():return render(model,{},resolution=resolution,zoom=zoom,rgba_textures=doc.images_for(model,encoded,limit),highlight_texture=selected,yaw=angle)
+        token=(self.epoch,self.token);key=(self.epoch,self.models.current(),angle,zoom)
+        def work():
+            from desktop.retexture_preview import TexturePreview
+            images=doc.images_for(model,encoded,limit)
+            if getattr(self,'raster_key',None)!=key:
+                self.raster=TexturePreview(model,images,yaw=angle,zoom=zoom,resolution=480)
+                self.raster_key=key
+            return self.raster.image(images,selected)
         self.future=self.executor.submit(work);self.task_done=('preview',token)
 
     def background(self,work,done):
