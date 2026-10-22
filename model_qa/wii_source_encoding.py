@@ -18,7 +18,7 @@ def verify(data,index,model):
     for sid,payload in payloads.items():
         raw=payload[24:];end=struct.unpack('>I',checked(raw,4,4))[0]+8;raw=checked(raw,0,end)
         count=struct.unpack('>I',checked(raw,56,4))[0]
-        if count not in (1,2):raise ValueError('Unobserved source encoding packet count')
+        if count not in (1,2,3):raise ValueError('Unobserved source encoding packet count')
         for packet in range(count):
             h=64+64*packet;fraction=checked(raw,h+52,1)[0]
             if fraction not in (7,8):raise ValueError('Unobserved position fraction bits in source encoding audit')

@@ -80,6 +80,18 @@ class WiiAppTests(unittest.TestCase):
             self.assertEqual(path.read_bytes(),before)
             with self.assertRaises(ValueError):reader.inspect(path,entry_id='02')
 
+    @unittest.skipUnless(BASE.is_file(),'Development-only donor rig not present')
+    def test_three_packet_colorless_fixture_reaches_app_inspection_and_audits_all_packets(self):
+        from tools.wii_fixture import create
+        with tempfile.TemporaryDirectory()as tmp:
+            path=create(BASE,Path(tmp)/'fixture',mixed_packets=True);before=path.read_bytes()
+            info=adapter('wwe13-wii').inspect(path,entry_id='00')
+            audit=info['source_encoding_audit']
+            self.assertEqual(audit['status'],'pass')
+            self.assertEqual([r['position_divisor']for r in audit['packets']],[256,256,128]*2)
+            self.assertTrue(all(r['vertex_records_checked']>0 for r in audit['packets']))
+            self.assertEqual(path.read_bytes(),before)
+
     def test_epk8_magic_alone_is_not_accepted(self):
         with tempfile.TemporaryDirectory() as tmp:
             p=Path(tmp)/'not-wii.pac';p.write_bytes(b'EPK8'+bytes(4092))

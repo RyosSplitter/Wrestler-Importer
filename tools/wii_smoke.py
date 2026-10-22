@@ -25,6 +25,15 @@ def run(app,output,base):
         app.root.update()
         if errors:raise ValueError(str(errors[-1]))
     try:
+        # Exercise the Road Dogg layout in the frozen worker using procedural
+        # geometry; retain the existing complete conversion control below.
+        mixed=create(base,output.parent/'mixed-packet-fixtures',mixed_packets=True)
+        mixed_original=mixed.read_bytes()
+        app.choose_source_format('wwe13-wii');app.select_source(mixed);wait(lambda:app.inspector is None)
+        audit=app.source_inspection['source_encoding_audit']
+        assert audit['status']=='pass' and len(audit['packets'])==6
+        assert [r['position_divisor']for r in audit['packets']]==[256,256,128]*2
+        assert mixed.read_bytes()==mixed_original
         app.choose_source_format('wwe13-wii');app.select_source(source);wait(lambda:app.inspector is None)
         assert app.source_format.get()=='wwe13-wii'
         assert tuple(app.source_entry_dropdown.cget('values'))==('00','01')
@@ -67,6 +76,7 @@ def run(app,output,base):
             platform_selection=True,costume_selection=True,explicit_entrance_budget=True,source_bone_decode=True,
             bundled_blender_conversion=True,full_static_analytical_head_hand_qa=True,final_pac_preview=True,
             mixed_q7_body_q8_auxiliary_decode_verified=True,
+            three_packet_colorless_inspection=True,all_six_source_packets_audited=True,
             palette_and_alpha_reports=True,save_as_verified=True,cancellation_clean=True,hctp_options_restored=True,
             conversion_countdown=True,successful_timing_history=True,cancelled_run_not_learned=True,
             pac_bytes=len(raw),pac_sha256=sha(raw),inputs_unchanged=True,

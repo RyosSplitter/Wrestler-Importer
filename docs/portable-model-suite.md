@@ -1,4 +1,24 @@
-# PSP Model Suite v0.28.1
+# PSP Model Suite v0.28.2
+
+Adds WWE ’13 Wii Road Dogg (`ch312.pac`) source support. His body and transparent
+model each contain three geometry packets; the first two omit vertex-color
+indices. The decoder now reads those position/UV pairs and all three packet
+headers, retaining every packet's geometry, UVs, weights and Q7/Q8 position scale.
+Missing vertex colors use neutral white, consistent with the converter's existing
+source-tint policy. Unknown counts, attribute combinations and invalid indices
+remain rejected. The independent source-encoding audit checks all six packets.
+
+Choose **WWE ’13 (Wii) — Experimental**, costume **00**, then select ring or
+entrance and your PSP base as usual. This expands source decoding; the existing
+rig mapping, geometry profiles, texture allocation and output limits still apply.
+Review the final preview and test the converted model in PPSSPP.
+
+The verified overlay updates **v0.28.1 to v0.28.2**. Close the app and copy the
+overlay's `PSP-Model-Suite` contents into the existing app folder, replacing files.
+Use the complete ZIP for a new installation. Retexture and the conversion timer
+remain available.
+
+## Previous v0.28.1 countdown
 
 The converter now shows elapsed time and an **estimated remaining** countdown.
 It learns stage durations from successful conversions on this computer, grouped

@@ -57,6 +57,33 @@ class ReaderTests(unittest.TestCase):
         for offset in (0x16c,0x16e,0x170):
             raw,h=fixture();struct.pack_into('>H',raw,offset,99)
             with self.assertRaises(ValueError):self.read(raw,h)
+    def colorless(self):
+        raw,h=fixture();raw[0x4d]=3
+        struct.pack_into('>I',raw,0x68,0)
+        struct.pack_into('>H',raw,0x70,0)
+        struct.pack_into('>6H',raw,0x16c,0,0,2,1,3,2)
+        return raw,h
+    def test_position_uv_pairs_preserve_all_source_attributes_without_phantom_color(self):
+        original,h=fixture();expected=self.read(original,h)
+        raw,h=self.colorless();before=bytes(raw);actual=self.read(raw,h)
+        self.assertEqual(bytes(raw),before)
+        self.assertEqual(actual['meshes'],expected['meshes'])
+        self.assertFalse(actual['source_decode_report']['source_vertex_colors_present'])
+        self.assertEqual(actual['source_decode_report']['source_corner_index_width'],2)
+        self.assertEqual(actual['source_decode_report']['referenced_positions'],3)
+    def test_colorless_position_and_uv_bounds_are_checked(self):
+        for offset in (0x16c,0x16e):
+            raw,h=self.colorless();struct.pack_into('>H',raw,offset,99)
+            with self.subTest(offset=offset),self.assertRaisesRegex(ValueError,'corner outside'):self.read(raw,h)
+    def test_colorless_attribute_rejects_nonzero_count_or_pointer(self):
+        for field in ('count','pointer'):
+            raw,h=self.colorless()
+            if field=='count':struct.pack_into('>H',raw,0x70,1)
+            else:struct.pack_into('>I',raw,0x68,0x280-8)
+            with self.subTest(field=field),self.assertRaisesRegex(ValueError,'vertex-color'):self.read(raw,h)
+    def test_color_attribute_requires_nonempty_color_buffer(self):
+        raw,h=fixture();struct.pack_into('>H',raw,0x70,0)
+        with self.assertRaisesRegex(ValueError,'vertex-color'):self.read(raw,h)
     def test_invalid_palette(self):
         raw,h=fixture();struct.pack_into('>H',raw,0x140,3)
         with self.assertRaises(ValueError):self.read(raw,h)

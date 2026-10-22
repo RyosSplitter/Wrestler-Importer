@@ -21,7 +21,7 @@ def source_bones(target):
     return [dict(b,name=names.get(b['name'],b['name']),local_position=(np.array(b['local_position'])*10).tolist()) for b in target['bones']]
 
 
-def yobj(target,*,decoration=False):
+def yobj(target,*,decoration=False,mixed_packets=False):
     bones=source_bones(target);positions=bone_matrices(dict(bones=bones))[:,:3,3]
     byname={b['name']:b['index'] for b in bones}
     panels=[]
@@ -32,7 +32,7 @@ def yobj(target,*,decoration=False):
         center=positions[byname[name]]+np.array([0,0,-1.])
         radius=.15 if name.endswith('_eye') else 3. if 'Finger' in name else .7
         panels.append((byname[name],[center+[-radius,-radius,0],center+[radius,-radius,0],center+[-radius,radius,0],center+[radius,radius,0]]))
-    raw=bytearray(128)
+    raw=bytearray(256 if mixed_packets else 128)
     def alloc(value,align=4):
         raw.extend(bytes((-len(raw))%align));p=len(raw);raw.extend(value);return p
     packed=[];position_fraction=8 if decoration else 7
@@ -46,6 +46,11 @@ def yobj(target,*,decoration=False):
         strips=alloc(b''.join(struct.pack('>I',4)+b''.join(struct.pack('>3H',i*4+j,0,j) for j in range(4)) for i in indices))
         struct.pack_into('>BBHI',raw,draw+8*draw_index,mid,0,len(indices),strips-8)
     color=alloc(bytes([255]*4));uv=alloc(struct.pack('>8h',128,128,384,128,128,384,384,384))
+    if mixed_packets:
+        pair_draw=alloc(bytes(8 if decoration else 16))
+        for draw_index,(mid,indices)in enumerate(draw_groups):
+            strips=alloc(b''.join(struct.pack('>I',4)+b''.join(struct.pack('>2H',i*4+j,j)for j in range(4))for i in indices))
+            struct.pack_into('>BBHI',raw,pair_draw+8*draw_index,mid,0,len(indices),strips-8)
     materials=alloc(bytes(40))
     for mid in range(2):
         state=alloc(bytes(72));struct.pack_into('>I',raw,materials+20*mid+16,state-8);struct.pack_into('>H',raw,state+70,mid)
@@ -63,6 +68,18 @@ def yobj(target,*,decoration=False):
     for offset,pointer in [(0x54,pp),(0x5c,groups),(0x60,draw),(0x68,color),(0x6c,uv)]:struct.pack_into('>I',raw,offset,pointer-8)
     struct.pack_into('>2H',raw,0x70,1,4)
     raw[0x74]=position_fraction
+    if mixed_packets:
+        # Inspection fixture: three headers share procedural position/skin/UV
+        # buffers. First two omit color indices, third retains triples.
+        packet=bytes(raw[64:128])
+        struct.pack_into('>I',raw,8,0x70003);struct.pack_into('>I',raw,56,3)
+        for i in range(3):
+            h=64+64*i;raw[h:h+64]=packet;raw[h+52]=8 if i<2 else 7
+            if i<2:
+                raw[h+13]=3
+                struct.pack_into('>I',raw,h+32,pair_draw-8)
+                struct.pack_into('>I',raw,h+40,0)
+                struct.pack_into('>H',raw,h+48,0)
     return b'DUMY\0\0\0\x10'+bytes(16)+bytes(raw)
 
 
@@ -73,12 +90,12 @@ def tpl():
     return bytes(header)+blocks
 
 
-def create(base_path,output):
+def create(base_path,output,*,mixed_packets=False):
     _,target=base_model(base_path);output=Path(output);output.mkdir(parents=True,exist_ok=True)
     image=tpl();table=bytearray(struct.pack('<4I',2,0x100,0,16))
     for i,name in enumerate(('color','trans')):table+=name.encode().ljust(16,b'\0')+b'tpl\0'+struct.pack('<3I',len(image),80+i*len(image),0)
     table=bytes(table)+image+image
-    payloads=[(2,compress(yobj(target))),(9,compress(table)),(10000,compress(yobj(target,decoration=True)))]
+    payloads=[(2,compress(yobj(target,mixed_packets=mixed_packets))),(9,compress(table)),(10000,compress(yobj(target,decoration=True,mixed_packets=mixed_packets)))]
     head=bytearray(b'PACH'+struct.pack('<I',len(payloads)));body=bytearray()
     for sid,data in payloads:
         body.extend(bytes((-len(body))%4));head+=struct.pack('<3I',sid,len(body),len(data));body+=data

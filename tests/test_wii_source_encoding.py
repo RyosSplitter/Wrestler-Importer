@@ -50,8 +50,24 @@ class SourceEncodingTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'Unobserved position fraction'):self.audit(bytes(raw),m)
 
     def test_unknown_packet_count_is_not_silently_ignored(self):
-        payload,m=self.case();raw=bytearray(payload);struct.pack_into('>I',raw,24+56,3)
+        payload,m=self.case();raw=bytearray(payload);struct.pack_into('>I',raw,24+56,4)
         with self.assertRaisesRegex(ValueError,'packet count'):self.audit(bytes(raw),m)
+    def test_three_packets_keep_independent_q8_q8_q7_fields_and_are_all_audited(self):
+        from tools.wwe13_wii_corpus import read_corpus_model
+        raw,header=fixture();struct.pack_into('>I',raw,4,len(raw)-8)
+        struct.pack_into('>I',raw,8,0x70003);struct.pack_into('>I',raw,56,3)
+        packet=bytes(raw[64:128])
+        for i,q in enumerate((8,8,7)):
+            raw[64+64*i:128+64*i]=packet;raw[64+64*i+52]=q
+        header['bones']=[dict(index=i,name='bone'+str(i),parent=-1)for i in range(3)]
+        payload=bytes(24)+bytes(raw)
+        with patch('tools.wwe13_wii_model.read_model_header',return_value=header):m=read_corpus_model(payload)
+        for mesh in m['meshes']:mesh['source_section']=2
+        report=self.audit(payload,m)
+        self.assertEqual([p['position_divisor']for p in report['packets']],[256,256,128])
+        self.assertEqual([p['vertex_records_checked']for p in report['packets']],[3,3,3])
+        for v in m['meshes'][2]['vertices']:v['position']=(np.array(v['position'])/2).tolist()
+        with self.assertRaisesRegex(ValueError,'packet 2.*Q7'):self.audit(payload,m)
 
     def test_mixed_q7_q8_packets_use_their_own_fields(self):
         from tools.wwe13_wii_corpus import read_corpus_model

@@ -31,20 +31,24 @@ def bundles(data):
 
 
 def read_corpus_model(payload):
-    """Decode the observed two-packet auxiliary layout without moving data.
+    """Decode observed two/three-packet layouts without moving source data.
 
-    Both packet headers contain absolute offsets relative to the same YOBJ
+    Packet headers contain absolute offsets relative to the same YOBJ
     origin. Reusing the single-packet decoder on a private header view retains
     its index/normal/weight checks. The input payload is never changed.
-    The low root field and 0x38 both equal two in the observed Edge auxiliary;
-    their full format semantics remain unknown. Other layouts are rejected.
+    Edge has two packet headers; Road Dogg has three in both body and cutout.
+    The low root field and 0x38 agree in each observed layout. Other counts and
+    mismatches are rejected, and every packet must pass the bounded reader.
     """
     version=struct.unpack_from('>I',checked(payload,32,4))[0]
-    if version==0x70001:return read_model(payload)
-    if version!=0x70002 or struct.unpack_from('>I',checked(payload,80,4))[0]!=2:
+    count=struct.unpack_from('>I',checked(payload,80,4))[0]
+    if version==0x70001:
+        if count!=1:raise ValueError('Unreviewed multi-packet Wii layout')
+        return read_model(payload)
+    if count not in (2,3) or version!=0x70000+count:
         raise ValueError('Unreviewed multi-packet Wii layout')
-    checked(payload,24+64,128);packets=[]
-    for index in range(2):
+    checked(payload,24+64,64*count);packets=[]
+    for index in range(count):
         view=bytearray(payload)
         struct.pack_into('>I',view,32,0x70001);struct.pack_into('>I',view,80,1)
         view[24+64:24+128]=payload[24+64+64*index:24+128+64*index]
@@ -59,12 +63,12 @@ def read_corpus_model(payload):
             for v in mesh['vertices']:v['source_packet']=index
             for a in mesh['materials']:a['texture_id']=tids[p['textures'][a['texture_id']]]
             result['meshes'].append(mesh)
-    result.update(version='0x00070002',mesh_count=len(result['meshes']),texture_count=len(result['textures']),
+    result.update(version=f'0x{version:08x}',mesh_count=len(result['meshes']),texture_count=len(result['textures']),
         triangle_count=sum(p['triangle_count']for p in packets),vertex_count=sum(p['vertex_count']for p in packets))
-    result['source_decode_report']=dict(packet_count=2,source_root_field='0x00070002',
-        packet_header_offsets=[64,128],packets=[p['source_decode_report']for p in packets],
+    result['source_decode_report']=dict(packet_count=count,source_root_field=f'0x{version:08x}',
+        packet_header_offsets=[64+64*i for i in range(count)],packets=[p['source_decode_report']for p in packets],
         private_header_view_only=True,source_payload_unchanged=True,
-        limitation='Two observed packet headers decoded; general version/count semantics not proven')
+        limitation='Observed two/three-packet headers decoded; other version/count layouts remain unsupported')
     return result
 
 
