@@ -30,9 +30,9 @@ class RetexturePanel:
         self.message=tk.StringVar(value='Open a PSP PAC or choose Retexture under a model in the editor. All work stays offline.')
         self.info=tk.StringVar(value='Original texture alpha is locked. Export always preserves geometry, UVs and rigging.')
         toolbar=ttk.Frame(page,padding=(8,8,8,3));toolbar.pack(fill='x')
-        for text,command in [('Open PAC…',self.open_pac),('Use editor PAC',self.use_current),
-                             ('Open project…',self.open_project),('Save project…',self.save_project),
-                             ('Check size',self.check_size),('Export PAC…',self.export_pac)]:
+        for text,command in [('Open PAC...',self.open_pac),('Use editor PAC',self.use_current),
+                             ('Open project...',self.open_project),('Save project...',self.save_project),
+                             ('Check size',self.check_size),('Export PAC...',self.export_pac)]:
             ttk.Button(toolbar,text=text,command=command).pack(side='left',padx=(0,4))
         ttk.Label(page,textvariable=self.message,wraplength=1100,padding=(8,2,8,5)).pack(fill='x')
         panes=ttk.Panedwindow(page,orient='horizontal');panes.pack(fill='both',expand=True,padx=8,pady=(0,6))
@@ -50,28 +50,28 @@ class RetexturePanel:
         self.layers=tk.Listbox(left,height=6,exportselection=False)
         self.layers.pack(fill='x');self.layers.bind('<<ListboxSelect>>',self.select_layer)
         buttons=ttk.Frame(left);buttons.pack(fill='x',pady=3)
-        for text,cmd in [('↑',lambda:self.layer_action('up')),('↓',lambda:self.layer_action('down')),
+        for text,cmd in [('Up',lambda:self.layer_action('up')),('Down',lambda:self.layer_action('down')),
                          ('Show/hide',lambda:self.layer_action('visible')),('Delete',lambda:self.layer_action('delete'))]:
             ttk.Button(buttons,text=text,width=2 if len(text)==1 else 8,command=cmd).pack(side='left')
-        ttk.Button(left,text='Import logo / pattern…',command=self.import_art).pack(fill='x',pady=2)
-        ttk.Button(left,text='Layer opacity…',command=self.set_opacity).pack(fill='x',pady=2)
+        ttk.Button(left,text='Import logo / pattern...',command=self.import_art).pack(fill='x',pady=2)
+        ttk.Button(left,text='Layer opacity...',command=self.set_opacity).pack(fill='x',pady=2)
         transforms=ttk.Frame(left);transforms.pack(fill='x')
-        for i,(text,cmd) in enumerate([('−15°',lambda:self.transform('rotate',-15)),('+15°',lambda:self.transform('rotate',15)),
+        for i,(text,cmd) in enumerate([('-15 deg',lambda:self.transform('rotate',-15)),('+15 deg',lambda:self.transform('rotate',15)),
                          ('Smaller',lambda:self.transform('scale',.9)),('Larger',lambda:self.transform('scale',1.1))]):
             ttk.Button(transforms,text=text,width=8,command=cmd).grid(row=i//2,column=i%2,sticky='ew')
         flips=ttk.Frame(left);flips.pack(fill='x',pady=2)
-        ttk.Button(flips,text='Mirror ↔',command=lambda:self.transform('mirror',0)).pack(side='left',fill='x',expand=True)
-        ttk.Button(flips,text='Flip ↕',command=lambda:self.transform('flip',0)).pack(side='left',fill='x',expand=True)
+        ttk.Button(flips,text='Mirror H',command=lambda:self.transform('mirror',0)).pack(side='left',fill='x',expand=True)
+        ttk.Button(flips,text='Flip V',command=lambda:self.transform('flip',0)).pack(side='left',fill='x',expand=True)
         tools=ttk.Frame(middle);tools.pack(fill='x')
         ttk.Label(tools,text='Tool').pack(side='left')
         ttk.Combobox(tools,textvariable=self.tool,values=('Brush','Erase','Picker','Select rectangle','Protect','Unprotect','Move layer','Warp corners'),state='readonly',width=16).pack(side='left',padx=3)
         self.color_button=tk.Button(tools,text='Color',bg='#dc1e23',fg='white',command=self.choose_color);self.color_button.pack(side='left',padx=3)
         ttk.Label(tools,text='Radius').pack(side='left')
         ttk.Spinbox(tools,from_=1,to=128,textvariable=self.brush,width=4).pack(side='left',padx=3)
-        ttk.Combobox(tools,textvariable=self.zoom,values=('Fit','1×','2×','4×','8×','16×'),state='readonly',width=5).pack(side='right')
+        ttk.Combobox(tools,textvariable=self.zoom,values=('Fit','1x','2x','4x','8x','16x'),state='readonly',width=5).pack(side='right')
         self.zoom.trace_add('write',lambda *_:self.redraw())
         selection=ttk.Frame(middle);selection.pack(fill='x',pady=3)
-        for i,(label,cmd) in enumerate([('Recolor…',self.recolor),('Similar color…',self.similar_color),('Select all',self.select_all),
+        for i,(label,cmd) in enumerate([('Recolor...',self.recolor),('Similar color...',self.similar_color),('Select all',self.select_all),
                           ('Invert',self.invert_selection),('Clear protection',self.clear_protection)]):
             ttk.Button(selection,text=label,command=cmd).grid(row=i//3,column=i%3,sticky='w',padx=(0,3),pady=1)
         canvas_frame=ttk.Frame(middle);canvas_frame.pack(fill='both',expand=True)
@@ -89,9 +89,9 @@ class RetexturePanel:
         ttk.Checkbutton(footer,text='UV guides',variable=self.uv,command=self.redraw).pack(side='left')
         ttk.Button(footer,text='Undo',command=lambda:self.undo(False)).pack(side='left',padx=4)
         ttk.Button(footer,text='Redo',command=lambda:self.undo(True)).pack(side='left')
-        ttk.Button(footer,text='Export texture PNG…',command=self.export_png).pack(side='right')
+        ttk.Button(footer,text='Export texture PNG...',command=self.export_png).pack(side='right')
         ttk.Label(middle,textvariable=self.info,wraplength=490).pack(fill='x')
-        ttk.Label(right,text='Live model preview — drag to rotate').pack(anchor='w')
+        ttk.Label(right,text='Live model preview  -  drag to rotate').pack(anchor='w')
         self.models=ttk.Combobox(right,textvariable=self.model_choice,state='readonly');self.models.pack(fill='x',pady=3)
         self.models.bind('<<ComboboxSelected>>',lambda e:self.changed(False))
         self.preview=tk.Label(right,bg='#484848',fg='white',text='Load a PAC to preview edits.')
@@ -100,7 +100,7 @@ class RetexturePanel:
         self.preview.bind('<ButtonPress-1>',lambda e:setattr(self,'orbit_start',(e.x,self.yaw.get())))
         self.preview.bind('<B1-Motion>',self.orbit)
         views=ttk.Frame(right);views.pack(fill='x',pady=3)
-        for label,angle in [('¾',35),('Front',0),('Rear',180),('Left',90),('Right',270)]:
+        for label,angle in [('3/4',35),('Front',0),('Rear',180),('Left',90),('Right',270)]:
             ttk.Button(views,text=label,width=5,command=lambda a=angle:self.set_yaw(a)).pack(side='left',padx=(0,2))
         ttk.Scale(right,from_=1,to=3,variable=self.model_zoom,command=lambda _:self.schedule_preview()).pack(fill='x')
         options=ttk.Frame(right);options.pack(fill='x')
@@ -112,7 +112,7 @@ class RetexturePanel:
         self.palette_menu.pack(side='left',padx=4);self.palette_menu.bind('<<ComboboxSelected>>',self.palette_changed)
         ttk.Label(right,text='References (display only; not generated automatically)').pack(anchor='w',pady=(6,1))
         refs=ttk.Frame(right);refs.pack(fill='x')
-        ttk.Button(refs,text='Add pictures…',command=self.add_reference).pack(side='left')
+        ttk.Button(refs,text='Add pictures...',command=self.add_reference).pack(side='left')
         ttk.Button(refs,text='Remove',command=self.remove_reference).pack(side='left',padx=3)
         self.reference_list=ttk.Combobox(right,state='readonly');self.reference_list.pack(fill='x',pady=3)
         self.reference_list.bind('<<ComboboxSelected>>',lambda e:self.show_reference())
@@ -156,8 +156,9 @@ class RetexturePanel:
         self.models.configure(values=[f'Section {s}: {m["report"]["model_name"]}'for s,m in doc.models]);self.models.current(0)
         self.reference_list.configure(values=[n for n,im in doc.references])
         if doc.references:self.reference_list.current(0)
-        self.textures.selection_set('0');self.select_texture();self.show_reference()
-        self.message.set(Path(doc.source).name+' — original PAC and all model records preserved. Save project to retain layers/masks.')
+        first=next((t.index for t in doc.textures if t.editable),0)
+        self.textures.selection_set(str(first));self.select_texture();self.show_reference()
+        self.message.set(Path(doc.source).name+'  -  original PAC and all model records preserved. Save project to retain layers/masks.')
 
     def use_workspace(self,path):
         from desktop.workspace import verified_snapshot
@@ -197,13 +198,13 @@ class RetexturePanel:
         self.texture_index=int(self.textures.selection()[0]);self.layer_index=-1
         self.refresh_layers();self.redraw();self.schedule_preview()
         t=self.texture;ix,pal=__import__('desktop.texture_optimizer.candidates',fromlist=['read_gim']).read_gim(t.raw)
-        self.info.set(f'{t.name}: {t.original.width}×{t.original.height}, {len(pal)} palette entries. '+
+        self.info.set(f'{t.name}: {t.original.width}x{t.original.height}, {len(pal)} palette entries. '+
                       ('Brush/selection/protection use texture pixels. Alpha locked.'if t.editable else'Effect/non-main texture: read-only.'))
 
     def refresh_layers(self):
         self.layers.delete(0,'end')
-        for l in reversed(self.texture.layers):self.layers.insert('end',('● 'if l.visible else'○ ')+l.name)
-        self.layers.insert('end','🔒 Original (unchanged)')
+        for l in reversed(self.texture.layers):self.layers.insert('end',('[x] 'if l.visible else'[ ] ')+l.name)
+        self.layers.insert('end','[locked] Original (unchanged)')
         if 0<=self.layer_index<len(self.texture.layers):self.layers.selection_set(len(self.texture.layers)-1-self.layer_index)
 
     def select_layer(self,event=None):
@@ -437,16 +438,16 @@ class RetexturePanel:
         if self.task_done and self.task_done[0]!='preview':raise ValueError('A texture export/check is already running.')
         # Let any current preview finish before launching the serialized task.
         if self.future is not None:
-            self.after_preview=(work,done);self.message.set('Finishing preview, then checking the serialized PAC…');return
+            self.after_preview=(work,done);self.message.set('Finishing preview, then checking the serialized PAC...');return
         self.future=self.executor.submit(work);self.task_done=('operation',done)
 
     def check_size(self):
         def apply():
             snapshot=copy.copy(self.doc);snapshot.textures=copy.deepcopy(self.doc.textures);limit=self.color_limit()
-            self.message.set('Encoding edits and measuring the actual PAC…')
+            self.message.set('Encoding edits and measuring the actual PAC...')
             def done(result):
                 _,report=result;self.last_report=report
-                text=f"{report['bytes']:,} / {report['max_pac_bytes']:,} bytes — "+('fits.'if report['fits']else'OVER BUDGET: reduce edited colors or simplify artwork.')
+                text=f"{report['bytes']:,} / {report['max_pac_bytes']:,} bytes  -  "+('fits.'if report['fits']else'OVER BUDGET: reduce edited colors or simplify artwork.')
                 warnings=[r['name']for r in report['textures']if r.get('changed')and r.get('rgb_rmse',0)>25]
                 if warnings:text+=' Significant palette loss: '+', '.join(warnings)+'. Check the encoded preview.'
                 self.message.set(text)
@@ -459,7 +460,7 @@ class RetexturePanel:
             path=filedialog.asksaveasfilename(title='Export retextured PAC to a NEW filename',initialdir=str(self.shell.pac_browser.folder or Path(self.doc.source).parent),initialfile=Path(self.doc.source).stem+'-retextured.pac',defaultextension='.pac',filetypes=[('PSP PAC','*.pac')],confirmoverwrite=False)
             if not path:return
             snapshot=copy.copy(self.doc);snapshot.textures=copy.deepcopy(self.doc.textures);limit=self.color_limit()
-            self.message.set('Checking encoded textures, native records and final size before export…')
+            self.message.set('Checking encoded textures, native records and final size before export...')
             def done(report):
                 self.last_report=report;self.shell.pac_browser.refresh()
                 self.message.set(f"Saved {Path(path).name}: {report['bytes']:,} bytes. Model/rigging unchanged. Test appearance in PPSSPP.")
