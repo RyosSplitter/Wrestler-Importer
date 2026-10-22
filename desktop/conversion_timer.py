@@ -22,8 +22,9 @@ def duration(seconds):
 
 
 def profile(options):
-    return '|'.join(str(options.get(k,default))for k,default in
+    key='|'.join(str(options.get(k,default))for k,default in
                     [('source_format','hctp'),('texture_mode','Default'),('costume_role','ring'),('wii_geometry','Standard'),('downgrade_steps',0)])
+    return key+'|clothing-seams'if options.get('wii_seam_protection',False)else key
 
 
 def valid_trace(value):

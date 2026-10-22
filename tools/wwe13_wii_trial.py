@@ -160,7 +160,23 @@ def base_model_bytes(base):
     return base,audit_yobj(next(r for s,r in sections(base)if s['id']==2))
 
 
-def run(source,base_path,out,index,ratio=1.,head_floor=.6,hand_floor=.5,mouth_ratio=.6,material_only=False,texture_candidates=None,source_reader=None,atlas_options=None,export_face_floor=False,arm_floor=None,opposed_normals=False,source_normals=False,costume_role='ring',preserve_uv_seams=False,preserve_hand_transitions=False,command_runner=None,texture_allocator=None,progress=print):
+def require_pose_gates(checks,*,protect_clothing_seams=False):
+    failed=[name for name,row in checks['hand_reference_envelope'].items()if not row['passes']]
+    bad_pose=any(f['kind']in ('analytic-collapse','ocular-envelope-review')for f in checks['poses']['review_findings'])
+    if not failed and not bad_pose:return
+    message='Native analytical pose gate failed; candidate retained for diagnosis only.'
+    if failed:
+        message+=' Failed hand checks: '+', '.join(name.replace('-',' ')for name in failed)+'.'
+        choices=[]
+        if any(name in ('grip','finger-extension')for name in failed):choices.append('Preserve Hands')
+        if any(name in ('wrist-flex','forearm-twist')for name in failed):choices.append('Preserve Arms')
+        if choices:message+=' Try Geometry: '+' or '.join(choices)+'.'
+    if protect_clothing_seams:
+        message+=' You can also turn off Protect clothing seams and compare the preview.'
+    raise ValueError(message)
+
+
+def run(source,base_path,out,index,ratio=1.,head_floor=.6,hand_floor=.5,mouth_ratio=.6,material_only=False,texture_candidates=None,source_reader=None,atlas_options=None,export_face_floor=False,arm_floor=None,opposed_normals=False,source_normals=False,costume_role='ring',preserve_uv_seams=False,preserve_hand_transitions=False,command_runner=None,texture_allocator=None,progress=print,protect_clothing_seams=False):
     limits=budget(costume_role)
     if any(not 0<v<=1 for v in (ratio,head_floor,hand_floor,mouth_ratio)):raise ValueError('Reduction ratios must be in (0,1]')
     if arm_floor is not None and not 0<arm_floor<=1:raise ValueError('Arm floor must be in (0,1]')
@@ -185,7 +201,7 @@ def run(source,base_path,out,index,ratio=1.,head_floor=.6,hand_floor=.5,mouth_ra
     if ratio<1:
         env=os.environ.copy();env['BLENDER_USER_CONFIG']=str((out/'blender-config').resolve())
         from desktop.core import blender_path
-        args=[str(blender_path()),'-b','-t','2','--python-exit-code','1','--python',str(Path(__file__).resolve().with_name('wwe13_reduce_trial.py')),'--',str((out/'charted.json').resolve()),str((out/'reduced.json').resolve()),str((out/'profile.json').resolve()),'--hand-weighted','--material-boundaries' if material_only else '--uv-islands']+(['--export-face-floor']if export_face_floor else [])+(['--opposed-normals']if opposed_normals else [])+(['--source-normals']if source_normals else [])+(['--preserve-uv-seams']if preserve_uv_seams else [])+(['--preserve-hand-transitions']if preserve_hand_transitions else [])
+        args=[str(blender_path()),'-b','-t','2','--python-exit-code','1','--python',str(Path(__file__).resolve().with_name('wwe13_reduce_trial.py')),'--',str((out/'charted.json').resolve()),str((out/'reduced.json').resolve()),str((out/'profile.json').resolve()),'--hand-weighted','--material-boundaries' if material_only else '--uv-islands']+(['--export-face-floor']if export_face_floor else [])+(['--opposed-normals']if opposed_normals else [])+(['--source-normals']if source_normals else [])+(['--preserve-uv-seams']if preserve_uv_seams else [])+(['--preserve-hand-transitions']if preserve_hand_transitions else [])+(['--protect-clothing-seams']if protect_clothing_seams else [])
         if command_runner is not None:command_runner(args,out/'blender.log',env)
         else:
             with (out/'blender.log').open('w')as log:subprocess.run(args,check=True,env=env,stdout=log,stderr=subprocess.STDOUT)
@@ -203,8 +219,7 @@ def run(source,base_path,out,index,ratio=1.,head_floor=.6,hand_floor=.5,mouth_ra
         envelope[name]=dict(candidate=value,source_reference=control,native_donor=donor,limit=limit,passes=value<=limit)
     checks['hand_reference_envelope']=envelope
     for name,value in [('packed',packed),('contracts',contracts),('native-checks',checks)]:dump(out/(name+'.json'),value)
-    if any(f['kind']in ('analytic-collapse','ocular-envelope-review')for f in checks['poses']['review_findings']) or not all(r['passes']for r in envelope.values()):
-        raise ValueError('Native analytical pose gate failed; candidate retained for diagnosis only')
+    require_pose_gates(checks,protect_clothing_seams=protect_clothing_seams)
     (out/'candidate.yobj').write_bytes(raw)
     print('Native model expanded',len(raw),'compressed',len(compress(raw)),flush=True)
     pac,gims,tex=(texture_allocator or allocate)(base,raw,packed,images,contracts,out/'textures',target=limits['max_pac_bytes'],candidate_factory=texture_candidates or candidates,progress=progress)

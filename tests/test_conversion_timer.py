@@ -62,6 +62,8 @@ class ConversionTimerTests(unittest.TestCase):
         self.assertNotEqual(a,profile(dict(texture_mode='ATO')))
         self.assertNotEqual(a,profile(dict(costume_role='entrance')))
         self.assertNotEqual(a,profile(dict(wii_geometry='Preserve Arms')))
+        self.assertNotEqual(a,profile(dict(wii_seam_protection=True)))
+        self.assertEqual(a,profile(dict(wii_seam_protection=False)))
 
     def test_history_is_atomic_bounded_and_ignores_corrupt_records(self):
         with tempfile.TemporaryDirectory()as temp:

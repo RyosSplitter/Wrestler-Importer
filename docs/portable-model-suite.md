@@ -1,4 +1,23 @@
-# PSP Model Suite v0.28.2
+# PSP Model Suite v0.28.3
+
+Adds **Protect clothing seams** under the Wii geometry settings. Enable it to
+retain extra source UV contacts on arms, torso and legs during reduction. It can
+straighten wristband, trunks and knee-pad borders. For Billy Gunn, combine it
+with **Geometry: Preserve Hands**. The setting is optional and starts unchecked;
+existing conversions retain their previous behavior until it is enabled.
+
+Additional seam geometry can leave less room for texture detail or fail a pose
+check on some models. The existing ring/entrance limits and deformation gates
+still apply. Failed hand checks now name the failed probes and suggest a geometry
+profile; with seam protection enabled, the error also offers disabling it for
+comparison. The conversion timer learns separate timing histories for seam-on
+and seam-off runs. See [Wii clothing seam protection](wwe13-wii-clothing-seams.md).
+
+The verified overlay updates **v0.28.2 to v0.28.3**. Close the app and copy the
+overlay's `PSP-Model-Suite` contents into your existing app folder, replacing
+files. Use the complete ZIP for older versions or new installations.
+
+## Previous v0.28.2 Road Dogg support
 
 Adds WWE ’13 Wii Road Dogg (`ch312.pac`) source support. His body and transparent
 model each contain three geometry packets; the first two omit vertex-color

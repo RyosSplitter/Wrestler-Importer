@@ -11,7 +11,7 @@ from region_mesh import DETAIL_TEXTURES, RATIOS, make_regions, smooth_normals
 from vertex_identity import annotate, point_key, position_key, validate_locked
 
 
-def reduce(source, ratio, detail_profile=False, regional=False, preserved_regions=(), retention_reserve=None, export_face_floor=False, source_normals=False, preserve_uv_seams=False):
+def reduce(source, ratio, detail_profile=False, regional=False, preserved_regions=(), retention_reserve=None, export_face_floor=False, source_normals=False, preserve_uv_seams=False, uv_seam_regions=None):
     if not 0 < ratio <= 1:
         raise ValueError('Reduction ratio must be between zero and one')
     bpy.ops.wm.read_factory_settings(use_empty=True)
@@ -24,7 +24,7 @@ def reduce(source, ratio, detail_profile=False, regional=False, preserved_region
     protected = {p for p, meshes in owners.items() if len(meshes) > 1}
     if preserve_uv_seams:
         from wwe13_uv_seams import seam_positions
-        protected.update(seam_positions(source))
+        protected.update(seam_positions(source,regions=uv_seam_regions))
     detail_textures = DETAIL_TEXTURES if detail_profile else set()
     if detail_profile:
         for entry in source['meshes']:

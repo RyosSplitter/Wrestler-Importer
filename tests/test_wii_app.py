@@ -55,11 +55,37 @@ class WiiAppTests(unittest.TestCase):
             with self.assertRaises(ValueError):self.request(tmp,source_entry='../x').validate()
             with self.assertRaises(ValueError):self.request(tmp,costume_role='unknown').validate()
 
+    def test_seam_protection_is_explicit_wii_only_and_strictly_boolean(self):
+        with tempfile.TemporaryDirectory()as tmp:
+            self.assertFalse(self.request(tmp).wii_seam_protection)
+            for enabled in (False,True):
+                for profile in ('Standard','Preserve Hands','Preserve Arms'):
+                    self.request(tmp,wii_geometry=profile,wii_seam_protection=enabled).validate()
+            for invalid in (0,1,None,'true'):
+                with self.subTest(invalid=invalid),self.assertRaisesRegex(ValueError,'boolean'):
+                    self.request(tmp,wii_seam_protection=invalid).validate()
+            r=self.request(tmp)
+            with self.assertRaisesRegex(ValueError,'Wii source'):
+                Request(r.source,r.base,wii_seam_protection=True).validate()
+
     def test_dispatch_does_not_call_hctp_prepare(self):
         req=Request('source.pac','base.pac',source_format='wwe13-wii')
         with patch('desktop.wii_job.run_job',return_value={'format':'wii'}) as job,patch('desktop.core.prepare',side_effect=AssertionError('HCTP called')):
             self.assertEqual(run_job(req,'work'),{'format':'wii'})
             self.assertIs(job.call_args.args[0],req)
+
+    def test_failed_hand_gate_retains_rejection_and_names_a_geometry_setting(self):
+        from tools.wwe13_wii_trial import require_pose_gates
+        checks=dict(hand_reference_envelope={'grip':dict(passes=False)},poses={'review_findings':[]})
+        with self.assertRaisesRegex(ValueError,'Native analytical pose gate failed.*Preserve Hands.*Protect clothing seams'):
+            require_pose_gates(checks,protect_clothing_seams=True)
+        checks['hand_reference_envelope']={'wrist-flex':dict(passes=False)}
+        with self.assertRaisesRegex(ValueError,'Preserve Arms'):require_pose_gates(checks)
+        checks['hand_reference_envelope']={'grip':dict(passes=True)}
+        require_pose_gates(checks)
+        for kind in ('analytic-collapse','ocular-envelope-review'):
+            checks['poses']['review_findings']=[dict(kind=kind)]
+            with self.assertRaisesRegex(ValueError,'Native analytical pose gate failed'):require_pose_gates(checks)
 
     def test_cancel_before_decoding_or_launching_blender(self):
         with tempfile.TemporaryDirectory() as tmp:

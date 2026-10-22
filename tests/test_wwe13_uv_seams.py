@@ -29,5 +29,26 @@ class UVSeamTests(unittest.TestCase):
         model['meshes'][0]['vertices'].append(dict(position=[0.,0.,0.],uv=[.8,.8],weights=[.2,.8]))
         self.assertEqual(seam_positions(model),set())
 
+    def test_clothing_scope_does_not_add_hand_or_head_locks(self):
+        for region in ('Hands','Head','Eyes','Mouth','Hair'):
+            model=self.model()
+            for mesh in model['meshes']:mesh['region']=region
+            before=copy.deepcopy(model)
+            self.assertEqual(seam_positions(model),{(0.,0.,0.)})
+            self.assertEqual(seam_positions(model,regions=('Arms','Torso','Legs')),set())
+            self.assertEqual(model,before)
+
+    def test_clothing_regions_retain_existing_contacts_without_attribute_edits(self):
+        for region in ('Arms','Torso','Legs'):
+            model=self.model()
+            for mesh in model['meshes']:mesh['region']=region
+            before=copy.deepcopy(model)
+            self.assertEqual(seam_positions(model,regions=('Arms','Torso','Legs')),{(0.,0.,0.)})
+            self.assertEqual(model,before)
+
+    def test_excluded_region_cannot_create_a_phantom_clothing_contact(self):
+        model=self.model();model['meshes'][0]['region']='Arms';model['meshes'][1]['region']='Hands'
+        self.assertEqual(seam_positions(model,regions=('Arms','Torso','Legs')),set())
+
 
 if __name__=='__main__':unittest.main()

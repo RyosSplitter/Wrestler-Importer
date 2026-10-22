@@ -36,6 +36,7 @@ class Application:
         self.source_format=tk.StringVar(value='hctp');self.source_entry=tk.StringVar(value='')
         self.costume_role=tk.StringVar(value='ring')
         self.wii_geometry=tk.StringVar(value='Standard')
+        self.wii_seam_protection=tk.BooleanVar(value=False)
         self.base=tk.StringVar(value=self.settings.get('base',''));self.status=tk.StringVar(value='Choose your PSP base once, then drop an HCTP PAC.')
         # Session-only and deliberately OFF, even when an earlier job enabled it.
         self.texture_mode=tk.StringVar(value='Default')
@@ -133,6 +134,10 @@ class Application:
         ttk.Label(self.wii_geometry_row,text='Geometry:').pack(side='left',padx=(0,8))
         self.wii_geometry_dropdown=ttk.Combobox(self.wii_geometry_row,textvariable=self.wii_geometry,values=('Standard','Preserve Hands','Preserve Arms'),state='readonly',width=17)
         self.wii_geometry_dropdown.pack(side='left')
+        self.wii_seam_row=ttk.Frame(source_group)
+        self.wii_seam_checkbox=ttk.Checkbutton(self.wii_seam_row,text='Protect clothing seams',variable=self.wii_seam_protection)
+        self.wii_seam_checkbox.pack(anchor='w')
+        ttk.Label(self.wii_seam_row,text='Retains clothing edges; may leave less room for textures.',style='Muted.TLabel',wraplength=310).pack(anchor='w')
         ttk.Label(source_group,textvariable=self.info,style='Muted.TLabel',wraplength=310,justify='left').pack(fill='x',pady=(8,0))
         base_group=ttk.LabelFrame(left,text='PSP base PAC',padding=10);base_group.pack(fill='x',pady=(10,0))
         ttk.Label(base_group,textvariable=self.base,wraplength=310,justify='left').pack(fill='x',pady=(0,8))
@@ -194,9 +199,10 @@ class Application:
         self.source_entry.set('');self.source_entry_row.pack_forget();self.source_entry_dropdown.configure(values=())
         self.costume_role.set('ring')
         self.wii_geometry.set('Standard')
+        self.wii_seam_protection.set(False)
         if key=='wwe13-wii':
-            self.costume_role_row.pack(fill='x',pady=(8,0));self.wii_geometry_row.pack(fill='x',pady=(8,0))
-        else:self.costume_role_row.pack_forget();self.wii_geometry_row.pack_forget()
+            self.costume_role_row.pack(fill='x',pady=(8,0));self.wii_geometry_row.pack(fill='x',pady=(8,0));self.wii_seam_row.pack(fill='x',pady=(8,0))
+        else:self.costume_role_row.pack_forget();self.wii_geometry_row.pack_forget();self.wii_seam_row.pack_forget()
         self.skin_checkbox.configure(state='disabled' if key=='wwe13-wii' else 'normal')
         self.clean_inspection();self.source=None;self.source_inspection=None;self.priority_textures=();self.result=None
         self.save.configure(state='disabled');self.info.set('No source selected')
@@ -277,6 +283,7 @@ class Application:
             self.priority_textures=selection;priorities=selection
         options=dict(source=self.source,base=self.base.get(),source_format=self.source_format.get(),source_entry=self.source_entry.get(),
             costume_role=self.costume_role.get(),wii_geometry=self.wii_geometry.get(),
+            wii_seam_protection=self.wii_seam_protection.get(),
             texture_mode=mode,adaptive_textures=mode=='ATO',skin_palette_compatibility=self.skin_palette_compatibility.get(),
             downgrade_steps=int(self.downgrade_steps.get()[0]) if mode=='Downgrade' else 0,
             priority_textures=list(priorities),texture_review_sha256=self.source_inspection['source_sha256'] if priorities else '',
@@ -291,6 +298,7 @@ class Application:
         self.source_button.configure(state='disabled');self.source_entry_dropdown.configure(state='disabled')
         self.costume_role_dropdown.configure(state='disabled')
         self.wii_geometry_dropdown.configure(state='disabled')
+        self.wii_seam_checkbox.configure(state='disabled')
         self.output.set('Building an experimental PSP candidate…');self.preview.configure(image='',text='Converting…');self.progress['value']=0
         self.process=self.spawn(['--worker',str(self.job/'request.json')]);self.status.set('Starting isolated conversion job…')
         from desktop.conversion_timer import ConversionTimer,profile,read_history
@@ -340,6 +348,7 @@ class Application:
                 self.skin_checkbox.configure(state='disabled' if self.source_format.get()=='wwe13-wii' else 'normal')
                 self.costume_role_dropdown.configure(state='readonly')
                 self.wii_geometry_dropdown.configure(state='readonly')
+                self.wii_seam_checkbox.configure(state='normal')
                 self.source_button.configure(state='normal');self.source_entry_dropdown.configure(state='readonly')
                 try:
                     if not (self.job/'success.json').exists():

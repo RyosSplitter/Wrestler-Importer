@@ -39,6 +39,8 @@ def run(app,output,base):
         assert tuple(app.source_entry_dropdown.cget('values'))==('00','01')
         assert tuple(app.texture_dropdown.cget('values'))==('Default',)
         assert app.costume_role.get()=='ring'
+        assert not app.wii_seam_protection.get() and app.wii_seam_row.winfo_ismapped()
+        app.wii_seam_checkbox.invoke();assert app.wii_seam_protection.get()
         app.source_entry.set('01');app.change_source_entry();wait(lambda:app.inspector is None)
         assert app.source_inspection['selected_entry']=='01'
         scales=app.source_inspection['source_encoding_audit']
@@ -57,6 +59,11 @@ def run(app,output,base):
         checks=json.loads((work/'wii/native-checks.json').read_text());ocular=json.loads((work/'wii/ocular.json').read_text())
         validate_trial(raw,(work/'storage-reference.pac').read_bytes(),checks['radius_changes'],ocular['source_controller_pivot_fit'],costume_role='entrance')
         assert result['source_entry']=='01' and result['costume_role']=='entrance'
+        assert result['wii_seam_protection']
+        reduced=json.loads((work/'wii/reduced.json').read_text())
+        assert reduced['reduction_report']['source_uv_seam_scope']==['Arms','Torso','Legs']
+        assert reduced['reduction_report']['source_uv_seam_locks']
+        assert 'Protect clothing seams: enabled' in Path(result['report']).read_text(encoding='utf-8')
         assert result['budget']['max_pac_bytes']==180000 and len(raw)<=180000
         assert app.preview.cget('image') and Path(result['report']).is_file()
         assert (work/'qa/opacity-support.json').is_file() and (work/'qa/palette-quality.json').is_file()
@@ -71,12 +78,15 @@ def run(app,output,base):
         assert len(read_history(data_dir()/'conversion-timings.json').get(app.timing_profile,[]))==before_timings
         app.choose_source_format('hctp');app.root.update()
         assert 'ATO' in app.texture_dropdown.cget('values') and not app.costume_role_row.winfo_ismapped()
+        assert not app.wii_seam_row.winfo_ismapped() and not app.wii_seam_protection.get()
         assert source.read_bytes()==original and Path(base).read_bytes()==original_base
         report=dict(status='pass',fixture='Procedural fixed-point GCTC panels/TPL images on caller-supplied development rig; no wrestler geometry or texture',
             platform_selection=True,costume_selection=True,explicit_entrance_budget=True,source_bone_decode=True,
             bundled_blender_conversion=True,full_static_analytical_head_hand_qa=True,final_pac_preview=True,
             mixed_q7_body_q8_auxiliary_decode_verified=True,
             three_packet_colorless_inspection=True,all_six_source_packets_audited=True,
+            clothing_seam_checkbox=True,clothing_scope_passed_to_bundled_blender=True,
+            seam_setting_reported=True,seam_control_hidden_and_reset_for_hctp=True,
             palette_and_alpha_reports=True,save_as_verified=True,cancellation_clean=True,hctp_options_restored=True,
             conversion_countdown=True,successful_timing_history=True,cancelled_run_not_learned=True,
             pac_bytes=len(raw),pac_sha256=sha(raw),inputs_unchanged=True,

@@ -55,8 +55,8 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
     compact,storage=compact_effect_storage(base.read_bytes())
     reference=work/'storage-reference.pac';reference.write_bytes(compact)
     dump(work/'effect-storage.json',storage)
-    # Keep the tested material-domain geometry settings. Global UV locks,
-    # hand-transition floors and experimental UV-layout changes are not enabled.
+    # Optional extra locks use the tested clothing-region scope. Face and hand
+    # reduction settings and existing shared-joint guards stay independent.
     folder=work/'wii';ratio=.45 if index==0 else .35
     hand_floor=.75 if request.wii_geometry=='Preserve Hands' else .5
     arm_floor=.75 if request.wii_geometry=='Preserve Arms' else None
@@ -65,6 +65,7 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
         built=build_wii(source,reference,folder,index,ratio=ratio,head_floor=.6,hand_floor=hand_floor,arm_floor=arm_floor,mouth_ratio=.6,
             material_only=True,source_reader=source_bundle,atlas_options=dict(repeat_safe=True),export_face_floor=True,
             costume_role=request.costume_role,command_runner=command,texture_allocator=allocate,
+            protect_clothing_seams=request.wii_seam_protection,
             progress=lambda message,**kw:step(45,message))
         check()
         candidate=folder/built['pac'];payload=candidate.read_bytes()
@@ -108,7 +109,8 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
         '<h1>WWE ’13 Wii → SVR 2011 PSP — experimental</h1>',
         '<p>%s, costume %02d, %s. %s / %s bytes. %d review findings.</p>'%(html.escape(source.name),index,request.costume_role,f'{len(payload):,}',f"{limits['max_pac_bytes']:,}",flags),
         '<p>Native structure and analytical pose gates passed. This is not in-game validation. Some Wii hair, hands, clothing, facial color and body shapes still require review; known bad global geometry rules remain disabled. Dynamic Wii blood/hair animation is not reproduced. Unknown layouts are rejected.</p>',
-        '<p>Existing material-domain reduction and rig mapping; measured texture allocation with source-nearest alpha and a half-source cutout floor. Opaque 16-color candidates may use lossless T4 storage; only corresponding material depth words change. Section 8 may be BPE-compressed with every decoded effect byte preserved. No new UV/layout experiment is enabled.</p>',
+        '<p>Existing material-domain reduction and rig mapping; measured texture allocation with source-nearest alpha and a half-source cutout floor. Opaque 16-color candidates may use lossless T4 storage; only corresponding material depth words change. Section 8 may be BPE-compressed with every decoded effect byte preserved. No UV atlas remapping is enabled.</p>',
+        '<p>Protect clothing seams: %s. Extra UV contact locks apply to Arms, Torso and Legs only. Source artwork and UV layout are retained; hand/face reduction settings are independent. Additional geometry can reduce the texture budget. Pose and size gates remain mandatory.</p>'%('enabled'if request.wii_seam_protection else'disabled'),
         '<p><a href="report.html">Complete source/posed comparison and heatmaps</a> · <a href="report.json">Comparison metrics</a> · <a href="surface-attributes.json">UV/source sampling</a> · <a href="opacity-support.json">Thin strands and cutout support</a> · <a href="palette-quality.json">Native-grid palette loss</a> · <a href="native-final.json">Native offsets, palettes and constraints</a> · <a href="../wii/textures/report.json">Every texture and allocation decision</a> · <a href="../effect-storage.json">Lossless effect storage</a> · <a href="app-result.json">Export result</a></p>',
         '<p><a href="../wii/source-materials.json">Original packet Q7/Q8 fields, exact source/IR encoding audit, draw bindings and excluded effects</a>. Transparency indicates a cutout, not anatomical hair; leg decals retain their original leg weights.</p>',
         *['<figure><figcaption>%s — actual final PAC, CPU preview</figcaption><img width="480" src="../preview/%s-full.png"></figure>'%(v,v) for v in ('front','back','left','right','front-left')],
@@ -117,6 +119,7 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
         bytes=len(payload),sha256=digest(final),source=str(source.resolve()),base=str(base.resolve()),inputs=inputs,
         source_format='wwe13-wii',source_entry=f'{index:02d}',costume_role=request.costume_role,budget=limits,
         profile='wwe13-wii-experimental-material-domains',wii_geometry=request.wii_geometry,meshes=native['report']['meshes'],
+        wii_seam_protection=request.wii_seam_protection,
         vertices=native['report']['vertices'],triangles=native['report']['triangles'],model_count=1,
         native_validation='passed',ocular_validation='passed',review_flags=flags,effect_storage=storage,
         status='Experimental Wii candidate: review QA and test in PPSSPP; geometry issues remain on some sources.')

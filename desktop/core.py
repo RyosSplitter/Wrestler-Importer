@@ -58,6 +58,7 @@ class Request:
     texture_review_entry:str=''
     costume_role:str='ring'
     wii_geometry:str='Standard'
+    wii_seam_protection:bool=False
 
     @property
     def use_adaptive(self):
@@ -92,6 +93,8 @@ class Request:
         if self.source_format!='wwe13-wii' and self.costume_role!='ring':raise ValueError('Entrance budget is available only for WWE 13 Wii.')
         if self.wii_geometry not in ('Standard','Preserve Hands','Preserve Arms'):raise ValueError('Unknown Wii geometry profile.')
         if self.source_format!='wwe13-wii' and self.wii_geometry!='Standard':raise ValueError('Wii geometry profiles require a Wii source.')
+        if type(self.wii_seam_protection)is not bool:raise ValueError('Wii seam protection must be a boolean.')
+        if self.source_format!='wwe13-wii' and self.wii_seam_protection:raise ValueError('Clothing seam protection requires a Wii source.')
         if not isinstance(self.source_entry,str) or not isinstance(self.texture_review_entry,str):raise ValueError('Source entry must be a string.')
         if self.source_format=='jbi':
             if self.source_entry and not re.fullmatch('[0-9a-f]{4}',self.source_entry):raise ValueError('Choose a four-digit JBI archive entry.')
