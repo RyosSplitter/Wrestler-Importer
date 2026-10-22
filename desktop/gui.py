@@ -29,6 +29,9 @@ class Application:
         x=max(0,(screen_w-width)//2);y=max(0,(screen_h-height)//2-20)
         self.root.geometry(f'{width}x{height}+{x}+{y}');self.root.minsize(940,640)
         self.settings=load_settings();self.source=None;self.process=None;self.result=None;self.saved=None;self.closing=False
+        from desktop.conversion_timer import ConversionTimer
+        self.conversion_timer=ConversionTimer();self.timing_profile=None;self.event_rows=0
+        self.timer_text=tk.StringVar(value=self.conversion_timer.text())
         self.inspector=None;self.inspect_root=None;self.view='front-left';self.zoom='full';self.photo=None
         self.source_format=tk.StringVar(value='hctp');self.source_entry=tk.StringVar(value='')
         self.costume_role=tk.StringVar(value='ring')
@@ -78,6 +81,8 @@ class Application:
         # at the minimum window size and at enlarged Windows text scales.
         footer=ttk.Frame(container,padding=(12,6,12,10));footer.pack(side='bottom',fill='x')
         self.progress=ttk.Progressbar(footer,maximum=100);self.progress.pack(fill='x',pady=(0,6))
+        self.timer_label=ttk.Label(footer,textvariable=self.timer_text,style='Muted.TLabel')
+        self.timer_label.pack(fill='x',pady=(0,4))
         status_row=ttk.Frame(footer);status_row.pack(fill='x')
         self.button(status_row,'Logs',self.open_logs).pack(side='right',padx=(8,0))
         self.status_label=ttk.Label(status_row,textvariable=self.status,style='Muted.TLabel',wraplength=850)
@@ -288,8 +293,14 @@ class Application:
         self.wii_geometry_dropdown.configure(state='disabled')
         self.output.set('Building an experimental PSP candidate…');self.preview.configure(image='',text='Converting…');self.progress['value']=0
         self.process=self.spawn(['--worker',str(self.job/'request.json')]);self.status.set('Starting isolated conversion job…')
+        from desktop.conversion_timer import ConversionTimer,profile,read_history
+        self.timing_profile=profile(options);self.event_rows=0
+        self.conversion_timer=ConversionTimer(read_history(data_dir()/'conversion-timings.json').get(self.timing_profile,[]))
+        self.conversion_timer.start();self.timer_text.set(self.conversion_timer.text())
     def cancel_job(self):
-        if self.busy():(self.job/'cancel').touch();self.status.set('Cancelling and cleaning incomplete output…');self.cancel.configure(state='disabled')
+        if self.busy():
+            (self.job/'cancel').touch();self.status.set('Cancelling and cleaning incomplete output…');self.cancel.configure(state='disabled')
+            self.conversion_timer.cancel();self.timer_text.set(self.conversion_timer.text())
     def poll(self):
         if self.inspector is not None and self.inspector.poll() is not None:
             try:
@@ -316,8 +327,13 @@ class Application:
             events=self.job/'events.jsonl'
             if events.exists():
                 try:
-                    rows=events.read_text(encoding='utf-8').splitlines();r=json.loads(rows[-1]);self.progress['value']=max(self.progress['value'],r['percent']);self.status.set(r['message'])
+                    rows=events.read_text(encoding='utf-8').splitlines()
+                    for line in rows[self.event_rows:]:
+                        r=json.loads(line);self.event_rows+=1
+                        self.progress['value']=max(self.progress['value'],r['percent']);self.status.set(r['message'])
+                        self.conversion_timer.observe(r['percent'],r.get('elapsed_seconds'))
                 except (ValueError,IndexError):pass
+            self.timer_text.set(self.conversion_timer.text())
             if self.process.poll() is not None:
                 self.process=None;self.cancel.configure(state='disabled');self.convert.configure(state='normal');self.base_button.configure(state='normal')
                 self.texture_dropdown.configure(state='readonly');self.downgrade_dropdown.configure(state='readonly')
@@ -328,9 +344,11 @@ class Application:
                 try:
                     if not (self.job/'success.json').exists():
                         failure=json.loads((self.job/'failure.json').read_text(encoding='utf-8'));self.status.set(failure['error'])
+                        self.finish_timer('cancelled'if failure['cancelled']else'failed')
                         if not failure['cancelled']:messagebox.showerror('Conversion stopped',failure['error']+'\n\nUse Logs for diagnostics.')
                     else:
                         self.result=json.loads((self.job/'success.json').read_text(encoding='utf-8'));r=self.result
+                        self.finish_timer('completed')
                         self.output.set(f"{Path(r['pac']).name}  •  {r['bytes']:,} bytes\nNative checks passed • {r.get('model_count',1)} models • {r.get('total_meshes',r['meshes'])} meshes • {r.get('total_triangles',r['triangles']):,} triangles\nQA: {r['review_flags']} findings to review • PPSSPP validation required")
                         if r.get('adaptive_textures'):
                             self.output.set(self.output.get()+f"\nAdaptive textures: {r['adaptive_textures']['review_flags']} texture tradeoffs — open QA report")
@@ -353,9 +371,15 @@ class Application:
                         if r.get('maximum_downgrade'):
                             self.output.set(self.output.get()+f"\nMaximum Downgrade: {r['maximum_downgrade']['changed_textures']} textures reduced; model unchanged — open QA report")
                         self.save.configure(state='normal');self.status.set('Review the PSP preview and QA report before saving.');self.show_preview()
-                except Exception as e:self.status.set('Worker ended unexpectedly; inspect Logs.');messagebox.showerror(NAME,str(e))
+                except Exception as e:self.finish_timer('failed');self.status.set('Worker ended unexpectedly; inspect Logs.');messagebox.showerror(NAME,str(e))
         if self.closing and not self.busy() and self.inspector is None and not (self.suite and self.suite.busy()):self.clean_inspection();self.root.destroy();return
         self.root.after(200,self.poll)
+    def finish_timer(self,status):
+        trace=self.conversion_timer.finish(status);self.timer_text.set(self.conversion_timer.text())
+        if trace is not None:
+            from desktop.conversion_timer import save_trace
+            try:save_trace(data_dir()/'conversion-timings.json',self.timing_profile,trace)
+            except OSError:pass  # Timing history must never block a completed conversion.
     def set_view(self,view):self.view=view;self.show_preview()
     def toggle_zoom(self):self.zoom='zoom' if self.zoom=='full' else 'full';self.show_preview()
     def image_path(self):return Path(self.result['preview'])/(self.view+'-'+self.zoom+'.png')

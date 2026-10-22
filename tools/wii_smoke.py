@@ -35,8 +35,15 @@ def run(app,output,base):
         scales=app.source_inspection['source_encoding_audit']
         assert scales['status']=='pass'
         assert {r['position_divisor']for r in scales['packets']}=={128,256}
-        app.base.set(str(Path(base).resolve()));app.costume_role.set('entrance');app.start();wait(lambda:not app.busy())
+        app.base.set(str(Path(base).resolve()));app.costume_role.set('entrance');app.start()
+        assert app.conversion_timer.status=='running' and 'Estimated remaining:'in app.timer_text.get()
+        wait(lambda:not app.busy())
         assert app.result is not None,app.status.get()
+        assert app.conversion_timer.status=='completed' and 'Completed in 'in app.timer_text.get()
+        from desktop.conversion_timer import read_history
+        from desktop.storage import data_dir
+        before_timings=len(read_history(data_dir()/'conversion-timings.json').get(app.timing_profile,[]))
+        assert before_timings>0
         result=app.result;raw=Path(result['pac']).read_bytes();work=Path(result['pac']).parent
         checks=json.loads((work/'wii/native-checks.json').read_text());ocular=json.loads((work/'wii/ocular.json').read_text())
         validate_trial(raw,(work/'storage-reference.pac').read_bytes(),checks['radius_changes'],ocular['source_controller_pivot_fit'],costume_role='entrance')
@@ -51,6 +58,8 @@ def run(app,output,base):
         app.start();app.cancel_job();wait(lambda:not app.busy())
         failure=json.loads((app.job/'failure.json').read_text())
         assert failure['cancelled'] and not (app.job/'work').exists()
+        assert app.conversion_timer.status=='cancelled'
+        assert len(read_history(data_dir()/'conversion-timings.json').get(app.timing_profile,[]))==before_timings
         app.choose_source_format('hctp');app.root.update()
         assert 'ATO' in app.texture_dropdown.cget('values') and not app.costume_role_row.winfo_ismapped()
         assert source.read_bytes()==original and Path(base).read_bytes()==original_base
@@ -59,6 +68,7 @@ def run(app,output,base):
             bundled_blender_conversion=True,full_static_analytical_head_hand_qa=True,final_pac_preview=True,
             mixed_q7_body_q8_auxiliary_decode_verified=True,
             palette_and_alpha_reports=True,save_as_verified=True,cancellation_clean=True,hctp_options_restored=True,
+            conversion_countdown=True,successful_timing_history=True,cancelled_run_not_learned=True,
             pac_bytes=len(raw),pac_sha256=sha(raw),inputs_unchanged=True,
             limitations='Hosted Windows frozen test; not a clean user Windows installation, real wrestler render or PPSSPP test.')
         output.write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8');return report

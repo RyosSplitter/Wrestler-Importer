@@ -1,7 +1,7 @@
 name: Build PSP Model Suite preview
 on:
   push:
-    branches: [feature/wwe13-wii-app-preview, feature/offline-retexture-editor]
+    branches: [feature/wwe13-wii-app-preview, feature/offline-retexture-editor, feature/conversion-countdown]
   workflow_dispatch:
 permissions:
   contents: write
@@ -77,7 +77,7 @@ jobs:
           }
           Copy-Item $output dist/jbi-smoke.json
           Copy-Item "$env:RUNNER_TEMP/jbi-smoke/*.png" dist/
-      - name: Frozen Wii selection, decoding, Blender, QA, preview, entrance Save As and cancellation
+      - name: Frozen Wii selection, conversion countdown, Blender, QA, preview, entrance Save As and cancellation
         timeout-minutes: 15
         shell: pwsh
         run: |
@@ -98,9 +98,9 @@ jobs:
         run: |
           import hashlib,shutil
           from pathlib import Path
-          path=Path(shutil.make_archive('dist/PSP-Model-Suite-v0.28.0-Windows-x64','zip','dist','PSP-Model-Suite'))
+          path=Path(shutil.make_archive('dist/PSP-Model-Suite-v0.28.1-Windows-x64','zip','dist','PSP-Model-Suite'))
           Path(str(path)+'.sha256').write_text(hashlib.file_digest(path.open('rb'),'sha256').hexdigest()+'  '+path.name+'\n')
-      - name: Build optional verified overlay update from the published v0.27.1 app
+      - name: Build optional verified overlay update from the published v0.28.0 app
         shell: python
         env:
           GH_TOKEN: ${{ github.token }}
@@ -111,12 +111,12 @@ jobs:
           # `python -m` from the checkout. Make this import path explicit.
           sys.path.insert(0,str(Path.cwd()))
           folder=Path('build/previous-release');folder.mkdir(parents=True,exist_ok=True)
-          previous=folder/'PSP-Model-Suite-v0.27.1-Windows-x64.zip'
-          output=Path('dist/PSP-Model-Suite-v0.27.1-to-v0.28.0-Update.zip')
+          previous=folder/'PSP-Model-Suite-v0.28.0-Windows-x64.zip'
+          output=Path('dist/PSP-Model-Suite-v0.28.0-to-v0.28.1-Update.zip')
           try:
               from tools.build_suite_update import build
-              subprocess.run(['gh','release','download','suite-wii-11-97c2a47e33f0f28687ce2c233aa02327cf29a402','--repo','RyosSplitter/Wrestler-Importer','--pattern',previous.name,'--dir',str(folder)],check=True)
-              report=build(previous,'dist/PSP-Model-Suite',output,'e84597bf550e4b478ca4b38a03476634478e05d2282561d7b70baf09f23103c1',from_version='0.27.1',to_version='0.28.0')
+              subprocess.run(['gh','release','download','suite-retexture-14-9a177593d14bd5ae6435aecd67b64fd958f64388','--repo','RyosSplitter/Wrestler-Importer','--pattern',previous.name,'--dir',str(folder)],check=True)
+              report=build(previous,'dist/PSP-Model-Suite',output,'7e4d5e389e6c28a39efd2ec793c681a6f9fa5853e07923df5cfc4490a90cb453',from_version='0.28.0',to_version='0.28.1')
               print('Verified overlay bytes:',report['zip_bytes'],'changed files:',len(report['changed_files']))
               report['status']='pass'
           except Exception as exc:
@@ -127,7 +127,7 @@ jobs:
           Path('dist/update-smoke.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
       - uses: actions/upload-artifact@v4
         with:
-          name: PSP-Model-Suite-v0.28.0-Windows-x64
+          name: PSP-Model-Suite-v0.28.1-Windows-x64
           path: |
             dist/*.zip
             dist/*.sha256
@@ -139,7 +139,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           @'
-          PSP Model Suite v0.28.0 adds an offline Retexture node inside Model Editor, with a dedicated workspace: texture thumbnails, protected-area masks, selection/recolor, brush/eraser, imported artwork layers, opacity/order/move/rotate/mirror/perspective corners, UV guides, reference pictures, orbit/zoom and live encoded model preview during active strokes. Portable .pspret projects retain the original PAC, layers, masks and references. Export checks actual encoded size, keeps all model/rigging/UV/material bytes and alpha unchanged, pins untouched texture colors, and writes a new PAC plus report. No online service, model download, API key or additional dependency. Supports observed native PSP PAC/indexed-GIM layouts; convert other platforms first. Existing HCTP/JBI/Wii converter behavior and accepted PACs remain intact; main remains unmerged. Includes the v0.27.1 Q7/Q8 source decoder fix. Full bundled Blender/runtime/source/licenses; Windows 10/11 x64, Windows 7-style UI, no game assets bundled. A verified v0.27.1-to-v0.28.0 overlay is included only if every manifest check passes. Frozen Windows tests exercise continuous-stroke live preview, actual editor-tree entry, layers, project reopen and PAC export alongside all converter/suite/JBI/Wii regressions. CPU preview speed depends on the model/computer and is not PSP shader emulation. Test appearance in PPSSPP. See sources/converter/docs/offline-retexture-editor.md.
+          PSP Model Suite v0.28.1 adds a live conversion clock: elapsed time plus an explicitly estimated countdown. It learns stage timing curves from successful local runs of the same source/texture/geometry/role settings, adjusts estimates as stages change, and uses a provisional progress-rate estimate for new profiles. Slow stages show an updating message rather than a false zero; completion, cancellation and errors stop the timer. Timing history stays local, stores no source paths/model data, and failed/cancelled runs do not train it. No conversion algorithms, geometry, textures or PAC packing behavior changed. Retains the v0.28.0 offline Retexture node, live encoded model preview, layers/masks/PNG artwork/reference pictures, portable projects and protected texture-only PAC exports; HCTP/JBI and experimental WWE 13 Wii conversion remain available. Windows 10/11 x64, Windows 7-style UI, full bundled Blender/source/licenses, no game assets. Includes a verified v0.28.0-to-v0.28.1 overlay only when all manifest checks pass; use the complete ZIP for new installations. Frozen tests cover timer running/completion/cancellation/learning plus all existing converter/editor/Retexture/JBI/Wii checks. Estimated time varies with model complexity and system load; it is not a guaranteed finish time. Main and accepted PAC baselines remain unchanged.
           '@ | Set-Content "$env:RUNNER_TEMP/suite-release-notes.txt" -Encoding utf8NoBOM
-          $tag = "suite-retexture-${{ github.run_number }}-${{ github.sha }}"
-          gh release create $tag dist/*.zip dist/*.sha256 dist/*.png dist/*smoke.json --target '${{ github.sha }}' --prerelease --title 'PSP Model Suite v0.28.0 — Offline Retexture editor' --notes-file "$env:RUNNER_TEMP/suite-release-notes.txt"
+          $tag = "suite-timer-${{ github.run_number }}-${{ github.sha }}"
+          gh release create $tag dist/*.zip dist/*.sha256 dist/*.png dist/*smoke.json --target '${{ github.sha }}' --prerelease --title 'PSP Model Suite v0.28.1 — Conversion countdown' --notes-file "$env:RUNNER_TEMP/suite-release-notes.txt"

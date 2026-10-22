@@ -5,13 +5,15 @@ from pathlib import Path
 import shutil
 import sys
 import traceback
+import time
 
 def worker(job_path):
     from desktop.core import Request,Cancelled,run_job,dump
     job=json.loads(Path(job_path).read_text());root=Path(job_path).parent
     cancel=root/'cancel';working=root/'work';events=root/'events.jsonl'
+    started=time.monotonic()
     def event(percent,message):
-        with events.open('a',encoding='utf-8') as f:f.write(json.dumps(dict(percent=percent,message=message))+'\n')
+        with events.open('a',encoding='utf-8') as f:f.write(json.dumps(dict(percent=percent,message=message,elapsed_seconds=time.monotonic()-started))+'\n')
     try:
         result=run_job(Request(**job),working,event,lambda:cancel.exists())
         dump(root/'success.json',result);return 0

@@ -71,7 +71,7 @@ def build(name=NAME):
     focused_tests=sources/'converter/tests';focused_tests.mkdir()
     (focused_tests/'__init__.py').write_text('')
     for filename in ('test_default_textures.py','test_texture_budget_trial.py','test_suite_workspace.py','test_pac_browser.py','test_edit_folder.py','test_pac_validator.py','test_portable_skinning.py','test_compatibility_validator.py',
-                     'test_retexture.py','test_jbi_rig.py','test_jbi_adapter.py','test_sym_source.py','test_pac_inspect.py'):
+                     'test_retexture.py','test_conversion_timer.py','test_jbi_rig.py','test_jbi_adapter.py','test_sym_source.py','test_pac_inspect.py'):
         shutil.copy2(ROOT/'tests'/filename,focused_tests/filename)
     for filename in ('test_wii_app.py','test_wii_source_encoding.py','test_wwe13_wii_model.py','test_wwe13_wii_corpus.py','test_wwe13_wii_inspect.py','test_wwe13_texture_format_trial.py','test_psp_effect_storage_trial.py','test_palette_quality_qa.py','test_alpha_coverage.py'):
         shutil.copy2(ROOT/'tests'/filename,focused_tests/filename)

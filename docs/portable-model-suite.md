@@ -1,4 +1,20 @@
-# PSP Model Suite v0.28.0
+# PSP Model Suite v0.28.1
+
+The converter now shows elapsed time and an **estimated remaining** countdown.
+It learns stage durations from successful conversions on this computer, grouped
+by source platform, texture mode, output role and geometry profile. New profiles
+use a provisional progress-rate estimate after startup. Counts adjust at stage
+changes; a slow stage shows "updating" instead of a misleading zero. Completion,
+failure and cancellation stop the clock. Only successful runs train the local
+`conversion-timings.json` history; no filenames or model data are stored there.
+The estimate is approximate and may increase as work progresses. This update
+does not change conversion algorithms or PAC output.
+
+The verified overlay for this release updates v0.28.0 to v0.28.1. Close the app
+and copy the overlay's `PSP-Model-Suite` folder contents into the existing app
+folder, replacing files. Use the complete ZIP for a new installation.
+
+## Previous v0.28.0 editor milestone
 
 Adds an [offline Retexture editor](offline-retexture-editor.md) as a node under
 each model in Model Editor, with a toolbar shortcut and a Retexture tab. Paint,
