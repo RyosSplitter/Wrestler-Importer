@@ -1,4 +1,19 @@
-# PSP Model Suite v0.27.1
+# PSP Model Suite v0.28.0
+
+Adds an [offline Retexture editor](offline-retexture-editor.md) as a node under
+each model in Model Editor, with a toolbar shortcut and a Retexture tab. Paint,
+protect/recolor regions, layer imported logos, warp/mirror them, consult reference
+pictures and watch the encoded model preview update during strokes. Save layered
+`.pspret` projects or export a new PAC after exact model/alpha/allocation and
+serialized-size checks. No online service, AI model or new dependency is needed.
+The converter's existing geometry and texture paths are unchanged.
+
+If the release includes a verified overlay, it updates v0.27.1 to v0.28.0.
+Close the app and copy its `PSP-Model-Suite` contents into your current app folder,
+replacing files. Keep the existing runtime/libraries/sources/licenses alongside
+the executable. Retexture still needs supported native PSP PACs supplied by you.
+
+## Previous v0.27.1 hotfix
 
 Hotfix: [per-packet Q7/Q8 decoding](wwe13-wii-packet-scale-hotfix.md) corrects
 Undertaker's oversized floating thigh decorations and adds an independent
@@ -36,6 +51,7 @@ Accepted PAC baselines and main remain preserved.
 | Converter | Existing HCTP workflow, texture modes, PSP base preference, QA and Save As |
 | PSP Model Editor | PAC library, native inspection, editable folder export, PNG texture editing/repacking, five rest views, exact unchanged PAC copy |
 | Textures | Shared native texture browser, dimensions, encoded cost, palette/used-color counts, transparency preview; conversion settings remain in Converter |
+| Retexture | Offline layers, selections/protection, paint/recolor, logo transforms, UV guides, live encoded preview, editable projects and texture-only PAC export |
 | Quality Assurance | Textures / Model / Full PSP-base compatibility validation, verified repair copies, conversion reports |
 | Model Creator | Explicit development roadmap; assembly/export and asset libraries are not implemented |
 

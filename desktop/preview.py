@@ -8,10 +8,18 @@ from tools.texture_convert import read_gim
 
 VIEWS=('front-left','front','back','left','right')
 
-def render(model,textures,view='front-left',resolution=768,zoom=1.,*,gim_reader=read_gim):
+def render(model,textures,view='front-left',resolution=768,zoom=1.,*,gim_reader=read_gim,
+           rgba_textures=None,highlight_texture=None,yaw=None):
     points=np.array([v['position'] for m in model['meshes'] for v in m['vertices']])@AXES
-    cam=camera(points,view,resolution);cam.span/=zoom
-    rgba={name:colors[indices] for name,raw in textures.items() for indices,colors in [gim_reader(raw)]}
+    cam=camera(points,view,resolution)
+    if yaw is not None:
+        radians=np.deg2rad(float(yaw));cam.direction=np.array([np.sin(radians),0.,np.cos(radians)])
+        cam.right=np.cross(cam.up,cam.direction)
+        # Orbit uses one fixed, all-angle framing rather than rescaling each view.
+        extent=points.max(0)-points.min(0)
+        cam.span=max(float(np.hypot(extent[0],extent[2])),float(extent[1]))*1.18
+    cam.span/=zoom
+    rgba=rgba_textures if rgba_textures is not None else {name:colors[indices] for name,raw in textures.items() for indices,colors in [gim_reader(raw)]}
     pixels=np.full((resolution,resolution,3),72,dtype=np.uint8)
     depth=np.full((resolution,resolution),-np.inf)
     light=cam.direction+.45*cam.right+.7*cam.up;light/=np.linalg.norm(light)
@@ -43,9 +51,13 @@ def render(model,textures,view='front-left',resolution=768,zoom=1.,*,gim_reader=
                 normal=bary@ns[face];normal/=np.maximum(np.linalg.norm(normal,axis=-1,keepdims=True),1e-12)
                 shade=.4+.6*np.abs(normal@light)
                 color=np.clip(sample[:,:,:3]*vc[:,:,:3]*shade[:,:,None],0,255).astype(np.uint8)
+                if highlight_texture is not None and model['texture_names'][mat['texture_id']]!=highlight_texture:
+                    gray=color.mean(axis=-1,keepdims=True)*.35
+                    color=np.repeat(gray,3,axis=-1).astype(np.uint8)
                 target=pixels[lo[1]:hi[1]+1,lo[0]:hi[0]+1];target[take]=color[take];window[take]=zz[take]
     image=Image.fromarray(pixels);draw=ImageDraw.Draw(image)
-    draw.text((14,14),'PSP OUTPUT | '+view.replace('-',' ').upper(),fill='white')
+    label=view.replace('-',' ').upper()if yaw is None else 'LIVE ORBIT %.0f DEG'%float(yaw)
+    draw.text((14,14),'PSP OUTPUT | '+label,fill='white')
     draw.text((14,resolution-25),'Offline preview | game shading may differ',fill='white')
     return image
 

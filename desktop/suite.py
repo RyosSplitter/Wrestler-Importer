@@ -12,7 +12,7 @@ from PIL import Image, ImageTk
 from desktop.storage import data_dir, save_settings
 from desktop import VERSION
 
-TABS = ('Converter', 'PSP Model Editor', 'Textures', 'Quality Assurance', 'Model Creator')
+TABS = ('Converter', 'PSP Model Editor', 'Textures', 'Retexture', 'Quality Assurance', 'Model Creator')
 
 
 class SuiteShell:
@@ -49,6 +49,8 @@ class SuiteShell:
         self.converter = self.pages['Converter']
         self.build_editor()
         self.build_textures()
+        from desktop.retexture_ui import RetexturePanel
+        self.retexture=RetexturePanel(self,self.pages['Retexture'])
         self.build_qa()
         self.build_creator()
         remembered = app.settings.get('editor_pac_folder')
@@ -71,6 +73,7 @@ class SuiteShell:
         self.pack_button.pack(side='left', padx=(0,6))
         self.copy_button = self.button(toolbar, 'Save unchanged copy...', self.save_copy)
         self.copy_button.pack(side='left')
+        self.button(toolbar,'Retexture…',self.show_retexture).pack(side='left',padx=6)
         for button in (self.export_button, self.copy_button):
             button.configure(state='disabled')
         ttk.Label(page, textvariable=self.status, wraplength=880, padding=(10, 0, 10, 6)).pack(fill='x')
@@ -281,6 +284,7 @@ class SuiteShell:
                 for mesh in audit['mesh_reports']:
                     self.model_tree.insert(key, 'end', text=f"Mesh {mesh['mesh']}",
                         values=(mesh['vertices'], mesh['triangles'], str(mesh['vertex_stride'])+' B/vertex'))
+            self.model_tree.insert(key,'end',iid='retexture_'+str(model['index']),text='Retexture…',values=('','','Offline editor'))
         for row in manifest['textures']:
             self.texture_tree.insert('', 'end', iid=str(row['index']), text=f"{row['name']} / {row['section']}",
                 values=(f"{row['width']} × {row['height']}" if row.get('png') else 'Unsupported',
@@ -305,10 +309,22 @@ class SuiteShell:
         if not selected:
             return
         key = selected[0]
+        if key.startswith('retexture_'):
+            self.model_index=int(key.split('_')[1]);self.show_retexture();return
         while self.model_tree.parent(key):
             key = self.model_tree.parent(key)
         self.model_index = int(key.split('_')[1])
         self.show_preview()
+
+    def show_retexture(self):
+        if not self.manifest:
+            self.tabs.select(self.pages['Retexture']);return
+        try:
+            if self.retexture.use_workspace(self.manifest_path):
+                self.retexture.models.current(self.model_index)
+                self.retexture.changed(False)
+                self.tabs.select(self.pages['Retexture'])
+        except (ValueError,OSError)as exc:messagebox.showerror('Retexture',str(exc))
 
     def set_view(self, view):
         self.view = view
@@ -595,6 +611,7 @@ class SuiteShell:
 
     def close(self):
         self.closing = True
+        self.retexture.close()
         self.pending_source = None
         self.pac_browser.cancel_selection()
         if self.process is not None and self.process.poll() is None:

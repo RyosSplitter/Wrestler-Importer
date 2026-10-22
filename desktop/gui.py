@@ -389,6 +389,7 @@ class Application:
         if self.inspect_root is not None:shutil.rmtree(self.inspect_root,ignore_errors=True)
         self.inspect_root=None
     def close(self):
+        if self.suite and not self.suite.retexture.confirm_replace():return
         self.closing=True
         if self.suite:self.suite.close()
         if self.busy():self.cancel_job()
