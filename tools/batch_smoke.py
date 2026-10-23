@@ -45,6 +45,10 @@ def run(app, output, base):
          patch('tkinter.messagebox.showerror', side_effect=lambda title, message, **kw: errors.append((title, message))), \
          patch('tkinter.messagebox.askyesno', return_value=True):
         batch.base.set(str(Path(base).resolve()))
+        app.root.update()
+        for button in batch.view_buttons:
+            assert button.winfo_width() > 30
+            assert button.winfo_x() + button.winfo_width() <= button.master.winfo_width(), button.cget('text')
         batch.game.set(next(label for label, key in batch.formats.items() if key == 'wwe13-wii'))
         batch.update_options()
         app.root.update()

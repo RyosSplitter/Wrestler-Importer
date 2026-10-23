@@ -132,9 +132,16 @@ class BatchWindow:
         self.tree.bind('<<TreeviewSelect>>', lambda event: self.select())
         views = ttk.Frame(right)
         views.pack(fill='x')
+        self.view_buttons = []
         for title, view in [('¾', 'front-left'), ('Front', 'front'), ('Rear', 'back'), ('Left', 'left'), ('Right', 'right')]:
-            self.button(views, title, lambda v=view: self.set_view(v)).pack(side='left', padx=(0, 3))
-        self.button(views, 'Zoom', self.toggle_zoom).pack(side='right')
+            button = self.button(views, title, lambda v=view: self.set_view(v))
+            button.configure(width=5)
+            button.pack(side='left', padx=(0, 3))
+            self.view_buttons.append(button)
+        zoom = self.button(views, 'Zoom', self.toggle_zoom)
+        zoom.configure(width=5)
+        zoom.pack(side='right')
+        self.view_buttons.append(zoom)
         actions = ttk.Frame(right)
         actions.pack(side='bottom', fill='x', pady=(6, 0))
         self.save_button = self.button(actions, 'Save PAC As…', self.export)
