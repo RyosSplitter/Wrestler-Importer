@@ -160,6 +160,13 @@ def run_batch(request_path, entry, *, spawn=subprocess.Popen, pause=time.sleep):
                                error=failure.get('error') or f'Worker exited with code {code}; see its logs.')
             except Exception as exc:
                 row.update(state='cancelled' if cancel.exists() else 'skipped', error=str(exc))
+            finally:
+                # A progress/logging failure must not leave a live conversion
+                # behind when the queue advances to its next model.
+                if child is not None:
+                    (job / 'cancel').touch(exist_ok=True)
+                    child.wait()
+                    child = None
             state.update(current=None, percent=0)
             write_state(root / 'state.json', state)
         for row in state['items']:

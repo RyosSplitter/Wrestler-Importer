@@ -178,6 +178,25 @@ class BatchTests(unittest.TestCase):
         self.assertEqual(state['items'][0]['state'], 'skipped')
         self.assertIn('different costume', state['items'][0]['error'])
 
+    def test_monitor_failure_reaps_current_worker_before_advancing(self):
+        request = self.request([self.file('monitor-error.pac'), self.file('next.pac')])
+        stopped = []
+        def script(job, options):
+            if Path(options['source']).name == 'monitor-error.pac':
+                self.assertTrue((job / 'cancel').exists())
+                stopped.append(job)
+                return 2
+            self.assertEqual(len(stopped), 1)
+            return self.success(job, options)
+        spawn, calls = self.fake_spawn(script)
+        def pause(_):
+            if len(calls) == 1:
+                raise OSError('progress monitor unavailable')
+        run_batch(request, ['converter'], spawn=spawn, pause=pause)
+        state = json.loads(request.with_name('summary.json').read_text())
+        self.assertEqual([row['state'] for row in state['items']], ['skipped', 'succeeded'])
+        self.assertEqual(state['items'][0]['error'], 'progress monitor unavailable')
+
     def test_only_reviewed_success_can_save_and_all_batch_inputs_are_protected(self):
         first, second = self.file('a.pac'), self.file('b.pac')
         request = self.request([first, second])
