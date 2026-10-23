@@ -12,7 +12,7 @@ from desktop.batch import counts, load_result, plan_files, run_batch, save_revie
 class BatchTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
-        self.root = Path(self.temp.name)
+        self.root = Path(self.temp.name).resolve()
         self.addCleanup(self.temp.cleanup)
         self.base = self.file('base.pac')
 
