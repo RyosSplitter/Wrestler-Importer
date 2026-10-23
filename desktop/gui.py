@@ -29,6 +29,7 @@ class Application:
         x=max(0,(screen_w-width)//2);y=max(0,(screen_h-height)//2-20)
         self.root.geometry(f'{width}x{height}+{x}+{y}');self.root.minsize(940,640)
         self.settings=load_settings();self.source=None;self.process=None;self.result=None;self.saved=None;self.closing=False
+        self.batch_window=None
         from desktop.conversion_timer import ConversionTimer
         self.conversion_timer=ConversionTimer();self.timing_profile=None;self.event_rows=0
         self.timer_text=tk.StringVar(value=self.conversion_timer.text())
@@ -166,6 +167,7 @@ class Application:
         conversion_actions=ttk.Frame(preview_group);conversion_actions.pack(fill='x',pady=(0,8))
         self.convert=self.button(conversion_actions,'Convert',self.start,primary=True);self.convert.pack(side='left',padx=(0,6))
         self.cancel=self.button(conversion_actions,'Cancel',self.cancel_job);self.cancel.pack(side='left');self.cancel.configure(state='disabled')
+        self.button(conversion_actions,'Batch…',self.open_batch).pack(side='left',padx=6)
         ttk.Label(conversion_actions,text='Textured preview',style='Muted.TLabel').pack(side='right')
         # Pack the fixed view controls first so the preview receives only the
         # remaining space, keeping buttons accessible when the window shrinks.
@@ -191,6 +193,13 @@ class Application:
     def entry(self):return [sys.executable] if getattr(sys,'frozen',False) else [sys.executable,str(Path(__file__).resolve().parents[1]/'ps2psp_converter.py')]
     def spawn(self,args):return subprocess.Popen(self.entry()+args,creationflags=0x08000000 if os.name=='nt' else 0)
     def busy(self):return self.process is not None
+    def open_batch(self):
+        if self.batch_window is not None:
+            self.batch_window.top.lift();return
+        if self.busy() or self.inspector is not None or (self.suite and self.suite.busy()):
+            messagebox.showinfo('Batch Converter','Wait for the current job to finish.');return
+        from desktop.batch_ui import BatchWindow
+        self.batch_window=BatchWindow(self)
     def choose_source_format(self,key):
         if self.busy() or self.inspector is not None:return
         selected=next((f for f in FORMATS if f.key==key and f.supported),None)
@@ -381,7 +390,7 @@ class Application:
                             self.output.set(self.output.get()+f"\nMaximum Downgrade: {r['maximum_downgrade']['changed_textures']} textures reduced; model unchanged — open QA report")
                         self.save.configure(state='normal');self.status.set('Review the PSP preview and QA report before saving.');self.show_preview()
                 except Exception as e:self.finish_timer('failed');self.status.set('Worker ended unexpectedly; inspect Logs.');messagebox.showerror(NAME,str(e))
-        if self.closing and not self.busy() and self.inspector is None and not (self.suite and self.suite.busy()):self.clean_inspection();self.root.destroy();return
+        if self.closing and not self.busy() and self.inspector is None and not (self.suite and self.suite.busy()) and not (self.batch_window and self.batch_window.running()):self.clean_inspection();self.root.destroy();return
         self.root.after(200,self.poll)
     def finish_timer(self,status):
         trace=self.conversion_timer.finish(status);self.timer_text.set(self.conversion_timer.text())
@@ -424,6 +433,7 @@ class Application:
     def close(self):
         if self.suite and not self.suite.retexture.confirm_replace():return
         self.closing=True
+        if self.batch_window:self.batch_window.close()
         if self.suite:self.suite.close()
         if self.busy():self.cancel_job()
-        elif self.inspector is None and not (self.suite and self.suite.busy()):self.clean_inspection();self.root.destroy()
+        elif self.inspector is None and not (self.suite and self.suite.busy()) and not (self.batch_window and self.batch_window.running()):self.clean_inspection();self.root.destroy()

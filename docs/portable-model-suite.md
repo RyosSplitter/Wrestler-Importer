@@ -1,4 +1,21 @@
-# PSP Model Suite v0.28.3
+# PSP Model Suite v0.29.0
+
+Open **Converter → Batch…** to choose one source game and PSP base, add multiple
+source PACs and run a sequential queue. JBI/Wii archives expand into individual
+costumes. Unsupported or failed models are skipped with their exact errors;
+later models continue. At completion, the queue and Batch report show every
+success, skip and cancellation. Select a successful row for five views, zoom,
+QA and **Save PAC As…**. Each candidate uses the existing checked export path.
+Cancelling retains completed results. A per-model estimated countdown uses the
+existing timing history. See [batch conversion](batch-converter.md).
+
+Batch settings include the applicable texture modes and Wii role, geometry and
+seam protection. Per-model Priority Selection remains in the single converter.
+The verified overlay updates **v0.28.3 to v0.29.0**; close the app and copy the
+overlay's `PSP-Model-Suite` contents over that version. Use the complete app ZIP
+for a new installation or an older version.
+
+## Previous v0.28.3 clothing seams
 
 Adds **Protect clothing seams** under the Wii geometry settings. Enable it to
 retain extra source UV contacts on arms, torso and legs during reduction. It can

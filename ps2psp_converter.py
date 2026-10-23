@@ -27,6 +27,10 @@ def worker(job_path):
         dump(root/'failure.json',dict(error=str(exc),cancelled=cancelled,logs=str(root)));return 2 if cancelled else 1
 
 def main():
+    if len(sys.argv)>1 and sys.argv[1]=='--batch-worker':
+        from desktop.batch import run_batch
+        entry=[sys.executable] if getattr(sys,'frozen',False) else [sys.executable,str(Path(__file__).resolve())]
+        return run_batch(sys.argv[2],entry)
     if len(sys.argv)>1 and sys.argv[1]=='--suite-validate':
         from desktop.pac_validator import validate_pac
         from desktop.workspace import dump
@@ -125,6 +129,15 @@ def main():
             (Path(output).parent/'qa-error.log').write_text(traceback.format_exc(),encoding='utf-8');return 1
     from desktop.gui import Application
     app=Application(suite='--converter-only' not in sys.argv)
+    if len(sys.argv)>1 and sys.argv[1]=='--batch-smoke-test':
+        from tools.batch_smoke import run
+        try:run(app,sys.argv[2],sys.argv[3])
+        except Exception:
+            Path(sys.argv[2]).parent.mkdir(parents=True,exist_ok=True)
+            Path(sys.argv[2]).with_suffix('.error.log').write_text(traceback.format_exc(),encoding='utf-8')
+            return 1
+        finally:app.close()
+        return 0
     if len(sys.argv)>1 and sys.argv[1]=='--retexture-smoke-test':
         from tools.retexture_smoke import run
         try:run(app,sys.argv[2])
