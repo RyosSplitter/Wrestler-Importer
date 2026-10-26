@@ -15,6 +15,7 @@ import uuid
 from PIL import ImageTk
 
 from .core import MAX_BYTES, PARTS, POSES, VERSION, assemble, build, create_project, dump, load_source, preview, read_project
+from .parts import DEFAULT_WAIST, WAIST_RANGE
 from tools.psp_mesh_audit import audit_yobj
 
 
@@ -44,6 +45,19 @@ class App:
         for part in PARTS:
             ttk.Label(left,text=part).pack(anchor='w',pady=(3,0));v=tk.StringVar();self.choices[part]=v
             box=ttk.Combobox(left,textvariable=v,state='readonly',width=25);box.pack(fill='x');box.bind('<<ComboboxSelected>>',lambda _:self.dirty());self.controls.append(box)
+        self.waist_y=tk.DoubleVar(value=DEFAULT_WAIST)
+        self.show_waist=tk.BooleanVar(value=True)
+        heading=ttk.Frame(left);heading.pack(fill='x',pady=(8,0))
+        ttk.Label(heading,text='Torso cutoff').pack(side='left')
+        self.waist_reset=ttk.Button(heading,text='Reset',width=6,command=self.reset_waist)
+        self.waist_reset.pack(side='right')
+        ends=ttk.Frame(left);ends.pack(fill='x')
+        ttk.Label(ends,text='Higher').pack(side='left')
+        ttk.Label(ends,text='Lower').pack(side='right')
+        self.waist_slider=ttk.Scale(ends,from_=WAIST_RANGE[0],to=WAIST_RANGE[1],variable=self.waist_y,command=self.waist_changed)
+        self.waist_slider.pack(side='left',fill='x',expand=True,padx=3)
+        self.waist_guide_checkbox=ttk.Checkbutton(left,text='Show cut line (rest pose)',variable=self.show_waist,command=self.toggle_waist_guide)
+        self.waist_guide_checkbox.pack(anchor='w',pady=(3,0))
         self.max_textures=tk.BooleanVar(value=False)
         self.max_texture_checkbox=ttk.Checkbutton(left,text='Maximum texture downgrade',variable=self.max_textures,command=self.dirty)
         self.max_texture_checkbox.pack(anchor='w',pady=(8,0))
@@ -88,6 +102,16 @@ class App:
             except Exception:self.events.put(('error',traceback.format_exc()))
         threading.Thread(target=worker,daemon=True).start()
 
+    def waist_changed(self,*_):
+        self.dirty()
+
+    def reset_waist(self):
+        self.waist_y.set(DEFAULT_WAIST);self.dirty()
+
+    def toggle_waist_guide(self):
+        if self.model is None:self.dirty()
+        else:self.refresh()
+
     def poll(self):
         try:
             while True:
@@ -118,6 +142,7 @@ class App:
         from .library import Library
         try:
             choices=self.selected() if preserve and self.library is not None else dict.fromkeys(PARTS,0)
+            if not preserve:self.waist_y.set(DEFAULT_WAIST)
             self.library=Library(root);self.library_project=True;self.project=None;self.green.set(False)
             self.labels=[f'{i+1}. {e["label"]}' for i,e in enumerate(self.library.entries)]
             for part,box in zip(PARTS,self.controls):box['values']=self.labels;self.choices[part].set(self.labels[choices[part]])
@@ -193,6 +218,7 @@ class App:
         else:reader=read_project
         project,sources=reader(path);self.project=Path(path);self.labels=[s['label'] for s in sources]
         self.max_textures.set(project.get('maximum_textures') is True)
+        self.waist_y.set(project['waist_y'])
         # Include source numbers so even identical filenames are distinguishable.
         self.labels=[f'{i+1}. {label}' for i,label in enumerate(self.labels)]
         for part,box in zip(PARTS,self.controls):box['values']=self.labels;self.choices[part].set(self.labels[project['selections'][part]])
@@ -218,6 +244,7 @@ class App:
         revision=self.preview_revision;library_mode=self.library_project
         choices=self.selected();library=self.library;path=self.project
         view,pose,green=self.view,self.pose.get(),self.green.get()
+        waist_y=float(self.waist_y.get());guide=waist_y if self.show_waist.get() else None
         def work():
             if library_mode and library is not None:sources,selections=library.selection(choices)
             else:
@@ -225,12 +252,12 @@ class App:
                     from .library import read_project as project_reader
                 else:project_reader=read_project
                 _,sources=project_reader(path);selections=choices
-            raw,textures,_=assemble(sources,selections,library=library_mode)
+            raw,textures,_=assemble(sources,selections,library=library_mode,waist_y=waist_y)
             if library_mode:
                 from .native import audit_yobj as reader
             else:reader=audit_yobj
             model=reader(raw)
-            return model,textures,preview(model,textures,view,self.preview_size,pose,green)
+            return model,textures,preview(model,textures,view,self.preview_size,pose,green,waist_guide=guide)
         def done(result):
             if revision!=self.preview_revision:return
             self.model,self.textures,image=result;photo=ImageTk.PhotoImage(image)
@@ -245,12 +272,13 @@ class App:
             if parent:
                 from .library import create_project as snapshot
                 sources,selections=self.current_sources();path=snapshot(sources,selections,Path(parent)/('Creator-project-'+uuid.uuid4().hex[:8]))
-                data=json.loads(path.read_text(encoding='utf-8'));data['maximum_textures']=self.max_textures.get();dump(path,data)
+                data=json.loads(path.read_text(encoding='utf-8'));data['maximum_textures']=self.max_textures.get();data['waist_y']=float(self.waist_y.get());dump(path,data)
                 self.status.set('Saved independent snapshots and recipe: '+str(path))
             return
         if not self.project:return
         try:
             project,_=read_project(self.project);project['selections']=self.selected();project['maximum_textures']=self.max_textures.get()
+            project['waist_y']=float(self.waist_y.get())
             history=self.project.parent/'history';history.mkdir(exist_ok=True)
             shutil.copy2(self.project,history/(uuid.uuid4().hex+'.json'))
             temp=self.project.with_suffix('.new');dump(temp,project);temp.replace(self.project)
@@ -267,7 +295,7 @@ class App:
             from .library import create_project as snapshot
             parent=Path(os.environ.get('LOCALAPPDATA',Path.home()/'.local/share'))/'PSP Model Creator'/'jobs'/uuid.uuid4().hex
             project=snapshot(sources,selections,parent);output=parent/'build'
-            metadata=json.loads(project.read_text(encoding='utf-8'));metadata['maximum_textures']=maximum_textures;dump(project,metadata)
+            metadata=json.loads(project.read_text(encoding='utf-8'));metadata['maximum_textures']=maximum_textures;metadata['waist_y']=float(self.waist_y.get());dump(project,metadata)
         else:
             self.save();project=self.project;output=self.project.parent/'builds'/uuid.uuid4().hex
         def work():
@@ -297,9 +325,10 @@ class App:
                 self.refresh_after=self.root.after(150,retry)
             return
         model,textures,view,pose,green=self.model,self.textures,self.view,self.pose.get(),self.green.get()
+        guide=float(self.waist_y.get()) if self.show_waist.get() else None
         def done(image):
             photo=ImageTk.PhotoImage(image);self.picture.configure(image=photo,text='');self.picture.image=photo
-        self.task(lambda:preview(model,textures,view,self.preview_size,pose,green),done)
+        self.task(lambda:preview(model,textures,view,self.preview_size,pose,green,waist_guide=guide),done)
 
     def set_view(self,view):
         if not self.require_idle():return
@@ -312,6 +341,8 @@ class App:
             messagebox.showinfo('Selections changed','The preview uses your current choices. Assemble and validate this combination before exporting it. Your previous build is preserved.',parent=self.root);return False
         if bool(self.last_report.get('maximum_texture_downgrade'))!=self.max_textures.get():
             messagebox.showinfo('Texture option changed','Assemble and validate with the current texture option before exporting. The previous build is preserved.',parent=self.root);return False
+        if abs(self.last_report.get('waist_y',DEFAULT_WAIST)-float(self.waist_y.get()))>1e-7:
+            messagebox.showinfo('Torso cutoff changed','Assemble and validate with the current torso cutoff before exporting. The previous build is preserved.',parent=self.root);return False
         return True
 
     def export_pac(self):

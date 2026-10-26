@@ -84,6 +84,49 @@ def run_library(app,output):
     dump(output,report)
     run_donor_import(app,output)
     run_creator030(app,output)
+    run_waistline(app,output)
+
+
+def run_waistline(app,output):
+    import json
+    from unittest.mock import patch
+    from .parts import DEFAULT_WAIST
+    from .core import read_project
+    def wait():
+        deadline=time.monotonic()+120
+        while (app.preview_after is not None or app.busy) and time.monotonic()<deadline:
+            app.root.update();time.sleep(.02)
+        if app.model is None or app.busy:raise ValueError('Waistline preview did not complete: '+getattr(app,'last_error',''))
+    with tempfile.TemporaryDirectory(prefix='creator-waistline-') as temporary:
+        root=Path(temporary)
+        paths=[root/'First.pac',root/'Second.pac']
+        for path,data in zip(paths,pair()):path.write_bytes(data)
+        project=create_project(*paths,root/'Project');app.load(project)
+        app.choices['Legs'].set(app.labels[1]);app.pose.set('rest');app.dirty();wait()
+        if abs(app.waist_y.get()-DEFAULT_WAIST)>1e-7:raise ValueError('New projects did not use the waistband default')
+        app.waist_slider.set(-2.65);wait()
+        app.assemble();wait()
+        if app.result is None or abs(app.last_report['waist_y']+2.65)>1e-7:raise ValueError('Export ignored the chosen waistline')
+        seam=next(r for r in app.last_report['seams'] if r['joint']=='waist')
+        if abs(seam['limit']+2.65)>1e-7:raise ValueError('Seam QA used a different cut plane')
+        app.waist_slider.set(-1.8);wait()
+        with patch('model_creator.gui.messagebox.showinfo'):
+            if app.require_result():raise ValueError('Cutoff change allowed stale export')
+        app.save()
+        if abs(read_project(project)[0]['waist_y']+1.8)>1e-7:raise ValueError('Saved choices lost the cut height')
+        app.load(project);wait()
+        if abs(app.waist_y.get()+1.8)>1e-7:raise ValueError('Project reload lost the cut height')
+        app.waist_reset.invoke();wait()
+        if abs(app.waist_y.get()-DEFAULT_WAIST)>1e-7:raise ValueError('Waist reset failed')
+        from PIL import ImageGrab
+        app.root.update();x,y=app.root.winfo_rootx(),app.root.winfo_rooty();w,h=app.root.winfo_width(),app.root.winfo_height()
+        for widget in (app.waist_slider,app.waist_reset,app.waist_guide_checkbox,app.assemble_button):
+            if not widget.winfo_ismapped() or widget.winfo_height()<15 or widget.winfo_rooty()+widget.winfo_height()>y+h:raise ValueError('Torso cutoff controls clipped')
+        ImageGrab.grab(bbox=(x,y,x+w,y+h)).save(output.with_name('creator-waistline-window.png'))
+        report=json.loads(output.read_text());report.update(waistband_default=True,live_waistline_adjustment=True,
+            configured_waistline_export_and_qa=True,cutoff_stale_export_blocked=True,
+            waistline_project_roundtrip=True,waistline_reset=True,waistline_controls_visible=True)
+        dump(output,report)
 
 
 def run_creator030(app,output):

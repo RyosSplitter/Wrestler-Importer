@@ -1,4 +1,4 @@
-> Version 0.2 adds a prepared 31-model library. See [creator-library-02.md](creator-library-02.md) for current usage, supported native groups and compatibility limits. The original 0.1 pair study below is retained as development evidence.
+> Current creator: [0.3.1 waistband cutoff](creator-031.md), including a live torso-height slider and saved cut settings. [0.3](creator-030.md) added donor binds and texture rescue; [0.2](creator-library-02.md) added the prepared 31-model library. The original 0.1 pair study below is retained as development evidence.
 
 # PSP Model Creator 0.1 — standalone experimental application
 

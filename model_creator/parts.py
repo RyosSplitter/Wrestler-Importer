@@ -13,9 +13,19 @@ import numpy as np
 
 PARTS = ('Head', 'Torso', 'Arms', 'Legs')
 # Native PSP coordinates: negative Y is up. Cuts lie at neck, upper arms, waist.
-JOINTS = {'neck': (1, -6.8), 'waist': (1, -1.3),
+DEFAULT_WAIST = -2.2
+LEGACY_WAIST = -1.3
+WAIST_RANGE = (-3.5, -1.0)
+JOINTS = {'neck': (1, -6.8), 'waist': (1, DEFAULT_WAIST),
           'left_arm': (0, 3.15), 'right_arm': (0, -3.15)}
 EPS = 2e-6
+
+
+def cut_planes(waist_y=None):
+    value = DEFAULT_WAIST if waist_y is None else waist_y
+    if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value) or not WAIST_RANGE[0] <= value <= WAIST_RANGE[1]:
+        raise ValueError('Torso cutoff is outside the supported waistline range.')
+    return dict(JOINTS, waist=(1, float(value)))
 
 
 def mix(a, b, t):
@@ -34,14 +44,18 @@ def clip(poly, axis, limit, sign):
     return result
 
 
-def extract(model, part, canonical_names):
+def extract(model, part, canonical_names, *, planes=None):
+    planes = JOINTS if planes is None else planes
+    neck = planes['neck'][1]
+    waist = planes['waist'][1]
+    left, right = planes['left_arm'][1], planes['right_arm'][1]
     remap = [canonical_names.index(b['name']) for b in model['bones']]
     conditions = {
-        'Head': [[(1, -6.8, -1)]],
-        'Torso': [[(1, -6.8, 1), (1, -1.3, -1), (0, 3.15, -1), (0, -3.15, 1)]],
-        'Arms': [[(0, 3.15, 1), (1, -6.8, 1), (1, -1.3, -1)],
-                 [(0, -3.15, -1), (1, -6.8, 1), (1, -1.3, -1)]],
-        'Legs': [[(1, -1.3, 1)]],
+        'Head': [[(1, neck, -1)]],
+        'Torso': [[(1, neck, 1), (1, waist, -1), (0, left, -1), (0, right, 1)]],
+        'Arms': [[(0, left, 1), (1, neck, 1), (1, waist, -1)],
+                 [(0, right, -1), (1, neck, 1), (1, waist, -1)]],
+        'Legs': [[(1, waist, 1)]],
     }[part]
     records = []
     for mesh in model['meshes']:
@@ -59,7 +73,7 @@ def extract(model, part, canonical_names):
             if decoration:
                 used=sorted(set(i for t in mat['triangles'] for i in t))
                 center=np.mean([vertices[i]['p'] for i in used],axis=0)
-                owner='Head' if 'hair' in texture or center[1]<JOINTS['neck'][1] else 'Torso'
+                owner='Head' if 'hair' in texture or center[1]<neck else 'Torso'
                 if owner!=part:continue
             for ti, tri in enumerate(mat['triangles']):
                 for planes in ([[]] if decoration else conditions):
@@ -73,8 +87,8 @@ def extract(model, part, canonical_names):
     return records
 
 
-def edges(records, joint, ordinary_only=False):
-    axis, limit = JOINTS[joint]
+def edges(records, joint, ordinary_only=False, *, planes=None):
+    axis, limit = (JOINTS if planes is None else planes)[joint]
     result = []
     for row in records:
         if row['overlay']:continue
@@ -94,10 +108,10 @@ def angle_delta(a, b):
     return (b-a+math.pi) % (2*math.pi)-math.pi
 
 
-def seam_reference(records, joint):
-    edge = edges(records, joint, True)
+def seam_reference(records, joint, *, planes=None):
+    edge = edges(records, joint, True, planes=planes)
     if not edge:raise ValueError('Missing ordinary attachment contour: '+joint)
-    axis, limit = JOINTS[joint]
+    axis, limit = (JOINTS if planes is None else planes)[joint]
     points = np.unique(np.round([v['p'] for e in edge for v in e], 6), axis=0)
     center = np.delete(points, axis, axis=1).mean(0)
     def sample(angle):
@@ -117,14 +131,15 @@ def seam_reference(records, joint):
     return axis, limit, center, sample
 
 
-def stitch(selected, torso_reference, joints=None):
+def stitch(selected, torso_reference, joints=None, *, planes=None):
+    planes = JOINTS if planes is None else planes
     changes = []
-    for joint in (JOINTS if joints is None else joints):
-        axis, limit, center, sample = seam_reference(torso_reference, joint)
+    for joint in (planes if joints is None else joints):
+        axis, limit, center, sample = seam_reference(torso_reference, joint, planes=planes)
         touching = [('Torso', selected['Torso']),
                     ('Head' if joint=='neck' else 'Legs' if joint=='waist' else 'Arms',
                      selected['Head' if joint=='neck' else 'Legs' if joint=='waist' else 'Arms'])]
-        angles = sorted(set(round(angular(v, axis, center), 9) for _, rows in touching for a,b in edges(rows, joint) for v in (a,b)))
+        angles = sorted(set(round(angular(v, axis, center), 9) for _, rows in touching for a,b in edges(rows, joint, planes=planes) for v in (a,b)))
         before, after, max_displacement = [], [], 0.
         internal_records=0
         for part, rows in touching:
@@ -165,17 +180,17 @@ def stitch(selected, torso_reference, joints=None):
                         if not poly or np.linalg.norm(poly[-1]['p']-v['p'])>1e-8:poly.append(v)
                 if len(poly)>1 and np.linalg.norm(poly[0]['p']-poly[-1]['p'])<1e-8:poly.pop()
                 row['poly']=poly
-        changes.append(dict(joint=joint, angular_samples=len(angles), changed_seam_records=len(after),
+        changes.append(dict(joint=joint, axis=axis, limit=limit, angular_samples=len(angles), changed_seam_records=len(after),
                             maximum_displacement=max_displacement, unstitched_internal_records=internal_records,
                             before=before, after=after))
     return changes
 
 
-def triangles(poly):
+def triangles(poly, *, planes=None):
     # A cut triangle has one boundary chain in the attachment plane. Fan from
     # an off-plane source/intersection vertex, preserving every seam edge split.
     # Fan triangles retain the original polygon order and therefore winding.
-    anchor=next((i for i,v in enumerate(poly) if all(abs(v['p'][axis]-limit)>EPS for axis,limit in JOINTS.values())),0)
+    anchor=next((i for i,v in enumerate(poly) if all(abs(v['p'][axis]-limit)>EPS for axis,limit in (JOINTS if planes is None else planes).values())),0)
     order=list(range(anchor,len(poly)))+list(range(anchor))
     result=[]
     for j in range(1,len(order)-1):

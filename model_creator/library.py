@@ -17,6 +17,7 @@ import uuid
 import numpy as np
 
 from .core import PARTS, VERSION, digest, dump, load_source
+from .parts import DEFAULT_WAIST, LEGACY_WAIST, cut_planes
 from tools.weight_trial_review import descendant_names
 
 SCHEMA='psp-model-creator.library-project/1'
@@ -170,13 +171,14 @@ def compatible(sources,selections):
 
 
 
-def skeleton(sources,selections):
+def skeleton(sources,selections,*,waist_y=None):
     base=copy.deepcopy(sources[selections['Torso']]['model'])
     names=list(dict.fromkeys(b['name'] for s in sources for b in s['model']['bones']))
     head=sources[selections['Head']]['model'];facial=descendant_names(head,'atama')
     # Extra controllers belong to the geometry they actually influence. Names
     # such as "kami" are not sufficient evidence that a controller is for hair.
-    from .parts import extract, JOINTS
+    from .parts import extract, cut_planes
+    planes=cut_planes(waist_y)
     active={name:set() for name in names}
     preserved={}
     for part in PARTS:
@@ -184,11 +186,11 @@ def skeleton(sources,selections):
         source_bones=sources[si]['model']['bones']
         by_name={b['name']:b for b in source_bones}
         used=set()
-        for row in extract(sources[si]['model'],part,names):
+        for row in extract(sources[si]['model'],part,names,planes=planes):
             for vertex in row['poly']:
                 used.update(names[b] for b in np.flatnonzero(vertex['w']>0))
                 tag=vertex['tag']
-                if abs(tag[1]-tag[0]**2)<1e-8 and all(abs(vertex['p'][axis]-limit)>2e-6 for axis,limit in JOINTS.values()):
+                if abs(tag[1]-tag[0]**2)<1e-8 and all(abs(vertex['p'][axis]-limit)>2e-6 for axis,limit in planes.values()):
                     preserved[(si,row['mesh'],int(round(tag[0])))]=(si,vertex['p'],vertex['w'])
         for name in used:
             b=by_name[name]
@@ -235,7 +237,7 @@ def create_project(sources,selections,output):
     for i,s in enumerate(sources):
         filename=f'source-{i}.pac';(output/filename).write_bytes(s['data'])
         rows.append(dict(file=filename,label=s['label'],sha256=s['sha256']))
-    dump(output/'project.json',dict(schema=SCHEMA,version=VERSION,sources=rows,selections=selections))
+    dump(output/'project.json',dict(schema=SCHEMA,version=VERSION,sources=rows,selections=selections,waist_y=DEFAULT_WAIST))
     return output/'project.json'
 
 
@@ -243,6 +245,8 @@ def read_project(path):
     path=Path(path);project=json.loads(path.read_text(encoding='utf-8'))
     rows=project.get('sources',[]);choices=project.get('selections',{})
     if project.get('schema')!=SCHEMA or not 1<=len(rows)<=4:raise ValueError('Unsupported library project')
+    project.setdefault('waist_y',LEGACY_WAIST)
+    cut_planes(project['waist_y'])
     if set(choices)!=set(PARTS) or any(type(v)!=int or not 0<=v<len(rows) for v in choices.values()):raise ValueError('Invalid part selections')
     sources=[]
     for i,row in enumerate(rows):

@@ -20,9 +20,9 @@ from tools.psp_mesh_merge_trial import sections, write_preview
 from tools.stripify import stripify, join_strips
 from tools.weight_trial_review import descendant_names, deform
 from tools.prepare_model import bone_matrices
-from model_creator.parts import PARTS, JOINTS, extract, stitch, triangles
+from model_creator.parts import PARTS, JOINTS, DEFAULT_WAIST, LEGACY_WAIST, cut_planes, extract, stitch, triangles
 
-VERSION = '0.3.0'
+VERSION = '0.3.1'
 SCHEMA = 'psp-model-creator/1'
 MAX_BYTES = IN_RING_MAX_PAC_BYTES
 POSES = {'rest': {}, 'standing': {'l_ninoude': ('z',70), 'r_ninoude': ('z',-70)},
@@ -98,7 +98,7 @@ def create_project(first, second, output):
     output.mkdir(parents=True)
     for i,source in enumerate((a,b)):(output/f'source-{i}.pac').write_bytes(source['data'])
     project=dict(schema=SCHEMA, version=VERSION, sources=[dict(file=f'source-{i}.pac',sha256=s['sha256'],label=s['label']) for i,s in enumerate((a,b))],
-                 selections={p:0 for p in PARTS}, compatibility=review)
+                 selections={p:0 for p in PARTS}, compatibility=review,waist_y=DEFAULT_WAIST)
     dump(output/'project.json',project)
     return str(output/'project.json')
 
@@ -106,6 +106,8 @@ def create_project(first, second, output):
 def read_project(path):
     path=Path(path);project=json.loads(path.read_text(encoding='utf-8'))
     if project.get('schema')!=SCHEMA or len(project.get('sources',[]))!=2:raise ValueError('Unsupported creator project.')
+    project.setdefault('waist_y',LEGACY_WAIST)
+    cut_planes(project['waist_y'])
     choices=project.get('selections',{})
     if set(choices)!=set(PARTS) or any(type(v)!=int or v not in (0,1) for v in choices.values()):raise ValueError('Invalid saved part selections.')
     sources=[]
@@ -135,7 +137,8 @@ def skeleton(sources, selections):
     return base,names
 
 
-def assemble(sources, selections, *, library=False):
+def assemble(sources, selections, *, library=False, waist_y=None):
+    planes=cut_planes(waist_y)
     reader=audit_yobj
     if library:
         from .native import audit_yobj as reader
@@ -145,15 +148,15 @@ def assemble(sources, selections, *, library=False):
     else:compatible(*sources)
     if len(set(selections.values()))==1:
         s=sources[selections['Head']]
-        return s['sections'][2],{n:s['textures'][n.casefold()] for n in s['model']['texture_names']},dict(mode='Original native model',seams=[],sources=[s['sha256']],geometry_unchanged=True)
-    base,names=(library_skeleton(sources,selections) if library else skeleton(sources,selections))
-    selected={part:extract(sources[selections[part]]['model'],part,names) for part in PARTS}
-    reference=extract(sources[selections['Torso']]['model'],'Torso',names)
+        return s['sections'][2],{n:s['textures'][n.casefold()] for n in s['model']['texture_names']},dict(mode='Original native model',seams=[],sources=[s['sha256']],geometry_unchanged=True,waist_y=planes['waist'][1])
+    base,names=(library_skeleton(sources,selections,waist_y=planes['waist'][1]) if library else skeleton(sources,selections))
+    selected={part:extract(sources[selections[part]]['model'],part,names,planes=planes) for part in PARTS}
+    reference=extract(sources[selections['Torso']]['model'],'Torso',names,planes=planes)
     joints=[]
     if selections['Head']!=selections['Torso']:joints.append('neck')
     if selections['Legs']!=selections['Torso']:joints.append('waist')
     if selections['Arms']!=selections['Torso']:joints+=['left_arm','right_arm']
-    seams=stitch(selected,reference,joints)
+    seams=stitch(selected,reference,joints,planes=planes)
     if max(s['maximum_displacement'] for s in seams)>1.0:raise ValueError('Attachment mismatch exceeds the prepared-pair tolerance; export withheld.')
     meshes=[];texture_names=[];textures={};provenance=[];interior_checks=[]
     # Stable source-part/material draw order; no merging across source boundaries.
@@ -163,7 +166,7 @@ def assemble(sources, selections, *, library=False):
         rows.sort(key=lambda r:(r['mesh'],r['material'],r['triangle'],PARTS.index(r['part'])))
         buckets=[]
         for row in rows:
-            for tri in triangles(row['poly']):
+            for tri in triangles(row['poly'],planes=planes):
                 vs=[row['poly'][i] for i in tri]
                 bones=set(int(i) for v in vs for i in np.flatnonzero(v['w']>0))
                 if len(bones)>8:raise ValueError('Attachment requires more than eight bone slots.')
@@ -198,7 +201,7 @@ def assemble(sources, selections, *, library=False):
                         w=v['w'][palette]
                         vertices.append(dict(position=v['p'].tolist(),normal=n.tolist(),uv=v['uv'].tolist(),
                                              color=np.clip(np.rint(v['c']),0,255).astype(int).tolist(),weights=w.tolist()))
-                        if original_record and all(abs(v['p'][axis]-limit)>2e-6 for axis,limit in JOINTS.values()):
+                        if original_record and all(abs(v['p'][axis]-limit)>2e-6 for axis,limit in planes.values()):
                             interior_checks.append((len(meshes),len(vertices)-1,source_id,mesh_id,int(round(v['tag'][0]))))
                     face.append(lookup[key])
                 indices.append(face)
@@ -294,7 +297,7 @@ def assemble(sources, selections, *, library=False):
         from .native import restore_descriptors
         raw=restore_descriptors(raw,descriptor_records,descriptor_sizes)
     native=reader(raw)
-    return raw,textures,dict(mode='Prepared-pair stitched assembly',seams=seams,provenance=provenance,
+    return raw,textures,dict(mode='Prepared-pair stitched assembly',seams=seams,provenance=provenance,waist_y=planes['waist'][1],
         lossless_buffer_groups=groups,lossless_buffer_validation=merge_validation,
         single_slot_compatibility=slot_compatibility,
         interior_source_records_verified=len(interior_checks),interior_pose_comparison=pose_regressions,local_axis_interior_pose_comparison=local_pose_regressions,
@@ -334,7 +337,7 @@ def qa(raw, report, *, library=False):
     # can legitimately have different source weights and are not welded.
     seam_groups={}
     for joint in report['seams']:
-        axis,limit=JOINTS[joint['joint']]
+        axis,limit=joint.get('axis',JOINTS[joint['joint']][0]),joint.get('limit',JOINTS[joint['joint']][1])
         for i in np.flatnonzero(np.abs(p[:,axis]-limit)<2e-6):
             seam_groups.setdefault(tuple(np.round(p[i],5)),[]).append(int(i))
     for name,controls in POSES.items():
@@ -357,7 +360,7 @@ def qa(raw, report, *, library=False):
                 runtime_status='Experimental: PPSSPP import and animation testing still required.')
 
 
-def preview(model,textures,view='front-left',resolution=640,pose='rest',green=False):
+def preview(model,textures,view='front-left',resolution=640,pose='rest',green=False,*,waist_guide=None):
     shown=posed_model(model,pose)
     for mesh in shown['meshes']:
         mesh['materials']=[m for m in mesh['materials'] if 'blood' not in model['texture_names'][m['texture_id']].casefold()]
@@ -365,7 +368,11 @@ def preview(model,textures,view='front-left',resolution=640,pose='rest',green=Fa
         from desktop.texture_optimizer.candidates import write_gim
         c=np.zeros((16,4),np.uint8);c[:,3]=255;c[0,:3]=(80,180,115)
         raw=write_gim(np.zeros((8,32),np.uint8),c,4);textures={name:raw for name in model['texture_names']}
-    return render(shown,textures,view,resolution,gim_reader=read_gim)
+    image=render(shown,textures,view,resolution,gim_reader=read_gim)
+    if waist_guide is not None and pose=='rest':
+        from .waist import draw_guide
+        image=draw_guide(image,shown,view,waist_guide)
+    return image
 
 
 def build(project_path, selections, output, *, resolution=640, progress=lambda _:None, library=False, allow_oversize=False, maximum_textures=False):
@@ -377,7 +384,8 @@ def build(project_path, selections, output, *, resolution=640, progress=lambda _
     project,sources=project_reader(project_path);output=Path(output)
     if output.exists():raise FileExistsError('Output directory already exists; previous versions are preserved.')
     progress('Assembling native parts and attachment seams')
-    raw,textures,report=assemble(sources,selections,library=library)
+    raw,textures,report=assemble(sources,selections,library=library,waist_y=project['waist_y'])
+    report['waist_y']=project['waist_y']
     progress('Checking native buffers, bone palettes and analytical poses')
     report['qa']=qa(raw,report,library=library);model=reader(raw)
     # Source 0 is the explicit output-container template for mixed assemblies.

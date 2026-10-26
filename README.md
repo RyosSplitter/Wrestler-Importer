@@ -1,5 +1,8 @@
 # Wrestler Importer
 
+The separate **PSP Model Creator 0.3.1** adds a [waistband torso cutoff](docs/creator-031.md)
+with live height adjustment, a rest-pose guide and saved cut settings.
+
 The current **v0.29.0** preview adds [batch conversion](docs/batch-converter.md):
 choose one source game, add multiple PACs, continue past unsupported models,
 then preview and save successful outputs. Archives expand into costume rows,
