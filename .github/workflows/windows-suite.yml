@@ -1,7 +1,7 @@
 name: Build PSP Model Suite preview
 on:
   push:
-    branches: [feature/wwe13-wii-app-preview, feature/offline-retexture-editor, feature/conversion-countdown, feature/wwe13-road-dogg, feature/wii-clothing-seams, feature/batch-converter]
+    branches: [feature/wwe13-wii-app-preview, feature/offline-retexture-editor, feature/conversion-countdown, feature/wwe13-road-dogg, feature/wii-clothing-seams, feature/batch-converter, feature/export-seam-checks]
   workflow_dispatch:
 permissions:
   contents: write
@@ -37,6 +37,37 @@ jobs:
           if ($p.ExitCode -ne 0) { throw 'Existing converter GUI/runtime smoke failed' }
           Copy-Item $output dist/converter-smoke.json
           Copy-Item ([System.IO.Path]::ChangeExtension($output,'png')) dist/converter-smoke.png
+      - name: Frozen HCTP conversion and final source-linked seam QA
+        timeout-minutes: 15
+        shell: python
+        run: |
+          import os,sys,json,zipfile,subprocess,hashlib
+          from pathlib import Path
+          sys.path.insert(0,str(Path.cwd()))
+          from tools.portable_fixture import create
+          folder=Path(os.environ['RUNNER_TEMP'])/'hctp-seams-smoke';folder.mkdir()
+          with zipfile.ZipFile('downloads/Jericho-QA-facial-weights-experiment.zip') as archive:
+              source_model=json.loads(archive.read('trial/input-source-weighted.json'))
+          source=folder/'modified-source.pac';create(source_model,source)
+          base=Path('assets/Kurt-Angle-Ring.PAC').resolve()
+          inputs={str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in (source,base)}
+          (folder/'request.json').write_text(json.dumps(dict(source=str(source),base=str(base),source_format='hctp')),encoding='utf-8')
+          env=dict(os.environ);env['PATH']=os.environ['SystemRoot']+'\\System32;'+os.environ['SystemRoot']
+          child=subprocess.run(['dist/PSP-Model-Suite/PSP-Model-Suite.exe','--worker',str(folder/'request.json')],env=env,timeout=800)
+          if child.returncode:
+              print((folder/'error.log').read_text(encoding='utf-8'))
+              raise RuntimeError('Frozen HCTP conversion failed')
+          result=json.loads((folder/'success.json').read_text(encoding='utf-8'))
+          seams=json.loads(Path(result['export_seams']['report']).read_text(encoding='utf-8'))
+          assert seams['poses_checked']>=15 and seams['matched_contact_locations']>0
+          assert 'seam-wrist-flex' in seams['poses'] and 'seam-knee-flex' in seams['poses']
+          assert result['review_flags']>=seams['review_findings']
+          assert 'Export seam checks' in Path(result['report']).read_text(encoding='utf-8')
+          assert result['sha256']==hashlib.sha256(Path(result['pac']).read_bytes()).hexdigest()
+          assert inputs=={p:hashlib.sha256(Path(p).read_bytes()).hexdigest() for p in inputs}
+          Path('dist/hctp-seams-smoke.json').write_text(json.dumps(dict(status='pass',final_export_seams=True,
+              poses_checked=seams['poses_checked'],matched_contacts=seams['matched_contact_locations'],
+              findings=seams['review_findings'],input_hashes_unchanged=True,final_pac_sha256=result['sha256']),indent=2),encoding='utf-8')
       - name: Frozen suite folder browsing, editable export, PNG import, PAC round trips and validator
         shell: pwsh
         run: |
@@ -114,9 +145,9 @@ jobs:
         run: |
           import hashlib,shutil
           from pathlib import Path
-          path=Path(shutil.make_archive('dist/PSP-Model-Suite-v0.29.0-Windows-x64','zip','dist','PSP-Model-Suite'))
+          path=Path(shutil.make_archive('dist/PSP-Model-Suite-v0.29.1-Windows-x64','zip','dist','PSP-Model-Suite'))
           Path(str(path)+'.sha256').write_text(hashlib.file_digest(path.open('rb'),'sha256').hexdigest()+'  '+path.name+'\n')
-      - name: Build optional verified overlay update from the published v0.28.3 app
+      - name: Build optional verified overlay update from the published v0.29.0 app
         shell: python
         env:
           GH_TOKEN: ${{ github.token }}
@@ -127,12 +158,12 @@ jobs:
           # `python -m` from the checkout. Make this import path explicit.
           sys.path.insert(0,str(Path.cwd()))
           folder=Path('build/previous-release');folder.mkdir(parents=True,exist_ok=True)
-          previous=folder/'PSP-Model-Suite-v0.28.3-Windows-x64.zip'
-          output=Path('dist/PSP-Model-Suite-v0.28.3-to-v0.29.0-Update.zip')
+          previous=folder/'PSP-Model-Suite-v0.29.0-Windows-x64.zip'
+          output=Path('dist/PSP-Model-Suite-v0.29.0-to-v0.29.1-Update.zip')
           try:
               from tools.build_suite_update import build
-              subprocess.run(['gh','release','download','suite-wii-seams-17-cfb1b1b6ef6f794dd0e306d6087307c0bc0058fb','--repo','RyosSplitter/Wrestler-Importer','--pattern',previous.name,'--dir',str(folder)],check=True)
-              report=build(previous,'dist/PSP-Model-Suite',output,'3364f4b2bf0449641eb3188d138180f068ed70e8f20f37bead2cedf8b3173a25',from_version='0.28.3',to_version='0.29.0')
+              subprocess.run(['gh','release','download','suite-batch-21-7760bbea39117568817b0dbd45104ec74be9f8cf','--repo','RyosSplitter/Wrestler-Importer','--pattern',previous.name,'--dir',str(folder)],check=True)
+              report=build(previous,'dist/PSP-Model-Suite',output,'e65bee54094b76ffb9d7506b4d1b2c7ddf5cc2406a9787573039a4292be602a6',from_version='0.29.0',to_version='0.29.1')
               print('Verified overlay bytes:',report['zip_bytes'],'changed files:',len(report['changed_files']))
               report['status']='pass'
           except Exception as exc:
@@ -143,19 +174,19 @@ jobs:
           Path('dist/update-smoke.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
       - uses: actions/upload-artifact@v4
         with:
-          name: PSP-Model-Suite-v0.29.0-Windows-x64
+          name: PSP-Model-Suite-v0.29.1-Windows-x64
           path: |
             dist/*.zip
             dist/*.sha256
             dist/*.png
             dist/*smoke.json
-      - name: Publish batch converter suite preview
+      - name: Publish export seam checks suite preview
         shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           @'
-          PSP Model Suite v0.29.0 adds Converter > Batch: select HCTP, JBI or experimental WWE '13 Wii, add multiple PACs, and convert sequentially with the existing worker and validation gates. Archives expand into individual costumes. Unsupported models and worker failures are skipped with an end-of-batch report, while later models continue. Select successful results for five preview views, zoom, individual QA reports and checked Save PAC As. Cancellation retains completed candidates. Includes per-model estimated countdowns, source/PSP-base protection across the whole batch, and existing texture/Wii geometry/seam settings. Per-model texture priorities remain in the single converter. Frozen Windows smoke exercises conversion failures followed by success, malformed files, archive entries, separate previews and UI exports, cancellation and unchanged inputs alongside all prior converter/editor/Retexture/JBI/Wii checks. Windows 10/11 x64 with bundled Blender/sources/licenses; no game assets. Includes a verified v0.28.3-to-v0.29.0 overlay when manifest checks pass plus the complete portable app. Experimental outputs still need visual and PPSSPP review. Main and accepted PAC baselines remain unchanged.
+          PSP Model Suite v0.29.1 adds stronger read-only seam checks on final HCTP, JBI and experimental Wii exports, including batch conversions. Checks include same-texture UV islands, edge interiors, source-relative local contact gaps and wrist/forearm/knee stress. Unmatched or ambiguous correspondence is explicitly reported. Results and Save warnings show seam counts; QA includes per-pose measurements, worst locations and bounded HCTP/Wii close-ups. Each JBI model/accessory is checked independently against its prepared source. Existing geometry, UVs, textures, weights, native gates and budgets are preserved. Retains batch recovery/previews/checked Save As, offline Retexture, countdowns and Wii clothing protection. Frozen Windows JBI/Wii/batch smoke requires the final audit and visible coverage summaries. Full Windows x64 portable ZIP with bundled runtime/sources/licenses, no game assets. A v0.29.0-to-v0.29.1 overlay is included only when its strict manifest checks pass. Review findings are diagnostic; texture-color continuity and actual gameplay still require visual/PPSSPP review.
           '@ | Set-Content "$env:RUNNER_TEMP/suite-release-notes.txt" -Encoding utf8NoBOM
-          $tag = "suite-batch-${{ github.run_number }}-${{ github.sha }}"
-          gh release create $tag dist/*.zip dist/*.sha256 dist/*.png dist/*smoke.json --target '${{ github.sha }}' --prerelease --title 'PSP Model Suite v0.29.0 — Batch conversion and preview' --notes-file "$env:RUNNER_TEMP/suite-release-notes.txt"
+          $tag = "suite-seams-${{ github.run_number }}-${{ github.sha }}"
+          gh release create $tag dist/*.zip dist/*.sha256 dist/*.png dist/*smoke.json --target '${{ github.sha }}' --prerelease --title 'PSP Model Suite v0.29.1 — Stronger export seam checks' --notes-file "$env:RUNNER_TEMP/suite-release-notes.txt"

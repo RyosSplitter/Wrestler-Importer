@@ -61,6 +61,11 @@ def run(app,output,base):
             assert result['bytes']==len(raw)<=IN_RING_MAX_PAC_BYTES
             validate_pac(raw,gim_reader=read_gim)
             assert Path(result['report']).is_file()
+            seams=json.loads(Path(result['export_seams']['report']).read_text(encoding='utf-8'))
+            assert set(seams['models'])=={'2','26','27'}
+            assert all(s['poses_checked']>=15 for s in seams['models'].values())
+            assert result['review_flags']>=seams['review_findings']
+            assert 'Seams:' in app.output.get() and 'Export seam checks' in Path(result['report']).read_text(encoding='utf-8')
             assert app.preview.cget('image')
             assert 'disabled' not in app.save.state()
             unpacked={s['id']:r for s,r in sections(raw)}
@@ -82,6 +87,7 @@ def run(app,output,base):
         report=dict(status='pass',fixture='Procedural meshes/TIM2 on the selected development-only PSP rig; not original JBI assets',
             archive_selection=True,entry_switch_clears_priorities=True,source_formats=['jbi','hctp'],
             outputs=outputs,cancellation_clean=True,input_hashes_unchanged=True,
+            final_export_seam_audit_all_models=True,seam_summary_visible=True,
             limitation='Frozen hosted Windows GUI/runtime validation; not a clean user PC or PPSSPP test')
         output.write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
         return report

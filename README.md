@@ -3,7 +3,10 @@
 The separate **PSP Model Creator 0.3.1** adds a [waistband torso cutoff](docs/creator-031.md)
 with live height adjustment, a rest-pose guide and saved cut settings.
 
-The current **v0.29.0** preview adds [batch conversion](docs/batch-converter.md):
+The current **v0.29.1** preview adds [final export seam checks](docs/export-seam-checks.md)
+for HCTP/JBI/Wii: same-texture UV boundaries, local source-relative gaps under
+movement, explicit unmatched coverage, and seam summaries in QA and Save warnings.
+It retains [batch conversion](docs/batch-converter.md):
 choose one source game, add multiple PACs, continue past unsupported models,
 then preview and save successful outputs. Archives expand into costume rows,
 and the final report lists every skip reason. Includes the offline Retexture

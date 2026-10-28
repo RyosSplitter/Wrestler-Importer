@@ -101,6 +101,10 @@ class MaterialBoundaryTests(unittest.TestCase):
             self.assertIn('material_boundaries',result['rest'])
             self.assertTrue(any(f.get('texture')=='y2j_hiji' for f in result['unresolved_review']))
             self.assertIn('Material and accessory boundaries',(path/'qa/report.html').read_text())
+            self.assertIn('export_seams',result)
+            self.assertEqual(result['export_seams']['poses_checked'],1)
+            self.assertTrue((path/'qa/export-seams.json').is_file())
+            self.assertIn('Export seam checks',(path/'qa/report.html').read_text())
             self.assertTrue(result['inputs_unchanged']);self.assertFalse(result['can_replace_best_model'])
 
     def test_flagged_pad_generates_matching_front_back_side_closeups(self):

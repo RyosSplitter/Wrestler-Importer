@@ -25,6 +25,7 @@ from model_qa.geometry import read_model
 from model_qa.surface_attributes import compare as surface_compare
 from model_qa.alpha_coverage import report as alpha_report
 from model_qa.palette_quality import representation
+from model_qa.export_seams import brief as seam_brief
 from desktop.texture_optimizer.analysis import model_usage
 
 
@@ -111,6 +112,7 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
         '<p>Native structure and analytical pose gates passed. This is not in-game validation. Some Wii hair, hands, clothing, facial color and body shapes still require review; known bad global geometry rules remain disabled. Dynamic Wii blood/hair animation is not reproduced. Unknown layouts are rejected.</p>',
         '<p>Existing material-domain reduction and rig mapping; measured texture allocation with source-nearest alpha and a half-source cutout floor. Opaque 16-color candidates may use lossless T4 storage; only corresponding material depth words change. Section 8 may be BPE-compressed with every decoded effect byte preserved. No UV atlas remapping is enabled.</p>',
         '<p>Protect clothing seams: %s. Extra UV contact locks apply to Arms, Torso and Legs only. Source artwork and UV layout are retained; hand/face reduction settings are independent. Additional geometry can reduce the texture budget. Pose and size gates remain mandatory.</p>'%('enabled'if request.wii_seam_protection else'disabled'),
+        '<p>Final export seam checks: %d findings; %d unmatched/ambiguous side checks. Includes same-texture UV boundaries and local source-relative gaps under movement. <a href="report.html">Seam summary</a> · <a href="export-seams.json">Detailed seam locations and measurements</a>. Checks run with clothing protection both on and off; findings require visual review.</p>'%(qa['export_seams']['review_findings'],qa['export_seams']['unmatched_sides']),
         '<p><a href="report.html">Complete source/posed comparison and heatmaps</a> · <a href="report.json">Comparison metrics</a> · <a href="surface-attributes.json">UV/source sampling</a> · <a href="opacity-support.json">Thin strands and cutout support</a> · <a href="palette-quality.json">Native-grid palette loss</a> · <a href="native-final.json">Native offsets, palettes and constraints</a> · <a href="../wii/textures/report.json">Every texture and allocation decision</a> · <a href="../effect-storage.json">Lossless effect storage</a> · <a href="app-result.json">Export result</a></p>',
         '<p><a href="../wii/source-materials.json">Original packet Q7/Q8 fields, exact source/IR encoding audit, draw bindings and excluded effects</a>. Transparency indicates a cutout, not anatomical hair; leg decals retain their original leg weights.</p>',
         *['<figure><figcaption>%s — actual final PAC, CPU preview</figcaption><img width="480" src="../preview/%s-full.png"></figure>'%(v,v) for v in ('front','back','left','right','front-left')],
@@ -122,6 +124,7 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
         wii_seam_protection=request.wii_seam_protection,
         vertices=native['report']['vertices'],triangles=native['report']['triangles'],model_count=1,
         native_validation='passed',ocular_validation='passed',review_flags=flags,effect_storage=storage,
+        export_seams=seam_brief(qa['export_seams'],work/'qa/export-seams.json'),
         status='Experimental Wii candidate: review QA and test in PPSSPP; geometry issues remain on some sources.')
     dump(work/'qa/app-result.json',result)
     step(100,'Wii PAC and final preview ready for review')

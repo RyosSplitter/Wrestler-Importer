@@ -15,6 +15,7 @@ from .metrics import DEFAULT_PROFILE,detect,measure,influence_groups
 from .regions import regions
 from .render import DIRECTIONS,camera,save_pair
 from .head import compare_head,controller_probes,layout_review
+from .export_seams import prepare as seam_prepare,measure as seam_measure,summary as seam_summary,STRESS_POSES
 
 
 POSES = {
@@ -130,6 +131,11 @@ def run(source_path,candidate_path,output,*,profile=None,stages=(),samples=16000
     np.savez_compressed(output/'geometry/mapped-reference.npz',vertices=mapped_reference.vertices,faces=mapped_reference.faces,weights=mapped_reference.weights)
     progress('Measuring bidirectional rest surfaces and curvature')
     rest,heat=measure(reference,candidate,rois,height,count=samples,with_curvature=True)
+    progress('Checking final export UV/material seam edges and local contact coverage')
+    seam_plan=seam_prepare(reference,candidate,height)
+    seam_rest=seam_measure(seam_plan,reference,candidate)
+    seam_poses={}
+    skipped_seam_poses=[]
     np.savez_compressed(output/'geometry/vertex-errors.npz',**heat)
     gallery=[]
     if renders:
@@ -137,7 +143,7 @@ def run(source_path,candidate_path,output,*,profile=None,stages=(),samples=16000
         entries,views=render_views(reference,candidate,reference,rois,height,heat['vertex_error'],output/'renders',resolution=resolution,save_depth=save_depth)
         gallery+=entries
         for name,metrics in views.items():rest['regions'][name]['views']=metrics
-    flags=detect(rest,thresholds);motion={};pose_controls=poses or POSES
+    flags=detect(rest,thresholds)+seam_rest['flags'];motion={};pose_controls=poses or POSES
     head_resolution=min(resolution,160)
     head_rest=compare_head(reference,candidate,resolution=head_resolution,
         render_folder=output/'renders' if renders else None)
@@ -146,6 +152,7 @@ def run(source_path,candidate_path,output,*,profile=None,stages=(),samples=16000
     head_poses={}
     if renders:
         gallery+=render_material_flags(reference,candidate,rest,flags,output/'renders',height,resolution)
+        gallery+=render_seam_flags(reference,candidate,seam_rest['flags'],output/'renders',height,resolution,limit=3)
     if animations:
         source_names=set(reference.bone_names);target_names=set(candidate.bone_names)
         for name,controls in pose_controls.items():
@@ -158,6 +165,8 @@ def run(source_path,candidate_path,output,*,profile=None,stages=(),samples=16000
             np.savez_compressed(output/'geometry'/(name+'-reference.npz'),vertices=rp.vertices)
             np.savez_compressed(output/'geometry'/(name+'-candidate.npz'),vertices=cp.vertices)
             pose_flags=detect(comparison,thresholds,name,rest)
+            seam_poses[name]=seam_measure(seam_plan,rp,cp,name)
+            pose_flags+=seam_poses[name]['flags']
             if renders:
                 gallery+=render_material_flags(rp,cp,comparison,pose_flags,output/'renders',height,resolution,name)
             if renders and name in ('standing','bend','crouch','neck-turn','jaw-18','jaw-25'):
@@ -165,7 +174,19 @@ def run(source_path,candidate_path,output,*,profile=None,stages=(),samples=16000
                 entries,views=render_views(rp,cp,reference,rois,height,pose_heat['vertex_error'],output/'renders',pose=name,resolution=resolution,selected=selections,save_depth=save_depth)
                 gallery+=entries
                 for region,metrics in views.items():comparison['regions'][region]['views']=metrics
+            if renders and name=='crouch':
+                gallery+=render_seam_flags(rp,cp,seam_poses[name]['flags'],output/'renders',height,resolution,limit=1)
             motion[name]=comparison;flags+=pose_flags
+        for name,controls in STRESS_POSES.items():
+            if not set(controls)<=source_names&target_names:
+                skipped_seam_poses.append(name)
+                continue
+            progress('Checking local export seams in '+name)
+            seam_poses[name]=seam_measure(seam_plan,posed(mapped_reference,controls),posed(candidate,controls),name)
+            flags+=seam_poses[name]['flags']
+            if renders and name in ('seam-wrist-flex','seam-knee-flex'):
+                gallery+=render_seam_flags(posed(mapped_reference,controls),posed(candidate,controls),
+                    seam_poses[name]['flags'],output/'renders',height,resolution,limit=1)
         from .ocular import skin
         progress('Checking complete cranial support under facial and head-controller stress probes')
         for name,probe in controller_probes(target).items():
@@ -226,6 +247,7 @@ def run(source_path,candidate_path,output,*,profile=None,stages=(),samples=16000
     report=dict(qa_version=VERSION,mode='comparison-and-report-only',inputs=dict(source=str(source_path.resolve()),candidate=str(candidate_path.resolve()),sha256=hashes),
         reference_height=height,alignment=alignment,canonical_axes='Proper rotation (x,-y,-z): x=wrestler left, y=up, z=forward',
         thresholds=thresholds,rest=rest,poses=motion,pose_controls=pose_controls if animations else {},
+        export_seams=seam_summary(seam_rest,seam_poses),
         head_diagnostics=dict(rest=head_rest,poses=head_poses,native_layout_review=native_head_flags,
             limitation='Provisional full-head/outlier/winding/controller review. CPU cull conventions are diagnostic; actual SVR loader, GPU state and clips are not emulated.'),
         animation_method='Primary: original HCTP geometry and ancestor-mapped source weights vs final geometry/weights, both on the identical PSP rig and poses. Additional original-HCTP-rig controls isolate rig adaptation.',
@@ -240,6 +262,8 @@ def run(source_path,candidate_path,output,*,profile=None,stages=(),samples=16000
                      'Finite surface sampling can miss extremely small defects; sample count and coverage are reported',
                      'Curvature and disconnected components are diagnostics, not proof of defects',
                      'No verified anatomical vertex-index correspondence is assumed'])
+    report['export_seams']['skipped_poses']=skipped_seam_poses
+    dump(output/'export-seams.json',report['export_seams'])
     dump(output/'report.json',report);write_html(report,output/'report.html')
     manifest={str(p.relative_to(output)):sha(p) for p in sorted(output.rglob('*')) if p.is_file()}
     dump(output/'manifest.json',dict(inputs_unchanged=True,sha256=manifest))
@@ -292,6 +316,8 @@ details{padding:12px;border:1px solid #50555c;margin:10px 0}summary{cursor:point
     d=report['rest']['overall'];body+='<p>Bidirectional mean surface distance '+str(round(d['mean'],6))+' model units; p95 '+str(round(d['p95_height']*100,4))+'% of original height. Uniform scale only.</p>'
     body+='<p><a href="report.json">Full machine-readable report</a> · <a href="manifest.json">SHA-256 manifest</a> · <a href="geometry/reference.obj">Aligned reference OBJ</a> · <a href="geometry/candidate.obj">Candidate OBJ</a></p>'
     body+='<table><tr><th>Region</th><th>Samples</th><th>Mean distance</th><th>P95 / height</th><th>Review</th></tr>'+''.join(rows)+'</table>'
+    if report.get('export_seams'):
+        body+=seam_html(report['export_seams'])
     material_rows=[]
     for name,r in report['rest'].get('material_boundaries',{}).get('materials',{}).items():
         status=', '.join(sorted({f['severity'] for f in report['flags'] if f.get('texture')==name})) or r['status']
@@ -302,3 +328,50 @@ details{padding:12px;border:1px solid #50555c;margin:10px 0}summary{cursor:point
     body+='<h2>Matching renders and heatmaps</h2><p>Source-only camera framing, identical orthographic projection and lights. Blue is low surface error; red is at least 0.6% of height. Open details to use the comparison wipe.</p>'+''.join(views)
     body+='<h2>Tolerances and limitations</h2><pre>'+e(json.dumps(report['thresholds'],indent=2))+'</pre><ul>'+''.join('<li>'+e(v)+'</li>' for v in report['limitations']+report['animation_limitations'])+'</ul></body></html>'
     Path(path).write_text(body,encoding='utf-8')
+
+
+def seam_html(report):
+    e=html.escape
+    rows=[]
+    for r in [report['rest'],*report['poses'].values()]:
+        rows.append('<tr><td>'+e(r['pose'])+'</td><td>'+str(r['matched_contact_locations'])+'</td><td>'+
+                    ('%.5f%%'%(r['maximum_extra_gap_height']*100))+'</td><td>'+str(r['flagged_pairs'])+'</td></tr>')
+    locations=[]
+    for result in [report['rest'],*report['poses'].values()]:
+        for row in result['worst_locations']:
+            locations.append((result['pose'],row))
+    locations.sort(key=lambda item:-item[1]['extra_height'])
+    details=''.join('<tr><td>'+e(pose)+'</td><td>'+e(', '.join(r['textures']))+'</td><td>'
+        +e(', '.join('%.4f'%v for v in r['position']))+'</td><td>'+('%.5f%%'%(100*r['extra_height']))+'</td></tr>'
+        for pose,r in locations[:24])
+    return ('<h2 id="export-seams">Export seam checks</h2><p>'+e(report['status'])+'. '
+        +str(report['review_findings'])+' findings; '+str(report['unmatched_sides'])+' unmatched/ambiguous side checks. '
+        'Checks include boundaries within one texture, edge interiors and local source-relative gaps at rest and under movement. '
+        'A large gap elsewhere cannot excuse a new local opening. '
+        '<a href="export-seams.json">Seam locations, coverage and measurements</a>.</p>'
+        '<table><tr><th>Pose</th><th>Matched contact locations</th><th>Maximum extra gap / height</th><th>Flagged pairs</th></tr>'
+        +''.join(rows)+'</table><h3>Worst local openings</h3><table><tr><th>Pose</th><th>Texture sides</th><th>Bind location (x, y, z)</th><th>Extra gap / height</th></tr>'
+        +details+'</table><p>These checks do not repair seams or certify texture-color continuity. '
+        'Unmatched coverage and intentional openings require visual review. Analytical poses still need PPSSPP testing.</p>')
+
+
+def render_seam_flags(reference,candidate,flags,folder,height,resolution,*,limit):
+    """Bounded source-framed clay close-ups for located seam findings."""
+    from hashlib import sha256
+    located=[f for f in flags if f.get('position') is not None]
+    located.sort(key=lambda f:-(f.get('extra_height') or f.get('maximum_height') or 0.))
+    entries=[];seen=[]
+    for flag in located:
+        point=np.array(flag['position'])
+        if any(np.linalg.norm(point-p)<height*.02 for p in seen):continue
+        seen.append(point)
+        safe=sha256((flag['region']+repr(flag['position'])).encode()).hexdigest()[:12]
+        bounds=np.array([point-height*.04,point+height*.04])
+        for view in ('front','back','left','right'):
+            cam=camera(bounds,view,max(128,resolution))
+            stem=flag['pose']+'-seam-'+safe+'-'+view
+            values,configuration=save_pair(folder,stem,reference,candidate,cam,height)
+            entries.append(dict(region=flag['region'],pose=flag['pose'],view=view,
+                file='renders/'+stem+'.png',camera=configuration,metrics=values))
+        if len(seen)>=limit:break
+    return entries

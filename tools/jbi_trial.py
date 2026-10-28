@@ -197,6 +197,7 @@ def run(source, base_path, output, *, entry_id='', progress=lambda p,m:None,
         if source_sid not in originals:continue
         step(45,'Building and auditing native PSP model section '+str(target_sid))
         obj=subset(prepared,source_sid); packed=pack(obj,target); donor=copy.deepcopy(target)
+        dump(output/('seam-reference-%d.json'%target_sid),obj)
         # A two-segment source digit may form a two-slot draw. Use its native
         # third phalanx as an explicitly zero-weight slot to match the observed
         # three-slot native draw convention without inventing an influence.

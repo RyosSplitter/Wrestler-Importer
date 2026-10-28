@@ -391,7 +391,9 @@ class BatchWindow:
         try:
             self.result = load_result(row)
             result = self.result
+            from desktop.seam_review import seam_status
             self.detail.set(f"{row['label']}\n{result['bytes']:,} bytes | QA: {result['review_flags']} findings to review\n" +
+                            (seam_status(result)+'\n' if result.get('export_seams') else '')+
                             (self.saved.get(row['id']) or 'Review the preview and QA report before saving.'))
             self.show_preview()
             self.save_button.configure(state='normal')
@@ -425,8 +427,9 @@ class BatchWindow:
         row = self.selected_row()
         if self.result is None or row is None:
             return
+        from desktop.seam_review import save_warning
         if self.result['review_flags'] and not messagebox.askyesno('QA findings require review',
-                f"This model has {self.result['review_flags']} QA findings and needs PPSSPP testing. Save as an experimental PAC?", parent=self.top):
+                save_warning(self.result), parent=self.top):
             return
         name = Path(row['source']).stem + ('-' + row['source_entry'] if row['source_entry'] else '') + '-PSP.pac'
         chosen = filedialog.asksaveasfilename(parent=self.top, title='Save selected PSP PAC', initialfile=name,

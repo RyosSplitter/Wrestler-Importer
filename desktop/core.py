@@ -547,6 +547,7 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
     entry=[sys.executable] if getattr(sys,'frozen',False) else [sys.executable,str(ROOT/'ps2psp_converter.py')]
     command(entry+args,'qa.log')
     qa=json.loads((work/'qa/report.json').read_text())
+    from model_qa.export_seams import brief as seam_brief
     # Body QA stays a separate reusable stage. Link the independent model-set
     # evidence so the displayed report does not imply it audited only section 2.
     qa['model_set_validation']=dict(status='pass',model_count=1+len(accessory_yobjs),
@@ -598,6 +599,7 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
                 total_triangles=packed['triangle_count']+sum(a['triangles'] for a in accessory_reports),
                 total_vertices=packed['vertex_count']+sum(a['vertices'] for a in accessory_reports),
                 native_validation='passed',review_flags=len(qa['unresolved_review']),ocular_validation=ocular['status'],
+                export_seams=seam_brief(qa['export_seams'],work/'qa/export-seams.json'),
                 skinning_identity_validation=skinning_identity['status'],
                 attribute_precision=packed.get('attribute_precision_report'),
                 precision_validation=precision_validation,

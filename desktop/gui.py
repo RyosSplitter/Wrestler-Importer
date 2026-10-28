@@ -388,6 +388,8 @@ class Application:
                             self.output.set(self.output.get()+f"\nDowngrade: {r['texture_downgrade']['steps']} steps from Default, 64-pixel floor — open QA report")
                         if r.get('maximum_downgrade'):
                             self.output.set(self.output.get()+f"\nMaximum Downgrade: {r['maximum_downgrade']['changed_textures']} textures reduced; model unchanged — open QA report")
+                        from desktop.seam_review import seam_status
+                        if r.get('export_seams'):self.output.set(self.output.get()+'\n'+seam_status(r))
                         self.save.configure(state='normal');self.status.set('Review the PSP preview and QA report before saving.');self.show_preview()
                 except Exception as e:self.finish_timer('failed');self.status.set('Worker ended unexpectedly; inspect Logs.');messagebox.showerror(NAME,str(e))
         if self.closing and not self.busy() and self.inspector is None and not (self.suite and self.suite.busy()) and not (self.batch_window and self.batch_window.running()):self.clean_inspection();self.root.destroy();return
@@ -412,7 +414,8 @@ class Application:
         label=tk.Label(top,image=photo,bg=PANEL);label.image=photo;label.pack()
     def export(self):
         if not self.result:return
-        if self.result['review_flags'] and not messagebox.askyesno('QA findings require review',f"The QA report has {self.result['review_flags']} review findings. This candidate still needs PPSSPP testing. Save it as an experimental PAC?"):return
+        from desktop.seam_review import save_warning
+        if self.result['review_flags'] and not messagebox.askyesno('QA findings require review',save_warning(self.result)):return
         chosen=filedialog.asksaveasfilename(title='Save experimental PSP PAC',defaultextension='.pac',initialfile=Path(self.result['pac']).name,filetypes=[('PSP PAC','*.pac')])
         if not chosen:return
         try:self.saved=save_as(self.result,chosen);self.status.set('Saved '+self.saved)

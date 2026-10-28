@@ -67,6 +67,11 @@ def run(app,output,base):
         assert result['budget']['max_pac_bytes']==180000 and len(raw)<=180000
         assert app.preview.cget('image') and Path(result['report']).is_file()
         assert (work/'qa/opacity-support.json').is_file() and (work/'qa/palette-quality.json').is_file()
+        seams=json.loads(Path(result['export_seams']['report']).read_text(encoding='utf-8'))
+        assert seams['schema']=='psp-export-seams/1' and seams['poses_checked']>=15
+        assert 'seam-wrist-flex' in seams['poses'] and 'seam-knee-flex' in seams['poses']
+        assert result['review_flags']>=seams['review_findings']
+        assert 'Seams:' in app.output.get() and 'Detailed seam locations' in Path(result['report']).read_text(encoding='utf-8')
         save_as(result,output.parent/'procedural-wii-export.pac')
         assert (output.parent/'procedural-wii-export.pac').read_bytes()==raw
         app.root.update();x,y=app.root.winfo_rootx(),app.root.winfo_rooty()
@@ -86,6 +91,7 @@ def run(app,output,base):
             mixed_q7_body_q8_auxiliary_decode_verified=True,
             three_packet_colorless_inspection=True,all_six_source_packets_audited=True,
             clothing_seam_checkbox=True,clothing_scope_passed_to_bundled_blender=True,
+            final_export_seam_audit=True,local_source_relative_gap_checks=True,wrist_and_knee_stress=True,
             seam_setting_reported=True,seam_control_hidden_and_reset_for_hctp=True,
             palette_and_alpha_reports=True,save_as_verified=True,cancellation_clean=True,hctp_options_restored=True,
             conversion_countdown=True,successful_timing_history=True,cancelled_run_not_learned=True,

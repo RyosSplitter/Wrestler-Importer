@@ -15,6 +15,9 @@ from tools.jbi_source import read as read_bundle,decoded_textures
 from tools.jbi_trial import run as build_jbi
 from tools.psp_mesh_audit import audit_yobj
 from tools.psp_mesh_merge_trial import sections,write_preview
+from model_qa.export_seams import compare_models,brief as seam_brief
+from model_qa.pipeline import POSES,seam_html
+from model_qa.geometry import geometry
 
 
 def texture_stage(request,baseline,bundle,folder,envelope,check,progress):
@@ -100,6 +103,20 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False):
     findings=[dict(section=sid,**row) for sid,item in qa.items() for row in item['review_findings']]
     texture_flags=sum(bool(t.get('quality_review_flags')) for t in (texture_report or {}).get('textures',[]))
     page=work/'qa';page.mkdir()
+    step(95,'Checking final JBI UV/material seams and local posed contacts')
+    seams={}
+    reference_height=geometry(json.loads((folder/'seam-reference-2.json').read_text(encoding='utf-8'))).height
+    for sid,model in final_models.items():
+        check()
+        seams[str(sid)]=compare_models(json.loads((folder/('seam-reference-%d.json'%sid)).read_text(encoding='utf-8')),
+            model,POSES,height=reference_height,progress=lambda message:step(96,message))
+    seam_flags=sum(s['review_findings'] for s in seams.values())
+    seam_record=dict(schema='psp-export-seams-model-set/1',models=seams,
+        status='review required' if seam_flags else 'within provisional measured tolerances',review_findings=seam_flags,
+        matched_contact_locations=sum(s['matched_contact_locations'] for s in seams.values()),
+        unmatched_sides=sum(s['unmatched_sides'] for s in seams.values()),
+        poses_checked=sum(s['poses_checked'] for s in seams.values()))
+    dump(page/'export-seams.json',seam_record)
     document=['<!doctype html><html><meta charset="utf-8"><title>JBI conversion QA</title><body>',
         '<h1>JBI → SVR 2011 PSP</h1>',
         '<p>Entry %s. %d / %s bytes. %d independent models. Texture mode: %s.</p>'%
@@ -115,6 +132,8 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False):
         '<a href="../jbi/native-pose-qa.json">Body/ocular/accessory poses and review findings</a> · '
         '<a href="../jbi/textures/report.json">Default texture allocation</a></p>']
     if label:document.append('<p><a href="../jbi/%s/report.html">Selected texture option, reductions and budgets</a></p>'%html.escape(label))
+    for sid,seam in seams.items():
+        document.append('<h2>Model section '+sid+'</h2>'+seam_html(seam))
     document += ['<h2>Review findings</h2><pre>'+html.escape(json.dumps(findings,indent=2))+'</pre>',
         '<p>Analytical pose checks are not captured game animation or a guarantee of runtime safety.</p>']
     for view in ('front','back','left','right','front-left'):
@@ -127,7 +146,8 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False):
         total_meshes=sum(m['report']['meshes'] for m in final_models.values()),
         total_vertices=sum(m['report']['vertices'] for m in final_models.values()),
         total_triangles=sum(m['report']['triangles'] for m in final_models.values()),
-        native_validation='passed',ocular_validation='passed',review_flags=len(findings)+texture_flags,
+        native_validation='passed',ocular_validation='passed',review_flags=len(findings)+texture_flags+seam_flags,
+        export_seams=seam_brief(seam_record,page/'export-seams.json'),
         jbi_textures=dict(mode=request.texture_mode or 'Default',report=str(folder/(label or 'textures')/'report.json')),
         status='JBI conversion; review analytical QA and test every new model in PPSSPP.')
     dump(page/'report.json',dict(result,unresolved_review=findings))

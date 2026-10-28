@@ -1,4 +1,11 @@
-# PSP Model Suite v0.29.0
+# PSP Model Suite v0.29.1
+
+Conversions now run stronger final **export seam checks**, including UV seams
+within one texture and local source-relative gaps under wrist/knee and other
+movement probes. The result and Save warning show seam/coverage findings; open
+**QA report → Export seam checks** for measurements and located close-ups.
+Applies to HCTP, JBI and Wii, including batch conversions. Checks are diagnostic;
+review findings and test new PACs in PPSSPP. See [details](export-seam-checks.md).
 
 Open **Converter → Batch…** to choose one source game and PSP base, add multiple
 source PACs and run a sequential queue. JBI/Wii archives expand into individual
@@ -11,9 +18,9 @@ existing timing history. See [batch conversion](batch-converter.md).
 
 Batch settings include the applicable texture modes and Wii role, geometry and
 seam protection. Per-model Priority Selection remains in the single converter.
-The verified overlay updates **v0.28.3 to v0.29.0**; close the app and copy the
-overlay's `PSP-Model-Suite` contents over that version. Use the complete app ZIP
-for a new installation or an older version.
+When an overlay is published, it updates **v0.29.0 to v0.29.1**; close the app
+and follow its included installation instructions. If overlay verification is
+withheld, extract the complete app ZIP into a new folder.
 
 ## Previous v0.28.3 clothing seams
 

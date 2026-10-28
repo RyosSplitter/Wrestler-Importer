@@ -77,6 +77,8 @@ def run(app, output, base):
             assert batch.preview.cget('image')
             assert 'disabled' not in batch.save_button.state()
             assert batch.result['source'] == row['source']
+            assert Path(batch.result['export_seams']['report']).is_file()
+            assert 'Seams:' in batch.detail.get()
             for view in ('front', 'back', 'left', 'right', 'front-left'):
                 batch.set_view(view)
                 assert batch.preview.cget('image')
@@ -86,7 +88,8 @@ def run(app, output, base):
             with patch('tkinter.filedialog.asksaveasfilename', return_value=str(destination)):
                 batch.export()
             assert destination.read_bytes() == Path(batch.result['pac']).read_bytes()
-            results.append(dict(source=row['source'], bytes=batch.result['bytes'], sha256=digest(destination)))
+            results.append(dict(source=row['source'], bytes=batch.result['bytes'], sha256=digest(destination),
+                                export_seam_audit=True,seam_summary_visible=True))
         batch.tree.selection_set('1')
         batch.select()
         assert batch.result is None and not batch.preview.cget('image')
