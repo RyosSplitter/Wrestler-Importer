@@ -40,8 +40,9 @@ def select_guards(model):
     torso_materials={tid for tid,n in all_faces.items() if torso_faces[tid]/n>=.3}
     decisions=[]
     contact_faces={tuple(x) for x in model.get('source_contact_shape_guards',{}).get('faces',[])}
+    painted_faces={tuple(x) for x in model.get('painted_clothing_edge_guards',{}).get('faces',[])}
     for mesh in model['meshes']:
-        for mat in mesh['materials']:
+        for mat_index,mat in enumerate(mesh['materials']):
             for ti,tri in enumerate(mat['triangles']):
                 vertices=[mesh['vertices'][i] for i in tri]
                 torso=sum(sum(w for b,w in zip(mesh['bone_palette'],v['weights']) if bone_regions[b]=='Torso') for v in vertices)/3
@@ -50,7 +51,8 @@ def select_guards(model):
                 cutout=mat['texture_id'] in model.get('cutout_texture_ids',[])
                 attachment=any(tuple(v['position']) in attachments for v in vertices)
                 skinning=any(v.get('skin_locked') for v in vertices) or (mesh['index'],mat['texture_id'],ti) in contact_faces
-                decisions.append((mesh['index'],mat['texture_id'],ti,torso>.5 or mat['texture_id'] in torso_materials or eyes or seam or cutout or attachment or skinning))
+                painted=(mesh['index'],mat_index,mat['texture_id'],ti) in painted_faces
+                decisions.append((mesh['index'],mat_index,mat['texture_id'],ti,torso>.5 or mat['texture_id'] in torso_materials or eyes or seam or cutout or attachment or skinning or painted))
     return decisions
 
 
@@ -59,13 +61,13 @@ def run(source_path,output_path,profile_path):
     model=annotate(json.loads(Path(source_path).read_text()));profile=json.loads(Path(profile_path).read_text())
     if Path(output_path).exists():raise FileExistsError(output_path)
     region_mesh.RATIOS.update(profile['ratios']);blender_reduce.RATIOS.update(profile['ratios'])
-    selections={(mi,tid,ti):held for mi,tid,ti,held in select_guards(model)}
+    selections={(mi,ai,tid,ti):held for mi,ai,tid,ti,held in select_guards(model)}
     free=copy.deepcopy(model);held=copy.deepcopy(model)
     for dst,keep in ((free,False),(held,True)):
         for mesh in dst['meshes']:
             mats=[]
-            for mat in mesh['materials']:
-                mat['triangles']=[t for i,t in enumerate(mat['triangles']) if selections[mesh['index'],mat['texture_id'],i]==keep]
+            for ai,mat in enumerate(mesh['materials']):
+                mat['triangles']=[t for i,t in enumerate(mat['triangles']) if selections[mesh['index'],ai,mat['texture_id'],i]==keep]
                 if mat['triangles']:mats.append(mat)
             mesh['materials']=mats
         dst['meshes']=[m for m in dst['meshes'] if m['materials']]
@@ -135,8 +137,9 @@ def run(source_path,output_path,profile_path):
     for mesh in result['meshes']:
         for vertex in mesh['vertices']:validate_locked(vertex,mesh['bone_palette'])
     result['reduction_report']['source_skinning_identity']=model['source_skinning_identity']
-    result['reduction_report']['guard_policy']='Source torso/pelvis, eye-controller support, cutouts and all shared material-boundary rings; no budget redistribution'
+    result['reduction_report']['guard_policy']='Source torso/pelvis, eye-controller support, cutouts, shared material-boundary rings and source-image painted clothing borders; no budget redistribution'
     result['reduction_report']['protected_triangles']=held['triangle_count']
+    result['reduction_report']['painted_clothing_edge_guards']=model.get('painted_clothing_edge_guards',{})
     Path(output_path).write_text(json.dumps(result,allow_nan=False))
 
 

@@ -75,7 +75,7 @@ class PortableTests(unittest.TestCase):
 
     def test_torso_guard_has_no_character_selector(self):
         model=dict(bones=[dict(index=0,name='koshi',parent=-1)],meshes=[dict(index=0,bone_palette=[0],vertices=[dict(position=p,weights=[1.]) for p in ((0,0,0),(1,0,0),(0,1,0))],materials=[dict(texture_id=0,triangles=[[0,1,2]])])])
-        self.assertEqual(select_guards(model),[(0,0,0,True)])
+        self.assertEqual(select_guards(model),[(0,0,0,0,True)])
 
     def test_selective_eye_policy_preserves_source_jaw_records(self):
         import zipfile

@@ -345,8 +345,12 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
     prepared,legacy,jaw=prepare(original,target)
     prepared['textures']=texture_names;prepared['texture_count']=len(texture_names)
     prepared['cutout_texture_ids']=[i for i,n,r,rgba,d in decoded if np.any(rgba[:,:,3]<128)]
+    from desktop.texture_edges import clothing_edges
+    painted_edges=clothing_edges(prepared,{name:rgba for _,name,_,rgba,_ in decoded})
+    prepared['painted_clothing_edge_guards']=painted_edges
+    dump(work/'painted-clothing-edges.json',painted_edges)
     for name,model in (('source',original),('prepared',prepared),('legacy-eye-control',legacy),('source-jaw-control',jaw)):dump(work/(name+'.json'),model)
-    step(25,'Protecting source anatomy and material boundaries before decimation')
+    step(25,'Protecting source anatomy, painted clothing edges and material boundaries before decimation')
     attempts=[];candidate=None
     size_report=SizeFitReport(work/'size-fit.json',profile['max_pac_bytes'],hashes,
                               dict(bytes=source.stat().st_size,meshes=original['mesh_count'],
@@ -571,6 +575,7 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
     text=html.read_text(encoding='utf-8')
     note='<p>Native model set: %d models. <a href="../accessory-qa.json">Independent accessory structure, attributes and pose validation</a>. <a href="../preview/output.obj">Combined OBJ preview</a>. Actual in-game pad removal/throw behavior remains unverified.</p>'%(1+len(accessory_yobjs))
     note+='<p>Source-authorized coincident skinning: %d locations. <a href="../skinning-identity-qa.json">Protected face correspondence, effective weights and analytical motion/gap checks</a>. Distinct source branches are retained; newly introduced inconsistencies stop export.</p>'%skinning_identity['source_conflicting_locations']
+    note+='<p>Painted clothing borders: <a href="../painted-clothing-edges.json">Source-image limb edge protection</a>. %d source faces beside %d opaque dark/light edges are held before simplification. Includes same-map wristbands and knee pads where a material/UV seam alone is insufficient. Source positions, UVs and weights are retained; textures are not repainted. Fixed image samples can also retain dark limb artwork and do not identify every clothing color.</p>'%(painted_edges['source_triangles'],painted_edges['contrasting_edges'])
     if default_report is not None:
         note+='<p>Default textures: <a href="../default-textures/report.html">Automatic detail priorities, source/final images and independent texture budget</a>. The final model data is unchanged by this texture stage. <a href="../legacy-texture-method.pac">Legacy comparison PAC</a>.</p>'
     if adaptive_report is not None:
@@ -600,6 +605,7 @@ def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_sampl
                 total_vertices=packed['vertex_count']+sum(a['vertices'] for a in accessory_reports),
                 native_validation='passed',review_flags=len(qa['unresolved_review']),ocular_validation=ocular['status'],
                 export_seams=seam_brief(qa['export_seams'],work/'qa/export-seams.json'),
+                painted_clothing_edges=dict(source_triangles=painted_edges['source_triangles'],contrasting_edges=painted_edges['contrasting_edges'],report=str(work/'painted-clothing-edges.json')),
                 skinning_identity_validation=skinning_identity['status'],
                 attribute_precision=packed.get('attribute_precision_report'),
                 precision_validation=precision_validation,

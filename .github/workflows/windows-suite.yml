@@ -1,7 +1,7 @@
 name: Build PSP Model Suite preview
 on:
   push:
-    branches: [feature/wwe13-wii-app-preview, feature/offline-retexture-editor, feature/conversion-countdown, feature/wwe13-road-dogg, feature/wii-clothing-seams, feature/batch-converter, feature/export-seam-checks]
+    branches: [feature/wwe13-wii-app-preview, feature/offline-retexture-editor, feature/conversion-countdown, feature/wwe13-road-dogg, feature/wii-clothing-seams, feature/batch-converter, feature/export-seam-checks, feature/painted-clothing-edges]
   workflow_dispatch:
 permissions:
   contents: write
@@ -61,12 +61,16 @@ jobs:
           seams=json.loads(Path(result['export_seams']['report']).read_text(encoding='utf-8'))
           assert seams['poses_checked']>=15 and seams['matched_contact_locations']>0
           assert 'seam-wrist-flex' in seams['poses'] and 'seam-knee-flex' in seams['poses']
+          guards=json.loads(Path(result['painted_clothing_edges']['report']).read_text(encoding='utf-8'))
+          reduced=json.loads((Path(result['pac']).parent/'reduced.json').read_text(encoding='utf-8'))
+          assert guards==reduced['reduction_report']['painted_clothing_edge_guards']
+          assert guards['samples_per_face']==91
           assert result['review_flags']>=seams['review_findings']
           assert 'Export seam checks' in Path(result['report']).read_text(encoding='utf-8')
           assert result['sha256']==hashlib.sha256(Path(result['pac']).read_bytes()).hexdigest()
           assert inputs=={p:hashlib.sha256(Path(p).read_bytes()).hexdigest() for p in inputs}
           Path('dist/hctp-seams-smoke.json').write_text(json.dumps(dict(status='pass',final_export_seams=True,
-              poses_checked=seams['poses_checked'],matched_contacts=seams['matched_contact_locations'],
+              painted_clothing_guard_verified=True,poses_checked=seams['poses_checked'],matched_contacts=seams['matched_contact_locations'],
               findings=seams['review_findings'],input_hashes_unchanged=True,final_pac_sha256=result['sha256']),indent=2),encoding='utf-8')
       - name: Frozen suite folder browsing, editable export, PNG import, PAC round trips and validator
         shell: pwsh
@@ -145,9 +149,9 @@ jobs:
         run: |
           import hashlib,shutil
           from pathlib import Path
-          path=Path(shutil.make_archive('dist/PSP-Model-Suite-v0.29.1-Windows-x64','zip','dist','PSP-Model-Suite'))
+          path=Path(shutil.make_archive('dist/PSP-Model-Suite-v0.29.2-Windows-x64','zip','dist','PSP-Model-Suite'))
           Path(str(path)+'.sha256').write_text(hashlib.file_digest(path.open('rb'),'sha256').hexdigest()+'  '+path.name+'\n')
-      - name: Build optional verified overlay update from the published v0.29.0 app
+      - name: Build optional verified overlay update from the published v0.29.1 app
         shell: python
         env:
           GH_TOKEN: ${{ github.token }}
@@ -158,12 +162,12 @@ jobs:
           # `python -m` from the checkout. Make this import path explicit.
           sys.path.insert(0,str(Path.cwd()))
           folder=Path('build/previous-release');folder.mkdir(parents=True,exist_ok=True)
-          previous=folder/'PSP-Model-Suite-v0.29.0-Windows-x64.zip'
-          output=Path('dist/PSP-Model-Suite-v0.29.0-to-v0.29.1-Update.zip')
+          previous=folder/'PSP-Model-Suite-v0.29.1-Windows-x64.zip'
+          output=Path('dist/PSP-Model-Suite-v0.29.1-to-v0.29.2-Update.zip')
           try:
               from tools.build_suite_update import build
-              subprocess.run(['gh','release','download','suite-batch-21-7760bbea39117568817b0dbd45104ec74be9f8cf','--repo','RyosSplitter/Wrestler-Importer','--pattern',previous.name,'--dir',str(folder)],check=True)
-              report=build(previous,'dist/PSP-Model-Suite',output,'e65bee54094b76ffb9d7506b4d1b2c7ddf5cc2406a9787573039a4292be602a6',from_version='0.29.0',to_version='0.29.1')
+              subprocess.run(['gh','release','download','suite-seams-22-624a8906be493b552027ba2e2374d22bf0118d46','--repo','RyosSplitter/Wrestler-Importer','--pattern',previous.name,'--dir',str(folder)],check=True)
+              report=build(previous,'dist/PSP-Model-Suite',output,'7003fa6fd9254b437921eedb282d6a2609a6dde859c67199798151e1dca32e14',from_version='0.29.1',to_version='0.29.2')
               print('Verified overlay bytes:',report['zip_bytes'],'changed files:',len(report['changed_files']))
               report['status']='pass'
           except Exception as exc:
@@ -174,19 +178,19 @@ jobs:
           Path('dist/update-smoke.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
       - uses: actions/upload-artifact@v4
         with:
-          name: PSP-Model-Suite-v0.29.1-Windows-x64
+          name: PSP-Model-Suite-v0.29.2-Windows-x64
           path: |
             dist/*.zip
             dist/*.sha256
             dist/*.png
             dist/*smoke.json
-      - name: Publish export seam checks suite preview
+      - name: Publish painted clothing border fix
         shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           @'
-          PSP Model Suite v0.29.1 adds stronger read-only seam checks on final HCTP, JBI and experimental Wii exports, including batch conversions. Checks include same-texture UV islands, edge interiors, source-relative local contact gaps and wrist/forearm/knee stress. Unmatched or ambiguous correspondence is explicitly reported. Results and Save warnings show seam counts; QA includes per-pose measurements, worst locations and bounded HCTP/Wii close-ups. Each JBI model/accessory is checked independently against its prepared source. Existing geometry, UVs, textures, weights, native gates and budgets are preserved. Retains batch recovery/previews/checked Save As, offline Retexture, countdowns and Wii clothing protection. Frozen Windows JBI/Wii/batch smoke requires the final audit and visible coverage summaries. Full Windows x64 portable ZIP with bundled runtime/sources/licenses, no game assets. A v0.29.0-to-v0.29.1 overlay is included only when its strict manifest checks pass. Review findings are diagnostic; texture-color continuity and actual gameplay still require visual/PPSSPP review.
+          PSP Model Suite v0.29.2 fixes HCTP painted clothing borders that could skew during simplification even when material boundaries were protected. Source-image contrast at adjacent limb faces retains the original support around dark wristbands and knee pads sharing a map with skin. The A-Train study restores the source knee-pad/wristband outlines with 40 additional reduced triangles. Selection is based on images/geometry/weights, with no wrestler-name or hash special case. Source pixels, UVs and prepared weights are not edited. Existing budgets and validation gates remain mandatory. QA links the new selection evidence alongside final source-relative seam checks. Retains HCTP/JBI/Wii conversion, batch previews and checked saves, offline Retexture and countdowns. Full frozen Windows conversion/editor/JBI/Wii/batch checks; HCTP checks guard propagation. Includes a verified v0.29.1-to-v0.29.2 overlay only if all manifest checks pass, plus the full portable Windows app/runtime/sources/licenses. No game assets are bundled. Dark/light sampling does not detect every clothing color; visual and PPSSPP review remain necessary.
           '@ | Set-Content "$env:RUNNER_TEMP/suite-release-notes.txt" -Encoding utf8NoBOM
-          $tag = "suite-seams-${{ github.run_number }}-${{ github.sha }}"
-          gh release create $tag dist/*.zip dist/*.sha256 dist/*.png dist/*smoke.json --target '${{ github.sha }}' --prerelease --title 'PSP Model Suite v0.29.1 — Stronger export seam checks' --notes-file "$env:RUNNER_TEMP/suite-release-notes.txt"
+          $tag = "suite-painted-${{ github.run_number }}-${{ github.sha }}"
+          gh release create $tag dist/*.zip dist/*.sha256 dist/*.png dist/*smoke.json --target '${{ github.sha }}' --prerelease --title 'PSP Model Suite v0.29.2 — Painted wristband and knee-pad borders' --notes-file "$env:RUNNER_TEMP/suite-release-notes.txt"

@@ -3,7 +3,9 @@
 The separate **PSP Model Creator 0.3.1** adds a [waistband torso cutoff](docs/creator-031.md)
 with live height adjustment, a rest-pose guide and saved cut settings.
 
-The current **v0.29.1** preview adds [final export seam checks](docs/export-seam-checks.md)
+The current **v0.29.2** preview adds [painted clothing edge protection](docs/painted-clothing-edges.md)
+for HCTP wristbands and knee pads sharing a material with skin.
+It retains [final export seam checks](docs/export-seam-checks.md)
 for HCTP/JBI/Wii: same-texture UV boundaries, local source-relative gaps under
 movement, explicit unmatched coverage, and seam summaries in QA and Save warnings.
 It retains [batch conversion](docs/batch-converter.md):

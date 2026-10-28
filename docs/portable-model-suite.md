@@ -1,4 +1,10 @@
-# PSP Model Suite v0.29.1
+# PSP Model Suite v0.29.2
+
+HCTP reduction now protects **painted clothing borders** as well as material
+seams. This addresses wristbands and knee pads skewing where their dark fabric
+shares a map with skin. Source-image evidence selects adjacent limb faces to
+retain before reduction. QA links the selection report; no pixels are repainted.
+See [painted clothing edges](painted-clothing-edges.md).
 
 Conversions now run stronger final **export seam checks**, including UV seams
 within one texture and local source-relative gaps under wrist/knee and other
@@ -18,7 +24,7 @@ existing timing history. See [batch conversion](batch-converter.md).
 
 Batch settings include the applicable texture modes and Wii role, geometry and
 seam protection. Per-model Priority Selection remains in the single converter.
-When an overlay is published, it updates **v0.29.0 to v0.29.1**; close the app
+When an overlay is published, it updates **v0.29.1 to v0.29.2**; close the app
 and follow its included installation instructions. If overlay verification is
 withheld, extract the complete app ZIP into a new folder.
 
