@@ -85,6 +85,59 @@ def run_library(app,output):
     run_donor_import(app,output)
     run_creator030(app,output)
     run_waistline(app,output)
+    run_morph(app,output)
+
+
+def run_morph(app,output):
+    import json
+    from unittest.mock import patch
+    from .morph.fixtures import donor
+    from .morph.document import signature
+    def wait():
+        deadline=time.monotonic()+150
+        while (app.busy or app.preview_after is not None or app.refresh_after is not None or app.morph_ui.preview_after is not None) and time.monotonic()<deadline:
+            app.root.update();time.sleep(.02)
+        app.root.update()
+        if app.busy or app.model is None:raise ValueError('Morph preview timed out: '+getattr(app,'last_error',''))
+    with tempfile.TemporaryDirectory(prefix='creator-morph-smoke-') as temp:
+        root=Path(temp);data=donor();paths=[root/'A.pac',root/'B.pac']
+        for path in paths:path.write_bytes(data)
+        project=create_project(*paths,root/'Project');app.load(project);app.pose.set('rest');wait()
+        studio=app.morph_ui
+        if studio.doc is None or 'disabled' in studio.scales[1].state():raise ValueError('Morph runtime or body controls unavailable: '+studio.info.get())
+        original=app.preview_frame.tobytes();app.sidebar.select(1);app.root.update()
+        studio.scales[1].set(.6);studio.finish_gesture();wait()
+        if app.preview_frame.tobytes()==original:raise ValueError('Body slider did not change the existing live preview')
+        changed=app.preview_frame.tobytes();studio.undo();wait()
+        if app.preview_frame.tobytes()!=original:raise ValueError('Undo did not restore the baseline preview')
+        studio.undo(True);wait()
+        if app.preview_frame.tobytes()!=changed:raise ValueError('Redo accumulated morph error')
+        studio.original.set(True);studio.request_preview();wait()
+        if app.preview_frame.tobytes()!=original:raise ValueError('Compare original changed the morph baseline')
+        studio.original.set(False);studio.request_preview();wait()
+        app.save();metadata=json.loads(Path(project).read_text(encoding='utf-8'))
+        if metadata['schema']!='psp-model-creator/2':raise ValueError('Morph project lacks versioned recipe protection')
+        app.assemble();wait()
+        if app.result is None or 'morph' not in app.last_report:raise ValueError('Blender-backed morph export failed: '+getattr(app,'last_error',''))
+        report=app.last_report['morph']
+        if not report['native']['topology_uv_weights_materials_bones_exact'] or len(report['qa']['poses'])!=20:raise ValueError('Morph preservation/pose proof incomplete')
+        if report['signature']!=signature(studio.recipe()):raise ValueError('Export used stale morph values')
+        studio.scales[1].set(.3);studio.finish_gesture();wait()
+        with patch('model_creator.gui.messagebox.showinfo'):
+            if app.require_result():raise ValueError('Changed morph exported a stale PAC')
+        app.load(project);wait()
+        if abs(studio.doc.values['chest_width']-.6)>1e-5:raise ValueError('Saved morph did not restore')
+        from PIL import ImageGrab
+        app.sidebar.select(1);app.root.update();x,y=app.root.winfo_rootx(),app.root.winfo_rooty()
+        ImageGrab.grab(bbox=(x,y,x+app.root.winfo_width(),y+app.root.winfo_height())).save(output.with_name('creator-morph-window.png'))
+        studio.reset();wait();app.assemble();wait()
+        if (app.result/'created-model.pac').read_bytes()!=data:raise ValueError('Reset morph failed exact original PAC export')
+        if any(path.read_bytes()!=data for path in paths):raise ValueError('Morph changed a source donor')
+        saved=json.loads(output.read_text());saved.update(morph_studio=True,morph_live_preview=True,
+            morph_undo_redo=True,morph_compare_original=True,morph_project_roundtrip=True,morph_stale_export_blocked=True,
+            morph_blender_runtime=report['runtime'],morph_native_attributes_preserved=True,morph_pose_checks=20,
+            morph_reset_export_byte_exact=True,morph_sources_unchanged=True)
+        dump(output,saved)
 
 
 def run_waistline(app,output):

@@ -1,7 +1,9 @@
 # Wrestler Importer
 
-The separate **PSP Model Creator 0.3.1** adds a [waistband torso cutoff](docs/creator-031.md)
-with live height adjustment, a rest-pose guide and saved cut settings.
+The existing **PSP Model Creator 0.4.0** adds [Model Morph Studio](docs/creator-040.md):
+reversible whole-donor body proportions, live preview, undo/redo, original comparison,
+Blender 4.3.2 validation and native PAC preservation. It reuses the installed Suite
+Blender runtime. Retains the [waistband torso cutoff](docs/creator-031.md).
 
 The current **v0.29.2** preview adds [painted clothing edge protection](docs/painted-clothing-edges.md)
 for HCTP wristbands and knee pads sharing a material with skin.

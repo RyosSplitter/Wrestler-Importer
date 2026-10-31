@@ -287,10 +287,9 @@ def ocular_checks(prepared,legacy,jaw,native):
                 limitation='Compatibility with the selected donor transfer, not proof of actual SVR eye animation semantics; PPSSPP validation required.')
 
 def blender_path():
-    frozen=getattr(sys,'frozen',False)
-    path=Path(sys.executable).parent/'runtime/blender/blender.exe' if frozen else Path(os.environ.get('PS2PSP_DEV_BLENDER','/usr/bin/blender'))
-    if not path.is_file():raise ValueError('Bundled Blender runtime is missing. Extract the entire portable ZIP again.')
-    return path
+    from desktop.blender_runtime import resolve
+    try:return resolve(shared=False)
+    except ValueError:raise ValueError('Bundled Blender runtime is missing. Extract the entire portable ZIP again.') from None
 
 def run_job(request,work,progress=lambda p,m:None,cancel=lambda:False,*,qa_samples=None,qa_resolution=None):
     if request.source_format=='wwe13-wii':

@@ -1,4 +1,4 @@
-> Current creator: [0.3.1 waistband cutoff](creator-031.md), including a live torso-height slider and saved cut settings. [0.3](creator-030.md) added donor binds and texture rescue; [0.2](creator-library-02.md) added the prepared 31-model library. The original 0.1 pair study below is retained as development evidence.
+> Current creator: [0.4.0 Model Morph Studio](creator-040.md), with reversible body proportions, live preview and shared Blender validation. Retains the [0.3.1 waistband cutoff](creator-031.md). [0.3](creator-030.md) added donor binds and texture rescue; [0.2](creator-library-02.md) added the prepared 31-model library. The original 0.1 pair study below is retained as development evidence.
 
 # PSP Model Creator 0.1 — standalone experimental application
 

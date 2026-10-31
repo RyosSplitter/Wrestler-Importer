@@ -1,7 +1,7 @@
 name: Build standalone PSP Model Creator
 on:
   push:
-    branches: [feature/standalone-model-creator, feature/creator-waistline]
+    branches: [feature/standalone-model-creator, feature/creator-waistline, feature/model-morph-studio]
   workflow_dispatch:
 permissions:
   contents: write
@@ -16,20 +16,33 @@ jobs:
           python-version: '3.13'
       - run: python -m pip install -r requirements-desktop.txt
       - name: Original synthetic creator regression tests
-        run: python -m unittest tests.test_model_creator tests.test_creator_library tests.test_creator_donor_import tests.test_creator_030 tests.test_creator_waist -v
+        run: python -m unittest tests.test_model_creator tests.test_creator_library tests.test_creator_donor_import tests.test_creator_030 tests.test_creator_waist tests.test_morph_studio -v
       - name: Build separate portable application
         run: python -m tools.build_creator
+      - name: Prepare the existing Suite Blender runtime for morph verification
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $folder = "$env:RUNNER_TEMP/creator-suite-runtime"
+          New-Item -ItemType Directory -Path $folder | Out-Null
+          gh release download suite-painted-23-1d1059e7ee4761dee320fb2e32a6dfe14ec5016d --pattern 'PSP-Model-Suite-v0.29.2-Windows-x64.zip' --dir $folder
+          $archive = "$folder/PSP-Model-Suite-v0.29.2-Windows-x64.zip"
+          if ((Get-FileHash $archive -Algorithm SHA256).Hash.ToLower() -ne '7c5683b59e2a5a719ef33f6321ede5fe4d6c468c9aa2769b2524d83f12d7f0ae') { throw 'Suite runtime archive hash mismatch' }
+          python -c "import zipfile,pathlib,os; folder=pathlib.Path(os.environ['RUNNER_TEMP'])/'creator-suite-runtime'; archive=zipfile.ZipFile(folder/'PSP-Model-Suite-v0.29.2-Windows-x64.zip'); prefix='PSP-Model-Suite/runtime/blender/'; [(folder.joinpath(n[len(prefix):]).parent.mkdir(parents=True,exist_ok=True),folder.joinpath(n[len(prefix):]).write_bytes(archive.read(n))) for n in archive.namelist() if n.startswith(prefix) and not n.endswith('/') and '..' not in pathlib.PurePosixPath(n).parts]"
+      - name: Package Creator and Blender worker patch
+        run: python -m tools.build_creator_patch
       - name: Frozen creator live selection preview, assembly, native export and texture roundtrip
         shell: pwsh
         run: |
           $env:PATH = "$env:SystemRoot\System32;$env:SystemRoot"
           $output = "$env:RUNNER_TEMP\creator-smoke\report.json"
           New-Item -ItemType Directory -Path (Split-Path $output) | Out-Null
-          $p = Start-Process dist/PSP-Model-Creator/PSP-Model-Creator.exe -ArgumentList @('--smoke-test',$output) -PassThru -Wait
+          $p = Start-Process dist/PSP-Model-Creator/PSP-Model-Creator.exe -ArgumentList @('--smoke-test',$output,'--morph-runtime',"$env:RUNNER_TEMP/creator-suite-runtime/blender.exe") -PassThru -Wait
           if (Test-Path $output) { Copy-Item $output dist/creator-smoke.json }
           if ($p.ExitCode -ne 0) { throw 'Frozen creator functional self-check failed' }
           $report = Get-Content $output -Raw | ConvertFrom-Json
-          if (-not $report.passed -or -not $report.live_selection_preview_before_export -or -not $report.live_waistline_adjustment -or -not $report.configured_waistline_export_and_qa -or -not $report.waistline_project_roundtrip) { throw 'Creator self-check missing successful live waistline preview/export' }
+          if (-not $report.passed -or -not $report.live_selection_preview_before_export -or -not $report.live_waistline_adjustment -or -not $report.configured_waistline_export_and_qa -or -not $report.waistline_project_roundtrip -or -not $report.morph_studio -or -not $report.morph_native_attributes_preserved -or -not $report.morph_reset_export_byte_exact) { throw 'Creator self-check missing successful live waistline preview/export' }
           Copy-Item $output dist/creator-smoke.json
           Copy-Item "$env:RUNNER_TEMP/creator-smoke/*.png" dist/
       - name: Test drop-in executable over released 0.2 runtime and library
@@ -46,29 +59,27 @@ jobs:
           Expand-Archive $archive "$base/extracted"
           $app = "$base/extracted/PSP-Model-Creator"
           $catalogBefore = (Get-FileHash "$app/creator_library/catalog.json").Hash
-          Copy-Item dist/PSP-Model-Creator/PSP-Model-Creator.exe "$app/PSP-Model-Creator.exe" -Force
+          Expand-Archive dist/PSP-Model-Creator-0.4.0-Creator-Patch.zip $app -Force
           $env:PATH = "$env:SystemRoot\System32;$env:SystemRoot"
           $output = "$env:RUNNER_TEMP/creator-patch-smoke/report.json"
           New-Item -ItemType Directory -Path (Split-Path $output) | Out-Null
-          $p = Start-Process "$app/PSP-Model-Creator.exe" -ArgumentList @('--smoke-test',$output) -PassThru -Wait
+          $p = Start-Process "$app/PSP-Model-Creator.exe" -ArgumentList @('--smoke-test',$output,'--morph-runtime',"$env:RUNNER_TEMP/creator-suite-runtime/blender.exe") -PassThru -Wait
           if (Test-Path $output) { Copy-Item $output dist/creator-patch-smoke.json }
           if ($p.ExitCode -ne 0) { throw 'Overlay on original 0.2 runtime failed' }
           $report = Get-Content $output -Raw | ConvertFrom-Json
-          if (-not $report.passed -or -not $report.add_donors_button -or -not $report.imported_donor_mixed_preview_and_export -or -not $report.oversized_pac_export_allowed -or -not $report.oversized_gui_warning_shown -or -not $report.maximum_texture_gui_rescue -or -not $report.frozen_hardy_bind_fit -or -not $report.live_waistline_adjustment -or -not $report.cutoff_stale_export_blocked -or -not $report.waistline_controls_visible) { throw 'Donor import/waistline overlay checks failed' }
+          if (-not $report.passed -or -not $report.add_donors_button -or -not $report.imported_donor_mixed_preview_and_export -or -not $report.oversized_pac_export_allowed -or -not $report.oversized_gui_warning_shown -or -not $report.maximum_texture_gui_rescue -or -not $report.frozen_hardy_bind_fit -or -not $report.live_waistline_adjustment -or -not $report.cutoff_stale_export_blocked -or -not $report.waistline_controls_visible -or -not $report.morph_live_preview -or -not $report.morph_stale_export_blocked -or -not $report.morph_project_roundtrip) { throw 'Donor import/waistline overlay checks failed' }
           if ((Get-FileHash "$app/creator_library/catalog.json").Hash -ne $catalogBefore) { throw 'Bundled catalog changed during patch self-check' }
-      - name: Package drop-in donor patch
-        run: python -m tools.build_creator_patch
       - name: Package standalone application
         shell: python
         run: |
           import hashlib,shutil
           from pathlib import Path
-          path=Path(shutil.make_archive('dist/PSP-Model-Creator-0.3.1-Windows-x64','zip','dist','PSP-Model-Creator'))
+          path=Path(shutil.make_archive('dist/PSP-Model-Creator-0.4.0-Windows-x64','zip','dist','PSP-Model-Creator'))
           Path(str(path)+'.sha256').write_text(hashlib.file_digest(path.open('rb'),'sha256').hexdigest()+'  '+path.name+'\n')
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: PSP-Model-Creator-0.3.1-Windows-x64
+          name: PSP-Model-Creator-0.4.0-Windows-x64
           path: |
             dist/*.zip
             dist/*.sha256
@@ -81,7 +92,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           @'
-          PSP Model Creator 0.3.1 moves the default torso/legs cutoff to the waistband and adds a live Higher/Lower slider, a rest-pose cut-line guide and Reset. Preview, native assembly, contour stitching, skeleton selection and seam/pose QA share the configured plane. Saved recipes retain the chosen height; older recipes preserve their legacy cut until Reset is selected. A changed cutoff blocks stale exports until reassembly. Whole-donor PACs remain byte-exact and original donor files are preserved. Retains Add donors, native part binds and optional texture-only fitting. Frozen full-app and original-runtime patch checks exercise the waistline preview, custom export/QA, save/reload/reset, stale-export protection and existing creator workflows. Close the app and extract the 0.3.1 Creator Patch into its folder, keeping _internal and creator_library. The complete Windows ZIP includes all 31 prepared donors. New mixed models still need visual and PPSSPP review; no converter changes.
+          PSP Model Creator 0.4.0 integrates Model Morph Studio into the existing Creator sidebar and model preview. Bounded symmetrical shoulder, chest, waist, upper-arm, thigh and calf controls use immutable native baselines, Undo/Redo, Reset and original comparison. Versioned saved recipes prevent older Creator executables silently discarding edits. Validation uses Blender 4.3.2 relative shape keys with stable native-record IDs and measured preview agreement, then whitelisted native position/normal/mesh-bound edits. UVs, topology, weight/bone bytes, materials and native descriptors stay intact. Reset exports the original PAC exactly with texture downgrade off. Changed controls block stale exports. This body MVP supports compatible whole donors; mixed-part morphs, auxiliaries, length and face controls are later phases. Choose the already installed PSP Model Suite runtime/blender/blender.exe; no duplicate Blender runtime or automatic download is added. Existing Creator operations work without Blender. Full and original-0.2-runtime patch smoke exercise real GUI morphing, Blender export, history, original comparison, save/load/reset and preservation alongside existing creator workflows. The patch adds required _internal/model_creator worker sources as well as the executable: close Creator and merge all patch contents into the installed Creator folder. Source library files stay untouched. Analytical results require PPSSPP review.
           '@ | Set-Content "$env:RUNNER_TEMP/creator-notes.txt" -Encoding utf8NoBOM
           $tag = "creator-preview-${{ github.run_number }}-${{ github.sha }}"
-          gh release create $tag dist/*.zip dist/*.sha256 dist/creator-window.png dist/creator-library-window.png dist/creator-030-window.png dist/creator-waistline-window.png --target '${{ github.sha }}' --prerelease --title 'PSP Model Creator 0.3.1 — waistband torso cutoff' --notes-file "$env:RUNNER_TEMP/creator-notes.txt"
+          gh release create $tag dist/*.zip dist/*.sha256 dist/creator-window.png dist/creator-library-window.png dist/creator-030-window.png dist/creator-waistline-window.png dist/creator-morph-window.png dist/creator-smoke.json dist/creator-patch-smoke.json --target '${{ github.sha }}' --prerelease --title 'PSP Model Creator 0.4.0 — Model Morph Studio' --notes-file "$env:RUNNER_TEMP/creator-notes.txt"

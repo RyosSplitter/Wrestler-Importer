@@ -244,7 +244,9 @@ def create_project(sources,selections,output):
 def read_project(path):
     path=Path(path);project=json.loads(path.read_text(encoding='utf-8'))
     rows=project.get('sources',[]);choices=project.get('selections',{})
-    if project.get('schema')!=SCHEMA or not 1<=len(rows)<=4:raise ValueError('Unsupported library project')
+    from .morph.document import LIBRARY_SCHEMA,validate_recipe
+    if project.get('schema') not in (SCHEMA,LIBRARY_SCHEMA) or not 1<=len(rows)<=4:raise ValueError('Unsupported library project')
+    validate_recipe(project.get('morph'))
     project.setdefault('waist_y',LEGACY_WAIST)
     cut_planes(project['waist_y'])
     if set(choices)!=set(PARTS) or any(type(v)!=int or not 0<=v<len(rows) for v in choices.values()):raise ValueError('Invalid part selections')

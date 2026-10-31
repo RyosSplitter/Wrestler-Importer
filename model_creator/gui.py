@@ -23,6 +23,7 @@ class App:
     def __init__(self, root):
         self.root=root;self.project=None;self.result=None;self.model=None;self.textures=None;self.busy=False;self.events=queue.Queue()
         self.preview_after=None;self.preview_revision=0;self.refresh_after=None;self.library=None;self.library_project=False
+        self.stop_event=threading.Event();root.protocol('WM_DELETE_WINDOW',self.close)
         root.title('PSP Model Creator — Experimental '+VERSION)
         width=min(1100,root.winfo_screenwidth()-40);height=min(830,root.winfo_screenheight()-100)
         self.preview_size=min(448,max(256,root.winfo_screenheight()-480))
@@ -40,7 +41,9 @@ class App:
         self.project_label=tk.StringVar(value='Open the prepared library to start, or create a project from your own PACs.')
         ttk.Label(shell,textvariable=self.project_label,wraplength=950).pack(anchor='w',pady=8)
         work=ttk.Frame(shell);work.pack(fill='both',expand=True)
-        left=ttk.LabelFrame(work,text='Body parts',padding=12);left.pack(side='left',fill='y',padx=(0,12))
+        self.sidebar=ttk.Notebook(work);self.sidebar.pack(side='left',fill='y',padx=(0,12))
+        left=ttk.Frame(self.sidebar,padding=12);self.sidebar.add(left,text='Body parts')
+        morph_page=ttk.Frame(self.sidebar,padding=10);self.sidebar.add(morph_page,text='Morph Studio')
         self.choices={};self.controls=[]
         for part in PARTS:
             ttk.Label(left,text=part).pack(anchor='w',pady=(3,0));v=tk.StringVar();self.choices[part]=v
@@ -81,6 +84,8 @@ class App:
             button=ttk.Button(export,text=text,command=fn);button.pack(side='left',padx=(0,6));self.export_buttons.append(button)
         self.progress=ttk.Progressbar(shell,mode='indeterminate');self.progress.pack(fill='x')
         self.status=tk.StringVar(value='Ready. Originals are copied into a private project and never overwritten.')
+        from .morph.ui import Panel
+        self.morph_ui=Panel(self,morph_page)
         status_label=ttk.Label(shell,textvariable=self.status,wraplength=900)
         # Reserve controls/status BEFORE the expandable preview gets remaining
         # space. Otherwise Tk can shrink late-packed buttons to unlabeled slivers.
@@ -123,7 +128,7 @@ class App:
                     log=Path(tempfile.gettempdir())/'psp-model-creator-last-error.txt';log.write_text(event[1],encoding='utf-8')
                     self.status.set('Operation failed; previous result preserved. '+str(log))
                     self.last_error=event[1]
-                    if '--smoke-test' not in sys.argv:messagebox.showerror('Creator stopped',event[1].splitlines()[-1]+'\n\nFull log: '+str(log),parent=self.root)
+                    if '--smoke-test' not in sys.argv and not self.stop_event.is_set():messagebox.showerror('Creator stopped',event[1].splitlines()[-1]+'\n\nFull log: '+str(log),parent=self.root)
                 else:
                     try:event[1](event[2])
                     except Exception:messagebox.showerror('Creator',traceback.format_exc(),parent=self.root)
@@ -143,6 +148,7 @@ class App:
         try:
             choices=self.selected() if preserve and self.library is not None else dict.fromkeys(PARTS,0)
             if not preserve:self.waist_y.set(DEFAULT_WAIST)
+            if not preserve:self.morph_ui.loading()
             self.library=Library(root);self.library_project=True;self.project=None;self.green.set(False)
             self.labels=[f'{i+1}. {e["label"]}' for i,e in enumerate(self.library.entries)]
             for part,box in zip(PARTS,self.controls):box['values']=self.labels;self.choices[part].set(self.labels[choices[part]])
@@ -212,11 +218,12 @@ class App:
 
     def load(self,path):
         metadata=json.loads(Path(path).read_text(encoding='utf-8'))
-        self.library_project=metadata.get('schema')=='psp-model-creator.library-project/1';self.library=None
+        self.library_project=metadata.get('schema') in ('psp-model-creator.library-project/1','psp-model-creator.library-project/2');self.library=None
         if self.library_project:
             from .library import read_project as reader
         else:reader=read_project
         project,sources=reader(path);self.project=Path(path);self.labels=[s['label'] for s in sources]
+        self.morph_ui.loading(project.get('morph'))
         self.max_textures.set(project.get('maximum_textures') is True)
         self.waist_y.set(project['waist_y'])
         # Include source numbers so even identical filenames are distinguishable.
@@ -257,12 +264,18 @@ class App:
                 from .native import audit_yobj as reader
             else:reader=audit_yobj
             model=reader(raw)
-            return model,textures,preview(model,textures,view,self.preview_size,pose,green,waist_guide=guide)
+            single=len(set(selections.values()))==1
+            reason=None if single else 'Choose Whole donor on Body parts. Mixed-part morphing is a later phase.'
+            if single and set(sources[selections['Head']]['sections'])-{2,8,9}:reason='This donor has auxiliary sections not supported by body morphing yet.'
+            return model,textures,preview(model,textures,view,self.preview_size,pose,green,waist_guide=guide),raw,reason
         def done(result):
             if revision!=self.preview_revision:return
-            self.model,self.textures,image=result;photo=ImageTk.PhotoImage(image)
+            self.model,self.textures,image,raw,reason=result
+            self.morph_ui.baseline(raw,reason);photo=ImageTk.PhotoImage(image)
             self.picture.configure(image=photo,text='');self.picture.image=photo
+            self.preview_frame=image
             self.status.set('Current selections previewed. Assemble and validate to check native structure, poses and actual PAC size.')
+            if self.morph_ui.recipe():self.refresh()
         self.task(work,done)
 
     def save(self):
@@ -272,13 +285,17 @@ class App:
             if parent:
                 from .library import create_project as snapshot
                 sources,selections=self.current_sources();path=snapshot(sources,selections,Path(parent)/('Creator-project-'+uuid.uuid4().hex[:8]))
-                data=json.loads(path.read_text(encoding='utf-8'));data['maximum_textures']=self.max_textures.get();data['waist_y']=float(self.waist_y.get());dump(path,data)
+                data=json.loads(path.read_text(encoding='utf-8'));data['maximum_textures']=self.max_textures.get();data['waist_y']=float(self.waist_y.get())
+                from .morph.document import attach
+                dump(path,attach(data,self.morph_ui.recipe()))
                 self.status.set('Saved independent snapshots and recipe: '+str(path))
             return
         if not self.project:return
         try:
             project,_=read_project(self.project);project['selections']=self.selected();project['maximum_textures']=self.max_textures.get()
             project['waist_y']=float(self.waist_y.get())
+            from .morph.document import attach
+            project=attach(project,self.morph_ui.recipe())
             history=self.project.parent/'history';history.mkdir(exist_ok=True)
             shutil.copy2(self.project,history/(uuid.uuid4().hex+'.json'))
             temp=self.project.with_suffix('.new');dump(temp,project);temp.replace(self.project)
@@ -291,15 +308,18 @@ class App:
         if self.preview_after is not None:self.root.after_cancel(self.preview_after);self.preview_after=None
         self.preview_revision+=1
         original_selections=self.selected();sources,selections=self.current_sources();library_mode=self.library_project;maximum_textures=self.max_textures.get()
+        morph_recipe=self.morph_ui.recipe();runtime=self.morph_ui.runtime
         if library_mode:
             from .library import create_project as snapshot
             parent=Path(os.environ.get('LOCALAPPDATA',Path.home()/'.local/share'))/'PSP Model Creator'/'jobs'/uuid.uuid4().hex
             project=snapshot(sources,selections,parent);output=parent/'build'
-            metadata=json.loads(project.read_text(encoding='utf-8'));metadata['maximum_textures']=maximum_textures;metadata['waist_y']=float(self.waist_y.get());dump(project,metadata)
+            metadata=json.loads(project.read_text(encoding='utf-8'));metadata['maximum_textures']=maximum_textures;metadata['waist_y']=float(self.waist_y.get())
+            from .morph.document import attach
+            dump(project,attach(metadata,morph_recipe))
         else:
             self.save();project=self.project;output=self.project.parent/'builds'/uuid.uuid4().hex
         def work():
-            report=build(project,selections,output,library=library_mode,allow_oversize=True,maximum_textures=maximum_textures,progress=lambda msg:self.events.put(('status',msg)))
+            report=build(project,selections,output,library=library_mode,allow_oversize=True,maximum_textures=maximum_textures,morph=morph_recipe,blender=runtime,cancel=self.stop_event.is_set,progress=lambda msg:self.events.put(('status',msg)))
             report['ui_selections']=original_selections
             source=load_source(output/'created-model.pac',library=library_mode)
             return output,report,source
@@ -325,10 +345,18 @@ class App:
                 self.refresh_after=self.root.after(150,retry)
             return
         model,textures,view,pose,green=self.model,self.textures,self.view,self.pose.get(),self.green.get()
+        revision=self.preview_revision;model_job=self.morph_ui.preview_job(model)
         guide=float(self.waist_y.get()) if self.show_waist.get() else None
         def done(image):
+            if revision!=self.preview_revision:return
             photo=ImageTk.PhotoImage(image);self.picture.configure(image=photo,text='');self.picture.image=photo
-        self.task(lambda:preview(model,textures,view,self.preview_size,pose,green,waist_guide=guide),done)
+            self.preview_frame=image
+        self.task(lambda:preview(model_job(),textures,view,self.preview_size,pose,green,waist_guide=guide),done)
+
+    def close(self):
+        self.stop_event.set()
+        if self.busy:self.status.set('Closing after the current worker stops…');self.root.after(100,self.close)
+        else:self.root.destroy()
 
     def set_view(self,view):
         if not self.require_idle():return
@@ -343,6 +371,8 @@ class App:
             messagebox.showinfo('Texture option changed','Assemble and validate with the current texture option before exporting. The previous build is preserved.',parent=self.root);return False
         if abs(self.last_report.get('waist_y',DEFAULT_WAIST)-float(self.waist_y.get()))>1e-7:
             messagebox.showinfo('Torso cutoff changed','Assemble and validate with the current torso cutoff before exporting. The previous build is preserved.',parent=self.root);return False
+        if not self.morph_ui.matches(self.last_report):
+            messagebox.showinfo('Morph changed','Assemble and validate the current body morph before exporting. Your previous build is preserved.',parent=self.root);return False
         return True
 
     def export_pac(self):
@@ -418,6 +448,8 @@ class App:
 
 def main():
     root=tk.Tk();app=App(root)
+    if '--morph-runtime' in sys.argv:
+        app.morph_ui.runtime=sys.argv[sys.argv.index('--morph-runtime')+1];app.morph_ui.update_runtime()
     if '--smoke-test' in sys.argv:
         from .smoke import run
         output=Path(sys.argv[sys.argv.index('--smoke-test')+1])
