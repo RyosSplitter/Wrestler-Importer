@@ -245,7 +245,9 @@ def read_project(path):
     path=Path(path);project=json.loads(path.read_text(encoding='utf-8'))
     rows=project.get('sources',[]);choices=project.get('selections',{})
     from .morph.document import LIBRARY_SCHEMA,validate_recipe
-    if project.get('schema') not in (SCHEMA,LIBRARY_SCHEMA) or not 1<=len(rows)<=4:raise ValueError('Unsupported library project')
+    from .uv.document import LIBRARY_SCHEMA as UV_SCHEMA,validate_recipe as validate_uv
+    validate_uv(project.get('uv'))
+    if project.get('schema') not in (SCHEMA,LIBRARY_SCHEMA,UV_SCHEMA) or not 1<=len(rows)<=4:raise ValueError('Unsupported library project')
     validate_recipe(project.get('morph'))
     project.setdefault('waist_y',LEGACY_WAIST)
     cut_planes(project['waist_y'])

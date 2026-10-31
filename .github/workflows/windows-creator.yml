@@ -1,7 +1,7 @@
 name: Build standalone PSP Model Creator
 on:
   push:
-    branches: [feature/standalone-model-creator, feature/creator-waistline, feature/model-morph-studio]
+    branches: [feature/standalone-model-creator, feature/creator-waistline, feature/model-morph-studio, feature/creator-uv-editor]
   workflow_dispatch:
 permissions:
   contents: write
@@ -16,7 +16,7 @@ jobs:
           python-version: '3.13'
       - run: python -m pip install -r requirements-desktop.txt
       - name: Original synthetic creator regression tests
-        run: python -m unittest tests.test_model_creator tests.test_creator_library tests.test_creator_donor_import tests.test_creator_030 tests.test_creator_waist tests.test_morph_studio -v
+        run: python -m unittest tests.test_model_creator tests.test_creator_library tests.test_creator_donor_import tests.test_creator_030 tests.test_creator_waist tests.test_morph_studio tests.test_uv_editor -v
       - name: Build separate portable application
         run: python -m tools.build_creator
       - name: Prepare the existing Suite Blender runtime for morph verification
@@ -42,7 +42,7 @@ jobs:
           if (Test-Path $output) { Copy-Item $output dist/creator-smoke.json }
           if ($p.ExitCode -ne 0) { throw 'Frozen creator functional self-check failed' }
           $report = Get-Content $output -Raw | ConvertFrom-Json
-          if (-not $report.passed -or -not $report.live_selection_preview_before_export -or -not $report.live_waistline_adjustment -or -not $report.configured_waistline_export_and_qa -or -not $report.waistline_project_roundtrip -or -not $report.morph_studio -or -not $report.morph_native_attributes_preserved -or -not $report.morph_reset_export_byte_exact) { throw 'Creator self-check missing successful live waistline preview/export' }
+          if (-not $report.passed -or -not $report.live_selection_preview_before_export -or -not $report.live_waistline_adjustment -or -not $report.configured_waistline_export_and_qa -or -not $report.waistline_project_roundtrip -or -not $report.morph_studio -or -not $report.morph_native_attributes_preserved -or -not $report.morph_reset_export_byte_exact -or -not $report.uv_live_preview -or -not $report.uv_canvas_mouse_drag -or -not $report.uv_morph_combined_export -or -not $report.uv_reset_export_byte_exact) { throw 'Creator self-check missing successful live waistline preview/export' }
           Copy-Item $output dist/creator-smoke.json
           Copy-Item "$env:RUNNER_TEMP/creator-smoke/*.png" dist/
       - name: Test drop-in executable over released 0.2 runtime and library
@@ -59,7 +59,7 @@ jobs:
           Expand-Archive $archive "$base/extracted"
           $app = "$base/extracted/PSP-Model-Creator"
           $catalogBefore = (Get-FileHash "$app/creator_library/catalog.json").Hash
-          Expand-Archive dist/PSP-Model-Creator-0.4.0-Creator-Patch.zip $app -Force
+          Expand-Archive dist/PSP-Model-Creator-0.5.0-Creator-Patch.zip $app -Force
           $env:PATH = "$env:SystemRoot\System32;$env:SystemRoot"
           $output = "$env:RUNNER_TEMP/creator-patch-smoke/report.json"
           New-Item -ItemType Directory -Path (Split-Path $output) | Out-Null
@@ -67,19 +67,19 @@ jobs:
           if (Test-Path $output) { Copy-Item $output dist/creator-patch-smoke.json }
           if ($p.ExitCode -ne 0) { throw 'Overlay on original 0.2 runtime failed' }
           $report = Get-Content $output -Raw | ConvertFrom-Json
-          if (-not $report.passed -or -not $report.add_donors_button -or -not $report.imported_donor_mixed_preview_and_export -or -not $report.oversized_pac_export_allowed -or -not $report.oversized_gui_warning_shown -or -not $report.maximum_texture_gui_rescue -or -not $report.frozen_hardy_bind_fit -or -not $report.live_waistline_adjustment -or -not $report.cutoff_stale_export_blocked -or -not $report.waistline_controls_visible -or -not $report.morph_live_preview -or -not $report.morph_stale_export_blocked -or -not $report.morph_project_roundtrip) { throw 'Donor import/waistline overlay checks failed' }
+          if (-not $report.passed -or -not $report.add_donors_button -or -not $report.imported_donor_mixed_preview_and_export -or -not $report.oversized_pac_export_allowed -or -not $report.oversized_gui_warning_shown -or -not $report.maximum_texture_gui_rescue -or -not $report.frozen_hardy_bind_fit -or -not $report.live_waistline_adjustment -or -not $report.cutoff_stale_export_blocked -or -not $report.waistline_controls_visible -or -not $report.morph_live_preview -or -not $report.morph_stale_export_blocked -or -not $report.morph_project_roundtrip -or -not $report.uv_project_roundtrip -or -not $report.uv_stale_export_blocked -or -not $report.uv_palette_texture_import) { throw 'Donor import/waistline overlay checks failed' }
           if ((Get-FileHash "$app/creator_library/catalog.json").Hash -ne $catalogBefore) { throw 'Bundled catalog changed during patch self-check' }
       - name: Package standalone application
         shell: python
         run: |
           import hashlib,shutil
           from pathlib import Path
-          path=Path(shutil.make_archive('dist/PSP-Model-Creator-0.4.0-Windows-x64','zip','dist','PSP-Model-Creator'))
+          path=Path(shutil.make_archive('dist/PSP-Model-Creator-0.5.0-Windows-x64','zip','dist','PSP-Model-Creator'))
           Path(str(path)+'.sha256').write_text(hashlib.file_digest(path.open('rb'),'sha256').hexdigest()+'  '+path.name+'\n')
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: PSP-Model-Creator-0.4.0-Windows-x64
+          name: PSP-Model-Creator-0.5.0-Windows-x64
           path: |
             dist/*.zip
             dist/*.sha256
@@ -92,7 +92,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           @'
-          PSP Model Creator 0.4.0 integrates Model Morph Studio into the existing Creator sidebar and model preview. Bounded symmetrical shoulder, chest, waist, upper-arm, thigh and calf controls use immutable native baselines, Undo/Redo, Reset and original comparison. Versioned saved recipes prevent older Creator executables silently discarding edits. Validation uses Blender 4.3.2 relative shape keys with stable native-record IDs and measured preview agreement, then whitelisted native position/normal/mesh-bound edits. UVs, topology, weight/bone bytes, materials and native descriptors stay intact. Reset exports the original PAC exactly with texture downgrade off. Changed controls block stale exports. This body MVP supports compatible whole donors; mixed-part morphs, auxiliaries, length and face controls are later phases. Choose the already installed PSP Model Suite runtime/blender/blender.exe; no duplicate Blender runtime or automatic download is added. Existing Creator operations work without Blender. Full and original-0.2-runtime patch smoke exercise real GUI morphing, Blender export, history, original comparison, save/load/reset and preservation alongside existing creator workflows. The patch adds required _internal/model_creator worker sources as well as the executable: close Creator and merge all patch contents into the installed Creator folder. Source library files stay untouched. Analytical results require PPSSPP review.
+          PSP Model Creator 0.5.0 adds an integrated UV Editor beside the shared live model preview, retaining Model Morph Studio and the existing native PAC workflow. Display textures and UV islands, select islands or box-select records, filter face/head, torso, arms and legs, isolate regions in 3D, and move/scale/rotate with direct canvas gestures or numeric controls. Undo/Redo, resets, original comparison, zoom/pan, manual U/V mirroring and relative UV-area distortion overlays are included. Matching-size PNG import preserves native format, allocation and alpha and previews actual indexed PSP colors. Saved schema-3 projects retain morphs, sparse UV edits and imported textures. Export patches only UV float pairs after optional Blender-validated body morphing; readback and whitelisted byte checks preserve geometry, topology, bones, weights and material state. Changed edits block stale exports. Source PACs and prepared library assets remain unchanged. Whole-donor reset exports original bytes with texture downgrade off. Original Creator 0.2-runtime patch and full-app Windows smoke checks exercise real mouse gestures, live preview, morph+UV export, palette import, saved projects, stale saves and reset. Close Creator and merge ALL patch files including _internal into the existing Creator folder. No Blender runtime is bundled; choose the installed Suite runtime for body morph export. Facial landmark alignment, automatic bilateral pairing and independent seam/unmirroring tools are later phases. Analytical verification still requires PPSSPP testing.
           '@ | Set-Content "$env:RUNNER_TEMP/creator-notes.txt" -Encoding utf8NoBOM
           $tag = "creator-preview-${{ github.run_number }}-${{ github.sha }}"
-          gh release create $tag dist/*.zip dist/*.sha256 dist/creator-window.png dist/creator-library-window.png dist/creator-030-window.png dist/creator-waistline-window.png dist/creator-morph-window.png dist/creator-smoke.json dist/creator-patch-smoke.json --target '${{ github.sha }}' --prerelease --title 'PSP Model Creator 0.4.0 — Model Morph Studio' --notes-file "$env:RUNNER_TEMP/creator-notes.txt"
+          gh release create $tag dist/*.zip dist/*.sha256 dist/creator-window.png dist/creator-library-window.png dist/creator-030-window.png dist/creator-waistline-window.png dist/creator-morph-window.png dist/creator-uv-window.png dist/creator-smoke.json dist/creator-patch-smoke.json --target '${{ github.sha }}' --prerelease --title 'PSP Model Creator 0.5.0 — UV Editor and Morph Studio' --notes-file "$env:RUNNER_TEMP/creator-notes.txt"

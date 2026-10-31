@@ -34,6 +34,8 @@ def attach(project,recipe):
     else:
         project['schema']='psp-model-creator.library-project/1' if '.library-project/' in project['schema'] else 'psp-model-creator/1'
         project.pop('morph',None)
+    if project.get('uv'):
+        project['schema']='psp-model-creator.library-project/3' if '.library-project/' in project['schema'] else 'psp-model-creator/3'
     return project
 
 

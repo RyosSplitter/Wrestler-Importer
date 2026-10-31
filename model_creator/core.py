@@ -22,7 +22,7 @@ from tools.weight_trial_review import descendant_names, deform
 from tools.prepare_model import bone_matrices
 from model_creator.parts import PARTS, JOINTS, DEFAULT_WAIST, LEGACY_WAIST, cut_planes, extract, stitch, triangles
 
-VERSION = '0.4.0'
+VERSION = '0.5.0'
 SCHEMA = 'psp-model-creator/1'
 MAX_BYTES = IN_RING_MAX_PAC_BYTES
 POSES = {'rest': {}, 'standing': {'l_ninoude': ('z',70), 'r_ninoude': ('z',-70)},
@@ -106,7 +106,9 @@ def create_project(first, second, output):
 def read_project(path):
     path=Path(path);project=json.loads(path.read_text(encoding='utf-8'))
     from .morph.document import PAIR_SCHEMA,validate_recipe
-    if project.get('schema') not in (SCHEMA,PAIR_SCHEMA) or len(project.get('sources',[]))!=2:raise ValueError('Unsupported creator project.')
+    from .uv.document import PAIR_SCHEMA as UV_SCHEMA,validate_recipe as validate_uv
+    validate_uv(project.get('uv'))
+    if project.get('schema') not in (SCHEMA,PAIR_SCHEMA,UV_SCHEMA) or len(project.get('sources',[]))!=2:raise ValueError('Unsupported creator project.')
     validate_recipe(project.get('morph'))
     project.setdefault('waist_y',LEGACY_WAIST)
     cut_planes(project['waist_y'])
@@ -377,7 +379,7 @@ def preview(model,textures,view='front-left',resolution=640,pose='rest',green=Fa
     return image
 
 
-def build(project_path, selections, output, *, resolution=640, progress=lambda _:None, library=False, allow_oversize=False, maximum_textures=False, morph=None, blender=None, cancel=lambda:False):
+def build(project_path, selections, output, *, resolution=640, progress=lambda _:None, library=False, allow_oversize=False, maximum_textures=False, morph=None, blender=None, uv=None, cancel=lambda:False):
     from tools.yukes_bpe import compress,decompress
     reader=audit_yobj;project_reader=read_project
     if library:
@@ -387,6 +389,7 @@ def build(project_path, selections, output, *, resolution=640, progress=lambda _
     if output.exists():raise FileExistsError('Output directory already exists; previous versions are preserved.')
     progress('Assembling native parts and attachment seams')
     raw,textures,report=assemble(sources,selections,library=library,waist_y=project['waist_y'])
+    baseline_raw=raw
     report['waist_y']=project['waist_y']
     progress('Checking native buffers, bone palettes and analytical poses')
     report['qa']=qa(raw,report,library=library);model=reader(raw)
@@ -403,24 +406,38 @@ def build(project_path, selections, output, *, resolution=640, progress=lambda _
         raw,report['morph']=commit(raw,recipe,runtime=blender,cancel=cancel);model=reader(raw)
         report['geometry_unchanged']=False
         report['changed_geometry']='Reversible body fields; native topology, UVs, bone bytes and weight bytes retained'
+    from .uv.document import validate_recipe as validate_uv
+    uv_recipe=validate_uv(uv if uv is not None else project.get('uv'))
+    uv_changed=bool(uv_recipe and (uv_recipe['edits'] or uv_recipe['textures']))
+    texture_changed=False
+    if uv_changed:
+        progress('Checking UV-only native edits and indexed texture readback')
+        from .uv.native_patch import commit as commit_uv
+        raw,textures,report['uv']=commit_uv(raw,baseline_raw,textures,uv_recipe);model=reader(raw)
+        texture_changed=bool(report['uv']['changed_textures'])
+    native_edit=morphed or uv_changed
     # Source 0 is the explicit output-container template for mixed assemblies.
     # This prototype assembles the main model, not optional source-1 auxiliary
     # nested PACs. Both complete originals remain in the private project.
     template=selections['Head'] if len(set(selections.values()))==1 else selections['Torso'] if library else 0
     donor=sources[template]
-    if len(set(selections.values()))==1 and not morphed:
+    if len(set(selections.values()))==1 and not native_edit:
         donor=sources[selections['Head']]
         pac=donor['data'];report['packaging']='Original PAC byte-exact (single-source assembly).'
     else:
         from desktop.source_reference_qa import safe_repack
-        if not morphed:safe_repack(donor['data'])
+        if not native_edit:safe_repack(donor['data'])
         packed=compress(raw,max_distinct=220)
         if decompress(packed)!=raw:raise ValueError('Model compression roundtrip failed.')
-        if morphed:
+        if len(set(selections.values()))==1:
             donor=sources[selections['Head']]
             # Creator's descriptor-aware audit and whitelisted byte patch
             # preserve native allocations; no generic geometry rebuild occurs.
-            pac=replace_sections(donor['data'],{2:packed})
+            replacements={2:packed}
+            if texture_changed:
+                table=texture_table(model['texture_names'],[textures[n] for n in model['texture_names']],gim_reader=read_gim)
+                replacements[9]=compress(table,max_distinct=220)
+            pac=replace_sections(donor['data'],replacements)
         else:
             table=texture_table(model['texture_names'],[textures[n] for n in model['texture_names']],gim_reader=read_gim)
             pac=replace_sections(donor['data'],{2:packed,9:compress(table,max_distinct=220)})
@@ -429,7 +446,7 @@ def build(project_path, selections, output, *, resolution=640, progress=lambda _
         original=inspect_pac(donor['data']);final=inspect_pac(pac);unchanged=[]
         for a,b in zip(original['sections'],final['sections']):
             if a['id']!=b['id']:raise ValueError('PAC section identity changed.')
-            if a['id'] not in ((2,) if morphed else (2,9)):
+            if a['id'] not in ((2,) if len(set(selections.values()))==1 and not texture_changed else (2,9)):
                 if donor['data'][a['offset']:a['offset']+a['size']]!=pac[b['offset']:b['offset']+b['size']]:raise ValueError('Unrelated PAC payload changed.')
                 unchanged.append(a['id'])
         report['unrelated_stored_sections_identical']=unchanged
@@ -447,7 +464,7 @@ def build(project_path, selections, output, *, resolution=640, progress=lambda _
         except Exception:
             texture_diagnostics.cleanup();raise
     report.update(maximum_texture_downgrade=texture_report,selections=selections,labels=[s['label'] for s in sources],pac_bytes=len(pac),max_pac_bytes=MAX_BYTES,
-                  pac_sha256=digest(pac),yobj_sha256=digest(raw),textures_byte_exact=not texture_report or texture_report['changed_textures']==0,
+                  pac_sha256=digest(pac),yobj_sha256=digest(raw),textures_byte_exact=not texture_changed and (not texture_report or texture_report['changed_textures']==0),
                   geometry_decimation=False,within_budget=len(pac)<=MAX_BYTES)
     report['source_allocation_fill']=[s['allocation_fill'] for s in sources]
     report['review_findings']=[dict(joint=s['joint'],unstitched_ambiguous_records=s['unstitched_internal_records'],
@@ -465,7 +482,7 @@ def build(project_path, selections, output, *, resolution=640, progress=lambda _
     container=inspect_pac(pac)
     if len(pac)%2048:raise ValueError('PAC final alignment failed.')
     aligned=all(s['offset']%16==0 for s in container['sections'])
-    if (len(set(selections.values()))!=1 or morphed) and not aligned:raise ValueError('Rebuilt PAC section alignment failed.')
+    if (len(set(selections.values()))!=1 or native_edit) and not aligned:raise ValueError('Rebuilt PAC section alignment failed.')
     report['section_alignment']=dict(rebuilt_sections_16_aligned=aligned,
         native_single_source_layout_retained=len(set(selections.values()))==1)
     finalraw=next(r for s,r in sections(pac) if s['id']==2)
@@ -487,7 +504,7 @@ def build(project_path, selections, output, *, resolution=640, progress=lambda _
     for view in ('front','back','left','right','front-left'):
         progress('Rendering '+view);preview(model,textures,view,resolution).save(folder/(view+'.png'))
     (output/'SHA256SUMS.txt').write_text(report['pac_sha256']+'  created-model.pac\n',encoding='ascii')
-    dump(output/'qa.json',report);dump(output/'recipe.json',dict(schema=project['schema'],selections=selections,sources=project['sources'],waist_y=project['waist_y'],maximum_textures=maximum_textures,morph=recipe))
+    dump(output/'qa.json',report);dump(output/'recipe.json',dict(schema=project['schema'],selections=selections,sources=project['sources'],waist_y=project['waist_y'],maximum_textures=maximum_textures,morph=recipe,uv=uv_recipe))
     warning=('OVER BUDGET: '+str(report['budget_warning']['over_by_bytes'])+' bytes over target. '+report['budget_warning']['message']+'\n\n') if report.get('budget_warning') else ''
     (output/'README.txt').write_text(warning+'Experimental native PSP assembly. Import created-model.pac into a COPY of the wrestler slot using your established PAC/ARC workflow. Rebuild the enclosing archive and update its ARC metadata before testing a copied ISO in PPSSPP. Do not overwrite accepted PACs. Analytical poses are not captured game animations. OBJ is preview-only; native YOBJ and PAC retain rigging. Blood overlay meshes are retained in PAC and OBJ, but hidden in normal preview PNGs. Review qa.json, standing/walking/crouching, facial motion and blood in-game.\n',encoding='utf-8')
     return report

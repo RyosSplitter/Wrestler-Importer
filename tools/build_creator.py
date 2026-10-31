@@ -25,12 +25,13 @@ def build():
                 out=sources/path.relative_to(ROOT);out.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(path,out)
     for name in ('psp_model_creator.py','requirements.txt','requirements-qa.txt','requirements-desktop.txt'):
         shutil.copy2(ROOT/name,sources/name)
-    shutil.copy2(ROOT/'docs/creator-040.md',destination/'README.md')
+    shutil.copy2(ROOT/'docs/creator-050.md',destination/'README.md')
     shutil.copy2(ROOT/'docs/standalone-model-creator.md',sources/'CREATOR.md')
     shutil.copy2(ROOT/'docs/creator-library-02.md',destination/'LIBRARY.md')
     shutil.copy2(ROOT/'docs/creator-030.md',destination/'ADD-DONORS.md')
     shutil.copy2(ROOT/'docs/creator-031.md',sources/'CREATOR-WAISTLINE.md')
     shutil.copy2(ROOT/'docs/creator-040.md',sources/'CREATOR-MORPH.md')
+    shutil.copy2(ROOT/'docs/creator-050.md',sources/'CREATOR-UV.md')
     library=ROOT/'creator_library'
     from model_creator.library import Library
     prepared=Library(library)
@@ -56,7 +57,7 @@ def build():
     for p in destination.rglob('*'):
         if p.suffix.casefold() in forbidden and p not in approved_assets:raise ValueError('Unexpected asset in application bundle: '+str(p))
     files={p.relative_to(destination).as_posix():hashlib.file_digest(p.open('rb'),'sha256').hexdigest() for p in destination.rglob('*') if p.is_file()}
-    (destination/'MANIFEST.json').write_text(json.dumps(dict(version='0.4.0',blender_bundled=False,blender_runtime='Select existing Blender 4.3.2 from PSP Model Suite for morph export',game_assets_bundled=True,
+    (destination/'MANIFEST.json').write_text(json.dumps(dict(version='0.5.0',blender_bundled=False,blender_runtime='Select existing Blender 4.3.2 from PSP Model Suite for morph export',game_assets_bundled=True,
         prepared_models=len(prepared.entries),assets='User-supplied native library; original rights retained.',files=files),indent=2),encoding='utf-8')
     print('Creator ready:',destination)
 

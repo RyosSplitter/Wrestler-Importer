@@ -44,6 +44,7 @@ class App:
         self.sidebar=ttk.Notebook(work);self.sidebar.pack(side='left',fill='y',padx=(0,12))
         left=ttk.Frame(self.sidebar,padding=12);self.sidebar.add(left,text='Body parts')
         morph_page=ttk.Frame(self.sidebar,padding=10);self.sidebar.add(morph_page,text='Morph Studio')
+        uv_page=ttk.Frame(self.sidebar,padding=8);self.sidebar.add(uv_page,text='UV Editor')
         self.choices={};self.controls=[]
         for part in PARTS:
             ttk.Label(left,text=part).pack(anchor='w',pady=(3,0));v=tk.StringVar();self.choices[part]=v
@@ -74,7 +75,9 @@ class App:
         ttk.Label(top,text='Pose:').pack(side='left');self.pose=tk.StringVar(value='rest')
         box=ttk.Combobox(top,textvariable=self.pose,values=list(POSES),state='readonly',width=15);box.pack(side='left',padx=6);box.bind('<<ComboboxSelected>>',lambda _:self.refresh())
         self.green=tk.BooleanVar(value=True);ttk.Checkbutton(top,text='Green body preview',variable=self.green,command=self.refresh).pack(side='left',padx=10)
-        self.picture=ttk.Label(right,text='Choose two PSP PACs to begin.',anchor='center',background='#484848',foreground='white');self.picture.pack(fill='both',expand=True)
+        stage=ttk.Frame(right);stage.pack(fill='both',expand=True)
+        uv_workspace=ttk.Frame(stage)
+        self.picture=ttk.Label(stage,text='Choose two PSP PACs to begin.',anchor='center',background='#484848',foreground='white');self.picture.pack(fill='both',expand=True)
         views=ttk.Frame(right);views.pack(fill='x',pady=6);self.view='front-left'
         for label,view in (('¾','front-left'),('Front','front'),('Rear','back'),('Left','left'),('Right','right')):
             ttk.Button(views,text=label,command=lambda v=view:self.set_view(v),width=8).pack(side='left',padx=(0,4))
@@ -86,6 +89,9 @@ class App:
         self.status=tk.StringVar(value='Ready. Originals are copied into a private project and never overwritten.')
         from .morph.ui import Panel
         self.morph_ui=Panel(self,morph_page)
+        from .uv.ui import Panel as UVPanel
+        self.uv_ui=UVPanel(self,uv_page,uv_workspace)
+        self.sidebar.bind('<<NotebookTabChanged>>',lambda _:self.uv_ui.tab_changed())
         status_label=ttk.Label(shell,textvariable=self.status,wraplength=900)
         # Reserve controls/status BEFORE the expandable preview gets remaining
         # space. Otherwise Tk can shrink late-packed buttons to unlabeled slivers.
@@ -148,7 +154,7 @@ class App:
         try:
             choices=self.selected() if preserve and self.library is not None else dict.fromkeys(PARTS,0)
             if not preserve:self.waist_y.set(DEFAULT_WAIST)
-            if not preserve:self.morph_ui.loading()
+            if not preserve:self.morph_ui.loading();self.uv_ui.loading()
             self.library=Library(root);self.library_project=True;self.project=None;self.green.set(False)
             self.labels=[f'{i+1}. {e["label"]}' for i,e in enumerate(self.library.entries)]
             for part,box in zip(PARTS,self.controls):box['values']=self.labels;self.choices[part].set(self.labels[choices[part]])
@@ -218,12 +224,12 @@ class App:
 
     def load(self,path):
         metadata=json.loads(Path(path).read_text(encoding='utf-8'))
-        self.library_project=metadata.get('schema') in ('psp-model-creator.library-project/1','psp-model-creator.library-project/2');self.library=None
+        self.library_project=metadata.get('schema') in ('psp-model-creator.library-project/1','psp-model-creator.library-project/2','psp-model-creator.library-project/3');self.library=None
         if self.library_project:
             from .library import read_project as reader
         else:reader=read_project
         project,sources=reader(path);self.project=Path(path);self.labels=[s['label'] for s in sources]
-        self.morph_ui.loading(project.get('morph'))
+        self.morph_ui.loading(project.get('morph'));self.uv_ui.loading(project.get('uv'))
         self.max_textures.set(project.get('maximum_textures') is True)
         self.waist_y.set(project['waist_y'])
         # Include source numbers so even identical filenames are distinguishable.
@@ -270,12 +276,12 @@ class App:
             return model,textures,preview(model,textures,view,self.preview_size,pose,green,waist_guide=guide),raw,reason
         def done(result):
             if revision!=self.preview_revision:return
-            self.model,self.textures,image,raw,reason=result
-            self.morph_ui.baseline(raw,reason);photo=ImageTk.PhotoImage(image)
+            self.model,self.textures,image,raw,reason=result;self.showing_build=False
+            self.morph_ui.baseline(raw,reason);self.uv_ui.baseline(raw,self.textures);photo=ImageTk.PhotoImage(image)
             self.picture.configure(image=photo,text='');self.picture.image=photo
             self.preview_frame=image
             self.status.set('Current selections previewed. Assemble and validate to check native structure, poses and actual PAC size.')
-            if self.morph_ui.recipe():self.refresh()
+            if self.morph_ui.recipe() or self.uv_ui.recipe() or self.uv_ui.active:self.refresh()
         self.task(work,done)
 
     def save(self):
@@ -287,7 +293,8 @@ class App:
                 sources,selections=self.current_sources();path=snapshot(sources,selections,Path(parent)/('Creator-project-'+uuid.uuid4().hex[:8]))
                 data=json.loads(path.read_text(encoding='utf-8'));data['maximum_textures']=self.max_textures.get();data['waist_y']=float(self.waist_y.get())
                 from .morph.document import attach
-                dump(path,attach(data,self.morph_ui.recipe()))
+                from .uv.document import attach as attach_uv
+                dump(path,attach_uv(attach(data,self.morph_ui.recipe()),self.uv_ui.recipe()))
                 self.status.set('Saved independent snapshots and recipe: '+str(path))
             return
         if not self.project:return
@@ -295,7 +302,8 @@ class App:
             project,_=read_project(self.project);project['selections']=self.selected();project['maximum_textures']=self.max_textures.get()
             project['waist_y']=float(self.waist_y.get())
             from .morph.document import attach
-            project=attach(project,self.morph_ui.recipe())
+            from .uv.document import attach as attach_uv
+            project=attach_uv(attach(project,self.morph_ui.recipe()),self.uv_ui.recipe())
             history=self.project.parent/'history';history.mkdir(exist_ok=True)
             shutil.copy2(self.project,history/(uuid.uuid4().hex+'.json'))
             temp=self.project.with_suffix('.new');dump(temp,project);temp.replace(self.project)
@@ -308,23 +316,24 @@ class App:
         if self.preview_after is not None:self.root.after_cancel(self.preview_after);self.preview_after=None
         self.preview_revision+=1
         original_selections=self.selected();sources,selections=self.current_sources();library_mode=self.library_project;maximum_textures=self.max_textures.get()
-        morph_recipe=self.morph_ui.recipe();runtime=self.morph_ui.runtime
+        morph_recipe=self.morph_ui.recipe();runtime=self.morph_ui.runtime;uv_recipe=self.uv_ui.recipe()
         if library_mode:
             from .library import create_project as snapshot
             parent=Path(os.environ.get('LOCALAPPDATA',Path.home()/'.local/share'))/'PSP Model Creator'/'jobs'/uuid.uuid4().hex
             project=snapshot(sources,selections,parent);output=parent/'build'
             metadata=json.loads(project.read_text(encoding='utf-8'));metadata['maximum_textures']=maximum_textures;metadata['waist_y']=float(self.waist_y.get())
             from .morph.document import attach
-            dump(project,attach(metadata,morph_recipe))
+            from .uv.document import attach as attach_uv
+            dump(project,attach_uv(attach(metadata,morph_recipe),uv_recipe))
         else:
             self.save();project=self.project;output=self.project.parent/'builds'/uuid.uuid4().hex
         def work():
-            report=build(project,selections,output,library=library_mode,allow_oversize=True,maximum_textures=maximum_textures,morph=morph_recipe,blender=runtime,cancel=self.stop_event.is_set,progress=lambda msg:self.events.put(('status',msg)))
+            report=build(project,selections,output,library=library_mode,allow_oversize=True,maximum_textures=maximum_textures,morph=morph_recipe,blender=runtime,uv=uv_recipe,cancel=self.stop_event.is_set,progress=lambda msg:self.events.put(('status',msg)))
             report['ui_selections']=original_selections
             source=load_source(output/'created-model.pac',library=library_mode)
             return output,report,source
         def done(result):
-            self.result,self.last_report,source=result;self.model=source['model'];self.textures={n:source['textures'][n.casefold()] for n in self.model['texture_names']}
+            self.result,self.last_report,source=result;self.showing_build=True;self.model=source['model'];self.textures={n:source['textures'][n.casefold()] for n in self.model['texture_names']}
             self.status.set(f'Experimental build: {self.last_report["pac_bytes"]:,} / {MAX_BYTES:,} bytes. Native checks passed; review seams and test in PPSSPP.')
             if self.last_report.get('budget_warning'):
                 warning=self.last_report['budget_warning']
@@ -346,6 +355,8 @@ class App:
             return
         model,textures,view,pose,green=self.model,self.textures,self.view,self.pose.get(),self.green.get()
         revision=self.preview_revision;model_job=self.morph_ui.preview_job(model)
+        model_job,textures=self.uv_ui.preview_job(model_job,textures)
+        if self.uv_ui.active:self.uv_ui.draw()
         guide=float(self.waist_y.get()) if self.show_waist.get() else None
         def done(image):
             if revision!=self.preview_revision:return
@@ -373,6 +384,8 @@ class App:
             messagebox.showinfo('Torso cutoff changed','Assemble and validate with the current torso cutoff before exporting. The previous build is preserved.',parent=self.root);return False
         if not self.morph_ui.matches(self.last_report):
             messagebox.showinfo('Morph changed','Assemble and validate the current body morph before exporting. Your previous build is preserved.',parent=self.root);return False
+        if not self.uv_ui.matches(self.last_report):
+            messagebox.showinfo('UV edits changed','Assemble and validate the current UVs and textures before exporting. Your previous build is preserved.',parent=self.root);return False
         return True
 
     def export_pac(self):

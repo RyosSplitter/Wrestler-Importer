@@ -86,6 +86,7 @@ def run_library(app,output):
     run_creator030(app,output)
     run_waistline(app,output)
     run_morph(app,output)
+    run_uv(app,output)
 
 
 def run_morph(app,output):
@@ -272,4 +273,88 @@ def run_donor_import(app,output):
         report=json.loads(output.read_text());report.update(add_donors_button=True,import_batch_add_duplicate_reject=True,
             imported_donor_persists_without_original=True,imported_donor_mixed_preview_and_export=True,
             oversized_gui_warning_shown=True,oversized_pac_export_allowed=True)
+        dump(output,report)
+
+
+def run_uv(app,output):
+    """Real canvas gestures, morph/UV preview, portable projects and PAC export."""
+    import json
+    import numpy as np
+    from PIL import Image,ImageGrab
+    from unittest.mock import patch
+    from .morph.fixtures import donor
+    from .uv.document import signature
+    from desktop.texture_optimizer.candidates import write_gim,read_gim
+    from tools.pac_repack import replace_sections,texture_table
+    from tools.yukes_bpe import compress
+    from .core import read_project
+    def wait():
+        deadline=time.monotonic()+120
+        while time.monotonic()<deadline:
+            app.root.update()
+            if not any((app.busy,app.preview_after,app.refresh_after,app.morph_ui.preview_after,app.uv_ui.preview_after)):break
+            time.sleep(.02)
+        if app.busy or app.model is None:raise ValueError('UV preview failed: '+getattr(app,'last_error',''))
+    with tempfile.TemporaryDirectory(prefix='creator-uv-',dir=output.parent) as temporary:
+        t=Path(temporary);palette=np.zeros((16,4),np.uint8);palette[:,3]=255
+        palette[:4,:3]=[[185,125,80],[40,50,100],[240,225,180],[100,30,30]]
+        yy,xx=np.indices((32,32));pixels=((xx//4+yy//4)%4).astype(np.uint8)
+        gim=write_gim(pixels,palette,4);data=replace_sections(donor(),{9:compress(texture_table(['skin'],[gim],gim_reader=read_gim))})
+        paths=[t/'A.pac',t/'B.pac']
+        for p in paths:p.write_bytes(data)
+        project=create_project(*paths,t/'Project');app.load(project);app.green.set(False);app.show_waist.set(False);app.pose.set('rest')
+        app.sidebar.select(2);wait();uv=app.uv_ui;doc=uv.doc
+        if doc is None or not uv.canvas.winfo_ismapped():raise ValueError('Integrated UV canvas is unavailable')
+        original=app.preview_frame.tobytes();uv.select_all()
+        # Numeric move changes the shared model preview using real native UVs.
+        uv.inputs[('Move UV','U')].set('.12');uv.numeric('Move UV');wait()
+        if app.preview_frame.tobytes()==original:raise ValueError('Live UV edits did not alter the 3D preview')
+        moved=doc.uv.copy();uv.undo();wait()
+        if app.preview_frame.tobytes()!=original:raise ValueError('UV undo did not restore the rendered original')
+        uv.undo(True);wait();np.testing.assert_array_equal(doc.uv,moved)
+        # Actual Tk mouse drag uses an immutable gesture start and one undo step.
+        fi=next(f for f in uv.visible() if abs(np.linalg.det(np.column_stack((doc.uv[doc.faces[f]][1]-doc.uv[doc.faces[f]][0],doc.uv[doc.faces[f]][2]-doc.uv[doc.faces[f]][0]))))>1e-6)
+        q=uv.coordinates(doc.uv[doc.faces[fi]].mean(0));uv.mode.set('Move');old=doc.uv.copy();history=len(doc.undo_stack)
+        uv.canvas.event_generate('<ButtonPress-1>',x=int(q[0]),y=int(q[1]))
+        uv.canvas.event_generate('<B1-Motion>',x=int(q[0]+12),y=int(q[1]+4))
+        uv.canvas.event_generate('<ButtonRelease-1>',x=int(q[0]+12),y=int(q[1]+4));wait()
+        if np.array_equal(old,doc.uv) or len(doc.undo_stack)!=history+1:raise ValueError('UV canvas drag/history failed')
+        uv.undo();wait();np.testing.assert_array_equal(doc.uv,old)
+        uv.region.set('Face / head');uv.filter_changed();uv.select_all();uv.isolate.set(True);uv.changed();wait()
+        if not doc.selection:raise ValueError('Face region filter selected nothing')
+        uv.inputs[('Scale','X')].set('.96');uv.inputs[('Scale','Y')].set('1.03');uv.numeric('Scale')
+        uv.inputs[('Rotate °','Angle')].set('3');uv.numeric('Rotate °');uv.distortion.set(True);uv.draw();wait()
+        uv.isolate.set(False);uv.region.set('All');uv.filter_changed()
+        image=Image.fromarray(palette[pixels]);image.putpixel((0,0),(250,50,40,255));texture=t/'Edited.png';image.save(texture)
+        with patch('model_creator.uv.ui.filedialog.askopenfilename',return_value=str(texture)):uv.import_texture()
+        wait()
+        app.morph_ui.variables['chest_width'].set(.45);app.morph_ui.changed('chest_width');app.morph_ui.finish_gesture();wait()
+        recipe=uv.recipe();expected_model=doc.model(app.morph_ui.preview_job(app.model)());app.save()
+        metadata,_=read_project(project)
+        if metadata['schema']!='psp-model-creator/3' or signature(metadata.get('uv'))!=signature(recipe):raise ValueError('UV project recipe was not saved')
+        app.assemble();wait()
+        if app.last_report.get('uv',{}).get('signature')!=signature(recipe) or not app.last_report.get('morph'):raise ValueError('Combined morph/UV export missing an edit layer: '+getattr(app,'last_error',''))
+        result=load_source(app.result/'created-model.pac')
+        actual=[v for m in result['model']['meshes'] for v in m['vertices']];expected=[v for m in expected_model['meshes'] for v in m['vertices']]
+        np.testing.assert_array_equal([v['uv'] for v in actual],[v['uv'] for v in expected])
+        np.testing.assert_allclose([v['position'] for v in actual],[v['position'] for v in expected],atol=1e-5)
+        if result['textures']['skin']!=doc.textures['skin']:raise ValueError('Preview texture differs from exported indexed texture')
+        saved=t/'Saved.pac'
+        with patch('model_creator.gui.filedialog.asksaveasfilename',return_value=str(saved)):app.export_pac()
+        if not saved.is_file():raise ValueError('UV PAC save was unavailable')
+        uv.select_all();uv.transform(move=(.01,0));wait()
+        with patch('model_creator.gui.messagebox.showinfo'):
+            if app.require_result():raise ValueError('UV edit allowed a stale PAC export')
+        app.load(project);wait();uv=app.uv_ui
+        if signature(uv.recipe())!=signature(recipe) or abs(app.morph_ui.values()['chest_width']-.45)>1e-5:raise ValueError('Reload lost morph/UV edits')
+        uv.distortion.set(False);uv.draw();app.root.update()
+        x,y=app.root.winfo_rootx(),app.root.winfo_rooty();w,h=app.root.winfo_width(),app.root.winfo_height()
+        if uv.canvas.winfo_width()<200 or uv.canvas.winfo_height()<200:raise ValueError('UV canvas clipped')
+        ImageGrab.grab(bbox=(x,y,x+w,y+h)).save(output.with_name('creator-uv-window.png'))
+        uv.reset();app.morph_ui.reset();wait();app.assemble();wait()
+        if (app.result/'created-model.pac').read_bytes()!=data:raise ValueError('UV/morph reset did not export the byte-exact original')
+        if any(p.read_bytes()!=data for p in paths):raise ValueError('UV editing modified a source PAC')
+        report=json.loads(output.read_text());report.update(uv_editor=True,uv_live_preview=True,uv_canvas_mouse_drag=True,uv_undo_redo=True,
+            uv_region_isolation=True,uv_scale_rotation=True,uv_palette_texture_import=True,uv_morph_combined_export=True,
+            uv_native_geometry_weights_preserved=True,uv_project_roundtrip=True,uv_stale_export_blocked=True,uv_reset_export_byte_exact=True)
         dump(output,report)
