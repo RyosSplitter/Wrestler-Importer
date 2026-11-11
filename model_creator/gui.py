@@ -45,6 +45,7 @@ class App:
         left=ttk.Frame(self.sidebar,padding=12);self.sidebar.add(left,text='Body parts')
         morph_page=ttk.Frame(self.sidebar,padding=10);self.sidebar.add(morph_page,text='Morph Studio')
         uv_page=ttk.Frame(self.sidebar,padding=8);self.sidebar.add(uv_page,text='UV Editor')
+        blender_page=ttk.Frame(self.sidebar,padding=10);self.sidebar.add(blender_page,text='Blender')
         self.choices={};self.controls=[]
         for part in PARTS:
             ttk.Label(left,text=part).pack(anchor='w',pady=(3,0));v=tk.StringVar();self.choices[part]=v
@@ -91,7 +92,9 @@ class App:
         self.morph_ui=Panel(self,morph_page)
         from .uv.ui import Panel as UVPanel
         self.uv_ui=UVPanel(self,uv_page,uv_workspace)
-        self.sidebar.bind('<<NotebookTabChanged>>',lambda _:self.uv_ui.tab_changed())
+        from .blender_edit.ui import Panel as BlenderPanel
+        self.blender_ui=BlenderPanel(self,blender_page)
+        self.sidebar.bind('<<NotebookTabChanged>>',self.editor_tab_changed)
         status_label=ttk.Label(shell,textvariable=self.status,wraplength=900)
         # Reserve controls/status BEFORE the expandable preview gets remaining
         # space. Otherwise Tk can shrink late-packed buttons to unlabeled slivers.
@@ -104,6 +107,16 @@ class App:
         if '--smoke-test' not in sys.argv:
             from .library import bundled_root
             if (bundled_root()/'catalog.json').is_file():root.after(150,self.open_library)
+
+    def blender_build_active(self):
+        return bool(getattr(self,'showing_build',False) and self.result is not None and
+                    getattr(self,'last_report',{}).get('blender_edit'))
+
+    def editor_tab_changed(self,*_):
+        if self.blender_build_active() and self.sidebar.index(self.sidebar.select()) in (1,2):
+            self.sidebar.select(3)
+            self.status.set('Blender build active. Continue shape/UV edits in Blender, or Assemble Creator choices to start a fresh build. Your import is saved separately.')
+        self.uv_ui.tab_changed()
 
     def task(self,fn,done):
         if self.busy:return
@@ -354,8 +367,11 @@ class App:
                 self.refresh_after=self.root.after(150,retry)
             return
         model,textures,view,pose,green=self.model,self.textures,self.view,self.pose.get(),self.green.get()
-        revision=self.preview_revision;model_job=self.morph_ui.preview_job(model)
-        model_job,textures=self.uv_ui.preview_job(model_job,textures)
+        revision=self.preview_revision
+        if self.blender_build_active():model_job=lambda:model
+        else:
+            model_job=self.morph_ui.preview_job(model)
+            model_job,textures=self.uv_ui.preview_job(model_job,textures)
         if self.uv_ui.active:self.uv_ui.draw()
         guide=float(self.waist_y.get()) if self.show_waist.get() else None
         def done(image):
@@ -443,6 +459,7 @@ class App:
                 'Native bind branches follow the selected parts, including the head neck pivot. Source-pose checks remain mandatory.\n'
                 'Maximum texture downgrade tries to fit oversized models using textures only; an already fitting model keeps its textures.\n'
                 'Hair follows the selected head. Torso supplies the output container; other donor auxiliary PACs are not transferred.\n'
+                'Blender tab: edit an assembled model, then import the saved .blend as a separate validated build. Topology and skinning changes are rejected.\n'
                 'Analytical poses are not in-game tests. Review all sides and test in PPSSPP.',parent=self.root)
             return
         messagebox.showinfo('Prepared-pair experimental creator',
@@ -450,7 +467,8 @@ class App:
             '2. Choose Head / Torso / Arms / Legs; the preview updates automatically.\n'
             '3. Check textured and green previews from every side and under poses.\n'
             '4. Save PAC, or export a folder for PNG editing in Photoshop/GIMP.\n'
-            '5. Pack edited folder and test a copied ISO in PPSSPP.\n\n'
+            '5. Pack edited folder and test a copied ISO in PPSSPP.\n'
+            'Blender tab: edit your assembled model and import the saved .blend. Previous builds remain saved; topology and skinning changes are rejected.\n\n'
             'Both original PACs remain in your private project. Each build gets its own folder.\n'
             'The torso supplies shared attachment contours. Hair remains with the head.\n'
             'Mixed assemblies use source 1’s container; source 2 auxiliary models are not assembled.\n'

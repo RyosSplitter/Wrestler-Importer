@@ -87,6 +87,7 @@ def run_library(app,output):
     run_waistline(app,output)
     run_morph(app,output)
     run_uv(app,output)
+    run_blender(app,output)
 
 
 def run_morph(app,output):
@@ -357,4 +358,63 @@ def run_uv(app,output):
         report=json.loads(output.read_text());report.update(uv_editor=True,uv_live_preview=True,uv_canvas_mouse_drag=True,uv_undo_redo=True,
             uv_region_isolation=True,uv_scale_rotation=True,uv_palette_texture_import=True,uv_morph_combined_export=True,
             uv_native_geometry_weights_preserved=True,uv_project_roundtrip=True,uv_stale_export_blocked=True,uv_reset_export_byte_exact=True)
+        dump(output,report)
+
+
+def run_blender(app,output):
+    """Exercise bundled worker sources through the frozen app, including rejection."""
+    import json,os,subprocess
+    from unittest.mock import patch
+    from PIL import ImageGrab
+    from .morph.fixtures import donor
+    from desktop.blender_runtime import resolve
+    runtime=resolve(app.morph_ui.runtime)
+    def wait(allow_error=False):
+        deadline=time.monotonic()+150
+        while time.monotonic()<deadline:
+            app.root.update()
+            if getattr(app,'last_error',None) and not allow_error:raise ValueError(app.last_error)
+            if not any((app.busy,app.preview_after,app.refresh_after,app.morph_ui.preview_after,app.uv_ui.preview_after)):return
+            time.sleep(.02)
+        raise ValueError('Blender UI worker timed out')
+    with tempfile.TemporaryDirectory(prefix='creator-blender-smoke-',dir=output.parent)as temporary:
+        t=Path(temporary);data=donor();paths=[t/'A.pac',t/'B.pac']
+        for p in paths:p.write_bytes(data)
+        project=create_project(*paths,t/'project');app.load(project)
+        for part in PARTS:app.choices[part].set(app.labels[0])
+        app.max_textures.set(False);app.dirty();wait();app.assemble();wait();baseline=app.result;original=(baseline/'created-model.pac').read_bytes()
+        if original!=data:raise ValueError('Blender smoke baseline is not byte exact')
+        with patch('model_creator.blender_edit.ui.filedialog.askdirectory',return_value=str(t)),patch('model_creator.blender_edit.ui.launch'):
+            app.blender_ui.open();wait()
+        session=app.blender_ui.session;blend=session/'model.blend'
+        if not blend.is_file() or not(session/'contract.json').is_file():raise ValueError('Frozen Blender worker data missing')
+        with patch('model_creator.blender_edit.ui.filedialog.askopenfilename',return_value=str(blend)):
+            app.blender_ui.import_file();wait()
+        noop=app.result
+        if (noop/'created-model.pac').read_bytes()!=original:raise ValueError('Frozen Blender no-op changed native PAC bytes')
+        script=t/'edit.py';script.write_text("import bpy\nfor o in bpy.context.scene.objects:\n if o.type=='MESH':\n  for v in o.data.vertices:v.co*=1.01\n  for uv in o.data.uv_layers[0].data:uv.uv.x+=.02\nim=bpy.data.images['PSP Image 000'];pixels=list(im.pixels)\nfor i in range(0,len(pixels),4):pixels[i:i+3]=[.15,.35,.8]\nim.pixels.foreach_set(pixels);im.pack()\nbpy.ops.wm.save_as_mainfile(filepath=bpy.data.filepath)\n",encoding='utf-8')
+        def edit():
+            r=subprocess.run([str(runtime),'-b',str(blend),'--disable-autoexec','--python-exit-code','1','--python',str(script)],capture_output=True,text=True,creationflags=0x08000000 if os.name=='nt' else 0,timeout=120)
+            if r.returncode:raise ValueError('Blender smoke edit failed: '+r.stdout[-3000:]+r.stderr[-1000:])
+        edit()
+        with patch('model_creator.blender_edit.ui.filedialog.askopenfilename',return_value=str(blend)):
+            app.blender_ui.import_file();wait()
+        edited=app.result
+        if edited==noop or not app.require_result() or not app.blender_build_active():raise ValueError('Blender import did not become exportable')
+        if not app.last_report['blender_edit']['changed_textures']:raise ValueError('Blender painted texture not imported')
+        if (edited/'created-model.pac').read_bytes()==original or (baseline/'created-model.pac').read_bytes()!=original:raise ValueError('Blender changed/preserved build checks failed')
+        app.sidebar.select(2);app.root.update()
+        if app.sidebar.index(app.sidebar.select())!=3:raise ValueError('Blender build can accidentally receive a second Creator recipe')
+        app.green.set(False);app.show_waist.set(False);app.refresh();wait();app.root.update()
+        x,y=app.root.winfo_rootx(),app.root.winfo_rooty();w,h=app.root.winfo_width(),app.root.winfo_height()
+        ImageGrab.grab(bbox=(x,y,x+w,y+h)).save(output.with_name('creator-blender-window.png'))
+        app.blender_ui.undo();wait()
+        if app.result!=noop or (app.result/'created-model.pac').read_bytes()!=original:raise ValueError('Blender undo did not restore the prior build')
+        script.write_text("import bpy\no=next(o for o in bpy.context.scene.objects if o.type=='MESH')\no.vertex_groups[0].add([0],.4,'REPLACE')\nbpy.ops.wm.save_as_mainfile(filepath=bpy.data.filepath)\n",encoding='utf-8');edit();app.last_error=None
+        with patch('model_creator.blender_edit.ui.filedialog.askopenfilename',return_value=str(blend)):
+            app.blender_ui.import_file();wait(allow_error=True)
+        if not app.last_error or 'Skin weights changed'not in app.last_error or app.result!=noop:raise ValueError('Frozen Blender invalid weights were accepted')
+        app.last_error=None
+        if any(p.read_bytes()!=data for p in paths):raise ValueError('Blender smoke changed original source PACs')
+        report=json.loads(output.read_text());report.update(blender_editor=True,blender_worker_roundtrip_exact=True,blender_import_validated=True,blender_texture_paint=True,blender_undo_preserves_builds=True,blender_skin_weights_rejected=True,blender_final_preview=True)
         dump(output,report)
