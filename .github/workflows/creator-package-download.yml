@@ -1,0 +1,47 @@
+name: Publish verified Creator 0.6.0 downloads
+on:
+  push:
+    branches: [build/creator-blender-download]
+permissions:
+  contents: write
+  actions: read
+jobs:
+  downloads:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: PSP-Model-Creator-0.6.0-Windows-x64
+          run-id: 43049826500
+          github-token: ${{ github.token }}
+          path: packages
+      - name: Verify built packages and Windows checks
+        shell: python
+        run: |
+          import hashlib,json,zipfile
+          from pathlib import Path
+          root=Path('packages')
+          expected={'PSP-Model-Creator-0.6.0-Creator-Patch.zip':'33ec90b7fe2571a4686ac8d0057a411296bccfcc99c4c41897d77c03eccb489b','PSP-Model-Creator-0.6.0-Windows-x64.zip':'bfbc355c0befdec91b2789537b64f7e37def5ca98a804d5d59186d2f5a5c71d1'}
+          for name,digest in expected.items():
+              path=root/name
+              assert hashlib.file_digest(path.open('rb'),'sha256').hexdigest()==digest,name
+              assert (root/(name+'.sha256')).read_text().split()[0]==digest,name
+              with zipfile.ZipFile(path) as archive:assert archive.testzip() is None,name
+          for name in ('creator-smoke.json','creator-patch-smoke.json'):
+              checks=json.loads((root/name).read_text())
+              for key in ('passed','blender_editor','blender_worker_roundtrip_exact','blender_import_validated','blender_texture_paint','blender_undo_preserves_builds','blender_skin_weights_rejected'):assert checks[key],(name,key)
+          (root/'RELEASE-VALIDATION.json').write_text(json.dumps(dict(version='0.6.0',build_commit='52143106d56eaca53c9ef74042bb5330481a7442',windows_build_run=43049826500,package_sha256=expected,windows_full_and_overlay_checks_passed=True),indent=2)+'\n')
+      - name: Make verified ZIPs publicly downloadable
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          cat > release-notes.md <<'NOTES'
+          PSP Model Creator 0.6.0 adds Edit in Blender using the existing Blender 4.3.2 runtime. Assemble, edit shape/UVs/textures in Blender, then import a separately validated build with Undo. Topology, bone/weight and material assignment edits remain unsupported.
+
+          Choose the full Windows ZIP for a fresh installation, or the Creator Patch ZIP for an existing Creator 0.2–0.5.0 installation. Close Creator and merge all patch contents, including _internal. Blender is not bundled; select the installed Suite's Blender 4.3.2 executable.
+
+          These exact ZIPs passed the Windows full-app and original 0.2-runtime overlay self-checks, including real Blender no-op/edit/paint import, weight rejection and Undo. SHA-256 files and validation reports are included. Game testing remains necessary.
+          NOTES
+          gh release create creator-0.6.0-blender packages/*.zip packages/*.sha256 packages/creator-smoke.json packages/creator-patch-smoke.json packages/creator-blender-window.png packages/RELEASE-VALIDATION.json --repo "$GH_REPO" --target 52143106d56eaca53c9ef74042bb5330481a7442 --prerelease --title 'PSP Model Creator 0.6.0 — Blender Editing' --notes-file release-notes.md
